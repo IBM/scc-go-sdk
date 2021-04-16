@@ -19,22 +19,23 @@ package notificationsapiv1_test
 import (
 	"bytes"
 	"fmt"
-	"github.com/IBM/cloud-go-sdk/notificationsapiv1"
-	"github.com/IBM/go-sdk-core/v4/core"
-	"github.com/go-openapi/strfmt"
-	. "github.com/onsi/ginkgo"
-	. "github.com/onsi/gomega"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"time"
+
+	"github.com/IBM/cloud-go-sdk/notificationsapiv1"
+	"github.com/IBM/go-sdk-core/v5/core"
+	"github.com/go-openapi/strfmt"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
 var _ = Describe(`NotificationsApiV1`, func() {
 	var testServer *httptest.Server
-    Describe(`Service constructor tests`, func() {
+	Describe(`Service constructor tests`, func() {
 		It(`Instantiate service client`, func() {
 			testService, testServiceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
 				Authenticator: &core.NoAuthAuthenticator{},
@@ -65,14 +66,13 @@ var _ = Describe(`NotificationsApiV1`, func() {
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"NOTIFICATIONS_API_URL": "https://notificationsapiv1/api",
+				"NOTIFICATIONS_API_URL":       "https://notificationsapiv1/api",
 				"NOTIFICATIONS_API_AUTH_TYPE": "noauth",
 			}
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				testService, testServiceErr := notificationsapiv1.NewNotificationsApiV1UsingExternalConfig(&notificationsapiv1.NotificationsApiV1Options{
-				})
+				testService, testServiceErr := notificationsapiv1.NewNotificationsApiV1UsingExternalConfig(&notificationsapiv1.NotificationsApiV1Options{})
 				Expect(testService).ToNot(BeNil())
 				Expect(testServiceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
@@ -89,8 +89,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				testService, testServiceErr := notificationsapiv1.NewNotificationsApiV1UsingExternalConfig(&notificationsapiv1.NotificationsApiV1Options{
-				})
+				testService, testServiceErr := notificationsapiv1.NewNotificationsApiV1UsingExternalConfig(&notificationsapiv1.NotificationsApiV1Options{})
 				err := testService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
 				Expect(testService).ToNot(BeNil())
@@ -102,13 +101,12 @@ var _ = Describe(`NotificationsApiV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"NOTIFICATIONS_API_URL": "https://notificationsapiv1/api",
+				"NOTIFICATIONS_API_URL":       "https://notificationsapiv1/api",
 				"NOTIFICATIONS_API_AUTH_TYPE": "someOtherAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			testService, testServiceErr := notificationsapiv1.NewNotificationsApiV1UsingExternalConfig(&notificationsapiv1.NotificationsApiV1Options{
-			})
+			testService, testServiceErr := notificationsapiv1.NewNotificationsApiV1UsingExternalConfig(&notificationsapiv1.NotificationsApiV1Options{})
 
 			It(`Instantiate service client with error`, func() {
 				Expect(testService).To(BeNil())
@@ -119,7 +117,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"NOTIFICATIONS_API_AUTH_TYPE":   "NOAuth",
+				"NOTIFICATIONS_API_AUTH_TYPE": "NOAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
@@ -223,7 +221,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				listAllChannelsOptionsModel.TransactionID = core.StringPtr("testString")
 				listAllChannelsOptionsModel.Limit = core.Int64Ptr(int64(38))
 				listAllChannelsOptionsModel.Skip = core.Int64Ptr(int64(38))
- 				listAllChannelsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				listAllChannelsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
 				result, response, operationErr = testService.ListAllChannels(listAllChannelsOptionsModel)
@@ -368,7 +366,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				createNotificationChannelOptionsModel.Enabled = core.BoolPtr(true)
 				createNotificationChannelOptionsModel.AlertSource = []notificationsapiv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}
 				createNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
- 				createNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				createNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
 				result, response, operationErr = testService.CreateNotificationChannel(createNotificationChannelOptionsModel)
@@ -501,7 +499,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				deleteNotificationChannelsOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNotificationChannelsOptionsModel.RequestBody = []string{"testString"}
 				deleteNotificationChannelsOptionsModel.TransactionID = core.StringPtr("testString")
- 				deleteNotificationChannelsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				deleteNotificationChannelsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
 				result, response, operationErr = testService.DeleteNotificationChannels(deleteNotificationChannelsOptionsModel)
@@ -623,7 +621,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				deleteNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
- 				deleteNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				deleteNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
 				result, response, operationErr = testService.DeleteNotificationChannel(deleteNotificationChannelOptionsModel)
@@ -745,7 +743,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				getNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
- 				getNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				getNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
 				result, response, operationErr = testService.GetNotificationChannel(getNotificationChannelOptionsModel)
@@ -891,7 +889,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				updateNotificationChannelOptionsModel.Enabled = core.BoolPtr(true)
 				updateNotificationChannelOptionsModel.AlertSource = []notificationsapiv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}
 				updateNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
- 				updateNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				updateNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
 				result, response, operationErr = testService.UpdateNotificationChannel(updateNotificationChannelOptionsModel)
@@ -1025,7 +1023,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				testNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
- 				testNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				testNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
 				result, response, operationErr = testService.TestNotificationChannel(testNotificationChannelOptionsModel)
@@ -1145,7 +1143,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				getPublicKeyOptionsModel := new(notificationsapiv1.GetPublicKeyOptions)
 				getPublicKeyOptionsModel.AccountID = core.StringPtr("testString")
 				getPublicKeyOptionsModel.TransactionID = core.StringPtr("testString")
- 				getPublicKeyOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				getPublicKeyOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
 				result, response, operationErr = testService.GetPublicKey(getPublicKeyOptionsModel)

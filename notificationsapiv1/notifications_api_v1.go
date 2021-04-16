@@ -20,9 +20,10 @@ package notificationsapiv1
 import (
 	"encoding/json"
 	"fmt"
-	common "github.com/IBM/cloud-go-sdk/common"
-	"github.com/IBM/go-sdk-core/v4/core"
 	"reflect"
+
+	common "github.com/IBM/cloud-go-sdk/common"
+	"github.com/IBM/go-sdk-core/v5/core"
 )
 
 // NotificationsApiV1 : notifications-api
@@ -627,7 +628,6 @@ type ChannelResponseDefinitionAlertSourceItem struct {
 	FindingTypes []string `json:"finding_types,omitempty"`
 }
 
-
 // UnmarshalChannelResponseDefinitionAlertSourceItem unmarshals an instance of ChannelResponseDefinitionAlertSourceItem from the specified map of raw messages.
 func UnmarshalChannelResponseDefinitionAlertSourceItem(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(ChannelResponseDefinitionAlertSourceItem)
@@ -657,7 +657,6 @@ type ChannelResponseDefinitionSeverity struct {
 	// Low Severity.
 	Low *bool `json:"low,omitempty"`
 }
-
 
 // UnmarshalChannelResponseDefinitionSeverity unmarshals an instance of ChannelResponseDefinitionSeverity from the specified map of raw messages.
 func UnmarshalChannelResponseDefinitionSeverity(m map[string]json.RawMessage, result interface{}) (err error) {
@@ -722,18 +721,18 @@ const (
 // Constants associated with the CreateNotificationChannelOptions.Severity property.
 const (
 	CreateNotificationChannelOptions_Severity_Critical = "critical"
-	CreateNotificationChannelOptions_Severity_High = "high"
-	CreateNotificationChannelOptions_Severity_Low = "low"
-	CreateNotificationChannelOptions_Severity_Medium = "medium"
+	CreateNotificationChannelOptions_Severity_High     = "high"
+	CreateNotificationChannelOptions_Severity_Low      = "low"
+	CreateNotificationChannelOptions_Severity_Medium   = "medium"
 )
 
 // NewCreateNotificationChannelOptions : Instantiate CreateNotificationChannelOptions
 func (*NotificationsApiV1) NewCreateNotificationChannelOptions(accountID string, name string, typeVar string, endpoint string) *CreateNotificationChannelOptions {
 	return &CreateNotificationChannelOptions{
 		AccountID: core.StringPtr(accountID),
-		Name: core.StringPtr(name),
-		Type: core.StringPtr(typeVar),
-		Endpoint: core.StringPtr(endpoint),
+		Name:      core.StringPtr(name),
+		Type:      core.StringPtr(typeVar),
+		Endpoint:  core.StringPtr(endpoint),
 	}
 }
 
@@ -862,7 +861,7 @@ type DeleteNotificationChannelsOptions struct {
 // NewDeleteNotificationChannelsOptions : Instantiate DeleteNotificationChannelsOptions
 func (*NotificationsApiV1) NewDeleteNotificationChannelsOptions(accountID string, requestBody []string) *DeleteNotificationChannelsOptions {
 	return &DeleteNotificationChannelsOptions{
-		AccountID: core.StringPtr(accountID),
+		AccountID:   core.StringPtr(accountID),
 		RequestBody: requestBody,
 	}
 }
@@ -1059,7 +1058,6 @@ type NotificationChannelAlertSourceItem struct {
 	FindingTypes []string `json:"finding_types,omitempty"`
 }
 
-
 // NewNotificationChannelAlertSourceItem : Instantiate NotificationChannelAlertSourceItem (Generic Model Constructor)
 func (*NotificationsApiV1) NewNotificationChannelAlertSourceItem(providerName string) (model *NotificationChannelAlertSourceItem, err error) {
 	model = &NotificationChannelAlertSourceItem{
@@ -1174,9 +1172,9 @@ const (
 // Constants associated with the UpdateNotificationChannelOptions.Severity property.
 const (
 	UpdateNotificationChannelOptions_Severity_Critical = "critical"
-	UpdateNotificationChannelOptions_Severity_High = "high"
-	UpdateNotificationChannelOptions_Severity_Low = "low"
-	UpdateNotificationChannelOptions_Severity_Medium = "medium"
+	UpdateNotificationChannelOptions_Severity_High     = "high"
+	UpdateNotificationChannelOptions_Severity_Low      = "low"
+	UpdateNotificationChannelOptions_Severity_Medium   = "medium"
 )
 
 // NewUpdateNotificationChannelOptions : Instantiate UpdateNotificationChannelOptions
@@ -1184,9 +1182,9 @@ func (*NotificationsApiV1) NewUpdateNotificationChannelOptions(accountID string,
 	return &UpdateNotificationChannelOptions{
 		AccountID: core.StringPtr(accountID),
 		ChannelID: core.StringPtr(channelID),
-		Name: core.StringPtr(name),
-		Type: core.StringPtr(typeVar),
-		Endpoint: core.StringPtr(endpoint),
+		Name:      core.StringPtr(name),
+		Type:      core.StringPtr(typeVar),
+		Endpoint:  core.StringPtr(endpoint),
 	}
 }
 
@@ -1262,7 +1260,6 @@ type BulkDeleteChannelsResponse struct {
 	Message *string `json:"message,omitempty"`
 }
 
-
 // UnmarshalBulkDeleteChannelsResponse unmarshals an instance of BulkDeleteChannelsResponse from the specified map of raw messages.
 func UnmarshalBulkDeleteChannelsResponse(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(BulkDeleteChannelsResponse)
@@ -1306,7 +1303,6 @@ type ChannelResponseDefinition struct {
 const (
 	ChannelResponseDefinition_Type_Webhook = "Webhook"
 )
-
 
 // UnmarshalChannelResponseDefinition unmarshals an instance of ChannelResponseDefinition from the specified map of raw messages.
 func UnmarshalChannelResponseDefinition(m map[string]json.RawMessage, result interface{}) (err error) {
@@ -1360,7 +1356,6 @@ type CreateChannelsResponse struct {
 	StatusCode *int64 `json:"status_code,omitempty"`
 }
 
-
 // UnmarshalCreateChannelsResponse unmarshals an instance of CreateChannelsResponse from the specified map of raw messages.
 func UnmarshalCreateChannelsResponse(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(CreateChannelsResponse)
@@ -1385,7 +1380,6 @@ type DeleteChannelResponse struct {
 	Message *string `json:"message,omitempty"`
 }
 
-
 // UnmarshalDeleteChannelResponse unmarshals an instance of DeleteChannelResponse from the specified map of raw messages.
 func UnmarshalDeleteChannelResponse(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(DeleteChannelResponse)
@@ -1407,7 +1401,6 @@ type GetChannelResponse struct {
 	Channel *ChannelResponseDefinition `json:"channel,omitempty"`
 }
 
-
 // UnmarshalGetChannelResponse unmarshals an instance of GetChannelResponse from the specified map of raw messages.
 func UnmarshalGetChannelResponse(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(GetChannelResponse)
@@ -1423,7 +1416,6 @@ func UnmarshalGetChannelResponse(m map[string]json.RawMessage, result interface{
 type ListChannelsResponse struct {
 	Channels []ChannelResponseDefinition `json:"channels,omitempty"`
 }
-
 
 // UnmarshalListChannelsResponse unmarshals an instance of ListChannelsResponse from the specified map of raw messages.
 func UnmarshalListChannelsResponse(m map[string]json.RawMessage, result interface{}) (err error) {
@@ -1441,7 +1433,6 @@ type PublicKeyResponse struct {
 	PublicKey *string `json:"public_key" validate:"required"`
 }
 
-
 // UnmarshalPublicKeyResponse unmarshals an instance of PublicKeyResponse from the specified map of raw messages.
 func UnmarshalPublicKeyResponse(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(PublicKeyResponse)
@@ -1458,7 +1449,6 @@ type TestChannelResponse struct {
 	// response status.
 	Test *string `json:"test,omitempty"`
 }
-
 
 // UnmarshalTestChannelResponse unmarshals an instance of TestChannelResponse from the specified map of raw messages.
 func UnmarshalTestChannelResponse(m map[string]json.RawMessage, result interface{}) (err error) {
@@ -1479,7 +1469,6 @@ type UpdateChannelResponse struct {
 	// response code.
 	StatusCode *int64 `json:"status_code,omitempty"`
 }
-
 
 // UnmarshalUpdateChannelResponse unmarshals an instance of UpdateChannelResponse from the specified map of raw messages.
 func UnmarshalUpdateChannelResponse(m map[string]json.RawMessage, result interface{}) (err error) {

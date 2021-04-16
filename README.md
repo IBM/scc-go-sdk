@@ -1,36 +1,24 @@
-[![Build Status](https://travis.ibm.com/CloudEngineering/go-sdk-template.svg?token=eW5FVD71iyte6tTby8gr&branch=main)](https://travis.ibm.com/CloudEngineering/go-sdk-template.svg?token=eW5FVD71iyte6tTby8gr&branch=main)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
-
-# IBM Cloud MySDK Go SDK Version 0.0.1
+# IBM Cloud Security and Compliance Center Go SDK Version 0.0.1
 Go client library to interact with the various [IBM Cloud MySDK Service APIs](https://cloud.ibm.com/apidocs?category=<service-category>).
 
 Disclaimer: this SDK is being released initially as a **pre-release** version.
 Changes might occur which impact applications that use this SDK.
 
 ## Table of Contents
-<!--
-  The TOC below is generated using the `markdown-toc` node package.
 
-      https://github.com/jonschlinkert/markdown-toc
-
-  You should regenerate the TOC after making changes to this file.
-
-      npx markdown-toc -i README.md
-  -->
-
-<!-- toc -->
-
-- [Overview](#overview)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-  * [Go modules](#go-modules)
-  * [`go get` command](#go-get-command)
-- [Using the SDK](#using-the-sdk)
-- [Questions](#questions)
-- [Issues](#issues)
-- [Open source @ IBM](#open-source--ibm)
-- [Contributing](#contributing)
-- [License](#license)
+- [IBM Cloud Security and Compliance Center Go SDK Version 0.0.1](#ibm-cloud-security-and-compliance-center-go-sdk-version-001)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+    - [Go modules](#go-modules)
+    - [`go get` command](#go-get-command)
+  - [Using the SDK](#using-the-sdk)
+  - [Questions](#questions)
+  - [Issues](#issues)
+  - [Open source @ IBM](#open-source--ibm)
+  - [Contributing](#contributing)
+  - [License](#license)
 
 <!-- tocstop -->
 
@@ -40,7 +28,7 @@ The IBM Cloud MySDK Go SDK allows developers to programmatically interact with t
 
 Service Name | Package name 
 --- | --- 
-[Example Service](https://cloud.ibm.com/apidocs/example-service) | exampleservicev1
+[Notifications Service](https://cloud.ibm.com/apidocs/notifications) | notificationsapiv1
 
 ## Prerequisites
 
@@ -60,20 +48,20 @@ Here is an example:
 
 ```go
 import (
-	"github.ibm.com/CloudEngineering/go-sdk-template/exampleservicev1"
+	"github.com/ibm-cloud-security/scc-go-sdk/notificationsapiv1"
 )
 ```
 Next, run `go build` or `go mod tidy` to download and install the new dependencies and update your application's
 `go.mod` file.  
 
-In the example above, the `exampleservicev1` part of the import path is the package name
-associated with the Example Service service.
+In the example above, the `notificationsapiv1` part of the import path is the package name
+associated with the Security Insights Notifications Service.
 See the service table above to find the approprate package name for the services used by your application.
 
 ### `go get` command  
 Alternatively, you can use the `go get` command to download and install the appropriate packages needed by your application:
 ```
-go get -u github.ibm.com/CloudEngineering/go-sdk-template/exampleservicev1
+go get -u github.com/ibm-cloud-security/scc-go-sdk/notificationsapiv1
 ```
 Be sure to use the appropriate package name from the service table above for the services used by your application.
 

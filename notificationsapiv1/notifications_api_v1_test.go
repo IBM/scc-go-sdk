@@ -26,9 +26,9 @@ import (
 	"os"
 	"time"
 
-	"github.com/IBM/cloud-go-sdk/notificationsapiv1"
 	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/go-openapi/strfmt"
+	"github.com/ibm-cloud-security/scc-go-sdk/notificationsapiv1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )

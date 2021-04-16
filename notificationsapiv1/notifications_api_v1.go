@@ -22,8 +22,8 @@ import (
 	"fmt"
 	"reflect"
 
-	common "github.com/IBM/cloud-go-sdk/common"
 	"github.com/IBM/go-sdk-core/v5/core"
+	common "github.com/ibm-cloud-security/scc-go-sdk/common"
 )
 
 // NotificationsApiV1 : notifications-api

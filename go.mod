@@ -1,4 +1,4 @@
-module github.ibm.com/CloudEngineering/go-sdk-template
+module github.com/ibm-cloud-security/scc-go-sdk
 
 go 1.14
 

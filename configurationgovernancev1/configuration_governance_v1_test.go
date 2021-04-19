@@ -28,8 +28,8 @@ import (
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/IBM/platform-services-go-sdk/configurationgovernancev1"
 	"github.com/go-openapi/strfmt"
+	"github.com/ibm-cloud-security/scc-go-sdk/configurationgovernancev1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )

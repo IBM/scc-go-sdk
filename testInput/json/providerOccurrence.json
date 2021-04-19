@@ -1,0 +1,27 @@
+{
+  "context": {
+    "resource_name": "mycluster",
+    "resource_type": "cluster"
+  },
+  "description": "new custom tool findings",
+  "finding": {
+    "next_steps": [
+      {
+        "title": "Custom tool finding"
+      }
+    ],
+    "severity": "HIGH"
+  },
+  "id": "sec_advisor_202X_provider_occ_id1",
+  "kind": "FINDING",
+  "long_description": "new custom tool finding",
+  "message": "message",
+  "provider_id": "sec_advisor_202X_provider_occ_test",
+  "remediation": "steps for remediation",
+  "reported_by": {
+    "id": "custom-note",
+    "title": "Custom tool"
+  },
+  "short_description": "new custom tool finding",
+  "resource_url": "https://gcr.io/provider/image@sha256:foo"
+}

@@ -1,0 +1,54 @@
+{
+    "kind": "CARD",
+    "provider_id": "sec_advisor_202X_provider",
+    "id": "sec_advisor_202X_note_id1_card",
+    "short_description": "abc",
+    "long_description": "abc",
+    "reported_by": {
+        "id": "abc",
+        "title": "abc"
+    },
+    "card": {
+        "elements": [
+            {
+                "default_time_range": "1d",
+                "kind": "NUMERIC",
+                "text": "This should not be here",
+                "value_type": {
+                    "finding_note_names": [
+                        "providers/sec_advisor_202X_provider/notes/sec_advisor_202X_note"
+                    ],
+                    "kind": "FINDING_COUNT"
+                }
+            },
+            {
+                "kind": "TIME_SERIES",
+                "text": "Containers with my security issue in the last 7 days",
+                "default_interval": "d",
+                "default_time_range": "4d",
+                "value_types": [
+                    {
+                        "kind": "FINDING_COUNT",
+                        "finding_note_names": [
+                            "providers/sec_advisor_202X_provider/notes/sec_advisor_202X_note"
+                        ],
+                        "text": "Vulnerabilities"
+                    },
+                    {
+                        "kind": "FINDING_COUNT",
+                        "finding_note_names": [
+                            "providers/sec_advisor_202X_provider/notes/sec_advisor_202X_note"
+                        ],
+                        "text": "Config Issues"
+                    }
+                ]
+            }
+        ],
+        "finding_note_names": [
+            "providers/sec_advisor_202X_provider/notes/sec_advisor_202X_note"
+        ],
+        "section": "My Security Tools",
+        "title": "Card posted from Go SDK",
+        "subtitle": "Trial error card"
+    }
+}

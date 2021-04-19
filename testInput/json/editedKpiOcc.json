@@ -1,0 +1,10 @@
+{
+  "provider_id": "sec_advisor_202X_provider",
+  "kind": "KPI",
+  "id": "sec_advisor_202X_kpi_occ",
+  "occurrence_id":"providers/sec_advisor_202X_provider/occurrences/sec_advisor_202X_kpi_occ",
+  "kpi":{
+      "value":2,
+      "total":2
+    }
+}

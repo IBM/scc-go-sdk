@@ -43,7 +43,7 @@ type FindingsApiV1 struct {
 }
 
 // DefaultServiceURL is the default URL to make service requests to.
-const DefaultServiceURL = "https://us-south.secadvisor.cloud.ibm.com/findings"
+const DefaultServiceURL = "https://findings-api.cloud.ibm.com/findings"
 
 // DefaultServiceName is the default key used to find external configuration information.
 const DefaultServiceName = "findings_api"
@@ -933,12 +933,12 @@ func (findingsApi *FindingsApiV1) ListNoteOccurrencesWithContext(ctx context.Con
 }
 
 // GetOccurrence : Returns the requested `Occurrence`
-func (findingsApi *FindingsApiV1) GetOccurrence(getOccurrenceOptions *GetOccurrenceOptions) (result *ApiListOccurrencesResponse, response *core.DetailedResponse, err error) {
+func (findingsApi *FindingsApiV1) GetOccurrence(getOccurrenceOptions *GetOccurrenceOptions) (result *ApiOccurrence, response *core.DetailedResponse, err error) {
 	return findingsApi.GetOccurrenceWithContext(context.Background(), getOccurrenceOptions)
 }
 
 // GetOccurrenceWithContext is an alternate form of the GetOccurrence method which supports a Context parameter
-func (findingsApi *FindingsApiV1) GetOccurrenceWithContext(ctx context.Context, getOccurrenceOptions *GetOccurrenceOptions) (result *ApiListOccurrencesResponse, response *core.DetailedResponse, err error) {
+func (findingsApi *FindingsApiV1) GetOccurrenceWithContext(ctx context.Context, getOccurrenceOptions *GetOccurrenceOptions) (result *ApiOccurrence, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getOccurrenceOptions, "getOccurrenceOptions cannot be nil")
 	if err != nil {
 		return
@@ -985,7 +985,7 @@ func (findingsApi *FindingsApiV1) GetOccurrenceWithContext(ctx context.Context, 
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalApiListOccurrencesResponse)
+	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalApiOccurrence)
 	if err != nil {
 		return
 	}

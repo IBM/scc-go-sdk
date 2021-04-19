@@ -1,0 +1,22 @@
+{
+    "provider_id":"sdktest",
+	"short_description":"sdk test findings edited",
+	"long_description":"sdk test findings edited",
+	"kind":"FINDING",
+    "id":"sdk_note_id1",
+    "note_id": "providers/sdktest/notes/sdk_note_id1",
+	"reported_by":{
+        "id":"1",
+        "title":"test1",
+        "url":"www.test.com"
+    },
+	"finding":{
+        "severity": "HIGH",
+        "next_steps": [
+            {
+                "title": "string",
+                "url": "string"
+            }
+        ]
+    }
+}

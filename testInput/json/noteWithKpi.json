@@ -1,0 +1,15 @@
+{
+    "provider_id":"sec_advisor_202X_provider",
+	"short_description":"sdk test findings",
+	"long_description":"sdk test findings",
+	"kind":"KPI",
+	"id":"sec_advisor_202X_kpi_note",
+	"reported_by":{
+        "id":"1",
+        "title":"test1",
+        "url":"www.test.com"
+    },
+    "kpi":{
+        "aggregation_type": "SUM"
+    }
+}

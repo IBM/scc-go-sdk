@@ -1,16 +1,16 @@
 {
-    "provider_id":"sdktest",
-	"short_description":"sdk test findings edited",
-	"long_description":"sdk test findings edited",
-	"kind":"FINDING",
-    "id":"sdk_note_id1",
-    "note_id": "providers/sdktest/notes/sdk_note_id1",
-	"reported_by":{
+    "ProviderID":"sdktest",
+	"ShortDescription":"sdk test findings edited",
+	"LongDescription":"sdk test findings edited",
+	"Kind":"FINDING",
+    "ID":"sdk_note_id1",
+    "NoteID": "providers/sdktest/notes/sdk_note_id1",
+	"ReportedBy":{
         "id":"1",
         "title":"test1",
         "url":"www.test.com"
     },
-	"finding":{
+	"Finding":{
         "severity": "HIGH",
         "next_steps": [
             {

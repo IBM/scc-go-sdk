@@ -1,15 +1,15 @@
 {
-    "provider_id":"sec_advisor_202X_provider_occ_test",
-	"short_description":"sdk test findings",
-	"long_description":"sdk test findings",
-	"kind":"FINDING",
-	"id":"sec_advisor_202X_occ_note_id1",
-	"reported_by":{
+    "ProviderID":"sec_advisor_202X_provider_occ_test",
+	"ShortDescription":"sdk test findings",
+	"LongDescription":"sdk test findings",
+	"Kind":"FINDING",
+	"ID":"sec_advisor_202X_occ_note_id1",
+	"ReportedBy":{
         "id":"1",
         "title":"test1",
         "url":"www.test.com"
     },
-	"finding":{
+	"Finding":{
         "severity": "LOW",
         "next_steps": [
             {

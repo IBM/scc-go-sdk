@@ -56,7 +56,6 @@ func createNoteHelper(t *testing.T, path string) (result *findingsapiv1.ApiNote,
 	createNoteOptions.SetHeaders(headers)
 	createNoteOptions.SetAccountID(accountID)
 	createNoteOptions.SetID(strconv.FormatInt(timeStamp, 10))
-
 	result, _, operationErr := service.CreateNote(createNoteOptions)
 	if operationErr != nil {
 		t.Log("Failed to create note: ", operationErr)
@@ -205,7 +204,7 @@ func TestPostGraph(t *testing.T) {
 	findingCount := res.Result.(map[string]interface{})["data"].(map[string]interface{})["findingCount"]
 	findingCount = int(findingCount.(float64))
 
-	assert.Equal(t, findingCount, 1)
+	assert.GreaterOrEqual(t, findingCount, 1)
 
 	assert.Nil(t, operationErr)
 	assert.NotNil(t, res)
@@ -555,7 +554,6 @@ func TestUpdateOccurrence(t *testing.T) {
 
 	fmt.Println("Creating new note for edit....")
 	_, createNoteOptions := createNoteHelper(t, inputFilePath+"/noteWithKpi.json")
-
 	fmt.Println("Creating new occurrence for edit....")
 	_, createOccurrenceOptions := createOccurrenceHelper(t, inputFilePath+"/occKpi.json", *createNoteOptions.ID)
 
@@ -569,6 +567,7 @@ func TestUpdateOccurrence(t *testing.T) {
 	updateOccurrenceOptions.SetHeaders(headers)
 	updateOccurrenceOptions.SetAccountID(accountID)
 	updateOccurrenceOptions.SetID(*createOccurrenceOptions.ID)
+	updateOccurrenceOptions.SetOccurrenceID(*createOccurrenceOptions.ID)
 
 	//Update kpis to verify kpi setters
 	kpi, _ := service.NewKpi(float64(5))
@@ -676,7 +675,6 @@ func TestGetAllNote(t *testing.T) {
 
 	fmt.Println("creating notes")
 	_, createNoteOptions := createNoteHelper(t, inputFilePath+"/note.json")
-	_, createCardOptions := createNoteHelper(t, inputFilePath+"/card.json")
 
 	fmt.Println("created notes")
 	//Test using required fileds
@@ -685,14 +683,14 @@ func TestGetAllNote(t *testing.T) {
 
 	found := 0
 	for i := 0; i < len(res.Notes); i++ {
-		if *res.Notes[i].ID == *createCardOptions.ID || *res.Notes[i].ID == *createNoteOptions.ID {
+		if *res.Notes[i].ID == *createNoteOptions.ID {
 			found++
 		}
 	}
 
 	assert.Nil(t, err)
 	assert.NotNil(t, res)
-	assert.Equal(t, found, 2)
+	assert.Equal(t, found, 1)
 
 	//Test using setters
 	var listOptions findingsapiv1.ListNotesOptions
@@ -707,7 +705,6 @@ func TestGetAllNote(t *testing.T) {
 
 	fmt.Println("Cleaning up notes....")
 	deleteNoteHelper(t, createNoteOptions)
-	deleteNoteHelper(t, createCardOptions)
 }
 
 func TestGetNote(t *testing.T) {
@@ -819,16 +816,41 @@ func TestDeleteNote(t *testing.T) {
 }
 
 func TestPostCard(t *testing.T) {
-	result, createNoteOptions := createNoteHelper(t, "../testInput/json/card.json")
+	headers := make(map[string]string)
+	headers["Content-Type"] = "application/json"
+	providerID := "exampleProvider"
+	shortDescription := "exampleString"
+	longDescription := "exampleString"
+	kind := "CARD"
+	id := "exampleCardNote"
+	reportedBy, _ := service.NewReporter("hello", "https://ss.ss")
+	cardValueKind := "FINDING_COUNT"
+	cardElementKind := "TIME_SERIES"
+	cardElementText := "text TIME_SERIES"
+	var cardValueTypes []findingsapiv1.ValueTypeIntf
+	cardValueTypes = append(cardValueTypes, &findingsapiv1.ValueTypeFindingCountValueType{Kind: &cardValueKind, Text: &cardElementKind, FindingNoteNames: []string{"providers/sdktest/notes/sdk_note_id1"}})
+	cardValueTypes = append(cardValueTypes, &findingsapiv1.ValueTypeFindingCountValueType{Kind: core.StringPtr("FINDING_COUNT"), Text: &cardElementText, FindingNoteNames: []string{"providers/sdktest/notes/sdk_note_id2"}})
 
+	var cardElement []findingsapiv1.CardElementIntf
+	cardElement = append(cardElement, &findingsapiv1.CardElementTimeSeriesCardElement{
+		Kind:       &cardElementKind,
+		Text:       &cardElementText,
+		ValueTypes: cardValueTypes, //ValueType required for kind NUMERIC
+	})
+	card, _ := service.NewCard("My Security Tools", "Card from Go SDK time series", "subtitle", []string{"providers/sdktest/notes/sdk_note_id1"}, cardElement)
+	var createNoteOptions = service.NewCreateNoteOptions("fd139bf514294d76914c05c11b6a175a", providerID, shortDescription, longDescription, kind, id, reportedBy)
+	createNoteOptions.SetHeaders(headers)
+	createNoteOptions.SetCard(card)
+	result, _, operationErr := service.CreateNote(createNoteOptions)
+	if operationErr != nil {
+		fmt.Println("Failed to create Card: ", operationErr)
+		panic(operationErr)
+	}
 	assert.NotNil(t, result)
 	if result != nil {
 		assert.Equal(t, *(result.ID), *(createNoteOptions.ID))
 		assert.Equal(t, *(result.ShortDescription), *(createNoteOptions.ShortDescription))
 		assert.Equal(t, *result.Card.Title, *createNoteOptions.Card.Title)
-
-		// assert.Equal(t, *result.Card.Elements[0].Kind, *createNoteOptions.Card.Elements[0].Kind)
-		// assert.Equal(t, *result.Card.Elements[1].Kind, *createNoteOptions.Card.Elements[1].Kind)
 
 		fmt.Println("Cleaning up note....")
 		deleteNoteHelper(t, createNoteOptions)
@@ -927,6 +949,7 @@ func TestEditNote(t *testing.T) {
 		updateNoteOptions.SetLongDescription("sdk test findings edited")
 		updateNoteOptions.SetKind("FINDING")
 		updateNoteOptions.SetID(*createNoteOptions.ID)
+		updateNoteOptions.SetNoteID(*createNoteOptions.ID)
 		updateNoteOptions.SetRelatedURL([]findingsapiv1.ApiNoteRelatedURL{related})
 		updateNoteOptions.SetReportedBy(reportedBy)
 		updateNoteOptions.SetFinding(finding)

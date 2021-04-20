@@ -1,10 +1,9 @@
 {
-  "context": {
+  "Context": {
     "resource_name": "mycluster",
     "resource_type": "cluster"
   },
-  "description": "new custom tool findings",
-  "finding": {
+  "Finding": {
     "next_steps": [
       {
         "title": "Custom tool finding"
@@ -12,16 +11,15 @@
     ],
     "severity": "HIGH"
   },
-  "id": "sec_advisor_202X_occ_id1",
-  "kind": "FINDING",
-  "long_description": "new custom tool finding",
-  "message": "message",
-  "provider_id": "sec_advisor_202X_provider",
-  "remediation": "steps for remediation",
-  "reported_by": {
+  "Id": "sec_advisor_202X_occ_id1",
+  "Kind": "FINDING",
+  "LongDescription": "new custom tool finding",
+  "ProviderId": "sec_advisor_202X_provider",
+  "Remediation": "steps for remediation",
+  "ReportedBy": {
     "id": "custom-note",
     "title": "Custom tool"
   },
-  "short_description": "new custom tool finding",
-  "resource_url": "https://gcr.io/provider/image@sha256:foo"
+  "ShortDescription": "new custom tool finding",
+  "ResourceURL": "https://gcr.io/provider/image@sha256:foo"
 }

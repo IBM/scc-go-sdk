@@ -43,7 +43,7 @@ type FindingsApiV1 struct {
 }
 
 // DefaultServiceURL is the default URL to make service requests to.
-const DefaultServiceURL = "https://findings-api.cloud.ibm.com/findings"
+const DefaultServiceURL = "https://us-south.secadvisor.cloud.ibm.com/findings"
 
 // DefaultServiceName is the default key used to find external configuration information.
 const DefaultServiceName = "findings_api"
@@ -209,8 +209,12 @@ func (findingsApi *FindingsApiV1) PostGraphWithContext(ctx context.Context, post
 	if postGraphOptions.TransactionID != nil {
 		builder.AddHeader("Transaction-Id", fmt.Sprint(*postGraphOptions.TransactionID))
 	}
-
-	_, err = builder.SetBodyContent(core.StringNilMapper(postGraphOptions.ContentType), postGraphOptions.Body, nil, postGraphOptions.Body)
+	fmt.Println(*postGraphOptions.ContentType)
+	if *postGraphOptions.ContentType == "application/json" {
+		_, err = builder.SetBodyContent(core.StringNilMapper(postGraphOptions.ContentType), postGraphOptions.Body, nil, nil)
+	} else {
+		_, err = builder.SetBodyContent(core.StringNilMapper(postGraphOptions.ContentType), nil, nil, postGraphOptions.Body)
+	}
 	if err != nil {
 		return
 	}
@@ -220,8 +224,9 @@ func (findingsApi *FindingsApiV1) PostGraphWithContext(ctx context.Context, post
 		return
 	}
 
-	response, err = findingsApi.Service.Request(request, nil)
-
+	var test interface{}
+	response, err = findingsApi.Service.Request(request, &test)
+	fmt.Println(err)
 	return
 }
 

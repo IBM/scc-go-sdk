@@ -1,10 +1,10 @@
 {
-    "provider_id":"sec_advisor_202X_provider",
-	"short_description":"sdk test findings",
-	"long_description":"sdk test findings",
-	"kind":"FINDING",
-	"id":"sec_advisor_202X_note",
-	"reported_by":{
+    "ProviderID":"sec_advisor_202X_provider",
+	"ShortDescription":"sdk test findings",
+	"LongDescription":"sdk test findings",
+	"Kind":"FINDING",
+	"ID":"sec_advisor_202X_note",
+	"ReportedBy":{
         "id":"1",
         "title":"test1",
         "url":"www.test.com"

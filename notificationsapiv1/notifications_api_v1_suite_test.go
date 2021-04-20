@@ -1,3 +1,5 @@
+// +build !integration
+
 /**
  * (C) Copyright IBM Corp. 2021.
  *
@@ -17,9 +19,10 @@
 package notificationsapiv1_test
 
 import (
+	"testing"
+
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"testing"
 )
 
 func TestNotificationsApiV1(t *testing.T) {

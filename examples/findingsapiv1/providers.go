@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/ibm-cloud-security/scc-go-sdk/findingsapiv1"
+	"github.com/ibm-cloud-security/scc-go-sdk/findingsv1"
 )
 
 //ListProviders Lists all providers under a account
@@ -17,7 +17,7 @@ func ListProviders() {
 		ApiKey: apiKey,
 		URL:    url, //use for dev/preprod env
 	}
-	service, _ := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+	service, _ := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 		Authenticator: authenticator,
 		URL:           "https://us-south.secadvisor.cloud.ibm.com/findings", //Specify url or use default
 	})

@@ -14,52 +14,51 @@
  * limitations under the License.
  */
 
-package findingsapiv1_test
+package findingsv1_test
 
 import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/IBM/go-sdk-core/v5/core"
+	"github.com/go-openapi/strfmt"
+	"github.com/ibm-cloud-security/scc-go-sdk/findingsv1"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"time"
-
-	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/go-openapi/strfmt"
-	"github.com/ibm-cloud-security/scc-go-sdk/findingsapiv1"
-	. "github.com/onsi/ginkgo"
-	. "github.com/onsi/gomega"
 )
 
-var _ = Describe(`FindingsApiV1`, func() {
+var _ = Describe(`FindingsV1`, func() {
 	var testServer *httptest.Server
 	Describe(`Service constructor tests`, func() {
 		It(`Instantiate service client`, func() {
-			findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 				Authenticator: &core.NoAuthAuthenticator{},
 			})
-			Expect(findingsApiService).ToNot(BeNil())
+			Expect(findingsService).ToNot(BeNil())
 			Expect(serviceErr).To(BeNil())
 		})
 		It(`Instantiate service client with error: Invalid URL`, func() {
-			findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 				URL: "{BAD_URL_STRING",
 			})
-			Expect(findingsApiService).To(BeNil())
+			Expect(findingsService).To(BeNil())
 			Expect(serviceErr).ToNot(BeNil())
 		})
 		It(`Instantiate service client with error: Invalid Auth`, func() {
-			findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
-				URL: "https://findingsapiv1/api",
+			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
+				URL: "https://findingsv1/api",
 				Authenticator: &core.BasicAuthenticator{
 					Username: "",
 					Password: "",
 				},
 			})
-			Expect(findingsApiService).To(BeNil())
+			Expect(findingsService).To(BeNil())
 			Expect(serviceErr).ToNot(BeNil())
 		})
 	})
@@ -67,68 +66,71 @@ var _ = Describe(`FindingsApiV1`, func() {
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"FINDINGS_API_URL":       "https://findingsapiv1/api",
-				"FINDINGS_API_AUTH_TYPE": "noauth",
+				"FINDINGS_URL": "https://findingsv1/api",
+				"FINDINGS_AUTH_TYPE": "noauth",
 			}
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1UsingExternalConfig(&findingsapiv1.FindingsApiV1Options{})
-				Expect(findingsApiService).ToNot(BeNil())
+				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
+				})
+				Expect(findingsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
 
-				clone := findingsApiService.Clone()
+				clone := findingsService.Clone()
 				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != findingsApiService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(findingsApiService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(findingsApiService.Service.Options.Authenticator))
+				Expect(clone.Service != findingsService.Service).To(BeTrue())
+				Expect(clone.GetServiceURL()).To(Equal(findingsService.GetServiceURL()))
+				Expect(clone.Service.Options.Authenticator).To(Equal(findingsService.Service.Options.Authenticator))
 			})
 			It(`Create service client using external config and set url from constructor successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1UsingExternalConfig(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
 					URL: "https://testService/api",
 				})
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService.Service.GetServiceURL()).To(Equal("https://testService/api"))
+				Expect(findingsService.Service.GetServiceURL()).To(Equal("https://testService/api"))
 				ClearTestEnvironment(testEnvironment)
 
-				clone := findingsApiService.Clone()
+				clone := findingsService.Clone()
 				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != findingsApiService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(findingsApiService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(findingsApiService.Service.Options.Authenticator))
+				Expect(clone.Service != findingsService.Service).To(BeTrue())
+				Expect(clone.GetServiceURL()).To(Equal(findingsService.GetServiceURL()))
+				Expect(clone.Service.Options.Authenticator).To(Equal(findingsService.Service.Options.Authenticator))
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1UsingExternalConfig(&findingsapiv1.FindingsApiV1Options{})
-				err := findingsApiService.SetServiceURL("https://testService/api")
+				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
+				})
+				err := findingsService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService.Service.GetServiceURL()).To(Equal("https://testService/api"))
+				Expect(findingsService.Service.GetServiceURL()).To(Equal("https://testService/api"))
 				ClearTestEnvironment(testEnvironment)
 
-				clone := findingsApiService.Clone()
+				clone := findingsService.Clone()
 				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != findingsApiService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(findingsApiService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(findingsApiService.Service.Options.Authenticator))
+				Expect(clone.Service != findingsService.Service).To(BeTrue())
+				Expect(clone.GetServiceURL()).To(Equal(findingsService.GetServiceURL()))
+				Expect(clone.Service.Options.Authenticator).To(Equal(findingsService.Service.Options.Authenticator))
 			})
 		})
 		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"FINDINGS_API_URL":       "https://findingsapiv1/api",
-				"FINDINGS_API_AUTH_TYPE": "someOtherAuth",
+				"FINDINGS_URL": "https://findingsv1/api",
+				"FINDINGS_AUTH_TYPE": "someOtherAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1UsingExternalConfig(&findingsapiv1.FindingsApiV1Options{})
+			findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
+			})
 
 			It(`Instantiate service client with error`, func() {
-				Expect(findingsApiService).To(BeNil())
+				Expect(findingsService).To(BeNil())
 				Expect(serviceErr).ToNot(BeNil())
 				ClearTestEnvironment(testEnvironment)
 			})
@@ -136,16 +138,16 @@ var _ = Describe(`FindingsApiV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"FINDINGS_API_AUTH_TYPE": "NOAuth",
+				"FINDINGS_AUTH_TYPE":   "NOAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1UsingExternalConfig(&findingsapiv1.FindingsApiV1Options{
+			findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
 				URL: "{BAD_URL_STRING",
 			})
 
 			It(`Instantiate service client with error`, func() {
-				Expect(findingsApiService).To(BeNil())
+				Expect(findingsService).To(BeNil())
 				Expect(serviceErr).ToNot(BeNil())
 				ClearTestEnvironment(testEnvironment)
 			})
@@ -155,7 +157,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 		It(`GetServiceURLForRegion(region string)`, func() {
 			var url string
 			var err error
-			url, err = findingsapiv1.GetServiceURLForRegion("INVALID_REGION")
+			url, err = findingsv1.GetServiceURLForRegion("INVALID_REGION")
 			Expect(url).To(BeEmpty())
 			Expect(err).ToNot(BeNil())
 			fmt.Fprintf(GinkgoWriter, "Expected error: %s\n", err.Error())
@@ -193,26 +195,24 @@ var _ = Describe(`FindingsApiV1`, func() {
 					Expect(req.Header["Content-Type"][0]).To(Equal(fmt.Sprintf("%v", "application/json")))
 					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					res.Header().Set("Content-type", "application/json")
-					fmt.Fprintf(res, "%s", `{}`)
 					res.WriteHeader(200)
 				}))
 			})
 			It(`Invoke PostGraph successfully`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				response, operationErr := findingsApiService.PostGraph(nil)
+				response, operationErr := findingsService.PostGraph(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 
 				// Construct an instance of the PostGraphOptions model
-				postGraphOptionsModel := new(findingsapiv1.PostGraphOptions)
+				postGraphOptionsModel := new(findingsv1.PostGraphOptions)
 				postGraphOptionsModel.AccountID = core.StringPtr("testString")
 				postGraphOptionsModel.Body = CreateMockReader("This is a mock file.")
 				postGraphOptionsModel.ContentType = core.StringPtr("application/json")
@@ -220,37 +220,36 @@ var _ = Describe(`FindingsApiV1`, func() {
 				postGraphOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				response, operationErr = findingsApiService.PostGraph(postGraphOptionsModel)
-				fmt.Println(operationErr)
+				response, operationErr = findingsService.PostGraph(postGraphOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 			})
 			It(`Invoke PostGraph with error: Operation validation and request error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the PostGraphOptions model
-				postGraphOptionsModel := new(findingsapiv1.PostGraphOptions)
+				postGraphOptionsModel := new(findingsv1.PostGraphOptions)
 				postGraphOptionsModel.AccountID = core.StringPtr("testString")
 				postGraphOptionsModel.Body = CreateMockReader("This is a mock file.")
 				postGraphOptionsModel.ContentType = core.StringPtr("application/json")
 				postGraphOptionsModel.TransactionID = core.StringPtr("testString")
 				postGraphOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := findingsApiService.SetServiceURL("")
+				err := findingsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				response, operationErr := findingsApiService.PostGraph(postGraphOptionsModel)
+				response, operationErr := findingsService.PostGraph(postGraphOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				// Construct a second instance of the PostGraphOptions model with no property values
-				postGraphOptionsModelNew := new(findingsapiv1.PostGraphOptions)
+				postGraphOptionsModelNew := new(findingsv1.PostGraphOptions)
 				// Invoke operation with invalid model (negative test)
-				response, operationErr = findingsApiService.PostGraph(postGraphOptionsModelNew)
+				response, operationErr = findingsService.PostGraph(postGraphOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 			})
@@ -261,28 +260,28 @@ var _ = Describe(`FindingsApiV1`, func() {
 	})
 	Describe(`Service constructor tests`, func() {
 		It(`Instantiate service client`, func() {
-			findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 				Authenticator: &core.NoAuthAuthenticator{},
 			})
-			Expect(findingsApiService).ToNot(BeNil())
+			Expect(findingsService).ToNot(BeNil())
 			Expect(serviceErr).To(BeNil())
 		})
 		It(`Instantiate service client with error: Invalid URL`, func() {
-			findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 				URL: "{BAD_URL_STRING",
 			})
-			Expect(findingsApiService).To(BeNil())
+			Expect(findingsService).To(BeNil())
 			Expect(serviceErr).ToNot(BeNil())
 		})
 		It(`Instantiate service client with error: Invalid Auth`, func() {
-			findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
-				URL: "https://findingsapiv1/api",
+			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
+				URL: "https://findingsv1/api",
 				Authenticator: &core.BasicAuthenticator{
 					Username: "",
 					Password: "",
 				},
 			})
-			Expect(findingsApiService).To(BeNil())
+			Expect(findingsService).To(BeNil())
 			Expect(serviceErr).ToNot(BeNil())
 		})
 	})
@@ -290,68 +289,71 @@ var _ = Describe(`FindingsApiV1`, func() {
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"FINDINGS_API_URL":       "https://findingsapiv1/api",
-				"FINDINGS_API_AUTH_TYPE": "noauth",
+				"FINDINGS_URL": "https://findingsv1/api",
+				"FINDINGS_AUTH_TYPE": "noauth",
 			}
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1UsingExternalConfig(&findingsapiv1.FindingsApiV1Options{})
-				Expect(findingsApiService).ToNot(BeNil())
+				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
+				})
+				Expect(findingsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
 
-				clone := findingsApiService.Clone()
+				clone := findingsService.Clone()
 				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != findingsApiService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(findingsApiService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(findingsApiService.Service.Options.Authenticator))
+				Expect(clone.Service != findingsService.Service).To(BeTrue())
+				Expect(clone.GetServiceURL()).To(Equal(findingsService.GetServiceURL()))
+				Expect(clone.Service.Options.Authenticator).To(Equal(findingsService.Service.Options.Authenticator))
 			})
 			It(`Create service client using external config and set url from constructor successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1UsingExternalConfig(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
 					URL: "https://testService/api",
 				})
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService.Service.GetServiceURL()).To(Equal("https://testService/api"))
+				Expect(findingsService.Service.GetServiceURL()).To(Equal("https://testService/api"))
 				ClearTestEnvironment(testEnvironment)
 
-				clone := findingsApiService.Clone()
+				clone := findingsService.Clone()
 				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != findingsApiService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(findingsApiService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(findingsApiService.Service.Options.Authenticator))
+				Expect(clone.Service != findingsService.Service).To(BeTrue())
+				Expect(clone.GetServiceURL()).To(Equal(findingsService.GetServiceURL()))
+				Expect(clone.Service.Options.Authenticator).To(Equal(findingsService.Service.Options.Authenticator))
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1UsingExternalConfig(&findingsapiv1.FindingsApiV1Options{})
-				err := findingsApiService.SetServiceURL("https://testService/api")
+				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
+				})
+				err := findingsService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService.Service.GetServiceURL()).To(Equal("https://testService/api"))
+				Expect(findingsService.Service.GetServiceURL()).To(Equal("https://testService/api"))
 				ClearTestEnvironment(testEnvironment)
 
-				clone := findingsApiService.Clone()
+				clone := findingsService.Clone()
 				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != findingsApiService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(findingsApiService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(findingsApiService.Service.Options.Authenticator))
+				Expect(clone.Service != findingsService.Service).To(BeTrue())
+				Expect(clone.GetServiceURL()).To(Equal(findingsService.GetServiceURL()))
+				Expect(clone.Service.Options.Authenticator).To(Equal(findingsService.Service.Options.Authenticator))
 			})
 		})
 		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"FINDINGS_API_URL":       "https://findingsapiv1/api",
-				"FINDINGS_API_AUTH_TYPE": "someOtherAuth",
+				"FINDINGS_URL": "https://findingsv1/api",
+				"FINDINGS_AUTH_TYPE": "someOtherAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1UsingExternalConfig(&findingsapiv1.FindingsApiV1Options{})
+			findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
+			})
 
 			It(`Instantiate service client with error`, func() {
-				Expect(findingsApiService).To(BeNil())
+				Expect(findingsService).To(BeNil())
 				Expect(serviceErr).ToNot(BeNil())
 				ClearTestEnvironment(testEnvironment)
 			})
@@ -359,16 +361,16 @@ var _ = Describe(`FindingsApiV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"FINDINGS_API_AUTH_TYPE": "NOAuth",
+				"FINDINGS_AUTH_TYPE":   "NOAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1UsingExternalConfig(&findingsapiv1.FindingsApiV1Options{
+			findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
 				URL: "{BAD_URL_STRING",
 			})
 
 			It(`Instantiate service client with error`, func() {
-				Expect(findingsApiService).To(BeNil())
+				Expect(findingsService).To(BeNil())
 				Expect(serviceErr).ToNot(BeNil())
 				ClearTestEnvironment(testEnvironment)
 			})
@@ -378,7 +380,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 		It(`GetServiceURLForRegion(region string)`, func() {
 			var url string
 			var err error
-			url, err = findingsapiv1.GetServiceURLForRegion("INVALID_REGION")
+			url, err = findingsv1.GetServiceURLForRegion("INVALID_REGION")
 			Expect(url).To(BeEmpty())
 			Expect(err).ToNot(BeNil())
 			fmt.Fprintf(GinkgoWriter, "Expected error: %s\n", err.Error())
@@ -402,54 +404,54 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke CreateNote with error: Operation response processing error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the Reporter model
-				reporterModel := new(findingsapiv1.Reporter)
+				reporterModel := new(findingsv1.Reporter)
 				reporterModel.ID = core.StringPtr("testString")
 				reporterModel.Title = core.StringPtr("testString")
 				reporterModel.URL = core.StringPtr("testString")
 
-				// Construct an instance of the ApiNoteRelatedURL model
-				apiNoteRelatedUrlModel := new(findingsapiv1.ApiNoteRelatedURL)
-				apiNoteRelatedUrlModel.Label = core.StringPtr("testString")
-				apiNoteRelatedUrlModel.URL = core.StringPtr("testString")
+				// Construct an instance of the APINoteRelatedURL model
+				apiNoteRelatedURLModel := new(findingsv1.APINoteRelatedURL)
+				apiNoteRelatedURLModel.Label = core.StringPtr("testString")
+				apiNoteRelatedURLModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the RemediationStep model
-				remediationStepModel := new(findingsapiv1.RemediationStep)
+				remediationStepModel := new(findingsv1.RemediationStep)
 				remediationStepModel.Title = core.StringPtr("testString")
 				remediationStepModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the FindingType model
-				findingTypeModel := new(findingsapiv1.FindingType)
+				findingTypeModel := new(findingsv1.FindingType)
 				findingTypeModel.Severity = core.StringPtr("LOW")
-				findingTypeModel.NextSteps = []findingsapiv1.RemediationStep{*remediationStepModel}
+				findingTypeModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
 
 				// Construct an instance of the KpiType model
-				kpiTypeModel := new(findingsapiv1.KpiType)
+				kpiTypeModel := new(findingsv1.KpiType)
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
-				valueTypeModel := new(findingsapiv1.ValueTypeFindingCountValueType)
+				valueTypeModel := new(findingsv1.ValueTypeFindingCountValueType)
 				valueTypeModel.Kind = core.StringPtr("FINDING_COUNT")
 				valueTypeModel.FindingNoteNames = []string{"testString"}
 				valueTypeModel.Text = core.StringPtr("testString")
 
 				// Construct an instance of the CardElementTimeSeriesCardElement model
-				cardElementModel := new(findingsapiv1.CardElementTimeSeriesCardElement)
+				cardElementModel := new(findingsv1.CardElementTimeSeriesCardElement)
 				cardElementModel.Text = core.StringPtr("testString")
 				cardElementModel.DefaultInterval = core.StringPtr("testString")
 				cardElementModel.Kind = core.StringPtr("TIME_SERIES")
 				cardElementModel.DefaultTimeRange = core.StringPtr("1d")
-				cardElementModel.ValueTypes = []findingsapiv1.ValueTypeIntf{valueTypeModel}
+				cardElementModel.ValueTypes = []findingsv1.ValueTypeIntf{valueTypeModel}
 
 				// Construct an instance of the Card model
-				cardModel := new(findingsapiv1.Card)
+				cardModel := new(findingsv1.Card)
 				cardModel.Section = core.StringPtr("testString")
 				cardModel.Title = core.StringPtr("testString")
 				cardModel.Subtitle = core.StringPtr("testString")
@@ -458,15 +460,15 @@ var _ = Describe(`FindingsApiV1`, func() {
 				cardModel.RequiresConfiguration = core.BoolPtr(true)
 				cardModel.BadgeText = core.StringPtr("testString")
 				cardModel.BadgeImage = core.StringPtr("testString")
-				cardModel.Elements = []findingsapiv1.CardElementIntf{cardElementModel}
+				cardModel.Elements = []findingsv1.CardElementIntf{cardElementModel}
 
 				// Construct an instance of the Section model
-				sectionModel := new(findingsapiv1.Section)
+				sectionModel := new(findingsv1.Section)
 				sectionModel.Title = core.StringPtr("testString")
 				sectionModel.Image = core.StringPtr("testString")
 
 				// Construct an instance of the CreateNoteOptions model
-				createNoteOptionsModel := new(findingsapiv1.CreateNoteOptions)
+				createNoteOptionsModel := new(findingsv1.CreateNoteOptions)
 				createNoteOptionsModel.AccountID = core.StringPtr("testString")
 				createNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				createNoteOptionsModel.ShortDescription = core.StringPtr("testString")
@@ -474,7 +476,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				createNoteOptionsModel.Kind = core.StringPtr("FINDING")
 				createNoteOptionsModel.ID = core.StringPtr("testString")
 				createNoteOptionsModel.ReportedBy = reporterModel
-				createNoteOptionsModel.RelatedURL = []findingsapiv1.ApiNoteRelatedURL{*apiNoteRelatedUrlModel}
+				createNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
 				createNoteOptionsModel.ExpirationTime = CreateMockDateTime()
 				createNoteOptionsModel.CreateTime = CreateMockDateTime()
 				createNoteOptionsModel.UpdateTime = CreateMockDateTime()
@@ -486,14 +488,14 @@ var _ = Describe(`FindingsApiV1`, func() {
 				createNoteOptionsModel.TransactionID = core.StringPtr("testString")
 				createNoteOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := findingsApiService.CreateNote(createNoteOptionsModel)
+				result, response, operationErr := findingsService.CreateNote(createNoteOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
 
 				// Enable retries and test again
-				findingsApiService.EnableRetries(0, 0)
-				result, response, operationErr = findingsApiService.CreateNote(createNoteOptionsModel)
+				findingsService.EnableRetries(0, 0)
+				result, response, operationErr = findingsService.CreateNote(createNoteOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
@@ -543,55 +545,55 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke CreateNote successfully with retries`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
-				findingsApiService.EnableRetries(0, 0)
+				Expect(findingsService).ToNot(BeNil())
+				findingsService.EnableRetries(0, 0)
 
 				// Construct an instance of the Reporter model
-				reporterModel := new(findingsapiv1.Reporter)
+				reporterModel := new(findingsv1.Reporter)
 				reporterModel.ID = core.StringPtr("testString")
 				reporterModel.Title = core.StringPtr("testString")
 				reporterModel.URL = core.StringPtr("testString")
 
-				// Construct an instance of the ApiNoteRelatedURL model
-				apiNoteRelatedUrlModel := new(findingsapiv1.ApiNoteRelatedURL)
-				apiNoteRelatedUrlModel.Label = core.StringPtr("testString")
-				apiNoteRelatedUrlModel.URL = core.StringPtr("testString")
+				// Construct an instance of the APINoteRelatedURL model
+				apiNoteRelatedURLModel := new(findingsv1.APINoteRelatedURL)
+				apiNoteRelatedURLModel.Label = core.StringPtr("testString")
+				apiNoteRelatedURLModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the RemediationStep model
-				remediationStepModel := new(findingsapiv1.RemediationStep)
+				remediationStepModel := new(findingsv1.RemediationStep)
 				remediationStepModel.Title = core.StringPtr("testString")
 				remediationStepModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the FindingType model
-				findingTypeModel := new(findingsapiv1.FindingType)
+				findingTypeModel := new(findingsv1.FindingType)
 				findingTypeModel.Severity = core.StringPtr("LOW")
-				findingTypeModel.NextSteps = []findingsapiv1.RemediationStep{*remediationStepModel}
+				findingTypeModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
 
 				// Construct an instance of the KpiType model
-				kpiTypeModel := new(findingsapiv1.KpiType)
+				kpiTypeModel := new(findingsv1.KpiType)
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
-				valueTypeModel := new(findingsapiv1.ValueTypeFindingCountValueType)
+				valueTypeModel := new(findingsv1.ValueTypeFindingCountValueType)
 				valueTypeModel.Kind = core.StringPtr("FINDING_COUNT")
 				valueTypeModel.FindingNoteNames = []string{"testString"}
 				valueTypeModel.Text = core.StringPtr("testString")
 
 				// Construct an instance of the CardElementTimeSeriesCardElement model
-				cardElementModel := new(findingsapiv1.CardElementTimeSeriesCardElement)
+				cardElementModel := new(findingsv1.CardElementTimeSeriesCardElement)
 				cardElementModel.Text = core.StringPtr("testString")
 				cardElementModel.DefaultInterval = core.StringPtr("testString")
 				cardElementModel.Kind = core.StringPtr("TIME_SERIES")
 				cardElementModel.DefaultTimeRange = core.StringPtr("1d")
-				cardElementModel.ValueTypes = []findingsapiv1.ValueTypeIntf{valueTypeModel}
+				cardElementModel.ValueTypes = []findingsv1.ValueTypeIntf{valueTypeModel}
 
 				// Construct an instance of the Card model
-				cardModel := new(findingsapiv1.Card)
+				cardModel := new(findingsv1.Card)
 				cardModel.Section = core.StringPtr("testString")
 				cardModel.Title = core.StringPtr("testString")
 				cardModel.Subtitle = core.StringPtr("testString")
@@ -600,15 +602,15 @@ var _ = Describe(`FindingsApiV1`, func() {
 				cardModel.RequiresConfiguration = core.BoolPtr(true)
 				cardModel.BadgeText = core.StringPtr("testString")
 				cardModel.BadgeImage = core.StringPtr("testString")
-				cardModel.Elements = []findingsapiv1.CardElementIntf{cardElementModel}
+				cardModel.Elements = []findingsv1.CardElementIntf{cardElementModel}
 
 				// Construct an instance of the Section model
-				sectionModel := new(findingsapiv1.Section)
+				sectionModel := new(findingsv1.Section)
 				sectionModel.Title = core.StringPtr("testString")
 				sectionModel.Image = core.StringPtr("testString")
 
 				// Construct an instance of the CreateNoteOptions model
-				createNoteOptionsModel := new(findingsapiv1.CreateNoteOptions)
+				createNoteOptionsModel := new(findingsv1.CreateNoteOptions)
 				createNoteOptionsModel.AccountID = core.StringPtr("testString")
 				createNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				createNoteOptionsModel.ShortDescription = core.StringPtr("testString")
@@ -616,7 +618,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				createNoteOptionsModel.Kind = core.StringPtr("FINDING")
 				createNoteOptionsModel.ID = core.StringPtr("testString")
 				createNoteOptionsModel.ReportedBy = reporterModel
-				createNoteOptionsModel.RelatedURL = []findingsapiv1.ApiNoteRelatedURL{*apiNoteRelatedUrlModel}
+				createNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
 				createNoteOptionsModel.ExpirationTime = CreateMockDateTime()
 				createNoteOptionsModel.CreateTime = CreateMockDateTime()
 				createNoteOptionsModel.UpdateTime = CreateMockDateTime()
@@ -631,13 +633,13 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Invoke operation with a Context to test a timeout error
 				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc()
-				_, _, operationErr := findingsApiService.CreateNoteWithContext(ctx, createNoteOptionsModel)
+				_, _, operationErr := findingsService.CreateNoteWithContext(ctx, createNoteOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 
 				// Disable retries and test again
-				findingsApiService.DisableRetries()
-				result, response, operationErr := findingsApiService.CreateNote(createNoteOptionsModel)
+				findingsService.DisableRetries()
+				result, response, operationErr := findingsService.CreateNote(createNoteOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
@@ -645,7 +647,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc2()
-				_, _, operationErr = findingsApiService.CreateNoteWithContext(ctx, createNoteOptionsModel)
+				_, _, operationErr = findingsService.CreateNoteWithContext(ctx, createNoteOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
@@ -687,60 +689,60 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke CreateNote successfully`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := findingsApiService.CreateNote(nil)
+				result, response, operationErr := findingsService.CreateNote(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the Reporter model
-				reporterModel := new(findingsapiv1.Reporter)
+				reporterModel := new(findingsv1.Reporter)
 				reporterModel.ID = core.StringPtr("testString")
 				reporterModel.Title = core.StringPtr("testString")
 				reporterModel.URL = core.StringPtr("testString")
 
-				// Construct an instance of the ApiNoteRelatedURL model
-				apiNoteRelatedUrlModel := new(findingsapiv1.ApiNoteRelatedURL)
-				apiNoteRelatedUrlModel.Label = core.StringPtr("testString")
-				apiNoteRelatedUrlModel.URL = core.StringPtr("testString")
+				// Construct an instance of the APINoteRelatedURL model
+				apiNoteRelatedURLModel := new(findingsv1.APINoteRelatedURL)
+				apiNoteRelatedURLModel.Label = core.StringPtr("testString")
+				apiNoteRelatedURLModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the RemediationStep model
-				remediationStepModel := new(findingsapiv1.RemediationStep)
+				remediationStepModel := new(findingsv1.RemediationStep)
 				remediationStepModel.Title = core.StringPtr("testString")
 				remediationStepModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the FindingType model
-				findingTypeModel := new(findingsapiv1.FindingType)
+				findingTypeModel := new(findingsv1.FindingType)
 				findingTypeModel.Severity = core.StringPtr("LOW")
-				findingTypeModel.NextSteps = []findingsapiv1.RemediationStep{*remediationStepModel}
+				findingTypeModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
 
 				// Construct an instance of the KpiType model
-				kpiTypeModel := new(findingsapiv1.KpiType)
+				kpiTypeModel := new(findingsv1.KpiType)
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
-				valueTypeModel := new(findingsapiv1.ValueTypeFindingCountValueType)
+				valueTypeModel := new(findingsv1.ValueTypeFindingCountValueType)
 				valueTypeModel.Kind = core.StringPtr("FINDING_COUNT")
 				valueTypeModel.FindingNoteNames = []string{"testString"}
 				valueTypeModel.Text = core.StringPtr("testString")
 
 				// Construct an instance of the CardElementTimeSeriesCardElement model
-				cardElementModel := new(findingsapiv1.CardElementTimeSeriesCardElement)
+				cardElementModel := new(findingsv1.CardElementTimeSeriesCardElement)
 				cardElementModel.Text = core.StringPtr("testString")
 				cardElementModel.DefaultInterval = core.StringPtr("testString")
 				cardElementModel.Kind = core.StringPtr("TIME_SERIES")
 				cardElementModel.DefaultTimeRange = core.StringPtr("1d")
-				cardElementModel.ValueTypes = []findingsapiv1.ValueTypeIntf{valueTypeModel}
+				cardElementModel.ValueTypes = []findingsv1.ValueTypeIntf{valueTypeModel}
 
 				// Construct an instance of the Card model
-				cardModel := new(findingsapiv1.Card)
+				cardModel := new(findingsv1.Card)
 				cardModel.Section = core.StringPtr("testString")
 				cardModel.Title = core.StringPtr("testString")
 				cardModel.Subtitle = core.StringPtr("testString")
@@ -749,15 +751,15 @@ var _ = Describe(`FindingsApiV1`, func() {
 				cardModel.RequiresConfiguration = core.BoolPtr(true)
 				cardModel.BadgeText = core.StringPtr("testString")
 				cardModel.BadgeImage = core.StringPtr("testString")
-				cardModel.Elements = []findingsapiv1.CardElementIntf{cardElementModel}
+				cardModel.Elements = []findingsv1.CardElementIntf{cardElementModel}
 
 				// Construct an instance of the Section model
-				sectionModel := new(findingsapiv1.Section)
+				sectionModel := new(findingsv1.Section)
 				sectionModel.Title = core.StringPtr("testString")
 				sectionModel.Image = core.StringPtr("testString")
 
 				// Construct an instance of the CreateNoteOptions model
-				createNoteOptionsModel := new(findingsapiv1.CreateNoteOptions)
+				createNoteOptionsModel := new(findingsv1.CreateNoteOptions)
 				createNoteOptionsModel.AccountID = core.StringPtr("testString")
 				createNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				createNoteOptionsModel.ShortDescription = core.StringPtr("testString")
@@ -765,7 +767,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				createNoteOptionsModel.Kind = core.StringPtr("FINDING")
 				createNoteOptionsModel.ID = core.StringPtr("testString")
 				createNoteOptionsModel.ReportedBy = reporterModel
-				createNoteOptionsModel.RelatedURL = []findingsapiv1.ApiNoteRelatedURL{*apiNoteRelatedUrlModel}
+				createNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
 				createNoteOptionsModel.ExpirationTime = CreateMockDateTime()
 				createNoteOptionsModel.CreateTime = CreateMockDateTime()
 				createNoteOptionsModel.UpdateTime = CreateMockDateTime()
@@ -778,61 +780,61 @@ var _ = Describe(`FindingsApiV1`, func() {
 				createNoteOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = findingsApiService.CreateNote(createNoteOptionsModel)
+				result, response, operationErr = findingsService.CreateNote(createNoteOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
 			})
 			It(`Invoke CreateNote with error: Operation validation and request error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the Reporter model
-				reporterModel := new(findingsapiv1.Reporter)
+				reporterModel := new(findingsv1.Reporter)
 				reporterModel.ID = core.StringPtr("testString")
 				reporterModel.Title = core.StringPtr("testString")
 				reporterModel.URL = core.StringPtr("testString")
 
-				// Construct an instance of the ApiNoteRelatedURL model
-				apiNoteRelatedUrlModel := new(findingsapiv1.ApiNoteRelatedURL)
-				apiNoteRelatedUrlModel.Label = core.StringPtr("testString")
-				apiNoteRelatedUrlModel.URL = core.StringPtr("testString")
+				// Construct an instance of the APINoteRelatedURL model
+				apiNoteRelatedURLModel := new(findingsv1.APINoteRelatedURL)
+				apiNoteRelatedURLModel.Label = core.StringPtr("testString")
+				apiNoteRelatedURLModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the RemediationStep model
-				remediationStepModel := new(findingsapiv1.RemediationStep)
+				remediationStepModel := new(findingsv1.RemediationStep)
 				remediationStepModel.Title = core.StringPtr("testString")
 				remediationStepModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the FindingType model
-				findingTypeModel := new(findingsapiv1.FindingType)
+				findingTypeModel := new(findingsv1.FindingType)
 				findingTypeModel.Severity = core.StringPtr("LOW")
-				findingTypeModel.NextSteps = []findingsapiv1.RemediationStep{*remediationStepModel}
+				findingTypeModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
 
 				// Construct an instance of the KpiType model
-				kpiTypeModel := new(findingsapiv1.KpiType)
+				kpiTypeModel := new(findingsv1.KpiType)
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
-				valueTypeModel := new(findingsapiv1.ValueTypeFindingCountValueType)
+				valueTypeModel := new(findingsv1.ValueTypeFindingCountValueType)
 				valueTypeModel.Kind = core.StringPtr("FINDING_COUNT")
 				valueTypeModel.FindingNoteNames = []string{"testString"}
 				valueTypeModel.Text = core.StringPtr("testString")
 
 				// Construct an instance of the CardElementTimeSeriesCardElement model
-				cardElementModel := new(findingsapiv1.CardElementTimeSeriesCardElement)
+				cardElementModel := new(findingsv1.CardElementTimeSeriesCardElement)
 				cardElementModel.Text = core.StringPtr("testString")
 				cardElementModel.DefaultInterval = core.StringPtr("testString")
 				cardElementModel.Kind = core.StringPtr("TIME_SERIES")
 				cardElementModel.DefaultTimeRange = core.StringPtr("1d")
-				cardElementModel.ValueTypes = []findingsapiv1.ValueTypeIntf{valueTypeModel}
+				cardElementModel.ValueTypes = []findingsv1.ValueTypeIntf{valueTypeModel}
 
 				// Construct an instance of the Card model
-				cardModel := new(findingsapiv1.Card)
+				cardModel := new(findingsv1.Card)
 				cardModel.Section = core.StringPtr("testString")
 				cardModel.Title = core.StringPtr("testString")
 				cardModel.Subtitle = core.StringPtr("testString")
@@ -841,15 +843,15 @@ var _ = Describe(`FindingsApiV1`, func() {
 				cardModel.RequiresConfiguration = core.BoolPtr(true)
 				cardModel.BadgeText = core.StringPtr("testString")
 				cardModel.BadgeImage = core.StringPtr("testString")
-				cardModel.Elements = []findingsapiv1.CardElementIntf{cardElementModel}
+				cardModel.Elements = []findingsv1.CardElementIntf{cardElementModel}
 
 				// Construct an instance of the Section model
-				sectionModel := new(findingsapiv1.Section)
+				sectionModel := new(findingsv1.Section)
 				sectionModel.Title = core.StringPtr("testString")
 				sectionModel.Image = core.StringPtr("testString")
 
 				// Construct an instance of the CreateNoteOptions model
-				createNoteOptionsModel := new(findingsapiv1.CreateNoteOptions)
+				createNoteOptionsModel := new(findingsv1.CreateNoteOptions)
 				createNoteOptionsModel.AccountID = core.StringPtr("testString")
 				createNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				createNoteOptionsModel.ShortDescription = core.StringPtr("testString")
@@ -857,7 +859,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				createNoteOptionsModel.Kind = core.StringPtr("FINDING")
 				createNoteOptionsModel.ID = core.StringPtr("testString")
 				createNoteOptionsModel.ReportedBy = reporterModel
-				createNoteOptionsModel.RelatedURL = []findingsapiv1.ApiNoteRelatedURL{*apiNoteRelatedUrlModel}
+				createNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
 				createNoteOptionsModel.ExpirationTime = CreateMockDateTime()
 				createNoteOptionsModel.CreateTime = CreateMockDateTime()
 				createNoteOptionsModel.UpdateTime = CreateMockDateTime()
@@ -869,17 +871,17 @@ var _ = Describe(`FindingsApiV1`, func() {
 				createNoteOptionsModel.TransactionID = core.StringPtr("testString")
 				createNoteOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := findingsApiService.SetServiceURL("")
+				err := findingsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				result, response, operationErr := findingsApiService.CreateNote(createNoteOptionsModel)
+				result, response, operationErr := findingsService.CreateNote(createNoteOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the CreateNoteOptions model with no property values
-				createNoteOptionsModelNew := new(findingsapiv1.CreateNoteOptions)
+				createNoteOptionsModelNew := new(findingsv1.CreateNoteOptions)
 				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = findingsApiService.CreateNote(createNoteOptionsModelNew)
+				result, response, operationErr = findingsService.CreateNote(createNoteOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
@@ -909,15 +911,15 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke ListNotes with error: Operation response processing error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the ListNotesOptions model
-				listNotesOptionsModel := new(findingsapiv1.ListNotesOptions)
+				listNotesOptionsModel := new(findingsv1.ListNotesOptions)
 				listNotesOptionsModel.AccountID = core.StringPtr("testString")
 				listNotesOptionsModel.ProviderID = core.StringPtr("testString")
 				listNotesOptionsModel.TransactionID = core.StringPtr("testString")
@@ -925,14 +927,14 @@ var _ = Describe(`FindingsApiV1`, func() {
 				listNotesOptionsModel.PageToken = core.StringPtr("testString")
 				listNotesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := findingsApiService.ListNotes(listNotesOptionsModel)
+				result, response, operationErr := findingsService.ListNotes(listNotesOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
 
 				// Enable retries and test again
-				findingsApiService.EnableRetries(0, 0)
-				result, response, operationErr = findingsApiService.ListNotes(listNotesOptionsModel)
+				findingsService.EnableRetries(0, 0)
+				result, response, operationErr = findingsService.ListNotes(listNotesOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
@@ -968,16 +970,16 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke ListNotes successfully with retries`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
-				findingsApiService.EnableRetries(0, 0)
+				Expect(findingsService).ToNot(BeNil())
+				findingsService.EnableRetries(0, 0)
 
 				// Construct an instance of the ListNotesOptions model
-				listNotesOptionsModel := new(findingsapiv1.ListNotesOptions)
+				listNotesOptionsModel := new(findingsv1.ListNotesOptions)
 				listNotesOptionsModel.AccountID = core.StringPtr("testString")
 				listNotesOptionsModel.ProviderID = core.StringPtr("testString")
 				listNotesOptionsModel.TransactionID = core.StringPtr("testString")
@@ -988,13 +990,13 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Invoke operation with a Context to test a timeout error
 				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc()
-				_, _, operationErr := findingsApiService.ListNotesWithContext(ctx, listNotesOptionsModel)
+				_, _, operationErr := findingsService.ListNotesWithContext(ctx, listNotesOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 
 				// Disable retries and test again
-				findingsApiService.DisableRetries()
-				result, response, operationErr := findingsApiService.ListNotes(listNotesOptionsModel)
+				findingsService.DisableRetries()
+				result, response, operationErr := findingsService.ListNotes(listNotesOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
@@ -1002,7 +1004,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc2()
-				_, _, operationErr = findingsApiService.ListNotesWithContext(ctx, listNotesOptionsModel)
+				_, _, operationErr = findingsService.ListNotesWithContext(ctx, listNotesOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
@@ -1030,21 +1032,21 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke ListNotes successfully`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := findingsApiService.ListNotes(nil)
+				result, response, operationErr := findingsService.ListNotes(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the ListNotesOptions model
-				listNotesOptionsModel := new(findingsapiv1.ListNotesOptions)
+				listNotesOptionsModel := new(findingsv1.ListNotesOptions)
 				listNotesOptionsModel.AccountID = core.StringPtr("testString")
 				listNotesOptionsModel.ProviderID = core.StringPtr("testString")
 				listNotesOptionsModel.TransactionID = core.StringPtr("testString")
@@ -1053,22 +1055,22 @@ var _ = Describe(`FindingsApiV1`, func() {
 				listNotesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = findingsApiService.ListNotes(listNotesOptionsModel)
+				result, response, operationErr = findingsService.ListNotes(listNotesOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
 			})
 			It(`Invoke ListNotes with error: Operation validation and request error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the ListNotesOptions model
-				listNotesOptionsModel := new(findingsapiv1.ListNotesOptions)
+				listNotesOptionsModel := new(findingsv1.ListNotesOptions)
 				listNotesOptionsModel.AccountID = core.StringPtr("testString")
 				listNotesOptionsModel.ProviderID = core.StringPtr("testString")
 				listNotesOptionsModel.TransactionID = core.StringPtr("testString")
@@ -1076,17 +1078,17 @@ var _ = Describe(`FindingsApiV1`, func() {
 				listNotesOptionsModel.PageToken = core.StringPtr("testString")
 				listNotesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := findingsApiService.SetServiceURL("")
+				err := findingsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				result, response, operationErr := findingsApiService.ListNotes(listNotesOptionsModel)
+				result, response, operationErr := findingsService.ListNotes(listNotesOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the ListNotesOptions model with no property values
-				listNotesOptionsModelNew := new(findingsapiv1.ListNotesOptions)
+				listNotesOptionsModelNew := new(findingsv1.ListNotesOptions)
 				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = findingsApiService.ListNotes(listNotesOptionsModelNew)
+				result, response, operationErr = findingsService.ListNotes(listNotesOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
@@ -1114,29 +1116,29 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke GetNote with error: Operation response processing error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the GetNoteOptions model
-				getNoteOptionsModel := new(findingsapiv1.GetNoteOptions)
+				getNoteOptionsModel := new(findingsv1.GetNoteOptions)
 				getNoteOptionsModel.AccountID = core.StringPtr("testString")
 				getNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				getNoteOptionsModel.NoteID = core.StringPtr("testString")
 				getNoteOptionsModel.TransactionID = core.StringPtr("testString")
 				getNoteOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := findingsApiService.GetNote(getNoteOptionsModel)
+				result, response, operationErr := findingsService.GetNote(getNoteOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
 
 				// Enable retries and test again
-				findingsApiService.EnableRetries(0, 0)
-				result, response, operationErr = findingsApiService.GetNote(getNoteOptionsModel)
+				findingsService.EnableRetries(0, 0)
+				result, response, operationErr = findingsService.GetNote(getNoteOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
@@ -1170,16 +1172,16 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke GetNote successfully with retries`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
-				findingsApiService.EnableRetries(0, 0)
+				Expect(findingsService).ToNot(BeNil())
+				findingsService.EnableRetries(0, 0)
 
 				// Construct an instance of the GetNoteOptions model
-				getNoteOptionsModel := new(findingsapiv1.GetNoteOptions)
+				getNoteOptionsModel := new(findingsv1.GetNoteOptions)
 				getNoteOptionsModel.AccountID = core.StringPtr("testString")
 				getNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				getNoteOptionsModel.NoteID = core.StringPtr("testString")
@@ -1189,13 +1191,13 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Invoke operation with a Context to test a timeout error
 				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc()
-				_, _, operationErr := findingsApiService.GetNoteWithContext(ctx, getNoteOptionsModel)
+				_, _, operationErr := findingsService.GetNoteWithContext(ctx, getNoteOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 
 				// Disable retries and test again
-				findingsApiService.DisableRetries()
-				result, response, operationErr := findingsApiService.GetNote(getNoteOptionsModel)
+				findingsService.DisableRetries()
+				result, response, operationErr := findingsService.GetNote(getNoteOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
@@ -1203,7 +1205,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc2()
-				_, _, operationErr = findingsApiService.GetNoteWithContext(ctx, getNoteOptionsModel)
+				_, _, operationErr = findingsService.GetNoteWithContext(ctx, getNoteOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
@@ -1229,21 +1231,21 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke GetNote successfully`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := findingsApiService.GetNote(nil)
+				result, response, operationErr := findingsService.GetNote(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the GetNoteOptions model
-				getNoteOptionsModel := new(findingsapiv1.GetNoteOptions)
+				getNoteOptionsModel := new(findingsv1.GetNoteOptions)
 				getNoteOptionsModel.AccountID = core.StringPtr("testString")
 				getNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				getNoteOptionsModel.NoteID = core.StringPtr("testString")
@@ -1251,39 +1253,39 @@ var _ = Describe(`FindingsApiV1`, func() {
 				getNoteOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = findingsApiService.GetNote(getNoteOptionsModel)
+				result, response, operationErr = findingsService.GetNote(getNoteOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
 			})
 			It(`Invoke GetNote with error: Operation validation and request error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the GetNoteOptions model
-				getNoteOptionsModel := new(findingsapiv1.GetNoteOptions)
+				getNoteOptionsModel := new(findingsv1.GetNoteOptions)
 				getNoteOptionsModel.AccountID = core.StringPtr("testString")
 				getNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				getNoteOptionsModel.NoteID = core.StringPtr("testString")
 				getNoteOptionsModel.TransactionID = core.StringPtr("testString")
 				getNoteOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := findingsApiService.SetServiceURL("")
+				err := findingsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				result, response, operationErr := findingsApiService.GetNote(getNoteOptionsModel)
+				result, response, operationErr := findingsService.GetNote(getNoteOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the GetNoteOptions model with no property values
-				getNoteOptionsModelNew := new(findingsapiv1.GetNoteOptions)
+				getNoteOptionsModelNew := new(findingsv1.GetNoteOptions)
 				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = findingsApiService.GetNote(getNoteOptionsModelNew)
+				result, response, operationErr = findingsService.GetNote(getNoteOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
@@ -1311,54 +1313,54 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke UpdateNote with error: Operation response processing error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the Reporter model
-				reporterModel := new(findingsapiv1.Reporter)
+				reporterModel := new(findingsv1.Reporter)
 				reporterModel.ID = core.StringPtr("testString")
 				reporterModel.Title = core.StringPtr("testString")
 				reporterModel.URL = core.StringPtr("testString")
 
-				// Construct an instance of the ApiNoteRelatedURL model
-				apiNoteRelatedUrlModel := new(findingsapiv1.ApiNoteRelatedURL)
-				apiNoteRelatedUrlModel.Label = core.StringPtr("testString")
-				apiNoteRelatedUrlModel.URL = core.StringPtr("testString")
+				// Construct an instance of the APINoteRelatedURL model
+				apiNoteRelatedURLModel := new(findingsv1.APINoteRelatedURL)
+				apiNoteRelatedURLModel.Label = core.StringPtr("testString")
+				apiNoteRelatedURLModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the RemediationStep model
-				remediationStepModel := new(findingsapiv1.RemediationStep)
+				remediationStepModel := new(findingsv1.RemediationStep)
 				remediationStepModel.Title = core.StringPtr("testString")
 				remediationStepModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the FindingType model
-				findingTypeModel := new(findingsapiv1.FindingType)
+				findingTypeModel := new(findingsv1.FindingType)
 				findingTypeModel.Severity = core.StringPtr("LOW")
-				findingTypeModel.NextSteps = []findingsapiv1.RemediationStep{*remediationStepModel}
+				findingTypeModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
 
 				// Construct an instance of the KpiType model
-				kpiTypeModel := new(findingsapiv1.KpiType)
+				kpiTypeModel := new(findingsv1.KpiType)
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
-				valueTypeModel := new(findingsapiv1.ValueTypeFindingCountValueType)
+				valueTypeModel := new(findingsv1.ValueTypeFindingCountValueType)
 				valueTypeModel.Kind = core.StringPtr("FINDING_COUNT")
 				valueTypeModel.FindingNoteNames = []string{"testString"}
 				valueTypeModel.Text = core.StringPtr("testString")
 
 				// Construct an instance of the CardElementTimeSeriesCardElement model
-				cardElementModel := new(findingsapiv1.CardElementTimeSeriesCardElement)
+				cardElementModel := new(findingsv1.CardElementTimeSeriesCardElement)
 				cardElementModel.Text = core.StringPtr("testString")
 				cardElementModel.DefaultInterval = core.StringPtr("testString")
 				cardElementModel.Kind = core.StringPtr("TIME_SERIES")
 				cardElementModel.DefaultTimeRange = core.StringPtr("1d")
-				cardElementModel.ValueTypes = []findingsapiv1.ValueTypeIntf{valueTypeModel}
+				cardElementModel.ValueTypes = []findingsv1.ValueTypeIntf{valueTypeModel}
 
 				// Construct an instance of the Card model
-				cardModel := new(findingsapiv1.Card)
+				cardModel := new(findingsv1.Card)
 				cardModel.Section = core.StringPtr("testString")
 				cardModel.Title = core.StringPtr("testString")
 				cardModel.Subtitle = core.StringPtr("testString")
@@ -1367,15 +1369,15 @@ var _ = Describe(`FindingsApiV1`, func() {
 				cardModel.RequiresConfiguration = core.BoolPtr(true)
 				cardModel.BadgeText = core.StringPtr("testString")
 				cardModel.BadgeImage = core.StringPtr("testString")
-				cardModel.Elements = []findingsapiv1.CardElementIntf{cardElementModel}
+				cardModel.Elements = []findingsv1.CardElementIntf{cardElementModel}
 
 				// Construct an instance of the Section model
-				sectionModel := new(findingsapiv1.Section)
+				sectionModel := new(findingsv1.Section)
 				sectionModel.Title = core.StringPtr("testString")
 				sectionModel.Image = core.StringPtr("testString")
 
 				// Construct an instance of the UpdateNoteOptions model
-				updateNoteOptionsModel := new(findingsapiv1.UpdateNoteOptions)
+				updateNoteOptionsModel := new(findingsv1.UpdateNoteOptions)
 				updateNoteOptionsModel.AccountID = core.StringPtr("testString")
 				updateNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				updateNoteOptionsModel.NoteID = core.StringPtr("testString")
@@ -1384,7 +1386,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				updateNoteOptionsModel.Kind = core.StringPtr("FINDING")
 				updateNoteOptionsModel.ID = core.StringPtr("testString")
 				updateNoteOptionsModel.ReportedBy = reporterModel
-				updateNoteOptionsModel.RelatedURL = []findingsapiv1.ApiNoteRelatedURL{*apiNoteRelatedUrlModel}
+				updateNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
 				updateNoteOptionsModel.ExpirationTime = CreateMockDateTime()
 				updateNoteOptionsModel.CreateTime = CreateMockDateTime()
 				updateNoteOptionsModel.UpdateTime = CreateMockDateTime()
@@ -1396,14 +1398,14 @@ var _ = Describe(`FindingsApiV1`, func() {
 				updateNoteOptionsModel.TransactionID = core.StringPtr("testString")
 				updateNoteOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := findingsApiService.UpdateNote(updateNoteOptionsModel)
+				result, response, operationErr := findingsService.UpdateNote(updateNoteOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
 
 				// Enable retries and test again
-				findingsApiService.EnableRetries(0, 0)
-				result, response, operationErr = findingsApiService.UpdateNote(updateNoteOptionsModel)
+				findingsService.EnableRetries(0, 0)
+				result, response, operationErr = findingsService.UpdateNote(updateNoteOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
@@ -1453,55 +1455,55 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke UpdateNote successfully with retries`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
-				findingsApiService.EnableRetries(0, 0)
+				Expect(findingsService).ToNot(BeNil())
+				findingsService.EnableRetries(0, 0)
 
 				// Construct an instance of the Reporter model
-				reporterModel := new(findingsapiv1.Reporter)
+				reporterModel := new(findingsv1.Reporter)
 				reporterModel.ID = core.StringPtr("testString")
 				reporterModel.Title = core.StringPtr("testString")
 				reporterModel.URL = core.StringPtr("testString")
 
-				// Construct an instance of the ApiNoteRelatedURL model
-				apiNoteRelatedUrlModel := new(findingsapiv1.ApiNoteRelatedURL)
-				apiNoteRelatedUrlModel.Label = core.StringPtr("testString")
-				apiNoteRelatedUrlModel.URL = core.StringPtr("testString")
+				// Construct an instance of the APINoteRelatedURL model
+				apiNoteRelatedURLModel := new(findingsv1.APINoteRelatedURL)
+				apiNoteRelatedURLModel.Label = core.StringPtr("testString")
+				apiNoteRelatedURLModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the RemediationStep model
-				remediationStepModel := new(findingsapiv1.RemediationStep)
+				remediationStepModel := new(findingsv1.RemediationStep)
 				remediationStepModel.Title = core.StringPtr("testString")
 				remediationStepModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the FindingType model
-				findingTypeModel := new(findingsapiv1.FindingType)
+				findingTypeModel := new(findingsv1.FindingType)
 				findingTypeModel.Severity = core.StringPtr("LOW")
-				findingTypeModel.NextSteps = []findingsapiv1.RemediationStep{*remediationStepModel}
+				findingTypeModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
 
 				// Construct an instance of the KpiType model
-				kpiTypeModel := new(findingsapiv1.KpiType)
+				kpiTypeModel := new(findingsv1.KpiType)
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
-				valueTypeModel := new(findingsapiv1.ValueTypeFindingCountValueType)
+				valueTypeModel := new(findingsv1.ValueTypeFindingCountValueType)
 				valueTypeModel.Kind = core.StringPtr("FINDING_COUNT")
 				valueTypeModel.FindingNoteNames = []string{"testString"}
 				valueTypeModel.Text = core.StringPtr("testString")
 
 				// Construct an instance of the CardElementTimeSeriesCardElement model
-				cardElementModel := new(findingsapiv1.CardElementTimeSeriesCardElement)
+				cardElementModel := new(findingsv1.CardElementTimeSeriesCardElement)
 				cardElementModel.Text = core.StringPtr("testString")
 				cardElementModel.DefaultInterval = core.StringPtr("testString")
 				cardElementModel.Kind = core.StringPtr("TIME_SERIES")
 				cardElementModel.DefaultTimeRange = core.StringPtr("1d")
-				cardElementModel.ValueTypes = []findingsapiv1.ValueTypeIntf{valueTypeModel}
+				cardElementModel.ValueTypes = []findingsv1.ValueTypeIntf{valueTypeModel}
 
 				// Construct an instance of the Card model
-				cardModel := new(findingsapiv1.Card)
+				cardModel := new(findingsv1.Card)
 				cardModel.Section = core.StringPtr("testString")
 				cardModel.Title = core.StringPtr("testString")
 				cardModel.Subtitle = core.StringPtr("testString")
@@ -1510,15 +1512,15 @@ var _ = Describe(`FindingsApiV1`, func() {
 				cardModel.RequiresConfiguration = core.BoolPtr(true)
 				cardModel.BadgeText = core.StringPtr("testString")
 				cardModel.BadgeImage = core.StringPtr("testString")
-				cardModel.Elements = []findingsapiv1.CardElementIntf{cardElementModel}
+				cardModel.Elements = []findingsv1.CardElementIntf{cardElementModel}
 
 				// Construct an instance of the Section model
-				sectionModel := new(findingsapiv1.Section)
+				sectionModel := new(findingsv1.Section)
 				sectionModel.Title = core.StringPtr("testString")
 				sectionModel.Image = core.StringPtr("testString")
 
 				// Construct an instance of the UpdateNoteOptions model
-				updateNoteOptionsModel := new(findingsapiv1.UpdateNoteOptions)
+				updateNoteOptionsModel := new(findingsv1.UpdateNoteOptions)
 				updateNoteOptionsModel.AccountID = core.StringPtr("testString")
 				updateNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				updateNoteOptionsModel.NoteID = core.StringPtr("testString")
@@ -1527,7 +1529,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				updateNoteOptionsModel.Kind = core.StringPtr("FINDING")
 				updateNoteOptionsModel.ID = core.StringPtr("testString")
 				updateNoteOptionsModel.ReportedBy = reporterModel
-				updateNoteOptionsModel.RelatedURL = []findingsapiv1.ApiNoteRelatedURL{*apiNoteRelatedUrlModel}
+				updateNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
 				updateNoteOptionsModel.ExpirationTime = CreateMockDateTime()
 				updateNoteOptionsModel.CreateTime = CreateMockDateTime()
 				updateNoteOptionsModel.UpdateTime = CreateMockDateTime()
@@ -1542,13 +1544,13 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Invoke operation with a Context to test a timeout error
 				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc()
-				_, _, operationErr := findingsApiService.UpdateNoteWithContext(ctx, updateNoteOptionsModel)
+				_, _, operationErr := findingsService.UpdateNoteWithContext(ctx, updateNoteOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 
 				// Disable retries and test again
-				findingsApiService.DisableRetries()
-				result, response, operationErr := findingsApiService.UpdateNote(updateNoteOptionsModel)
+				findingsService.DisableRetries()
+				result, response, operationErr := findingsService.UpdateNote(updateNoteOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
@@ -1556,7 +1558,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc2()
-				_, _, operationErr = findingsApiService.UpdateNoteWithContext(ctx, updateNoteOptionsModel)
+				_, _, operationErr = findingsService.UpdateNoteWithContext(ctx, updateNoteOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
@@ -1598,60 +1600,60 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke UpdateNote successfully`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := findingsApiService.UpdateNote(nil)
+				result, response, operationErr := findingsService.UpdateNote(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the Reporter model
-				reporterModel := new(findingsapiv1.Reporter)
+				reporterModel := new(findingsv1.Reporter)
 				reporterModel.ID = core.StringPtr("testString")
 				reporterModel.Title = core.StringPtr("testString")
 				reporterModel.URL = core.StringPtr("testString")
 
-				// Construct an instance of the ApiNoteRelatedURL model
-				apiNoteRelatedUrlModel := new(findingsapiv1.ApiNoteRelatedURL)
-				apiNoteRelatedUrlModel.Label = core.StringPtr("testString")
-				apiNoteRelatedUrlModel.URL = core.StringPtr("testString")
+				// Construct an instance of the APINoteRelatedURL model
+				apiNoteRelatedURLModel := new(findingsv1.APINoteRelatedURL)
+				apiNoteRelatedURLModel.Label = core.StringPtr("testString")
+				apiNoteRelatedURLModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the RemediationStep model
-				remediationStepModel := new(findingsapiv1.RemediationStep)
+				remediationStepModel := new(findingsv1.RemediationStep)
 				remediationStepModel.Title = core.StringPtr("testString")
 				remediationStepModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the FindingType model
-				findingTypeModel := new(findingsapiv1.FindingType)
+				findingTypeModel := new(findingsv1.FindingType)
 				findingTypeModel.Severity = core.StringPtr("LOW")
-				findingTypeModel.NextSteps = []findingsapiv1.RemediationStep{*remediationStepModel}
+				findingTypeModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
 
 				// Construct an instance of the KpiType model
-				kpiTypeModel := new(findingsapiv1.KpiType)
+				kpiTypeModel := new(findingsv1.KpiType)
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
-				valueTypeModel := new(findingsapiv1.ValueTypeFindingCountValueType)
+				valueTypeModel := new(findingsv1.ValueTypeFindingCountValueType)
 				valueTypeModel.Kind = core.StringPtr("FINDING_COUNT")
 				valueTypeModel.FindingNoteNames = []string{"testString"}
 				valueTypeModel.Text = core.StringPtr("testString")
 
 				// Construct an instance of the CardElementTimeSeriesCardElement model
-				cardElementModel := new(findingsapiv1.CardElementTimeSeriesCardElement)
+				cardElementModel := new(findingsv1.CardElementTimeSeriesCardElement)
 				cardElementModel.Text = core.StringPtr("testString")
 				cardElementModel.DefaultInterval = core.StringPtr("testString")
 				cardElementModel.Kind = core.StringPtr("TIME_SERIES")
 				cardElementModel.DefaultTimeRange = core.StringPtr("1d")
-				cardElementModel.ValueTypes = []findingsapiv1.ValueTypeIntf{valueTypeModel}
+				cardElementModel.ValueTypes = []findingsv1.ValueTypeIntf{valueTypeModel}
 
 				// Construct an instance of the Card model
-				cardModel := new(findingsapiv1.Card)
+				cardModel := new(findingsv1.Card)
 				cardModel.Section = core.StringPtr("testString")
 				cardModel.Title = core.StringPtr("testString")
 				cardModel.Subtitle = core.StringPtr("testString")
@@ -1660,15 +1662,15 @@ var _ = Describe(`FindingsApiV1`, func() {
 				cardModel.RequiresConfiguration = core.BoolPtr(true)
 				cardModel.BadgeText = core.StringPtr("testString")
 				cardModel.BadgeImage = core.StringPtr("testString")
-				cardModel.Elements = []findingsapiv1.CardElementIntf{cardElementModel}
+				cardModel.Elements = []findingsv1.CardElementIntf{cardElementModel}
 
 				// Construct an instance of the Section model
-				sectionModel := new(findingsapiv1.Section)
+				sectionModel := new(findingsv1.Section)
 				sectionModel.Title = core.StringPtr("testString")
 				sectionModel.Image = core.StringPtr("testString")
 
 				// Construct an instance of the UpdateNoteOptions model
-				updateNoteOptionsModel := new(findingsapiv1.UpdateNoteOptions)
+				updateNoteOptionsModel := new(findingsv1.UpdateNoteOptions)
 				updateNoteOptionsModel.AccountID = core.StringPtr("testString")
 				updateNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				updateNoteOptionsModel.NoteID = core.StringPtr("testString")
@@ -1677,7 +1679,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				updateNoteOptionsModel.Kind = core.StringPtr("FINDING")
 				updateNoteOptionsModel.ID = core.StringPtr("testString")
 				updateNoteOptionsModel.ReportedBy = reporterModel
-				updateNoteOptionsModel.RelatedURL = []findingsapiv1.ApiNoteRelatedURL{*apiNoteRelatedUrlModel}
+				updateNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
 				updateNoteOptionsModel.ExpirationTime = CreateMockDateTime()
 				updateNoteOptionsModel.CreateTime = CreateMockDateTime()
 				updateNoteOptionsModel.UpdateTime = CreateMockDateTime()
@@ -1690,61 +1692,61 @@ var _ = Describe(`FindingsApiV1`, func() {
 				updateNoteOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = findingsApiService.UpdateNote(updateNoteOptionsModel)
+				result, response, operationErr = findingsService.UpdateNote(updateNoteOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
 			})
 			It(`Invoke UpdateNote with error: Operation validation and request error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the Reporter model
-				reporterModel := new(findingsapiv1.Reporter)
+				reporterModel := new(findingsv1.Reporter)
 				reporterModel.ID = core.StringPtr("testString")
 				reporterModel.Title = core.StringPtr("testString")
 				reporterModel.URL = core.StringPtr("testString")
 
-				// Construct an instance of the ApiNoteRelatedURL model
-				apiNoteRelatedUrlModel := new(findingsapiv1.ApiNoteRelatedURL)
-				apiNoteRelatedUrlModel.Label = core.StringPtr("testString")
-				apiNoteRelatedUrlModel.URL = core.StringPtr("testString")
+				// Construct an instance of the APINoteRelatedURL model
+				apiNoteRelatedURLModel := new(findingsv1.APINoteRelatedURL)
+				apiNoteRelatedURLModel.Label = core.StringPtr("testString")
+				apiNoteRelatedURLModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the RemediationStep model
-				remediationStepModel := new(findingsapiv1.RemediationStep)
+				remediationStepModel := new(findingsv1.RemediationStep)
 				remediationStepModel.Title = core.StringPtr("testString")
 				remediationStepModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the FindingType model
-				findingTypeModel := new(findingsapiv1.FindingType)
+				findingTypeModel := new(findingsv1.FindingType)
 				findingTypeModel.Severity = core.StringPtr("LOW")
-				findingTypeModel.NextSteps = []findingsapiv1.RemediationStep{*remediationStepModel}
+				findingTypeModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
 
 				// Construct an instance of the KpiType model
-				kpiTypeModel := new(findingsapiv1.KpiType)
+				kpiTypeModel := new(findingsv1.KpiType)
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
-				valueTypeModel := new(findingsapiv1.ValueTypeFindingCountValueType)
+				valueTypeModel := new(findingsv1.ValueTypeFindingCountValueType)
 				valueTypeModel.Kind = core.StringPtr("FINDING_COUNT")
 				valueTypeModel.FindingNoteNames = []string{"testString"}
 				valueTypeModel.Text = core.StringPtr("testString")
 
 				// Construct an instance of the CardElementTimeSeriesCardElement model
-				cardElementModel := new(findingsapiv1.CardElementTimeSeriesCardElement)
+				cardElementModel := new(findingsv1.CardElementTimeSeriesCardElement)
 				cardElementModel.Text = core.StringPtr("testString")
 				cardElementModel.DefaultInterval = core.StringPtr("testString")
 				cardElementModel.Kind = core.StringPtr("TIME_SERIES")
 				cardElementModel.DefaultTimeRange = core.StringPtr("1d")
-				cardElementModel.ValueTypes = []findingsapiv1.ValueTypeIntf{valueTypeModel}
+				cardElementModel.ValueTypes = []findingsv1.ValueTypeIntf{valueTypeModel}
 
 				// Construct an instance of the Card model
-				cardModel := new(findingsapiv1.Card)
+				cardModel := new(findingsv1.Card)
 				cardModel.Section = core.StringPtr("testString")
 				cardModel.Title = core.StringPtr("testString")
 				cardModel.Subtitle = core.StringPtr("testString")
@@ -1753,15 +1755,15 @@ var _ = Describe(`FindingsApiV1`, func() {
 				cardModel.RequiresConfiguration = core.BoolPtr(true)
 				cardModel.BadgeText = core.StringPtr("testString")
 				cardModel.BadgeImage = core.StringPtr("testString")
-				cardModel.Elements = []findingsapiv1.CardElementIntf{cardElementModel}
+				cardModel.Elements = []findingsv1.CardElementIntf{cardElementModel}
 
 				// Construct an instance of the Section model
-				sectionModel := new(findingsapiv1.Section)
+				sectionModel := new(findingsv1.Section)
 				sectionModel.Title = core.StringPtr("testString")
 				sectionModel.Image = core.StringPtr("testString")
 
 				// Construct an instance of the UpdateNoteOptions model
-				updateNoteOptionsModel := new(findingsapiv1.UpdateNoteOptions)
+				updateNoteOptionsModel := new(findingsv1.UpdateNoteOptions)
 				updateNoteOptionsModel.AccountID = core.StringPtr("testString")
 				updateNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				updateNoteOptionsModel.NoteID = core.StringPtr("testString")
@@ -1770,7 +1772,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				updateNoteOptionsModel.Kind = core.StringPtr("FINDING")
 				updateNoteOptionsModel.ID = core.StringPtr("testString")
 				updateNoteOptionsModel.ReportedBy = reporterModel
-				updateNoteOptionsModel.RelatedURL = []findingsapiv1.ApiNoteRelatedURL{*apiNoteRelatedUrlModel}
+				updateNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
 				updateNoteOptionsModel.ExpirationTime = CreateMockDateTime()
 				updateNoteOptionsModel.CreateTime = CreateMockDateTime()
 				updateNoteOptionsModel.UpdateTime = CreateMockDateTime()
@@ -1782,17 +1784,17 @@ var _ = Describe(`FindingsApiV1`, func() {
 				updateNoteOptionsModel.TransactionID = core.StringPtr("testString")
 				updateNoteOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := findingsApiService.SetServiceURL("")
+				err := findingsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				result, response, operationErr := findingsApiService.UpdateNote(updateNoteOptionsModel)
+				result, response, operationErr := findingsService.UpdateNote(updateNoteOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the UpdateNoteOptions model with no property values
-				updateNoteOptionsModelNew := new(findingsapiv1.UpdateNoteOptions)
+				updateNoteOptionsModelNew := new(findingsv1.UpdateNoteOptions)
 				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = findingsApiService.UpdateNote(updateNoteOptionsModelNew)
+				result, response, operationErr = findingsService.UpdateNote(updateNoteOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
@@ -1820,20 +1822,20 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke DeleteNote successfully`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				response, operationErr := findingsApiService.DeleteNote(nil)
+				response, operationErr := findingsService.DeleteNote(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 
 				// Construct an instance of the DeleteNoteOptions model
-				deleteNoteOptionsModel := new(findingsapiv1.DeleteNoteOptions)
+				deleteNoteOptionsModel := new(findingsv1.DeleteNoteOptions)
 				deleteNoteOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				deleteNoteOptionsModel.NoteID = core.StringPtr("testString")
@@ -1841,36 +1843,36 @@ var _ = Describe(`FindingsApiV1`, func() {
 				deleteNoteOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				response, operationErr = findingsApiService.DeleteNote(deleteNoteOptionsModel)
+				response, operationErr = findingsService.DeleteNote(deleteNoteOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 			})
 			It(`Invoke DeleteNote with error: Operation validation and request error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteNoteOptions model
-				deleteNoteOptionsModel := new(findingsapiv1.DeleteNoteOptions)
+				deleteNoteOptionsModel := new(findingsv1.DeleteNoteOptions)
 				deleteNoteOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				deleteNoteOptionsModel.NoteID = core.StringPtr("testString")
 				deleteNoteOptionsModel.TransactionID = core.StringPtr("testString")
 				deleteNoteOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := findingsApiService.SetServiceURL("")
+				err := findingsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				response, operationErr := findingsApiService.DeleteNote(deleteNoteOptionsModel)
+				response, operationErr := findingsService.DeleteNote(deleteNoteOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				// Construct a second instance of the DeleteNoteOptions model with no property values
-				deleteNoteOptionsModelNew := new(findingsapiv1.DeleteNoteOptions)
+				deleteNoteOptionsModelNew := new(findingsv1.DeleteNoteOptions)
 				// Invoke operation with invalid model (negative test)
-				response, operationErr = findingsApiService.DeleteNote(deleteNoteOptionsModelNew)
+				response, operationErr = findingsService.DeleteNote(deleteNoteOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 			})
@@ -1897,29 +1899,29 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke GetOccurrenceNote with error: Operation response processing error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the GetOccurrenceNoteOptions model
-				getOccurrenceNoteOptionsModel := new(findingsapiv1.GetOccurrenceNoteOptions)
+				getOccurrenceNoteOptionsModel := new(findingsv1.GetOccurrenceNoteOptions)
 				getOccurrenceNoteOptionsModel.AccountID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.OccurrenceID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.TransactionID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := findingsApiService.GetOccurrenceNote(getOccurrenceNoteOptionsModel)
+				result, response, operationErr := findingsService.GetOccurrenceNote(getOccurrenceNoteOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
 
 				// Enable retries and test again
-				findingsApiService.EnableRetries(0, 0)
-				result, response, operationErr = findingsApiService.GetOccurrenceNote(getOccurrenceNoteOptionsModel)
+				findingsService.EnableRetries(0, 0)
+				result, response, operationErr = findingsService.GetOccurrenceNote(getOccurrenceNoteOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
@@ -1953,16 +1955,16 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke GetOccurrenceNote successfully with retries`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
-				findingsApiService.EnableRetries(0, 0)
+				Expect(findingsService).ToNot(BeNil())
+				findingsService.EnableRetries(0, 0)
 
 				// Construct an instance of the GetOccurrenceNoteOptions model
-				getOccurrenceNoteOptionsModel := new(findingsapiv1.GetOccurrenceNoteOptions)
+				getOccurrenceNoteOptionsModel := new(findingsv1.GetOccurrenceNoteOptions)
 				getOccurrenceNoteOptionsModel.AccountID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.OccurrenceID = core.StringPtr("testString")
@@ -1972,13 +1974,13 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Invoke operation with a Context to test a timeout error
 				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc()
-				_, _, operationErr := findingsApiService.GetOccurrenceNoteWithContext(ctx, getOccurrenceNoteOptionsModel)
+				_, _, operationErr := findingsService.GetOccurrenceNoteWithContext(ctx, getOccurrenceNoteOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 
 				// Disable retries and test again
-				findingsApiService.DisableRetries()
-				result, response, operationErr := findingsApiService.GetOccurrenceNote(getOccurrenceNoteOptionsModel)
+				findingsService.DisableRetries()
+				result, response, operationErr := findingsService.GetOccurrenceNote(getOccurrenceNoteOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
@@ -1986,7 +1988,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc2()
-				_, _, operationErr = findingsApiService.GetOccurrenceNoteWithContext(ctx, getOccurrenceNoteOptionsModel)
+				_, _, operationErr = findingsService.GetOccurrenceNoteWithContext(ctx, getOccurrenceNoteOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
@@ -2012,21 +2014,21 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke GetOccurrenceNote successfully`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := findingsApiService.GetOccurrenceNote(nil)
+				result, response, operationErr := findingsService.GetOccurrenceNote(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the GetOccurrenceNoteOptions model
-				getOccurrenceNoteOptionsModel := new(findingsapiv1.GetOccurrenceNoteOptions)
+				getOccurrenceNoteOptionsModel := new(findingsv1.GetOccurrenceNoteOptions)
 				getOccurrenceNoteOptionsModel.AccountID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.OccurrenceID = core.StringPtr("testString")
@@ -2034,39 +2036,39 @@ var _ = Describe(`FindingsApiV1`, func() {
 				getOccurrenceNoteOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = findingsApiService.GetOccurrenceNote(getOccurrenceNoteOptionsModel)
+				result, response, operationErr = findingsService.GetOccurrenceNote(getOccurrenceNoteOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
 			})
 			It(`Invoke GetOccurrenceNote with error: Operation validation and request error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the GetOccurrenceNoteOptions model
-				getOccurrenceNoteOptionsModel := new(findingsapiv1.GetOccurrenceNoteOptions)
+				getOccurrenceNoteOptionsModel := new(findingsv1.GetOccurrenceNoteOptions)
 				getOccurrenceNoteOptionsModel.AccountID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.OccurrenceID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.TransactionID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := findingsApiService.SetServiceURL("")
+				err := findingsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				result, response, operationErr := findingsApiService.GetOccurrenceNote(getOccurrenceNoteOptionsModel)
+				result, response, operationErr := findingsService.GetOccurrenceNote(getOccurrenceNoteOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the GetOccurrenceNoteOptions model with no property values
-				getOccurrenceNoteOptionsModelNew := new(findingsapiv1.GetOccurrenceNoteOptions)
+				getOccurrenceNoteOptionsModelNew := new(findingsv1.GetOccurrenceNoteOptions)
 				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = findingsApiService.GetOccurrenceNote(getOccurrenceNoteOptionsModelNew)
+				result, response, operationErr = findingsService.GetOccurrenceNote(getOccurrenceNoteOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
@@ -2078,28 +2080,28 @@ var _ = Describe(`FindingsApiV1`, func() {
 	})
 	Describe(`Service constructor tests`, func() {
 		It(`Instantiate service client`, func() {
-			findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 				Authenticator: &core.NoAuthAuthenticator{},
 			})
-			Expect(findingsApiService).ToNot(BeNil())
+			Expect(findingsService).ToNot(BeNil())
 			Expect(serviceErr).To(BeNil())
 		})
 		It(`Instantiate service client with error: Invalid URL`, func() {
-			findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 				URL: "{BAD_URL_STRING",
 			})
-			Expect(findingsApiService).To(BeNil())
+			Expect(findingsService).To(BeNil())
 			Expect(serviceErr).ToNot(BeNil())
 		})
 		It(`Instantiate service client with error: Invalid Auth`, func() {
-			findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
-				URL: "https://findingsapiv1/api",
+			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
+				URL: "https://findingsv1/api",
 				Authenticator: &core.BasicAuthenticator{
 					Username: "",
 					Password: "",
 				},
 			})
-			Expect(findingsApiService).To(BeNil())
+			Expect(findingsService).To(BeNil())
 			Expect(serviceErr).ToNot(BeNil())
 		})
 	})
@@ -2107,68 +2109,71 @@ var _ = Describe(`FindingsApiV1`, func() {
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"FINDINGS_API_URL":       "https://findingsapiv1/api",
-				"FINDINGS_API_AUTH_TYPE": "noauth",
+				"FINDINGS_URL": "https://findingsv1/api",
+				"FINDINGS_AUTH_TYPE": "noauth",
 			}
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1UsingExternalConfig(&findingsapiv1.FindingsApiV1Options{})
-				Expect(findingsApiService).ToNot(BeNil())
+				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
+				})
+				Expect(findingsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
 
-				clone := findingsApiService.Clone()
+				clone := findingsService.Clone()
 				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != findingsApiService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(findingsApiService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(findingsApiService.Service.Options.Authenticator))
+				Expect(clone.Service != findingsService.Service).To(BeTrue())
+				Expect(clone.GetServiceURL()).To(Equal(findingsService.GetServiceURL()))
+				Expect(clone.Service.Options.Authenticator).To(Equal(findingsService.Service.Options.Authenticator))
 			})
 			It(`Create service client using external config and set url from constructor successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1UsingExternalConfig(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
 					URL: "https://testService/api",
 				})
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService.Service.GetServiceURL()).To(Equal("https://testService/api"))
+				Expect(findingsService.Service.GetServiceURL()).To(Equal("https://testService/api"))
 				ClearTestEnvironment(testEnvironment)
 
-				clone := findingsApiService.Clone()
+				clone := findingsService.Clone()
 				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != findingsApiService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(findingsApiService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(findingsApiService.Service.Options.Authenticator))
+				Expect(clone.Service != findingsService.Service).To(BeTrue())
+				Expect(clone.GetServiceURL()).To(Equal(findingsService.GetServiceURL()))
+				Expect(clone.Service.Options.Authenticator).To(Equal(findingsService.Service.Options.Authenticator))
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1UsingExternalConfig(&findingsapiv1.FindingsApiV1Options{})
-				err := findingsApiService.SetServiceURL("https://testService/api")
+				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
+				})
+				err := findingsService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService.Service.GetServiceURL()).To(Equal("https://testService/api"))
+				Expect(findingsService.Service.GetServiceURL()).To(Equal("https://testService/api"))
 				ClearTestEnvironment(testEnvironment)
 
-				clone := findingsApiService.Clone()
+				clone := findingsService.Clone()
 				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != findingsApiService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(findingsApiService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(findingsApiService.Service.Options.Authenticator))
+				Expect(clone.Service != findingsService.Service).To(BeTrue())
+				Expect(clone.GetServiceURL()).To(Equal(findingsService.GetServiceURL()))
+				Expect(clone.Service.Options.Authenticator).To(Equal(findingsService.Service.Options.Authenticator))
 			})
 		})
 		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"FINDINGS_API_URL":       "https://findingsapiv1/api",
-				"FINDINGS_API_AUTH_TYPE": "someOtherAuth",
+				"FINDINGS_URL": "https://findingsv1/api",
+				"FINDINGS_AUTH_TYPE": "someOtherAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1UsingExternalConfig(&findingsapiv1.FindingsApiV1Options{})
+			findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
+			})
 
 			It(`Instantiate service client with error`, func() {
-				Expect(findingsApiService).To(BeNil())
+				Expect(findingsService).To(BeNil())
 				Expect(serviceErr).ToNot(BeNil())
 				ClearTestEnvironment(testEnvironment)
 			})
@@ -2176,16 +2181,16 @@ var _ = Describe(`FindingsApiV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"FINDINGS_API_AUTH_TYPE": "NOAuth",
+				"FINDINGS_AUTH_TYPE":   "NOAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1UsingExternalConfig(&findingsapiv1.FindingsApiV1Options{
+			findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
 				URL: "{BAD_URL_STRING",
 			})
 
 			It(`Instantiate service client with error`, func() {
-				Expect(findingsApiService).To(BeNil())
+				Expect(findingsService).To(BeNil())
 				Expect(serviceErr).ToNot(BeNil())
 				ClearTestEnvironment(testEnvironment)
 			})
@@ -2195,7 +2200,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 		It(`GetServiceURLForRegion(region string)`, func() {
 			var url string
 			var err error
-			url, err = findingsapiv1.GetServiceURLForRegion("INVALID_REGION")
+			url, err = findingsv1.GetServiceURLForRegion("INVALID_REGION")
 			Expect(url).To(BeEmpty())
 			Expect(err).ToNot(BeNil())
 			fmt.Fprintf(GinkgoWriter, "Expected error: %s\n", err.Error())
@@ -2221,65 +2226,65 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke CreateOccurrence with error: Operation response processing error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the Context model
-				contextModel := new(findingsapiv1.Context)
+				contextModel := new(findingsv1.Context)
 				contextModel.Region = core.StringPtr("testString")
-				contextModel.ResourceCrn = core.StringPtr("testString")
+				contextModel.ResourceCRN = core.StringPtr("testString")
 				contextModel.ResourceID = core.StringPtr("testString")
 				contextModel.ResourceName = core.StringPtr("testString")
 				contextModel.ResourceType = core.StringPtr("testString")
-				contextModel.ServiceCrn = core.StringPtr("testString")
+				contextModel.ServiceCRN = core.StringPtr("testString")
 				contextModel.ServiceName = core.StringPtr("testString")
 				contextModel.EnvironmentName = core.StringPtr("testString")
 				contextModel.ComponentName = core.StringPtr("testString")
 				contextModel.ToolchainID = core.StringPtr("testString")
 
 				// Construct an instance of the RemediationStep model
-				remediationStepModel := new(findingsapiv1.RemediationStep)
+				remediationStepModel := new(findingsv1.RemediationStep)
 				remediationStepModel.Title = core.StringPtr("testString")
 				remediationStepModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the SocketAddress model
-				socketAddressModel := new(findingsapiv1.SocketAddress)
+				socketAddressModel := new(findingsv1.SocketAddress)
 				socketAddressModel.Address = core.StringPtr("testString")
 				socketAddressModel.Port = core.Int64Ptr(int64(38))
 
 				// Construct an instance of the NetworkConnection model
-				networkConnectionModel := new(findingsapiv1.NetworkConnection)
+				networkConnectionModel := new(findingsv1.NetworkConnection)
 				networkConnectionModel.Direction = core.StringPtr("testString")
 				networkConnectionModel.Protocol = core.StringPtr("testString")
 				networkConnectionModel.Client = socketAddressModel
 				networkConnectionModel.Server = socketAddressModel
 
 				// Construct an instance of the DataTransferred model
-				dataTransferredModel := new(findingsapiv1.DataTransferred)
+				dataTransferredModel := new(findingsv1.DataTransferred)
 				dataTransferredModel.ClientBytes = core.Int64Ptr(int64(38))
 				dataTransferredModel.ServerBytes = core.Int64Ptr(int64(38))
 				dataTransferredModel.ClientPackets = core.Int64Ptr(int64(38))
 				dataTransferredModel.ServerPackets = core.Int64Ptr(int64(38))
 
 				// Construct an instance of the Finding model
-				findingModel := new(findingsapiv1.Finding)
+				findingModel := new(findingsv1.Finding)
 				findingModel.Severity = core.StringPtr("LOW")
 				findingModel.Certainty = core.StringPtr("LOW")
-				findingModel.NextSteps = []findingsapiv1.RemediationStep{*remediationStepModel}
+				findingModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
 				findingModel.NetworkConnection = networkConnectionModel
 				findingModel.DataTransferred = dataTransferredModel
 
 				// Construct an instance of the Kpi model
-				kpiModel := new(findingsapiv1.Kpi)
+				kpiModel := new(findingsv1.Kpi)
 				kpiModel.Value = core.Float64Ptr(float64(72.5))
 				kpiModel.Total = core.Float64Ptr(float64(72.5))
 
 				// Construct an instance of the CreateOccurrenceOptions model
-				createOccurrenceOptionsModel := new(findingsapiv1.CreateOccurrenceOptions)
+				createOccurrenceOptionsModel := new(findingsv1.CreateOccurrenceOptions)
 				createOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.NoteName = core.StringPtr("testString")
@@ -2297,14 +2302,14 @@ var _ = Describe(`FindingsApiV1`, func() {
 				createOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := findingsApiService.CreateOccurrence(createOccurrenceOptionsModel)
+				result, response, operationErr := findingsService.CreateOccurrence(createOccurrenceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
 
 				// Enable retries and test again
-				findingsApiService.EnableRetries(0, 0)
-				result, response, operationErr = findingsApiService.CreateOccurrence(createOccurrenceOptionsModel)
+				findingsService.EnableRetries(0, 0)
+				result, response, operationErr = findingsService.CreateOccurrence(createOccurrenceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
@@ -2352,70 +2357,70 @@ var _ = Describe(`FindingsApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCrn", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCrn", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}`)
+					fmt.Fprintf(res, "%s", `{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCRN", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCRN", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}`)
 				}))
 			})
 			It(`Invoke CreateOccurrence successfully with retries`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
-				findingsApiService.EnableRetries(0, 0)
+				Expect(findingsService).ToNot(BeNil())
+				findingsService.EnableRetries(0, 0)
 
 				// Construct an instance of the Context model
-				contextModel := new(findingsapiv1.Context)
+				contextModel := new(findingsv1.Context)
 				contextModel.Region = core.StringPtr("testString")
-				contextModel.ResourceCrn = core.StringPtr("testString")
+				contextModel.ResourceCRN = core.StringPtr("testString")
 				contextModel.ResourceID = core.StringPtr("testString")
 				contextModel.ResourceName = core.StringPtr("testString")
 				contextModel.ResourceType = core.StringPtr("testString")
-				contextModel.ServiceCrn = core.StringPtr("testString")
+				contextModel.ServiceCRN = core.StringPtr("testString")
 				contextModel.ServiceName = core.StringPtr("testString")
 				contextModel.EnvironmentName = core.StringPtr("testString")
 				contextModel.ComponentName = core.StringPtr("testString")
 				contextModel.ToolchainID = core.StringPtr("testString")
 
 				// Construct an instance of the RemediationStep model
-				remediationStepModel := new(findingsapiv1.RemediationStep)
+				remediationStepModel := new(findingsv1.RemediationStep)
 				remediationStepModel.Title = core.StringPtr("testString")
 				remediationStepModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the SocketAddress model
-				socketAddressModel := new(findingsapiv1.SocketAddress)
+				socketAddressModel := new(findingsv1.SocketAddress)
 				socketAddressModel.Address = core.StringPtr("testString")
 				socketAddressModel.Port = core.Int64Ptr(int64(38))
 
 				// Construct an instance of the NetworkConnection model
-				networkConnectionModel := new(findingsapiv1.NetworkConnection)
+				networkConnectionModel := new(findingsv1.NetworkConnection)
 				networkConnectionModel.Direction = core.StringPtr("testString")
 				networkConnectionModel.Protocol = core.StringPtr("testString")
 				networkConnectionModel.Client = socketAddressModel
 				networkConnectionModel.Server = socketAddressModel
 
 				// Construct an instance of the DataTransferred model
-				dataTransferredModel := new(findingsapiv1.DataTransferred)
+				dataTransferredModel := new(findingsv1.DataTransferred)
 				dataTransferredModel.ClientBytes = core.Int64Ptr(int64(38))
 				dataTransferredModel.ServerBytes = core.Int64Ptr(int64(38))
 				dataTransferredModel.ClientPackets = core.Int64Ptr(int64(38))
 				dataTransferredModel.ServerPackets = core.Int64Ptr(int64(38))
 
 				// Construct an instance of the Finding model
-				findingModel := new(findingsapiv1.Finding)
+				findingModel := new(findingsv1.Finding)
 				findingModel.Severity = core.StringPtr("LOW")
 				findingModel.Certainty = core.StringPtr("LOW")
-				findingModel.NextSteps = []findingsapiv1.RemediationStep{*remediationStepModel}
+				findingModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
 				findingModel.NetworkConnection = networkConnectionModel
 				findingModel.DataTransferred = dataTransferredModel
 
 				// Construct an instance of the Kpi model
-				kpiModel := new(findingsapiv1.Kpi)
+				kpiModel := new(findingsv1.Kpi)
 				kpiModel.Value = core.Float64Ptr(float64(72.5))
 				kpiModel.Total = core.Float64Ptr(float64(72.5))
 
 				// Construct an instance of the CreateOccurrenceOptions model
-				createOccurrenceOptionsModel := new(findingsapiv1.CreateOccurrenceOptions)
+				createOccurrenceOptionsModel := new(findingsv1.CreateOccurrenceOptions)
 				createOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.NoteName = core.StringPtr("testString")
@@ -2436,13 +2441,13 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Invoke operation with a Context to test a timeout error
 				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc()
-				_, _, operationErr := findingsApiService.CreateOccurrenceWithContext(ctx, createOccurrenceOptionsModel)
+				_, _, operationErr := findingsService.CreateOccurrenceWithContext(ctx, createOccurrenceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 
 				// Disable retries and test again
-				findingsApiService.DisableRetries()
-				result, response, operationErr := findingsApiService.CreateOccurrence(createOccurrenceOptionsModel)
+				findingsService.DisableRetries()
+				result, response, operationErr := findingsService.CreateOccurrence(createOccurrenceOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
@@ -2450,7 +2455,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc2()
-				_, _, operationErr = findingsApiService.CreateOccurrenceWithContext(ctx, createOccurrenceOptionsModel)
+				_, _, operationErr = findingsService.CreateOccurrenceWithContext(ctx, createOccurrenceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
@@ -2490,75 +2495,75 @@ var _ = Describe(`FindingsApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCrn", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCrn", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}`)
+					fmt.Fprintf(res, "%s", `{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCRN", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCRN", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}`)
 				}))
 			})
 			It(`Invoke CreateOccurrence successfully`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := findingsApiService.CreateOccurrence(nil)
+				result, response, operationErr := findingsService.CreateOccurrence(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the Context model
-				contextModel := new(findingsapiv1.Context)
+				contextModel := new(findingsv1.Context)
 				contextModel.Region = core.StringPtr("testString")
-				contextModel.ResourceCrn = core.StringPtr("testString")
+				contextModel.ResourceCRN = core.StringPtr("testString")
 				contextModel.ResourceID = core.StringPtr("testString")
 				contextModel.ResourceName = core.StringPtr("testString")
 				contextModel.ResourceType = core.StringPtr("testString")
-				contextModel.ServiceCrn = core.StringPtr("testString")
+				contextModel.ServiceCRN = core.StringPtr("testString")
 				contextModel.ServiceName = core.StringPtr("testString")
 				contextModel.EnvironmentName = core.StringPtr("testString")
 				contextModel.ComponentName = core.StringPtr("testString")
 				contextModel.ToolchainID = core.StringPtr("testString")
 
 				// Construct an instance of the RemediationStep model
-				remediationStepModel := new(findingsapiv1.RemediationStep)
+				remediationStepModel := new(findingsv1.RemediationStep)
 				remediationStepModel.Title = core.StringPtr("testString")
 				remediationStepModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the SocketAddress model
-				socketAddressModel := new(findingsapiv1.SocketAddress)
+				socketAddressModel := new(findingsv1.SocketAddress)
 				socketAddressModel.Address = core.StringPtr("testString")
 				socketAddressModel.Port = core.Int64Ptr(int64(38))
 
 				// Construct an instance of the NetworkConnection model
-				networkConnectionModel := new(findingsapiv1.NetworkConnection)
+				networkConnectionModel := new(findingsv1.NetworkConnection)
 				networkConnectionModel.Direction = core.StringPtr("testString")
 				networkConnectionModel.Protocol = core.StringPtr("testString")
 				networkConnectionModel.Client = socketAddressModel
 				networkConnectionModel.Server = socketAddressModel
 
 				// Construct an instance of the DataTransferred model
-				dataTransferredModel := new(findingsapiv1.DataTransferred)
+				dataTransferredModel := new(findingsv1.DataTransferred)
 				dataTransferredModel.ClientBytes = core.Int64Ptr(int64(38))
 				dataTransferredModel.ServerBytes = core.Int64Ptr(int64(38))
 				dataTransferredModel.ClientPackets = core.Int64Ptr(int64(38))
 				dataTransferredModel.ServerPackets = core.Int64Ptr(int64(38))
 
 				// Construct an instance of the Finding model
-				findingModel := new(findingsapiv1.Finding)
+				findingModel := new(findingsv1.Finding)
 				findingModel.Severity = core.StringPtr("LOW")
 				findingModel.Certainty = core.StringPtr("LOW")
-				findingModel.NextSteps = []findingsapiv1.RemediationStep{*remediationStepModel}
+				findingModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
 				findingModel.NetworkConnection = networkConnectionModel
 				findingModel.DataTransferred = dataTransferredModel
 
 				// Construct an instance of the Kpi model
-				kpiModel := new(findingsapiv1.Kpi)
+				kpiModel := new(findingsv1.Kpi)
 				kpiModel.Value = core.Float64Ptr(float64(72.5))
 				kpiModel.Total = core.Float64Ptr(float64(72.5))
 
 				// Construct an instance of the CreateOccurrenceOptions model
-				createOccurrenceOptionsModel := new(findingsapiv1.CreateOccurrenceOptions)
+				createOccurrenceOptionsModel := new(findingsv1.CreateOccurrenceOptions)
 				createOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.NoteName = core.StringPtr("testString")
@@ -2577,72 +2582,72 @@ var _ = Describe(`FindingsApiV1`, func() {
 				createOccurrenceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = findingsApiService.CreateOccurrence(createOccurrenceOptionsModel)
+				result, response, operationErr = findingsService.CreateOccurrence(createOccurrenceOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
 			})
 			It(`Invoke CreateOccurrence with error: Operation validation and request error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the Context model
-				contextModel := new(findingsapiv1.Context)
+				contextModel := new(findingsv1.Context)
 				contextModel.Region = core.StringPtr("testString")
-				contextModel.ResourceCrn = core.StringPtr("testString")
+				contextModel.ResourceCRN = core.StringPtr("testString")
 				contextModel.ResourceID = core.StringPtr("testString")
 				contextModel.ResourceName = core.StringPtr("testString")
 				contextModel.ResourceType = core.StringPtr("testString")
-				contextModel.ServiceCrn = core.StringPtr("testString")
+				contextModel.ServiceCRN = core.StringPtr("testString")
 				contextModel.ServiceName = core.StringPtr("testString")
 				contextModel.EnvironmentName = core.StringPtr("testString")
 				contextModel.ComponentName = core.StringPtr("testString")
 				contextModel.ToolchainID = core.StringPtr("testString")
 
 				// Construct an instance of the RemediationStep model
-				remediationStepModel := new(findingsapiv1.RemediationStep)
+				remediationStepModel := new(findingsv1.RemediationStep)
 				remediationStepModel.Title = core.StringPtr("testString")
 				remediationStepModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the SocketAddress model
-				socketAddressModel := new(findingsapiv1.SocketAddress)
+				socketAddressModel := new(findingsv1.SocketAddress)
 				socketAddressModel.Address = core.StringPtr("testString")
 				socketAddressModel.Port = core.Int64Ptr(int64(38))
 
 				// Construct an instance of the NetworkConnection model
-				networkConnectionModel := new(findingsapiv1.NetworkConnection)
+				networkConnectionModel := new(findingsv1.NetworkConnection)
 				networkConnectionModel.Direction = core.StringPtr("testString")
 				networkConnectionModel.Protocol = core.StringPtr("testString")
 				networkConnectionModel.Client = socketAddressModel
 				networkConnectionModel.Server = socketAddressModel
 
 				// Construct an instance of the DataTransferred model
-				dataTransferredModel := new(findingsapiv1.DataTransferred)
+				dataTransferredModel := new(findingsv1.DataTransferred)
 				dataTransferredModel.ClientBytes = core.Int64Ptr(int64(38))
 				dataTransferredModel.ServerBytes = core.Int64Ptr(int64(38))
 				dataTransferredModel.ClientPackets = core.Int64Ptr(int64(38))
 				dataTransferredModel.ServerPackets = core.Int64Ptr(int64(38))
 
 				// Construct an instance of the Finding model
-				findingModel := new(findingsapiv1.Finding)
+				findingModel := new(findingsv1.Finding)
 				findingModel.Severity = core.StringPtr("LOW")
 				findingModel.Certainty = core.StringPtr("LOW")
-				findingModel.NextSteps = []findingsapiv1.RemediationStep{*remediationStepModel}
+				findingModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
 				findingModel.NetworkConnection = networkConnectionModel
 				findingModel.DataTransferred = dataTransferredModel
 
 				// Construct an instance of the Kpi model
-				kpiModel := new(findingsapiv1.Kpi)
+				kpiModel := new(findingsv1.Kpi)
 				kpiModel.Value = core.Float64Ptr(float64(72.5))
 				kpiModel.Total = core.Float64Ptr(float64(72.5))
 
 				// Construct an instance of the CreateOccurrenceOptions model
-				createOccurrenceOptionsModel := new(findingsapiv1.CreateOccurrenceOptions)
+				createOccurrenceOptionsModel := new(findingsv1.CreateOccurrenceOptions)
 				createOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.NoteName = core.StringPtr("testString")
@@ -2660,17 +2665,17 @@ var _ = Describe(`FindingsApiV1`, func() {
 				createOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := findingsApiService.SetServiceURL("")
+				err := findingsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				result, response, operationErr := findingsApiService.CreateOccurrence(createOccurrenceOptionsModel)
+				result, response, operationErr := findingsService.CreateOccurrence(createOccurrenceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the CreateOccurrenceOptions model with no property values
-				createOccurrenceOptionsModelNew := new(findingsapiv1.CreateOccurrenceOptions)
+				createOccurrenceOptionsModelNew := new(findingsv1.CreateOccurrenceOptions)
 				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = findingsApiService.CreateOccurrence(createOccurrenceOptionsModelNew)
+				result, response, operationErr = findingsService.CreateOccurrence(createOccurrenceOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
@@ -2700,15 +2705,15 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke ListOccurrences with error: Operation response processing error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the ListOccurrencesOptions model
-				listOccurrencesOptionsModel := new(findingsapiv1.ListOccurrencesOptions)
+				listOccurrencesOptionsModel := new(findingsv1.ListOccurrencesOptions)
 				listOccurrencesOptionsModel.AccountID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.ProviderID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.TransactionID = core.StringPtr("testString")
@@ -2716,14 +2721,14 @@ var _ = Describe(`FindingsApiV1`, func() {
 				listOccurrencesOptionsModel.PageToken = core.StringPtr("testString")
 				listOccurrencesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := findingsApiService.ListOccurrences(listOccurrencesOptionsModel)
+				result, response, operationErr := findingsService.ListOccurrences(listOccurrencesOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
 
 				// Enable retries and test again
-				findingsApiService.EnableRetries(0, 0)
-				result, response, operationErr = findingsApiService.ListOccurrences(listOccurrencesOptionsModel)
+				findingsService.EnableRetries(0, 0)
+				result, response, operationErr = findingsService.ListOccurrences(listOccurrencesOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
@@ -2755,20 +2760,20 @@ var _ = Describe(`FindingsApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"occurrences": [{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCrn", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCrn", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}], "next_page_token": "NextPageToken"}`)
+					fmt.Fprintf(res, "%s", `{"occurrences": [{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCRN", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCRN", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}], "next_page_token": "NextPageToken"}`)
 				}))
 			})
 			It(`Invoke ListOccurrences successfully with retries`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
-				findingsApiService.EnableRetries(0, 0)
+				Expect(findingsService).ToNot(BeNil())
+				findingsService.EnableRetries(0, 0)
 
 				// Construct an instance of the ListOccurrencesOptions model
-				listOccurrencesOptionsModel := new(findingsapiv1.ListOccurrencesOptions)
+				listOccurrencesOptionsModel := new(findingsv1.ListOccurrencesOptions)
 				listOccurrencesOptionsModel.AccountID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.ProviderID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.TransactionID = core.StringPtr("testString")
@@ -2779,13 +2784,13 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Invoke operation with a Context to test a timeout error
 				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc()
-				_, _, operationErr := findingsApiService.ListOccurrencesWithContext(ctx, listOccurrencesOptionsModel)
+				_, _, operationErr := findingsService.ListOccurrencesWithContext(ctx, listOccurrencesOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 
 				// Disable retries and test again
-				findingsApiService.DisableRetries()
-				result, response, operationErr := findingsApiService.ListOccurrences(listOccurrencesOptionsModel)
+				findingsService.DisableRetries()
+				result, response, operationErr := findingsService.ListOccurrences(listOccurrencesOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
@@ -2793,7 +2798,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc2()
-				_, _, operationErr = findingsApiService.ListOccurrencesWithContext(ctx, listOccurrencesOptionsModel)
+				_, _, operationErr = findingsService.ListOccurrencesWithContext(ctx, listOccurrencesOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
@@ -2817,25 +2822,25 @@ var _ = Describe(`FindingsApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"occurrences": [{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCrn", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCrn", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}], "next_page_token": "NextPageToken"}`)
+					fmt.Fprintf(res, "%s", `{"occurrences": [{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCRN", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCRN", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}], "next_page_token": "NextPageToken"}`)
 				}))
 			})
 			It(`Invoke ListOccurrences successfully`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := findingsApiService.ListOccurrences(nil)
+				result, response, operationErr := findingsService.ListOccurrences(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the ListOccurrencesOptions model
-				listOccurrencesOptionsModel := new(findingsapiv1.ListOccurrencesOptions)
+				listOccurrencesOptionsModel := new(findingsv1.ListOccurrencesOptions)
 				listOccurrencesOptionsModel.AccountID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.ProviderID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.TransactionID = core.StringPtr("testString")
@@ -2844,22 +2849,22 @@ var _ = Describe(`FindingsApiV1`, func() {
 				listOccurrencesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = findingsApiService.ListOccurrences(listOccurrencesOptionsModel)
+				result, response, operationErr = findingsService.ListOccurrences(listOccurrencesOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
 			})
 			It(`Invoke ListOccurrences with error: Operation validation and request error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the ListOccurrencesOptions model
-				listOccurrencesOptionsModel := new(findingsapiv1.ListOccurrencesOptions)
+				listOccurrencesOptionsModel := new(findingsv1.ListOccurrencesOptions)
 				listOccurrencesOptionsModel.AccountID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.ProviderID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.TransactionID = core.StringPtr("testString")
@@ -2867,17 +2872,17 @@ var _ = Describe(`FindingsApiV1`, func() {
 				listOccurrencesOptionsModel.PageToken = core.StringPtr("testString")
 				listOccurrencesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := findingsApiService.SetServiceURL("")
+				err := findingsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				result, response, operationErr := findingsApiService.ListOccurrences(listOccurrencesOptionsModel)
+				result, response, operationErr := findingsService.ListOccurrences(listOccurrencesOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the ListOccurrencesOptions model with no property values
-				listOccurrencesOptionsModelNew := new(findingsapiv1.ListOccurrencesOptions)
+				listOccurrencesOptionsModelNew := new(findingsv1.ListOccurrencesOptions)
 				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = findingsApiService.ListOccurrences(listOccurrencesOptionsModelNew)
+				result, response, operationErr = findingsService.ListOccurrences(listOccurrencesOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
@@ -2907,15 +2912,15 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke ListNoteOccurrences with error: Operation response processing error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the ListNoteOccurrencesOptions model
-				listNoteOccurrencesOptionsModel := new(findingsapiv1.ListNoteOccurrencesOptions)
+				listNoteOccurrencesOptionsModel := new(findingsv1.ListNoteOccurrencesOptions)
 				listNoteOccurrencesOptionsModel.AccountID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.ProviderID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.NoteID = core.StringPtr("testString")
@@ -2924,14 +2929,14 @@ var _ = Describe(`FindingsApiV1`, func() {
 				listNoteOccurrencesOptionsModel.PageToken = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := findingsApiService.ListNoteOccurrences(listNoteOccurrencesOptionsModel)
+				result, response, operationErr := findingsService.ListNoteOccurrences(listNoteOccurrencesOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
 
 				// Enable retries and test again
-				findingsApiService.EnableRetries(0, 0)
-				result, response, operationErr = findingsApiService.ListNoteOccurrences(listNoteOccurrencesOptionsModel)
+				findingsService.EnableRetries(0, 0)
+				result, response, operationErr = findingsService.ListNoteOccurrences(listNoteOccurrencesOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
@@ -2963,20 +2968,20 @@ var _ = Describe(`FindingsApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"occurrences": [{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCrn", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCrn", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}], "next_page_token": "NextPageToken"}`)
+					fmt.Fprintf(res, "%s", `{"occurrences": [{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCRN", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCRN", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}], "next_page_token": "NextPageToken"}`)
 				}))
 			})
 			It(`Invoke ListNoteOccurrences successfully with retries`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
-				findingsApiService.EnableRetries(0, 0)
+				Expect(findingsService).ToNot(BeNil())
+				findingsService.EnableRetries(0, 0)
 
 				// Construct an instance of the ListNoteOccurrencesOptions model
-				listNoteOccurrencesOptionsModel := new(findingsapiv1.ListNoteOccurrencesOptions)
+				listNoteOccurrencesOptionsModel := new(findingsv1.ListNoteOccurrencesOptions)
 				listNoteOccurrencesOptionsModel.AccountID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.ProviderID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.NoteID = core.StringPtr("testString")
@@ -2988,13 +2993,13 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Invoke operation with a Context to test a timeout error
 				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc()
-				_, _, operationErr := findingsApiService.ListNoteOccurrencesWithContext(ctx, listNoteOccurrencesOptionsModel)
+				_, _, operationErr := findingsService.ListNoteOccurrencesWithContext(ctx, listNoteOccurrencesOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 
 				// Disable retries and test again
-				findingsApiService.DisableRetries()
-				result, response, operationErr := findingsApiService.ListNoteOccurrences(listNoteOccurrencesOptionsModel)
+				findingsService.DisableRetries()
+				result, response, operationErr := findingsService.ListNoteOccurrences(listNoteOccurrencesOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
@@ -3002,7 +3007,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc2()
-				_, _, operationErr = findingsApiService.ListNoteOccurrencesWithContext(ctx, listNoteOccurrencesOptionsModel)
+				_, _, operationErr = findingsService.ListNoteOccurrencesWithContext(ctx, listNoteOccurrencesOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
@@ -3026,25 +3031,25 @@ var _ = Describe(`FindingsApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"occurrences": [{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCrn", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCrn", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}], "next_page_token": "NextPageToken"}`)
+					fmt.Fprintf(res, "%s", `{"occurrences": [{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCRN", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCRN", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}], "next_page_token": "NextPageToken"}`)
 				}))
 			})
 			It(`Invoke ListNoteOccurrences successfully`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := findingsApiService.ListNoteOccurrences(nil)
+				result, response, operationErr := findingsService.ListNoteOccurrences(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the ListNoteOccurrencesOptions model
-				listNoteOccurrencesOptionsModel := new(findingsapiv1.ListNoteOccurrencesOptions)
+				listNoteOccurrencesOptionsModel := new(findingsv1.ListNoteOccurrencesOptions)
 				listNoteOccurrencesOptionsModel.AccountID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.ProviderID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.NoteID = core.StringPtr("testString")
@@ -3054,22 +3059,22 @@ var _ = Describe(`FindingsApiV1`, func() {
 				listNoteOccurrencesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = findingsApiService.ListNoteOccurrences(listNoteOccurrencesOptionsModel)
+				result, response, operationErr = findingsService.ListNoteOccurrences(listNoteOccurrencesOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
 			})
 			It(`Invoke ListNoteOccurrences with error: Operation validation and request error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the ListNoteOccurrencesOptions model
-				listNoteOccurrencesOptionsModel := new(findingsapiv1.ListNoteOccurrencesOptions)
+				listNoteOccurrencesOptionsModel := new(findingsv1.ListNoteOccurrencesOptions)
 				listNoteOccurrencesOptionsModel.AccountID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.ProviderID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.NoteID = core.StringPtr("testString")
@@ -3078,17 +3083,17 @@ var _ = Describe(`FindingsApiV1`, func() {
 				listNoteOccurrencesOptionsModel.PageToken = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := findingsApiService.SetServiceURL("")
+				err := findingsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				result, response, operationErr := findingsApiService.ListNoteOccurrences(listNoteOccurrencesOptionsModel)
+				result, response, operationErr := findingsService.ListNoteOccurrences(listNoteOccurrencesOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the ListNoteOccurrencesOptions model with no property values
-				listNoteOccurrencesOptionsModelNew := new(findingsapiv1.ListNoteOccurrencesOptions)
+				listNoteOccurrencesOptionsModelNew := new(findingsv1.ListNoteOccurrencesOptions)
 				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = findingsApiService.ListNoteOccurrences(listNoteOccurrencesOptionsModelNew)
+				result, response, operationErr = findingsService.ListNoteOccurrences(listNoteOccurrencesOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
@@ -3116,29 +3121,29 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke GetOccurrence with error: Operation response processing error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the GetOccurrenceOptions model
-				getOccurrenceOptionsModel := new(findingsapiv1.GetOccurrenceOptions)
+				getOccurrenceOptionsModel := new(findingsv1.GetOccurrenceOptions)
 				getOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := findingsApiService.GetOccurrence(getOccurrenceOptionsModel)
+				result, response, operationErr := findingsService.GetOccurrence(getOccurrenceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
 
 				// Enable retries and test again
-				findingsApiService.EnableRetries(0, 0)
-				result, response, operationErr = findingsApiService.GetOccurrence(getOccurrenceOptionsModel)
+				findingsService.EnableRetries(0, 0)
+				result, response, operationErr = findingsService.GetOccurrence(getOccurrenceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
@@ -3168,20 +3173,20 @@ var _ = Describe(`FindingsApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCrn", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCrn", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}`)
+					fmt.Fprintf(res, "%s", `{"occurrences": [{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCRN", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCRN", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}], "next_page_token": "NextPageToken"}`)
 				}))
 			})
 			It(`Invoke GetOccurrence successfully with retries`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
-				findingsApiService.EnableRetries(0, 0)
+				Expect(findingsService).ToNot(BeNil())
+				findingsService.EnableRetries(0, 0)
 
 				// Construct an instance of the GetOccurrenceOptions model
-				getOccurrenceOptionsModel := new(findingsapiv1.GetOccurrenceOptions)
+				getOccurrenceOptionsModel := new(findingsv1.GetOccurrenceOptions)
 				getOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
@@ -3191,13 +3196,13 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Invoke operation with a Context to test a timeout error
 				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc()
-				_, _, operationErr := findingsApiService.GetOccurrenceWithContext(ctx, getOccurrenceOptionsModel)
+				_, _, operationErr := findingsService.GetOccurrenceWithContext(ctx, getOccurrenceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 
 				// Disable retries and test again
-				findingsApiService.DisableRetries()
-				result, response, operationErr := findingsApiService.GetOccurrence(getOccurrenceOptionsModel)
+				findingsService.DisableRetries()
+				result, response, operationErr := findingsService.GetOccurrence(getOccurrenceOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
@@ -3205,7 +3210,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc2()
-				_, _, operationErr = findingsApiService.GetOccurrenceWithContext(ctx, getOccurrenceOptionsModel)
+				_, _, operationErr = findingsService.GetOccurrenceWithContext(ctx, getOccurrenceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
@@ -3227,25 +3232,25 @@ var _ = Describe(`FindingsApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCrn", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCrn", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}`)
+					fmt.Fprintf(res, "%s", `{"occurrences": [{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCRN", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCRN", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}], "next_page_token": "NextPageToken"}`)
 				}))
 			})
 			It(`Invoke GetOccurrence successfully`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := findingsApiService.GetOccurrence(nil)
+				result, response, operationErr := findingsService.GetOccurrence(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the GetOccurrenceOptions model
-				getOccurrenceOptionsModel := new(findingsapiv1.GetOccurrenceOptions)
+				getOccurrenceOptionsModel := new(findingsv1.GetOccurrenceOptions)
 				getOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
@@ -3253,39 +3258,39 @@ var _ = Describe(`FindingsApiV1`, func() {
 				getOccurrenceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = findingsApiService.GetOccurrence(getOccurrenceOptionsModel)
+				result, response, operationErr = findingsService.GetOccurrence(getOccurrenceOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
 			})
 			It(`Invoke GetOccurrence with error: Operation validation and request error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the GetOccurrenceOptions model
-				getOccurrenceOptionsModel := new(findingsapiv1.GetOccurrenceOptions)
+				getOccurrenceOptionsModel := new(findingsv1.GetOccurrenceOptions)
 				getOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := findingsApiService.SetServiceURL("")
+				err := findingsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				result, response, operationErr := findingsApiService.GetOccurrence(getOccurrenceOptionsModel)
+				result, response, operationErr := findingsService.GetOccurrence(getOccurrenceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the GetOccurrenceOptions model with no property values
-				getOccurrenceOptionsModelNew := new(findingsapiv1.GetOccurrenceOptions)
+				getOccurrenceOptionsModelNew := new(findingsv1.GetOccurrenceOptions)
 				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = findingsApiService.GetOccurrence(getOccurrenceOptionsModelNew)
+				result, response, operationErr = findingsService.GetOccurrence(getOccurrenceOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
@@ -3313,65 +3318,65 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke UpdateOccurrence with error: Operation response processing error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the Context model
-				contextModel := new(findingsapiv1.Context)
+				contextModel := new(findingsv1.Context)
 				contextModel.Region = core.StringPtr("testString")
-				contextModel.ResourceCrn = core.StringPtr("testString")
+				contextModel.ResourceCRN = core.StringPtr("testString")
 				contextModel.ResourceID = core.StringPtr("testString")
 				contextModel.ResourceName = core.StringPtr("testString")
 				contextModel.ResourceType = core.StringPtr("testString")
-				contextModel.ServiceCrn = core.StringPtr("testString")
+				contextModel.ServiceCRN = core.StringPtr("testString")
 				contextModel.ServiceName = core.StringPtr("testString")
 				contextModel.EnvironmentName = core.StringPtr("testString")
 				contextModel.ComponentName = core.StringPtr("testString")
 				contextModel.ToolchainID = core.StringPtr("testString")
 
 				// Construct an instance of the RemediationStep model
-				remediationStepModel := new(findingsapiv1.RemediationStep)
+				remediationStepModel := new(findingsv1.RemediationStep)
 				remediationStepModel.Title = core.StringPtr("testString")
 				remediationStepModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the SocketAddress model
-				socketAddressModel := new(findingsapiv1.SocketAddress)
+				socketAddressModel := new(findingsv1.SocketAddress)
 				socketAddressModel.Address = core.StringPtr("testString")
 				socketAddressModel.Port = core.Int64Ptr(int64(38))
 
 				// Construct an instance of the NetworkConnection model
-				networkConnectionModel := new(findingsapiv1.NetworkConnection)
+				networkConnectionModel := new(findingsv1.NetworkConnection)
 				networkConnectionModel.Direction = core.StringPtr("testString")
 				networkConnectionModel.Protocol = core.StringPtr("testString")
 				networkConnectionModel.Client = socketAddressModel
 				networkConnectionModel.Server = socketAddressModel
 
 				// Construct an instance of the DataTransferred model
-				dataTransferredModel := new(findingsapiv1.DataTransferred)
+				dataTransferredModel := new(findingsv1.DataTransferred)
 				dataTransferredModel.ClientBytes = core.Int64Ptr(int64(38))
 				dataTransferredModel.ServerBytes = core.Int64Ptr(int64(38))
 				dataTransferredModel.ClientPackets = core.Int64Ptr(int64(38))
 				dataTransferredModel.ServerPackets = core.Int64Ptr(int64(38))
 
 				// Construct an instance of the Finding model
-				findingModel := new(findingsapiv1.Finding)
+				findingModel := new(findingsv1.Finding)
 				findingModel.Severity = core.StringPtr("LOW")
 				findingModel.Certainty = core.StringPtr("LOW")
-				findingModel.NextSteps = []findingsapiv1.RemediationStep{*remediationStepModel}
+				findingModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
 				findingModel.NetworkConnection = networkConnectionModel
 				findingModel.DataTransferred = dataTransferredModel
 
 				// Construct an instance of the Kpi model
-				kpiModel := new(findingsapiv1.Kpi)
+				kpiModel := new(findingsv1.Kpi)
 				kpiModel.Value = core.Float64Ptr(float64(72.5))
 				kpiModel.Total = core.Float64Ptr(float64(72.5))
 
 				// Construct an instance of the UpdateOccurrenceOptions model
-				updateOccurrenceOptionsModel := new(findingsapiv1.UpdateOccurrenceOptions)
+				updateOccurrenceOptionsModel := new(findingsv1.UpdateOccurrenceOptions)
 				updateOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
@@ -3389,14 +3394,14 @@ var _ = Describe(`FindingsApiV1`, func() {
 				updateOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := findingsApiService.UpdateOccurrence(updateOccurrenceOptionsModel)
+				result, response, operationErr := findingsService.UpdateOccurrence(updateOccurrenceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
 
 				// Enable retries and test again
-				findingsApiService.EnableRetries(0, 0)
-				result, response, operationErr = findingsApiService.UpdateOccurrence(updateOccurrenceOptionsModel)
+				findingsService.EnableRetries(0, 0)
+				result, response, operationErr = findingsService.UpdateOccurrence(updateOccurrenceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
@@ -3442,70 +3447,70 @@ var _ = Describe(`FindingsApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCrn", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCrn", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}`)
+					fmt.Fprintf(res, "%s", `{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCRN", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCRN", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}`)
 				}))
 			})
 			It(`Invoke UpdateOccurrence successfully with retries`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
-				findingsApiService.EnableRetries(0, 0)
+				Expect(findingsService).ToNot(BeNil())
+				findingsService.EnableRetries(0, 0)
 
 				// Construct an instance of the Context model
-				contextModel := new(findingsapiv1.Context)
+				contextModel := new(findingsv1.Context)
 				contextModel.Region = core.StringPtr("testString")
-				contextModel.ResourceCrn = core.StringPtr("testString")
+				contextModel.ResourceCRN = core.StringPtr("testString")
 				contextModel.ResourceID = core.StringPtr("testString")
 				contextModel.ResourceName = core.StringPtr("testString")
 				contextModel.ResourceType = core.StringPtr("testString")
-				contextModel.ServiceCrn = core.StringPtr("testString")
+				contextModel.ServiceCRN = core.StringPtr("testString")
 				contextModel.ServiceName = core.StringPtr("testString")
 				contextModel.EnvironmentName = core.StringPtr("testString")
 				contextModel.ComponentName = core.StringPtr("testString")
 				contextModel.ToolchainID = core.StringPtr("testString")
 
 				// Construct an instance of the RemediationStep model
-				remediationStepModel := new(findingsapiv1.RemediationStep)
+				remediationStepModel := new(findingsv1.RemediationStep)
 				remediationStepModel.Title = core.StringPtr("testString")
 				remediationStepModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the SocketAddress model
-				socketAddressModel := new(findingsapiv1.SocketAddress)
+				socketAddressModel := new(findingsv1.SocketAddress)
 				socketAddressModel.Address = core.StringPtr("testString")
 				socketAddressModel.Port = core.Int64Ptr(int64(38))
 
 				// Construct an instance of the NetworkConnection model
-				networkConnectionModel := new(findingsapiv1.NetworkConnection)
+				networkConnectionModel := new(findingsv1.NetworkConnection)
 				networkConnectionModel.Direction = core.StringPtr("testString")
 				networkConnectionModel.Protocol = core.StringPtr("testString")
 				networkConnectionModel.Client = socketAddressModel
 				networkConnectionModel.Server = socketAddressModel
 
 				// Construct an instance of the DataTransferred model
-				dataTransferredModel := new(findingsapiv1.DataTransferred)
+				dataTransferredModel := new(findingsv1.DataTransferred)
 				dataTransferredModel.ClientBytes = core.Int64Ptr(int64(38))
 				dataTransferredModel.ServerBytes = core.Int64Ptr(int64(38))
 				dataTransferredModel.ClientPackets = core.Int64Ptr(int64(38))
 				dataTransferredModel.ServerPackets = core.Int64Ptr(int64(38))
 
 				// Construct an instance of the Finding model
-				findingModel := new(findingsapiv1.Finding)
+				findingModel := new(findingsv1.Finding)
 				findingModel.Severity = core.StringPtr("LOW")
 				findingModel.Certainty = core.StringPtr("LOW")
-				findingModel.NextSteps = []findingsapiv1.RemediationStep{*remediationStepModel}
+				findingModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
 				findingModel.NetworkConnection = networkConnectionModel
 				findingModel.DataTransferred = dataTransferredModel
 
 				// Construct an instance of the Kpi model
-				kpiModel := new(findingsapiv1.Kpi)
+				kpiModel := new(findingsv1.Kpi)
 				kpiModel.Value = core.Float64Ptr(float64(72.5))
 				kpiModel.Total = core.Float64Ptr(float64(72.5))
 
 				// Construct an instance of the UpdateOccurrenceOptions model
-				updateOccurrenceOptionsModel := new(findingsapiv1.UpdateOccurrenceOptions)
+				updateOccurrenceOptionsModel := new(findingsv1.UpdateOccurrenceOptions)
 				updateOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
@@ -3526,13 +3531,13 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Invoke operation with a Context to test a timeout error
 				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc()
-				_, _, operationErr := findingsApiService.UpdateOccurrenceWithContext(ctx, updateOccurrenceOptionsModel)
+				_, _, operationErr := findingsService.UpdateOccurrenceWithContext(ctx, updateOccurrenceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 
 				// Disable retries and test again
-				findingsApiService.DisableRetries()
-				result, response, operationErr := findingsApiService.UpdateOccurrence(updateOccurrenceOptionsModel)
+				findingsService.DisableRetries()
+				result, response, operationErr := findingsService.UpdateOccurrence(updateOccurrenceOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
@@ -3540,7 +3545,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc2()
-				_, _, operationErr = findingsApiService.UpdateOccurrenceWithContext(ctx, updateOccurrenceOptionsModel)
+				_, _, operationErr = findingsService.UpdateOccurrenceWithContext(ctx, updateOccurrenceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
@@ -3578,75 +3583,75 @@ var _ = Describe(`FindingsApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCrn", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCrn", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}`)
+					fmt.Fprintf(res, "%s", `{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCRN", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCRN", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}`)
 				}))
 			})
 			It(`Invoke UpdateOccurrence successfully`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := findingsApiService.UpdateOccurrence(nil)
+				result, response, operationErr := findingsService.UpdateOccurrence(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the Context model
-				contextModel := new(findingsapiv1.Context)
+				contextModel := new(findingsv1.Context)
 				contextModel.Region = core.StringPtr("testString")
-				contextModel.ResourceCrn = core.StringPtr("testString")
+				contextModel.ResourceCRN = core.StringPtr("testString")
 				contextModel.ResourceID = core.StringPtr("testString")
 				contextModel.ResourceName = core.StringPtr("testString")
 				contextModel.ResourceType = core.StringPtr("testString")
-				contextModel.ServiceCrn = core.StringPtr("testString")
+				contextModel.ServiceCRN = core.StringPtr("testString")
 				contextModel.ServiceName = core.StringPtr("testString")
 				contextModel.EnvironmentName = core.StringPtr("testString")
 				contextModel.ComponentName = core.StringPtr("testString")
 				contextModel.ToolchainID = core.StringPtr("testString")
 
 				// Construct an instance of the RemediationStep model
-				remediationStepModel := new(findingsapiv1.RemediationStep)
+				remediationStepModel := new(findingsv1.RemediationStep)
 				remediationStepModel.Title = core.StringPtr("testString")
 				remediationStepModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the SocketAddress model
-				socketAddressModel := new(findingsapiv1.SocketAddress)
+				socketAddressModel := new(findingsv1.SocketAddress)
 				socketAddressModel.Address = core.StringPtr("testString")
 				socketAddressModel.Port = core.Int64Ptr(int64(38))
 
 				// Construct an instance of the NetworkConnection model
-				networkConnectionModel := new(findingsapiv1.NetworkConnection)
+				networkConnectionModel := new(findingsv1.NetworkConnection)
 				networkConnectionModel.Direction = core.StringPtr("testString")
 				networkConnectionModel.Protocol = core.StringPtr("testString")
 				networkConnectionModel.Client = socketAddressModel
 				networkConnectionModel.Server = socketAddressModel
 
 				// Construct an instance of the DataTransferred model
-				dataTransferredModel := new(findingsapiv1.DataTransferred)
+				dataTransferredModel := new(findingsv1.DataTransferred)
 				dataTransferredModel.ClientBytes = core.Int64Ptr(int64(38))
 				dataTransferredModel.ServerBytes = core.Int64Ptr(int64(38))
 				dataTransferredModel.ClientPackets = core.Int64Ptr(int64(38))
 				dataTransferredModel.ServerPackets = core.Int64Ptr(int64(38))
 
 				// Construct an instance of the Finding model
-				findingModel := new(findingsapiv1.Finding)
+				findingModel := new(findingsv1.Finding)
 				findingModel.Severity = core.StringPtr("LOW")
 				findingModel.Certainty = core.StringPtr("LOW")
-				findingModel.NextSteps = []findingsapiv1.RemediationStep{*remediationStepModel}
+				findingModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
 				findingModel.NetworkConnection = networkConnectionModel
 				findingModel.DataTransferred = dataTransferredModel
 
 				// Construct an instance of the Kpi model
-				kpiModel := new(findingsapiv1.Kpi)
+				kpiModel := new(findingsv1.Kpi)
 				kpiModel.Value = core.Float64Ptr(float64(72.5))
 				kpiModel.Total = core.Float64Ptr(float64(72.5))
 
 				// Construct an instance of the UpdateOccurrenceOptions model
-				updateOccurrenceOptionsModel := new(findingsapiv1.UpdateOccurrenceOptions)
+				updateOccurrenceOptionsModel := new(findingsv1.UpdateOccurrenceOptions)
 				updateOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
@@ -3665,72 +3670,72 @@ var _ = Describe(`FindingsApiV1`, func() {
 				updateOccurrenceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = findingsApiService.UpdateOccurrence(updateOccurrenceOptionsModel)
+				result, response, operationErr = findingsService.UpdateOccurrence(updateOccurrenceOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
 			})
 			It(`Invoke UpdateOccurrence with error: Operation validation and request error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the Context model
-				contextModel := new(findingsapiv1.Context)
+				contextModel := new(findingsv1.Context)
 				contextModel.Region = core.StringPtr("testString")
-				contextModel.ResourceCrn = core.StringPtr("testString")
+				contextModel.ResourceCRN = core.StringPtr("testString")
 				contextModel.ResourceID = core.StringPtr("testString")
 				contextModel.ResourceName = core.StringPtr("testString")
 				contextModel.ResourceType = core.StringPtr("testString")
-				contextModel.ServiceCrn = core.StringPtr("testString")
+				contextModel.ServiceCRN = core.StringPtr("testString")
 				contextModel.ServiceName = core.StringPtr("testString")
 				contextModel.EnvironmentName = core.StringPtr("testString")
 				contextModel.ComponentName = core.StringPtr("testString")
 				contextModel.ToolchainID = core.StringPtr("testString")
 
 				// Construct an instance of the RemediationStep model
-				remediationStepModel := new(findingsapiv1.RemediationStep)
+				remediationStepModel := new(findingsv1.RemediationStep)
 				remediationStepModel.Title = core.StringPtr("testString")
 				remediationStepModel.URL = core.StringPtr("testString")
 
 				// Construct an instance of the SocketAddress model
-				socketAddressModel := new(findingsapiv1.SocketAddress)
+				socketAddressModel := new(findingsv1.SocketAddress)
 				socketAddressModel.Address = core.StringPtr("testString")
 				socketAddressModel.Port = core.Int64Ptr(int64(38))
 
 				// Construct an instance of the NetworkConnection model
-				networkConnectionModel := new(findingsapiv1.NetworkConnection)
+				networkConnectionModel := new(findingsv1.NetworkConnection)
 				networkConnectionModel.Direction = core.StringPtr("testString")
 				networkConnectionModel.Protocol = core.StringPtr("testString")
 				networkConnectionModel.Client = socketAddressModel
 				networkConnectionModel.Server = socketAddressModel
 
 				// Construct an instance of the DataTransferred model
-				dataTransferredModel := new(findingsapiv1.DataTransferred)
+				dataTransferredModel := new(findingsv1.DataTransferred)
 				dataTransferredModel.ClientBytes = core.Int64Ptr(int64(38))
 				dataTransferredModel.ServerBytes = core.Int64Ptr(int64(38))
 				dataTransferredModel.ClientPackets = core.Int64Ptr(int64(38))
 				dataTransferredModel.ServerPackets = core.Int64Ptr(int64(38))
 
 				// Construct an instance of the Finding model
-				findingModel := new(findingsapiv1.Finding)
+				findingModel := new(findingsv1.Finding)
 				findingModel.Severity = core.StringPtr("LOW")
 				findingModel.Certainty = core.StringPtr("LOW")
-				findingModel.NextSteps = []findingsapiv1.RemediationStep{*remediationStepModel}
+				findingModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
 				findingModel.NetworkConnection = networkConnectionModel
 				findingModel.DataTransferred = dataTransferredModel
 
 				// Construct an instance of the Kpi model
-				kpiModel := new(findingsapiv1.Kpi)
+				kpiModel := new(findingsv1.Kpi)
 				kpiModel.Value = core.Float64Ptr(float64(72.5))
 				kpiModel.Total = core.Float64Ptr(float64(72.5))
 
 				// Construct an instance of the UpdateOccurrenceOptions model
-				updateOccurrenceOptionsModel := new(findingsapiv1.UpdateOccurrenceOptions)
+				updateOccurrenceOptionsModel := new(findingsv1.UpdateOccurrenceOptions)
 				updateOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
@@ -3748,17 +3753,17 @@ var _ = Describe(`FindingsApiV1`, func() {
 				updateOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := findingsApiService.SetServiceURL("")
+				err := findingsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				result, response, operationErr := findingsApiService.UpdateOccurrence(updateOccurrenceOptionsModel)
+				result, response, operationErr := findingsService.UpdateOccurrence(updateOccurrenceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the UpdateOccurrenceOptions model with no property values
-				updateOccurrenceOptionsModelNew := new(findingsapiv1.UpdateOccurrenceOptions)
+				updateOccurrenceOptionsModelNew := new(findingsv1.UpdateOccurrenceOptions)
 				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = findingsApiService.UpdateOccurrence(updateOccurrenceOptionsModelNew)
+				result, response, operationErr = findingsService.UpdateOccurrence(updateOccurrenceOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
@@ -3786,20 +3791,20 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke DeleteOccurrence successfully`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				response, operationErr := findingsApiService.DeleteOccurrence(nil)
+				response, operationErr := findingsService.DeleteOccurrence(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 
 				// Construct an instance of the DeleteOccurrenceOptions model
-				deleteOccurrenceOptionsModel := new(findingsapiv1.DeleteOccurrenceOptions)
+				deleteOccurrenceOptionsModel := new(findingsv1.DeleteOccurrenceOptions)
 				deleteOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				deleteOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				deleteOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
@@ -3807,36 +3812,36 @@ var _ = Describe(`FindingsApiV1`, func() {
 				deleteOccurrenceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				response, operationErr = findingsApiService.DeleteOccurrence(deleteOccurrenceOptionsModel)
+				response, operationErr = findingsService.DeleteOccurrence(deleteOccurrenceOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 			})
 			It(`Invoke DeleteOccurrence with error: Operation validation and request error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteOccurrenceOptions model
-				deleteOccurrenceOptionsModel := new(findingsapiv1.DeleteOccurrenceOptions)
+				deleteOccurrenceOptionsModel := new(findingsv1.DeleteOccurrenceOptions)
 				deleteOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				deleteOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				deleteOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
 				deleteOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
 				deleteOccurrenceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := findingsApiService.SetServiceURL("")
+				err := findingsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				response, operationErr := findingsApiService.DeleteOccurrence(deleteOccurrenceOptionsModel)
+				response, operationErr := findingsService.DeleteOccurrence(deleteOccurrenceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				// Construct a second instance of the DeleteOccurrenceOptions model with no property values
-				deleteOccurrenceOptionsModelNew := new(findingsapiv1.DeleteOccurrenceOptions)
+				deleteOccurrenceOptionsModelNew := new(findingsv1.DeleteOccurrenceOptions)
 				// Invoke operation with invalid model (negative test)
-				response, operationErr = findingsApiService.DeleteOccurrence(deleteOccurrenceOptionsModelNew)
+				response, operationErr = findingsService.DeleteOccurrence(deleteOccurrenceOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 			})
@@ -3847,28 +3852,28 @@ var _ = Describe(`FindingsApiV1`, func() {
 	})
 	Describe(`Service constructor tests`, func() {
 		It(`Instantiate service client`, func() {
-			findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 				Authenticator: &core.NoAuthAuthenticator{},
 			})
-			Expect(findingsApiService).ToNot(BeNil())
+			Expect(findingsService).ToNot(BeNil())
 			Expect(serviceErr).To(BeNil())
 		})
 		It(`Instantiate service client with error: Invalid URL`, func() {
-			findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 				URL: "{BAD_URL_STRING",
 			})
-			Expect(findingsApiService).To(BeNil())
+			Expect(findingsService).To(BeNil())
 			Expect(serviceErr).ToNot(BeNil())
 		})
 		It(`Instantiate service client with error: Invalid Auth`, func() {
-			findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
-				URL: "https://findingsapiv1/api",
+			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
+				URL: "https://findingsv1/api",
 				Authenticator: &core.BasicAuthenticator{
 					Username: "",
 					Password: "",
 				},
 			})
-			Expect(findingsApiService).To(BeNil())
+			Expect(findingsService).To(BeNil())
 			Expect(serviceErr).ToNot(BeNil())
 		})
 	})
@@ -3876,68 +3881,71 @@ var _ = Describe(`FindingsApiV1`, func() {
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"FINDINGS_API_URL":       "https://findingsapiv1/api",
-				"FINDINGS_API_AUTH_TYPE": "noauth",
+				"FINDINGS_URL": "https://findingsv1/api",
+				"FINDINGS_AUTH_TYPE": "noauth",
 			}
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1UsingExternalConfig(&findingsapiv1.FindingsApiV1Options{})
-				Expect(findingsApiService).ToNot(BeNil())
+				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
+				})
+				Expect(findingsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
 
-				clone := findingsApiService.Clone()
+				clone := findingsService.Clone()
 				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != findingsApiService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(findingsApiService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(findingsApiService.Service.Options.Authenticator))
+				Expect(clone.Service != findingsService.Service).To(BeTrue())
+				Expect(clone.GetServiceURL()).To(Equal(findingsService.GetServiceURL()))
+				Expect(clone.Service.Options.Authenticator).To(Equal(findingsService.Service.Options.Authenticator))
 			})
 			It(`Create service client using external config and set url from constructor successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1UsingExternalConfig(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
 					URL: "https://testService/api",
 				})
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService.Service.GetServiceURL()).To(Equal("https://testService/api"))
+				Expect(findingsService.Service.GetServiceURL()).To(Equal("https://testService/api"))
 				ClearTestEnvironment(testEnvironment)
 
-				clone := findingsApiService.Clone()
+				clone := findingsService.Clone()
 				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != findingsApiService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(findingsApiService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(findingsApiService.Service.Options.Authenticator))
+				Expect(clone.Service != findingsService.Service).To(BeTrue())
+				Expect(clone.GetServiceURL()).To(Equal(findingsService.GetServiceURL()))
+				Expect(clone.Service.Options.Authenticator).To(Equal(findingsService.Service.Options.Authenticator))
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1UsingExternalConfig(&findingsapiv1.FindingsApiV1Options{})
-				err := findingsApiService.SetServiceURL("https://testService/api")
+				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
+				})
+				err := findingsService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService.Service.GetServiceURL()).To(Equal("https://testService/api"))
+				Expect(findingsService.Service.GetServiceURL()).To(Equal("https://testService/api"))
 				ClearTestEnvironment(testEnvironment)
 
-				clone := findingsApiService.Clone()
+				clone := findingsService.Clone()
 				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != findingsApiService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(findingsApiService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(findingsApiService.Service.Options.Authenticator))
+				Expect(clone.Service != findingsService.Service).To(BeTrue())
+				Expect(clone.GetServiceURL()).To(Equal(findingsService.GetServiceURL()))
+				Expect(clone.Service.Options.Authenticator).To(Equal(findingsService.Service.Options.Authenticator))
 			})
 		})
 		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"FINDINGS_API_URL":       "https://findingsapiv1/api",
-				"FINDINGS_API_AUTH_TYPE": "someOtherAuth",
+				"FINDINGS_URL": "https://findingsv1/api",
+				"FINDINGS_AUTH_TYPE": "someOtherAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1UsingExternalConfig(&findingsapiv1.FindingsApiV1Options{})
+			findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
+			})
 
 			It(`Instantiate service client with error`, func() {
-				Expect(findingsApiService).To(BeNil())
+				Expect(findingsService).To(BeNil())
 				Expect(serviceErr).ToNot(BeNil())
 				ClearTestEnvironment(testEnvironment)
 			})
@@ -3945,16 +3953,16 @@ var _ = Describe(`FindingsApiV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"FINDINGS_API_AUTH_TYPE": "NOAuth",
+				"FINDINGS_AUTH_TYPE":   "NOAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1UsingExternalConfig(&findingsapiv1.FindingsApiV1Options{
+			findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
 				URL: "{BAD_URL_STRING",
 			})
 
 			It(`Instantiate service client with error`, func() {
-				Expect(findingsApiService).To(BeNil())
+				Expect(findingsService).To(BeNil())
 				Expect(serviceErr).ToNot(BeNil())
 				ClearTestEnvironment(testEnvironment)
 			})
@@ -3964,7 +3972,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 		It(`GetServiceURLForRegion(region string)`, func() {
 			var url string
 			var err error
-			url, err = findingsapiv1.GetServiceURLForRegion("INVALID_REGION")
+			url, err = findingsv1.GetServiceURLForRegion("INVALID_REGION")
 			Expect(url).To(BeEmpty())
 			Expect(err).ToNot(BeNil())
 			fmt.Fprintf(GinkgoWriter, "Expected error: %s\n", err.Error())
@@ -3992,15 +4000,15 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke ListProviders with error: Operation response processing error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the ListProvidersOptions model
-				listProvidersOptionsModel := new(findingsapiv1.ListProvidersOptions)
+				listProvidersOptionsModel := new(findingsv1.ListProvidersOptions)
 				listProvidersOptionsModel.AccountID = core.StringPtr("testString")
 				listProvidersOptionsModel.TransactionID = core.StringPtr("testString")
 				listProvidersOptionsModel.Limit = core.Int64Ptr(int64(2))
@@ -4009,14 +4017,14 @@ var _ = Describe(`FindingsApiV1`, func() {
 				listProvidersOptionsModel.EndProviderID = core.StringPtr("testString")
 				listProvidersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := findingsApiService.ListProviders(listProvidersOptionsModel)
+				result, response, operationErr := findingsService.ListProviders(listProvidersOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
 
 				// Enable retries and test again
-				findingsApiService.EnableRetries(0, 0)
-				result, response, operationErr = findingsApiService.ListProviders(listProvidersOptionsModel)
+				findingsService.EnableRetries(0, 0)
+				result, response, operationErr = findingsService.ListProviders(listProvidersOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
@@ -4054,16 +4062,16 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke ListProviders successfully with retries`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
-				findingsApiService.EnableRetries(0, 0)
+				Expect(findingsService).ToNot(BeNil())
+				findingsService.EnableRetries(0, 0)
 
 				// Construct an instance of the ListProvidersOptions model
-				listProvidersOptionsModel := new(findingsapiv1.ListProvidersOptions)
+				listProvidersOptionsModel := new(findingsv1.ListProvidersOptions)
 				listProvidersOptionsModel.AccountID = core.StringPtr("testString")
 				listProvidersOptionsModel.TransactionID = core.StringPtr("testString")
 				listProvidersOptionsModel.Limit = core.Int64Ptr(int64(2))
@@ -4075,13 +4083,13 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Invoke operation with a Context to test a timeout error
 				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc()
-				_, _, operationErr := findingsApiService.ListProvidersWithContext(ctx, listProvidersOptionsModel)
+				_, _, operationErr := findingsService.ListProvidersWithContext(ctx, listProvidersOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 
 				// Disable retries and test again
-				findingsApiService.DisableRetries()
-				result, response, operationErr := findingsApiService.ListProviders(listProvidersOptionsModel)
+				findingsService.DisableRetries()
+				result, response, operationErr := findingsService.ListProviders(listProvidersOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
@@ -4089,7 +4097,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc2()
-				_, _, operationErr = findingsApiService.ListProvidersWithContext(ctx, listProvidersOptionsModel)
+				_, _, operationErr = findingsService.ListProvidersWithContext(ctx, listProvidersOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
@@ -4119,21 +4127,21 @@ var _ = Describe(`FindingsApiV1`, func() {
 				}))
 			})
 			It(`Invoke ListProviders successfully`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := findingsApiService.ListProviders(nil)
+				result, response, operationErr := findingsService.ListProviders(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the ListProvidersOptions model
-				listProvidersOptionsModel := new(findingsapiv1.ListProvidersOptions)
+				listProvidersOptionsModel := new(findingsv1.ListProvidersOptions)
 				listProvidersOptionsModel.AccountID = core.StringPtr("testString")
 				listProvidersOptionsModel.TransactionID = core.StringPtr("testString")
 				listProvidersOptionsModel.Limit = core.Int64Ptr(int64(2))
@@ -4143,22 +4151,22 @@ var _ = Describe(`FindingsApiV1`, func() {
 				listProvidersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = findingsApiService.ListProviders(listProvidersOptionsModel)
+				result, response, operationErr = findingsService.ListProviders(listProvidersOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
 			})
 			It(`Invoke ListProviders with error: Operation validation and request error`, func() {
-				findingsApiService, serviceErr := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(findingsApiService).ToNot(BeNil())
+				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the ListProvidersOptions model
-				listProvidersOptionsModel := new(findingsapiv1.ListProvidersOptions)
+				listProvidersOptionsModel := new(findingsv1.ListProvidersOptions)
 				listProvidersOptionsModel.AccountID = core.StringPtr("testString")
 				listProvidersOptionsModel.TransactionID = core.StringPtr("testString")
 				listProvidersOptionsModel.Limit = core.Int64Ptr(int64(2))
@@ -4167,17 +4175,17 @@ var _ = Describe(`FindingsApiV1`, func() {
 				listProvidersOptionsModel.EndProviderID = core.StringPtr("testString")
 				listProvidersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := findingsApiService.SetServiceURL("")
+				err := findingsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				result, response, operationErr := findingsApiService.ListProviders(listProvidersOptionsModel)
+				result, response, operationErr := findingsService.ListProviders(listProvidersOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the ListProvidersOptions model with no property values
-				listProvidersOptionsModelNew := new(findingsapiv1.ListProvidersOptions)
+				listProvidersOptionsModelNew := new(findingsv1.ListProvidersOptions)
 				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = findingsApiService.ListProviders(listProvidersOptionsModelNew)
+				result, response, operationErr = findingsService.ListProviders(listProvidersOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
@@ -4189,8 +4197,8 @@ var _ = Describe(`FindingsApiV1`, func() {
 	})
 	Describe(`Model constructor tests`, func() {
 		Context(`Using a service client instance`, func() {
-			findingsApiService, _ := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
-				URL:           "http://findingsapiv1modelgenerator.com",
+			findingsService, _ := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
+				URL:           "http://findingsv1modelgenerator.com",
 				Authenticator: &core.NoAuthAuthenticator{},
 			})
 			It(`Invoke NewCard successfully`, func() {
@@ -4198,14 +4206,14 @@ var _ = Describe(`FindingsApiV1`, func() {
 				title := "testString"
 				subtitle := "testString"
 				findingNoteNames := []string{"testString"}
-				elements := []findingsapiv1.CardElementIntf{}
-				model, err := findingsApiService.NewCard(section, title, subtitle, findingNoteNames, elements)
+				elements := []findingsv1.CardElementIntf{}
+				model, err := findingsService.NewCard(section, title, subtitle, findingNoteNames, elements)
 				Expect(model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewCreateNoteOptions successfully`, func() {
 				// Construct an instance of the Reporter model
-				reporterModel := new(findingsapiv1.Reporter)
+				reporterModel := new(findingsv1.Reporter)
 				Expect(reporterModel).ToNot(BeNil())
 				reporterModel.ID = core.StringPtr("testString")
 				reporterModel.Title = core.StringPtr("testString")
@@ -4214,16 +4222,16 @@ var _ = Describe(`FindingsApiV1`, func() {
 				Expect(reporterModel.Title).To(Equal(core.StringPtr("testString")))
 				Expect(reporterModel.URL).To(Equal(core.StringPtr("testString")))
 
-				// Construct an instance of the ApiNoteRelatedURL model
-				apiNoteRelatedUrlModel := new(findingsapiv1.ApiNoteRelatedURL)
-				Expect(apiNoteRelatedUrlModel).ToNot(BeNil())
-				apiNoteRelatedUrlModel.Label = core.StringPtr("testString")
-				apiNoteRelatedUrlModel.URL = core.StringPtr("testString")
-				Expect(apiNoteRelatedUrlModel.Label).To(Equal(core.StringPtr("testString")))
-				Expect(apiNoteRelatedUrlModel.URL).To(Equal(core.StringPtr("testString")))
+				// Construct an instance of the APINoteRelatedURL model
+				apiNoteRelatedURLModel := new(findingsv1.APINoteRelatedURL)
+				Expect(apiNoteRelatedURLModel).ToNot(BeNil())
+				apiNoteRelatedURLModel.Label = core.StringPtr("testString")
+				apiNoteRelatedURLModel.URL = core.StringPtr("testString")
+				Expect(apiNoteRelatedURLModel.Label).To(Equal(core.StringPtr("testString")))
+				Expect(apiNoteRelatedURLModel.URL).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the RemediationStep model
-				remediationStepModel := new(findingsapiv1.RemediationStep)
+				remediationStepModel := new(findingsv1.RemediationStep)
 				Expect(remediationStepModel).ToNot(BeNil())
 				remediationStepModel.Title = core.StringPtr("testString")
 				remediationStepModel.URL = core.StringPtr("testString")
@@ -4231,21 +4239,21 @@ var _ = Describe(`FindingsApiV1`, func() {
 				Expect(remediationStepModel.URL).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the FindingType model
-				findingTypeModel := new(findingsapiv1.FindingType)
+				findingTypeModel := new(findingsv1.FindingType)
 				Expect(findingTypeModel).ToNot(BeNil())
 				findingTypeModel.Severity = core.StringPtr("LOW")
-				findingTypeModel.NextSteps = []findingsapiv1.RemediationStep{*remediationStepModel}
+				findingTypeModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
 				Expect(findingTypeModel.Severity).To(Equal(core.StringPtr("LOW")))
-				Expect(findingTypeModel.NextSteps).To(Equal([]findingsapiv1.RemediationStep{*remediationStepModel}))
+				Expect(findingTypeModel.NextSteps).To(Equal([]findingsv1.RemediationStep{*remediationStepModel}))
 
 				// Construct an instance of the KpiType model
-				kpiTypeModel := new(findingsapiv1.KpiType)
+				kpiTypeModel := new(findingsv1.KpiType)
 				Expect(kpiTypeModel).ToNot(BeNil())
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
 				Expect(kpiTypeModel.AggregationType).To(Equal(core.StringPtr("SUM")))
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
-				valueTypeModel := new(findingsapiv1.ValueTypeFindingCountValueType)
+				valueTypeModel := new(findingsv1.ValueTypeFindingCountValueType)
 				Expect(valueTypeModel).ToNot(BeNil())
 				valueTypeModel.Kind = core.StringPtr("FINDING_COUNT")
 				valueTypeModel.FindingNoteNames = []string{"testString"}
@@ -4255,21 +4263,21 @@ var _ = Describe(`FindingsApiV1`, func() {
 				Expect(valueTypeModel.Text).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the CardElementTimeSeriesCardElement model
-				cardElementModel := new(findingsapiv1.CardElementTimeSeriesCardElement)
+				cardElementModel := new(findingsv1.CardElementTimeSeriesCardElement)
 				Expect(cardElementModel).ToNot(BeNil())
 				cardElementModel.Text = core.StringPtr("testString")
 				cardElementModel.DefaultInterval = core.StringPtr("testString")
 				cardElementModel.Kind = core.StringPtr("TIME_SERIES")
 				cardElementModel.DefaultTimeRange = core.StringPtr("1d")
-				cardElementModel.ValueTypes = []findingsapiv1.ValueTypeIntf{valueTypeModel}
+				cardElementModel.ValueTypes = []findingsv1.ValueTypeIntf{valueTypeModel}
 				Expect(cardElementModel.Text).To(Equal(core.StringPtr("testString")))
 				Expect(cardElementModel.DefaultInterval).To(Equal(core.StringPtr("testString")))
 				Expect(cardElementModel.Kind).To(Equal(core.StringPtr("TIME_SERIES")))
 				Expect(cardElementModel.DefaultTimeRange).To(Equal(core.StringPtr("1d")))
-				Expect(cardElementModel.ValueTypes).To(Equal([]findingsapiv1.ValueTypeIntf{valueTypeModel}))
+				Expect(cardElementModel.ValueTypes).To(Equal([]findingsv1.ValueTypeIntf{valueTypeModel}))
 
 				// Construct an instance of the Card model
-				cardModel := new(findingsapiv1.Card)
+				cardModel := new(findingsv1.Card)
 				Expect(cardModel).ToNot(BeNil())
 				cardModel.Section = core.StringPtr("testString")
 				cardModel.Title = core.StringPtr("testString")
@@ -4279,7 +4287,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				cardModel.RequiresConfiguration = core.BoolPtr(true)
 				cardModel.BadgeText = core.StringPtr("testString")
 				cardModel.BadgeImage = core.StringPtr("testString")
-				cardModel.Elements = []findingsapiv1.CardElementIntf{cardElementModel}
+				cardModel.Elements = []findingsv1.CardElementIntf{cardElementModel}
 				Expect(cardModel.Section).To(Equal(core.StringPtr("testString")))
 				Expect(cardModel.Title).To(Equal(core.StringPtr("testString")))
 				Expect(cardModel.Subtitle).To(Equal(core.StringPtr("testString")))
@@ -4288,10 +4296,10 @@ var _ = Describe(`FindingsApiV1`, func() {
 				Expect(cardModel.RequiresConfiguration).To(Equal(core.BoolPtr(true)))
 				Expect(cardModel.BadgeText).To(Equal(core.StringPtr("testString")))
 				Expect(cardModel.BadgeImage).To(Equal(core.StringPtr("testString")))
-				Expect(cardModel.Elements).To(Equal([]findingsapiv1.CardElementIntf{cardElementModel}))
+				Expect(cardModel.Elements).To(Equal([]findingsv1.CardElementIntf{cardElementModel}))
 
 				// Construct an instance of the Section model
-				sectionModel := new(findingsapiv1.Section)
+				sectionModel := new(findingsv1.Section)
 				Expect(sectionModel).ToNot(BeNil())
 				sectionModel.Title = core.StringPtr("testString")
 				sectionModel.Image = core.StringPtr("testString")
@@ -4305,8 +4313,8 @@ var _ = Describe(`FindingsApiV1`, func() {
 				createNoteOptionsLongDescription := "testString"
 				createNoteOptionsKind := "FINDING"
 				createNoteOptionsID := "testString"
-				var createNoteOptionsReportedBy *findingsapiv1.Reporter = nil
-				createNoteOptionsModel := findingsApiService.NewCreateNoteOptions(accountID, providerID, createNoteOptionsShortDescription, createNoteOptionsLongDescription, createNoteOptionsKind, createNoteOptionsID, createNoteOptionsReportedBy)
+				var createNoteOptionsReportedBy *findingsv1.Reporter = nil
+				createNoteOptionsModel := findingsService.NewCreateNoteOptions(accountID, providerID, createNoteOptionsShortDescription, createNoteOptionsLongDescription, createNoteOptionsKind, createNoteOptionsID, createNoteOptionsReportedBy)
 				createNoteOptionsModel.SetAccountID("testString")
 				createNoteOptionsModel.SetProviderID("testString")
 				createNoteOptionsModel.SetShortDescription("testString")
@@ -4314,7 +4322,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				createNoteOptionsModel.SetKind("FINDING")
 				createNoteOptionsModel.SetID("testString")
 				createNoteOptionsModel.SetReportedBy(reporterModel)
-				createNoteOptionsModel.SetRelatedURL([]findingsapiv1.ApiNoteRelatedURL{*apiNoteRelatedUrlModel})
+				createNoteOptionsModel.SetRelatedURL([]findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel})
 				createNoteOptionsModel.SetExpirationTime(CreateMockDateTime())
 				createNoteOptionsModel.SetCreateTime(CreateMockDateTime())
 				createNoteOptionsModel.SetUpdateTime(CreateMockDateTime())
@@ -4333,7 +4341,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				Expect(createNoteOptionsModel.Kind).To(Equal(core.StringPtr("FINDING")))
 				Expect(createNoteOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(createNoteOptionsModel.ReportedBy).To(Equal(reporterModel))
-				Expect(createNoteOptionsModel.RelatedURL).To(Equal([]findingsapiv1.ApiNoteRelatedURL{*apiNoteRelatedUrlModel}))
+				Expect(createNoteOptionsModel.RelatedURL).To(Equal([]findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}))
 				Expect(createNoteOptionsModel.ExpirationTime).To(Equal(CreateMockDateTime()))
 				Expect(createNoteOptionsModel.CreateTime).To(Equal(CreateMockDateTime()))
 				Expect(createNoteOptionsModel.UpdateTime).To(Equal(CreateMockDateTime()))
@@ -4347,31 +4355,31 @@ var _ = Describe(`FindingsApiV1`, func() {
 			})
 			It(`Invoke NewCreateOccurrenceOptions successfully`, func() {
 				// Construct an instance of the Context model
-				contextModel := new(findingsapiv1.Context)
+				contextModel := new(findingsv1.Context)
 				Expect(contextModel).ToNot(BeNil())
 				contextModel.Region = core.StringPtr("testString")
-				contextModel.ResourceCrn = core.StringPtr("testString")
+				contextModel.ResourceCRN = core.StringPtr("testString")
 				contextModel.ResourceID = core.StringPtr("testString")
 				contextModel.ResourceName = core.StringPtr("testString")
 				contextModel.ResourceType = core.StringPtr("testString")
-				contextModel.ServiceCrn = core.StringPtr("testString")
+				contextModel.ServiceCRN = core.StringPtr("testString")
 				contextModel.ServiceName = core.StringPtr("testString")
 				contextModel.EnvironmentName = core.StringPtr("testString")
 				contextModel.ComponentName = core.StringPtr("testString")
 				contextModel.ToolchainID = core.StringPtr("testString")
 				Expect(contextModel.Region).To(Equal(core.StringPtr("testString")))
-				Expect(contextModel.ResourceCrn).To(Equal(core.StringPtr("testString")))
+				Expect(contextModel.ResourceCRN).To(Equal(core.StringPtr("testString")))
 				Expect(contextModel.ResourceID).To(Equal(core.StringPtr("testString")))
 				Expect(contextModel.ResourceName).To(Equal(core.StringPtr("testString")))
 				Expect(contextModel.ResourceType).To(Equal(core.StringPtr("testString")))
-				Expect(contextModel.ServiceCrn).To(Equal(core.StringPtr("testString")))
+				Expect(contextModel.ServiceCRN).To(Equal(core.StringPtr("testString")))
 				Expect(contextModel.ServiceName).To(Equal(core.StringPtr("testString")))
 				Expect(contextModel.EnvironmentName).To(Equal(core.StringPtr("testString")))
 				Expect(contextModel.ComponentName).To(Equal(core.StringPtr("testString")))
 				Expect(contextModel.ToolchainID).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the RemediationStep model
-				remediationStepModel := new(findingsapiv1.RemediationStep)
+				remediationStepModel := new(findingsv1.RemediationStep)
 				Expect(remediationStepModel).ToNot(BeNil())
 				remediationStepModel.Title = core.StringPtr("testString")
 				remediationStepModel.URL = core.StringPtr("testString")
@@ -4379,7 +4387,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				Expect(remediationStepModel.URL).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the SocketAddress model
-				socketAddressModel := new(findingsapiv1.SocketAddress)
+				socketAddressModel := new(findingsv1.SocketAddress)
 				Expect(socketAddressModel).ToNot(BeNil())
 				socketAddressModel.Address = core.StringPtr("testString")
 				socketAddressModel.Port = core.Int64Ptr(int64(38))
@@ -4387,7 +4395,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				Expect(socketAddressModel.Port).To(Equal(core.Int64Ptr(int64(38))))
 
 				// Construct an instance of the NetworkConnection model
-				networkConnectionModel := new(findingsapiv1.NetworkConnection)
+				networkConnectionModel := new(findingsv1.NetworkConnection)
 				Expect(networkConnectionModel).ToNot(BeNil())
 				networkConnectionModel.Direction = core.StringPtr("testString")
 				networkConnectionModel.Protocol = core.StringPtr("testString")
@@ -4399,7 +4407,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				Expect(networkConnectionModel.Server).To(Equal(socketAddressModel))
 
 				// Construct an instance of the DataTransferred model
-				dataTransferredModel := new(findingsapiv1.DataTransferred)
+				dataTransferredModel := new(findingsv1.DataTransferred)
 				Expect(dataTransferredModel).ToNot(BeNil())
 				dataTransferredModel.ClientBytes = core.Int64Ptr(int64(38))
 				dataTransferredModel.ServerBytes = core.Int64Ptr(int64(38))
@@ -4411,21 +4419,21 @@ var _ = Describe(`FindingsApiV1`, func() {
 				Expect(dataTransferredModel.ServerPackets).To(Equal(core.Int64Ptr(int64(38))))
 
 				// Construct an instance of the Finding model
-				findingModel := new(findingsapiv1.Finding)
+				findingModel := new(findingsv1.Finding)
 				Expect(findingModel).ToNot(BeNil())
 				findingModel.Severity = core.StringPtr("LOW")
 				findingModel.Certainty = core.StringPtr("LOW")
-				findingModel.NextSteps = []findingsapiv1.RemediationStep{*remediationStepModel}
+				findingModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
 				findingModel.NetworkConnection = networkConnectionModel
 				findingModel.DataTransferred = dataTransferredModel
 				Expect(findingModel.Severity).To(Equal(core.StringPtr("LOW")))
 				Expect(findingModel.Certainty).To(Equal(core.StringPtr("LOW")))
-				Expect(findingModel.NextSteps).To(Equal([]findingsapiv1.RemediationStep{*remediationStepModel}))
+				Expect(findingModel.NextSteps).To(Equal([]findingsv1.RemediationStep{*remediationStepModel}))
 				Expect(findingModel.NetworkConnection).To(Equal(networkConnectionModel))
 				Expect(findingModel.DataTransferred).To(Equal(dataTransferredModel))
 
 				// Construct an instance of the Kpi model
-				kpiModel := new(findingsapiv1.Kpi)
+				kpiModel := new(findingsv1.Kpi)
 				Expect(kpiModel).ToNot(BeNil())
 				kpiModel.Value = core.Float64Ptr(float64(72.5))
 				kpiModel.Total = core.Float64Ptr(float64(72.5))
@@ -4438,7 +4446,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				createOccurrenceOptionsNoteName := "testString"
 				createOccurrenceOptionsKind := "FINDING"
 				createOccurrenceOptionsID := "testString"
-				createOccurrenceOptionsModel := findingsApiService.NewCreateOccurrenceOptions(accountID, providerID, createOccurrenceOptionsNoteName, createOccurrenceOptionsKind, createOccurrenceOptionsID)
+				createOccurrenceOptionsModel := findingsService.NewCreateOccurrenceOptions(accountID, providerID, createOccurrenceOptionsNoteName, createOccurrenceOptionsKind, createOccurrenceOptionsID)
 				createOccurrenceOptionsModel.SetAccountID("testString")
 				createOccurrenceOptionsModel.SetProviderID("testString")
 				createOccurrenceOptionsModel.SetNoteName("testString")
@@ -4478,7 +4486,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				accountID := "testString"
 				providerID := "testString"
 				noteID := "testString"
-				deleteNoteOptionsModel := findingsApiService.NewDeleteNoteOptions(accountID, providerID, noteID)
+				deleteNoteOptionsModel := findingsService.NewDeleteNoteOptions(accountID, providerID, noteID)
 				deleteNoteOptionsModel.SetAccountID("testString")
 				deleteNoteOptionsModel.SetProviderID("testString")
 				deleteNoteOptionsModel.SetNoteID("testString")
@@ -4496,7 +4504,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				accountID := "testString"
 				providerID := "testString"
 				occurrenceID := "testString"
-				deleteOccurrenceOptionsModel := findingsApiService.NewDeleteOccurrenceOptions(accountID, providerID, occurrenceID)
+				deleteOccurrenceOptionsModel := findingsService.NewDeleteOccurrenceOptions(accountID, providerID, occurrenceID)
 				deleteOccurrenceOptionsModel.SetAccountID("testString")
 				deleteOccurrenceOptionsModel.SetProviderID("testString")
 				deleteOccurrenceOptionsModel.SetOccurrenceID("testString")
@@ -4511,7 +4519,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 			})
 			It(`Invoke NewFindingType successfully`, func() {
 				severity := "LOW"
-				model, err := findingsApiService.NewFindingType(severity)
+				model, err := findingsService.NewFindingType(severity)
 				Expect(model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
@@ -4520,7 +4528,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				accountID := "testString"
 				providerID := "testString"
 				noteID := "testString"
-				getNoteOptionsModel := findingsApiService.NewGetNoteOptions(accountID, providerID, noteID)
+				getNoteOptionsModel := findingsService.NewGetNoteOptions(accountID, providerID, noteID)
 				getNoteOptionsModel.SetAccountID("testString")
 				getNoteOptionsModel.SetProviderID("testString")
 				getNoteOptionsModel.SetNoteID("testString")
@@ -4538,7 +4546,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				accountID := "testString"
 				providerID := "testString"
 				occurrenceID := "testString"
-				getOccurrenceNoteOptionsModel := findingsApiService.NewGetOccurrenceNoteOptions(accountID, providerID, occurrenceID)
+				getOccurrenceNoteOptionsModel := findingsService.NewGetOccurrenceNoteOptions(accountID, providerID, occurrenceID)
 				getOccurrenceNoteOptionsModel.SetAccountID("testString")
 				getOccurrenceNoteOptionsModel.SetProviderID("testString")
 				getOccurrenceNoteOptionsModel.SetOccurrenceID("testString")
@@ -4556,7 +4564,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				accountID := "testString"
 				providerID := "testString"
 				occurrenceID := "testString"
-				getOccurrenceOptionsModel := findingsApiService.NewGetOccurrenceOptions(accountID, providerID, occurrenceID)
+				getOccurrenceOptionsModel := findingsService.NewGetOccurrenceOptions(accountID, providerID, occurrenceID)
 				getOccurrenceOptionsModel.SetAccountID("testString")
 				getOccurrenceOptionsModel.SetProviderID("testString")
 				getOccurrenceOptionsModel.SetOccurrenceID("testString")
@@ -4571,13 +4579,13 @@ var _ = Describe(`FindingsApiV1`, func() {
 			})
 			It(`Invoke NewKpi successfully`, func() {
 				value := float64(72.5)
-				model, err := findingsApiService.NewKpi(value)
+				model, err := findingsService.NewKpi(value)
 				Expect(model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewKpiType successfully`, func() {
 				aggregationType := "SUM"
-				model, err := findingsApiService.NewKpiType(aggregationType)
+				model, err := findingsService.NewKpiType(aggregationType)
 				Expect(model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
@@ -4586,7 +4594,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				accountID := "testString"
 				providerID := "testString"
 				noteID := "testString"
-				listNoteOccurrencesOptionsModel := findingsApiService.NewListNoteOccurrencesOptions(accountID, providerID, noteID)
+				listNoteOccurrencesOptionsModel := findingsService.NewListNoteOccurrencesOptions(accountID, providerID, noteID)
 				listNoteOccurrencesOptionsModel.SetAccountID("testString")
 				listNoteOccurrencesOptionsModel.SetProviderID("testString")
 				listNoteOccurrencesOptionsModel.SetNoteID("testString")
@@ -4607,7 +4615,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Construct an instance of the ListNotesOptions model
 				accountID := "testString"
 				providerID := "testString"
-				listNotesOptionsModel := findingsApiService.NewListNotesOptions(accountID, providerID)
+				listNotesOptionsModel := findingsService.NewListNotesOptions(accountID, providerID)
 				listNotesOptionsModel.SetAccountID("testString")
 				listNotesOptionsModel.SetProviderID("testString")
 				listNotesOptionsModel.SetTransactionID("testString")
@@ -4626,7 +4634,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				// Construct an instance of the ListOccurrencesOptions model
 				accountID := "testString"
 				providerID := "testString"
-				listOccurrencesOptionsModel := findingsApiService.NewListOccurrencesOptions(accountID, providerID)
+				listOccurrencesOptionsModel := findingsService.NewListOccurrencesOptions(accountID, providerID)
 				listOccurrencesOptionsModel.SetAccountID("testString")
 				listOccurrencesOptionsModel.SetProviderID("testString")
 				listOccurrencesOptionsModel.SetTransactionID("testString")
@@ -4644,7 +4652,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 			It(`Invoke NewListProvidersOptions successfully`, func() {
 				// Construct an instance of the ListProvidersOptions model
 				accountID := "testString"
-				listProvidersOptionsModel := findingsApiService.NewListProvidersOptions(accountID)
+				listProvidersOptionsModel := findingsService.NewListProvidersOptions(accountID)
 				listProvidersOptionsModel.SetAccountID("testString")
 				listProvidersOptionsModel.SetTransactionID("testString")
 				listProvidersOptionsModel.SetLimit(int64(2))
@@ -4664,7 +4672,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 			It(`Invoke NewPostGraphOptions successfully`, func() {
 				// Construct an instance of the PostGraphOptions model
 				accountID := "testString"
-				postGraphOptionsModel := findingsApiService.NewPostGraphOptions(accountID)
+				postGraphOptionsModel := findingsService.NewPostGraphOptions(accountID)
 				postGraphOptionsModel.SetAccountID("testString")
 				postGraphOptionsModel.SetBody(CreateMockReader("This is a mock file."))
 				postGraphOptionsModel.SetContentType("application/json")
@@ -4680,26 +4688,26 @@ var _ = Describe(`FindingsApiV1`, func() {
 			It(`Invoke NewReporter successfully`, func() {
 				id := "testString"
 				title := "testString"
-				model, err := findingsApiService.NewReporter(id, title)
+				model, err := findingsService.NewReporter(id, title)
 				Expect(model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewSection successfully`, func() {
 				title := "testString"
 				image := "testString"
-				model, err := findingsApiService.NewSection(title, image)
+				model, err := findingsService.NewSection(title, image)
 				Expect(model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewSocketAddress successfully`, func() {
 				address := "testString"
-				model, err := findingsApiService.NewSocketAddress(address)
+				model, err := findingsService.NewSocketAddress(address)
 				Expect(model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewUpdateNoteOptions successfully`, func() {
 				// Construct an instance of the Reporter model
-				reporterModel := new(findingsapiv1.Reporter)
+				reporterModel := new(findingsv1.Reporter)
 				Expect(reporterModel).ToNot(BeNil())
 				reporterModel.ID = core.StringPtr("testString")
 				reporterModel.Title = core.StringPtr("testString")
@@ -4708,16 +4716,16 @@ var _ = Describe(`FindingsApiV1`, func() {
 				Expect(reporterModel.Title).To(Equal(core.StringPtr("testString")))
 				Expect(reporterModel.URL).To(Equal(core.StringPtr("testString")))
 
-				// Construct an instance of the ApiNoteRelatedURL model
-				apiNoteRelatedUrlModel := new(findingsapiv1.ApiNoteRelatedURL)
-				Expect(apiNoteRelatedUrlModel).ToNot(BeNil())
-				apiNoteRelatedUrlModel.Label = core.StringPtr("testString")
-				apiNoteRelatedUrlModel.URL = core.StringPtr("testString")
-				Expect(apiNoteRelatedUrlModel.Label).To(Equal(core.StringPtr("testString")))
-				Expect(apiNoteRelatedUrlModel.URL).To(Equal(core.StringPtr("testString")))
+				// Construct an instance of the APINoteRelatedURL model
+				apiNoteRelatedURLModel := new(findingsv1.APINoteRelatedURL)
+				Expect(apiNoteRelatedURLModel).ToNot(BeNil())
+				apiNoteRelatedURLModel.Label = core.StringPtr("testString")
+				apiNoteRelatedURLModel.URL = core.StringPtr("testString")
+				Expect(apiNoteRelatedURLModel.Label).To(Equal(core.StringPtr("testString")))
+				Expect(apiNoteRelatedURLModel.URL).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the RemediationStep model
-				remediationStepModel := new(findingsapiv1.RemediationStep)
+				remediationStepModel := new(findingsv1.RemediationStep)
 				Expect(remediationStepModel).ToNot(BeNil())
 				remediationStepModel.Title = core.StringPtr("testString")
 				remediationStepModel.URL = core.StringPtr("testString")
@@ -4725,21 +4733,21 @@ var _ = Describe(`FindingsApiV1`, func() {
 				Expect(remediationStepModel.URL).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the FindingType model
-				findingTypeModel := new(findingsapiv1.FindingType)
+				findingTypeModel := new(findingsv1.FindingType)
 				Expect(findingTypeModel).ToNot(BeNil())
 				findingTypeModel.Severity = core.StringPtr("LOW")
-				findingTypeModel.NextSteps = []findingsapiv1.RemediationStep{*remediationStepModel}
+				findingTypeModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
 				Expect(findingTypeModel.Severity).To(Equal(core.StringPtr("LOW")))
-				Expect(findingTypeModel.NextSteps).To(Equal([]findingsapiv1.RemediationStep{*remediationStepModel}))
+				Expect(findingTypeModel.NextSteps).To(Equal([]findingsv1.RemediationStep{*remediationStepModel}))
 
 				// Construct an instance of the KpiType model
-				kpiTypeModel := new(findingsapiv1.KpiType)
+				kpiTypeModel := new(findingsv1.KpiType)
 				Expect(kpiTypeModel).ToNot(BeNil())
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
 				Expect(kpiTypeModel.AggregationType).To(Equal(core.StringPtr("SUM")))
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
-				valueTypeModel := new(findingsapiv1.ValueTypeFindingCountValueType)
+				valueTypeModel := new(findingsv1.ValueTypeFindingCountValueType)
 				Expect(valueTypeModel).ToNot(BeNil())
 				valueTypeModel.Kind = core.StringPtr("FINDING_COUNT")
 				valueTypeModel.FindingNoteNames = []string{"testString"}
@@ -4749,21 +4757,21 @@ var _ = Describe(`FindingsApiV1`, func() {
 				Expect(valueTypeModel.Text).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the CardElementTimeSeriesCardElement model
-				cardElementModel := new(findingsapiv1.CardElementTimeSeriesCardElement)
+				cardElementModel := new(findingsv1.CardElementTimeSeriesCardElement)
 				Expect(cardElementModel).ToNot(BeNil())
 				cardElementModel.Text = core.StringPtr("testString")
 				cardElementModel.DefaultInterval = core.StringPtr("testString")
 				cardElementModel.Kind = core.StringPtr("TIME_SERIES")
 				cardElementModel.DefaultTimeRange = core.StringPtr("1d")
-				cardElementModel.ValueTypes = []findingsapiv1.ValueTypeIntf{valueTypeModel}
+				cardElementModel.ValueTypes = []findingsv1.ValueTypeIntf{valueTypeModel}
 				Expect(cardElementModel.Text).To(Equal(core.StringPtr("testString")))
 				Expect(cardElementModel.DefaultInterval).To(Equal(core.StringPtr("testString")))
 				Expect(cardElementModel.Kind).To(Equal(core.StringPtr("TIME_SERIES")))
 				Expect(cardElementModel.DefaultTimeRange).To(Equal(core.StringPtr("1d")))
-				Expect(cardElementModel.ValueTypes).To(Equal([]findingsapiv1.ValueTypeIntf{valueTypeModel}))
+				Expect(cardElementModel.ValueTypes).To(Equal([]findingsv1.ValueTypeIntf{valueTypeModel}))
 
 				// Construct an instance of the Card model
-				cardModel := new(findingsapiv1.Card)
+				cardModel := new(findingsv1.Card)
 				Expect(cardModel).ToNot(BeNil())
 				cardModel.Section = core.StringPtr("testString")
 				cardModel.Title = core.StringPtr("testString")
@@ -4773,7 +4781,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				cardModel.RequiresConfiguration = core.BoolPtr(true)
 				cardModel.BadgeText = core.StringPtr("testString")
 				cardModel.BadgeImage = core.StringPtr("testString")
-				cardModel.Elements = []findingsapiv1.CardElementIntf{cardElementModel}
+				cardModel.Elements = []findingsv1.CardElementIntf{cardElementModel}
 				Expect(cardModel.Section).To(Equal(core.StringPtr("testString")))
 				Expect(cardModel.Title).To(Equal(core.StringPtr("testString")))
 				Expect(cardModel.Subtitle).To(Equal(core.StringPtr("testString")))
@@ -4782,10 +4790,10 @@ var _ = Describe(`FindingsApiV1`, func() {
 				Expect(cardModel.RequiresConfiguration).To(Equal(core.BoolPtr(true)))
 				Expect(cardModel.BadgeText).To(Equal(core.StringPtr("testString")))
 				Expect(cardModel.BadgeImage).To(Equal(core.StringPtr("testString")))
-				Expect(cardModel.Elements).To(Equal([]findingsapiv1.CardElementIntf{cardElementModel}))
+				Expect(cardModel.Elements).To(Equal([]findingsv1.CardElementIntf{cardElementModel}))
 
 				// Construct an instance of the Section model
-				sectionModel := new(findingsapiv1.Section)
+				sectionModel := new(findingsv1.Section)
 				Expect(sectionModel).ToNot(BeNil())
 				sectionModel.Title = core.StringPtr("testString")
 				sectionModel.Image = core.StringPtr("testString")
@@ -4800,8 +4808,8 @@ var _ = Describe(`FindingsApiV1`, func() {
 				updateNoteOptionsLongDescription := "testString"
 				updateNoteOptionsKind := "FINDING"
 				updateNoteOptionsID := "testString"
-				var updateNoteOptionsReportedBy *findingsapiv1.Reporter = nil
-				updateNoteOptionsModel := findingsApiService.NewUpdateNoteOptions(accountID, providerID, noteID, updateNoteOptionsShortDescription, updateNoteOptionsLongDescription, updateNoteOptionsKind, updateNoteOptionsID, updateNoteOptionsReportedBy)
+				var updateNoteOptionsReportedBy *findingsv1.Reporter = nil
+				updateNoteOptionsModel := findingsService.NewUpdateNoteOptions(accountID, providerID, noteID, updateNoteOptionsShortDescription, updateNoteOptionsLongDescription, updateNoteOptionsKind, updateNoteOptionsID, updateNoteOptionsReportedBy)
 				updateNoteOptionsModel.SetAccountID("testString")
 				updateNoteOptionsModel.SetProviderID("testString")
 				updateNoteOptionsModel.SetNoteID("testString")
@@ -4810,7 +4818,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				updateNoteOptionsModel.SetKind("FINDING")
 				updateNoteOptionsModel.SetID("testString")
 				updateNoteOptionsModel.SetReportedBy(reporterModel)
-				updateNoteOptionsModel.SetRelatedURL([]findingsapiv1.ApiNoteRelatedURL{*apiNoteRelatedUrlModel})
+				updateNoteOptionsModel.SetRelatedURL([]findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel})
 				updateNoteOptionsModel.SetExpirationTime(CreateMockDateTime())
 				updateNoteOptionsModel.SetCreateTime(CreateMockDateTime())
 				updateNoteOptionsModel.SetUpdateTime(CreateMockDateTime())
@@ -4830,7 +4838,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				Expect(updateNoteOptionsModel.Kind).To(Equal(core.StringPtr("FINDING")))
 				Expect(updateNoteOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(updateNoteOptionsModel.ReportedBy).To(Equal(reporterModel))
-				Expect(updateNoteOptionsModel.RelatedURL).To(Equal([]findingsapiv1.ApiNoteRelatedURL{*apiNoteRelatedUrlModel}))
+				Expect(updateNoteOptionsModel.RelatedURL).To(Equal([]findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}))
 				Expect(updateNoteOptionsModel.ExpirationTime).To(Equal(CreateMockDateTime()))
 				Expect(updateNoteOptionsModel.CreateTime).To(Equal(CreateMockDateTime()))
 				Expect(updateNoteOptionsModel.UpdateTime).To(Equal(CreateMockDateTime()))
@@ -4844,31 +4852,31 @@ var _ = Describe(`FindingsApiV1`, func() {
 			})
 			It(`Invoke NewUpdateOccurrenceOptions successfully`, func() {
 				// Construct an instance of the Context model
-				contextModel := new(findingsapiv1.Context)
+				contextModel := new(findingsv1.Context)
 				Expect(contextModel).ToNot(BeNil())
 				contextModel.Region = core.StringPtr("testString")
-				contextModel.ResourceCrn = core.StringPtr("testString")
+				contextModel.ResourceCRN = core.StringPtr("testString")
 				contextModel.ResourceID = core.StringPtr("testString")
 				contextModel.ResourceName = core.StringPtr("testString")
 				contextModel.ResourceType = core.StringPtr("testString")
-				contextModel.ServiceCrn = core.StringPtr("testString")
+				contextModel.ServiceCRN = core.StringPtr("testString")
 				contextModel.ServiceName = core.StringPtr("testString")
 				contextModel.EnvironmentName = core.StringPtr("testString")
 				contextModel.ComponentName = core.StringPtr("testString")
 				contextModel.ToolchainID = core.StringPtr("testString")
 				Expect(contextModel.Region).To(Equal(core.StringPtr("testString")))
-				Expect(contextModel.ResourceCrn).To(Equal(core.StringPtr("testString")))
+				Expect(contextModel.ResourceCRN).To(Equal(core.StringPtr("testString")))
 				Expect(contextModel.ResourceID).To(Equal(core.StringPtr("testString")))
 				Expect(contextModel.ResourceName).To(Equal(core.StringPtr("testString")))
 				Expect(contextModel.ResourceType).To(Equal(core.StringPtr("testString")))
-				Expect(contextModel.ServiceCrn).To(Equal(core.StringPtr("testString")))
+				Expect(contextModel.ServiceCRN).To(Equal(core.StringPtr("testString")))
 				Expect(contextModel.ServiceName).To(Equal(core.StringPtr("testString")))
 				Expect(contextModel.EnvironmentName).To(Equal(core.StringPtr("testString")))
 				Expect(contextModel.ComponentName).To(Equal(core.StringPtr("testString")))
 				Expect(contextModel.ToolchainID).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the RemediationStep model
-				remediationStepModel := new(findingsapiv1.RemediationStep)
+				remediationStepModel := new(findingsv1.RemediationStep)
 				Expect(remediationStepModel).ToNot(BeNil())
 				remediationStepModel.Title = core.StringPtr("testString")
 				remediationStepModel.URL = core.StringPtr("testString")
@@ -4876,7 +4884,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				Expect(remediationStepModel.URL).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the SocketAddress model
-				socketAddressModel := new(findingsapiv1.SocketAddress)
+				socketAddressModel := new(findingsv1.SocketAddress)
 				Expect(socketAddressModel).ToNot(BeNil())
 				socketAddressModel.Address = core.StringPtr("testString")
 				socketAddressModel.Port = core.Int64Ptr(int64(38))
@@ -4884,7 +4892,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				Expect(socketAddressModel.Port).To(Equal(core.Int64Ptr(int64(38))))
 
 				// Construct an instance of the NetworkConnection model
-				networkConnectionModel := new(findingsapiv1.NetworkConnection)
+				networkConnectionModel := new(findingsv1.NetworkConnection)
 				Expect(networkConnectionModel).ToNot(BeNil())
 				networkConnectionModel.Direction = core.StringPtr("testString")
 				networkConnectionModel.Protocol = core.StringPtr("testString")
@@ -4896,7 +4904,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				Expect(networkConnectionModel.Server).To(Equal(socketAddressModel))
 
 				// Construct an instance of the DataTransferred model
-				dataTransferredModel := new(findingsapiv1.DataTransferred)
+				dataTransferredModel := new(findingsv1.DataTransferred)
 				Expect(dataTransferredModel).ToNot(BeNil())
 				dataTransferredModel.ClientBytes = core.Int64Ptr(int64(38))
 				dataTransferredModel.ServerBytes = core.Int64Ptr(int64(38))
@@ -4908,21 +4916,21 @@ var _ = Describe(`FindingsApiV1`, func() {
 				Expect(dataTransferredModel.ServerPackets).To(Equal(core.Int64Ptr(int64(38))))
 
 				// Construct an instance of the Finding model
-				findingModel := new(findingsapiv1.Finding)
+				findingModel := new(findingsv1.Finding)
 				Expect(findingModel).ToNot(BeNil())
 				findingModel.Severity = core.StringPtr("LOW")
 				findingModel.Certainty = core.StringPtr("LOW")
-				findingModel.NextSteps = []findingsapiv1.RemediationStep{*remediationStepModel}
+				findingModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
 				findingModel.NetworkConnection = networkConnectionModel
 				findingModel.DataTransferred = dataTransferredModel
 				Expect(findingModel.Severity).To(Equal(core.StringPtr("LOW")))
 				Expect(findingModel.Certainty).To(Equal(core.StringPtr("LOW")))
-				Expect(findingModel.NextSteps).To(Equal([]findingsapiv1.RemediationStep{*remediationStepModel}))
+				Expect(findingModel.NextSteps).To(Equal([]findingsv1.RemediationStep{*remediationStepModel}))
 				Expect(findingModel.NetworkConnection).To(Equal(networkConnectionModel))
 				Expect(findingModel.DataTransferred).To(Equal(dataTransferredModel))
 
 				// Construct an instance of the Kpi model
-				kpiModel := new(findingsapiv1.Kpi)
+				kpiModel := new(findingsv1.Kpi)
 				Expect(kpiModel).ToNot(BeNil())
 				kpiModel.Value = core.Float64Ptr(float64(72.5))
 				kpiModel.Total = core.Float64Ptr(float64(72.5))
@@ -4936,7 +4944,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				updateOccurrenceOptionsNoteName := "testString"
 				updateOccurrenceOptionsKind := "FINDING"
 				updateOccurrenceOptionsID := "testString"
-				updateOccurrenceOptionsModel := findingsApiService.NewUpdateOccurrenceOptions(accountID, providerID, occurrenceID, updateOccurrenceOptionsNoteName, updateOccurrenceOptionsKind, updateOccurrenceOptionsID)
+				updateOccurrenceOptionsModel := findingsService.NewUpdateOccurrenceOptions(accountID, providerID, occurrenceID, updateOccurrenceOptionsNoteName, updateOccurrenceOptionsKind, updateOccurrenceOptionsID)
 				updateOccurrenceOptionsModel.SetAccountID("testString")
 				updateOccurrenceOptionsModel.SetProviderID("testString")
 				updateOccurrenceOptionsModel.SetOccurrenceID("testString")
@@ -4971,43 +4979,43 @@ var _ = Describe(`FindingsApiV1`, func() {
 				Expect(updateOccurrenceOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(updateOccurrenceOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
-			It(`Invoke NewApiNote successfully`, func() {
+			It(`Invoke NewAPINote successfully`, func() {
 				shortDescription := "testString"
 				longDescription := "testString"
 				kind := "FINDING"
 				id := "testString"
-				var reportedBy *findingsapiv1.Reporter = nil
-				_, err := findingsApiService.NewApiNote(shortDescription, longDescription, kind, id, reportedBy)
+				var reportedBy *findingsv1.Reporter = nil
+				_, err := findingsService.NewAPINote(shortDescription, longDescription, kind, id, reportedBy)
 				Expect(err).ToNot(BeNil())
 			})
-			It(`Invoke NewApiOccurrence successfully`, func() {
+			It(`Invoke NewAPIOccurrence successfully`, func() {
 				noteName := "testString"
 				kind := "FINDING"
 				id := "testString"
-				model, err := findingsApiService.NewApiOccurrence(noteName, kind, id)
+				model, err := findingsService.NewAPIOccurrence(noteName, kind, id)
 				Expect(model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewCardElementBreakdownCardElement successfully`, func() {
 				text := "testString"
 				kind := "BREAKDOWN"
-				valueTypes := []findingsapiv1.ValueTypeIntf{}
-				model, err := findingsApiService.NewCardElementBreakdownCardElement(text, kind, valueTypes)
+				valueTypes := []findingsv1.ValueTypeIntf{}
+				model, err := findingsService.NewCardElementBreakdownCardElement(text, kind, valueTypes)
 				Expect(model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewCardElementNumericCardElement successfully`, func() {
 				text := "testString"
 				kind := "NUMERIC"
-				var valueType *findingsapiv1.NumericCardElementValueType = nil
-				_, err := findingsApiService.NewCardElementNumericCardElement(text, kind, valueType)
+				var valueType *findingsv1.NumericCardElementValueType = nil
+				_, err := findingsService.NewCardElementNumericCardElement(text, kind, valueType)
 				Expect(err).ToNot(BeNil())
 			})
 			It(`Invoke NewCardElementTimeSeriesCardElement successfully`, func() {
 				text := "testString"
 				kind := "TIME_SERIES"
-				valueTypes := []findingsapiv1.ValueTypeIntf{}
-				model, err := findingsApiService.NewCardElementTimeSeriesCardElement(text, kind, valueTypes)
+				valueTypes := []findingsv1.ValueTypeIntf{}
+				model, err := findingsService.NewCardElementTimeSeriesCardElement(text, kind, valueTypes)
 				Expect(model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
@@ -5015,7 +5023,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				kind := "FINDING_COUNT"
 				findingNoteNames := []string{"testString"}
 				text := "testString"
-				model, err := findingsApiService.NewValueTypeFindingCountValueType(kind, findingNoteNames, text)
+				model, err := findingsService.NewValueTypeFindingCountValueType(kind, findingNoteNames, text)
 				Expect(model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
@@ -5023,7 +5031,7 @@ var _ = Describe(`FindingsApiV1`, func() {
 				kind := "KPI"
 				kpiNoteName := "testString"
 				text := "testString"
-				model, err := findingsApiService.NewValueTypeKpiValueType(kind, kpiNoteName, text)
+				model, err := findingsService.NewValueTypeKpiValueType(kind, kpiNoteName, text)
 				Expect(model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})

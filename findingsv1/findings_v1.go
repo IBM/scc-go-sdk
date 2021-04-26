@@ -18,45 +18,44 @@
  * IBM OpenAPI SDK Code Generator Version: 3.30.0-bd714324-20210406-200538
  */
 
-// Package findingsapiv1 : Operations and models for the FindingsApiV1 service
-package findingsapiv1
+// Package findingsv1 : Operations and models for the FindingsV1 service
+package findingsv1
 
 import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/IBM/go-sdk-core/v5/core"
+	"github.com/go-openapi/strfmt"
+	common "github.com/ibm-cloud-security/scc-go-sdk/common"
 	"io"
 	"net/http"
 	"reflect"
 	"time"
-
-	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/go-openapi/strfmt"
-	common "github.com/ibm-cloud-security/scc-go-sdk/common"
 )
 
-// FindingsApiV1 : The Findings API
+// FindingsV1 : API specification for the Findings service.
 //
 // Version: 1.0.0
-type FindingsApiV1 struct {
+type FindingsV1 struct {
 	Service *core.BaseService
 }
 
 // DefaultServiceURL is the default URL to make service requests to.
-const DefaultServiceURL = "https://us-south.secadvisor.cloud.ibm.com/findings"
+const DefaultServiceURL = "https://findings.cloud.ibm.com/findings"
 
 // DefaultServiceName is the default key used to find external configuration information.
-const DefaultServiceName = "findings_api"
+const DefaultServiceName = "findings"
 
-// FindingsApiV1Options : Service options
-type FindingsApiV1Options struct {
+// FindingsV1Options : Service options
+type FindingsV1Options struct {
 	ServiceName   string
 	URL           string
 	Authenticator core.Authenticator
 }
 
-// NewFindingsApiV1UsingExternalConfig : constructs an instance of FindingsApiV1 with passed in options and external configuration.
-func NewFindingsApiV1UsingExternalConfig(options *FindingsApiV1Options) (findingsApi *FindingsApiV1, err error) {
+// NewFindingsV1UsingExternalConfig : constructs an instance of FindingsV1 with passed in options and external configuration.
+func NewFindingsV1UsingExternalConfig(options *FindingsV1Options) (findings *FindingsV1, err error) {
 	if options.ServiceName == "" {
 		options.ServiceName = DefaultServiceName
 	}
@@ -68,24 +67,24 @@ func NewFindingsApiV1UsingExternalConfig(options *FindingsApiV1Options) (finding
 		}
 	}
 
-	findingsApi, err = NewFindingsApiV1(options)
+	findings, err = NewFindingsV1(options)
 	if err != nil {
 		return
 	}
 
-	err = findingsApi.Service.ConfigureService(options.ServiceName)
+	err = findings.Service.ConfigureService(options.ServiceName)
 	if err != nil {
 		return
 	}
 
 	if options.URL != "" {
-		err = findingsApi.Service.SetServiceURL(options.URL)
+		err = findings.Service.SetServiceURL(options.URL)
 	}
 	return
 }
 
-// NewFindingsApiV1 : constructs an instance of FindingsApiV1 with passed in options.
-func NewFindingsApiV1(options *FindingsApiV1Options) (service *FindingsApiV1, err error) {
+// NewFindingsV1 : constructs an instance of FindingsV1 with passed in options.
+func NewFindingsV1(options *FindingsV1Options) (service *FindingsV1, err error) {
 	serviceOptions := &core.ServiceOptions{
 		URL:           DefaultServiceURL,
 		Authenticator: options.Authenticator,
@@ -103,7 +102,7 @@ func NewFindingsApiV1(options *FindingsApiV1Options) (service *FindingsApiV1, er
 		}
 	}
 
-	service = &FindingsApiV1{
+	service = &FindingsV1{
 		Service: baseService,
 	}
 
@@ -115,60 +114,60 @@ func GetServiceURLForRegion(region string) (string, error) {
 	return "", fmt.Errorf("service does not support regional URLs")
 }
 
-// Clone makes a copy of "findingsApi" suitable for processing requests.
-func (findingsApi *FindingsApiV1) Clone() *FindingsApiV1 {
-	if core.IsNil(findingsApi) {
+// Clone makes a copy of "findings" suitable for processing requests.
+func (findings *FindingsV1) Clone() *FindingsV1 {
+	if core.IsNil(findings) {
 		return nil
 	}
-	clone := *findingsApi
-	clone.Service = findingsApi.Service.Clone()
+	clone := *findings
+	clone.Service = findings.Service.Clone()
 	return &clone
 }
 
 // SetServiceURL sets the service URL
-func (findingsApi *FindingsApiV1) SetServiceURL(url string) error {
-	return findingsApi.Service.SetServiceURL(url)
+func (findings *FindingsV1) SetServiceURL(url string) error {
+	return findings.Service.SetServiceURL(url)
 }
 
 // GetServiceURL returns the service URL
-func (findingsApi *FindingsApiV1) GetServiceURL() string {
-	return findingsApi.Service.GetServiceURL()
+func (findings *FindingsV1) GetServiceURL() string {
+	return findings.Service.GetServiceURL()
 }
 
 // SetDefaultHeaders sets HTTP headers to be sent in every request
-func (findingsApi *FindingsApiV1) SetDefaultHeaders(headers http.Header) {
-	findingsApi.Service.SetDefaultHeaders(headers)
+func (findings *FindingsV1) SetDefaultHeaders(headers http.Header) {
+	findings.Service.SetDefaultHeaders(headers)
 }
 
 // SetEnableGzipCompression sets the service's EnableGzipCompression field
-func (findingsApi *FindingsApiV1) SetEnableGzipCompression(enableGzip bool) {
-	findingsApi.Service.SetEnableGzipCompression(enableGzip)
+func (findings *FindingsV1) SetEnableGzipCompression(enableGzip bool) {
+	findings.Service.SetEnableGzipCompression(enableGzip)
 }
 
 // GetEnableGzipCompression returns the service's EnableGzipCompression field
-func (findingsApi *FindingsApiV1) GetEnableGzipCompression() bool {
-	return findingsApi.Service.GetEnableGzipCompression()
+func (findings *FindingsV1) GetEnableGzipCompression() bool {
+	return findings.Service.GetEnableGzipCompression()
 }
 
 // EnableRetries enables automatic retries for requests invoked for this service instance.
 // If either parameter is specified as 0, then a default value is used instead.
-func (findingsApi *FindingsApiV1) EnableRetries(maxRetries int, maxRetryInterval time.Duration) {
-	findingsApi.Service.EnableRetries(maxRetries, maxRetryInterval)
+func (findings *FindingsV1) EnableRetries(maxRetries int, maxRetryInterval time.Duration) {
+	findings.Service.EnableRetries(maxRetries, maxRetryInterval)
 }
 
 // DisableRetries disables automatic retries for requests invoked for this service instance.
-func (findingsApi *FindingsApiV1) DisableRetries() {
-	findingsApi.Service.DisableRetries()
+func (findings *FindingsV1) DisableRetries() {
+	findings.Service.DisableRetries()
 }
 
 // PostGraph : query findings
 // query findings.
-func (findingsApi *FindingsApiV1) PostGraph(postGraphOptions *PostGraphOptions) (response *core.DetailedResponse, err error) {
-	return findingsApi.PostGraphWithContext(context.Background(), postGraphOptions)
+func (findings *FindingsV1) PostGraph(postGraphOptions *PostGraphOptions) (response *core.DetailedResponse, err error) {
+	return findings.PostGraphWithContext(context.Background(), postGraphOptions)
 }
 
 // PostGraphWithContext is an alternate form of the PostGraph method which supports a Context parameter
-func (findingsApi *FindingsApiV1) PostGraphWithContext(ctx context.Context, postGraphOptions *PostGraphOptions) (response *core.DetailedResponse, err error) {
+func (findings *FindingsV1) PostGraphWithContext(ctx context.Context, postGraphOptions *PostGraphOptions) (response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(postGraphOptions, "postGraphOptions cannot be nil")
 	if err != nil {
 		return
@@ -188,8 +187,8 @@ func (findingsApi *FindingsApiV1) PostGraphWithContext(ctx context.Context, post
 
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = findingsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(findingsApi.Service.Options.URL, `/v1/{account_id}/graph`, pathParamsMap)
+	builder.EnableGzipCompression = findings.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(findings.Service.Options.URL, `/v1/{account_id}/graph`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -198,7 +197,7 @@ func (findingsApi *FindingsApiV1) PostGraphWithContext(ctx context.Context, post
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("findings_api", "V1", "PostGraph")
+	sdkHeaders := common.GetSdkHeaders("findings", "V1", "PostGraph")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -209,12 +208,8 @@ func (findingsApi *FindingsApiV1) PostGraphWithContext(ctx context.Context, post
 	if postGraphOptions.TransactionID != nil {
 		builder.AddHeader("Transaction-Id", fmt.Sprint(*postGraphOptions.TransactionID))
 	}
-	fmt.Println(*postGraphOptions.ContentType)
-	if *postGraphOptions.ContentType == "application/json" {
-		_, err = builder.SetBodyContent(core.StringNilMapper(postGraphOptions.ContentType), postGraphOptions.Body, nil, nil)
-	} else {
-		_, err = builder.SetBodyContent(core.StringNilMapper(postGraphOptions.ContentType), nil, nil, postGraphOptions.Body)
-	}
+
+	_, err = builder.SetBodyContent(core.StringNilMapper(postGraphOptions.ContentType), postGraphOptions.Body, nil, postGraphOptions.Body)
 	if err != nil {
 		return
 	}
@@ -224,19 +219,18 @@ func (findingsApi *FindingsApiV1) PostGraphWithContext(ctx context.Context, post
 		return
 	}
 
-	var test interface{}
-	response, err = findingsApi.Service.Request(request, &test)
-	fmt.Println(err)
+	response, err = findings.Service.Request(request, nil)
+
 	return
 }
 
 // CreateNote : Creates a new `Note`
-func (findingsApi *FindingsApiV1) CreateNote(createNoteOptions *CreateNoteOptions) (result *ApiNote, response *core.DetailedResponse, err error) {
-	return findingsApi.CreateNoteWithContext(context.Background(), createNoteOptions)
+func (findings *FindingsV1) CreateNote(createNoteOptions *CreateNoteOptions) (result *APINote, response *core.DetailedResponse, err error) {
+	return findings.CreateNoteWithContext(context.Background(), createNoteOptions)
 }
 
 // CreateNoteWithContext is an alternate form of the CreateNote method which supports a Context parameter
-func (findingsApi *FindingsApiV1) CreateNoteWithContext(ctx context.Context, createNoteOptions *CreateNoteOptions) (result *ApiNote, response *core.DetailedResponse, err error) {
+func (findings *FindingsV1) CreateNoteWithContext(ctx context.Context, createNoteOptions *CreateNoteOptions) (result *APINote, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(createNoteOptions, "createNoteOptions cannot be nil")
 	if err != nil {
 		return
@@ -247,14 +241,14 @@ func (findingsApi *FindingsApiV1) CreateNoteWithContext(ctx context.Context, cre
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":  *createNoteOptions.AccountID,
+		"account_id": *createNoteOptions.AccountID,
 		"provider_id": *createNoteOptions.ProviderID,
 	}
 
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = findingsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(findingsApi.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/notes`, pathParamsMap)
+	builder.EnableGzipCompression = findings.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(findings.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/notes`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -263,7 +257,7 @@ func (findingsApi *FindingsApiV1) CreateNoteWithContext(ctx context.Context, cre
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("findings_api", "V1", "CreateNote")
+	sdkHeaders := common.GetSdkHeaders("findings", "V1", "CreateNote")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -327,11 +321,11 @@ func (findingsApi *FindingsApiV1) CreateNoteWithContext(ctx context.Context, cre
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = findingsApi.Service.Request(request, &rawResponse)
+	response, err = findings.Service.Request(request, &rawResponse)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalApiNote)
+	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalAPINote)
 	if err != nil {
 		return
 	}
@@ -341,12 +335,12 @@ func (findingsApi *FindingsApiV1) CreateNoteWithContext(ctx context.Context, cre
 }
 
 // ListNotes : Lists all `Notes` for a given provider
-func (findingsApi *FindingsApiV1) ListNotes(listNotesOptions *ListNotesOptions) (result *ApiListNotesResponse, response *core.DetailedResponse, err error) {
-	return findingsApi.ListNotesWithContext(context.Background(), listNotesOptions)
+func (findings *FindingsV1) ListNotes(listNotesOptions *ListNotesOptions) (result *APIListNotesResponse, response *core.DetailedResponse, err error) {
+	return findings.ListNotesWithContext(context.Background(), listNotesOptions)
 }
 
 // ListNotesWithContext is an alternate form of the ListNotes method which supports a Context parameter
-func (findingsApi *FindingsApiV1) ListNotesWithContext(ctx context.Context, listNotesOptions *ListNotesOptions) (result *ApiListNotesResponse, response *core.DetailedResponse, err error) {
+func (findings *FindingsV1) ListNotesWithContext(ctx context.Context, listNotesOptions *ListNotesOptions) (result *APIListNotesResponse, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listNotesOptions, "listNotesOptions cannot be nil")
 	if err != nil {
 		return
@@ -357,14 +351,14 @@ func (findingsApi *FindingsApiV1) ListNotesWithContext(ctx context.Context, list
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":  *listNotesOptions.AccountID,
+		"account_id": *listNotesOptions.AccountID,
 		"provider_id": *listNotesOptions.ProviderID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = findingsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(findingsApi.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/notes`, pathParamsMap)
+	builder.EnableGzipCompression = findings.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(findings.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/notes`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -373,7 +367,7 @@ func (findingsApi *FindingsApiV1) ListNotesWithContext(ctx context.Context, list
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("findings_api", "V1", "ListNotes")
+	sdkHeaders := common.GetSdkHeaders("findings", "V1", "ListNotes")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -395,11 +389,11 @@ func (findingsApi *FindingsApiV1) ListNotesWithContext(ctx context.Context, list
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = findingsApi.Service.Request(request, &rawResponse)
+	response, err = findings.Service.Request(request, &rawResponse)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalApiListNotesResponse)
+	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalAPIListNotesResponse)
 	if err != nil {
 		return
 	}
@@ -409,12 +403,12 @@ func (findingsApi *FindingsApiV1) ListNotesWithContext(ctx context.Context, list
 }
 
 // GetNote : Returns the requested `Note`
-func (findingsApi *FindingsApiV1) GetNote(getNoteOptions *GetNoteOptions) (result *ApiNote, response *core.DetailedResponse, err error) {
-	return findingsApi.GetNoteWithContext(context.Background(), getNoteOptions)
+func (findings *FindingsV1) GetNote(getNoteOptions *GetNoteOptions) (result *APINote, response *core.DetailedResponse, err error) {
+	return findings.GetNoteWithContext(context.Background(), getNoteOptions)
 }
 
 // GetNoteWithContext is an alternate form of the GetNote method which supports a Context parameter
-func (findingsApi *FindingsApiV1) GetNoteWithContext(ctx context.Context, getNoteOptions *GetNoteOptions) (result *ApiNote, response *core.DetailedResponse, err error) {
+func (findings *FindingsV1) GetNoteWithContext(ctx context.Context, getNoteOptions *GetNoteOptions) (result *APINote, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getNoteOptions, "getNoteOptions cannot be nil")
 	if err != nil {
 		return
@@ -425,15 +419,15 @@ func (findingsApi *FindingsApiV1) GetNoteWithContext(ctx context.Context, getNot
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":  *getNoteOptions.AccountID,
+		"account_id": *getNoteOptions.AccountID,
 		"provider_id": *getNoteOptions.ProviderID,
-		"note_id":     *getNoteOptions.NoteID,
+		"note_id": *getNoteOptions.NoteID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = findingsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(findingsApi.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/notes/{note_id}`, pathParamsMap)
+	builder.EnableGzipCompression = findings.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(findings.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/notes/{note_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -442,7 +436,7 @@ func (findingsApi *FindingsApiV1) GetNoteWithContext(ctx context.Context, getNot
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("findings_api", "V1", "GetNote")
+	sdkHeaders := common.GetSdkHeaders("findings", "V1", "GetNote")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -457,11 +451,11 @@ func (findingsApi *FindingsApiV1) GetNoteWithContext(ctx context.Context, getNot
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = findingsApi.Service.Request(request, &rawResponse)
+	response, err = findings.Service.Request(request, &rawResponse)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalApiNote)
+	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalAPINote)
 	if err != nil {
 		return
 	}
@@ -471,12 +465,12 @@ func (findingsApi *FindingsApiV1) GetNoteWithContext(ctx context.Context, getNot
 }
 
 // UpdateNote : Updates an existing `Note`
-func (findingsApi *FindingsApiV1) UpdateNote(updateNoteOptions *UpdateNoteOptions) (result *ApiNote, response *core.DetailedResponse, err error) {
-	return findingsApi.UpdateNoteWithContext(context.Background(), updateNoteOptions)
+func (findings *FindingsV1) UpdateNote(updateNoteOptions *UpdateNoteOptions) (result *APINote, response *core.DetailedResponse, err error) {
+	return findings.UpdateNoteWithContext(context.Background(), updateNoteOptions)
 }
 
 // UpdateNoteWithContext is an alternate form of the UpdateNote method which supports a Context parameter
-func (findingsApi *FindingsApiV1) UpdateNoteWithContext(ctx context.Context, updateNoteOptions *UpdateNoteOptions) (result *ApiNote, response *core.DetailedResponse, err error) {
+func (findings *FindingsV1) UpdateNoteWithContext(ctx context.Context, updateNoteOptions *UpdateNoteOptions) (result *APINote, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(updateNoteOptions, "updateNoteOptions cannot be nil")
 	if err != nil {
 		return
@@ -487,15 +481,15 @@ func (findingsApi *FindingsApiV1) UpdateNoteWithContext(ctx context.Context, upd
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":  *updateNoteOptions.AccountID,
+		"account_id": *updateNoteOptions.AccountID,
 		"provider_id": *updateNoteOptions.ProviderID,
-		"note_id":     *updateNoteOptions.NoteID,
+		"note_id": *updateNoteOptions.NoteID,
 	}
 
 	builder := core.NewRequestBuilder(core.PUT)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = findingsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(findingsApi.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/notes/{note_id}`, pathParamsMap)
+	builder.EnableGzipCompression = findings.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(findings.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/notes/{note_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -504,7 +498,7 @@ func (findingsApi *FindingsApiV1) UpdateNoteWithContext(ctx context.Context, upd
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("findings_api", "V1", "UpdateNote")
+	sdkHeaders := common.GetSdkHeaders("findings", "V1", "UpdateNote")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -568,11 +562,11 @@ func (findingsApi *FindingsApiV1) UpdateNoteWithContext(ctx context.Context, upd
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = findingsApi.Service.Request(request, &rawResponse)
+	response, err = findings.Service.Request(request, &rawResponse)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalApiNote)
+	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalAPINote)
 	if err != nil {
 		return
 	}
@@ -582,12 +576,12 @@ func (findingsApi *FindingsApiV1) UpdateNoteWithContext(ctx context.Context, upd
 }
 
 // DeleteNote : Deletes the given `Note` from the system
-func (findingsApi *FindingsApiV1) DeleteNote(deleteNoteOptions *DeleteNoteOptions) (response *core.DetailedResponse, err error) {
-	return findingsApi.DeleteNoteWithContext(context.Background(), deleteNoteOptions)
+func (findings *FindingsV1) DeleteNote(deleteNoteOptions *DeleteNoteOptions) (response *core.DetailedResponse, err error) {
+	return findings.DeleteNoteWithContext(context.Background(), deleteNoteOptions)
 }
 
 // DeleteNoteWithContext is an alternate form of the DeleteNote method which supports a Context parameter
-func (findingsApi *FindingsApiV1) DeleteNoteWithContext(ctx context.Context, deleteNoteOptions *DeleteNoteOptions) (response *core.DetailedResponse, err error) {
+func (findings *FindingsV1) DeleteNoteWithContext(ctx context.Context, deleteNoteOptions *DeleteNoteOptions) (response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(deleteNoteOptions, "deleteNoteOptions cannot be nil")
 	if err != nil {
 		return
@@ -598,15 +592,15 @@ func (findingsApi *FindingsApiV1) DeleteNoteWithContext(ctx context.Context, del
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":  *deleteNoteOptions.AccountID,
+		"account_id": *deleteNoteOptions.AccountID,
 		"provider_id": *deleteNoteOptions.ProviderID,
-		"note_id":     *deleteNoteOptions.NoteID,
+		"note_id": *deleteNoteOptions.NoteID,
 	}
 
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = findingsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(findingsApi.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/notes/{note_id}`, pathParamsMap)
+	builder.EnableGzipCompression = findings.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(findings.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/notes/{note_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -615,7 +609,7 @@ func (findingsApi *FindingsApiV1) DeleteNoteWithContext(ctx context.Context, del
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("findings_api", "V1", "DeleteNote")
+	sdkHeaders := common.GetSdkHeaders("findings", "V1", "DeleteNote")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -629,18 +623,18 @@ func (findingsApi *FindingsApiV1) DeleteNoteWithContext(ctx context.Context, del
 		return
 	}
 
-	response, err = findingsApi.Service.Request(request, nil)
+	response, err = findings.Service.Request(request, nil)
 
 	return
 }
 
 // GetOccurrenceNote : Gets the `Note` attached to the given `Occurrence`
-func (findingsApi *FindingsApiV1) GetOccurrenceNote(getOccurrenceNoteOptions *GetOccurrenceNoteOptions) (result *ApiNote, response *core.DetailedResponse, err error) {
-	return findingsApi.GetOccurrenceNoteWithContext(context.Background(), getOccurrenceNoteOptions)
+func (findings *FindingsV1) GetOccurrenceNote(getOccurrenceNoteOptions *GetOccurrenceNoteOptions) (result *APINote, response *core.DetailedResponse, err error) {
+	return findings.GetOccurrenceNoteWithContext(context.Background(), getOccurrenceNoteOptions)
 }
 
 // GetOccurrenceNoteWithContext is an alternate form of the GetOccurrenceNote method which supports a Context parameter
-func (findingsApi *FindingsApiV1) GetOccurrenceNoteWithContext(ctx context.Context, getOccurrenceNoteOptions *GetOccurrenceNoteOptions) (result *ApiNote, response *core.DetailedResponse, err error) {
+func (findings *FindingsV1) GetOccurrenceNoteWithContext(ctx context.Context, getOccurrenceNoteOptions *GetOccurrenceNoteOptions) (result *APINote, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getOccurrenceNoteOptions, "getOccurrenceNoteOptions cannot be nil")
 	if err != nil {
 		return
@@ -651,15 +645,15 @@ func (findingsApi *FindingsApiV1) GetOccurrenceNoteWithContext(ctx context.Conte
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":    *getOccurrenceNoteOptions.AccountID,
-		"provider_id":   *getOccurrenceNoteOptions.ProviderID,
+		"account_id": *getOccurrenceNoteOptions.AccountID,
+		"provider_id": *getOccurrenceNoteOptions.ProviderID,
 		"occurrence_id": *getOccurrenceNoteOptions.OccurrenceID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = findingsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(findingsApi.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/occurrences/{occurrence_id}/note`, pathParamsMap)
+	builder.EnableGzipCompression = findings.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(findings.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/occurrences/{occurrence_id}/note`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -668,7 +662,7 @@ func (findingsApi *FindingsApiV1) GetOccurrenceNoteWithContext(ctx context.Conte
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("findings_api", "V1", "GetOccurrenceNote")
+	sdkHeaders := common.GetSdkHeaders("findings", "V1", "GetOccurrenceNote")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -683,11 +677,11 @@ func (findingsApi *FindingsApiV1) GetOccurrenceNoteWithContext(ctx context.Conte
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = findingsApi.Service.Request(request, &rawResponse)
+	response, err = findings.Service.Request(request, &rawResponse)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalApiNote)
+	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalAPINote)
 	if err != nil {
 		return
 	}
@@ -697,12 +691,12 @@ func (findingsApi *FindingsApiV1) GetOccurrenceNoteWithContext(ctx context.Conte
 }
 
 // CreateOccurrence : Creates a new `Occurrence`. Use this method to create `Occurrences` for a resource
-func (findingsApi *FindingsApiV1) CreateOccurrence(createOccurrenceOptions *CreateOccurrenceOptions) (result *ApiOccurrence, response *core.DetailedResponse, err error) {
-	return findingsApi.CreateOccurrenceWithContext(context.Background(), createOccurrenceOptions)
+func (findings *FindingsV1) CreateOccurrence(createOccurrenceOptions *CreateOccurrenceOptions) (result *APIOccurrence, response *core.DetailedResponse, err error) {
+	return findings.CreateOccurrenceWithContext(context.Background(), createOccurrenceOptions)
 }
 
 // CreateOccurrenceWithContext is an alternate form of the CreateOccurrence method which supports a Context parameter
-func (findingsApi *FindingsApiV1) CreateOccurrenceWithContext(ctx context.Context, createOccurrenceOptions *CreateOccurrenceOptions) (result *ApiOccurrence, response *core.DetailedResponse, err error) {
+func (findings *FindingsV1) CreateOccurrenceWithContext(ctx context.Context, createOccurrenceOptions *CreateOccurrenceOptions) (result *APIOccurrence, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(createOccurrenceOptions, "createOccurrenceOptions cannot be nil")
 	if err != nil {
 		return
@@ -713,14 +707,14 @@ func (findingsApi *FindingsApiV1) CreateOccurrenceWithContext(ctx context.Contex
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":  *createOccurrenceOptions.AccountID,
+		"account_id": *createOccurrenceOptions.AccountID,
 		"provider_id": *createOccurrenceOptions.ProviderID,
 	}
 
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = findingsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(findingsApi.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/occurrences`, pathParamsMap)
+	builder.EnableGzipCompression = findings.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(findings.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/occurrences`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -729,7 +723,7 @@ func (findingsApi *FindingsApiV1) CreateOccurrenceWithContext(ctx context.Contex
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("findings_api", "V1", "CreateOccurrence")
+	sdkHeaders := common.GetSdkHeaders("findings", "V1", "CreateOccurrence")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -787,11 +781,11 @@ func (findingsApi *FindingsApiV1) CreateOccurrenceWithContext(ctx context.Contex
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = findingsApi.Service.Request(request, &rawResponse)
+	response, err = findings.Service.Request(request, &rawResponse)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalApiOccurrence)
+	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalAPIOccurrence)
 	if err != nil {
 		return
 	}
@@ -801,12 +795,12 @@ func (findingsApi *FindingsApiV1) CreateOccurrenceWithContext(ctx context.Contex
 }
 
 // ListOccurrences : Lists active `Occurrences` for a given provider matching the filters
-func (findingsApi *FindingsApiV1) ListOccurrences(listOccurrencesOptions *ListOccurrencesOptions) (result *ApiListOccurrencesResponse, response *core.DetailedResponse, err error) {
-	return findingsApi.ListOccurrencesWithContext(context.Background(), listOccurrencesOptions)
+func (findings *FindingsV1) ListOccurrences(listOccurrencesOptions *ListOccurrencesOptions) (result *APIListOccurrencesResponse, response *core.DetailedResponse, err error) {
+	return findings.ListOccurrencesWithContext(context.Background(), listOccurrencesOptions)
 }
 
 // ListOccurrencesWithContext is an alternate form of the ListOccurrences method which supports a Context parameter
-func (findingsApi *FindingsApiV1) ListOccurrencesWithContext(ctx context.Context, listOccurrencesOptions *ListOccurrencesOptions) (result *ApiListOccurrencesResponse, response *core.DetailedResponse, err error) {
+func (findings *FindingsV1) ListOccurrencesWithContext(ctx context.Context, listOccurrencesOptions *ListOccurrencesOptions) (result *APIListOccurrencesResponse, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listOccurrencesOptions, "listOccurrencesOptions cannot be nil")
 	if err != nil {
 		return
@@ -817,14 +811,14 @@ func (findingsApi *FindingsApiV1) ListOccurrencesWithContext(ctx context.Context
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":  *listOccurrencesOptions.AccountID,
+		"account_id": *listOccurrencesOptions.AccountID,
 		"provider_id": *listOccurrencesOptions.ProviderID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = findingsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(findingsApi.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/occurrences`, pathParamsMap)
+	builder.EnableGzipCompression = findings.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(findings.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/occurrences`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -833,7 +827,7 @@ func (findingsApi *FindingsApiV1) ListOccurrencesWithContext(ctx context.Context
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("findings_api", "V1", "ListOccurrences")
+	sdkHeaders := common.GetSdkHeaders("findings", "V1", "ListOccurrences")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -855,11 +849,11 @@ func (findingsApi *FindingsApiV1) ListOccurrencesWithContext(ctx context.Context
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = findingsApi.Service.Request(request, &rawResponse)
+	response, err = findings.Service.Request(request, &rawResponse)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalApiListOccurrencesResponse)
+	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalAPIListOccurrencesResponse)
 	if err != nil {
 		return
 	}
@@ -869,12 +863,12 @@ func (findingsApi *FindingsApiV1) ListOccurrencesWithContext(ctx context.Context
 }
 
 // ListNoteOccurrences : Lists `Occurrences` referencing the specified `Note`. Use this method to get all occurrences referencing your `Note` across all your customer providers
-func (findingsApi *FindingsApiV1) ListNoteOccurrences(listNoteOccurrencesOptions *ListNoteOccurrencesOptions) (result *ApiListNoteOccurrencesResponse, response *core.DetailedResponse, err error) {
-	return findingsApi.ListNoteOccurrencesWithContext(context.Background(), listNoteOccurrencesOptions)
+func (findings *FindingsV1) ListNoteOccurrences(listNoteOccurrencesOptions *ListNoteOccurrencesOptions) (result *APIListNoteOccurrencesResponse, response *core.DetailedResponse, err error) {
+	return findings.ListNoteOccurrencesWithContext(context.Background(), listNoteOccurrencesOptions)
 }
 
 // ListNoteOccurrencesWithContext is an alternate form of the ListNoteOccurrences method which supports a Context parameter
-func (findingsApi *FindingsApiV1) ListNoteOccurrencesWithContext(ctx context.Context, listNoteOccurrencesOptions *ListNoteOccurrencesOptions) (result *ApiListNoteOccurrencesResponse, response *core.DetailedResponse, err error) {
+func (findings *FindingsV1) ListNoteOccurrencesWithContext(ctx context.Context, listNoteOccurrencesOptions *ListNoteOccurrencesOptions) (result *APIListNoteOccurrencesResponse, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listNoteOccurrencesOptions, "listNoteOccurrencesOptions cannot be nil")
 	if err != nil {
 		return
@@ -885,15 +879,15 @@ func (findingsApi *FindingsApiV1) ListNoteOccurrencesWithContext(ctx context.Con
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":  *listNoteOccurrencesOptions.AccountID,
+		"account_id": *listNoteOccurrencesOptions.AccountID,
 		"provider_id": *listNoteOccurrencesOptions.ProviderID,
-		"note_id":     *listNoteOccurrencesOptions.NoteID,
+		"note_id": *listNoteOccurrencesOptions.NoteID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = findingsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(findingsApi.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/notes/{note_id}/occurrences`, pathParamsMap)
+	builder.EnableGzipCompression = findings.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(findings.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/notes/{note_id}/occurrences`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -902,7 +896,7 @@ func (findingsApi *FindingsApiV1) ListNoteOccurrencesWithContext(ctx context.Con
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("findings_api", "V1", "ListNoteOccurrences")
+	sdkHeaders := common.GetSdkHeaders("findings", "V1", "ListNoteOccurrences")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -924,11 +918,11 @@ func (findingsApi *FindingsApiV1) ListNoteOccurrencesWithContext(ctx context.Con
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = findingsApi.Service.Request(request, &rawResponse)
+	response, err = findings.Service.Request(request, &rawResponse)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalApiListNoteOccurrencesResponse)
+	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalAPIListNoteOccurrencesResponse)
 	if err != nil {
 		return
 	}
@@ -938,12 +932,12 @@ func (findingsApi *FindingsApiV1) ListNoteOccurrencesWithContext(ctx context.Con
 }
 
 // GetOccurrence : Returns the requested `Occurrence`
-func (findingsApi *FindingsApiV1) GetOccurrence(getOccurrenceOptions *GetOccurrenceOptions) (result *ApiOccurrence, response *core.DetailedResponse, err error) {
-	return findingsApi.GetOccurrenceWithContext(context.Background(), getOccurrenceOptions)
+func (findings *FindingsV1) GetOccurrence(getOccurrenceOptions *GetOccurrenceOptions) (result *APIListOccurrencesResponse, response *core.DetailedResponse, err error) {
+	return findings.GetOccurrenceWithContext(context.Background(), getOccurrenceOptions)
 }
 
 // GetOccurrenceWithContext is an alternate form of the GetOccurrence method which supports a Context parameter
-func (findingsApi *FindingsApiV1) GetOccurrenceWithContext(ctx context.Context, getOccurrenceOptions *GetOccurrenceOptions) (result *ApiOccurrence, response *core.DetailedResponse, err error) {
+func (findings *FindingsV1) GetOccurrenceWithContext(ctx context.Context, getOccurrenceOptions *GetOccurrenceOptions) (result *APIListOccurrencesResponse, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getOccurrenceOptions, "getOccurrenceOptions cannot be nil")
 	if err != nil {
 		return
@@ -954,15 +948,15 @@ func (findingsApi *FindingsApiV1) GetOccurrenceWithContext(ctx context.Context, 
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":    *getOccurrenceOptions.AccountID,
-		"provider_id":   *getOccurrenceOptions.ProviderID,
+		"account_id": *getOccurrenceOptions.AccountID,
+		"provider_id": *getOccurrenceOptions.ProviderID,
 		"occurrence_id": *getOccurrenceOptions.OccurrenceID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = findingsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(findingsApi.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/occurrences/{occurrence_id}`, pathParamsMap)
+	builder.EnableGzipCompression = findings.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(findings.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/occurrences/{occurrence_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -971,7 +965,7 @@ func (findingsApi *FindingsApiV1) GetOccurrenceWithContext(ctx context.Context, 
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("findings_api", "V1", "GetOccurrence")
+	sdkHeaders := common.GetSdkHeaders("findings", "V1", "GetOccurrence")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -986,11 +980,11 @@ func (findingsApi *FindingsApiV1) GetOccurrenceWithContext(ctx context.Context, 
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = findingsApi.Service.Request(request, &rawResponse)
+	response, err = findings.Service.Request(request, &rawResponse)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalApiOccurrence)
+	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalAPIListOccurrencesResponse)
 	if err != nil {
 		return
 	}
@@ -1000,12 +994,12 @@ func (findingsApi *FindingsApiV1) GetOccurrenceWithContext(ctx context.Context, 
 }
 
 // UpdateOccurrence : Updates an existing `Occurrence`
-func (findingsApi *FindingsApiV1) UpdateOccurrence(updateOccurrenceOptions *UpdateOccurrenceOptions) (result *ApiOccurrence, response *core.DetailedResponse, err error) {
-	return findingsApi.UpdateOccurrenceWithContext(context.Background(), updateOccurrenceOptions)
+func (findings *FindingsV1) UpdateOccurrence(updateOccurrenceOptions *UpdateOccurrenceOptions) (result *APIOccurrence, response *core.DetailedResponse, err error) {
+	return findings.UpdateOccurrenceWithContext(context.Background(), updateOccurrenceOptions)
 }
 
 // UpdateOccurrenceWithContext is an alternate form of the UpdateOccurrence method which supports a Context parameter
-func (findingsApi *FindingsApiV1) UpdateOccurrenceWithContext(ctx context.Context, updateOccurrenceOptions *UpdateOccurrenceOptions) (result *ApiOccurrence, response *core.DetailedResponse, err error) {
+func (findings *FindingsV1) UpdateOccurrenceWithContext(ctx context.Context, updateOccurrenceOptions *UpdateOccurrenceOptions) (result *APIOccurrence, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(updateOccurrenceOptions, "updateOccurrenceOptions cannot be nil")
 	if err != nil {
 		return
@@ -1016,15 +1010,15 @@ func (findingsApi *FindingsApiV1) UpdateOccurrenceWithContext(ctx context.Contex
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":    *updateOccurrenceOptions.AccountID,
-		"provider_id":   *updateOccurrenceOptions.ProviderID,
+		"account_id": *updateOccurrenceOptions.AccountID,
+		"provider_id": *updateOccurrenceOptions.ProviderID,
 		"occurrence_id": *updateOccurrenceOptions.OccurrenceID,
 	}
 
 	builder := core.NewRequestBuilder(core.PUT)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = findingsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(findingsApi.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/occurrences/{occurrence_id}`, pathParamsMap)
+	builder.EnableGzipCompression = findings.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(findings.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/occurrences/{occurrence_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1033,7 +1027,7 @@ func (findingsApi *FindingsApiV1) UpdateOccurrenceWithContext(ctx context.Contex
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("findings_api", "V1", "UpdateOccurrence")
+	sdkHeaders := common.GetSdkHeaders("findings", "V1", "UpdateOccurrence")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -1088,11 +1082,11 @@ func (findingsApi *FindingsApiV1) UpdateOccurrenceWithContext(ctx context.Contex
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = findingsApi.Service.Request(request, &rawResponse)
+	response, err = findings.Service.Request(request, &rawResponse)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalApiOccurrence)
+	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalAPIOccurrence)
 	if err != nil {
 		return
 	}
@@ -1102,12 +1096,12 @@ func (findingsApi *FindingsApiV1) UpdateOccurrenceWithContext(ctx context.Contex
 }
 
 // DeleteOccurrence : Deletes the given `Occurrence` from the system
-func (findingsApi *FindingsApiV1) DeleteOccurrence(deleteOccurrenceOptions *DeleteOccurrenceOptions) (response *core.DetailedResponse, err error) {
-	return findingsApi.DeleteOccurrenceWithContext(context.Background(), deleteOccurrenceOptions)
+func (findings *FindingsV1) DeleteOccurrence(deleteOccurrenceOptions *DeleteOccurrenceOptions) (response *core.DetailedResponse, err error) {
+	return findings.DeleteOccurrenceWithContext(context.Background(), deleteOccurrenceOptions)
 }
 
 // DeleteOccurrenceWithContext is an alternate form of the DeleteOccurrence method which supports a Context parameter
-func (findingsApi *FindingsApiV1) DeleteOccurrenceWithContext(ctx context.Context, deleteOccurrenceOptions *DeleteOccurrenceOptions) (response *core.DetailedResponse, err error) {
+func (findings *FindingsV1) DeleteOccurrenceWithContext(ctx context.Context, deleteOccurrenceOptions *DeleteOccurrenceOptions) (response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(deleteOccurrenceOptions, "deleteOccurrenceOptions cannot be nil")
 	if err != nil {
 		return
@@ -1118,15 +1112,15 @@ func (findingsApi *FindingsApiV1) DeleteOccurrenceWithContext(ctx context.Contex
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":    *deleteOccurrenceOptions.AccountID,
-		"provider_id":   *deleteOccurrenceOptions.ProviderID,
+		"account_id": *deleteOccurrenceOptions.AccountID,
+		"provider_id": *deleteOccurrenceOptions.ProviderID,
 		"occurrence_id": *deleteOccurrenceOptions.OccurrenceID,
 	}
 
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = findingsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(findingsApi.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/occurrences/{occurrence_id}`, pathParamsMap)
+	builder.EnableGzipCompression = findings.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(findings.Service.Options.URL, `/v1/{account_id}/providers/{provider_id}/occurrences/{occurrence_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1135,7 +1129,7 @@ func (findingsApi *FindingsApiV1) DeleteOccurrenceWithContext(ctx context.Contex
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("findings_api", "V1", "DeleteOccurrence")
+	sdkHeaders := common.GetSdkHeaders("findings", "V1", "DeleteOccurrence")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -1149,18 +1143,18 @@ func (findingsApi *FindingsApiV1) DeleteOccurrenceWithContext(ctx context.Contex
 		return
 	}
 
-	response, err = findingsApi.Service.Request(request, nil)
+	response, err = findings.Service.Request(request, nil)
 
 	return
 }
 
 // ListProviders : Lists all `Providers` for a given account id
-func (findingsApi *FindingsApiV1) ListProviders(listProvidersOptions *ListProvidersOptions) (result *ApiListProvidersResponse, response *core.DetailedResponse, err error) {
-	return findingsApi.ListProvidersWithContext(context.Background(), listProvidersOptions)
+func (findings *FindingsV1) ListProviders(listProvidersOptions *ListProvidersOptions) (result *APIListProvidersResponse, response *core.DetailedResponse, err error) {
+	return findings.ListProvidersWithContext(context.Background(), listProvidersOptions)
 }
 
 // ListProvidersWithContext is an alternate form of the ListProviders method which supports a Context parameter
-func (findingsApi *FindingsApiV1) ListProvidersWithContext(ctx context.Context, listProvidersOptions *ListProvidersOptions) (result *ApiListProvidersResponse, response *core.DetailedResponse, err error) {
+func (findings *FindingsV1) ListProvidersWithContext(ctx context.Context, listProvidersOptions *ListProvidersOptions) (result *APIListProvidersResponse, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listProvidersOptions, "listProvidersOptions cannot be nil")
 	if err != nil {
 		return
@@ -1176,8 +1170,8 @@ func (findingsApi *FindingsApiV1) ListProvidersWithContext(ctx context.Context, 
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = findingsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(findingsApi.Service.Options.URL, `/v1/{account_id}/providers`, pathParamsMap)
+	builder.EnableGzipCompression = findings.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(findings.Service.Options.URL, `/v1/{account_id}/providers`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1186,7 +1180,7 @@ func (findingsApi *FindingsApiV1) ListProvidersWithContext(ctx context.Context, 
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("findings_api", "V1", "ListProviders")
+	sdkHeaders := common.GetSdkHeaders("findings", "V1", "ListProviders")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -1214,11 +1208,11 @@ func (findingsApi *FindingsApiV1) ListProvidersWithContext(ctx context.Context, 
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = findingsApi.Service.Request(request, &rawResponse)
+	response, err = findings.Service.Request(request, &rawResponse)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalApiListProvidersResponse)
+	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalAPIListProvidersResponse)
 	if err != nil {
 		return
 	}
@@ -1257,13 +1251,13 @@ type Card struct {
 }
 
 // NewCard : Instantiate Card (Generic Model Constructor)
-func (*FindingsApiV1) NewCard(section string, title string, subtitle string, findingNoteNames []string, elements []CardElementIntf) (model *Card, err error) {
+func (*FindingsV1) NewCard(section string, title string, subtitle string, findingNoteNames []string, elements []CardElementIntf) (model *Card, err error) {
 	model = &Card{
-		Section:          core.StringPtr(section),
-		Title:            core.StringPtr(title),
-		Subtitle:         core.StringPtr(subtitle),
+		Section: core.StringPtr(section),
+		Title: core.StringPtr(title),
+		Subtitle: core.StringPtr(subtitle),
 		FindingNoteNames: findingNoteNames,
-		Elements:         elements,
+		Elements: elements,
 	}
 	err = core.ValidateStruct(model, "required parameters")
 	return
@@ -1345,11 +1339,10 @@ type CardElement struct {
 // - BREAKDOWN&#58; Breakdown of numeric values
 // - TIME_SERIES&#58; Time-series of numeric values.
 const (
-	CardElement_Kind_Breakdown  = "BREAKDOWN"
-	CardElement_Kind_Numeric    = "NUMERIC"
-	CardElement_Kind_TimeSeries = "TIME_SERIES"
+	CardElementKindBreakdownConst = "BREAKDOWN"
+	CardElementKindNumericConst = "NUMERIC"
+	CardElementKindTimeSeriesConst = "TIME_SERIES"
 )
-
 func (*CardElement) isaCardElement() bool {
 	return true
 }
@@ -1389,7 +1382,7 @@ type Context struct {
 	Region *string `json:"region,omitempty"`
 
 	// The resource CRN (e.g. certificate CRN, image CRN).
-	ResourceCrn *string `json:"resource_crn,omitempty"`
+	ResourceCRN *string `json:"resource_crn,omitempty"`
 
 	// The resource ID, in case the CRN is not available.
 	ResourceID *string `json:"resource_id,omitempty"`
@@ -1401,7 +1394,7 @@ type Context struct {
 	ResourceType *string `json:"resource_type,omitempty"`
 
 	// The service CRN (e.g. CertMgr Instance CRN).
-	ServiceCrn *string `json:"service_crn,omitempty"`
+	ServiceCRN *string `json:"service_crn,omitempty"`
 
 	// The service name (e.g. CertMgr).
 	ServiceName *string `json:"service_name,omitempty"`
@@ -1423,7 +1416,7 @@ func UnmarshalContext(m map[string]json.RawMessage, result interface{}) (err err
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "resource_crn", &obj.ResourceCrn)
+	err = core.UnmarshalPrimitive(m, "resource_crn", &obj.ResourceCRN)
 	if err != nil {
 		return
 	}
@@ -1439,7 +1432,7 @@ func UnmarshalContext(m map[string]json.RawMessage, result interface{}) (err err
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "service_crn", &obj.ServiceCrn)
+	err = core.UnmarshalPrimitive(m, "service_crn", &obj.ServiceCRN)
 	if err != nil {
 		return
 	}
@@ -1490,7 +1483,7 @@ type CreateNoteOptions struct {
 	// The entity reporting a note.
 	ReportedBy *Reporter `validate:"required"`
 
-	RelatedURL []ApiNoteRelatedURL
+	RelatedURL []APINoteRelatedURL
 
 	// Time of expiration for this note, null if note does not expire.
 	ExpirationTime *strfmt.DateTime
@@ -1531,23 +1524,23 @@ type CreateNoteOptions struct {
 //  - CARD_CONFIGURED&#58; The note represents a card configured for a user account.
 //  - SECTION&#58; The note represents a section in a dashboard.
 const (
-	CreateNoteOptions_Kind_Card           = "CARD"
-	CreateNoteOptions_Kind_CardConfigured = "CARD_CONFIGURED"
-	CreateNoteOptions_Kind_Finding        = "FINDING"
-	CreateNoteOptions_Kind_Kpi            = "KPI"
-	CreateNoteOptions_Kind_Section        = "SECTION"
+	CreateNoteOptionsKindCardConst = "CARD"
+	CreateNoteOptionsKindCardConfiguredConst = "CARD_CONFIGURED"
+	CreateNoteOptionsKindFindingConst = "FINDING"
+	CreateNoteOptionsKindKpiConst = "KPI"
+	CreateNoteOptionsKindSectionConst = "SECTION"
 )
 
 // NewCreateNoteOptions : Instantiate CreateNoteOptions
-func (*FindingsApiV1) NewCreateNoteOptions(accountID string, providerID string, shortDescription string, longDescription string, kind string, id string, reportedBy *Reporter) *CreateNoteOptions {
+func (*FindingsV1) NewCreateNoteOptions(accountID string, providerID string, shortDescription string, longDescription string, kind string, id string, reportedBy *Reporter) *CreateNoteOptions {
 	return &CreateNoteOptions{
-		AccountID:        core.StringPtr(accountID),
-		ProviderID:       core.StringPtr(providerID),
+		AccountID: core.StringPtr(accountID),
+		ProviderID: core.StringPtr(providerID),
 		ShortDescription: core.StringPtr(shortDescription),
-		LongDescription:  core.StringPtr(longDescription),
-		Kind:             core.StringPtr(kind),
-		ID:               core.StringPtr(id),
-		ReportedBy:       reportedBy,
+		LongDescription: core.StringPtr(longDescription),
+		Kind: core.StringPtr(kind),
+		ID: core.StringPtr(id),
+		ReportedBy: reportedBy,
 	}
 }
 
@@ -1594,7 +1587,7 @@ func (options *CreateNoteOptions) SetReportedBy(reportedBy *Reporter) *CreateNot
 }
 
 // SetRelatedURL : Allow user to set RelatedURL
-func (options *CreateNoteOptions) SetRelatedURL(relatedURL []ApiNoteRelatedURL) *CreateNoteOptions {
+func (options *CreateNoteOptions) SetRelatedURL(relatedURL []APINoteRelatedURL) *CreateNoteOptions {
 	options.RelatedURL = relatedURL
 	return options
 }
@@ -1722,21 +1715,21 @@ type CreateOccurrenceOptions struct {
 //  - CARD_CONFIGURED&#58; The note represents a card configured for a user account.
 //  - SECTION&#58; The note represents a section in a dashboard.
 const (
-	CreateOccurrenceOptions_Kind_Card           = "CARD"
-	CreateOccurrenceOptions_Kind_CardConfigured = "CARD_CONFIGURED"
-	CreateOccurrenceOptions_Kind_Finding        = "FINDING"
-	CreateOccurrenceOptions_Kind_Kpi            = "KPI"
-	CreateOccurrenceOptions_Kind_Section        = "SECTION"
+	CreateOccurrenceOptionsKindCardConst = "CARD"
+	CreateOccurrenceOptionsKindCardConfiguredConst = "CARD_CONFIGURED"
+	CreateOccurrenceOptionsKindFindingConst = "FINDING"
+	CreateOccurrenceOptionsKindKpiConst = "KPI"
+	CreateOccurrenceOptionsKindSectionConst = "SECTION"
 )
 
 // NewCreateOccurrenceOptions : Instantiate CreateOccurrenceOptions
-func (*FindingsApiV1) NewCreateOccurrenceOptions(accountID string, providerID string, noteName string, kind string, id string) *CreateOccurrenceOptions {
+func (*FindingsV1) NewCreateOccurrenceOptions(accountID string, providerID string, noteName string, kind string, id string) *CreateOccurrenceOptions {
 	return &CreateOccurrenceOptions{
-		AccountID:  core.StringPtr(accountID),
+		AccountID: core.StringPtr(accountID),
 		ProviderID: core.StringPtr(providerID),
-		NoteName:   core.StringPtr(noteName),
-		Kind:       core.StringPtr(kind),
-		ID:         core.StringPtr(id),
+		NoteName: core.StringPtr(noteName),
+		Kind: core.StringPtr(kind),
+		ID: core.StringPtr(id),
 	}
 }
 
@@ -1893,11 +1886,11 @@ type DeleteNoteOptions struct {
 }
 
 // NewDeleteNoteOptions : Instantiate DeleteNoteOptions
-func (*FindingsApiV1) NewDeleteNoteOptions(accountID string, providerID string, noteID string) *DeleteNoteOptions {
+func (*FindingsV1) NewDeleteNoteOptions(accountID string, providerID string, noteID string) *DeleteNoteOptions {
 	return &DeleteNoteOptions{
-		AccountID:  core.StringPtr(accountID),
+		AccountID: core.StringPtr(accountID),
 		ProviderID: core.StringPtr(providerID),
-		NoteID:     core.StringPtr(noteID),
+		NoteID: core.StringPtr(noteID),
 	}
 }
 
@@ -1950,10 +1943,10 @@ type DeleteOccurrenceOptions struct {
 }
 
 // NewDeleteOccurrenceOptions : Instantiate DeleteOccurrenceOptions
-func (*FindingsApiV1) NewDeleteOccurrenceOptions(accountID string, providerID string, occurrenceID string) *DeleteOccurrenceOptions {
+func (*FindingsV1) NewDeleteOccurrenceOptions(accountID string, providerID string, occurrenceID string) *DeleteOccurrenceOptions {
 	return &DeleteOccurrenceOptions{
-		AccountID:    core.StringPtr(accountID),
-		ProviderID:   core.StringPtr(providerID),
+		AccountID: core.StringPtr(accountID),
+		ProviderID: core.StringPtr(providerID),
 		OccurrenceID: core.StringPtr(occurrenceID),
 	}
 }
@@ -2020,10 +2013,10 @@ type Finding struct {
 // - HIGH&#58; High Impact
 // - CRITICAL&#58; Critical Impact.
 const (
-	Finding_Severity_Critical = "CRITICAL"
-	Finding_Severity_High     = "HIGH"
-	Finding_Severity_Low      = "LOW"
-	Finding_Severity_Medium   = "MEDIUM"
+	FindingSeverityCriticalConst = "CRITICAL"
+	FindingSeverityHighConst = "HIGH"
+	FindingSeverityLowConst = "LOW"
+	FindingSeverityMediumConst = "MEDIUM"
 )
 
 // Constants associated with the Finding.Certainty property.
@@ -2032,9 +2025,9 @@ const (
 // - MEDIUM&#58; Medium Certainty
 // - HIGH&#58; High Certainty.
 const (
-	Finding_Certainty_High   = "HIGH"
-	Finding_Certainty_Low    = "LOW"
-	Finding_Certainty_Medium = "MEDIUM"
+	FindingCertaintyHighConst = "HIGH"
+	FindingCertaintyLowConst = "LOW"
+	FindingCertaintyMediumConst = "MEDIUM"
 )
 
 // UnmarshalFinding unmarshals an instance of Finding from the specified map of raw messages.
@@ -2084,14 +2077,14 @@ type FindingType struct {
 // - HIGH&#58; High Impact
 // - CRITICAL&#58; Critical Impact.
 const (
-	FindingType_Severity_Critical = "CRITICAL"
-	FindingType_Severity_High     = "HIGH"
-	FindingType_Severity_Low      = "LOW"
-	FindingType_Severity_Medium   = "MEDIUM"
+	FindingTypeSeverityCriticalConst = "CRITICAL"
+	FindingTypeSeverityHighConst = "HIGH"
+	FindingTypeSeverityLowConst = "LOW"
+	FindingTypeSeverityMediumConst = "MEDIUM"
 )
 
 // NewFindingType : Instantiate FindingType (Generic Model Constructor)
-func (*FindingsApiV1) NewFindingType(severity string) (model *FindingType, err error) {
+func (*FindingsV1) NewFindingType(severity string) (model *FindingType, err error) {
 	model = &FindingType{
 		Severity: core.StringPtr(severity),
 	}
@@ -2133,11 +2126,11 @@ type GetNoteOptions struct {
 }
 
 // NewGetNoteOptions : Instantiate GetNoteOptions
-func (*FindingsApiV1) NewGetNoteOptions(accountID string, providerID string, noteID string) *GetNoteOptions {
+func (*FindingsV1) NewGetNoteOptions(accountID string, providerID string, noteID string) *GetNoteOptions {
 	return &GetNoteOptions{
-		AccountID:  core.StringPtr(accountID),
+		AccountID: core.StringPtr(accountID),
 		ProviderID: core.StringPtr(providerID),
-		NoteID:     core.StringPtr(noteID),
+		NoteID: core.StringPtr(noteID),
 	}
 }
 
@@ -2190,10 +2183,10 @@ type GetOccurrenceNoteOptions struct {
 }
 
 // NewGetOccurrenceNoteOptions : Instantiate GetOccurrenceNoteOptions
-func (*FindingsApiV1) NewGetOccurrenceNoteOptions(accountID string, providerID string, occurrenceID string) *GetOccurrenceNoteOptions {
+func (*FindingsV1) NewGetOccurrenceNoteOptions(accountID string, providerID string, occurrenceID string) *GetOccurrenceNoteOptions {
 	return &GetOccurrenceNoteOptions{
-		AccountID:    core.StringPtr(accountID),
-		ProviderID:   core.StringPtr(providerID),
+		AccountID: core.StringPtr(accountID),
+		ProviderID: core.StringPtr(providerID),
 		OccurrenceID: core.StringPtr(occurrenceID),
 	}
 }
@@ -2247,10 +2240,10 @@ type GetOccurrenceOptions struct {
 }
 
 // NewGetOccurrenceOptions : Instantiate GetOccurrenceOptions
-func (*FindingsApiV1) NewGetOccurrenceOptions(accountID string, providerID string, occurrenceID string) *GetOccurrenceOptions {
+func (*FindingsV1) NewGetOccurrenceOptions(accountID string, providerID string, occurrenceID string) *GetOccurrenceOptions {
 	return &GetOccurrenceOptions{
-		AccountID:    core.StringPtr(accountID),
-		ProviderID:   core.StringPtr(providerID),
+		AccountID: core.StringPtr(accountID),
+		ProviderID: core.StringPtr(providerID),
 		OccurrenceID: core.StringPtr(occurrenceID),
 	}
 }
@@ -2295,7 +2288,7 @@ type Kpi struct {
 }
 
 // NewKpi : Instantiate Kpi (Generic Model Constructor)
-func (*FindingsApiV1) NewKpi(value float64) (model *Kpi, err error) {
+func (*FindingsV1) NewKpi(value float64) (model *Kpi, err error) {
 	model = &Kpi{
 		Value: core.Float64Ptr(value),
 	}
@@ -2331,11 +2324,11 @@ type KpiType struct {
 // - SUM&#58; A single-value metrics aggregation type that sums up numeric values
 //   that are extracted from KPI occurrences.
 const (
-	KpiType_AggregationType_Sum = "SUM"
+	KpiTypeAggregationTypeSumConst = "SUM"
 )
 
 // NewKpiType : Instantiate KpiType (Generic Model Constructor)
-func (*FindingsApiV1) NewKpiType(aggregationType string) (model *KpiType, err error) {
+func (*FindingsV1) NewKpiType(aggregationType string) (model *KpiType, err error) {
 	model = &KpiType{
 		AggregationType: core.StringPtr(aggregationType),
 	}
@@ -2379,11 +2372,11 @@ type ListNoteOccurrencesOptions struct {
 }
 
 // NewListNoteOccurrencesOptions : Instantiate ListNoteOccurrencesOptions
-func (*FindingsApiV1) NewListNoteOccurrencesOptions(accountID string, providerID string, noteID string) *ListNoteOccurrencesOptions {
+func (*FindingsV1) NewListNoteOccurrencesOptions(accountID string, providerID string, noteID string) *ListNoteOccurrencesOptions {
 	return &ListNoteOccurrencesOptions{
-		AccountID:  core.StringPtr(accountID),
+		AccountID: core.StringPtr(accountID),
 		ProviderID: core.StringPtr(providerID),
-		NoteID:     core.StringPtr(noteID),
+		NoteID: core.StringPtr(noteID),
 	}
 }
 
@@ -2451,9 +2444,9 @@ type ListNotesOptions struct {
 }
 
 // NewListNotesOptions : Instantiate ListNotesOptions
-func (*FindingsApiV1) NewListNotesOptions(accountID string, providerID string) *ListNotesOptions {
+func (*FindingsV1) NewListNotesOptions(accountID string, providerID string) *ListNotesOptions {
 	return &ListNotesOptions{
-		AccountID:  core.StringPtr(accountID),
+		AccountID: core.StringPtr(accountID),
 		ProviderID: core.StringPtr(providerID),
 	}
 }
@@ -2516,9 +2509,9 @@ type ListOccurrencesOptions struct {
 }
 
 // NewListOccurrencesOptions : Instantiate ListOccurrencesOptions
-func (*FindingsApiV1) NewListOccurrencesOptions(accountID string, providerID string) *ListOccurrencesOptions {
+func (*FindingsV1) NewListOccurrencesOptions(accountID string, providerID string) *ListOccurrencesOptions {
 	return &ListOccurrencesOptions{
-		AccountID:  core.StringPtr(accountID),
+		AccountID: core.StringPtr(accountID),
 		ProviderID: core.StringPtr(providerID),
 	}
 }
@@ -2584,7 +2577,7 @@ type ListProvidersOptions struct {
 }
 
 // NewListProvidersOptions : Instantiate ListProvidersOptions
-func (*FindingsApiV1) NewListProvidersOptions(accountID string) *ListProvidersOptions {
+func (*FindingsV1) NewListProvidersOptions(accountID string) *ListProvidersOptions {
 	return &ListProvidersOptions{
 		AccountID: core.StringPtr(accountID),
 	}
@@ -2689,7 +2682,7 @@ type PostGraphOptions struct {
 }
 
 // NewPostGraphOptions : Instantiate PostGraphOptions
-func (*FindingsApiV1) NewPostGraphOptions(accountID string) *PostGraphOptions {
+func (*FindingsV1) NewPostGraphOptions(accountID string) *PostGraphOptions {
 	return &PostGraphOptions{
 		AccountID: core.StringPtr(accountID),
 	}
@@ -2762,9 +2755,9 @@ type Reporter struct {
 }
 
 // NewReporter : Instantiate Reporter (Generic Model Constructor)
-func (*FindingsApiV1) NewReporter(id string, title string) (model *Reporter, err error) {
+func (*FindingsV1) NewReporter(id string, title string) (model *Reporter, err error) {
 	model = &Reporter{
-		ID:    core.StringPtr(id),
+		ID: core.StringPtr(id),
 		Title: core.StringPtr(title),
 	}
 	err = core.ValidateStruct(model, "required parameters")
@@ -2800,7 +2793,7 @@ type Section struct {
 }
 
 // NewSection : Instantiate Section (Generic Model Constructor)
-func (*FindingsApiV1) NewSection(title string, image string) (model *Section, err error) {
+func (*FindingsV1) NewSection(title string, image string) (model *Section, err error) {
 	model = &Section{
 		Title: core.StringPtr(title),
 		Image: core.StringPtr(image),
@@ -2834,7 +2827,7 @@ type SocketAddress struct {
 }
 
 // NewSocketAddress : Instantiate SocketAddress (Generic Model Constructor)
-func (*FindingsApiV1) NewSocketAddress(address string) (model *SocketAddress, err error) {
+func (*FindingsV1) NewSocketAddress(address string) (model *SocketAddress, err error) {
 	model = &SocketAddress{
 		Address: core.StringPtr(address),
 	}
@@ -2887,7 +2880,7 @@ type UpdateNoteOptions struct {
 	// The entity reporting a note.
 	ReportedBy *Reporter `validate:"required"`
 
-	RelatedURL []ApiNoteRelatedURL
+	RelatedURL []APINoteRelatedURL
 
 	// Time of expiration for this note, null if note does not expire.
 	ExpirationTime *strfmt.DateTime
@@ -2928,24 +2921,24 @@ type UpdateNoteOptions struct {
 //  - CARD_CONFIGURED&#58; The note represents a card configured for a user account.
 //  - SECTION&#58; The note represents a section in a dashboard.
 const (
-	UpdateNoteOptions_Kind_Card           = "CARD"
-	UpdateNoteOptions_Kind_CardConfigured = "CARD_CONFIGURED"
-	UpdateNoteOptions_Kind_Finding        = "FINDING"
-	UpdateNoteOptions_Kind_Kpi            = "KPI"
-	UpdateNoteOptions_Kind_Section        = "SECTION"
+	UpdateNoteOptionsKindCardConst = "CARD"
+	UpdateNoteOptionsKindCardConfiguredConst = "CARD_CONFIGURED"
+	UpdateNoteOptionsKindFindingConst = "FINDING"
+	UpdateNoteOptionsKindKpiConst = "KPI"
+	UpdateNoteOptionsKindSectionConst = "SECTION"
 )
 
 // NewUpdateNoteOptions : Instantiate UpdateNoteOptions
-func (*FindingsApiV1) NewUpdateNoteOptions(accountID string, providerID string, noteID string, shortDescription string, longDescription string, kind string, id string, reportedBy *Reporter) *UpdateNoteOptions {
+func (*FindingsV1) NewUpdateNoteOptions(accountID string, providerID string, noteID string, shortDescription string, longDescription string, kind string, id string, reportedBy *Reporter) *UpdateNoteOptions {
 	return &UpdateNoteOptions{
-		AccountID:        core.StringPtr(accountID),
-		ProviderID:       core.StringPtr(providerID),
-		NoteID:           core.StringPtr(noteID),
+		AccountID: core.StringPtr(accountID),
+		ProviderID: core.StringPtr(providerID),
+		NoteID: core.StringPtr(noteID),
 		ShortDescription: core.StringPtr(shortDescription),
-		LongDescription:  core.StringPtr(longDescription),
-		Kind:             core.StringPtr(kind),
-		ID:               core.StringPtr(id),
-		ReportedBy:       reportedBy,
+		LongDescription: core.StringPtr(longDescription),
+		Kind: core.StringPtr(kind),
+		ID: core.StringPtr(id),
+		ReportedBy: reportedBy,
 	}
 }
 
@@ -2998,7 +2991,7 @@ func (options *UpdateNoteOptions) SetReportedBy(reportedBy *Reporter) *UpdateNot
 }
 
 // SetRelatedURL : Allow user to set RelatedURL
-func (options *UpdateNoteOptions) SetRelatedURL(relatedURL []ApiNoteRelatedURL) *UpdateNoteOptions {
+func (options *UpdateNoteOptions) SetRelatedURL(relatedURL []APINoteRelatedURL) *UpdateNoteOptions {
 	options.RelatedURL = relatedURL
 	return options
 }
@@ -3126,22 +3119,22 @@ type UpdateOccurrenceOptions struct {
 //  - CARD_CONFIGURED&#58; The note represents a card configured for a user account.
 //  - SECTION&#58; The note represents a section in a dashboard.
 const (
-	UpdateOccurrenceOptions_Kind_Card           = "CARD"
-	UpdateOccurrenceOptions_Kind_CardConfigured = "CARD_CONFIGURED"
-	UpdateOccurrenceOptions_Kind_Finding        = "FINDING"
-	UpdateOccurrenceOptions_Kind_Kpi            = "KPI"
-	UpdateOccurrenceOptions_Kind_Section        = "SECTION"
+	UpdateOccurrenceOptionsKindCardConst = "CARD"
+	UpdateOccurrenceOptionsKindCardConfiguredConst = "CARD_CONFIGURED"
+	UpdateOccurrenceOptionsKindFindingConst = "FINDING"
+	UpdateOccurrenceOptionsKindKpiConst = "KPI"
+	UpdateOccurrenceOptionsKindSectionConst = "SECTION"
 )
 
 // NewUpdateOccurrenceOptions : Instantiate UpdateOccurrenceOptions
-func (*FindingsApiV1) NewUpdateOccurrenceOptions(accountID string, providerID string, occurrenceID string, noteName string, kind string, id string) *UpdateOccurrenceOptions {
+func (*FindingsV1) NewUpdateOccurrenceOptions(accountID string, providerID string, occurrenceID string, noteName string, kind string, id string) *UpdateOccurrenceOptions {
 	return &UpdateOccurrenceOptions{
-		AccountID:    core.StringPtr(accountID),
-		ProviderID:   core.StringPtr(providerID),
+		AccountID: core.StringPtr(accountID),
+		ProviderID: core.StringPtr(providerID),
 		OccurrenceID: core.StringPtr(occurrenceID),
-		NoteName:     core.StringPtr(noteName),
-		Kind:         core.StringPtr(kind),
-		ID:           core.StringPtr(id),
+		NoteName: core.StringPtr(noteName),
+		Kind: core.StringPtr(kind),
+		ID: core.StringPtr(id),
 	}
 }
 
@@ -3264,9 +3257,8 @@ type ValueType struct {
 // Kind of element
 // - KPI&#58; Kind of value derived from a KPI occurrence.
 const (
-	ValueType_Kind_Kpi = "KPI"
+	ValueTypeKindKpiConst = "KPI"
 )
-
 func (*ValueType) isaValueType() bool {
 	return true
 }
@@ -3298,19 +3290,19 @@ func UnmarshalValueType(m map[string]json.RawMessage, result interface{}) (err e
 	return
 }
 
-// ApiListNoteOccurrencesResponse : Response including listed occurrences for a note.
-type ApiListNoteOccurrencesResponse struct {
+// APIListNoteOccurrencesResponse : Response including listed occurrences for a note.
+type APIListNoteOccurrencesResponse struct {
 	// The occurrences attached to the specified note.
-	Occurrences []ApiOccurrence `json:"occurrences,omitempty"`
+	Occurrences []APIOccurrence `json:"occurrences,omitempty"`
 
 	// Token to receive the next page of notes.
 	NextPageToken *string `json:"next_page_token,omitempty"`
 }
 
-// UnmarshalApiListNoteOccurrencesResponse unmarshals an instance of ApiListNoteOccurrencesResponse from the specified map of raw messages.
-func UnmarshalApiListNoteOccurrencesResponse(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(ApiListNoteOccurrencesResponse)
-	err = core.UnmarshalModel(m, "occurrences", &obj.Occurrences, UnmarshalApiOccurrence)
+// UnmarshalAPIListNoteOccurrencesResponse unmarshals an instance of APIListNoteOccurrencesResponse from the specified map of raw messages.
+func UnmarshalAPIListNoteOccurrencesResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(APIListNoteOccurrencesResponse)
+	err = core.UnmarshalModel(m, "occurrences", &obj.Occurrences, UnmarshalAPIOccurrence)
 	if err != nil {
 		return
 	}
@@ -3322,19 +3314,19 @@ func UnmarshalApiListNoteOccurrencesResponse(m map[string]json.RawMessage, resul
 	return
 }
 
-// ApiListNotesResponse : Response including listed notes.
-type ApiListNotesResponse struct {
-	Notes []ApiNote `json:"notes,omitempty"`
+// APIListNotesResponse : Response including listed notes.
+type APIListNotesResponse struct {
+	Notes []APINote `json:"notes,omitempty"`
 
 	// The next pagination token in the list response. It should be used as page_token for the following request. An empty
 	// value means no more result.
 	NextPageToken *string `json:"next_page_token,omitempty"`
 }
 
-// UnmarshalApiListNotesResponse unmarshals an instance of ApiListNotesResponse from the specified map of raw messages.
-func UnmarshalApiListNotesResponse(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(ApiListNotesResponse)
-	err = core.UnmarshalModel(m, "notes", &obj.Notes, UnmarshalApiNote)
+// UnmarshalAPIListNotesResponse unmarshals an instance of APIListNotesResponse from the specified map of raw messages.
+func UnmarshalAPIListNotesResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(APIListNotesResponse)
+	err = core.UnmarshalModel(m, "notes", &obj.Notes, UnmarshalAPINote)
 	if err != nil {
 		return
 	}
@@ -3346,20 +3338,20 @@ func UnmarshalApiListNotesResponse(m map[string]json.RawMessage, result interfac
 	return
 }
 
-// ApiListOccurrencesResponse : Response including listed active occurrences.
-type ApiListOccurrencesResponse struct {
+// APIListOccurrencesResponse : Response including listed active occurrences.
+type APIListOccurrencesResponse struct {
 	// The occurrences requested.
-	Occurrences []ApiOccurrence `json:"occurrences,omitempty"`
+	Occurrences []APIOccurrence `json:"occurrences,omitempty"`
 
 	// The next pagination token in the list response. It should be used as
 	// `page_token` for the following request. An empty value means no more results.
 	NextPageToken *string `json:"next_page_token,omitempty"`
 }
 
-// UnmarshalApiListOccurrencesResponse unmarshals an instance of ApiListOccurrencesResponse from the specified map of raw messages.
-func UnmarshalApiListOccurrencesResponse(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(ApiListOccurrencesResponse)
-	err = core.UnmarshalModel(m, "occurrences", &obj.Occurrences, UnmarshalApiOccurrence)
+// UnmarshalAPIListOccurrencesResponse unmarshals an instance of APIListOccurrencesResponse from the specified map of raw messages.
+func UnmarshalAPIListOccurrencesResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(APIListOccurrencesResponse)
+	err = core.UnmarshalModel(m, "occurrences", &obj.Occurrences, UnmarshalAPIOccurrence)
 	if err != nil {
 		return
 	}
@@ -3371,15 +3363,15 @@ func UnmarshalApiListOccurrencesResponse(m map[string]json.RawMessage, result in
 	return
 }
 
-// ApiListProvidersResponse : Response including listed providers.
-type ApiListProvidersResponse struct {
-	Providers []ApiProvider `json:"providers,omitempty"`
+// APIListProvidersResponse : Response including listed providers.
+type APIListProvidersResponse struct {
+	Providers []APIProvider `json:"providers,omitempty"`
 }
 
-// UnmarshalApiListProvidersResponse unmarshals an instance of ApiListProvidersResponse from the specified map of raw messages.
-func UnmarshalApiListProvidersResponse(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(ApiListProvidersResponse)
-	err = core.UnmarshalModel(m, "providers", &obj.Providers, UnmarshalApiProvider)
+// UnmarshalAPIListProvidersResponse unmarshals an instance of APIListProvidersResponse from the specified map of raw messages.
+func UnmarshalAPIListProvidersResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(APIListProvidersResponse)
+	err = core.UnmarshalModel(m, "providers", &obj.Providers, UnmarshalAPIProvider)
 	if err != nil {
 		return
 	}
@@ -3387,8 +3379,8 @@ func UnmarshalApiListProvidersResponse(m map[string]json.RawMessage, result inte
 	return
 }
 
-// ApiNote : Provides a detailed description of a `Note`.
-type ApiNote struct {
+// APINote : Provides a detailed description of a `Note`.
+type APINote struct {
 	// A one sentence description of this `Note`.
 	ShortDescription *string `json:"short_description" validate:"required"`
 
@@ -3403,7 +3395,7 @@ type ApiNote struct {
 	//  - SECTION&#58; The note represents a section in a dashboard.
 	Kind *string `json:"kind" validate:"required"`
 
-	RelatedURL []ApiNoteRelatedURL `json:"related_url,omitempty"`
+	RelatedURL []APINoteRelatedURL `json:"related_url,omitempty"`
 
 	// Time of expiration for this note, null if note does not expire.
 	ExpirationTime *strfmt.DateTime `json:"expiration_time,omitempty"`
@@ -3435,7 +3427,7 @@ type ApiNote struct {
 	Section *Section `json:"section,omitempty"`
 }
 
-// Constants associated with the ApiNote.Kind property.
+// Constants associated with the APINote.Kind property.
 // This must be 1&#58;1 with members of our oneofs, it can be used for filtering Note and Occurrence on their kind.
 //  - FINDING&#58; The note and occurrence represent a finding.
 //  - KPI&#58; The note and occurrence represent a KPI value.
@@ -3443,29 +3435,29 @@ type ApiNote struct {
 //  - CARD_CONFIGURED&#58; The note represents a card configured for a user account.
 //  - SECTION&#58; The note represents a section in a dashboard.
 const (
-	ApiNote_Kind_Card           = "CARD"
-	ApiNote_Kind_CardConfigured = "CARD_CONFIGURED"
-	ApiNote_Kind_Finding        = "FINDING"
-	ApiNote_Kind_Kpi            = "KPI"
-	ApiNote_Kind_Section        = "SECTION"
+	APINoteKindCardConst = "CARD"
+	APINoteKindCardConfiguredConst = "CARD_CONFIGURED"
+	APINoteKindFindingConst = "FINDING"
+	APINoteKindKpiConst = "KPI"
+	APINoteKindSectionConst = "SECTION"
 )
 
-// NewApiNote : Instantiate ApiNote (Generic Model Constructor)
-func (*FindingsApiV1) NewApiNote(shortDescription string, longDescription string, kind string, id string, reportedBy *Reporter) (model *ApiNote, err error) {
-	model = &ApiNote{
+// NewAPINote : Instantiate APINote (Generic Model Constructor)
+func (*FindingsV1) NewAPINote(shortDescription string, longDescription string, kind string, id string, reportedBy *Reporter) (model *APINote, err error) {
+	model = &APINote{
 		ShortDescription: core.StringPtr(shortDescription),
-		LongDescription:  core.StringPtr(longDescription),
-		Kind:             core.StringPtr(kind),
-		ID:               core.StringPtr(id),
-		ReportedBy:       reportedBy,
+		LongDescription: core.StringPtr(longDescription),
+		Kind: core.StringPtr(kind),
+		ID: core.StringPtr(id),
+		ReportedBy: reportedBy,
 	}
 	err = core.ValidateStruct(model, "required parameters")
 	return
 }
 
-// UnmarshalApiNote unmarshals an instance of ApiNote from the specified map of raw messages.
-func UnmarshalApiNote(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(ApiNote)
+// UnmarshalAPINote unmarshals an instance of APINote from the specified map of raw messages.
+func UnmarshalAPINote(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(APINote)
 	err = core.UnmarshalPrimitive(m, "short_description", &obj.ShortDescription)
 	if err != nil {
 		return
@@ -3478,7 +3470,7 @@ func UnmarshalApiNote(m map[string]json.RawMessage, result interface{}) (err err
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(m, "related_url", &obj.RelatedURL, UnmarshalApiNoteRelatedURL)
+	err = core.UnmarshalModel(m, "related_url", &obj.RelatedURL, UnmarshalAPINoteRelatedURL)
 	if err != nil {
 		return
 	}
@@ -3526,16 +3518,16 @@ func UnmarshalApiNote(m map[string]json.RawMessage, result interface{}) (err err
 	return
 }
 
-// ApiNoteRelatedURL : Metadata for any related URL information.
-type ApiNoteRelatedURL struct {
+// APINoteRelatedURL : Metadata for any related URL information.
+type APINoteRelatedURL struct {
 	Label *string `json:"label,omitempty"`
 
 	URL *string `json:"url,omitempty"`
 }
 
-// UnmarshalApiNoteRelatedURL unmarshals an instance of ApiNoteRelatedURL from the specified map of raw messages.
-func UnmarshalApiNoteRelatedURL(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(ApiNoteRelatedURL)
+// UnmarshalAPINoteRelatedURL unmarshals an instance of APINoteRelatedURL from the specified map of raw messages.
+func UnmarshalAPINoteRelatedURL(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(APINoteRelatedURL)
 	err = core.UnmarshalPrimitive(m, "label", &obj.Label)
 	if err != nil {
 		return
@@ -3548,8 +3540,8 @@ func UnmarshalApiNoteRelatedURL(m map[string]json.RawMessage, result interface{}
 	return
 }
 
-// ApiOccurrence : `Occurrence` includes information about analysis occurrences for an image.
-type ApiOccurrence struct {
+// APIOccurrence : `Occurrence` includes information about analysis occurrences for an image.
+type APIOccurrence struct {
 	// The unique URL of the resource, image or the container, for which the `Occurrence` applies. For example,
 	// https://gcr.io/provider/image@sha256:foo. This field can be used as a filter in list requests.
 	ResourceURL *string `json:"resource_url,omitempty"`
@@ -3588,7 +3580,7 @@ type ApiOccurrence struct {
 	ReferenceData interface{} `json:"reference_data,omitempty"`
 }
 
-// Constants associated with the ApiOccurrence.Kind property.
+// Constants associated with the APIOccurrence.Kind property.
 // This must be 1&#58;1 with members of our oneofs, it can be used for filtering Note and Occurrence on their kind.
 //  - FINDING&#58; The note and occurrence represent a finding.
 //  - KPI&#58; The note and occurrence represent a KPI value.
@@ -3596,27 +3588,27 @@ type ApiOccurrence struct {
 //  - CARD_CONFIGURED&#58; The note represents a card configured for a user account.
 //  - SECTION&#58; The note represents a section in a dashboard.
 const (
-	ApiOccurrence_Kind_Card           = "CARD"
-	ApiOccurrence_Kind_CardConfigured = "CARD_CONFIGURED"
-	ApiOccurrence_Kind_Finding        = "FINDING"
-	ApiOccurrence_Kind_Kpi            = "KPI"
-	ApiOccurrence_Kind_Section        = "SECTION"
+	APIOccurrenceKindCardConst = "CARD"
+	APIOccurrenceKindCardConfiguredConst = "CARD_CONFIGURED"
+	APIOccurrenceKindFindingConst = "FINDING"
+	APIOccurrenceKindKpiConst = "KPI"
+	APIOccurrenceKindSectionConst = "SECTION"
 )
 
-// NewApiOccurrence : Instantiate ApiOccurrence (Generic Model Constructor)
-func (*FindingsApiV1) NewApiOccurrence(noteName string, kind string, id string) (model *ApiOccurrence, err error) {
-	model = &ApiOccurrence{
+// NewAPIOccurrence : Instantiate APIOccurrence (Generic Model Constructor)
+func (*FindingsV1) NewAPIOccurrence(noteName string, kind string, id string) (model *APIOccurrence, err error) {
+	model = &APIOccurrence{
 		NoteName: core.StringPtr(noteName),
-		Kind:     core.StringPtr(kind),
-		ID:       core.StringPtr(id),
+		Kind: core.StringPtr(kind),
+		ID: core.StringPtr(id),
 	}
 	err = core.ValidateStruct(model, "required parameters")
 	return
 }
 
-// UnmarshalApiOccurrence unmarshals an instance of ApiOccurrence from the specified map of raw messages.
-func UnmarshalApiOccurrence(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(ApiOccurrence)
+// UnmarshalAPIOccurrence unmarshals an instance of APIOccurrence from the specified map of raw messages.
+func UnmarshalAPIOccurrence(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(APIOccurrence)
 	err = core.UnmarshalPrimitive(m, "resource_url", &obj.ResourceURL)
 	if err != nil {
 		return
@@ -3665,16 +3657,16 @@ func UnmarshalApiOccurrence(m map[string]json.RawMessage, result interface{}) (e
 	return
 }
 
-// ApiProvider : Provides a detailed description of a `Provider`.
-type ApiProvider struct {
+// APIProvider : Provides a detailed description of a `Provider`.
+type APIProvider struct {
 	Name *string `json:"name" validate:"required"`
 
 	ID *string `json:"id" validate:"required"`
 }
 
-// UnmarshalApiProvider unmarshals an instance of ApiProvider from the specified map of raw messages.
-func UnmarshalApiProvider(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(ApiProvider)
+// UnmarshalAPIProvider unmarshals an instance of APIProvider from the specified map of raw messages.
+func UnmarshalAPIProvider(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(APIProvider)
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
 		return
@@ -3712,16 +3704,16 @@ type CardElementBreakdownCardElement struct {
 // - BREAKDOWN&#58; Breakdown of numeric values
 // - TIME_SERIES&#58; Time-series of numeric values.
 const (
-	CardElementBreakdownCardElement_Kind_Breakdown  = "BREAKDOWN"
-	CardElementBreakdownCardElement_Kind_Numeric    = "NUMERIC"
-	CardElementBreakdownCardElement_Kind_TimeSeries = "TIME_SERIES"
+	CardElementBreakdownCardElementKindBreakdownConst = "BREAKDOWN"
+	CardElementBreakdownCardElementKindNumericConst = "NUMERIC"
+	CardElementBreakdownCardElementKindTimeSeriesConst = "TIME_SERIES"
 )
 
 // NewCardElementBreakdownCardElement : Instantiate CardElementBreakdownCardElement (Generic Model Constructor)
-func (*FindingsApiV1) NewCardElementBreakdownCardElement(text string, kind string, valueTypes []ValueTypeIntf) (model *CardElementBreakdownCardElement, err error) {
+func (*FindingsV1) NewCardElementBreakdownCardElement(text string, kind string, valueTypes []ValueTypeIntf) (model *CardElementBreakdownCardElement, err error) {
 	model = &CardElementBreakdownCardElement{
-		Text:       core.StringPtr(text),
-		Kind:       core.StringPtr(kind),
+		Text: core.StringPtr(text),
+		Kind: core.StringPtr(kind),
 		ValueTypes: valueTypes,
 	}
 	err = core.ValidateStruct(model, "required parameters")
@@ -3779,16 +3771,16 @@ type CardElementNumericCardElement struct {
 // - BREAKDOWN&#58; Breakdown of numeric values
 // - TIME_SERIES&#58; Time-series of numeric values.
 const (
-	CardElementNumericCardElement_Kind_Breakdown  = "BREAKDOWN"
-	CardElementNumericCardElement_Kind_Numeric    = "NUMERIC"
-	CardElementNumericCardElement_Kind_TimeSeries = "TIME_SERIES"
+	CardElementNumericCardElementKindBreakdownConst = "BREAKDOWN"
+	CardElementNumericCardElementKindNumericConst = "NUMERIC"
+	CardElementNumericCardElementKindTimeSeriesConst = "TIME_SERIES"
 )
 
 // NewCardElementNumericCardElement : Instantiate CardElementNumericCardElement (Generic Model Constructor)
-func (*FindingsApiV1) NewCardElementNumericCardElement(text string, kind string, valueType *NumericCardElementValueType) (model *CardElementNumericCardElement, err error) {
+func (*FindingsV1) NewCardElementNumericCardElement(text string, kind string, valueType *NumericCardElementValueType) (model *CardElementNumericCardElement, err error) {
 	model = &CardElementNumericCardElement{
-		Text:      core.StringPtr(text),
-		Kind:      core.StringPtr(kind),
+		Text: core.StringPtr(text),
+		Kind: core.StringPtr(kind),
 		ValueType: valueType,
 	}
 	err = core.ValidateStruct(model, "required parameters")
@@ -3850,16 +3842,16 @@ type CardElementTimeSeriesCardElement struct {
 // - BREAKDOWN&#58; Breakdown of numeric values
 // - TIME_SERIES&#58; Time-series of numeric values.
 const (
-	CardElementTimeSeriesCardElement_Kind_Breakdown  = "BREAKDOWN"
-	CardElementTimeSeriesCardElement_Kind_Numeric    = "NUMERIC"
-	CardElementTimeSeriesCardElement_Kind_TimeSeries = "TIME_SERIES"
+	CardElementTimeSeriesCardElementKindBreakdownConst = "BREAKDOWN"
+	CardElementTimeSeriesCardElementKindNumericConst = "NUMERIC"
+	CardElementTimeSeriesCardElementKindTimeSeriesConst = "TIME_SERIES"
 )
 
 // NewCardElementTimeSeriesCardElement : Instantiate CardElementTimeSeriesCardElement (Generic Model Constructor)
-func (*FindingsApiV1) NewCardElementTimeSeriesCardElement(text string, kind string, valueTypes []ValueTypeIntf) (model *CardElementTimeSeriesCardElement, err error) {
+func (*FindingsV1) NewCardElementTimeSeriesCardElement(text string, kind string, valueTypes []ValueTypeIntf) (model *CardElementTimeSeriesCardElement, err error) {
 	model = &CardElementTimeSeriesCardElement{
-		Text:       core.StringPtr(text),
-		Kind:       core.StringPtr(kind),
+		Text: core.StringPtr(text),
+		Kind: core.StringPtr(kind),
 		ValueTypes: valueTypes,
 	}
 	err = core.ValidateStruct(model, "required parameters")
@@ -3918,7 +3910,7 @@ type NumericCardElementValueType struct {
 // Kind of element
 // - KPI&#58; Kind of value derived from a KPI occurrence.
 const (
-	NumericCardElementValueType_Kind_Kpi = "KPI"
+	NumericCardElementValueTypeKindKpiConst = "KPI"
 )
 
 func (*NumericCardElementValueType) isaValueType() bool {
@@ -3964,15 +3956,15 @@ type ValueTypeFindingCountValueType struct {
 // Constants associated with the ValueTypeFindingCountValueType.Kind property.
 // Kind of element - FINDING_COUNT&#58; Kind of value derived from a count of finding occurrences.
 const (
-	ValueTypeFindingCountValueType_Kind_FindingCount = "FINDING_COUNT"
+	ValueTypeFindingCountValueTypeKindFindingCountConst = "FINDING_COUNT"
 )
 
 // NewValueTypeFindingCountValueType : Instantiate ValueTypeFindingCountValueType (Generic Model Constructor)
-func (*FindingsApiV1) NewValueTypeFindingCountValueType(kind string, findingNoteNames []string, text string) (model *ValueTypeFindingCountValueType, err error) {
+func (*FindingsV1) NewValueTypeFindingCountValueType(kind string, findingNoteNames []string, text string) (model *ValueTypeFindingCountValueType, err error) {
 	model = &ValueTypeFindingCountValueType{
-		Kind:             core.StringPtr(kind),
+		Kind: core.StringPtr(kind),
 		FindingNoteNames: findingNoteNames,
-		Text:             core.StringPtr(text),
+		Text: core.StringPtr(text),
 	}
 	err = core.ValidateStruct(model, "required parameters")
 	return
@@ -4019,15 +4011,15 @@ type ValueTypeKpiValueType struct {
 // Kind of element
 // - KPI&#58; Kind of value derived from a KPI occurrence.
 const (
-	ValueTypeKpiValueType_Kind_Kpi = "KPI"
+	ValueTypeKpiValueTypeKindKpiConst = "KPI"
 )
 
 // NewValueTypeKpiValueType : Instantiate ValueTypeKpiValueType (Generic Model Constructor)
-func (*FindingsApiV1) NewValueTypeKpiValueType(kind string, kpiNoteName string, text string) (model *ValueTypeKpiValueType, err error) {
+func (*FindingsV1) NewValueTypeKpiValueType(kind string, kpiNoteName string, text string) (model *ValueTypeKpiValueType, err error) {
 	model = &ValueTypeKpiValueType{
-		Kind:        core.StringPtr(kind),
+		Kind: core.StringPtr(kind),
 		KpiNoteName: core.StringPtr(kpiNoteName),
-		Text:        core.StringPtr(text),
+		Text: core.StringPtr(text),
 	}
 	err = core.ValidateStruct(model, "required parameters")
 	return

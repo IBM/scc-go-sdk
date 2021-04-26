@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package notificationsapiv1_test
+package notificationsv1_test
 
 import (
 	"bytes"
 	"context"
 	"fmt"
-	"github.com/IBM/cloud-go-sdk/notificationsapiv1"
 	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/go-openapi/strfmt"
+	"github.com/ibm-cloud-security/scc-go-sdk/notificationsv1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"io"
@@ -33,32 +33,32 @@ import (
 	"time"
 )
 
-var _ = Describe(`NotificationsApiV1`, func() {
+var _ = Describe(`NotificationsV1`, func() {
 	var testServer *httptest.Server
 	Describe(`Service constructor tests`, func() {
 		It(`Instantiate service client`, func() {
-			notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+			notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 				Authenticator: &core.NoAuthAuthenticator{},
 			})
-			Expect(notificationsApiService).ToNot(BeNil())
+			Expect(notificationsService).ToNot(BeNil())
 			Expect(serviceErr).To(BeNil())
 		})
 		It(`Instantiate service client with error: Invalid URL`, func() {
-			notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+			notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 				URL: "{BAD_URL_STRING",
 			})
-			Expect(notificationsApiService).To(BeNil())
+			Expect(notificationsService).To(BeNil())
 			Expect(serviceErr).ToNot(BeNil())
 		})
 		It(`Instantiate service client with error: Invalid Auth`, func() {
-			notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
-				URL: "https://notificationsapiv1/api",
+			notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
+				URL: "https://notificationsv1/api",
 				Authenticator: &core.BasicAuthenticator{
 					Username: "",
 					Password: "",
 				},
 			})
-			Expect(notificationsApiService).To(BeNil())
+			Expect(notificationsService).To(BeNil())
 			Expect(serviceErr).ToNot(BeNil())
 		})
 	})
@@ -66,71 +66,71 @@ var _ = Describe(`NotificationsApiV1`, func() {
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"NOTIFICATIONS_API_URL": "https://notificationsapiv1/api",
-				"NOTIFICATIONS_API_AUTH_TYPE": "noauth",
+				"NOTIFICATIONS_URL": "https://notificationsv1/api",
+				"NOTIFICATIONS_AUTH_TYPE": "noauth",
 			}
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1UsingExternalConfig(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{
 				})
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
 
-				clone := notificationsApiService.Clone()
+				clone := notificationsService.Clone()
 				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != notificationsApiService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(notificationsApiService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(notificationsApiService.Service.Options.Authenticator))
+				Expect(clone.Service != notificationsService.Service).To(BeTrue())
+				Expect(clone.GetServiceURL()).To(Equal(notificationsService.GetServiceURL()))
+				Expect(clone.Service.Options.Authenticator).To(Equal(notificationsService.Service.Options.Authenticator))
 			})
 			It(`Create service client using external config and set url from constructor successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1UsingExternalConfig(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{
 					URL: "https://testService/api",
 				})
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService.Service.GetServiceURL()).To(Equal("https://testService/api"))
+				Expect(notificationsService.Service.GetServiceURL()).To(Equal("https://testService/api"))
 				ClearTestEnvironment(testEnvironment)
 
-				clone := notificationsApiService.Clone()
+				clone := notificationsService.Clone()
 				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != notificationsApiService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(notificationsApiService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(notificationsApiService.Service.Options.Authenticator))
+				Expect(clone.Service != notificationsService.Service).To(BeTrue())
+				Expect(clone.GetServiceURL()).To(Equal(notificationsService.GetServiceURL()))
+				Expect(clone.Service.Options.Authenticator).To(Equal(notificationsService.Service.Options.Authenticator))
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1UsingExternalConfig(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{
 				})
-				err := notificationsApiService.SetServiceURL("https://testService/api")
+				err := notificationsService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService.Service.GetServiceURL()).To(Equal("https://testService/api"))
+				Expect(notificationsService.Service.GetServiceURL()).To(Equal("https://testService/api"))
 				ClearTestEnvironment(testEnvironment)
 
-				clone := notificationsApiService.Clone()
+				clone := notificationsService.Clone()
 				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != notificationsApiService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(notificationsApiService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(notificationsApiService.Service.Options.Authenticator))
+				Expect(clone.Service != notificationsService.Service).To(BeTrue())
+				Expect(clone.GetServiceURL()).To(Equal(notificationsService.GetServiceURL()))
+				Expect(clone.Service.Options.Authenticator).To(Equal(notificationsService.Service.Options.Authenticator))
 			})
 		})
 		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"NOTIFICATIONS_API_URL": "https://notificationsapiv1/api",
-				"NOTIFICATIONS_API_AUTH_TYPE": "someOtherAuth",
+				"NOTIFICATIONS_URL": "https://notificationsv1/api",
+				"NOTIFICATIONS_AUTH_TYPE": "someOtherAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1UsingExternalConfig(&notificationsapiv1.NotificationsApiV1Options{
+			notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{
 			})
 
 			It(`Instantiate service client with error`, func() {
-				Expect(notificationsApiService).To(BeNil())
+				Expect(notificationsService).To(BeNil())
 				Expect(serviceErr).ToNot(BeNil())
 				ClearTestEnvironment(testEnvironment)
 			})
@@ -138,16 +138,16 @@ var _ = Describe(`NotificationsApiV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"NOTIFICATIONS_API_AUTH_TYPE":   "NOAuth",
+				"NOTIFICATIONS_AUTH_TYPE":   "NOAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1UsingExternalConfig(&notificationsapiv1.NotificationsApiV1Options{
+			notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{
 				URL: "{BAD_URL_STRING",
 			})
 
 			It(`Instantiate service client with error`, func() {
-				Expect(notificationsApiService).To(BeNil())
+				Expect(notificationsService).To(BeNil())
 				Expect(serviceErr).ToNot(BeNil())
 				ClearTestEnvironment(testEnvironment)
 			})
@@ -157,7 +157,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 		It(`GetServiceURLForRegion(region string)`, func() {
 			var url string
 			var err error
-			url, err = notificationsapiv1.GetServiceURLForRegion("INVALID_REGION")
+			url, err = notificationsv1.GetServiceURLForRegion("INVALID_REGION")
 			Expect(url).To(BeEmpty())
 			Expect(err).ToNot(BeNil())
 			fmt.Fprintf(GinkgoWriter, "Expected error: %s\n", err.Error())
@@ -183,29 +183,29 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke ListAllChannels with error: Operation response processing error`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the ListAllChannelsOptions model
-				listAllChannelsOptionsModel := new(notificationsapiv1.ListAllChannelsOptions)
+				listAllChannelsOptionsModel := new(notificationsv1.ListAllChannelsOptions)
 				listAllChannelsOptionsModel.AccountID = core.StringPtr("testString")
 				listAllChannelsOptionsModel.TransactionID = core.StringPtr("testString")
 				listAllChannelsOptionsModel.Limit = core.Int64Ptr(int64(38))
 				listAllChannelsOptionsModel.Skip = core.Int64Ptr(int64(38))
 				listAllChannelsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := notificationsApiService.ListAllChannels(listAllChannelsOptionsModel)
+				result, response, operationErr := notificationsService.ListAllChannels(listAllChannelsOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
 
 				// Enable retries and test again
-				notificationsApiService.EnableRetries(0, 0)
-				result, response, operationErr = notificationsApiService.ListAllChannels(listAllChannelsOptionsModel)
+				notificationsService.EnableRetries(0, 0)
+				result, response, operationErr = notificationsService.ListAllChannels(listAllChannelsOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
@@ -241,16 +241,16 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke ListAllChannels successfully with retries`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
-				notificationsApiService.EnableRetries(0, 0)
+				Expect(notificationsService).ToNot(BeNil())
+				notificationsService.EnableRetries(0, 0)
 
 				// Construct an instance of the ListAllChannelsOptions model
-				listAllChannelsOptionsModel := new(notificationsapiv1.ListAllChannelsOptions)
+				listAllChannelsOptionsModel := new(notificationsv1.ListAllChannelsOptions)
 				listAllChannelsOptionsModel.AccountID = core.StringPtr("testString")
 				listAllChannelsOptionsModel.TransactionID = core.StringPtr("testString")
 				listAllChannelsOptionsModel.Limit = core.Int64Ptr(int64(38))
@@ -260,13 +260,13 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				// Invoke operation with a Context to test a timeout error
 				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc()
-				_, _, operationErr := notificationsApiService.ListAllChannelsWithContext(ctx, listAllChannelsOptionsModel)
+				_, _, operationErr := notificationsService.ListAllChannelsWithContext(ctx, listAllChannelsOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 
 				// Disable retries and test again
-				notificationsApiService.DisableRetries()
-				result, response, operationErr := notificationsApiService.ListAllChannels(listAllChannelsOptionsModel)
+				notificationsService.DisableRetries()
+				result, response, operationErr := notificationsService.ListAllChannels(listAllChannelsOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
@@ -274,7 +274,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc2()
-				_, _, operationErr = notificationsApiService.ListAllChannelsWithContext(ctx, listAllChannelsOptionsModel)
+				_, _, operationErr = notificationsService.ListAllChannelsWithContext(ctx, listAllChannelsOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
@@ -302,21 +302,21 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke ListAllChannels successfully`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := notificationsApiService.ListAllChannels(nil)
+				result, response, operationErr := notificationsService.ListAllChannels(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the ListAllChannelsOptions model
-				listAllChannelsOptionsModel := new(notificationsapiv1.ListAllChannelsOptions)
+				listAllChannelsOptionsModel := new(notificationsv1.ListAllChannelsOptions)
 				listAllChannelsOptionsModel.AccountID = core.StringPtr("testString")
 				listAllChannelsOptionsModel.TransactionID = core.StringPtr("testString")
 				listAllChannelsOptionsModel.Limit = core.Int64Ptr(int64(38))
@@ -324,39 +324,39 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				listAllChannelsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = notificationsApiService.ListAllChannels(listAllChannelsOptionsModel)
+				result, response, operationErr = notificationsService.ListAllChannels(listAllChannelsOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
 			})
 			It(`Invoke ListAllChannels with error: Operation validation and request error`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the ListAllChannelsOptions model
-				listAllChannelsOptionsModel := new(notificationsapiv1.ListAllChannelsOptions)
+				listAllChannelsOptionsModel := new(notificationsv1.ListAllChannelsOptions)
 				listAllChannelsOptionsModel.AccountID = core.StringPtr("testString")
 				listAllChannelsOptionsModel.TransactionID = core.StringPtr("testString")
 				listAllChannelsOptionsModel.Limit = core.Int64Ptr(int64(38))
 				listAllChannelsOptionsModel.Skip = core.Int64Ptr(int64(38))
 				listAllChannelsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := notificationsApiService.SetServiceURL("")
+				err := notificationsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				result, response, operationErr := notificationsApiService.ListAllChannels(listAllChannelsOptionsModel)
+				result, response, operationErr := notificationsService.ListAllChannels(listAllChannelsOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the ListAllChannelsOptions model with no property values
-				listAllChannelsOptionsModelNew := new(notificationsapiv1.ListAllChannelsOptions)
+				listAllChannelsOptionsModelNew := new(notificationsv1.ListAllChannelsOptions)
 				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = notificationsApiService.ListAllChannels(listAllChannelsOptionsModelNew)
+				result, response, operationErr = notificationsService.ListAllChannels(listAllChannelsOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
@@ -384,20 +384,20 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke CreateNotificationChannel with error: Operation response processing error`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the NotificationChannelAlertSourceItem model
-				notificationChannelAlertSourceItemModel := new(notificationsapiv1.NotificationChannelAlertSourceItem)
+				notificationChannelAlertSourceItemModel := new(notificationsv1.NotificationChannelAlertSourceItem)
 				notificationChannelAlertSourceItemModel.ProviderName = core.StringPtr("testString")
 				notificationChannelAlertSourceItemModel.FindingTypes = []string{"testString"}
 
 				// Construct an instance of the CreateNotificationChannelOptions model
-				createNotificationChannelOptionsModel := new(notificationsapiv1.CreateNotificationChannelOptions)
+				createNotificationChannelOptionsModel := new(notificationsv1.CreateNotificationChannelOptions)
 				createNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Name = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Type = core.StringPtr("Webhook")
@@ -405,18 +405,18 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				createNotificationChannelOptionsModel.Description = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Severity = []string{"low"}
 				createNotificationChannelOptionsModel.Enabled = core.BoolPtr(true)
-				createNotificationChannelOptionsModel.AlertSource = []notificationsapiv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}
+				createNotificationChannelOptionsModel.AlertSource = []notificationsv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}
 				createNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := notificationsApiService.CreateNotificationChannel(createNotificationChannelOptionsModel)
+				result, response, operationErr := notificationsService.CreateNotificationChannel(createNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
 
 				// Enable retries and test again
-				notificationsApiService.EnableRetries(0, 0)
-				result, response, operationErr = notificationsApiService.CreateNotificationChannel(createNotificationChannelOptionsModel)
+				notificationsService.EnableRetries(0, 0)
+				result, response, operationErr = notificationsService.CreateNotificationChannel(createNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
@@ -466,21 +466,21 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke CreateNotificationChannel successfully with retries`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
-				notificationsApiService.EnableRetries(0, 0)
+				Expect(notificationsService).ToNot(BeNil())
+				notificationsService.EnableRetries(0, 0)
 
 				// Construct an instance of the NotificationChannelAlertSourceItem model
-				notificationChannelAlertSourceItemModel := new(notificationsapiv1.NotificationChannelAlertSourceItem)
+				notificationChannelAlertSourceItemModel := new(notificationsv1.NotificationChannelAlertSourceItem)
 				notificationChannelAlertSourceItemModel.ProviderName = core.StringPtr("testString")
 				notificationChannelAlertSourceItemModel.FindingTypes = []string{"testString"}
 
 				// Construct an instance of the CreateNotificationChannelOptions model
-				createNotificationChannelOptionsModel := new(notificationsapiv1.CreateNotificationChannelOptions)
+				createNotificationChannelOptionsModel := new(notificationsv1.CreateNotificationChannelOptions)
 				createNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Name = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Type = core.StringPtr("Webhook")
@@ -488,20 +488,20 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				createNotificationChannelOptionsModel.Description = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Severity = []string{"low"}
 				createNotificationChannelOptionsModel.Enabled = core.BoolPtr(true)
-				createNotificationChannelOptionsModel.AlertSource = []notificationsapiv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}
+				createNotificationChannelOptionsModel.AlertSource = []notificationsv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}
 				createNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with a Context to test a timeout error
 				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc()
-				_, _, operationErr := notificationsApiService.CreateNotificationChannelWithContext(ctx, createNotificationChannelOptionsModel)
+				_, _, operationErr := notificationsService.CreateNotificationChannelWithContext(ctx, createNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 
 				// Disable retries and test again
-				notificationsApiService.DisableRetries()
-				result, response, operationErr := notificationsApiService.CreateNotificationChannel(createNotificationChannelOptionsModel)
+				notificationsService.DisableRetries()
+				result, response, operationErr := notificationsService.CreateNotificationChannel(createNotificationChannelOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
@@ -509,7 +509,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc2()
-				_, _, operationErr = notificationsApiService.CreateNotificationChannelWithContext(ctx, createNotificationChannelOptionsModel)
+				_, _, operationErr = notificationsService.CreateNotificationChannelWithContext(ctx, createNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
@@ -551,26 +551,26 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke CreateNotificationChannel successfully`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := notificationsApiService.CreateNotificationChannel(nil)
+				result, response, operationErr := notificationsService.CreateNotificationChannel(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the NotificationChannelAlertSourceItem model
-				notificationChannelAlertSourceItemModel := new(notificationsapiv1.NotificationChannelAlertSourceItem)
+				notificationChannelAlertSourceItemModel := new(notificationsv1.NotificationChannelAlertSourceItem)
 				notificationChannelAlertSourceItemModel.ProviderName = core.StringPtr("testString")
 				notificationChannelAlertSourceItemModel.FindingTypes = []string{"testString"}
 
 				// Construct an instance of the CreateNotificationChannelOptions model
-				createNotificationChannelOptionsModel := new(notificationsapiv1.CreateNotificationChannelOptions)
+				createNotificationChannelOptionsModel := new(notificationsv1.CreateNotificationChannelOptions)
 				createNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Name = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Type = core.StringPtr("Webhook")
@@ -578,32 +578,32 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				createNotificationChannelOptionsModel.Description = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Severity = []string{"low"}
 				createNotificationChannelOptionsModel.Enabled = core.BoolPtr(true)
-				createNotificationChannelOptionsModel.AlertSource = []notificationsapiv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}
+				createNotificationChannelOptionsModel.AlertSource = []notificationsv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}
 				createNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = notificationsApiService.CreateNotificationChannel(createNotificationChannelOptionsModel)
+				result, response, operationErr = notificationsService.CreateNotificationChannel(createNotificationChannelOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
 			})
 			It(`Invoke CreateNotificationChannel with error: Operation validation and request error`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the NotificationChannelAlertSourceItem model
-				notificationChannelAlertSourceItemModel := new(notificationsapiv1.NotificationChannelAlertSourceItem)
+				notificationChannelAlertSourceItemModel := new(notificationsv1.NotificationChannelAlertSourceItem)
 				notificationChannelAlertSourceItemModel.ProviderName = core.StringPtr("testString")
 				notificationChannelAlertSourceItemModel.FindingTypes = []string{"testString"}
 
 				// Construct an instance of the CreateNotificationChannelOptions model
-				createNotificationChannelOptionsModel := new(notificationsapiv1.CreateNotificationChannelOptions)
+				createNotificationChannelOptionsModel := new(notificationsv1.CreateNotificationChannelOptions)
 				createNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Name = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Type = core.StringPtr("Webhook")
@@ -611,21 +611,21 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				createNotificationChannelOptionsModel.Description = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Severity = []string{"low"}
 				createNotificationChannelOptionsModel.Enabled = core.BoolPtr(true)
-				createNotificationChannelOptionsModel.AlertSource = []notificationsapiv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}
+				createNotificationChannelOptionsModel.AlertSource = []notificationsv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}
 				createNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := notificationsApiService.SetServiceURL("")
+				err := notificationsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				result, response, operationErr := notificationsApiService.CreateNotificationChannel(createNotificationChannelOptionsModel)
+				result, response, operationErr := notificationsService.CreateNotificationChannel(createNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the CreateNotificationChannelOptions model with no property values
-				createNotificationChannelOptionsModelNew := new(notificationsapiv1.CreateNotificationChannelOptions)
+				createNotificationChannelOptionsModelNew := new(notificationsv1.CreateNotificationChannelOptions)
 				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = notificationsApiService.CreateNotificationChannel(createNotificationChannelOptionsModelNew)
+				result, response, operationErr = notificationsService.CreateNotificationChannel(createNotificationChannelOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
@@ -653,28 +653,28 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke DeleteNotificationChannels with error: Operation response processing error`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteNotificationChannelsOptions model
-				deleteNotificationChannelsOptionsModel := new(notificationsapiv1.DeleteNotificationChannelsOptions)
+				deleteNotificationChannelsOptionsModel := new(notificationsv1.DeleteNotificationChannelsOptions)
 				deleteNotificationChannelsOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNotificationChannelsOptionsModel.Body = []string{"testString"}
 				deleteNotificationChannelsOptionsModel.TransactionID = core.StringPtr("testString")
 				deleteNotificationChannelsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := notificationsApiService.DeleteNotificationChannels(deleteNotificationChannelsOptionsModel)
+				result, response, operationErr := notificationsService.DeleteNotificationChannels(deleteNotificationChannelsOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
 
 				// Enable retries and test again
-				notificationsApiService.EnableRetries(0, 0)
-				result, response, operationErr = notificationsApiService.DeleteNotificationChannels(deleteNotificationChannelsOptionsModel)
+				notificationsService.EnableRetries(0, 0)
+				result, response, operationErr = notificationsService.DeleteNotificationChannels(deleteNotificationChannelsOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
@@ -724,16 +724,16 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke DeleteNotificationChannels successfully with retries`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
-				notificationsApiService.EnableRetries(0, 0)
+				Expect(notificationsService).ToNot(BeNil())
+				notificationsService.EnableRetries(0, 0)
 
 				// Construct an instance of the DeleteNotificationChannelsOptions model
-				deleteNotificationChannelsOptionsModel := new(notificationsapiv1.DeleteNotificationChannelsOptions)
+				deleteNotificationChannelsOptionsModel := new(notificationsv1.DeleteNotificationChannelsOptions)
 				deleteNotificationChannelsOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNotificationChannelsOptionsModel.Body = []string{"testString"}
 				deleteNotificationChannelsOptionsModel.TransactionID = core.StringPtr("testString")
@@ -742,13 +742,13 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				// Invoke operation with a Context to test a timeout error
 				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc()
-				_, _, operationErr := notificationsApiService.DeleteNotificationChannelsWithContext(ctx, deleteNotificationChannelsOptionsModel)
+				_, _, operationErr := notificationsService.DeleteNotificationChannelsWithContext(ctx, deleteNotificationChannelsOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 
 				// Disable retries and test again
-				notificationsApiService.DisableRetries()
-				result, response, operationErr := notificationsApiService.DeleteNotificationChannels(deleteNotificationChannelsOptionsModel)
+				notificationsService.DisableRetries()
+				result, response, operationErr := notificationsService.DeleteNotificationChannels(deleteNotificationChannelsOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
@@ -756,7 +756,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc2()
-				_, _, operationErr = notificationsApiService.DeleteNotificationChannelsWithContext(ctx, deleteNotificationChannelsOptionsModel)
+				_, _, operationErr = notificationsService.DeleteNotificationChannelsWithContext(ctx, deleteNotificationChannelsOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
@@ -798,59 +798,59 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke DeleteNotificationChannels successfully`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := notificationsApiService.DeleteNotificationChannels(nil)
+				result, response, operationErr := notificationsService.DeleteNotificationChannels(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the DeleteNotificationChannelsOptions model
-				deleteNotificationChannelsOptionsModel := new(notificationsapiv1.DeleteNotificationChannelsOptions)
+				deleteNotificationChannelsOptionsModel := new(notificationsv1.DeleteNotificationChannelsOptions)
 				deleteNotificationChannelsOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNotificationChannelsOptionsModel.Body = []string{"testString"}
 				deleteNotificationChannelsOptionsModel.TransactionID = core.StringPtr("testString")
 				deleteNotificationChannelsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = notificationsApiService.DeleteNotificationChannels(deleteNotificationChannelsOptionsModel)
+				result, response, operationErr = notificationsService.DeleteNotificationChannels(deleteNotificationChannelsOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
 			})
 			It(`Invoke DeleteNotificationChannels with error: Operation validation and request error`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteNotificationChannelsOptions model
-				deleteNotificationChannelsOptionsModel := new(notificationsapiv1.DeleteNotificationChannelsOptions)
+				deleteNotificationChannelsOptionsModel := new(notificationsv1.DeleteNotificationChannelsOptions)
 				deleteNotificationChannelsOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNotificationChannelsOptionsModel.Body = []string{"testString"}
 				deleteNotificationChannelsOptionsModel.TransactionID = core.StringPtr("testString")
 				deleteNotificationChannelsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := notificationsApiService.SetServiceURL("")
+				err := notificationsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				result, response, operationErr := notificationsApiService.DeleteNotificationChannels(deleteNotificationChannelsOptionsModel)
+				result, response, operationErr := notificationsService.DeleteNotificationChannels(deleteNotificationChannelsOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the DeleteNotificationChannelsOptions model with no property values
-				deleteNotificationChannelsOptionsModelNew := new(notificationsapiv1.DeleteNotificationChannelsOptions)
+				deleteNotificationChannelsOptionsModelNew := new(notificationsv1.DeleteNotificationChannelsOptions)
 				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = notificationsApiService.DeleteNotificationChannels(deleteNotificationChannelsOptionsModelNew)
+				result, response, operationErr = notificationsService.DeleteNotificationChannels(deleteNotificationChannelsOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
@@ -878,28 +878,28 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke DeleteNotificationChannel with error: Operation response processing error`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteNotificationChannelOptions model
-				deleteNotificationChannelOptionsModel := new(notificationsapiv1.DeleteNotificationChannelOptions)
+				deleteNotificationChannelOptionsModel := new(notificationsv1.DeleteNotificationChannelOptions)
 				deleteNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := notificationsApiService.DeleteNotificationChannel(deleteNotificationChannelOptionsModel)
+				result, response, operationErr := notificationsService.DeleteNotificationChannel(deleteNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
 
 				// Enable retries and test again
-				notificationsApiService.EnableRetries(0, 0)
-				result, response, operationErr = notificationsApiService.DeleteNotificationChannel(deleteNotificationChannelOptionsModel)
+				notificationsService.EnableRetries(0, 0)
+				result, response, operationErr = notificationsService.DeleteNotificationChannel(deleteNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
@@ -933,16 +933,16 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke DeleteNotificationChannel successfully with retries`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
-				notificationsApiService.EnableRetries(0, 0)
+				Expect(notificationsService).ToNot(BeNil())
+				notificationsService.EnableRetries(0, 0)
 
 				// Construct an instance of the DeleteNotificationChannelOptions model
-				deleteNotificationChannelOptionsModel := new(notificationsapiv1.DeleteNotificationChannelOptions)
+				deleteNotificationChannelOptionsModel := new(notificationsv1.DeleteNotificationChannelOptions)
 				deleteNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
@@ -951,13 +951,13 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				// Invoke operation with a Context to test a timeout error
 				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc()
-				_, _, operationErr := notificationsApiService.DeleteNotificationChannelWithContext(ctx, deleteNotificationChannelOptionsModel)
+				_, _, operationErr := notificationsService.DeleteNotificationChannelWithContext(ctx, deleteNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 
 				// Disable retries and test again
-				notificationsApiService.DisableRetries()
-				result, response, operationErr := notificationsApiService.DeleteNotificationChannel(deleteNotificationChannelOptionsModel)
+				notificationsService.DisableRetries()
+				result, response, operationErr := notificationsService.DeleteNotificationChannel(deleteNotificationChannelOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
@@ -965,7 +965,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc2()
-				_, _, operationErr = notificationsApiService.DeleteNotificationChannelWithContext(ctx, deleteNotificationChannelOptionsModel)
+				_, _, operationErr = notificationsService.DeleteNotificationChannelWithContext(ctx, deleteNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
@@ -991,59 +991,59 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke DeleteNotificationChannel successfully`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := notificationsApiService.DeleteNotificationChannel(nil)
+				result, response, operationErr := notificationsService.DeleteNotificationChannel(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the DeleteNotificationChannelOptions model
-				deleteNotificationChannelOptionsModel := new(notificationsapiv1.DeleteNotificationChannelOptions)
+				deleteNotificationChannelOptionsModel := new(notificationsv1.DeleteNotificationChannelOptions)
 				deleteNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = notificationsApiService.DeleteNotificationChannel(deleteNotificationChannelOptionsModel)
+				result, response, operationErr = notificationsService.DeleteNotificationChannel(deleteNotificationChannelOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
 			})
 			It(`Invoke DeleteNotificationChannel with error: Operation validation and request error`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteNotificationChannelOptions model
-				deleteNotificationChannelOptionsModel := new(notificationsapiv1.DeleteNotificationChannelOptions)
+				deleteNotificationChannelOptionsModel := new(notificationsv1.DeleteNotificationChannelOptions)
 				deleteNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := notificationsApiService.SetServiceURL("")
+				err := notificationsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				result, response, operationErr := notificationsApiService.DeleteNotificationChannel(deleteNotificationChannelOptionsModel)
+				result, response, operationErr := notificationsService.DeleteNotificationChannel(deleteNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the DeleteNotificationChannelOptions model with no property values
-				deleteNotificationChannelOptionsModelNew := new(notificationsapiv1.DeleteNotificationChannelOptions)
+				deleteNotificationChannelOptionsModelNew := new(notificationsv1.DeleteNotificationChannelOptions)
 				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = notificationsApiService.DeleteNotificationChannel(deleteNotificationChannelOptionsModelNew)
+				result, response, operationErr = notificationsService.DeleteNotificationChannel(deleteNotificationChannelOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
@@ -1071,28 +1071,28 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke GetNotificationChannel with error: Operation response processing error`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the GetNotificationChannelOptions model
-				getNotificationChannelOptionsModel := new(notificationsapiv1.GetNotificationChannelOptions)
+				getNotificationChannelOptionsModel := new(notificationsv1.GetNotificationChannelOptions)
 				getNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := notificationsApiService.GetNotificationChannel(getNotificationChannelOptionsModel)
+				result, response, operationErr := notificationsService.GetNotificationChannel(getNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
 
 				// Enable retries and test again
-				notificationsApiService.EnableRetries(0, 0)
-				result, response, operationErr = notificationsApiService.GetNotificationChannel(getNotificationChannelOptionsModel)
+				notificationsService.EnableRetries(0, 0)
+				result, response, operationErr = notificationsService.GetNotificationChannel(getNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
@@ -1126,16 +1126,16 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke GetNotificationChannel successfully with retries`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
-				notificationsApiService.EnableRetries(0, 0)
+				Expect(notificationsService).ToNot(BeNil())
+				notificationsService.EnableRetries(0, 0)
 
 				// Construct an instance of the GetNotificationChannelOptions model
-				getNotificationChannelOptionsModel := new(notificationsapiv1.GetNotificationChannelOptions)
+				getNotificationChannelOptionsModel := new(notificationsv1.GetNotificationChannelOptions)
 				getNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
@@ -1144,13 +1144,13 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				// Invoke operation with a Context to test a timeout error
 				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc()
-				_, _, operationErr := notificationsApiService.GetNotificationChannelWithContext(ctx, getNotificationChannelOptionsModel)
+				_, _, operationErr := notificationsService.GetNotificationChannelWithContext(ctx, getNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 
 				// Disable retries and test again
-				notificationsApiService.DisableRetries()
-				result, response, operationErr := notificationsApiService.GetNotificationChannel(getNotificationChannelOptionsModel)
+				notificationsService.DisableRetries()
+				result, response, operationErr := notificationsService.GetNotificationChannel(getNotificationChannelOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
@@ -1158,7 +1158,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc2()
-				_, _, operationErr = notificationsApiService.GetNotificationChannelWithContext(ctx, getNotificationChannelOptionsModel)
+				_, _, operationErr = notificationsService.GetNotificationChannelWithContext(ctx, getNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
@@ -1184,59 +1184,59 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke GetNotificationChannel successfully`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := notificationsApiService.GetNotificationChannel(nil)
+				result, response, operationErr := notificationsService.GetNotificationChannel(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the GetNotificationChannelOptions model
-				getNotificationChannelOptionsModel := new(notificationsapiv1.GetNotificationChannelOptions)
+				getNotificationChannelOptionsModel := new(notificationsv1.GetNotificationChannelOptions)
 				getNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = notificationsApiService.GetNotificationChannel(getNotificationChannelOptionsModel)
+				result, response, operationErr = notificationsService.GetNotificationChannel(getNotificationChannelOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
 			})
 			It(`Invoke GetNotificationChannel with error: Operation validation and request error`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the GetNotificationChannelOptions model
-				getNotificationChannelOptionsModel := new(notificationsapiv1.GetNotificationChannelOptions)
+				getNotificationChannelOptionsModel := new(notificationsv1.GetNotificationChannelOptions)
 				getNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := notificationsApiService.SetServiceURL("")
+				err := notificationsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				result, response, operationErr := notificationsApiService.GetNotificationChannel(getNotificationChannelOptionsModel)
+				result, response, operationErr := notificationsService.GetNotificationChannel(getNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the GetNotificationChannelOptions model with no property values
-				getNotificationChannelOptionsModelNew := new(notificationsapiv1.GetNotificationChannelOptions)
+				getNotificationChannelOptionsModelNew := new(notificationsv1.GetNotificationChannelOptions)
 				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = notificationsApiService.GetNotificationChannel(getNotificationChannelOptionsModelNew)
+				result, response, operationErr = notificationsService.GetNotificationChannel(getNotificationChannelOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
@@ -1264,20 +1264,20 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke UpdateNotificationChannel with error: Operation response processing error`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the NotificationChannelAlertSourceItem model
-				notificationChannelAlertSourceItemModel := new(notificationsapiv1.NotificationChannelAlertSourceItem)
+				notificationChannelAlertSourceItemModel := new(notificationsv1.NotificationChannelAlertSourceItem)
 				notificationChannelAlertSourceItemModel.ProviderName = core.StringPtr("testString")
 				notificationChannelAlertSourceItemModel.FindingTypes = []string{"testString"}
 
 				// Construct an instance of the UpdateNotificationChannelOptions model
-				updateNotificationChannelOptionsModel := new(notificationsapiv1.UpdateNotificationChannelOptions)
+				updateNotificationChannelOptionsModel := new(notificationsv1.UpdateNotificationChannelOptions)
 				updateNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Name = core.StringPtr("testString")
@@ -1286,18 +1286,18 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				updateNotificationChannelOptionsModel.Description = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Severity = []string{"low"}
 				updateNotificationChannelOptionsModel.Enabled = core.BoolPtr(true)
-				updateNotificationChannelOptionsModel.AlertSource = []notificationsapiv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}
+				updateNotificationChannelOptionsModel.AlertSource = []notificationsv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}
 				updateNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := notificationsApiService.UpdateNotificationChannel(updateNotificationChannelOptionsModel)
+				result, response, operationErr := notificationsService.UpdateNotificationChannel(updateNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
 
 				// Enable retries and test again
-				notificationsApiService.EnableRetries(0, 0)
-				result, response, operationErr = notificationsApiService.UpdateNotificationChannel(updateNotificationChannelOptionsModel)
+				notificationsService.EnableRetries(0, 0)
+				result, response, operationErr = notificationsService.UpdateNotificationChannel(updateNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
@@ -1347,21 +1347,21 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke UpdateNotificationChannel successfully with retries`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
-				notificationsApiService.EnableRetries(0, 0)
+				Expect(notificationsService).ToNot(BeNil())
+				notificationsService.EnableRetries(0, 0)
 
 				// Construct an instance of the NotificationChannelAlertSourceItem model
-				notificationChannelAlertSourceItemModel := new(notificationsapiv1.NotificationChannelAlertSourceItem)
+				notificationChannelAlertSourceItemModel := new(notificationsv1.NotificationChannelAlertSourceItem)
 				notificationChannelAlertSourceItemModel.ProviderName = core.StringPtr("testString")
 				notificationChannelAlertSourceItemModel.FindingTypes = []string{"testString"}
 
 				// Construct an instance of the UpdateNotificationChannelOptions model
-				updateNotificationChannelOptionsModel := new(notificationsapiv1.UpdateNotificationChannelOptions)
+				updateNotificationChannelOptionsModel := new(notificationsv1.UpdateNotificationChannelOptions)
 				updateNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Name = core.StringPtr("testString")
@@ -1370,20 +1370,20 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				updateNotificationChannelOptionsModel.Description = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Severity = []string{"low"}
 				updateNotificationChannelOptionsModel.Enabled = core.BoolPtr(true)
-				updateNotificationChannelOptionsModel.AlertSource = []notificationsapiv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}
+				updateNotificationChannelOptionsModel.AlertSource = []notificationsv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}
 				updateNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with a Context to test a timeout error
 				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc()
-				_, _, operationErr := notificationsApiService.UpdateNotificationChannelWithContext(ctx, updateNotificationChannelOptionsModel)
+				_, _, operationErr := notificationsService.UpdateNotificationChannelWithContext(ctx, updateNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 
 				// Disable retries and test again
-				notificationsApiService.DisableRetries()
-				result, response, operationErr := notificationsApiService.UpdateNotificationChannel(updateNotificationChannelOptionsModel)
+				notificationsService.DisableRetries()
+				result, response, operationErr := notificationsService.UpdateNotificationChannel(updateNotificationChannelOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
@@ -1391,7 +1391,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc2()
-				_, _, operationErr = notificationsApiService.UpdateNotificationChannelWithContext(ctx, updateNotificationChannelOptionsModel)
+				_, _, operationErr = notificationsService.UpdateNotificationChannelWithContext(ctx, updateNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
@@ -1433,26 +1433,26 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke UpdateNotificationChannel successfully`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := notificationsApiService.UpdateNotificationChannel(nil)
+				result, response, operationErr := notificationsService.UpdateNotificationChannel(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the NotificationChannelAlertSourceItem model
-				notificationChannelAlertSourceItemModel := new(notificationsapiv1.NotificationChannelAlertSourceItem)
+				notificationChannelAlertSourceItemModel := new(notificationsv1.NotificationChannelAlertSourceItem)
 				notificationChannelAlertSourceItemModel.ProviderName = core.StringPtr("testString")
 				notificationChannelAlertSourceItemModel.FindingTypes = []string{"testString"}
 
 				// Construct an instance of the UpdateNotificationChannelOptions model
-				updateNotificationChannelOptionsModel := new(notificationsapiv1.UpdateNotificationChannelOptions)
+				updateNotificationChannelOptionsModel := new(notificationsv1.UpdateNotificationChannelOptions)
 				updateNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Name = core.StringPtr("testString")
@@ -1461,32 +1461,32 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				updateNotificationChannelOptionsModel.Description = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Severity = []string{"low"}
 				updateNotificationChannelOptionsModel.Enabled = core.BoolPtr(true)
-				updateNotificationChannelOptionsModel.AlertSource = []notificationsapiv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}
+				updateNotificationChannelOptionsModel.AlertSource = []notificationsv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}
 				updateNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = notificationsApiService.UpdateNotificationChannel(updateNotificationChannelOptionsModel)
+				result, response, operationErr = notificationsService.UpdateNotificationChannel(updateNotificationChannelOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
 			})
 			It(`Invoke UpdateNotificationChannel with error: Operation validation and request error`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the NotificationChannelAlertSourceItem model
-				notificationChannelAlertSourceItemModel := new(notificationsapiv1.NotificationChannelAlertSourceItem)
+				notificationChannelAlertSourceItemModel := new(notificationsv1.NotificationChannelAlertSourceItem)
 				notificationChannelAlertSourceItemModel.ProviderName = core.StringPtr("testString")
 				notificationChannelAlertSourceItemModel.FindingTypes = []string{"testString"}
 
 				// Construct an instance of the UpdateNotificationChannelOptions model
-				updateNotificationChannelOptionsModel := new(notificationsapiv1.UpdateNotificationChannelOptions)
+				updateNotificationChannelOptionsModel := new(notificationsv1.UpdateNotificationChannelOptions)
 				updateNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Name = core.StringPtr("testString")
@@ -1495,21 +1495,21 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				updateNotificationChannelOptionsModel.Description = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Severity = []string{"low"}
 				updateNotificationChannelOptionsModel.Enabled = core.BoolPtr(true)
-				updateNotificationChannelOptionsModel.AlertSource = []notificationsapiv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}
+				updateNotificationChannelOptionsModel.AlertSource = []notificationsv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}
 				updateNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := notificationsApiService.SetServiceURL("")
+				err := notificationsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				result, response, operationErr := notificationsApiService.UpdateNotificationChannel(updateNotificationChannelOptionsModel)
+				result, response, operationErr := notificationsService.UpdateNotificationChannel(updateNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the UpdateNotificationChannelOptions model with no property values
-				updateNotificationChannelOptionsModelNew := new(notificationsapiv1.UpdateNotificationChannelOptions)
+				updateNotificationChannelOptionsModelNew := new(notificationsv1.UpdateNotificationChannelOptions)
 				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = notificationsApiService.UpdateNotificationChannel(updateNotificationChannelOptionsModelNew)
+				result, response, operationErr = notificationsService.UpdateNotificationChannel(updateNotificationChannelOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
@@ -1537,28 +1537,28 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke TestNotificationChannel with error: Operation response processing error`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the TestNotificationChannelOptions model
-				testNotificationChannelOptionsModel := new(notificationsapiv1.TestNotificationChannelOptions)
+				testNotificationChannelOptionsModel := new(notificationsv1.TestNotificationChannelOptions)
 				testNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := notificationsApiService.TestNotificationChannel(testNotificationChannelOptionsModel)
+				result, response, operationErr := notificationsService.TestNotificationChannel(testNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
 
 				// Enable retries and test again
-				notificationsApiService.EnableRetries(0, 0)
-				result, response, operationErr = notificationsApiService.TestNotificationChannel(testNotificationChannelOptionsModel)
+				notificationsService.EnableRetries(0, 0)
+				result, response, operationErr = notificationsService.TestNotificationChannel(testNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
@@ -1592,16 +1592,16 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke TestNotificationChannel successfully with retries`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
-				notificationsApiService.EnableRetries(0, 0)
+				Expect(notificationsService).ToNot(BeNil())
+				notificationsService.EnableRetries(0, 0)
 
 				// Construct an instance of the TestNotificationChannelOptions model
-				testNotificationChannelOptionsModel := new(notificationsapiv1.TestNotificationChannelOptions)
+				testNotificationChannelOptionsModel := new(notificationsv1.TestNotificationChannelOptions)
 				testNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
@@ -1610,13 +1610,13 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				// Invoke operation with a Context to test a timeout error
 				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc()
-				_, _, operationErr := notificationsApiService.TestNotificationChannelWithContext(ctx, testNotificationChannelOptionsModel)
+				_, _, operationErr := notificationsService.TestNotificationChannelWithContext(ctx, testNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 
 				// Disable retries and test again
-				notificationsApiService.DisableRetries()
-				result, response, operationErr := notificationsApiService.TestNotificationChannel(testNotificationChannelOptionsModel)
+				notificationsService.DisableRetries()
+				result, response, operationErr := notificationsService.TestNotificationChannel(testNotificationChannelOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
@@ -1624,7 +1624,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc2()
-				_, _, operationErr = notificationsApiService.TestNotificationChannelWithContext(ctx, testNotificationChannelOptionsModel)
+				_, _, operationErr = notificationsService.TestNotificationChannelWithContext(ctx, testNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
@@ -1650,59 +1650,59 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke TestNotificationChannel successfully`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := notificationsApiService.TestNotificationChannel(nil)
+				result, response, operationErr := notificationsService.TestNotificationChannel(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the TestNotificationChannelOptions model
-				testNotificationChannelOptionsModel := new(notificationsapiv1.TestNotificationChannelOptions)
+				testNotificationChannelOptionsModel := new(notificationsv1.TestNotificationChannelOptions)
 				testNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = notificationsApiService.TestNotificationChannel(testNotificationChannelOptionsModel)
+				result, response, operationErr = notificationsService.TestNotificationChannel(testNotificationChannelOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
 			})
 			It(`Invoke TestNotificationChannel with error: Operation validation and request error`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the TestNotificationChannelOptions model
-				testNotificationChannelOptionsModel := new(notificationsapiv1.TestNotificationChannelOptions)
+				testNotificationChannelOptionsModel := new(notificationsv1.TestNotificationChannelOptions)
 				testNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := notificationsApiService.SetServiceURL("")
+				err := notificationsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				result, response, operationErr := notificationsApiService.TestNotificationChannel(testNotificationChannelOptionsModel)
+				result, response, operationErr := notificationsService.TestNotificationChannel(testNotificationChannelOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the TestNotificationChannelOptions model with no property values
-				testNotificationChannelOptionsModelNew := new(notificationsapiv1.TestNotificationChannelOptions)
+				testNotificationChannelOptionsModelNew := new(notificationsv1.TestNotificationChannelOptions)
 				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = notificationsApiService.TestNotificationChannel(testNotificationChannelOptionsModelNew)
+				result, response, operationErr = notificationsService.TestNotificationChannel(testNotificationChannelOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
@@ -1730,27 +1730,27 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke GetPublicKey with error: Operation response processing error`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the GetPublicKeyOptions model
-				getPublicKeyOptionsModel := new(notificationsapiv1.GetPublicKeyOptions)
+				getPublicKeyOptionsModel := new(notificationsv1.GetPublicKeyOptions)
 				getPublicKeyOptionsModel.AccountID = core.StringPtr("testString")
 				getPublicKeyOptionsModel.TransactionID = core.StringPtr("testString")
 				getPublicKeyOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := notificationsApiService.GetPublicKey(getPublicKeyOptionsModel)
+				result, response, operationErr := notificationsService.GetPublicKey(getPublicKeyOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
 
 				// Enable retries and test again
-				notificationsApiService.EnableRetries(0, 0)
-				result, response, operationErr = notificationsApiService.GetPublicKey(getPublicKeyOptionsModel)
+				notificationsService.EnableRetries(0, 0)
+				result, response, operationErr = notificationsService.GetPublicKey(getPublicKeyOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
@@ -1784,16 +1784,16 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke GetPublicKey successfully with retries`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
-				notificationsApiService.EnableRetries(0, 0)
+				Expect(notificationsService).ToNot(BeNil())
+				notificationsService.EnableRetries(0, 0)
 
 				// Construct an instance of the GetPublicKeyOptions model
-				getPublicKeyOptionsModel := new(notificationsapiv1.GetPublicKeyOptions)
+				getPublicKeyOptionsModel := new(notificationsv1.GetPublicKeyOptions)
 				getPublicKeyOptionsModel.AccountID = core.StringPtr("testString")
 				getPublicKeyOptionsModel.TransactionID = core.StringPtr("testString")
 				getPublicKeyOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1801,13 +1801,13 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				// Invoke operation with a Context to test a timeout error
 				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc()
-				_, _, operationErr := notificationsApiService.GetPublicKeyWithContext(ctx, getPublicKeyOptionsModel)
+				_, _, operationErr := notificationsService.GetPublicKeyWithContext(ctx, getPublicKeyOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 
 				// Disable retries and test again
-				notificationsApiService.DisableRetries()
-				result, response, operationErr := notificationsApiService.GetPublicKey(getPublicKeyOptionsModel)
+				notificationsService.DisableRetries()
+				result, response, operationErr := notificationsService.GetPublicKey(getPublicKeyOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
@@ -1815,7 +1815,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc2()
-				_, _, operationErr = notificationsApiService.GetPublicKeyWithContext(ctx, getPublicKeyOptionsModel)
+				_, _, operationErr = notificationsService.GetPublicKeyWithContext(ctx, getPublicKeyOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
@@ -1841,57 +1841,57 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				}))
 			})
 			It(`Invoke GetPublicKey successfully`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := notificationsApiService.GetPublicKey(nil)
+				result, response, operationErr := notificationsService.GetPublicKey(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the GetPublicKeyOptions model
-				getPublicKeyOptionsModel := new(notificationsapiv1.GetPublicKeyOptions)
+				getPublicKeyOptionsModel := new(notificationsv1.GetPublicKeyOptions)
 				getPublicKeyOptionsModel.AccountID = core.StringPtr("testString")
 				getPublicKeyOptionsModel.TransactionID = core.StringPtr("testString")
 				getPublicKeyOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = notificationsApiService.GetPublicKey(getPublicKeyOptionsModel)
+				result, response, operationErr = notificationsService.GetPublicKey(getPublicKeyOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
 			})
 			It(`Invoke GetPublicKey with error: Operation validation and request error`, func() {
-				notificationsApiService, serviceErr := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
-				Expect(notificationsApiService).ToNot(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the GetPublicKeyOptions model
-				getPublicKeyOptionsModel := new(notificationsapiv1.GetPublicKeyOptions)
+				getPublicKeyOptionsModel := new(notificationsv1.GetPublicKeyOptions)
 				getPublicKeyOptionsModel.AccountID = core.StringPtr("testString")
 				getPublicKeyOptionsModel.TransactionID = core.StringPtr("testString")
 				getPublicKeyOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
-				err := notificationsApiService.SetServiceURL("")
+				err := notificationsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				result, response, operationErr := notificationsApiService.GetPublicKey(getPublicKeyOptionsModel)
+				result, response, operationErr := notificationsService.GetPublicKey(getPublicKeyOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the GetPublicKeyOptions model with no property values
-				getPublicKeyOptionsModelNew := new(notificationsapiv1.GetPublicKeyOptions)
+				getPublicKeyOptionsModelNew := new(notificationsv1.GetPublicKeyOptions)
 				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = notificationsApiService.GetPublicKey(getPublicKeyOptionsModelNew)
+				result, response, operationErr = notificationsService.GetPublicKey(getPublicKeyOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
@@ -1903,13 +1903,13 @@ var _ = Describe(`NotificationsApiV1`, func() {
 	})
 	Describe(`Model constructor tests`, func() {
 		Context(`Using a service client instance`, func() {
-			notificationsApiService, _ := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
-				URL:           "http://notificationsapiv1modelgenerator.com",
+			notificationsService, _ := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
+				URL:           "http://notificationsv1modelgenerator.com",
 				Authenticator: &core.NoAuthAuthenticator{},
 			})
 			It(`Invoke NewCreateNotificationChannelOptions successfully`, func() {
 				// Construct an instance of the NotificationChannelAlertSourceItem model
-				notificationChannelAlertSourceItemModel := new(notificationsapiv1.NotificationChannelAlertSourceItem)
+				notificationChannelAlertSourceItemModel := new(notificationsv1.NotificationChannelAlertSourceItem)
 				Expect(notificationChannelAlertSourceItemModel).ToNot(BeNil())
 				notificationChannelAlertSourceItemModel.ProviderName = core.StringPtr("testString")
 				notificationChannelAlertSourceItemModel.FindingTypes = []string{"testString"}
@@ -1921,7 +1921,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				createNotificationChannelOptionsName := "testString"
 				createNotificationChannelOptionsType := "Webhook"
 				createNotificationChannelOptionsEndpoint := "testString"
-				createNotificationChannelOptionsModel := notificationsApiService.NewCreateNotificationChannelOptions(accountID, createNotificationChannelOptionsName, createNotificationChannelOptionsType, createNotificationChannelOptionsEndpoint)
+				createNotificationChannelOptionsModel := notificationsService.NewCreateNotificationChannelOptions(accountID, createNotificationChannelOptionsName, createNotificationChannelOptionsType, createNotificationChannelOptionsEndpoint)
 				createNotificationChannelOptionsModel.SetAccountID("testString")
 				createNotificationChannelOptionsModel.SetName("testString")
 				createNotificationChannelOptionsModel.SetType("Webhook")
@@ -1929,7 +1929,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				createNotificationChannelOptionsModel.SetDescription("testString")
 				createNotificationChannelOptionsModel.SetSeverity([]string{"low"})
 				createNotificationChannelOptionsModel.SetEnabled(true)
-				createNotificationChannelOptionsModel.SetAlertSource([]notificationsapiv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel})
+				createNotificationChannelOptionsModel.SetAlertSource([]notificationsv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel})
 				createNotificationChannelOptionsModel.SetTransactionID("testString")
 				createNotificationChannelOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(createNotificationChannelOptionsModel).ToNot(BeNil())
@@ -1940,7 +1940,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				Expect(createNotificationChannelOptionsModel.Description).To(Equal(core.StringPtr("testString")))
 				Expect(createNotificationChannelOptionsModel.Severity).To(Equal([]string{"low"}))
 				Expect(createNotificationChannelOptionsModel.Enabled).To(Equal(core.BoolPtr(true)))
-				Expect(createNotificationChannelOptionsModel.AlertSource).To(Equal([]notificationsapiv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}))
+				Expect(createNotificationChannelOptionsModel.AlertSource).To(Equal([]notificationsv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}))
 				Expect(createNotificationChannelOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(createNotificationChannelOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
@@ -1948,7 +1948,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				// Construct an instance of the DeleteNotificationChannelOptions model
 				accountID := "testString"
 				channelID := "testString"
-				deleteNotificationChannelOptionsModel := notificationsApiService.NewDeleteNotificationChannelOptions(accountID, channelID)
+				deleteNotificationChannelOptionsModel := notificationsService.NewDeleteNotificationChannelOptions(accountID, channelID)
 				deleteNotificationChannelOptionsModel.SetAccountID("testString")
 				deleteNotificationChannelOptionsModel.SetChannelID("testString")
 				deleteNotificationChannelOptionsModel.SetTransactionID("testString")
@@ -1963,7 +1963,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				// Construct an instance of the DeleteNotificationChannelsOptions model
 				accountID := "testString"
 				body := []string{"testString"}
-				deleteNotificationChannelsOptionsModel := notificationsApiService.NewDeleteNotificationChannelsOptions(accountID, body)
+				deleteNotificationChannelsOptionsModel := notificationsService.NewDeleteNotificationChannelsOptions(accountID, body)
 				deleteNotificationChannelsOptionsModel.SetAccountID("testString")
 				deleteNotificationChannelsOptionsModel.SetBody([]string{"testString"})
 				deleteNotificationChannelsOptionsModel.SetTransactionID("testString")
@@ -1978,7 +1978,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				// Construct an instance of the GetNotificationChannelOptions model
 				accountID := "testString"
 				channelID := "testString"
-				getNotificationChannelOptionsModel := notificationsApiService.NewGetNotificationChannelOptions(accountID, channelID)
+				getNotificationChannelOptionsModel := notificationsService.NewGetNotificationChannelOptions(accountID, channelID)
 				getNotificationChannelOptionsModel.SetAccountID("testString")
 				getNotificationChannelOptionsModel.SetChannelID("testString")
 				getNotificationChannelOptionsModel.SetTransactionID("testString")
@@ -1992,7 +1992,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 			It(`Invoke NewGetPublicKeyOptions successfully`, func() {
 				// Construct an instance of the GetPublicKeyOptions model
 				accountID := "testString"
-				getPublicKeyOptionsModel := notificationsApiService.NewGetPublicKeyOptions(accountID)
+				getPublicKeyOptionsModel := notificationsService.NewGetPublicKeyOptions(accountID)
 				getPublicKeyOptionsModel.SetAccountID("testString")
 				getPublicKeyOptionsModel.SetTransactionID("testString")
 				getPublicKeyOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
@@ -2004,7 +2004,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 			It(`Invoke NewListAllChannelsOptions successfully`, func() {
 				// Construct an instance of the ListAllChannelsOptions model
 				accountID := "testString"
-				listAllChannelsOptionsModel := notificationsApiService.NewListAllChannelsOptions(accountID)
+				listAllChannelsOptionsModel := notificationsService.NewListAllChannelsOptions(accountID)
 				listAllChannelsOptionsModel.SetAccountID("testString")
 				listAllChannelsOptionsModel.SetTransactionID("testString")
 				listAllChannelsOptionsModel.SetLimit(int64(38))
@@ -2019,7 +2019,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 			})
 			It(`Invoke NewNotificationChannelAlertSourceItem successfully`, func() {
 				providerName := "testString"
-				model, err := notificationsApiService.NewNotificationChannelAlertSourceItem(providerName)
+				model, err := notificationsService.NewNotificationChannelAlertSourceItem(providerName)
 				Expect(model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
@@ -2027,7 +2027,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				// Construct an instance of the TestNotificationChannelOptions model
 				accountID := "testString"
 				channelID := "testString"
-				testNotificationChannelOptionsModel := notificationsApiService.NewTestNotificationChannelOptions(accountID, channelID)
+				testNotificationChannelOptionsModel := notificationsService.NewTestNotificationChannelOptions(accountID, channelID)
 				testNotificationChannelOptionsModel.SetAccountID("testString")
 				testNotificationChannelOptionsModel.SetChannelID("testString")
 				testNotificationChannelOptionsModel.SetTransactionID("testString")
@@ -2040,7 +2040,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 			})
 			It(`Invoke NewUpdateNotificationChannelOptions successfully`, func() {
 				// Construct an instance of the NotificationChannelAlertSourceItem model
-				notificationChannelAlertSourceItemModel := new(notificationsapiv1.NotificationChannelAlertSourceItem)
+				notificationChannelAlertSourceItemModel := new(notificationsv1.NotificationChannelAlertSourceItem)
 				Expect(notificationChannelAlertSourceItemModel).ToNot(BeNil())
 				notificationChannelAlertSourceItemModel.ProviderName = core.StringPtr("testString")
 				notificationChannelAlertSourceItemModel.FindingTypes = []string{"testString"}
@@ -2053,7 +2053,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				updateNotificationChannelOptionsName := "testString"
 				updateNotificationChannelOptionsType := "Webhook"
 				updateNotificationChannelOptionsEndpoint := "testString"
-				updateNotificationChannelOptionsModel := notificationsApiService.NewUpdateNotificationChannelOptions(accountID, channelID, updateNotificationChannelOptionsName, updateNotificationChannelOptionsType, updateNotificationChannelOptionsEndpoint)
+				updateNotificationChannelOptionsModel := notificationsService.NewUpdateNotificationChannelOptions(accountID, channelID, updateNotificationChannelOptionsName, updateNotificationChannelOptionsType, updateNotificationChannelOptionsEndpoint)
 				updateNotificationChannelOptionsModel.SetAccountID("testString")
 				updateNotificationChannelOptionsModel.SetChannelID("testString")
 				updateNotificationChannelOptionsModel.SetName("testString")
@@ -2062,7 +2062,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				updateNotificationChannelOptionsModel.SetDescription("testString")
 				updateNotificationChannelOptionsModel.SetSeverity([]string{"low"})
 				updateNotificationChannelOptionsModel.SetEnabled(true)
-				updateNotificationChannelOptionsModel.SetAlertSource([]notificationsapiv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel})
+				updateNotificationChannelOptionsModel.SetAlertSource([]notificationsv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel})
 				updateNotificationChannelOptionsModel.SetTransactionID("testString")
 				updateNotificationChannelOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(updateNotificationChannelOptionsModel).ToNot(BeNil())
@@ -2074,7 +2074,7 @@ var _ = Describe(`NotificationsApiV1`, func() {
 				Expect(updateNotificationChannelOptionsModel.Description).To(Equal(core.StringPtr("testString")))
 				Expect(updateNotificationChannelOptionsModel.Severity).To(Equal([]string{"low"}))
 				Expect(updateNotificationChannelOptionsModel.Enabled).To(Equal(core.BoolPtr(true)))
-				Expect(updateNotificationChannelOptionsModel.AlertSource).To(Equal([]notificationsapiv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}))
+				Expect(updateNotificationChannelOptionsModel.AlertSource).To(Equal([]notificationsv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}))
 				Expect(updateNotificationChannelOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(updateNotificationChannelOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})

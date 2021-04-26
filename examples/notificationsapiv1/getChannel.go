@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/ibm-cloud-security/scc-go-sdk/notificationsapiv1"
+	"github.com/ibm-cloud-security/scc-go-sdk/notificationsv1"
 )
 
 //GetChannel gets a channel
@@ -15,7 +15,7 @@ func GetChannel() {
 		ApiKey: apiKey,
 		URL:    url, //use for dev/preprod env
 	}
-	service, _ := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+	service, _ := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 		Authenticator: authenticator,
 		URL:           "https://us-south.secadvisor.cloud.ibm.com/notifications", //Specify url or use default
 	})

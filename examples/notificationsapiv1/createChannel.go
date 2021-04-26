@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/ibm-cloud-security/scc-go-sdk/notificationsapiv1"
+	"github.com/ibm-cloud-security/scc-go-sdk/notificationsv1"
 )
 
 //CreateChannel creates a new channel
@@ -17,7 +17,7 @@ func CreateChannel() {
 		ApiKey: apiKey,
 		URL:    url, //use for dev/preprod env
 	}
-	service, _ := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+	service, _ := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 		Authenticator: authenticator,
 		URL:           "https://us-south.secadvisor.cloud.ibm.com/notifications", //Specify url or use default
 	})
@@ -25,9 +25,9 @@ func CreateChannel() {
 	channelName := "sdktest_channel_exmpl"
 	endpoint := "https://ss.ss"
 	channelType := "Webhook"
-	severity := []string{notificationsapiv1.CreateNotificationChannelOptions_Severity_Low, notificationsapiv1.CreateNotificationChannelOptions_Severity_High, notificationsapiv1.CreateNotificationChannelOptions_Severity_Critical}
+	severity := []string{notificationsv1.CreateNotificationChannelOptionsSeverityCriticalConst, notificationsv1.CreateNotificationChannelOptionsSeverityHighConst, notificationsv1.CreateNotificationChannelOptionsSeverityLowConst}
 
-	var alertSource []notificationsapiv1.NotificationChannelAlertSourceItem
+	var alertSource []notificationsv1.NotificationChannelAlertSourceItem
 	source, _ := service.NewNotificationChannelAlertSourceItem("ATA")
 	source.FindingTypes = []string{"appid", "cos", "iks"}
 	alertSource = append(alertSource, *source)
@@ -60,7 +60,7 @@ func CreateChannelUsingFile() {
 		ApiKey: apiKey,
 		URL:    url, //use for dev/preprod env
 	}
-	service, _ := notificationsapiv1.NewNotificationsApiV1(&notificationsapiv1.NotificationsApiV1Options{
+	service, _ := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 		Authenticator: authenticator,
 		URL:           "https://dev-dallas.secadvisor.test.cloud.ibm.com/notifications", //Specify url or use default
 	})
@@ -70,7 +70,7 @@ func CreateChannelUsingFile() {
 		fmt.Println("Failed to open file: ", err)
 		return
 	}
-	var createNotificationChannelOptions *notificationsapiv1.CreateNotificationChannelOptions
+	var createNotificationChannelOptions *notificationsv1.CreateNotificationChannelOptions
 	json.Unmarshal([]byte(query), &createNotificationChannelOptions)
 	createNotificationChannelOptions.SetHeaders(headers)
 

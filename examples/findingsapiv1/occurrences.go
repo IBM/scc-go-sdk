@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/ibm-cloud-security/scc-go-sdk/findingsapiv1"
+	"github.com/ibm-cloud-security/scc-go-sdk/findingsv1"
 )
 
 //CreateFindingOccurrence creates a new occurrence of type finding
@@ -16,7 +16,7 @@ func CreateFindingOccurrence() {
 		ApiKey: apiKey,
 		URL:    url, //use for dev/preprod env
 	}
-	service, _ := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+	service, _ := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 		Authenticator: authenticator,
 		URL:           "https://us-south.secadvisor.cloud.ibm.com/findings", //Specify url or use default
 	})
@@ -25,9 +25,9 @@ func CreateFindingOccurrence() {
 	ID := "test-finding"
 	noteName := accountID + "/providers/custom-provider/notes/custom-note"
 	kind := "FINDING"
-	nextStep := []findingsapiv1.RemediationStep{{Title: core.StringPtr("title"), URL: core.StringPtr("https://hello.world")}}
-	finding := findingsapiv1.Finding{Severity: core.StringPtr("CRITICAL"), Certainty: core.StringPtr("LOW"), NextSteps: nextStep}
-	context := findingsapiv1.Context{Region: core.StringPtr("us-south"), ResourceType: core.StringPtr("my_cluster"), ResourceName: core.StringPtr("test")}
+	nextStep := []findingsv1.RemediationStep{{Title: core.StringPtr("title"), URL: core.StringPtr("https://hello.world")}}
+	finding := findingsv1.Finding{Severity: core.StringPtr("CRITICAL"), Certainty: core.StringPtr("LOW"), NextSteps: nextStep}
+	context := findingsv1.Context{Region: core.StringPtr("us-south"), ResourceType: core.StringPtr("my_cluster"), ResourceName: core.StringPtr("test")}
 
 	var createOccurrenceOptions = service.NewCreateOccurrenceOptions(accountID, providerID, noteName, kind, ID)
 	createOccurrenceOptions.SetHeaders(headers)
@@ -55,7 +55,7 @@ func CreateKPIOccurrence() {
 		ApiKey: apiKey,
 		URL:    url, //use for dev/preprod env
 	}
-	service, _ := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+	service, _ := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 		Authenticator: authenticator,
 		URL:           "https://dev-dallas.secadvisor.test.cloud.ibm.com/findings", //Specify url or use default
 	})
@@ -90,7 +90,7 @@ func UpdateOccurrence() {
 		ApiKey: apiKey,
 		URL:    url, //use for dev/preprod env
 	}
-	service, _ := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+	service, _ := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 		Authenticator: authenticator,
 		URL:           "https://dev-dallas.secadvisor.test.cloud.ibm.com/findings",
 	})
@@ -102,7 +102,7 @@ func UpdateOccurrence() {
 	kind := "KPI"
 	kpiValue := 3.0
 	kpiTotal := 3.0
-	kpi := findingsapiv1.Kpi{Value: &kpiValue, Total: &kpiTotal}
+	kpi := findingsv1.Kpi{Value: &kpiValue, Total: &kpiTotal}
 
 	var updateOccurrenceOptions = service.NewUpdateOccurrenceOptions(accountID, providerID, occID, noteName, kind, ID)
 	updateOccurrenceOptions.SetHeaders(headers)
@@ -124,7 +124,7 @@ func GetOccurrence() {
 		ApiKey: apiKey,
 		URL:    url, //use for dev/preprod env
 	}
-	service, _ := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+	service, _ := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 		Authenticator: authenticator,
 		URL:           "https://us-south.secadvisor.cloud.ibm.com/findings",
 	})
@@ -141,7 +141,7 @@ func GetOccurrence() {
 
 	fmt.Println(res)
 	fmt.Println(detailedResponse.Result) //type interface {}
-	fmt.Println(*res.ID)
+	fmt.Println(*res.Occurrences[0].ID)
 
 }
 
@@ -151,7 +151,7 @@ func DeleteOccurrence() {
 		ApiKey: apiKey,
 		URL:    url, //use for dev/preprod env
 	}
-	service, _ := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+	service, _ := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 		Authenticator: authenticator,
 	})
 
@@ -175,7 +175,7 @@ func GetNoteOccurrences() {
 		ApiKey: apiKey,
 		URL:    url, //use for dev/preprod env
 	}
-	service, _ := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+	service, _ := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 		Authenticator: authenticator,
 	})
 
@@ -204,7 +204,7 @@ func GetProviderOccurrences() {
 		ApiKey: apiKey,
 		URL:    url, //use for dev/preprod env
 	}
-	service, _ := findingsapiv1.NewFindingsApiV1(&findingsapiv1.FindingsApiV1Options{
+	service, _ := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 		Authenticator: authenticator,
 	})
 

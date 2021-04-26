@@ -1,4 +1,4 @@
-package examples
+package main
 
 import (
 	"fmt"
@@ -324,4 +324,16 @@ func GetOccurrenceNote() {
 		fmt.Println(*res.ShortDescription)
 	}
 
+}
+
+func main() {
+	CreateFindingNote()
+	CreateKPINote()
+	CreateSectionNote()
+	GetNote()
+	CreateCardNote()
+	ListNotes()
+	UpdateNote()
+	DeleteNote()
+	GetOccurrenceNote()
 }

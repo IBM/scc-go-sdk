@@ -1,5 +1,3 @@
-// +build !integration
-
 /**
  * (C) Copyright IBM Corp. 2021.
  *
@@ -16,16 +14,15 @@
  * limitations under the License.
  */
 
-package notificationsapiv1_test
+package findingsv1_test
 
 import (
-	"testing"
-
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"testing"
 )
 
-func TestNotificationsApiV1(t *testing.T) {
+func TestFindingsV1(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "NotificationsApiV1 Suite")
+	RunSpecs(t, "FindingsV1 Suite")
 }

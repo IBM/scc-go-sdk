@@ -42,8 +42,8 @@ The  IBM Cloud Security and Compliance Center GO SDK allows developers to progra
 
 Service Name | Package name 
 --- | --- 
-[Findings Service](https://cloud.ibm.com/apidocs/security-advisor/findings) | findingsapiv1
-[Notifications Service](https://cloud.ibm.com/apidocs/security-advisor/notifications) | notificationsapiv1
+[Findings Service](https://cloud.ibm.com/apidocs/security-advisor/findings) | findingsv1
+[Notifications Service](https://cloud.ibm.com/apidocs/security-advisor/notifications) | notificationsv1
 [Configuration Governance Service](https://cloud.ibm.com/apidocs/security-compliance/config) | configurationgovernancev1
 
 ## Prerequisites
@@ -74,8 +74,9 @@ Go application, like this:
 
 ```go
 import (
-  "github.com/ibm-cloud-security/scc-go-sdk/findingsapiv1"
-  "github.com/ibm-cloud-security/scc-go-sdk/notificationsapiv1"
+  "github.com/ibm-cloud-security/scc-go-sdk/findingsv1"
+  "github.com/ibm-cloud-security/scc-go-sdk/notificationsv1"
+  "github.com/ibm-cloud-security/scc-go-sdk/configurationgovernancev1"
 )
 ```
 

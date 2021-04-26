@@ -18,42 +18,42 @@
  * IBM OpenAPI SDK Code Generator Version: 3.30.0-bd714324-20210406-200538
  */
 
-// Package notificationsapiv1 : Operations and models for the NotificationsApiV1 service
-package notificationsapiv1
+// Package notificationsv1 : Operations and models for the NotificationsV1 service
+package notificationsv1
 
 import (
 	"context"
 	"encoding/json"
 	"fmt"
-	common "github.com/IBM/cloud-go-sdk/common"
 	"github.com/IBM/go-sdk-core/v5/core"
+	common "github.com/ibm-cloud-security/scc-go-sdk/common"
 	"net/http"
 	"reflect"
 	"time"
 )
 
-// NotificationsApiV1 : notifications-api
+// NotificationsV1 : API specification for the Notifications service.
 //
 // Version: 1.0.0
-type NotificationsApiV1 struct {
+type NotificationsV1 struct {
 	Service *core.BaseService
 }
 
 // DefaultServiceURL is the default URL to make service requests to.
-const DefaultServiceURL = "https://notifications-api.cloud.ibm.com/notifications"
+const DefaultServiceURL = "https://notifications.cloud.ibm.com/notifications"
 
 // DefaultServiceName is the default key used to find external configuration information.
-const DefaultServiceName = "notifications_api"
+const DefaultServiceName = "notifications"
 
-// NotificationsApiV1Options : Service options
-type NotificationsApiV1Options struct {
+// NotificationsV1Options : Service options
+type NotificationsV1Options struct {
 	ServiceName   string
 	URL           string
 	Authenticator core.Authenticator
 }
 
-// NewNotificationsApiV1UsingExternalConfig : constructs an instance of NotificationsApiV1 with passed in options and external configuration.
-func NewNotificationsApiV1UsingExternalConfig(options *NotificationsApiV1Options) (notificationsApi *NotificationsApiV1, err error) {
+// NewNotificationsV1UsingExternalConfig : constructs an instance of NotificationsV1 with passed in options and external configuration.
+func NewNotificationsV1UsingExternalConfig(options *NotificationsV1Options) (notifications *NotificationsV1, err error) {
 	if options.ServiceName == "" {
 		options.ServiceName = DefaultServiceName
 	}
@@ -65,24 +65,24 @@ func NewNotificationsApiV1UsingExternalConfig(options *NotificationsApiV1Options
 		}
 	}
 
-	notificationsApi, err = NewNotificationsApiV1(options)
+	notifications, err = NewNotificationsV1(options)
 	if err != nil {
 		return
 	}
 
-	err = notificationsApi.Service.ConfigureService(options.ServiceName)
+	err = notifications.Service.ConfigureService(options.ServiceName)
 	if err != nil {
 		return
 	}
 
 	if options.URL != "" {
-		err = notificationsApi.Service.SetServiceURL(options.URL)
+		err = notifications.Service.SetServiceURL(options.URL)
 	}
 	return
 }
 
-// NewNotificationsApiV1 : constructs an instance of NotificationsApiV1 with passed in options.
-func NewNotificationsApiV1(options *NotificationsApiV1Options) (service *NotificationsApiV1, err error) {
+// NewNotificationsV1 : constructs an instance of NotificationsV1 with passed in options.
+func NewNotificationsV1(options *NotificationsV1Options) (service *NotificationsV1, err error) {
 	serviceOptions := &core.ServiceOptions{
 		URL:           DefaultServiceURL,
 		Authenticator: options.Authenticator,
@@ -100,7 +100,7 @@ func NewNotificationsApiV1(options *NotificationsApiV1Options) (service *Notific
 		}
 	}
 
-	service = &NotificationsApiV1{
+	service = &NotificationsV1{
 		Service: baseService,
 	}
 
@@ -112,60 +112,60 @@ func GetServiceURLForRegion(region string) (string, error) {
 	return "", fmt.Errorf("service does not support regional URLs")
 }
 
-// Clone makes a copy of "notificationsApi" suitable for processing requests.
-func (notificationsApi *NotificationsApiV1) Clone() *NotificationsApiV1 {
-	if core.IsNil(notificationsApi) {
+// Clone makes a copy of "notifications" suitable for processing requests.
+func (notifications *NotificationsV1) Clone() *NotificationsV1 {
+	if core.IsNil(notifications) {
 		return nil
 	}
-	clone := *notificationsApi
-	clone.Service = notificationsApi.Service.Clone()
+	clone := *notifications
+	clone.Service = notifications.Service.Clone()
 	return &clone
 }
 
 // SetServiceURL sets the service URL
-func (notificationsApi *NotificationsApiV1) SetServiceURL(url string) error {
-	return notificationsApi.Service.SetServiceURL(url)
+func (notifications *NotificationsV1) SetServiceURL(url string) error {
+	return notifications.Service.SetServiceURL(url)
 }
 
 // GetServiceURL returns the service URL
-func (notificationsApi *NotificationsApiV1) GetServiceURL() string {
-	return notificationsApi.Service.GetServiceURL()
+func (notifications *NotificationsV1) GetServiceURL() string {
+	return notifications.Service.GetServiceURL()
 }
 
 // SetDefaultHeaders sets HTTP headers to be sent in every request
-func (notificationsApi *NotificationsApiV1) SetDefaultHeaders(headers http.Header) {
-	notificationsApi.Service.SetDefaultHeaders(headers)
+func (notifications *NotificationsV1) SetDefaultHeaders(headers http.Header) {
+	notifications.Service.SetDefaultHeaders(headers)
 }
 
 // SetEnableGzipCompression sets the service's EnableGzipCompression field
-func (notificationsApi *NotificationsApiV1) SetEnableGzipCompression(enableGzip bool) {
-	notificationsApi.Service.SetEnableGzipCompression(enableGzip)
+func (notifications *NotificationsV1) SetEnableGzipCompression(enableGzip bool) {
+	notifications.Service.SetEnableGzipCompression(enableGzip)
 }
 
 // GetEnableGzipCompression returns the service's EnableGzipCompression field
-func (notificationsApi *NotificationsApiV1) GetEnableGzipCompression() bool {
-	return notificationsApi.Service.GetEnableGzipCompression()
+func (notifications *NotificationsV1) GetEnableGzipCompression() bool {
+	return notifications.Service.GetEnableGzipCompression()
 }
 
 // EnableRetries enables automatic retries for requests invoked for this service instance.
 // If either parameter is specified as 0, then a default value is used instead.
-func (notificationsApi *NotificationsApiV1) EnableRetries(maxRetries int, maxRetryInterval time.Duration) {
-	notificationsApi.Service.EnableRetries(maxRetries, maxRetryInterval)
+func (notifications *NotificationsV1) EnableRetries(maxRetries int, maxRetryInterval time.Duration) {
+	notifications.Service.EnableRetries(maxRetries, maxRetryInterval)
 }
 
 // DisableRetries disables automatic retries for requests invoked for this service instance.
-func (notificationsApi *NotificationsApiV1) DisableRetries() {
-	notificationsApi.Service.DisableRetries()
+func (notifications *NotificationsV1) DisableRetries() {
+	notifications.Service.DisableRetries()
 }
 
 // ListAllChannels : list all channels
 // list all channels under this account.
-func (notificationsApi *NotificationsApiV1) ListAllChannels(listAllChannelsOptions *ListAllChannelsOptions) (result *ChannelsList, response *core.DetailedResponse, err error) {
-	return notificationsApi.ListAllChannelsWithContext(context.Background(), listAllChannelsOptions)
+func (notifications *NotificationsV1) ListAllChannels(listAllChannelsOptions *ListAllChannelsOptions) (result *ChannelsList, response *core.DetailedResponse, err error) {
+	return notifications.ListAllChannelsWithContext(context.Background(), listAllChannelsOptions)
 }
 
 // ListAllChannelsWithContext is an alternate form of the ListAllChannels method which supports a Context parameter
-func (notificationsApi *NotificationsApiV1) ListAllChannelsWithContext(ctx context.Context, listAllChannelsOptions *ListAllChannelsOptions) (result *ChannelsList, response *core.DetailedResponse, err error) {
+func (notifications *NotificationsV1) ListAllChannelsWithContext(ctx context.Context, listAllChannelsOptions *ListAllChannelsOptions) (result *ChannelsList, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listAllChannelsOptions, "listAllChannelsOptions cannot be nil")
 	if err != nil {
 		return
@@ -181,8 +181,8 @@ func (notificationsApi *NotificationsApiV1) ListAllChannelsWithContext(ctx conte
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = notificationsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(notificationsApi.Service.Options.URL, `/v1/{account_id}/notifications/channels`, pathParamsMap)
+	builder.EnableGzipCompression = notifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(notifications.Service.Options.URL, `/v1/{account_id}/notifications/channels`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -191,7 +191,7 @@ func (notificationsApi *NotificationsApiV1) ListAllChannelsWithContext(ctx conte
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("notifications_api", "V1", "ListAllChannels")
+	sdkHeaders := common.GetSdkHeaders("notifications", "V1", "ListAllChannels")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -213,7 +213,7 @@ func (notificationsApi *NotificationsApiV1) ListAllChannelsWithContext(ctx conte
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = notificationsApi.Service.Request(request, &rawResponse)
+	response, err = notifications.Service.Request(request, &rawResponse)
 	if err != nil {
 		return
 	}
@@ -228,12 +228,12 @@ func (notificationsApi *NotificationsApiV1) ListAllChannelsWithContext(ctx conte
 
 // CreateNotificationChannel : create notification channel
 // create notification channel.
-func (notificationsApi *NotificationsApiV1) CreateNotificationChannel(createNotificationChannelOptions *CreateNotificationChannelOptions) (result *ChannelInfo, response *core.DetailedResponse, err error) {
-	return notificationsApi.CreateNotificationChannelWithContext(context.Background(), createNotificationChannelOptions)
+func (notifications *NotificationsV1) CreateNotificationChannel(createNotificationChannelOptions *CreateNotificationChannelOptions) (result *ChannelInfo, response *core.DetailedResponse, err error) {
+	return notifications.CreateNotificationChannelWithContext(context.Background(), createNotificationChannelOptions)
 }
 
 // CreateNotificationChannelWithContext is an alternate form of the CreateNotificationChannel method which supports a Context parameter
-func (notificationsApi *NotificationsApiV1) CreateNotificationChannelWithContext(ctx context.Context, createNotificationChannelOptions *CreateNotificationChannelOptions) (result *ChannelInfo, response *core.DetailedResponse, err error) {
+func (notifications *NotificationsV1) CreateNotificationChannelWithContext(ctx context.Context, createNotificationChannelOptions *CreateNotificationChannelOptions) (result *ChannelInfo, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(createNotificationChannelOptions, "createNotificationChannelOptions cannot be nil")
 	if err != nil {
 		return
@@ -249,8 +249,8 @@ func (notificationsApi *NotificationsApiV1) CreateNotificationChannelWithContext
 
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = notificationsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(notificationsApi.Service.Options.URL, `/v1/{account_id}/notifications/channels`, pathParamsMap)
+	builder.EnableGzipCompression = notifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(notifications.Service.Options.URL, `/v1/{account_id}/notifications/channels`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -259,7 +259,7 @@ func (notificationsApi *NotificationsApiV1) CreateNotificationChannelWithContext
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("notifications_api", "V1", "CreateNotificationChannel")
+	sdkHeaders := common.GetSdkHeaders("notifications", "V1", "CreateNotificationChannel")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -302,7 +302,7 @@ func (notificationsApi *NotificationsApiV1) CreateNotificationChannelWithContext
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = notificationsApi.Service.Request(request, &rawResponse)
+	response, err = notifications.Service.Request(request, &rawResponse)
 	if err != nil {
 		return
 	}
@@ -317,12 +317,12 @@ func (notificationsApi *NotificationsApiV1) CreateNotificationChannelWithContext
 
 // DeleteNotificationChannels : bulk delete of channels
 // bulk delete of channels.
-func (notificationsApi *NotificationsApiV1) DeleteNotificationChannels(deleteNotificationChannelsOptions *DeleteNotificationChannelsOptions) (result *ChannelsDelete, response *core.DetailedResponse, err error) {
-	return notificationsApi.DeleteNotificationChannelsWithContext(context.Background(), deleteNotificationChannelsOptions)
+func (notifications *NotificationsV1) DeleteNotificationChannels(deleteNotificationChannelsOptions *DeleteNotificationChannelsOptions) (result *ChannelsDelete, response *core.DetailedResponse, err error) {
+	return notifications.DeleteNotificationChannelsWithContext(context.Background(), deleteNotificationChannelsOptions)
 }
 
 // DeleteNotificationChannelsWithContext is an alternate form of the DeleteNotificationChannels method which supports a Context parameter
-func (notificationsApi *NotificationsApiV1) DeleteNotificationChannelsWithContext(ctx context.Context, deleteNotificationChannelsOptions *DeleteNotificationChannelsOptions) (result *ChannelsDelete, response *core.DetailedResponse, err error) {
+func (notifications *NotificationsV1) DeleteNotificationChannelsWithContext(ctx context.Context, deleteNotificationChannelsOptions *DeleteNotificationChannelsOptions) (result *ChannelsDelete, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(deleteNotificationChannelsOptions, "deleteNotificationChannelsOptions cannot be nil")
 	if err != nil {
 		return
@@ -338,8 +338,8 @@ func (notificationsApi *NotificationsApiV1) DeleteNotificationChannelsWithContex
 
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = notificationsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(notificationsApi.Service.Options.URL, `/v1/{account_id}/notifications/channels`, pathParamsMap)
+	builder.EnableGzipCompression = notifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(notifications.Service.Options.URL, `/v1/{account_id}/notifications/channels`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -348,7 +348,7 @@ func (notificationsApi *NotificationsApiV1) DeleteNotificationChannelsWithContex
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("notifications_api", "V1", "DeleteNotificationChannels")
+	sdkHeaders := common.GetSdkHeaders("notifications", "V1", "DeleteNotificationChannels")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -369,7 +369,7 @@ func (notificationsApi *NotificationsApiV1) DeleteNotificationChannelsWithContex
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = notificationsApi.Service.Request(request, &rawResponse)
+	response, err = notifications.Service.Request(request, &rawResponse)
 	if err != nil {
 		return
 	}
@@ -384,12 +384,12 @@ func (notificationsApi *NotificationsApiV1) DeleteNotificationChannelsWithContex
 
 // DeleteNotificationChannel : delete the details of a specific channel
 // delete the details of a specific channel.
-func (notificationsApi *NotificationsApiV1) DeleteNotificationChannel(deleteNotificationChannelOptions *DeleteNotificationChannelOptions) (result *ChannelDelete, response *core.DetailedResponse, err error) {
-	return notificationsApi.DeleteNotificationChannelWithContext(context.Background(), deleteNotificationChannelOptions)
+func (notifications *NotificationsV1) DeleteNotificationChannel(deleteNotificationChannelOptions *DeleteNotificationChannelOptions) (result *ChannelDelete, response *core.DetailedResponse, err error) {
+	return notifications.DeleteNotificationChannelWithContext(context.Background(), deleteNotificationChannelOptions)
 }
 
 // DeleteNotificationChannelWithContext is an alternate form of the DeleteNotificationChannel method which supports a Context parameter
-func (notificationsApi *NotificationsApiV1) DeleteNotificationChannelWithContext(ctx context.Context, deleteNotificationChannelOptions *DeleteNotificationChannelOptions) (result *ChannelDelete, response *core.DetailedResponse, err error) {
+func (notifications *NotificationsV1) DeleteNotificationChannelWithContext(ctx context.Context, deleteNotificationChannelOptions *DeleteNotificationChannelOptions) (result *ChannelDelete, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(deleteNotificationChannelOptions, "deleteNotificationChannelOptions cannot be nil")
 	if err != nil {
 		return
@@ -406,8 +406,8 @@ func (notificationsApi *NotificationsApiV1) DeleteNotificationChannelWithContext
 
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = notificationsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(notificationsApi.Service.Options.URL, `/v1/{account_id}/notifications/channels/{channel_id}`, pathParamsMap)
+	builder.EnableGzipCompression = notifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(notifications.Service.Options.URL, `/v1/{account_id}/notifications/channels/{channel_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -416,7 +416,7 @@ func (notificationsApi *NotificationsApiV1) DeleteNotificationChannelWithContext
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("notifications_api", "V1", "DeleteNotificationChannel")
+	sdkHeaders := common.GetSdkHeaders("notifications", "V1", "DeleteNotificationChannel")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -431,7 +431,7 @@ func (notificationsApi *NotificationsApiV1) DeleteNotificationChannelWithContext
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = notificationsApi.Service.Request(request, &rawResponse)
+	response, err = notifications.Service.Request(request, &rawResponse)
 	if err != nil {
 		return
 	}
@@ -446,12 +446,12 @@ func (notificationsApi *NotificationsApiV1) DeleteNotificationChannelWithContext
 
 // GetNotificationChannel : get the details of a specific channel
 // get the details of a specific channel.
-func (notificationsApi *NotificationsApiV1) GetNotificationChannel(getNotificationChannelOptions *GetNotificationChannelOptions) (result *ChannelGet, response *core.DetailedResponse, err error) {
-	return notificationsApi.GetNotificationChannelWithContext(context.Background(), getNotificationChannelOptions)
+func (notifications *NotificationsV1) GetNotificationChannel(getNotificationChannelOptions *GetNotificationChannelOptions) (result *ChannelGet, response *core.DetailedResponse, err error) {
+	return notifications.GetNotificationChannelWithContext(context.Background(), getNotificationChannelOptions)
 }
 
 // GetNotificationChannelWithContext is an alternate form of the GetNotificationChannel method which supports a Context parameter
-func (notificationsApi *NotificationsApiV1) GetNotificationChannelWithContext(ctx context.Context, getNotificationChannelOptions *GetNotificationChannelOptions) (result *ChannelGet, response *core.DetailedResponse, err error) {
+func (notifications *NotificationsV1) GetNotificationChannelWithContext(ctx context.Context, getNotificationChannelOptions *GetNotificationChannelOptions) (result *ChannelGet, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getNotificationChannelOptions, "getNotificationChannelOptions cannot be nil")
 	if err != nil {
 		return
@@ -468,8 +468,8 @@ func (notificationsApi *NotificationsApiV1) GetNotificationChannelWithContext(ct
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = notificationsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(notificationsApi.Service.Options.URL, `/v1/{account_id}/notifications/channels/{channel_id}`, pathParamsMap)
+	builder.EnableGzipCompression = notifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(notifications.Service.Options.URL, `/v1/{account_id}/notifications/channels/{channel_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -478,7 +478,7 @@ func (notificationsApi *NotificationsApiV1) GetNotificationChannelWithContext(ct
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("notifications_api", "V1", "GetNotificationChannel")
+	sdkHeaders := common.GetSdkHeaders("notifications", "V1", "GetNotificationChannel")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -493,7 +493,7 @@ func (notificationsApi *NotificationsApiV1) GetNotificationChannelWithContext(ct
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = notificationsApi.Service.Request(request, &rawResponse)
+	response, err = notifications.Service.Request(request, &rawResponse)
 	if err != nil {
 		return
 	}
@@ -508,12 +508,12 @@ func (notificationsApi *NotificationsApiV1) GetNotificationChannelWithContext(ct
 
 // UpdateNotificationChannel : update notification channel
 // update notification channel.
-func (notificationsApi *NotificationsApiV1) UpdateNotificationChannel(updateNotificationChannelOptions *UpdateNotificationChannelOptions) (result *ChannelInfo, response *core.DetailedResponse, err error) {
-	return notificationsApi.UpdateNotificationChannelWithContext(context.Background(), updateNotificationChannelOptions)
+func (notifications *NotificationsV1) UpdateNotificationChannel(updateNotificationChannelOptions *UpdateNotificationChannelOptions) (result *ChannelInfo, response *core.DetailedResponse, err error) {
+	return notifications.UpdateNotificationChannelWithContext(context.Background(), updateNotificationChannelOptions)
 }
 
 // UpdateNotificationChannelWithContext is an alternate form of the UpdateNotificationChannel method which supports a Context parameter
-func (notificationsApi *NotificationsApiV1) UpdateNotificationChannelWithContext(ctx context.Context, updateNotificationChannelOptions *UpdateNotificationChannelOptions) (result *ChannelInfo, response *core.DetailedResponse, err error) {
+func (notifications *NotificationsV1) UpdateNotificationChannelWithContext(ctx context.Context, updateNotificationChannelOptions *UpdateNotificationChannelOptions) (result *ChannelInfo, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(updateNotificationChannelOptions, "updateNotificationChannelOptions cannot be nil")
 	if err != nil {
 		return
@@ -530,8 +530,8 @@ func (notificationsApi *NotificationsApiV1) UpdateNotificationChannelWithContext
 
 	builder := core.NewRequestBuilder(core.PUT)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = notificationsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(notificationsApi.Service.Options.URL, `/v1/{account_id}/notifications/channels/{channel_id}`, pathParamsMap)
+	builder.EnableGzipCompression = notifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(notifications.Service.Options.URL, `/v1/{account_id}/notifications/channels/{channel_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -540,7 +540,7 @@ func (notificationsApi *NotificationsApiV1) UpdateNotificationChannelWithContext
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("notifications_api", "V1", "UpdateNotificationChannel")
+	sdkHeaders := common.GetSdkHeaders("notifications", "V1", "UpdateNotificationChannel")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -583,7 +583,7 @@ func (notificationsApi *NotificationsApiV1) UpdateNotificationChannelWithContext
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = notificationsApi.Service.Request(request, &rawResponse)
+	response, err = notifications.Service.Request(request, &rawResponse)
 	if err != nil {
 		return
 	}
@@ -598,12 +598,12 @@ func (notificationsApi *NotificationsApiV1) UpdateNotificationChannelWithContext
 
 // TestNotificationChannel : test notification channel
 // test a nofication channel under this account.
-func (notificationsApi *NotificationsApiV1) TestNotificationChannel(testNotificationChannelOptions *TestNotificationChannelOptions) (result *TestChannel, response *core.DetailedResponse, err error) {
-	return notificationsApi.TestNotificationChannelWithContext(context.Background(), testNotificationChannelOptions)
+func (notifications *NotificationsV1) TestNotificationChannel(testNotificationChannelOptions *TestNotificationChannelOptions) (result *TestChannel, response *core.DetailedResponse, err error) {
+	return notifications.TestNotificationChannelWithContext(context.Background(), testNotificationChannelOptions)
 }
 
 // TestNotificationChannelWithContext is an alternate form of the TestNotificationChannel method which supports a Context parameter
-func (notificationsApi *NotificationsApiV1) TestNotificationChannelWithContext(ctx context.Context, testNotificationChannelOptions *TestNotificationChannelOptions) (result *TestChannel, response *core.DetailedResponse, err error) {
+func (notifications *NotificationsV1) TestNotificationChannelWithContext(ctx context.Context, testNotificationChannelOptions *TestNotificationChannelOptions) (result *TestChannel, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(testNotificationChannelOptions, "testNotificationChannelOptions cannot be nil")
 	if err != nil {
 		return
@@ -620,8 +620,8 @@ func (notificationsApi *NotificationsApiV1) TestNotificationChannelWithContext(c
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = notificationsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(notificationsApi.Service.Options.URL, `/v1/{account_id}/notifications/channels/{channel_id}/test`, pathParamsMap)
+	builder.EnableGzipCompression = notifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(notifications.Service.Options.URL, `/v1/{account_id}/notifications/channels/{channel_id}/test`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -630,7 +630,7 @@ func (notificationsApi *NotificationsApiV1) TestNotificationChannelWithContext(c
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("notifications_api", "V1", "TestNotificationChannel")
+	sdkHeaders := common.GetSdkHeaders("notifications", "V1", "TestNotificationChannel")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -645,7 +645,7 @@ func (notificationsApi *NotificationsApiV1) TestNotificationChannelWithContext(c
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = notificationsApi.Service.Request(request, &rawResponse)
+	response, err = notifications.Service.Request(request, &rawResponse)
 	if err != nil {
 		return
 	}
@@ -660,12 +660,12 @@ func (notificationsApi *NotificationsApiV1) TestNotificationChannelWithContext(c
 
 // GetPublicKey : fetch notifications public key
 // fetch public key to decrypt messages in notification payload.
-func (notificationsApi *NotificationsApiV1) GetPublicKey(getPublicKeyOptions *GetPublicKeyOptions) (result *PublicKeyGet, response *core.DetailedResponse, err error) {
-	return notificationsApi.GetPublicKeyWithContext(context.Background(), getPublicKeyOptions)
+func (notifications *NotificationsV1) GetPublicKey(getPublicKeyOptions *GetPublicKeyOptions) (result *PublicKeyGet, response *core.DetailedResponse, err error) {
+	return notifications.GetPublicKeyWithContext(context.Background(), getPublicKeyOptions)
 }
 
 // GetPublicKeyWithContext is an alternate form of the GetPublicKey method which supports a Context parameter
-func (notificationsApi *NotificationsApiV1) GetPublicKeyWithContext(ctx context.Context, getPublicKeyOptions *GetPublicKeyOptions) (result *PublicKeyGet, response *core.DetailedResponse, err error) {
+func (notifications *NotificationsV1) GetPublicKeyWithContext(ctx context.Context, getPublicKeyOptions *GetPublicKeyOptions) (result *PublicKeyGet, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getPublicKeyOptions, "getPublicKeyOptions cannot be nil")
 	if err != nil {
 		return
@@ -681,8 +681,8 @@ func (notificationsApi *NotificationsApiV1) GetPublicKeyWithContext(ctx context.
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = notificationsApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(notificationsApi.Service.Options.URL, `/v1/{account_id}/notifications/public_key`, pathParamsMap)
+	builder.EnableGzipCompression = notifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(notifications.Service.Options.URL, `/v1/{account_id}/notifications/public_key`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -691,7 +691,7 @@ func (notificationsApi *NotificationsApiV1) GetPublicKeyWithContext(ctx context.
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("notifications_api", "V1", "GetPublicKey")
+	sdkHeaders := common.GetSdkHeaders("notifications", "V1", "GetPublicKey")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -706,7 +706,7 @@ func (notificationsApi *NotificationsApiV1) GetPublicKeyWithContext(ctx context.
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = notificationsApi.Service.Request(request, &rawResponse)
+	response, err = notifications.Service.Request(request, &rawResponse)
 	if err != nil {
 		return
 	}
@@ -736,11 +736,11 @@ type ChannelAlertSourceItem struct {
 // The providers that you can receive alerts for. To view your available providers, you can call the
 // /v1/{account_id}/providers endpoint of the Findings API.
 const (
-	ChannelAlertSourceItem_ProviderName_All = "ALL"
-	ChannelAlertSourceItem_ProviderName_Ata = "ATA"
-	ChannelAlertSourceItem_ProviderName_Cert = "CERT"
-	ChannelAlertSourceItem_ProviderName_Na = "NA"
-	ChannelAlertSourceItem_ProviderName_Va = "VA"
+	ChannelAlertSourceItemProviderNameAllConst = "ALL"
+	ChannelAlertSourceItemProviderNameAtaConst = "ATA"
+	ChannelAlertSourceItemProviderNameCertConst = "CERT"
+	ChannelAlertSourceItemProviderNameNaConst = "NA"
+	ChannelAlertSourceItemProviderNameVaConst = "VA"
 )
 
 // UnmarshalChannelAlertSourceItem unmarshals an instance of ChannelAlertSourceItem from the specified map of raw messages.
@@ -829,7 +829,7 @@ type ChannelGetChannel struct {
 // Constants associated with the ChannelGetChannel.Type property.
 // Type of callback URL.
 const (
-	ChannelGetChannel_Type_Webhook = "Webhook"
+	ChannelGetChannelTypeWebhookConst = "Webhook"
 )
 
 // UnmarshalChannelGetChannel unmarshals an instance of ChannelGetChannel from the specified map of raw messages.
@@ -892,11 +892,11 @@ type ChannelGetChannelAlertSourceItem struct {
 // The providers that you can receive alerts for. To view your available providers, you can call the
 // /v1/{account_id}/providers endpoint of the Findings API.
 const (
-	ChannelGetChannelAlertSourceItem_ProviderName_All = "ALL"
-	ChannelGetChannelAlertSourceItem_ProviderName_Ata = "ATA"
-	ChannelGetChannelAlertSourceItem_ProviderName_Cert = "CERT"
-	ChannelGetChannelAlertSourceItem_ProviderName_Na = "NA"
-	ChannelGetChannelAlertSourceItem_ProviderName_Va = "VA"
+	ChannelGetChannelAlertSourceItemProviderNameAllConst = "ALL"
+	ChannelGetChannelAlertSourceItemProviderNameAtaConst = "ATA"
+	ChannelGetChannelAlertSourceItemProviderNameCertConst = "CERT"
+	ChannelGetChannelAlertSourceItemProviderNameNaConst = "NA"
+	ChannelGetChannelAlertSourceItemProviderNameVaConst = "VA"
 )
 
 // UnmarshalChannelGetChannelAlertSourceItem unmarshals an instance of ChannelGetChannelAlertSourceItem from the specified map of raw messages.
@@ -1081,19 +1081,19 @@ type CreateNotificationChannelOptions struct {
 // Constants associated with the CreateNotificationChannelOptions.Type property.
 // Type of callback URL.
 const (
-	CreateNotificationChannelOptions_Type_Webhook = "Webhook"
+	CreateNotificationChannelOptionsTypeWebhookConst = "Webhook"
 )
 
 // Constants associated with the CreateNotificationChannelOptions.Severity property.
 const (
-	CreateNotificationChannelOptions_Severity_Critical = "critical"
-	CreateNotificationChannelOptions_Severity_High = "high"
-	CreateNotificationChannelOptions_Severity_Low = "low"
-	CreateNotificationChannelOptions_Severity_Medium = "medium"
+	CreateNotificationChannelOptionsSeverityCriticalConst = "critical"
+	CreateNotificationChannelOptionsSeverityHighConst = "high"
+	CreateNotificationChannelOptionsSeverityLowConst = "low"
+	CreateNotificationChannelOptionsSeverityMediumConst = "medium"
 )
 
 // NewCreateNotificationChannelOptions : Instantiate CreateNotificationChannelOptions
-func (*NotificationsApiV1) NewCreateNotificationChannelOptions(accountID string, name string, typeVar string, endpoint string) *CreateNotificationChannelOptions {
+func (*NotificationsV1) NewCreateNotificationChannelOptions(accountID string, name string, typeVar string, endpoint string) *CreateNotificationChannelOptions {
 	return &CreateNotificationChannelOptions{
 		AccountID: core.StringPtr(accountID),
 		Name: core.StringPtr(name),
@@ -1178,7 +1178,7 @@ type DeleteNotificationChannelOptions struct {
 }
 
 // NewDeleteNotificationChannelOptions : Instantiate DeleteNotificationChannelOptions
-func (*NotificationsApiV1) NewDeleteNotificationChannelOptions(accountID string, channelID string) *DeleteNotificationChannelOptions {
+func (*NotificationsV1) NewDeleteNotificationChannelOptions(accountID string, channelID string) *DeleteNotificationChannelOptions {
 	return &DeleteNotificationChannelOptions{
 		AccountID: core.StringPtr(accountID),
 		ChannelID: core.StringPtr(channelID),
@@ -1225,7 +1225,7 @@ type DeleteNotificationChannelsOptions struct {
 }
 
 // NewDeleteNotificationChannelsOptions : Instantiate DeleteNotificationChannelsOptions
-func (*NotificationsApiV1) NewDeleteNotificationChannelsOptions(accountID string, body []string) *DeleteNotificationChannelsOptions {
+func (*NotificationsV1) NewDeleteNotificationChannelsOptions(accountID string, body []string) *DeleteNotificationChannelsOptions {
 	return &DeleteNotificationChannelsOptions{
 		AccountID: core.StringPtr(accountID),
 		Body: body,
@@ -1272,7 +1272,7 @@ type GetNotificationChannelOptions struct {
 }
 
 // NewGetNotificationChannelOptions : Instantiate GetNotificationChannelOptions
-func (*NotificationsApiV1) NewGetNotificationChannelOptions(accountID string, channelID string) *GetNotificationChannelOptions {
+func (*NotificationsV1) NewGetNotificationChannelOptions(accountID string, channelID string) *GetNotificationChannelOptions {
 	return &GetNotificationChannelOptions{
 		AccountID: core.StringPtr(accountID),
 		ChannelID: core.StringPtr(channelID),
@@ -1316,7 +1316,7 @@ type GetPublicKeyOptions struct {
 }
 
 // NewGetPublicKeyOptions : Instantiate GetPublicKeyOptions
-func (*NotificationsApiV1) NewGetPublicKeyOptions(accountID string) *GetPublicKeyOptions {
+func (*NotificationsV1) NewGetPublicKeyOptions(accountID string) *GetPublicKeyOptions {
 	return &GetPublicKeyOptions{
 		AccountID: core.StringPtr(accountID),
 	}
@@ -1359,7 +1359,7 @@ type ListAllChannelsOptions struct {
 }
 
 // NewListAllChannelsOptions : Instantiate ListAllChannelsOptions
-func (*NotificationsApiV1) NewListAllChannelsOptions(accountID string) *ListAllChannelsOptions {
+func (*NotificationsV1) NewListAllChannelsOptions(accountID string) *ListAllChannelsOptions {
 	return &ListAllChannelsOptions{
 		AccountID: core.StringPtr(accountID),
 	}
@@ -1425,7 +1425,7 @@ type NotificationChannelAlertSourceItem struct {
 }
 
 // NewNotificationChannelAlertSourceItem : Instantiate NotificationChannelAlertSourceItem (Generic Model Constructor)
-func (*NotificationsApiV1) NewNotificationChannelAlertSourceItem(providerName string) (model *NotificationChannelAlertSourceItem, err error) {
+func (*NotificationsV1) NewNotificationChannelAlertSourceItem(providerName string) (model *NotificationChannelAlertSourceItem, err error) {
 	model = &NotificationChannelAlertSourceItem{
 		ProviderName: core.StringPtr(providerName),
 	}
@@ -1497,7 +1497,7 @@ type TestNotificationChannelOptions struct {
 }
 
 // NewTestNotificationChannelOptions : Instantiate TestNotificationChannelOptions
-func (*NotificationsApiV1) NewTestNotificationChannelOptions(accountID string, channelID string) *TestNotificationChannelOptions {
+func (*NotificationsV1) NewTestNotificationChannelOptions(accountID string, channelID string) *TestNotificationChannelOptions {
 	return &TestNotificationChannelOptions{
 		AccountID: core.StringPtr(accountID),
 		ChannelID: core.StringPtr(channelID),
@@ -1565,19 +1565,19 @@ type UpdateNotificationChannelOptions struct {
 // Constants associated with the UpdateNotificationChannelOptions.Type property.
 // Type of callback URL.
 const (
-	UpdateNotificationChannelOptions_Type_Webhook = "Webhook"
+	UpdateNotificationChannelOptionsTypeWebhookConst = "Webhook"
 )
 
 // Constants associated with the UpdateNotificationChannelOptions.Severity property.
 const (
-	UpdateNotificationChannelOptions_Severity_Critical = "critical"
-	UpdateNotificationChannelOptions_Severity_High = "high"
-	UpdateNotificationChannelOptions_Severity_Low = "low"
-	UpdateNotificationChannelOptions_Severity_Medium = "medium"
+	UpdateNotificationChannelOptionsSeverityCriticalConst = "critical"
+	UpdateNotificationChannelOptionsSeverityHighConst = "high"
+	UpdateNotificationChannelOptionsSeverityLowConst = "low"
+	UpdateNotificationChannelOptionsSeverityMediumConst = "medium"
 )
 
 // NewUpdateNotificationChannelOptions : Instantiate UpdateNotificationChannelOptions
-func (*NotificationsApiV1) NewUpdateNotificationChannelOptions(accountID string, channelID string, name string, typeVar string, endpoint string) *UpdateNotificationChannelOptions {
+func (*NotificationsV1) NewUpdateNotificationChannelOptions(accountID string, channelID string, name string, typeVar string, endpoint string) *UpdateNotificationChannelOptions {
 	return &UpdateNotificationChannelOptions{
 		AccountID: core.StringPtr(accountID),
 		ChannelID: core.StringPtr(channelID),
@@ -1683,7 +1683,7 @@ type Channel struct {
 // Constants associated with the Channel.Type property.
 // Type of callback URL.
 const (
-	Channel_Type_Webhook = "Webhook"
+	ChannelTypeWebhookConst = "Webhook"
 )
 
 // UnmarshalChannel unmarshals an instance of Channel from the specified map of raw messages.

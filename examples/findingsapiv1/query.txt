@@ -1,0 +1,3 @@
+query {
+    findingCount: occurrenceCount(kind: "FINDING")
+}

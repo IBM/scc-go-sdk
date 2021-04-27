@@ -25,13 +25,14 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/go-openapi/strfmt"
-	common "github.com/ibm-cloud-security/scc-go-sdk/common"
 	"io"
 	"net/http"
 	"reflect"
 	"time"
+
+	"github.com/IBM/go-sdk-core/v5/core"
+	"github.com/go-openapi/strfmt"
+	common "github.com/ibm-cloud-security/scc-go-sdk/common"
 )
 
 // FindingsV1 : API specification for the Findings service.
@@ -241,7 +242,7 @@ func (findings *FindingsV1) CreateNoteWithContext(ctx context.Context, createNot
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *createNoteOptions.AccountID,
+		"account_id":  *createNoteOptions.AccountID,
 		"provider_id": *createNoteOptions.ProviderID,
 	}
 
@@ -351,7 +352,7 @@ func (findings *FindingsV1) ListNotesWithContext(ctx context.Context, listNotesO
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *listNotesOptions.AccountID,
+		"account_id":  *listNotesOptions.AccountID,
 		"provider_id": *listNotesOptions.ProviderID,
 	}
 
@@ -419,9 +420,9 @@ func (findings *FindingsV1) GetNoteWithContext(ctx context.Context, getNoteOptio
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *getNoteOptions.AccountID,
+		"account_id":  *getNoteOptions.AccountID,
 		"provider_id": *getNoteOptions.ProviderID,
-		"note_id": *getNoteOptions.NoteID,
+		"note_id":     *getNoteOptions.NoteID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
@@ -481,9 +482,9 @@ func (findings *FindingsV1) UpdateNoteWithContext(ctx context.Context, updateNot
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *updateNoteOptions.AccountID,
+		"account_id":  *updateNoteOptions.AccountID,
 		"provider_id": *updateNoteOptions.ProviderID,
-		"note_id": *updateNoteOptions.NoteID,
+		"note_id":     *updateNoteOptions.NoteID,
 	}
 
 	builder := core.NewRequestBuilder(core.PUT)
@@ -592,9 +593,9 @@ func (findings *FindingsV1) DeleteNoteWithContext(ctx context.Context, deleteNot
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *deleteNoteOptions.AccountID,
+		"account_id":  *deleteNoteOptions.AccountID,
 		"provider_id": *deleteNoteOptions.ProviderID,
-		"note_id": *deleteNoteOptions.NoteID,
+		"note_id":     *deleteNoteOptions.NoteID,
 	}
 
 	builder := core.NewRequestBuilder(core.DELETE)
@@ -628,7 +629,7 @@ func (findings *FindingsV1) DeleteNoteWithContext(ctx context.Context, deleteNot
 	return
 }
 
-// GetOccurrenceNote : Gets the `Note` attached to the given `Occurrence`
+// GetOccurrenceNote : Gets the `Note` attached to the given 'Occurrence'
 func (findings *FindingsV1) GetOccurrenceNote(getOccurrenceNoteOptions *GetOccurrenceNoteOptions) (result *APINote, response *core.DetailedResponse, err error) {
 	return findings.GetOccurrenceNoteWithContext(context.Background(), getOccurrenceNoteOptions)
 }
@@ -645,8 +646,8 @@ func (findings *FindingsV1) GetOccurrenceNoteWithContext(ctx context.Context, ge
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *getOccurrenceNoteOptions.AccountID,
-		"provider_id": *getOccurrenceNoteOptions.ProviderID,
+		"account_id":    *getOccurrenceNoteOptions.AccountID,
+		"provider_id":   *getOccurrenceNoteOptions.ProviderID,
 		"occurrence_id": *getOccurrenceNoteOptions.OccurrenceID,
 	}
 
@@ -690,7 +691,7 @@ func (findings *FindingsV1) GetOccurrenceNoteWithContext(ctx context.Context, ge
 	return
 }
 
-// CreateOccurrence : Creates a new `Occurrence`. Use this method to create `Occurrences` for a resource
+// CreateOccurrence : Creates a new 'Occurrence'. Use this method to create `Occurrences` for a resource
 func (findings *FindingsV1) CreateOccurrence(createOccurrenceOptions *CreateOccurrenceOptions) (result *APIOccurrence, response *core.DetailedResponse, err error) {
 	return findings.CreateOccurrenceWithContext(context.Background(), createOccurrenceOptions)
 }
@@ -707,7 +708,7 @@ func (findings *FindingsV1) CreateOccurrenceWithContext(ctx context.Context, cre
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *createOccurrenceOptions.AccountID,
+		"account_id":  *createOccurrenceOptions.AccountID,
 		"provider_id": *createOccurrenceOptions.ProviderID,
 	}
 
@@ -811,7 +812,7 @@ func (findings *FindingsV1) ListOccurrencesWithContext(ctx context.Context, list
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *listOccurrencesOptions.AccountID,
+		"account_id":  *listOccurrencesOptions.AccountID,
 		"provider_id": *listOccurrencesOptions.ProviderID,
 	}
 
@@ -879,9 +880,9 @@ func (findings *FindingsV1) ListNoteOccurrencesWithContext(ctx context.Context, 
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *listNoteOccurrencesOptions.AccountID,
+		"account_id":  *listNoteOccurrencesOptions.AccountID,
 		"provider_id": *listNoteOccurrencesOptions.ProviderID,
-		"note_id": *listNoteOccurrencesOptions.NoteID,
+		"note_id":     *listNoteOccurrencesOptions.NoteID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
@@ -931,7 +932,7 @@ func (findings *FindingsV1) ListNoteOccurrencesWithContext(ctx context.Context, 
 	return
 }
 
-// GetOccurrence : Returns the requested `Occurrence`
+// GetOccurrence : Returns the requested 'Occurrence'
 func (findings *FindingsV1) GetOccurrence(getOccurrenceOptions *GetOccurrenceOptions) (result *APIListOccurrencesResponse, response *core.DetailedResponse, err error) {
 	return findings.GetOccurrenceWithContext(context.Background(), getOccurrenceOptions)
 }
@@ -948,8 +949,8 @@ func (findings *FindingsV1) GetOccurrenceWithContext(ctx context.Context, getOcc
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *getOccurrenceOptions.AccountID,
-		"provider_id": *getOccurrenceOptions.ProviderID,
+		"account_id":    *getOccurrenceOptions.AccountID,
+		"provider_id":   *getOccurrenceOptions.ProviderID,
 		"occurrence_id": *getOccurrenceOptions.OccurrenceID,
 	}
 
@@ -993,7 +994,7 @@ func (findings *FindingsV1) GetOccurrenceWithContext(ctx context.Context, getOcc
 	return
 }
 
-// UpdateOccurrence : Updates an existing `Occurrence`
+// UpdateOccurrence : Updates an existing 'Occurrence'
 func (findings *FindingsV1) UpdateOccurrence(updateOccurrenceOptions *UpdateOccurrenceOptions) (result *APIOccurrence, response *core.DetailedResponse, err error) {
 	return findings.UpdateOccurrenceWithContext(context.Background(), updateOccurrenceOptions)
 }
@@ -1010,8 +1011,8 @@ func (findings *FindingsV1) UpdateOccurrenceWithContext(ctx context.Context, upd
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *updateOccurrenceOptions.AccountID,
-		"provider_id": *updateOccurrenceOptions.ProviderID,
+		"account_id":    *updateOccurrenceOptions.AccountID,
+		"provider_id":   *updateOccurrenceOptions.ProviderID,
 		"occurrence_id": *updateOccurrenceOptions.OccurrenceID,
 	}
 
@@ -1095,7 +1096,7 @@ func (findings *FindingsV1) UpdateOccurrenceWithContext(ctx context.Context, upd
 	return
 }
 
-// DeleteOccurrence : Deletes the given `Occurrence` from the system
+// DeleteOccurrence : Deletes the given 'Occurrence' from the system
 func (findings *FindingsV1) DeleteOccurrence(deleteOccurrenceOptions *DeleteOccurrenceOptions) (response *core.DetailedResponse, err error) {
 	return findings.DeleteOccurrenceWithContext(context.Background(), deleteOccurrenceOptions)
 }
@@ -1112,8 +1113,8 @@ func (findings *FindingsV1) DeleteOccurrenceWithContext(ctx context.Context, del
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *deleteOccurrenceOptions.AccountID,
-		"provider_id": *deleteOccurrenceOptions.ProviderID,
+		"account_id":    *deleteOccurrenceOptions.AccountID,
+		"provider_id":   *deleteOccurrenceOptions.ProviderID,
 		"occurrence_id": *deleteOccurrenceOptions.OccurrenceID,
 	}
 
@@ -1253,11 +1254,11 @@ type Card struct {
 // NewCard : Instantiate Card (Generic Model Constructor)
 func (*FindingsV1) NewCard(section string, title string, subtitle string, findingNoteNames []string, elements []CardElementIntf) (model *Card, err error) {
 	model = &Card{
-		Section: core.StringPtr(section),
-		Title: core.StringPtr(title),
-		Subtitle: core.StringPtr(subtitle),
+		Section:          core.StringPtr(section),
+		Title:            core.StringPtr(title),
+		Subtitle:         core.StringPtr(subtitle),
 		FindingNoteNames: findingNoteNames,
-		Elements: elements,
+		Elements:         elements,
 	}
 	err = core.ValidateStruct(model, "required parameters")
 	return
@@ -1339,10 +1340,11 @@ type CardElement struct {
 // - BREAKDOWN&#58; Breakdown of numeric values
 // - TIME_SERIES&#58; Time-series of numeric values.
 const (
-	CardElementKindBreakdownConst = "BREAKDOWN"
-	CardElementKindNumericConst = "NUMERIC"
+	CardElementKindBreakdownConst  = "BREAKDOWN"
+	CardElementKindNumericConst    = "NUMERIC"
 	CardElementKindTimeSeriesConst = "TIME_SERIES"
 )
+
 func (*CardElement) isaCardElement() bool {
 	return true
 }
@@ -1524,23 +1526,23 @@ type CreateNoteOptions struct {
 //  - CARD_CONFIGURED&#58; The note represents a card configured for a user account.
 //  - SECTION&#58; The note represents a section in a dashboard.
 const (
-	CreateNoteOptionsKindCardConst = "CARD"
+	CreateNoteOptionsKindCardConst           = "CARD"
 	CreateNoteOptionsKindCardConfiguredConst = "CARD_CONFIGURED"
-	CreateNoteOptionsKindFindingConst = "FINDING"
-	CreateNoteOptionsKindKpiConst = "KPI"
-	CreateNoteOptionsKindSectionConst = "SECTION"
+	CreateNoteOptionsKindFindingConst        = "FINDING"
+	CreateNoteOptionsKindKpiConst            = "KPI"
+	CreateNoteOptionsKindSectionConst        = "SECTION"
 )
 
 // NewCreateNoteOptions : Instantiate CreateNoteOptions
 func (*FindingsV1) NewCreateNoteOptions(accountID string, providerID string, shortDescription string, longDescription string, kind string, id string, reportedBy *Reporter) *CreateNoteOptions {
 	return &CreateNoteOptions{
-		AccountID: core.StringPtr(accountID),
-		ProviderID: core.StringPtr(providerID),
+		AccountID:        core.StringPtr(accountID),
+		ProviderID:       core.StringPtr(providerID),
 		ShortDescription: core.StringPtr(shortDescription),
-		LongDescription: core.StringPtr(longDescription),
-		Kind: core.StringPtr(kind),
-		ID: core.StringPtr(id),
-		ReportedBy: reportedBy,
+		LongDescription:  core.StringPtr(longDescription),
+		Kind:             core.StringPtr(kind),
+		ID:               core.StringPtr(id),
+		ReportedBy:       reportedBy,
 	}
 }
 
@@ -1674,16 +1676,16 @@ type CreateOccurrenceOptions struct {
 
 	ID *string `validate:"required"`
 
-	// The unique URL of the resource, image or the container, for which the `Occurrence` applies. For example,
+	// The unique URL of the resource, image or the container, for which the 'Occurrence' applies. For example,
 	// https://gcr.io/provider/image@sha256:foo. This field can be used as a filter in list requests.
 	ResourceURL *string
 
 	Remediation *string
 
-	// Output only. The time this `Occurrence` was created.
+	// Output only. The time this 'Occurrence' was created.
 	CreateTime *strfmt.DateTime
 
-	// Output only. The time this `Occurrence` was last updated.
+	// Output only. The time this 'Occurrence' was last updated.
 	UpdateTime *strfmt.DateTime
 
 	Context *Context
@@ -1715,21 +1717,21 @@ type CreateOccurrenceOptions struct {
 //  - CARD_CONFIGURED&#58; The note represents a card configured for a user account.
 //  - SECTION&#58; The note represents a section in a dashboard.
 const (
-	CreateOccurrenceOptionsKindCardConst = "CARD"
+	CreateOccurrenceOptionsKindCardConst           = "CARD"
 	CreateOccurrenceOptionsKindCardConfiguredConst = "CARD_CONFIGURED"
-	CreateOccurrenceOptionsKindFindingConst = "FINDING"
-	CreateOccurrenceOptionsKindKpiConst = "KPI"
-	CreateOccurrenceOptionsKindSectionConst = "SECTION"
+	CreateOccurrenceOptionsKindFindingConst        = "FINDING"
+	CreateOccurrenceOptionsKindKpiConst            = "KPI"
+	CreateOccurrenceOptionsKindSectionConst        = "SECTION"
 )
 
 // NewCreateOccurrenceOptions : Instantiate CreateOccurrenceOptions
 func (*FindingsV1) NewCreateOccurrenceOptions(accountID string, providerID string, noteName string, kind string, id string) *CreateOccurrenceOptions {
 	return &CreateOccurrenceOptions{
-		AccountID: core.StringPtr(accountID),
+		AccountID:  core.StringPtr(accountID),
 		ProviderID: core.StringPtr(providerID),
-		NoteName: core.StringPtr(noteName),
-		Kind: core.StringPtr(kind),
-		ID: core.StringPtr(id),
+		NoteName:   core.StringPtr(noteName),
+		Kind:       core.StringPtr(kind),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -1888,9 +1890,9 @@ type DeleteNoteOptions struct {
 // NewDeleteNoteOptions : Instantiate DeleteNoteOptions
 func (*FindingsV1) NewDeleteNoteOptions(accountID string, providerID string, noteID string) *DeleteNoteOptions {
 	return &DeleteNoteOptions{
-		AccountID: core.StringPtr(accountID),
+		AccountID:  core.StringPtr(accountID),
 		ProviderID: core.StringPtr(providerID),
-		NoteID: core.StringPtr(noteID),
+		NoteID:     core.StringPtr(noteID),
 	}
 }
 
@@ -1945,8 +1947,8 @@ type DeleteOccurrenceOptions struct {
 // NewDeleteOccurrenceOptions : Instantiate DeleteOccurrenceOptions
 func (*FindingsV1) NewDeleteOccurrenceOptions(accountID string, providerID string, occurrenceID string) *DeleteOccurrenceOptions {
 	return &DeleteOccurrenceOptions{
-		AccountID: core.StringPtr(accountID),
-		ProviderID: core.StringPtr(providerID),
+		AccountID:    core.StringPtr(accountID),
+		ProviderID:   core.StringPtr(providerID),
 		OccurrenceID: core.StringPtr(occurrenceID),
 	}
 }
@@ -2014,9 +2016,9 @@ type Finding struct {
 // - CRITICAL&#58; Critical Impact.
 const (
 	FindingSeverityCriticalConst = "CRITICAL"
-	FindingSeverityHighConst = "HIGH"
-	FindingSeverityLowConst = "LOW"
-	FindingSeverityMediumConst = "MEDIUM"
+	FindingSeverityHighConst     = "HIGH"
+	FindingSeverityLowConst      = "LOW"
+	FindingSeverityMediumConst   = "MEDIUM"
 )
 
 // Constants associated with the Finding.Certainty property.
@@ -2025,8 +2027,8 @@ const (
 // - MEDIUM&#58; Medium Certainty
 // - HIGH&#58; High Certainty.
 const (
-	FindingCertaintyHighConst = "HIGH"
-	FindingCertaintyLowConst = "LOW"
+	FindingCertaintyHighConst   = "HIGH"
+	FindingCertaintyLowConst    = "LOW"
 	FindingCertaintyMediumConst = "MEDIUM"
 )
 
@@ -2078,9 +2080,9 @@ type FindingType struct {
 // - CRITICAL&#58; Critical Impact.
 const (
 	FindingTypeSeverityCriticalConst = "CRITICAL"
-	FindingTypeSeverityHighConst = "HIGH"
-	FindingTypeSeverityLowConst = "LOW"
-	FindingTypeSeverityMediumConst = "MEDIUM"
+	FindingTypeSeverityHighConst     = "HIGH"
+	FindingTypeSeverityLowConst      = "LOW"
+	FindingTypeSeverityMediumConst   = "MEDIUM"
 )
 
 // NewFindingType : Instantiate FindingType (Generic Model Constructor)
@@ -2128,9 +2130,9 @@ type GetNoteOptions struct {
 // NewGetNoteOptions : Instantiate GetNoteOptions
 func (*FindingsV1) NewGetNoteOptions(accountID string, providerID string, noteID string) *GetNoteOptions {
 	return &GetNoteOptions{
-		AccountID: core.StringPtr(accountID),
+		AccountID:  core.StringPtr(accountID),
 		ProviderID: core.StringPtr(providerID),
-		NoteID: core.StringPtr(noteID),
+		NoteID:     core.StringPtr(noteID),
 	}
 }
 
@@ -2185,8 +2187,8 @@ type GetOccurrenceNoteOptions struct {
 // NewGetOccurrenceNoteOptions : Instantiate GetOccurrenceNoteOptions
 func (*FindingsV1) NewGetOccurrenceNoteOptions(accountID string, providerID string, occurrenceID string) *GetOccurrenceNoteOptions {
 	return &GetOccurrenceNoteOptions{
-		AccountID: core.StringPtr(accountID),
-		ProviderID: core.StringPtr(providerID),
+		AccountID:    core.StringPtr(accountID),
+		ProviderID:   core.StringPtr(providerID),
 		OccurrenceID: core.StringPtr(occurrenceID),
 	}
 }
@@ -2242,8 +2244,8 @@ type GetOccurrenceOptions struct {
 // NewGetOccurrenceOptions : Instantiate GetOccurrenceOptions
 func (*FindingsV1) NewGetOccurrenceOptions(accountID string, providerID string, occurrenceID string) *GetOccurrenceOptions {
 	return &GetOccurrenceOptions{
-		AccountID: core.StringPtr(accountID),
-		ProviderID: core.StringPtr(providerID),
+		AccountID:    core.StringPtr(accountID),
+		ProviderID:   core.StringPtr(providerID),
 		OccurrenceID: core.StringPtr(occurrenceID),
 	}
 }
@@ -2374,9 +2376,9 @@ type ListNoteOccurrencesOptions struct {
 // NewListNoteOccurrencesOptions : Instantiate ListNoteOccurrencesOptions
 func (*FindingsV1) NewListNoteOccurrencesOptions(accountID string, providerID string, noteID string) *ListNoteOccurrencesOptions {
 	return &ListNoteOccurrencesOptions{
-		AccountID: core.StringPtr(accountID),
+		AccountID:  core.StringPtr(accountID),
 		ProviderID: core.StringPtr(providerID),
-		NoteID: core.StringPtr(noteID),
+		NoteID:     core.StringPtr(noteID),
 	}
 }
 
@@ -2446,7 +2448,7 @@ type ListNotesOptions struct {
 // NewListNotesOptions : Instantiate ListNotesOptions
 func (*FindingsV1) NewListNotesOptions(accountID string, providerID string) *ListNotesOptions {
 	return &ListNotesOptions{
-		AccountID: core.StringPtr(accountID),
+		AccountID:  core.StringPtr(accountID),
 		ProviderID: core.StringPtr(providerID),
 	}
 }
@@ -2511,7 +2513,7 @@ type ListOccurrencesOptions struct {
 // NewListOccurrencesOptions : Instantiate ListOccurrencesOptions
 func (*FindingsV1) NewListOccurrencesOptions(accountID string, providerID string) *ListOccurrencesOptions {
 	return &ListOccurrencesOptions{
-		AccountID: core.StringPtr(accountID),
+		AccountID:  core.StringPtr(accountID),
 		ProviderID: core.StringPtr(providerID),
 	}
 }
@@ -2757,7 +2759,7 @@ type Reporter struct {
 // NewReporter : Instantiate Reporter (Generic Model Constructor)
 func (*FindingsV1) NewReporter(id string, title string) (model *Reporter, err error) {
 	model = &Reporter{
-		ID: core.StringPtr(id),
+		ID:    core.StringPtr(id),
 		Title: core.StringPtr(title),
 	}
 	err = core.ValidateStruct(model, "required parameters")
@@ -2921,24 +2923,24 @@ type UpdateNoteOptions struct {
 //  - CARD_CONFIGURED&#58; The note represents a card configured for a user account.
 //  - SECTION&#58; The note represents a section in a dashboard.
 const (
-	UpdateNoteOptionsKindCardConst = "CARD"
+	UpdateNoteOptionsKindCardConst           = "CARD"
 	UpdateNoteOptionsKindCardConfiguredConst = "CARD_CONFIGURED"
-	UpdateNoteOptionsKindFindingConst = "FINDING"
-	UpdateNoteOptionsKindKpiConst = "KPI"
-	UpdateNoteOptionsKindSectionConst = "SECTION"
+	UpdateNoteOptionsKindFindingConst        = "FINDING"
+	UpdateNoteOptionsKindKpiConst            = "KPI"
+	UpdateNoteOptionsKindSectionConst        = "SECTION"
 )
 
 // NewUpdateNoteOptions : Instantiate UpdateNoteOptions
 func (*FindingsV1) NewUpdateNoteOptions(accountID string, providerID string, noteID string, shortDescription string, longDescription string, kind string, id string, reportedBy *Reporter) *UpdateNoteOptions {
 	return &UpdateNoteOptions{
-		AccountID: core.StringPtr(accountID),
-		ProviderID: core.StringPtr(providerID),
-		NoteID: core.StringPtr(noteID),
+		AccountID:        core.StringPtr(accountID),
+		ProviderID:       core.StringPtr(providerID),
+		NoteID:           core.StringPtr(noteID),
 		ShortDescription: core.StringPtr(shortDescription),
-		LongDescription: core.StringPtr(longDescription),
-		Kind: core.StringPtr(kind),
-		ID: core.StringPtr(id),
-		ReportedBy: reportedBy,
+		LongDescription:  core.StringPtr(longDescription),
+		Kind:             core.StringPtr(kind),
+		ID:               core.StringPtr(id),
+		ReportedBy:       reportedBy,
 	}
 }
 
@@ -3081,16 +3083,16 @@ type UpdateOccurrenceOptions struct {
 
 	ID *string `validate:"required"`
 
-	// The unique URL of the resource, image or the container, for which the `Occurrence` applies. For example,
+	// The unique URL of the resource, image or the container, for which the 'Occurrence' applies. For example,
 	// https://gcr.io/provider/image@sha256:foo. This field can be used as a filter in list requests.
 	ResourceURL *string
 
 	Remediation *string
 
-	// Output only. The time this `Occurrence` was created.
+	// Output only. The time this 'Occurrence' was created.
 	CreateTime *strfmt.DateTime
 
-	// Output only. The time this `Occurrence` was last updated.
+	// Output only. The time this 'Occurrence' was last updated.
 	UpdateTime *strfmt.DateTime
 
 	Context *Context
@@ -3119,22 +3121,22 @@ type UpdateOccurrenceOptions struct {
 //  - CARD_CONFIGURED&#58; The note represents a card configured for a user account.
 //  - SECTION&#58; The note represents a section in a dashboard.
 const (
-	UpdateOccurrenceOptionsKindCardConst = "CARD"
+	UpdateOccurrenceOptionsKindCardConst           = "CARD"
 	UpdateOccurrenceOptionsKindCardConfiguredConst = "CARD_CONFIGURED"
-	UpdateOccurrenceOptionsKindFindingConst = "FINDING"
-	UpdateOccurrenceOptionsKindKpiConst = "KPI"
-	UpdateOccurrenceOptionsKindSectionConst = "SECTION"
+	UpdateOccurrenceOptionsKindFindingConst        = "FINDING"
+	UpdateOccurrenceOptionsKindKpiConst            = "KPI"
+	UpdateOccurrenceOptionsKindSectionConst        = "SECTION"
 )
 
 // NewUpdateOccurrenceOptions : Instantiate UpdateOccurrenceOptions
 func (*FindingsV1) NewUpdateOccurrenceOptions(accountID string, providerID string, occurrenceID string, noteName string, kind string, id string) *UpdateOccurrenceOptions {
 	return &UpdateOccurrenceOptions{
-		AccountID: core.StringPtr(accountID),
-		ProviderID: core.StringPtr(providerID),
+		AccountID:    core.StringPtr(accountID),
+		ProviderID:   core.StringPtr(providerID),
 		OccurrenceID: core.StringPtr(occurrenceID),
-		NoteName: core.StringPtr(noteName),
-		Kind: core.StringPtr(kind),
-		ID: core.StringPtr(id),
+		NoteName:     core.StringPtr(noteName),
+		Kind:         core.StringPtr(kind),
+		ID:           core.StringPtr(id),
 	}
 }
 
@@ -3259,6 +3261,7 @@ type ValueType struct {
 const (
 	ValueTypeKindKpiConst = "KPI"
 )
+
 func (*ValueType) isaValueType() bool {
 	return true
 }
@@ -3435,21 +3438,21 @@ type APINote struct {
 //  - CARD_CONFIGURED&#58; The note represents a card configured for a user account.
 //  - SECTION&#58; The note represents a section in a dashboard.
 const (
-	APINoteKindCardConst = "CARD"
+	APINoteKindCardConst           = "CARD"
 	APINoteKindCardConfiguredConst = "CARD_CONFIGURED"
-	APINoteKindFindingConst = "FINDING"
-	APINoteKindKpiConst = "KPI"
-	APINoteKindSectionConst = "SECTION"
+	APINoteKindFindingConst        = "FINDING"
+	APINoteKindKpiConst            = "KPI"
+	APINoteKindSectionConst        = "SECTION"
 )
 
 // NewAPINote : Instantiate APINote (Generic Model Constructor)
 func (*FindingsV1) NewAPINote(shortDescription string, longDescription string, kind string, id string, reportedBy *Reporter) (model *APINote, err error) {
 	model = &APINote{
 		ShortDescription: core.StringPtr(shortDescription),
-		LongDescription: core.StringPtr(longDescription),
-		Kind: core.StringPtr(kind),
-		ID: core.StringPtr(id),
-		ReportedBy: reportedBy,
+		LongDescription:  core.StringPtr(longDescription),
+		Kind:             core.StringPtr(kind),
+		ID:               core.StringPtr(id),
+		ReportedBy:       reportedBy,
 	}
 	err = core.ValidateStruct(model, "required parameters")
 	return
@@ -3540,9 +3543,9 @@ func UnmarshalAPINoteRelatedURL(m map[string]json.RawMessage, result interface{}
 	return
 }
 
-// APIOccurrence : `Occurrence` includes information about analysis occurrences for an image.
+// APIOccurrence : 'Occurrence' includes information about analysis occurrences for an image.
 type APIOccurrence struct {
-	// The unique URL of the resource, image or the container, for which the `Occurrence` applies. For example,
+	// The unique URL of the resource, image or the container, for which the 'Occurrence' applies. For example,
 	// https://gcr.io/provider/image@sha256:foo. This field can be used as a filter in list requests.
 	ResourceURL *string `json:"resource_url,omitempty"`
 
@@ -3560,10 +3563,10 @@ type APIOccurrence struct {
 
 	Remediation *string `json:"remediation,omitempty"`
 
-	// Output only. The time this `Occurrence` was created.
+	// Output only. The time this 'Occurrence' was created.
 	CreateTime *strfmt.DateTime `json:"create_time,omitempty"`
 
-	// Output only. The time this `Occurrence` was last updated.
+	// Output only. The time this 'Occurrence' was last updated.
 	UpdateTime *strfmt.DateTime `json:"update_time,omitempty"`
 
 	ID *string `json:"id" validate:"required"`
@@ -3588,19 +3591,19 @@ type APIOccurrence struct {
 //  - CARD_CONFIGURED&#58; The note represents a card configured for a user account.
 //  - SECTION&#58; The note represents a section in a dashboard.
 const (
-	APIOccurrenceKindCardConst = "CARD"
+	APIOccurrenceKindCardConst           = "CARD"
 	APIOccurrenceKindCardConfiguredConst = "CARD_CONFIGURED"
-	APIOccurrenceKindFindingConst = "FINDING"
-	APIOccurrenceKindKpiConst = "KPI"
-	APIOccurrenceKindSectionConst = "SECTION"
+	APIOccurrenceKindFindingConst        = "FINDING"
+	APIOccurrenceKindKpiConst            = "KPI"
+	APIOccurrenceKindSectionConst        = "SECTION"
 )
 
 // NewAPIOccurrence : Instantiate APIOccurrence (Generic Model Constructor)
 func (*FindingsV1) NewAPIOccurrence(noteName string, kind string, id string) (model *APIOccurrence, err error) {
 	model = &APIOccurrence{
 		NoteName: core.StringPtr(noteName),
-		Kind: core.StringPtr(kind),
-		ID: core.StringPtr(id),
+		Kind:     core.StringPtr(kind),
+		ID:       core.StringPtr(id),
 	}
 	err = core.ValidateStruct(model, "required parameters")
 	return
@@ -3704,16 +3707,16 @@ type CardElementBreakdownCardElement struct {
 // - BREAKDOWN&#58; Breakdown of numeric values
 // - TIME_SERIES&#58; Time-series of numeric values.
 const (
-	CardElementBreakdownCardElementKindBreakdownConst = "BREAKDOWN"
-	CardElementBreakdownCardElementKindNumericConst = "NUMERIC"
+	CardElementBreakdownCardElementKindBreakdownConst  = "BREAKDOWN"
+	CardElementBreakdownCardElementKindNumericConst    = "NUMERIC"
 	CardElementBreakdownCardElementKindTimeSeriesConst = "TIME_SERIES"
 )
 
 // NewCardElementBreakdownCardElement : Instantiate CardElementBreakdownCardElement (Generic Model Constructor)
 func (*FindingsV1) NewCardElementBreakdownCardElement(text string, kind string, valueTypes []ValueTypeIntf) (model *CardElementBreakdownCardElement, err error) {
 	model = &CardElementBreakdownCardElement{
-		Text: core.StringPtr(text),
-		Kind: core.StringPtr(kind),
+		Text:       core.StringPtr(text),
+		Kind:       core.StringPtr(kind),
 		ValueTypes: valueTypes,
 	}
 	err = core.ValidateStruct(model, "required parameters")
@@ -3771,16 +3774,16 @@ type CardElementNumericCardElement struct {
 // - BREAKDOWN&#58; Breakdown of numeric values
 // - TIME_SERIES&#58; Time-series of numeric values.
 const (
-	CardElementNumericCardElementKindBreakdownConst = "BREAKDOWN"
-	CardElementNumericCardElementKindNumericConst = "NUMERIC"
+	CardElementNumericCardElementKindBreakdownConst  = "BREAKDOWN"
+	CardElementNumericCardElementKindNumericConst    = "NUMERIC"
 	CardElementNumericCardElementKindTimeSeriesConst = "TIME_SERIES"
 )
 
 // NewCardElementNumericCardElement : Instantiate CardElementNumericCardElement (Generic Model Constructor)
 func (*FindingsV1) NewCardElementNumericCardElement(text string, kind string, valueType *NumericCardElementValueType) (model *CardElementNumericCardElement, err error) {
 	model = &CardElementNumericCardElement{
-		Text: core.StringPtr(text),
-		Kind: core.StringPtr(kind),
+		Text:      core.StringPtr(text),
+		Kind:      core.StringPtr(kind),
 		ValueType: valueType,
 	}
 	err = core.ValidateStruct(model, "required parameters")
@@ -3842,16 +3845,16 @@ type CardElementTimeSeriesCardElement struct {
 // - BREAKDOWN&#58; Breakdown of numeric values
 // - TIME_SERIES&#58; Time-series of numeric values.
 const (
-	CardElementTimeSeriesCardElementKindBreakdownConst = "BREAKDOWN"
-	CardElementTimeSeriesCardElementKindNumericConst = "NUMERIC"
+	CardElementTimeSeriesCardElementKindBreakdownConst  = "BREAKDOWN"
+	CardElementTimeSeriesCardElementKindNumericConst    = "NUMERIC"
 	CardElementTimeSeriesCardElementKindTimeSeriesConst = "TIME_SERIES"
 )
 
 // NewCardElementTimeSeriesCardElement : Instantiate CardElementTimeSeriesCardElement (Generic Model Constructor)
 func (*FindingsV1) NewCardElementTimeSeriesCardElement(text string, kind string, valueTypes []ValueTypeIntf) (model *CardElementTimeSeriesCardElement, err error) {
 	model = &CardElementTimeSeriesCardElement{
-		Text: core.StringPtr(text),
-		Kind: core.StringPtr(kind),
+		Text:       core.StringPtr(text),
+		Kind:       core.StringPtr(kind),
 		ValueTypes: valueTypes,
 	}
 	err = core.ValidateStruct(model, "required parameters")
@@ -3962,9 +3965,9 @@ const (
 // NewValueTypeFindingCountValueType : Instantiate ValueTypeFindingCountValueType (Generic Model Constructor)
 func (*FindingsV1) NewValueTypeFindingCountValueType(kind string, findingNoteNames []string, text string) (model *ValueTypeFindingCountValueType, err error) {
 	model = &ValueTypeFindingCountValueType{
-		Kind: core.StringPtr(kind),
+		Kind:             core.StringPtr(kind),
 		FindingNoteNames: findingNoteNames,
-		Text: core.StringPtr(text),
+		Text:             core.StringPtr(text),
 	}
 	err = core.ValidateStruct(model, "required parameters")
 	return
@@ -4017,9 +4020,9 @@ const (
 // NewValueTypeKpiValueType : Instantiate ValueTypeKpiValueType (Generic Model Constructor)
 func (*FindingsV1) NewValueTypeKpiValueType(kind string, kpiNoteName string, text string) (model *ValueTypeKpiValueType, err error) {
 	model = &ValueTypeKpiValueType{
-		Kind: core.StringPtr(kind),
+		Kind:        core.StringPtr(kind),
 		KpiNoteName: core.StringPtr(kpiNoteName),
-		Text: core.StringPtr(text),
+		Text:        core.StringPtr(text),
 	}
 	err = core.ValidateStruct(model, "required parameters")
 	return

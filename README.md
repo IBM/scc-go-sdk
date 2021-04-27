@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/github/ibm-cloud-security/scc-go-sdk)](https://travis-ci.com/github/ibm-cloud-security/scc-go-sdk)
+[![Build Status](https://travis-ci.com/ibm-cloud-security/scc-go-sdk.svg?branch=main)](https://travis-ci.com/github/ibm-cloud-security/scc-go-sdk)
 [![Release](https://img.shields.io/github/v/release/ibm-cloud-security/scc-go-sdk)](https://img.shields.io/github/v/release/ibm-cloud-security/scc-go-sdk)
 [![Go Reference](https://pkg.go.dev/badge/github.com/ibm-cloud-security/scc-go-sdk.svg)](https://pkg.go.dev/github.com/IBM/platform-services-go-sdk)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/ibm-cloud-security/scc-go-sdk)

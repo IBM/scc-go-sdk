@@ -29,9 +29,6 @@ script:
 - go test ./...
 - go test `go list ./...` -tags integration
 
-#Integration with appscan and other sec scans will be done later
-#- if [ "${TRAVIS_TAG}" = "${TRAVIS_BRANCH}" ]; then ./appscan/ASOC.sh; fi
-
 before_deploy:
 - pip install --user bumpversion
 - npm install @semantic-release/changelog
@@ -41,5 +38,7 @@ before_deploy:
 
 deploy:
 - provider: script
+  on:
+    branch: main
   skip_cleanup: true
   script: npx semantic-release --repository-url https://${GH_TOKEN}@github.com/ibm-cloud-security/scc-go-sdk --debug

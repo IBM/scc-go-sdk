@@ -1,3 +1,13 @@
+## [0.0.3](https://github.com/ibm-cloud-security/scc-go-sdk/compare/v0.0.2...v0.0.3) (2021-04-28)
+
+
+### Bug Fixes
+
+* **IBM Cloud SCC:** auto mated versioning ([c8cdb8a](https://github.com/ibm-cloud-security/scc-go-sdk/commit/c8cdb8af2b9bf1b5e95bc3ee90994df6ec50c135))
+* **IBM Cloud SCC:** automated versioning ([1e7b82f](https://github.com/ibm-cloud-security/scc-go-sdk/commit/1e7b82fb3a83c6c5ecd4bbcfd1bc5cc18578064a))
+* **IBM Cloud SCC:** automated versioning ([c471d0a](https://github.com/ibm-cloud-security/scc-go-sdk/commit/c471d0aa87ff97d8d42df40dac35bb2436f96c69))
+* **IBM Cloud SCC:** first release ([13f8946](https://github.com/ibm-cloud-security/scc-go-sdk/commit/13f8946cc8809edf70fe60f6d16592570bd3367c))
+
 ## [0.0.2](https://github.com/ibm-cloud-security/scc-go-sdk/compare/v0.0.1...v0.0.2) (2021-04-28)
 
 

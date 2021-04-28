@@ -20,11 +20,7 @@ before_install:
 - sudo apt-get install python
 
 install:
-- if [ "${TRAVIS_TAG}" = "${TRAVIS_BRANCH}" ]; then cd appscan; make asoc-tool; cd ../; fi
 - curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b $(go env GOPATH)/bin v1.21.0
-
-before_script:
-- if [ "${TRAVIS_TAG}" = "${TRAVIS_BRANCH}" ]; then chmod a+x ./appscan/ASOC.sh; fi
 
 script:
 # This step is required since we use a go module

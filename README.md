@@ -6,7 +6,7 @@
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 
-# IBM Cloud Security & Compliance Center Go SDK Version 0.0.1
+# IBM Cloud Security & Compliance Center Go SDK Version 0.0.2
 
 Go client library to interact with various
 [IBM Cloud Security & Compliance Center APIs](https://cloud.ibm.com/apidocs/security-and-compliance-center).
@@ -58,7 +58,7 @@ Service Name | Package name
 * Go version 1.12 or above.
 
 ## Installation
-The current version of this SDK: 0.0.1
+The current version of this SDK: 0.0.2
 
 ### Go modules  
 If your application uses Go modules for dependency management (recommended), just add an import for each service 

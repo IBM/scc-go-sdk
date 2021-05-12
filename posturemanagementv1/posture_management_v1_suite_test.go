@@ -25,5 +25,5 @@ import (
 
 func TestPostureManagementV1(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "PostureManagementV1 Suite")
+	RunSpecs(t, "Jason test")
 }

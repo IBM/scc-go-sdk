@@ -35,9 +35,9 @@ import (
  * The integration test will automatically skip tests if the required config file is not available.
  */
 
-var _ = Describe(`posturemanagementv1 Integration Tests`, func() {
+var _ = Describe(`Jason test`, func() {
 
-	const externalConfigFile = "../posturemanagement_v1.env"
+	const externalConfigFile = "../posturemanagementv1.env"
 
 	var (
 		err                      error
@@ -95,9 +95,9 @@ var _ = Describe(`posturemanagementv1 Integration Tests`, func() {
 		It(`ListScans(listScansOptions *ListScansOptions)`, func() {
 
 			listScansOptions := &posturemanagementv1.ListScansOptions{
-				AccountID: core.StringPtr("testString"),
+				AccountID:     core.StringPtr("testString"),
 				TransactionID: core.StringPtr("testString"),
-				Name: core.StringPtr("testString"),
+				Name:          core.StringPtr("testString"),
 			}
 
 			channelsList, response, err := postureManagementService.ListAllChannels(listScansOptions)
@@ -109,163 +109,6 @@ var _ = Describe(`posturemanagementv1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`Create Collector - create collector`, func() {
-		BeforeEach(func() {
-			shouldSkipTest()
-		})
-		It(`CreateCollector(createCollectorOptions *CreateCollectorOptions)`, func() {
-
-			createCollectorOptions := &posturemanagementv1.CreateCollectorOptions{
-				AccountID: core.StringPtr("testString"),
-				TransactionID: []string{"testString"},
-				CollectorDescription:
-			}
-
-			channelInfo, response, err := postureManagementService.CreateNotificationChannel(createNotificationChannelOptions)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(channelInfo).ToNot(BeNil())
-
-		})
-	})
-
-	Describe(`GetNotificationChannel - get the details of a specific channel`, func() {
-		BeforeEach(func() {
-			shouldSkipTest()
-		})
-		It(`GetNotificationChannel(getNotificationChannelOptions *GetNotificationChannelOptions)`, func() {
-
-			getNotificationChannelOptions := &posturemanagementv1.GetNotificationChannelOptions{
-				AccountID: core.StringPtr("testString"),
-				ChannelID: core.StringPtr("testString"),
-				TransactionID: core.StringPtr("testString"),
-			}
-
-			channelGet, response, err := postureManagementService.GetNotificationChannel(getNotificationChannelOptions)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(channelGet).ToNot(BeNil())
-
-		})
-	})
-
-	Describe(`UpdateNotificationChannel - update notification channel`, func() {
-		BeforeEach(func() {
-			shouldSkipTest()
-		})
-		It(`UpdateNotificationChannel(updateNotificationChannelOptions *UpdateNotificationChannelOptions)`, func() {
-
-			notificationChannelAlertSourceItemModel := &posturemanagementv1.NotificationChannelAlertSourceItem{
-				ProviderName: core.StringPtr("testString"),
-				FindingTypes: []string{"testString"},
-			}
-
-			updateNotificationChannelOptions := &posturemanagementv1.UpdateNotificationChannelOptions{
-				AccountID: core.StringPtr("testString"),
-				ChannelID: core.StringPtr("testString"),
-				Name: core.StringPtr("testString"),
-				Type: core.StringPtr("Webhook"),
-				Endpoint: core.StringPtr("testString"),
-				Description: core.StringPtr("testString"),
-				Severity: []string{"low"},
-				Enabled: core.BoolPtr(true),
-				AlertSource: []posturemanagementv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel},
-				TransactionID: core.StringPtr("testString"),
-			}
-
-			channelInfo, response, err := postureManagementService.UpdateNotificationChannel(updateNotificationChannelOptions)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(channelInfo).ToNot(BeNil())
-
-		})
-	})
-
-	Describe(`TestNotificationChannel - test notification channel`, func() {
-		BeforeEach(func() {
-			shouldSkipTest()
-		})
-		It(`TestNotificationChannel(testNotificationChannelOptions *TestNotificationChannelOptions)`, func() {
-
-			testNotificationChannelOptions := &posturemanagementv1.TestNotificationChannelOptions{
-				AccountID: core.StringPtr("testString"),
-				ChannelID: core.StringPtr("testString"),
-				TransactionID: core.StringPtr("testString"),
-			}
-
-			testChannel, response, err := postureManagementService.TestNotificationChannel(testNotificationChannelOptions)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(testChannel).ToNot(BeNil())
-
-		})
-	})
-
-	Describe(`GetPublicKey - fetch notifications public key`, func() {
-		BeforeEach(func() {
-			shouldSkipTest()
-		})
-		It(`GetPublicKey(getPublicKeyOptions *GetPublicKeyOptions)`, func() {
-
-			getPublicKeyOptions := &posturemanagementv1.GetPublicKeyOptions{
-				AccountID: core.StringPtr("testString"),
-				TransactionID: core.StringPtr("testString"),
-			}
-
-			publicKeyGet, response, err := postureManagementService.GetPublicKey(getPublicKeyOptions)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(publicKeyGet).ToNot(BeNil())
-
-		})
-	})
-
-	Describe(`DeleteNotificationChannels - bulk delete of channels`, func() {
-		BeforeEach(func() {
-			shouldSkipTest()
-		})
-		It(`DeleteNotificationChannels(deleteNotificationChannelsOptions *DeleteNotificationChannelsOptions)`, func() {
-
-			deleteNotificationChannelsOptions := &posturemanagementv1.DeleteNotificationChannelsOptions{
-				AccountID: core.StringPtr("testString"),
-				Body: []string{"testString"},
-				TransactionID: core.StringPtr("testString"),
-			}
-
-			channelsDelete, response, err := postureManagementService.DeleteNotificationChannels(deleteNotificationChannelsOptions)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(channelsDelete).ToNot(BeNil())
-
-		})
-	})
-
-	Describe(`DeleteNotificationChannel - delete the details of a specific channel`, func() {
-		BeforeEach(func() {
-			shouldSkipTest()
-		})
-		It(`DeleteNotificationChannel(deleteNotificationChannelOptions *DeleteNotificationChannelOptions)`, func() {
-
-			deleteNotificationChannelOptions := &posturemanagementv1.DeleteNotificationChannelOptions{
-				AccountID: core.StringPtr("testString"),
-				ChannelID: core.StringPtr("testString"),
-				TransactionID: core.StringPtr("testString"),
-			}
-
-			channelDelete, response, err := postureManagementService.DeleteNotificationChannel(deleteNotificationChannelOptions)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(channelDelete).ToNot(BeNil())
-
-		})
-	})
 })
 
 //

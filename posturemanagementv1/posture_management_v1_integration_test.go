@@ -40,10 +40,10 @@ var _ = Describe(`posturemanagementv1 Integration Tests`, func() {
 	const externalConfigFile = "../posturemanagement_v1.env"
 
 	var (
-		err          error
+		err                      error
 		postureManagementService *posturemanagementv1.PostureManagementV1
-		serviceURL   string
-		config       map[string]string
+		serviceURL               string
+		config                   map[string]string
 	)
 
 	var shouldSkipTest = func() {
@@ -78,30 +78,29 @@ var _ = Describe(`posturemanagementv1 Integration Tests`, func() {
 		})
 		It("Successfully construct the service client instance", func() {
 
-			notificationsServiceOptions := &posturemanagementv1.NotificationsV1Options{}
+			notificationsServiceOptions := &posturemanagementv1.PostureManagementV1Options{}
 
-			notificationsService, err = posturemanagementv1.NewNotificationsV1UsingExternalConfig(notificationsServiceOptions)
+			postureManagementService, err = posturemanagementv1.NewPostureManagementV1UsingExternalConfig(notificationsServiceOptions)
 
 			Expect(err).To(BeNil())
-			Expect(notificationsService).ToNot(BeNil())
-			Expect(notificationsService.Service.Options.URL).To(Equal(serviceURL))
+			Expect(postureManagementService).ToNot(BeNil())
+			Expect(postureManagementService.Service.Options.URL).To(Equal(serviceURL))
 		})
 	})
 
-	Describe(`ListAllChannels - list all channels`, func() {
+	Describe(`List Scans - list all scans`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
-		It(`ListAllChannels(listAllChannelsOptions *ListAllChannelsOptions)`, func() {
+		It(`ListScans(listScansOptions *ListScansOptions)`, func() {
 
-			listAllChannelsOptions := &posturemanagementv1.ListAllChannelsOptions{
+			listScansOptions := &posturemanagementv1.ListScansOptions{
 				AccountID: core.StringPtr("testString"),
 				TransactionID: core.StringPtr("testString"),
-				Limit: core.Int64Ptr(int64(38)),
-				Skip: core.Int64Ptr(int64(38)),
+				Name: core.StringPtr("testString"),
 			}
 
-			channelsList, response, err := notificationsService.ListAllChannels(listAllChannelsOptions)
+			channelsList, response, err := postureManagementService.ListAllChannels(listScansOptions)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
@@ -110,30 +109,19 @@ var _ = Describe(`posturemanagementv1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`CreateNotificationChannel - create notification channel`, func() {
+	Describe(`Create Collector - create collector`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
-		It(`CreateNotificationChannel(createNotificationChannelOptions *CreateNotificationChannelOptions)`, func() {
+		It(`CreateCollector(createCollectorOptions *CreateCollectorOptions)`, func() {
 
-			notificationChannelAlertSourceItemModel := &posturemanagementv1.NotificationChannelAlertSourceItem{
-				ProviderName: core.StringPtr("testString"),
-				FindingTypes: []string{"testString"},
-			}
-
-			createNotificationChannelOptions := &posturemanagementv1.CreateNotificationChannelOptions{
+			createCollectorOptions := &posturemanagementv1.CreateCollectorOptions{
 				AccountID: core.StringPtr("testString"),
-				Name: core.StringPtr("testString"),
-				Type: core.StringPtr("Webhook"),
-				Endpoint: core.StringPtr("testString"),
-				Description: core.StringPtr("testString"),
-				Severity: []string{"low"},
-				Enabled: core.BoolPtr(true),
-				AlertSource: []posturemanagementv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel},
-				TransactionID: core.StringPtr("testString"),
+				TransactionID: []string{"testString"},
+				CollectorDescription:
 			}
 
-			channelInfo, response, err := notificationsService.CreateNotificationChannel(createNotificationChannelOptions)
+			channelInfo, response, err := postureManagementService.CreateNotificationChannel(createNotificationChannelOptions)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
@@ -154,7 +142,7 @@ var _ = Describe(`posturemanagementv1 Integration Tests`, func() {
 				TransactionID: core.StringPtr("testString"),
 			}
 
-			channelGet, response, err := notificationsService.GetNotificationChannel(getNotificationChannelOptions)
+			channelGet, response, err := postureManagementService.GetNotificationChannel(getNotificationChannelOptions)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
@@ -187,7 +175,7 @@ var _ = Describe(`posturemanagementv1 Integration Tests`, func() {
 				TransactionID: core.StringPtr("testString"),
 			}
 
-			channelInfo, response, err := notificationsService.UpdateNotificationChannel(updateNotificationChannelOptions)
+			channelInfo, response, err := postureManagementService.UpdateNotificationChannel(updateNotificationChannelOptions)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
@@ -208,7 +196,7 @@ var _ = Describe(`posturemanagementv1 Integration Tests`, func() {
 				TransactionID: core.StringPtr("testString"),
 			}
 
-			testChannel, response, err := notificationsService.TestNotificationChannel(testNotificationChannelOptions)
+			testChannel, response, err := postureManagementService.TestNotificationChannel(testNotificationChannelOptions)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
@@ -228,7 +216,7 @@ var _ = Describe(`posturemanagementv1 Integration Tests`, func() {
 				TransactionID: core.StringPtr("testString"),
 			}
 
-			publicKeyGet, response, err := notificationsService.GetPublicKey(getPublicKeyOptions)
+			publicKeyGet, response, err := postureManagementService.GetPublicKey(getPublicKeyOptions)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
@@ -249,7 +237,7 @@ var _ = Describe(`posturemanagementv1 Integration Tests`, func() {
 				TransactionID: core.StringPtr("testString"),
 			}
 
-			channelsDelete, response, err := notificationsService.DeleteNotificationChannels(deleteNotificationChannelsOptions)
+			channelsDelete, response, err := postureManagementService.DeleteNotificationChannels(deleteNotificationChannelsOptions)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
@@ -270,7 +258,7 @@ var _ = Describe(`posturemanagementv1 Integration Tests`, func() {
 				TransactionID: core.StringPtr("testString"),
 			}
 
-			channelDelete, response, err := notificationsService.DeleteNotificationChannel(deleteNotificationChannelOptions)
+			channelDelete, response, err := postureManagementService.DeleteNotificationChannel(deleteNotificationChannelOptions)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))

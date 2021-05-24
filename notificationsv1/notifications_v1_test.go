@@ -33,7 +33,7 @@ import (
 	"time"
 )
 
-var _ = Describe(`NotificationsV1`, func() {
+var _ = XDescribe(`NotificationsV1`, func() {
 	var testServer *httptest.Server
 	Describe(`Service constructor tests`, func() {
 		It(`Instantiate service client`, func() {

@@ -34,7 +34,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe(`PostureManagementV1`, func() {
+var _ = XDescribe(`PostureManagementV1`, func() {
 	var testServer *httptest.Server
 	Describe(`Service constructor tests`, func() {
 		It(`Instantiate service client`, func() {

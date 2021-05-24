@@ -31,8 +31,8 @@ import (
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	common "github.com/IBM/scc-go-sdk/common"
 	"github.com/go-openapi/strfmt"
+	common "github.com/ibm-cloud-security/scc-go-sdk/common"
 )
 
 // PostureManagementV1 : With IBM Cloud® Security and Compliance Center, you can embed checks into your every day

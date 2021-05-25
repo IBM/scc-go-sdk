@@ -300,12 +300,6 @@ func (findings *FindingsV1) CreateNoteWithContext(ctx context.Context, createNot
 	if createNoteOptions.ExpirationTime != nil {
 		body["expiration_time"] = createNoteOptions.ExpirationTime
 	}
-	if createNoteOptions.CreateTime != nil {
-		body["create_time"] = createNoteOptions.CreateTime
-	}
-	if createNoteOptions.UpdateTime != nil {
-		body["update_time"] = createNoteOptions.UpdateTime
-	}
 	if createNoteOptions.Shared != nil {
 		body["shared"] = createNoteOptions.Shared
 	}
@@ -547,12 +541,6 @@ func (findings *FindingsV1) UpdateNoteWithContext(ctx context.Context, updateNot
 	if updateNoteOptions.ExpirationTime != nil {
 		body["expiration_time"] = updateNoteOptions.ExpirationTime
 	}
-	if updateNoteOptions.CreateTime != nil {
-		body["create_time"] = updateNoteOptions.CreateTime
-	}
-	if updateNoteOptions.UpdateTime != nil {
-		body["update_time"] = updateNoteOptions.UpdateTime
-	}
 	if updateNoteOptions.Shared != nil {
 		body["shared"] = updateNoteOptions.Shared
 	}
@@ -772,12 +760,6 @@ func (findings *FindingsV1) CreateOccurrenceWithContext(ctx context.Context, cre
 	}
 	if createOccurrenceOptions.Remediation != nil {
 		body["remediation"] = createOccurrenceOptions.Remediation
-	}
-	if createOccurrenceOptions.CreateTime != nil {
-		body["create_time"] = createOccurrenceOptions.CreateTime
-	}
-	if createOccurrenceOptions.UpdateTime != nil {
-		body["update_time"] = createOccurrenceOptions.UpdateTime
 	}
 	if createOccurrenceOptions.Context != nil {
 		body["context"] = createOccurrenceOptions.Context
@@ -1081,12 +1063,6 @@ func (findings *FindingsV1) UpdateOccurrenceWithContext(ctx context.Context, upd
 	}
 	if updateOccurrenceOptions.Remediation != nil {
 		body["remediation"] = updateOccurrenceOptions.Remediation
-	}
-	if updateOccurrenceOptions.CreateTime != nil {
-		body["create_time"] = updateOccurrenceOptions.CreateTime
-	}
-	if updateOccurrenceOptions.UpdateTime != nil {
-		body["update_time"] = updateOccurrenceOptions.UpdateTime
 	}
 	if updateOccurrenceOptions.Context != nil {
 		body["context"] = updateOccurrenceOptions.Context
@@ -1511,21 +1487,17 @@ type CreateNoteOptions struct {
 	//  - SECTION&#58; The note represents a section in a dashboard.
 	Kind *string `validate:"required"`
 
+	// The id of the note.
 	ID *string `validate:"required"`
 
 	// The entity reporting a note.
 	ReportedBy *Reporter `validate:"required"`
 
+	// URLs associated with this note.
 	RelatedURL []APINoteRelatedURL
 
 	// Time of expiration for this note, null if note does not expire.
 	ExpirationTime *strfmt.DateTime
-
-	// Output only. The time this note was created. This field can be used as a filter in list requests.
-	CreateTime *strfmt.DateTime
-
-	// Output only. The time this note was last updated. This field can be used as a filter in list requests.
-	UpdateTime *strfmt.DateTime
 
 	// True if this `Note` can be shared by multiple accounts.
 	Shared *bool
@@ -1631,18 +1603,6 @@ func (options *CreateNoteOptions) SetExpirationTime(expirationTime *strfmt.DateT
 	return options
 }
 
-// SetCreateTime : Allow user to set CreateTime
-func (options *CreateNoteOptions) SetCreateTime(createTime *strfmt.DateTime) *CreateNoteOptions {
-	options.CreateTime = createTime
-	return options
-}
-
-// SetUpdateTime : Allow user to set UpdateTime
-func (options *CreateNoteOptions) SetUpdateTime(updateTime *strfmt.DateTime) *CreateNoteOptions {
-	options.UpdateTime = updateTime
-	return options
-}
-
 // SetShared : Allow user to set Shared
 func (options *CreateNoteOptions) SetShared(shared bool) *CreateNoteOptions {
 	options.Shared = core.BoolPtr(shared)
@@ -1705,19 +1665,15 @@ type CreateOccurrenceOptions struct {
 	//  - SECTION&#58; The note represents a section in a dashboard.
 	Kind *string `validate:"required"`
 
+	// The id of the occurrence.
 	ID *string `validate:"required"`
 
 	// The unique URL of the resource, image or the container, for which the `Occurrence` applies. For example,
 	// https://gcr.io/provider/image@sha256:foo. This field can be used as a filter in list requests.
 	ResourceURL *string
 
+	// A description of actions that can be taken to remedy the `Note`.
 	Remediation *string
-
-	// Output only. The time this `Occurrence` was created.
-	CreateTime *strfmt.DateTime
-
-	// Output only. The time this `Occurrence` was last updated.
-	UpdateTime *strfmt.DateTime
 
 	Context *Context
 
@@ -1805,18 +1761,6 @@ func (options *CreateOccurrenceOptions) SetResourceURL(resourceURL string) *Crea
 // SetRemediation : Allow user to set Remediation
 func (options *CreateOccurrenceOptions) SetRemediation(remediation string) *CreateOccurrenceOptions {
 	options.Remediation = core.StringPtr(remediation)
-	return options
-}
-
-// SetCreateTime : Allow user to set CreateTime
-func (options *CreateOccurrenceOptions) SetCreateTime(createTime *strfmt.DateTime) *CreateOccurrenceOptions {
-	options.CreateTime = createTime
-	return options
-}
-
-// SetUpdateTime : Allow user to set UpdateTime
-func (options *CreateOccurrenceOptions) SetUpdateTime(updateTime *strfmt.DateTime) *CreateOccurrenceOptions {
-	options.UpdateTime = updateTime
 	return options
 }
 
@@ -2908,21 +2852,17 @@ type UpdateNoteOptions struct {
 	//  - SECTION&#58; The note represents a section in a dashboard.
 	Kind *string `validate:"required"`
 
+	// The id of the note.
 	ID *string `validate:"required"`
 
 	// The entity reporting a note.
 	ReportedBy *Reporter `validate:"required"`
 
+	// URLs associated with this note.
 	RelatedURL []APINoteRelatedURL
 
 	// Time of expiration for this note, null if note does not expire.
 	ExpirationTime *strfmt.DateTime
-
-	// Output only. The time this note was created. This field can be used as a filter in list requests.
-	CreateTime *strfmt.DateTime
-
-	// Output only. The time this note was last updated. This field can be used as a filter in list requests.
-	UpdateTime *strfmt.DateTime
 
 	// True if this `Note` can be shared by multiple accounts.
 	Shared *bool
@@ -3035,18 +2975,6 @@ func (options *UpdateNoteOptions) SetExpirationTime(expirationTime *strfmt.DateT
 	return options
 }
 
-// SetCreateTime : Allow user to set CreateTime
-func (options *UpdateNoteOptions) SetCreateTime(createTime *strfmt.DateTime) *UpdateNoteOptions {
-	options.CreateTime = createTime
-	return options
-}
-
-// SetUpdateTime : Allow user to set UpdateTime
-func (options *UpdateNoteOptions) SetUpdateTime(updateTime *strfmt.DateTime) *UpdateNoteOptions {
-	options.UpdateTime = updateTime
-	return options
-}
-
 // SetShared : Allow user to set Shared
 func (options *UpdateNoteOptions) SetShared(shared bool) *UpdateNoteOptions {
 	options.Shared = core.BoolPtr(shared)
@@ -3112,19 +3040,15 @@ type UpdateOccurrenceOptions struct {
 	//  - SECTION&#58; The note represents a section in a dashboard.
 	Kind *string `validate:"required"`
 
+	// The id of the occurrence.
 	ID *string `validate:"required"`
 
 	// The unique URL of the resource, image or the container, for which the `Occurrence` applies. For example,
 	// https://gcr.io/provider/image@sha256:foo. This field can be used as a filter in list requests.
 	ResourceURL *string
 
+	// A description of actions that can be taken to remedy the `Note`.
 	Remediation *string
-
-	// Output only. The time this `Occurrence` was created.
-	CreateTime *strfmt.DateTime
-
-	// Output only. The time this `Occurrence` was last updated.
-	UpdateTime *strfmt.DateTime
 
 	Context *Context
 
@@ -3216,18 +3140,6 @@ func (options *UpdateOccurrenceOptions) SetResourceURL(resourceURL string) *Upda
 // SetRemediation : Allow user to set Remediation
 func (options *UpdateOccurrenceOptions) SetRemediation(remediation string) *UpdateOccurrenceOptions {
 	options.Remediation = core.StringPtr(remediation)
-	return options
-}
-
-// SetCreateTime : Allow user to set CreateTime
-func (options *UpdateOccurrenceOptions) SetCreateTime(createTime *strfmt.DateTime) *UpdateOccurrenceOptions {
-	options.CreateTime = createTime
-	return options
-}
-
-// SetUpdateTime : Allow user to set UpdateTime
-func (options *UpdateOccurrenceOptions) SetUpdateTime(updateTime *strfmt.DateTime) *UpdateOccurrenceOptions {
-	options.UpdateTime = updateTime
 	return options
 }
 
@@ -3349,6 +3261,7 @@ func UnmarshalAPIListNoteOccurrencesResponse(m map[string]json.RawMessage, resul
 
 // APIListNotesResponse : Response including listed notes.
 type APIListNotesResponse struct {
+	// The occurrences requested.
 	Notes []APINote `json:"notes,omitempty"`
 
 	// The next pagination token in the list response. It should be used as page_token for the following request. An empty
@@ -3398,6 +3311,7 @@ func UnmarshalAPIListOccurrencesResponse(m map[string]json.RawMessage, result in
 
 // APIListProvidersResponse : Response including listed providers.
 type APIListProvidersResponse struct {
+	// The providers requested.
 	Providers []APIProvider `json:"providers,omitempty"`
 }
 
@@ -3428,6 +3342,7 @@ type APINote struct {
 	//  - SECTION&#58; The note represents a section in a dashboard.
 	Kind *string `json:"kind" validate:"required"`
 
+	// URLs associated with this note.
 	RelatedURL []APINoteRelatedURL `json:"related_url,omitempty"`
 
 	// Time of expiration for this note, null if note does not expire.
@@ -3439,6 +3354,7 @@ type APINote struct {
 	// Output only. The time this note was last updated. This field can be used as a filter in list requests.
 	UpdateTime *strfmt.DateTime `json:"update_time,omitempty"`
 
+	// The id of the note.
 	ID *string `json:"id" validate:"required"`
 
 	// True if this `Note` can be shared by multiple accounts.
@@ -3553,9 +3469,21 @@ func UnmarshalAPINote(m map[string]json.RawMessage, result interface{}) (err err
 
 // APINoteRelatedURL : Metadata for any related URL information.
 type APINoteRelatedURL struct {
-	Label *string `json:"label,omitempty"`
+	// Label to describe usage of the URL.
+	Label *string `json:"label" validate:"required"`
 
-	URL *string `json:"url,omitempty"`
+	// Specific URL to associate with the note.
+	URL *string `json:"url" validate:"required"`
+}
+
+// NewAPINoteRelatedURL : Instantiate APINoteRelatedURL (Generic Model Constructor)
+func (*FindingsV1) NewAPINoteRelatedURL(label string, url string) (model *APINoteRelatedURL, err error) {
+	model = &APINoteRelatedURL{
+		Label: core.StringPtr(label),
+		URL: core.StringPtr(url),
+	}
+	err = core.ValidateStruct(model, "required parameters")
+	return
 }
 
 // UnmarshalAPINoteRelatedURL unmarshals an instance of APINoteRelatedURL from the specified map of raw messages.
@@ -3591,6 +3519,7 @@ type APIOccurrence struct {
 	//  - SECTION&#58; The note represents a section in a dashboard.
 	Kind *string `json:"kind" validate:"required"`
 
+	// A description of actions that can be taken to remedy the `Note`.
 	Remediation *string `json:"remediation,omitempty"`
 
 	// Output only. The time this `Occurrence` was created.
@@ -3599,6 +3528,7 @@ type APIOccurrence struct {
 	// Output only. The time this `Occurrence` was last updated.
 	UpdateTime *strfmt.DateTime `json:"update_time,omitempty"`
 
+	// The id of the occurrence.
 	ID *string `json:"id" validate:"required"`
 
 	Context *Context `json:"context,omitempty"`
@@ -3692,8 +3622,10 @@ func UnmarshalAPIOccurrence(m map[string]json.RawMessage, result interface{}) (e
 
 // APIProvider : Provides a detailed description of a `Provider`.
 type APIProvider struct {
+	// The name of the provider in the form "{account_id}/providers/{provider_id}".
 	Name *string `json:"name" validate:"required"`
 
+	// The id of the provider.
 	ID *string `json:"id" validate:"required"`
 }
 

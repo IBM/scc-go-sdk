@@ -811,167 +811,14 @@ func UnmarshalChannelDelete(m map[string]json.RawMessage, result interface{}) (e
 
 // ChannelGet : The returned response when get channel is run.
 type ChannelGet struct {
-	// Response including channels.
-	Channel *ChannelGetChannel `json:"channel,omitempty"`
+	// get channel.
+	Channel *Channel `json:"channel,omitempty"`
 }
 
 // UnmarshalChannelGet unmarshals an instance of ChannelGet from the specified map of raw messages.
 func UnmarshalChannelGet(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(ChannelGet)
-	err = core.UnmarshalModel(m, "channel", &obj.Channel, UnmarshalChannelGetChannel)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// ChannelGetChannel : Response including channels.
-type ChannelGetChannel struct {
-	// A unique ID for the channel.
-	ChannelID *string `json:"channel_id,omitempty"`
-
-	Name *string `json:"name,omitempty"`
-
-	// A one sentence description of this `Channel`.
-	Description *string `json:"description,omitempty"`
-
-	// Type of callback URL.
-	Type *string `json:"type,omitempty"`
-
-	// The severity of the notification.
-	Severity *ChannelGetChannelSeverity `json:"severity,omitempty"`
-
-	// The callback URL which receives the notification.
-	Endpoint *string `json:"endpoint,omitempty"`
-
-	// Whether the channel is enabled. The default is disabled.
-	Enabled *bool `json:"enabled,omitempty"`
-
-	AlertSource []ChannelGetChannelAlertSourceItem `json:"alert_source,omitempty"`
-
-	Frequency *string `json:"frequency,omitempty"`
-}
-
-// Constants associated with the ChannelGetChannel.Type property.
-// Type of callback URL.
-const (
-	ChannelGetChannelTypeWebhookConst = "Webhook"
-)
-
-// UnmarshalChannelGetChannel unmarshals an instance of ChannelGetChannel from the specified map of raw messages.
-func UnmarshalChannelGetChannel(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(ChannelGetChannel)
-	err = core.UnmarshalPrimitive(m, "channel_id", &obj.ChannelID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalModel(m, "severity", &obj.Severity, UnmarshalChannelGetChannelSeverity)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "endpoint", &obj.Endpoint)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "enabled", &obj.Enabled)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalModel(m, "alert_source", &obj.AlertSource, UnmarshalChannelGetChannelAlertSourceItem)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "frequency", &obj.Frequency)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// ChannelGetChannelAlertSourceItem : The providers that act as alert sources and the potential findings that can be flagged as alerts.
-type ChannelGetChannelAlertSourceItem struct {
-	// The providers that you can receive alerts for. To view your available providers, you can call the
-	// /v1/{account_id}/providers endpoint of the Findings API.
-	ProviderName *string `json:"provider_name,omitempty"`
-
-	// The types of findings for each provider that you want to receive alerts for. Options are dependent upon the provider
-	// that you select. Depending on that selection, some available options include `image_with_vulnerabilities`,
-	// `anonym_server`, `server_suspected_ratio`, `appid`, `cos`, `expired_cert`, and `expiring_1day_cert`For a full list
-	// of available finding types, see [the docs](/docs/).
-	FindingTypes []interface{} `json:"finding_types,omitempty"`
-}
-
-// Constants associated with the ChannelGetChannelAlertSourceItem.ProviderName property.
-// The providers that you can receive alerts for. To view your available providers, you can call the
-// /v1/{account_id}/providers endpoint of the Findings API.
-const (
-	ChannelGetChannelAlertSourceItemProviderNameAllConst = "ALL"
-	ChannelGetChannelAlertSourceItemProviderNameAtaConst = "ATA"
-	ChannelGetChannelAlertSourceItemProviderNameCertConst = "CERT"
-	ChannelGetChannelAlertSourceItemProviderNameNaConst = "NA"
-	ChannelGetChannelAlertSourceItemProviderNameVaConst = "VA"
-)
-
-// UnmarshalChannelGetChannelAlertSourceItem unmarshals an instance of ChannelGetChannelAlertSourceItem from the specified map of raw messages.
-func UnmarshalChannelGetChannelAlertSourceItem(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(ChannelGetChannelAlertSourceItem)
-	err = core.UnmarshalPrimitive(m, "provider_name", &obj.ProviderName)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "finding_types", &obj.FindingTypes)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// ChannelGetChannelSeverity : The severity of the notification.
-type ChannelGetChannelSeverity struct {
-	// Critical severity.
-	Critical *bool `json:"critical,omitempty"`
-
-	// High severity.
-	High *bool `json:"high,omitempty"`
-
-	// Medium severity.
-	Medium *bool `json:"medium,omitempty"`
-
-	// Low severity.
-	Low *bool `json:"low,omitempty"`
-}
-
-// UnmarshalChannelGetChannelSeverity unmarshals an instance of ChannelGetChannelSeverity from the specified map of raw messages.
-func UnmarshalChannelGetChannelSeverity(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(ChannelGetChannelSeverity)
-	err = core.UnmarshalPrimitive(m, "critical", &obj.Critical)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "high", &obj.High)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "medium", &obj.Medium)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "low", &obj.Low)
+	err = core.UnmarshalModel(m, "channel", &obj.Channel, UnmarshalChannel)
 	if err != nil {
 		return
 	}
@@ -1060,6 +907,7 @@ func UnmarshalChannelsDelete(m map[string]json.RawMessage, result interface{}) (
 
 // ChannelsList : Available channels in your account are listed.
 type ChannelsList struct {
+	// List of channels.
 	Channels []Channel `json:"channels,omitempty"`
 }
 
@@ -1079,6 +927,7 @@ type CreateNotificationChannelOptions struct {
 	// Account ID.
 	AccountID *string `validate:"required,ne="`
 
+	// The name of the notification channel in the form "v1/{account_id}/notifications/channelName".
 	Name *string `validate:"required"`
 
 	// Type of callback URL.
@@ -1563,6 +1412,7 @@ type UpdateNotificationChannelOptions struct {
 	// Channel ID.
 	ChannelID *string `validate:"required,ne="`
 
+	// The name of the notification channel in the form "v1/{account_id}/notifications/channelName".
 	Name *string `validate:"required"`
 
 	// Type of callback URL.
@@ -1685,6 +1535,7 @@ type Channel struct {
 	// A unique ID for the channel.
 	ChannelID *string `json:"channel_id,omitempty"`
 
+	// The name of the notification channel in the form "v1/{account_id}/notifications/channelName".
 	Name *string `json:"name,omitempty"`
 
 	// A one sentence description of this `Channel`.

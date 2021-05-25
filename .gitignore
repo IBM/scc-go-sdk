@@ -1,2 +1,3 @@
 .openapi-generator
 .idea
+main.go

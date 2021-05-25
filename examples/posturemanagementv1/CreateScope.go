@@ -27,17 +27,21 @@ func CreateScope() {
 	source := service.NewCreateScopeOptions(accountId)
 	source.SetScopeName("sample scope 01")
 	source.SetScopeDescription("sample scope description")
-	source.SetInstallationType("installed")
-	source.SetIsPublic(true)
-	source.SetPassphrase("secret")
+	source.SetEnvironmentType("ibm")
+	source.SetCollectorIds([]string{"1380"})
+	source.SetCredentialID("cred")
 
-	result, response, err := service.CreateCollector(source)
+	result, response, err := service.CreateScope(source)
 
 	if err != nil {
 		fmt.Println(response.Result)
-		fmt.Println("Failed to create collector: ", err)
+		fmt.Println("Failed to create scope: ", err)
 		return
 	}
-	fmt.Println("Collector ID: ", *result.CollectorID)
+	fmt.Println("Scope ID: ", *result.ScopeID)
+	fmt.Println("Scope Description: ", *result.ScopeDescription)
+	fmt.Println("Environment Type: ", *result.EnvironmentType)
+	fmt.Println("Created Time: ", *result.CreatedTime)
+	fmt.Println("Modified Time: ", *result.ModifiedTime)
 
 }

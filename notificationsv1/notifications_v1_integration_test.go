@@ -20,11 +20,12 @@ package notificationsv1_test
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/ibm-cloud-security/scc-go-sdk/notificationsv1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"os"
 )
 
 /**
@@ -35,15 +36,19 @@ import (
  * The integration test will automatically skip tests if the required config file is not available.
  */
 
+var accountID = os.Getenv("ACCOUNT_ID")
+var testString = "testString"
+var channelID = ""
+
 var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 
 	const externalConfigFile = "../notifications_v1.env"
 
 	var (
-		err          error
+		err                  error
 		notificationsService *notificationsv1.NotificationsV1
-		serviceURL   string
-		config       map[string]string
+		serviceURL           string
+		config               map[string]string
 	)
 
 	var shouldSkipTest = func() {
@@ -68,6 +73,7 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 			}
 
 			fmt.Printf("Service URL: %s\n", serviceURL)
+			fmt.Printf("Running Integration Tests using AccountID: %s\n", accountID)
 			shouldSkipTest = func() {}
 		})
 	})
@@ -95,10 +101,7 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 		It(`ListAllChannels(listAllChannelsOptions *ListAllChannelsOptions)`, func() {
 
 			listAllChannelsOptions := &notificationsv1.ListAllChannelsOptions{
-				AccountID: core.StringPtr("testString"),
-				TransactionID: core.StringPtr("testString"),
-				Limit: core.Int64Ptr(int64(38)),
-				Skip: core.Int64Ptr(int64(38)),
+				AccountID: &accountID,
 			}
 
 			channelsList, response, err := notificationsService.ListAllChannels(listAllChannelsOptions)
@@ -117,23 +120,24 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 		It(`CreateNotificationChannel(createNotificationChannelOptions *CreateNotificationChannelOptions)`, func() {
 
 			notificationChannelAlertSourceItemModel := &notificationsv1.NotificationChannelAlertSourceItem{
-				ProviderName: core.StringPtr("testString"),
-				FindingTypes: []string{"testString"},
+				ProviderName: core.StringPtr("VA"),
+				FindingTypes: []string{"image_with_vulnerabilities"},
 			}
 
 			createNotificationChannelOptions := &notificationsv1.CreateNotificationChannelOptions{
-				AccountID: core.StringPtr("testString"),
-				Name: core.StringPtr("testString"),
-				Type: core.StringPtr("Webhook"),
-				Endpoint: core.StringPtr("testString"),
-				Description: core.StringPtr("testString"),
-				Severity: []string{"low"},
-				Enabled: core.BoolPtr(true),
+				AccountID:   &accountID,
+				Name:        &testString,
+				Type:        core.StringPtr("Webhook"),
+				Endpoint:    core.StringPtr("https://webhook.site/136fe1e2-3c3f-4bff-925f-391fbb202546"),
+				Description: &testString,
+				Severity:    []string{"low"},
+				Enabled:     core.BoolPtr(true),
 				AlertSource: []notificationsv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel},
-				TransactionID: core.StringPtr("testString"),
 			}
 
 			channelInfo, response, err := notificationsService.CreateNotificationChannel(createNotificationChannelOptions)
+
+			channelID = *channelInfo.ChannelID
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
@@ -149,9 +153,8 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 		It(`GetNotificationChannel(getNotificationChannelOptions *GetNotificationChannelOptions)`, func() {
 
 			getNotificationChannelOptions := &notificationsv1.GetNotificationChannelOptions{
-				AccountID: core.StringPtr("testString"),
-				ChannelID: core.StringPtr("testString"),
-				TransactionID: core.StringPtr("testString"),
+				AccountID: &accountID,
+				ChannelID: &channelID,
 			}
 
 			channelGet, response, err := notificationsService.GetNotificationChannel(getNotificationChannelOptions)
@@ -170,21 +173,20 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 		It(`UpdateNotificationChannel(updateNotificationChannelOptions *UpdateNotificationChannelOptions)`, func() {
 
 			notificationChannelAlertSourceItemModel := &notificationsv1.NotificationChannelAlertSourceItem{
-				ProviderName: core.StringPtr("testString"),
-				FindingTypes: []string{"testString"},
+				ProviderName: core.StringPtr("VA"),
+				FindingTypes: []string{"image_with_vulnerabilities"},
 			}
 
 			updateNotificationChannelOptions := &notificationsv1.UpdateNotificationChannelOptions{
-				AccountID: core.StringPtr("testString"),
-				ChannelID: core.StringPtr("testString"),
-				Name: core.StringPtr("testString"),
-				Type: core.StringPtr("Webhook"),
-				Endpoint: core.StringPtr("testString"),
-				Description: core.StringPtr("testString"),
-				Severity: []string{"low"},
-				Enabled: core.BoolPtr(true),
+				AccountID:   &accountID,
+				ChannelID:   &channelID,
+				Name:        &testString,
+				Type:        core.StringPtr("Webhook"),
+				Endpoint:    core.StringPtr("https://webhook.site/136fe1e2-3c3f-4bff-925f-391fbb202546"),
+				Description: &testString,
+				Severity:    []string{"low"},
+				Enabled:     core.BoolPtr(true),
 				AlertSource: []notificationsv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel},
-				TransactionID: core.StringPtr("testString"),
 			}
 
 			channelInfo, response, err := notificationsService.UpdateNotificationChannel(updateNotificationChannelOptions)
@@ -203,9 +205,8 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 		It(`TestNotificationChannel(testNotificationChannelOptions *TestNotificationChannelOptions)`, func() {
 
 			testNotificationChannelOptions := &notificationsv1.TestNotificationChannelOptions{
-				AccountID: core.StringPtr("testString"),
-				ChannelID: core.StringPtr("testString"),
-				TransactionID: core.StringPtr("testString"),
+				AccountID: &accountID,
+				ChannelID: &channelID,
 			}
 
 			testChannel, response, err := notificationsService.TestNotificationChannel(testNotificationChannelOptions)
@@ -224,8 +225,7 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 		It(`GetPublicKey(getPublicKeyOptions *GetPublicKeyOptions)`, func() {
 
 			getPublicKeyOptions := &notificationsv1.GetPublicKeyOptions{
-				AccountID: core.StringPtr("testString"),
-				TransactionID: core.StringPtr("testString"),
+				AccountID: &accountID,
 			}
 
 			publicKeyGet, response, err := notificationsService.GetPublicKey(getPublicKeyOptions)
@@ -237,27 +237,6 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`DeleteNotificationChannels - bulk delete of channels`, func() {
-		BeforeEach(func() {
-			shouldSkipTest()
-		})
-		It(`DeleteNotificationChannels(deleteNotificationChannelsOptions *DeleteNotificationChannelsOptions)`, func() {
-
-			deleteNotificationChannelsOptions := &notificationsv1.DeleteNotificationChannelsOptions{
-				AccountID: core.StringPtr("testString"),
-				Body: []string{"testString"},
-				TransactionID: core.StringPtr("testString"),
-			}
-
-			channelsDelete, response, err := notificationsService.DeleteNotificationChannels(deleteNotificationChannelsOptions)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(channelsDelete).ToNot(BeNil())
-
-		})
-	})
-
 	Describe(`DeleteNotificationChannel - delete the details of a specific channel`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
@@ -265,9 +244,8 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 		It(`DeleteNotificationChannel(deleteNotificationChannelOptions *DeleteNotificationChannelOptions)`, func() {
 
 			deleteNotificationChannelOptions := &notificationsv1.DeleteNotificationChannelOptions{
-				AccountID: core.StringPtr("testString"),
-				ChannelID: core.StringPtr("testString"),
-				TransactionID: core.StringPtr("testString"),
+				AccountID: &accountID,
+				ChannelID: &channelID,
 			}
 
 			channelDelete, response, err := notificationsService.DeleteNotificationChannel(deleteNotificationChannelOptions)
@@ -278,8 +256,91 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 
 		})
 	})
+
+	Describe(`DeleteNotificationChannels - bulk delete of channels`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`DeleteNotificationChannels(deleteNotificationChannelsOptions *DeleteNotificationChannelsOptions)`, func() {
+
+			createNotificationChannelOptions := &notificationsv1.CreateNotificationChannelOptions{
+				AccountID:   &accountID,
+				Name:        &testString,
+				Type:        core.StringPtr("Webhook"),
+				Endpoint:    core.StringPtr("https://webhook.site/136fe1e2-3c3f-4bff-925f-391fbb202546"),
+				Description: &testString,
+				Severity:    []string{"low"},
+				Enabled:     core.BoolPtr(true),
+			}
+
+			channelInfo, response, err := notificationsService.CreateNotificationChannel(createNotificationChannelOptions)
+
+			channelID = *channelInfo.ChannelID
+
+			deleteNotificationChannelsOptions := &notificationsv1.DeleteNotificationChannelsOptions{
+				AccountID: &accountID,
+				Body:      []string{channelID},
+			}
+
+			channelsDelete, response, err := notificationsService.DeleteNotificationChannels(deleteNotificationChannelsOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(channelsDelete).ToNot(BeNil())
+
+		})
+	})
 })
 
 //
 // Utility functions are declared in the unit test file
 //
+
+// Cleanup: Delete all notes and occurrences under provider 'testString'
+var _ = AfterSuite(func() {
+	const externalConfigFile = "../notifications_v1.env"
+	_, err := os.Stat(externalConfigFile)
+	if err != nil {
+		Skip("External configuration file not found, skipping tests: " + err.Error())
+	}
+	os.Setenv("IBM_CREDENTIALS_FILE", externalConfigFile)
+	config, err := core.GetServiceProperties(notificationsv1.DefaultServiceName)
+	if err != nil {
+		Skip("Error loading service properties, skipping tests: " + err.Error())
+	}
+	serviceURL := config["URL"]
+	if serviceURL == "" {
+		Skip("Unable to load service URL configuration property, skipping tests")
+	}
+
+	fmt.Printf("cleaning up account: %s\n", accountID)
+
+	notificationsServiceOptions := &notificationsv1.NotificationsV1Options{}
+
+	notificationsService, err := notificationsv1.NewNotificationsV1UsingExternalConfig(notificationsServiceOptions)
+
+	listAllChannelsOptions := &notificationsv1.ListAllChannelsOptions{
+		AccountID: &accountID,
+	}
+
+	channels, _, err := notificationsService.ListAllChannels(listAllChannelsOptions)
+	if err != nil {
+		Skip("Error occurred while listing channels for cleanup: " + err.Error())
+	}
+
+	for _, channel := range channels.Channels {
+		if *channel.ChannelID == channelID {
+			deleteNotificationChannelOptions := &notificationsv1.DeleteNotificationChannelOptions{
+				AccountID: &accountID,
+				ChannelID: channel.ChannelID,
+			}
+
+			_, _, err := notificationsService.DeleteNotificationChannel(deleteNotificationChannelOptions)
+			if err != nil {
+				Skip("Error occurred while deleting channel for cleanup: " + err.Error())
+			}
+		}
+	}
+
+	fmt.Printf("cleanup was successful\n")
+})

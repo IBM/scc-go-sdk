@@ -1,3 +1,0 @@
-query {
-    findingCount: occurrenceCount(kind: "FINDING", providerId: "sec_advisor_202X_provider")
-}

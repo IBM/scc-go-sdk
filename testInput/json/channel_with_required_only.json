@@ -1,5 +1,0 @@
-{
-    "name": "sdkTest_channel",
-    "type": "Webhook",
-    "endpoint": "https://example.com"
-  }

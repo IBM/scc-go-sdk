@@ -27,8 +27,8 @@ script:
 - go mod download
 - golangci-lint run
 - curl https://us-south.functions.appdomain.cloud/api/v1/web/e6b54af6-ab44-4149-a8e4-e906dcc58136/default/secadvstg-location-shift.json
-- go test ./...
-- go test `go list ./...` -tags integration
+- make test
+- make test-int-cov
 
 before_deploy:
 - pip install --user bumpversion

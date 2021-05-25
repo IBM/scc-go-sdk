@@ -15,7 +15,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.30.0-bd714324-20210406-200538
+ * IBM OpenAPI SDK Code Generator Version: 3.32.0-4c6a3129-20210514-210323
  */
 
 // Package notificationsv1 : Operations and models for the NotificationsV1 service
@@ -25,11 +25,12 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/IBM/go-sdk-core/v5/core"
-	common "github.com/ibm-cloud-security/scc-go-sdk/common"
 	"net/http"
 	"reflect"
 	"time"
+
+	"github.com/IBM/go-sdk-core/v5/core"
+	common "github.com/ibm-cloud-security/scc-go-sdk/common"
 )
 
 // NotificationsV1 : API specification for the Notifications service.
@@ -40,7 +41,7 @@ type NotificationsV1 struct {
 }
 
 // DefaultServiceURL is the default URL to make service requests to.
-const DefaultServiceURL = "https://notifications.cloud.ibm.com/notifications"
+const DefaultServiceURL = "https://us-south.secadvisor.cloud.ibm.com/notifications"
 
 // DefaultServiceName is the default key used to find external configuration information.
 const DefaultServiceName = "notifications"
@@ -109,7 +110,17 @@ func NewNotificationsV1(options *NotificationsV1Options) (service *Notifications
 
 // GetServiceURLForRegion returns the service URL to be used for the specified region
 func GetServiceURLForRegion(region string) (string, error) {
-	return "", fmt.Errorf("service does not support regional URLs")
+	var endpoints = map[string]string{
+		"us-south": "https://us-south.secadvisor.cloud.ibm.com/notifications",
+		"us-east": "https://us-south.secadvisor.cloud.ibm.com/notifications",
+		"eu-gb": "https://eu-gb.secadvisor.cloud.ibm.com/notifications",
+		"eu-de": "https://eu.compliance.cloud.ibm.com/si/notifications",
+	}
+
+	if url, ok := endpoints[region]; ok {
+		return url, nil
+	}
+	return "", fmt.Errorf("service URL for region '%s' not found", region)
 }
 
 // Clone makes a copy of "notifications" suitable for processing requests.
@@ -217,11 +228,13 @@ func (notifications *NotificationsV1) ListAllChannelsWithContext(ctx context.Con
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalChannelsList)
-	if err != nil {
-		return
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalChannelsList)
+		if err != nil {
+			return
+		}
+		response.Result = result
 	}
-	response.Result = result
 
 	return
 }
@@ -306,11 +319,13 @@ func (notifications *NotificationsV1) CreateNotificationChannelWithContext(ctx c
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalChannelInfo)
-	if err != nil {
-		return
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalChannelInfo)
+		if err != nil {
+			return
+		}
+		response.Result = result
 	}
-	response.Result = result
 
 	return
 }
@@ -373,11 +388,13 @@ func (notifications *NotificationsV1) DeleteNotificationChannelsWithContext(ctx 
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalChannelsDelete)
-	if err != nil {
-		return
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalChannelsDelete)
+		if err != nil {
+			return
+		}
+		response.Result = result
 	}
-	response.Result = result
 
 	return
 }
@@ -435,11 +452,13 @@ func (notifications *NotificationsV1) DeleteNotificationChannelWithContext(ctx c
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalChannelDelete)
-	if err != nil {
-		return
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalChannelDelete)
+		if err != nil {
+			return
+		}
+		response.Result = result
 	}
-	response.Result = result
 
 	return
 }
@@ -497,11 +516,13 @@ func (notifications *NotificationsV1) GetNotificationChannelWithContext(ctx cont
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalChannelGet)
-	if err != nil {
-		return
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalChannelGet)
+		if err != nil {
+			return
+		}
+		response.Result = result
 	}
-	response.Result = result
 
 	return
 }
@@ -587,11 +608,13 @@ func (notifications *NotificationsV1) UpdateNotificationChannelWithContext(ctx c
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalChannelInfo)
-	if err != nil {
-		return
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalChannelInfo)
+		if err != nil {
+			return
+		}
+		response.Result = result
 	}
-	response.Result = result
 
 	return
 }
@@ -649,11 +672,13 @@ func (notifications *NotificationsV1) TestNotificationChannelWithContext(ctx con
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalTestChannel)
-	if err != nil {
-		return
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalTestChannel)
+		if err != nil {
+			return
+		}
+		response.Result = result
 	}
-	response.Result = result
 
 	return
 }
@@ -710,11 +735,13 @@ func (notifications *NotificationsV1) GetPublicKeyWithContext(ctx context.Contex
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalPublicKeyGet)
-	if err != nil {
-		return
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalPublicKeyGet)
+		if err != nil {
+			return
+		}
+		response.Result = result
 	}
-	response.Result = result
 
 	return
 }

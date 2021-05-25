@@ -20,17 +20,18 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/go-openapi/strfmt"
-	"github.com/ibm-cloud-security/scc-go-sdk/findingsv1"
-	. "github.com/onsi/ginkgo"
-	. "github.com/onsi/gomega"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"time"
+
+	"github.com/IBM/go-sdk-core/v5/core"
+	"github.com/go-openapi/strfmt"
+	"github.com/ibm-cloud-security/scc-go-sdk/findingsv1"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
 var _ = Describe(`FindingsV1`, func() {
@@ -157,13 +158,28 @@ var _ = Describe(`FindingsV1`, func() {
 		It(`GetServiceURLForRegion(region string)`, func() {
 			var url string
 			var err error
+			url, err = findingsv1.GetServiceURLForRegion("us-south")
+			Expect(url).To(Equal("https://us-south.secadvisor.cloud.ibm.com/findings"))
+			Expect(err).To(BeNil())
+
+			url, err = findingsv1.GetServiceURLForRegion("us-east")
+			Expect(url).To(Equal("https://us-south.secadvisor.cloud.ibm.com/findings"))
+			Expect(err).To(BeNil())
+
+			url, err = findingsv1.GetServiceURLForRegion("eu-gb")
+			Expect(url).To(Equal("https://eu-gb.secadvisor.cloud.ibm.com/findings"))
+			Expect(err).To(BeNil())
+
+			url, err = findingsv1.GetServiceURLForRegion("eu-de")
+			Expect(url).To(Equal("https://eu.compliance.cloud.ibm.com/si/findings"))
+			Expect(err).To(BeNil())
+
 			url, err = findingsv1.GetServiceURLForRegion("INVALID_REGION")
 			Expect(url).To(BeEmpty())
 			Expect(err).ToNot(BeNil())
 			fmt.Fprintf(GinkgoWriter, "Expected error: %s\n", err.Error())
 		})
 	})
-
 	Describe(`PostGraph(postGraphOptions *PostGraphOptions)`, func() {
 		postGraphPath := "/v1/testString/graph"
 		Context(`Using mock server endpoint`, func() {
@@ -258,137 +274,9 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 		})
 	})
-	Describe(`Service constructor tests`, func() {
-		It(`Instantiate service client`, func() {
-			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
-				Authenticator: &core.NoAuthAuthenticator{},
-			})
-			Expect(findingsService).ToNot(BeNil())
-			Expect(serviceErr).To(BeNil())
-		})
-		It(`Instantiate service client with error: Invalid URL`, func() {
-			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
-				URL: "{BAD_URL_STRING",
-			})
-			Expect(findingsService).To(BeNil())
-			Expect(serviceErr).ToNot(BeNil())
-		})
-		It(`Instantiate service client with error: Invalid Auth`, func() {
-			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
-				URL: "https://findingsv1/api",
-				Authenticator: &core.BasicAuthenticator{
-					Username: "",
-					Password: "",
-				},
-			})
-			Expect(findingsService).To(BeNil())
-			Expect(serviceErr).ToNot(BeNil())
-		})
-	})
-	Describe(`Service constructor tests using external config`, func() {
-		Context(`Using external config, construct service client instances`, func() {
-			// Map containing environment variables used in testing.
-			var testEnvironment = map[string]string{
-				"FINDINGS_URL": "https://findingsv1/api",
-				"FINDINGS_AUTH_TYPE": "noauth",
-			}
-
-			It(`Create service client using external config successfully`, func() {
-				SetTestEnvironment(testEnvironment)
-				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
-				})
-				Expect(findingsService).ToNot(BeNil())
-				Expect(serviceErr).To(BeNil())
-				ClearTestEnvironment(testEnvironment)
-
-				clone := findingsService.Clone()
-				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != findingsService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(findingsService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(findingsService.Service.Options.Authenticator))
-			})
-			It(`Create service client using external config and set url from constructor successfully`, func() {
-				SetTestEnvironment(testEnvironment)
-				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
-					URL: "https://testService/api",
-				})
-				Expect(findingsService).ToNot(BeNil())
-				Expect(serviceErr).To(BeNil())
-				Expect(findingsService.Service.GetServiceURL()).To(Equal("https://testService/api"))
-				ClearTestEnvironment(testEnvironment)
-
-				clone := findingsService.Clone()
-				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != findingsService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(findingsService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(findingsService.Service.Options.Authenticator))
-			})
-			It(`Create service client using external config and set url programatically successfully`, func() {
-				SetTestEnvironment(testEnvironment)
-				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
-				})
-				err := findingsService.SetServiceURL("https://testService/api")
-				Expect(err).To(BeNil())
-				Expect(findingsService).ToNot(BeNil())
-				Expect(serviceErr).To(BeNil())
-				Expect(findingsService.Service.GetServiceURL()).To(Equal("https://testService/api"))
-				ClearTestEnvironment(testEnvironment)
-
-				clone := findingsService.Clone()
-				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != findingsService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(findingsService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(findingsService.Service.Options.Authenticator))
-			})
-		})
-		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
-			// Map containing environment variables used in testing.
-			var testEnvironment = map[string]string{
-				"FINDINGS_URL": "https://findingsv1/api",
-				"FINDINGS_AUTH_TYPE": "someOtherAuth",
-			}
-
-			SetTestEnvironment(testEnvironment)
-			findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
-			})
-
-			It(`Instantiate service client with error`, func() {
-				Expect(findingsService).To(BeNil())
-				Expect(serviceErr).ToNot(BeNil())
-				ClearTestEnvironment(testEnvironment)
-			})
-		})
-		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
-			// Map containing environment variables used in testing.
-			var testEnvironment = map[string]string{
-				"FINDINGS_AUTH_TYPE":   "NOAuth",
-			}
-
-			SetTestEnvironment(testEnvironment)
-			findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
-				URL: "{BAD_URL_STRING",
-			})
-
-			It(`Instantiate service client with error`, func() {
-				Expect(findingsService).To(BeNil())
-				Expect(serviceErr).ToNot(BeNil())
-				ClearTestEnvironment(testEnvironment)
-			})
-		})
-	})
-	Describe(`Regional endpoint tests`, func() {
-		It(`GetServiceURLForRegion(region string)`, func() {
-			var url string
-			var err error
-			url, err = findingsv1.GetServiceURLForRegion("INVALID_REGION")
-			Expect(url).To(BeEmpty())
-			Expect(err).ToNot(BeNil())
-			fmt.Fprintf(GinkgoWriter, "Expected error: %s\n", err.Error())
-		})
-	})
 	Describe(`CreateNote(createNoteOptions *CreateNoteOptions) - Operation response error`, func() {
 		createNotePath := "/v1/testString/providers/testString/notes"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -477,9 +365,9 @@ var _ = Describe(`FindingsV1`, func() {
 				createNoteOptionsModel.ID = core.StringPtr("testString")
 				createNoteOptionsModel.ReportedBy = reporterModel
 				createNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
-				createNoteOptionsModel.ExpirationTime = CreateMockDateTime()
-				createNoteOptionsModel.CreateTime = CreateMockDateTime()
-				createNoteOptionsModel.UpdateTime = CreateMockDateTime()
+				createNoteOptionsModel.ExpirationTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createNoteOptionsModel.Shared = core.BoolPtr(true)
 				createNoteOptionsModel.Finding = findingTypeModel
 				createNoteOptionsModel.Kpi = kpiTypeModel
@@ -505,7 +393,6 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 		})
 	})
-
 	Describe(`CreateNote(createNoteOptions *CreateNoteOptions)`, func() {
 		createNotePath := "/v1/testString/providers/testString/notes"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -619,9 +506,9 @@ var _ = Describe(`FindingsV1`, func() {
 				createNoteOptionsModel.ID = core.StringPtr("testString")
 				createNoteOptionsModel.ReportedBy = reporterModel
 				createNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
-				createNoteOptionsModel.ExpirationTime = CreateMockDateTime()
-				createNoteOptionsModel.CreateTime = CreateMockDateTime()
-				createNoteOptionsModel.UpdateTime = CreateMockDateTime()
+				createNoteOptionsModel.ExpirationTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createNoteOptionsModel.Shared = core.BoolPtr(true)
 				createNoteOptionsModel.Finding = findingTypeModel
 				createNoteOptionsModel.Kpi = kpiTypeModel
@@ -768,9 +655,9 @@ var _ = Describe(`FindingsV1`, func() {
 				createNoteOptionsModel.ID = core.StringPtr("testString")
 				createNoteOptionsModel.ReportedBy = reporterModel
 				createNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
-				createNoteOptionsModel.ExpirationTime = CreateMockDateTime()
-				createNoteOptionsModel.CreateTime = CreateMockDateTime()
-				createNoteOptionsModel.UpdateTime = CreateMockDateTime()
+				createNoteOptionsModel.ExpirationTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createNoteOptionsModel.Shared = core.BoolPtr(true)
 				createNoteOptionsModel.Finding = findingTypeModel
 				createNoteOptionsModel.Kpi = kpiTypeModel
@@ -860,9 +747,9 @@ var _ = Describe(`FindingsV1`, func() {
 				createNoteOptionsModel.ID = core.StringPtr("testString")
 				createNoteOptionsModel.ReportedBy = reporterModel
 				createNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
-				createNoteOptionsModel.ExpirationTime = CreateMockDateTime()
-				createNoteOptionsModel.CreateTime = CreateMockDateTime()
-				createNoteOptionsModel.UpdateTime = CreateMockDateTime()
+				createNoteOptionsModel.ExpirationTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createNoteOptionsModel.Shared = core.BoolPtr(true)
 				createNoteOptionsModel.Finding = findingTypeModel
 				createNoteOptionsModel.Kpi = kpiTypeModel
@@ -890,10 +777,116 @@ var _ = Describe(`FindingsV1`, func() {
 				testServer.Close()
 			})
 		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke CreateNote successfully`, func() {
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(findingsService).ToNot(BeNil())
+
+				// Construct an instance of the Reporter model
+				reporterModel := new(findingsv1.Reporter)
+				reporterModel.ID = core.StringPtr("testString")
+				reporterModel.Title = core.StringPtr("testString")
+				reporterModel.URL = core.StringPtr("testString")
+
+				// Construct an instance of the APINoteRelatedURL model
+				apiNoteRelatedURLModel := new(findingsv1.APINoteRelatedURL)
+				apiNoteRelatedURLModel.Label = core.StringPtr("testString")
+				apiNoteRelatedURLModel.URL = core.StringPtr("testString")
+
+				// Construct an instance of the RemediationStep model
+				remediationStepModel := new(findingsv1.RemediationStep)
+				remediationStepModel.Title = core.StringPtr("testString")
+				remediationStepModel.URL = core.StringPtr("testString")
+
+				// Construct an instance of the FindingType model
+				findingTypeModel := new(findingsv1.FindingType)
+				findingTypeModel.Severity = core.StringPtr("LOW")
+				findingTypeModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
+
+				// Construct an instance of the KpiType model
+				kpiTypeModel := new(findingsv1.KpiType)
+				kpiTypeModel.AggregationType = core.StringPtr("SUM")
+
+				// Construct an instance of the ValueTypeFindingCountValueType model
+				valueTypeModel := new(findingsv1.ValueTypeFindingCountValueType)
+				valueTypeModel.Kind = core.StringPtr("FINDING_COUNT")
+				valueTypeModel.FindingNoteNames = []string{"testString"}
+				valueTypeModel.Text = core.StringPtr("testString")
+
+				// Construct an instance of the CardElementTimeSeriesCardElement model
+				cardElementModel := new(findingsv1.CardElementTimeSeriesCardElement)
+				cardElementModel.Text = core.StringPtr("testString")
+				cardElementModel.DefaultInterval = core.StringPtr("testString")
+				cardElementModel.Kind = core.StringPtr("TIME_SERIES")
+				cardElementModel.DefaultTimeRange = core.StringPtr("1d")
+				cardElementModel.ValueTypes = []findingsv1.ValueTypeIntf{valueTypeModel}
+
+				// Construct an instance of the Card model
+				cardModel := new(findingsv1.Card)
+				cardModel.Section = core.StringPtr("testString")
+				cardModel.Title = core.StringPtr("testString")
+				cardModel.Subtitle = core.StringPtr("testString")
+				cardModel.Order = core.Int64Ptr(int64(1))
+				cardModel.FindingNoteNames = []string{"testString"}
+				cardModel.RequiresConfiguration = core.BoolPtr(true)
+				cardModel.BadgeText = core.StringPtr("testString")
+				cardModel.BadgeImage = core.StringPtr("testString")
+				cardModel.Elements = []findingsv1.CardElementIntf{cardElementModel}
+
+				// Construct an instance of the Section model
+				sectionModel := new(findingsv1.Section)
+				sectionModel.Title = core.StringPtr("testString")
+				sectionModel.Image = core.StringPtr("testString")
+
+				// Construct an instance of the CreateNoteOptions model
+				createNoteOptionsModel := new(findingsv1.CreateNoteOptions)
+				createNoteOptionsModel.AccountID = core.StringPtr("testString")
+				createNoteOptionsModel.ProviderID = core.StringPtr("testString")
+				createNoteOptionsModel.ShortDescription = core.StringPtr("testString")
+				createNoteOptionsModel.LongDescription = core.StringPtr("testString")
+				createNoteOptionsModel.Kind = core.StringPtr("FINDING")
+				createNoteOptionsModel.ID = core.StringPtr("testString")
+				createNoteOptionsModel.ReportedBy = reporterModel
+				createNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
+				createNoteOptionsModel.ExpirationTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createNoteOptionsModel.Shared = core.BoolPtr(true)
+				createNoteOptionsModel.Finding = findingTypeModel
+				createNoteOptionsModel.Kpi = kpiTypeModel
+				createNoteOptionsModel.Card = cardModel
+				createNoteOptionsModel.Section = sectionModel
+				createNoteOptionsModel.TransactionID = core.StringPtr("testString")
+				createNoteOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := findingsService.CreateNote(createNoteOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
 	})
 	Describe(`ListNotes(listNotesOptions *ListNotesOptions) - Operation response error`, func() {
 		listNotesPath := "/v1/testString/providers/testString/notes"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -944,7 +937,6 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 		})
 	})
-
 	Describe(`ListNotes(listNotesOptions *ListNotesOptions)`, func() {
 		listNotesPath := "/v1/testString/providers/testString/notes"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -1097,10 +1089,48 @@ var _ = Describe(`FindingsV1`, func() {
 				testServer.Close()
 			})
 		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke ListNotes successfully`, func() {
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(findingsService).ToNot(BeNil())
+
+				// Construct an instance of the ListNotesOptions model
+				listNotesOptionsModel := new(findingsv1.ListNotesOptions)
+				listNotesOptionsModel.AccountID = core.StringPtr("testString")
+				listNotesOptionsModel.ProviderID = core.StringPtr("testString")
+				listNotesOptionsModel.TransactionID = core.StringPtr("testString")
+				listNotesOptionsModel.PageSize = core.Int64Ptr(int64(2))
+				listNotesOptionsModel.PageToken = core.StringPtr("testString")
+				listNotesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := findingsService.ListNotes(listNotesOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
 	})
 	Describe(`GetNote(getNoteOptions *GetNoteOptions) - Operation response error`, func() {
 		getNotePath := "/v1/testString/providers/testString/notes/testString"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -1148,7 +1178,6 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 		})
 	})
-
 	Describe(`GetNote(getNoteOptions *GetNoteOptions)`, func() {
 		getNotePath := "/v1/testString/providers/testString/notes/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -1294,10 +1323,47 @@ var _ = Describe(`FindingsV1`, func() {
 				testServer.Close()
 			})
 		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke GetNote successfully`, func() {
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(findingsService).ToNot(BeNil())
+
+				// Construct an instance of the GetNoteOptions model
+				getNoteOptionsModel := new(findingsv1.GetNoteOptions)
+				getNoteOptionsModel.AccountID = core.StringPtr("testString")
+				getNoteOptionsModel.ProviderID = core.StringPtr("testString")
+				getNoteOptionsModel.NoteID = core.StringPtr("testString")
+				getNoteOptionsModel.TransactionID = core.StringPtr("testString")
+				getNoteOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := findingsService.GetNote(getNoteOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
 	})
 	Describe(`UpdateNote(updateNoteOptions *UpdateNoteOptions) - Operation response error`, func() {
 		updateNotePath := "/v1/testString/providers/testString/notes/testString"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -1387,9 +1453,9 @@ var _ = Describe(`FindingsV1`, func() {
 				updateNoteOptionsModel.ID = core.StringPtr("testString")
 				updateNoteOptionsModel.ReportedBy = reporterModel
 				updateNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
-				updateNoteOptionsModel.ExpirationTime = CreateMockDateTime()
-				updateNoteOptionsModel.CreateTime = CreateMockDateTime()
-				updateNoteOptionsModel.UpdateTime = CreateMockDateTime()
+				updateNoteOptionsModel.ExpirationTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateNoteOptionsModel.Shared = core.BoolPtr(true)
 				updateNoteOptionsModel.Finding = findingTypeModel
 				updateNoteOptionsModel.Kpi = kpiTypeModel
@@ -1415,7 +1481,6 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 		})
 	})
-
 	Describe(`UpdateNote(updateNoteOptions *UpdateNoteOptions)`, func() {
 		updateNotePath := "/v1/testString/providers/testString/notes/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -1530,9 +1595,9 @@ var _ = Describe(`FindingsV1`, func() {
 				updateNoteOptionsModel.ID = core.StringPtr("testString")
 				updateNoteOptionsModel.ReportedBy = reporterModel
 				updateNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
-				updateNoteOptionsModel.ExpirationTime = CreateMockDateTime()
-				updateNoteOptionsModel.CreateTime = CreateMockDateTime()
-				updateNoteOptionsModel.UpdateTime = CreateMockDateTime()
+				updateNoteOptionsModel.ExpirationTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateNoteOptionsModel.Shared = core.BoolPtr(true)
 				updateNoteOptionsModel.Finding = findingTypeModel
 				updateNoteOptionsModel.Kpi = kpiTypeModel
@@ -1680,9 +1745,9 @@ var _ = Describe(`FindingsV1`, func() {
 				updateNoteOptionsModel.ID = core.StringPtr("testString")
 				updateNoteOptionsModel.ReportedBy = reporterModel
 				updateNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
-				updateNoteOptionsModel.ExpirationTime = CreateMockDateTime()
-				updateNoteOptionsModel.CreateTime = CreateMockDateTime()
-				updateNoteOptionsModel.UpdateTime = CreateMockDateTime()
+				updateNoteOptionsModel.ExpirationTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateNoteOptionsModel.Shared = core.BoolPtr(true)
 				updateNoteOptionsModel.Finding = findingTypeModel
 				updateNoteOptionsModel.Kpi = kpiTypeModel
@@ -1773,9 +1838,9 @@ var _ = Describe(`FindingsV1`, func() {
 				updateNoteOptionsModel.ID = core.StringPtr("testString")
 				updateNoteOptionsModel.ReportedBy = reporterModel
 				updateNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
-				updateNoteOptionsModel.ExpirationTime = CreateMockDateTime()
-				updateNoteOptionsModel.CreateTime = CreateMockDateTime()
-				updateNoteOptionsModel.UpdateTime = CreateMockDateTime()
+				updateNoteOptionsModel.ExpirationTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateNoteOptionsModel.Shared = core.BoolPtr(true)
 				updateNoteOptionsModel.Finding = findingTypeModel
 				updateNoteOptionsModel.Kpi = kpiTypeModel
@@ -1803,8 +1868,114 @@ var _ = Describe(`FindingsV1`, func() {
 				testServer.Close()
 			})
 		})
-	})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
 
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke UpdateNote successfully`, func() {
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(findingsService).ToNot(BeNil())
+
+				// Construct an instance of the Reporter model
+				reporterModel := new(findingsv1.Reporter)
+				reporterModel.ID = core.StringPtr("testString")
+				reporterModel.Title = core.StringPtr("testString")
+				reporterModel.URL = core.StringPtr("testString")
+
+				// Construct an instance of the APINoteRelatedURL model
+				apiNoteRelatedURLModel := new(findingsv1.APINoteRelatedURL)
+				apiNoteRelatedURLModel.Label = core.StringPtr("testString")
+				apiNoteRelatedURLModel.URL = core.StringPtr("testString")
+
+				// Construct an instance of the RemediationStep model
+				remediationStepModel := new(findingsv1.RemediationStep)
+				remediationStepModel.Title = core.StringPtr("testString")
+				remediationStepModel.URL = core.StringPtr("testString")
+
+				// Construct an instance of the FindingType model
+				findingTypeModel := new(findingsv1.FindingType)
+				findingTypeModel.Severity = core.StringPtr("LOW")
+				findingTypeModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
+
+				// Construct an instance of the KpiType model
+				kpiTypeModel := new(findingsv1.KpiType)
+				kpiTypeModel.AggregationType = core.StringPtr("SUM")
+
+				// Construct an instance of the ValueTypeFindingCountValueType model
+				valueTypeModel := new(findingsv1.ValueTypeFindingCountValueType)
+				valueTypeModel.Kind = core.StringPtr("FINDING_COUNT")
+				valueTypeModel.FindingNoteNames = []string{"testString"}
+				valueTypeModel.Text = core.StringPtr("testString")
+
+				// Construct an instance of the CardElementTimeSeriesCardElement model
+				cardElementModel := new(findingsv1.CardElementTimeSeriesCardElement)
+				cardElementModel.Text = core.StringPtr("testString")
+				cardElementModel.DefaultInterval = core.StringPtr("testString")
+				cardElementModel.Kind = core.StringPtr("TIME_SERIES")
+				cardElementModel.DefaultTimeRange = core.StringPtr("1d")
+				cardElementModel.ValueTypes = []findingsv1.ValueTypeIntf{valueTypeModel}
+
+				// Construct an instance of the Card model
+				cardModel := new(findingsv1.Card)
+				cardModel.Section = core.StringPtr("testString")
+				cardModel.Title = core.StringPtr("testString")
+				cardModel.Subtitle = core.StringPtr("testString")
+				cardModel.Order = core.Int64Ptr(int64(1))
+				cardModel.FindingNoteNames = []string{"testString"}
+				cardModel.RequiresConfiguration = core.BoolPtr(true)
+				cardModel.BadgeText = core.StringPtr("testString")
+				cardModel.BadgeImage = core.StringPtr("testString")
+				cardModel.Elements = []findingsv1.CardElementIntf{cardElementModel}
+
+				// Construct an instance of the Section model
+				sectionModel := new(findingsv1.Section)
+				sectionModel.Title = core.StringPtr("testString")
+				sectionModel.Image = core.StringPtr("testString")
+
+				// Construct an instance of the UpdateNoteOptions model
+				updateNoteOptionsModel := new(findingsv1.UpdateNoteOptions)
+				updateNoteOptionsModel.AccountID = core.StringPtr("testString")
+				updateNoteOptionsModel.ProviderID = core.StringPtr("testString")
+				updateNoteOptionsModel.NoteID = core.StringPtr("testString")
+				updateNoteOptionsModel.ShortDescription = core.StringPtr("testString")
+				updateNoteOptionsModel.LongDescription = core.StringPtr("testString")
+				updateNoteOptionsModel.Kind = core.StringPtr("FINDING")
+				updateNoteOptionsModel.ID = core.StringPtr("testString")
+				updateNoteOptionsModel.ReportedBy = reporterModel
+				updateNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
+				updateNoteOptionsModel.ExpirationTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateNoteOptionsModel.Shared = core.BoolPtr(true)
+				updateNoteOptionsModel.Finding = findingTypeModel
+				updateNoteOptionsModel.Kpi = kpiTypeModel
+				updateNoteOptionsModel.Card = cardModel
+				updateNoteOptionsModel.Section = sectionModel
+				updateNoteOptionsModel.TransactionID = core.StringPtr("testString")
+				updateNoteOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := findingsService.UpdateNote(updateNoteOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
 	Describe(`DeleteNote(deleteNoteOptions *DeleteNoteOptions)`, func() {
 		deleteNotePath := "/v1/testString/providers/testString/notes/testString"
 		Context(`Using mock server endpoint`, func() {
@@ -1883,7 +2054,7 @@ var _ = Describe(`FindingsV1`, func() {
 	})
 	Describe(`GetOccurrenceNote(getOccurrenceNoteOptions *GetOccurrenceNoteOptions) - Operation response error`, func() {
 		getOccurrenceNotePath := "/v1/testString/providers/testString/occurrences/testString/note"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -1931,7 +2102,6 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 		})
 	})
-
 	Describe(`GetOccurrenceNote(getOccurrenceNoteOptions *GetOccurrenceNoteOptions)`, func() {
 		getOccurrenceNotePath := "/v1/testString/providers/testString/occurrences/testString/note"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -2077,138 +2247,47 @@ var _ = Describe(`FindingsV1`, func() {
 				testServer.Close()
 			})
 		})
-	})
-	Describe(`Service constructor tests`, func() {
-		It(`Instantiate service client`, func() {
-			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
-				Authenticator: &core.NoAuthAuthenticator{},
-			})
-			Expect(findingsService).ToNot(BeNil())
-			Expect(serviceErr).To(BeNil())
-		})
-		It(`Instantiate service client with error: Invalid URL`, func() {
-			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
-				URL: "{BAD_URL_STRING",
-			})
-			Expect(findingsService).To(BeNil())
-			Expect(serviceErr).ToNot(BeNil())
-		})
-		It(`Instantiate service client with error: Invalid Auth`, func() {
-			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
-				URL: "https://findingsv1/api",
-				Authenticator: &core.BasicAuthenticator{
-					Username: "",
-					Password: "",
-				},
-			})
-			Expect(findingsService).To(BeNil())
-			Expect(serviceErr).ToNot(BeNil())
-		})
-	})
-	Describe(`Service constructor tests using external config`, func() {
-		Context(`Using external config, construct service client instances`, func() {
-			// Map containing environment variables used in testing.
-			var testEnvironment = map[string]string{
-				"FINDINGS_URL": "https://findingsv1/api",
-				"FINDINGS_AUTH_TYPE": "noauth",
-			}
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
 
-			It(`Create service client using external config successfully`, func() {
-				SetTestEnvironment(testEnvironment)
-				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke GetOccurrenceNote successfully`, func() {
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
 				})
-				Expect(findingsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
-				ClearTestEnvironment(testEnvironment)
-
-				clone := findingsService.Clone()
-				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != findingsService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(findingsService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(findingsService.Service.Options.Authenticator))
-			})
-			It(`Create service client using external config and set url from constructor successfully`, func() {
-				SetTestEnvironment(testEnvironment)
-				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
-					URL: "https://testService/api",
-				})
 				Expect(findingsService).ToNot(BeNil())
-				Expect(serviceErr).To(BeNil())
-				Expect(findingsService.Service.GetServiceURL()).To(Equal("https://testService/api"))
-				ClearTestEnvironment(testEnvironment)
 
-				clone := findingsService.Clone()
-				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != findingsService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(findingsService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(findingsService.Service.Options.Authenticator))
-			})
-			It(`Create service client using external config and set url programatically successfully`, func() {
-				SetTestEnvironment(testEnvironment)
-				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
-				})
-				err := findingsService.SetServiceURL("https://testService/api")
-				Expect(err).To(BeNil())
-				Expect(findingsService).ToNot(BeNil())
-				Expect(serviceErr).To(BeNil())
-				Expect(findingsService.Service.GetServiceURL()).To(Equal("https://testService/api"))
-				ClearTestEnvironment(testEnvironment)
+				// Construct an instance of the GetOccurrenceNoteOptions model
+				getOccurrenceNoteOptionsModel := new(findingsv1.GetOccurrenceNoteOptions)
+				getOccurrenceNoteOptionsModel.AccountID = core.StringPtr("testString")
+				getOccurrenceNoteOptionsModel.ProviderID = core.StringPtr("testString")
+				getOccurrenceNoteOptionsModel.OccurrenceID = core.StringPtr("testString")
+				getOccurrenceNoteOptionsModel.TransactionID = core.StringPtr("testString")
+				getOccurrenceNoteOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
-				clone := findingsService.Clone()
-				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != findingsService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(findingsService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(findingsService.Service.Options.Authenticator))
-			})
-		})
-		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
-			// Map containing environment variables used in testing.
-			var testEnvironment = map[string]string{
-				"FINDINGS_URL": "https://findingsv1/api",
-				"FINDINGS_AUTH_TYPE": "someOtherAuth",
-			}
+				// Invoke operation
+				result, response, operationErr := findingsService.GetOccurrenceNote(getOccurrenceNoteOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
 
-			SetTestEnvironment(testEnvironment)
-			findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
+				// Verify a nil result
+				Expect(result).To(BeNil())
 			})
-
-			It(`Instantiate service client with error`, func() {
-				Expect(findingsService).To(BeNil())
-				Expect(serviceErr).ToNot(BeNil())
-				ClearTestEnvironment(testEnvironment)
+			AfterEach(func() {
+				testServer.Close()
 			})
-		})
-		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
-			// Map containing environment variables used in testing.
-			var testEnvironment = map[string]string{
-				"FINDINGS_AUTH_TYPE":   "NOAuth",
-			}
-
-			SetTestEnvironment(testEnvironment)
-			findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
-				URL: "{BAD_URL_STRING",
-			})
-
-			It(`Instantiate service client with error`, func() {
-				Expect(findingsService).To(BeNil())
-				Expect(serviceErr).ToNot(BeNil())
-				ClearTestEnvironment(testEnvironment)
-			})
-		})
-	})
-	Describe(`Regional endpoint tests`, func() {
-		It(`GetServiceURLForRegion(region string)`, func() {
-			var url string
-			var err error
-			url, err = findingsv1.GetServiceURLForRegion("INVALID_REGION")
-			Expect(url).To(BeEmpty())
-			Expect(err).ToNot(BeNil())
-			fmt.Fprintf(GinkgoWriter, "Expected error: %s\n", err.Error())
 		})
 	})
 	Describe(`CreateOccurrence(createOccurrenceOptions *CreateOccurrenceOptions) - Operation response error`, func() {
 		createOccurrencePath := "/v1/testString/providers/testString/occurrences"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -2292,8 +2371,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createOccurrenceOptionsModel.ID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.ResourceURL = core.StringPtr("testString")
 				createOccurrenceOptionsModel.Remediation = core.StringPtr("testString")
-				createOccurrenceOptionsModel.CreateTime = CreateMockDateTime()
-				createOccurrenceOptionsModel.UpdateTime = CreateMockDateTime()
+				createOccurrenceOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createOccurrenceOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createOccurrenceOptionsModel.Context = contextModel
 				createOccurrenceOptionsModel.Finding = findingModel
 				createOccurrenceOptionsModel.Kpi = kpiModel
@@ -2319,7 +2398,6 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 		})
 	})
-
 	Describe(`CreateOccurrence(createOccurrenceOptions *CreateOccurrenceOptions)`, func() {
 		createOccurrencePath := "/v1/testString/providers/testString/occurrences"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -2428,8 +2506,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createOccurrenceOptionsModel.ID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.ResourceURL = core.StringPtr("testString")
 				createOccurrenceOptionsModel.Remediation = core.StringPtr("testString")
-				createOccurrenceOptionsModel.CreateTime = CreateMockDateTime()
-				createOccurrenceOptionsModel.UpdateTime = CreateMockDateTime()
+				createOccurrenceOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createOccurrenceOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createOccurrenceOptionsModel.Context = contextModel
 				createOccurrenceOptionsModel.Finding = findingModel
 				createOccurrenceOptionsModel.Kpi = kpiModel
@@ -2571,8 +2649,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createOccurrenceOptionsModel.ID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.ResourceURL = core.StringPtr("testString")
 				createOccurrenceOptionsModel.Remediation = core.StringPtr("testString")
-				createOccurrenceOptionsModel.CreateTime = CreateMockDateTime()
-				createOccurrenceOptionsModel.UpdateTime = CreateMockDateTime()
+				createOccurrenceOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createOccurrenceOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createOccurrenceOptionsModel.Context = contextModel
 				createOccurrenceOptionsModel.Finding = findingModel
 				createOccurrenceOptionsModel.Kpi = kpiModel
@@ -2655,8 +2733,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createOccurrenceOptionsModel.ID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.ResourceURL = core.StringPtr("testString")
 				createOccurrenceOptionsModel.Remediation = core.StringPtr("testString")
-				createOccurrenceOptionsModel.CreateTime = CreateMockDateTime()
-				createOccurrenceOptionsModel.UpdateTime = CreateMockDateTime()
+				createOccurrenceOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createOccurrenceOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createOccurrenceOptionsModel.Context = contextModel
 				createOccurrenceOptionsModel.Finding = findingModel
 				createOccurrenceOptionsModel.Kpi = kpiModel
@@ -2684,10 +2762,108 @@ var _ = Describe(`FindingsV1`, func() {
 				testServer.Close()
 			})
 		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke CreateOccurrence successfully`, func() {
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(findingsService).ToNot(BeNil())
+
+				// Construct an instance of the Context model
+				contextModel := new(findingsv1.Context)
+				contextModel.Region = core.StringPtr("testString")
+				contextModel.ResourceCRN = core.StringPtr("testString")
+				contextModel.ResourceID = core.StringPtr("testString")
+				contextModel.ResourceName = core.StringPtr("testString")
+				contextModel.ResourceType = core.StringPtr("testString")
+				contextModel.ServiceCRN = core.StringPtr("testString")
+				contextModel.ServiceName = core.StringPtr("testString")
+				contextModel.EnvironmentName = core.StringPtr("testString")
+				contextModel.ComponentName = core.StringPtr("testString")
+				contextModel.ToolchainID = core.StringPtr("testString")
+
+				// Construct an instance of the RemediationStep model
+				remediationStepModel := new(findingsv1.RemediationStep)
+				remediationStepModel.Title = core.StringPtr("testString")
+				remediationStepModel.URL = core.StringPtr("testString")
+
+				// Construct an instance of the SocketAddress model
+				socketAddressModel := new(findingsv1.SocketAddress)
+				socketAddressModel.Address = core.StringPtr("testString")
+				socketAddressModel.Port = core.Int64Ptr(int64(38))
+
+				// Construct an instance of the NetworkConnection model
+				networkConnectionModel := new(findingsv1.NetworkConnection)
+				networkConnectionModel.Direction = core.StringPtr("testString")
+				networkConnectionModel.Protocol = core.StringPtr("testString")
+				networkConnectionModel.Client = socketAddressModel
+				networkConnectionModel.Server = socketAddressModel
+
+				// Construct an instance of the DataTransferred model
+				dataTransferredModel := new(findingsv1.DataTransferred)
+				dataTransferredModel.ClientBytes = core.Int64Ptr(int64(38))
+				dataTransferredModel.ServerBytes = core.Int64Ptr(int64(38))
+				dataTransferredModel.ClientPackets = core.Int64Ptr(int64(38))
+				dataTransferredModel.ServerPackets = core.Int64Ptr(int64(38))
+
+				// Construct an instance of the Finding model
+				findingModel := new(findingsv1.Finding)
+				findingModel.Severity = core.StringPtr("LOW")
+				findingModel.Certainty = core.StringPtr("LOW")
+				findingModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
+				findingModel.NetworkConnection = networkConnectionModel
+				findingModel.DataTransferred = dataTransferredModel
+
+				// Construct an instance of the Kpi model
+				kpiModel := new(findingsv1.Kpi)
+				kpiModel.Value = core.Float64Ptr(float64(72.5))
+				kpiModel.Total = core.Float64Ptr(float64(72.5))
+
+				// Construct an instance of the CreateOccurrenceOptions model
+				createOccurrenceOptionsModel := new(findingsv1.CreateOccurrenceOptions)
+				createOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
+				createOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
+				createOccurrenceOptionsModel.NoteName = core.StringPtr("testString")
+				createOccurrenceOptionsModel.Kind = core.StringPtr("FINDING")
+				createOccurrenceOptionsModel.ID = core.StringPtr("testString")
+				createOccurrenceOptionsModel.ResourceURL = core.StringPtr("testString")
+				createOccurrenceOptionsModel.Remediation = core.StringPtr("testString")
+				createOccurrenceOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createOccurrenceOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createOccurrenceOptionsModel.Context = contextModel
+				createOccurrenceOptionsModel.Finding = findingModel
+				createOccurrenceOptionsModel.Kpi = kpiModel
+				createOccurrenceOptionsModel.ReferenceData = map[string]interface{}{"anyKey": "anyValue"}
+				createOccurrenceOptionsModel.ReplaceIfExists = core.BoolPtr(true)
+				createOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
+				createOccurrenceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := findingsService.CreateOccurrence(createOccurrenceOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
 	})
 	Describe(`ListOccurrences(listOccurrencesOptions *ListOccurrencesOptions) - Operation response error`, func() {
 		listOccurrencesPath := "/v1/testString/providers/testString/occurrences"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -2738,7 +2914,6 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 		})
 	})
-
 	Describe(`ListOccurrences(listOccurrencesOptions *ListOccurrencesOptions)`, func() {
 		listOccurrencesPath := "/v1/testString/providers/testString/occurrences"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -2891,10 +3066,48 @@ var _ = Describe(`FindingsV1`, func() {
 				testServer.Close()
 			})
 		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke ListOccurrences successfully`, func() {
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(findingsService).ToNot(BeNil())
+
+				// Construct an instance of the ListOccurrencesOptions model
+				listOccurrencesOptionsModel := new(findingsv1.ListOccurrencesOptions)
+				listOccurrencesOptionsModel.AccountID = core.StringPtr("testString")
+				listOccurrencesOptionsModel.ProviderID = core.StringPtr("testString")
+				listOccurrencesOptionsModel.TransactionID = core.StringPtr("testString")
+				listOccurrencesOptionsModel.PageSize = core.Int64Ptr(int64(2))
+				listOccurrencesOptionsModel.PageToken = core.StringPtr("testString")
+				listOccurrencesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := findingsService.ListOccurrences(listOccurrencesOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
 	})
 	Describe(`ListNoteOccurrences(listNoteOccurrencesOptions *ListNoteOccurrencesOptions) - Operation response error`, func() {
 		listNoteOccurrencesPath := "/v1/testString/providers/testString/notes/testString/occurrences"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -2946,7 +3159,6 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 		})
 	})
-
 	Describe(`ListNoteOccurrences(listNoteOccurrencesOptions *ListNoteOccurrencesOptions)`, func() {
 		listNoteOccurrencesPath := "/v1/testString/providers/testString/notes/testString/occurrences"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -3102,10 +3314,49 @@ var _ = Describe(`FindingsV1`, func() {
 				testServer.Close()
 			})
 		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke ListNoteOccurrences successfully`, func() {
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(findingsService).ToNot(BeNil())
+
+				// Construct an instance of the ListNoteOccurrencesOptions model
+				listNoteOccurrencesOptionsModel := new(findingsv1.ListNoteOccurrencesOptions)
+				listNoteOccurrencesOptionsModel.AccountID = core.StringPtr("testString")
+				listNoteOccurrencesOptionsModel.ProviderID = core.StringPtr("testString")
+				listNoteOccurrencesOptionsModel.NoteID = core.StringPtr("testString")
+				listNoteOccurrencesOptionsModel.TransactionID = core.StringPtr("testString")
+				listNoteOccurrencesOptionsModel.PageSize = core.Int64Ptr(int64(2))
+				listNoteOccurrencesOptionsModel.PageToken = core.StringPtr("testString")
+				listNoteOccurrencesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := findingsService.ListNoteOccurrences(listNoteOccurrencesOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
 	})
 	Describe(`GetOccurrence(getOccurrenceOptions *GetOccurrenceOptions) - Operation response error`, func() {
 		getOccurrencePath := "/v1/testString/providers/testString/occurrences/testString"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -3153,7 +3404,6 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 		})
 	})
-
 	Describe(`GetOccurrence(getOccurrenceOptions *GetOccurrenceOptions)`, func() {
 		getOccurrencePath := "/v1/testString/providers/testString/occurrences/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -3299,10 +3549,47 @@ var _ = Describe(`FindingsV1`, func() {
 				testServer.Close()
 			})
 		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke GetOccurrence successfully`, func() {
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(findingsService).ToNot(BeNil())
+
+				// Construct an instance of the GetOccurrenceOptions model
+				getOccurrenceOptionsModel := new(findingsv1.GetOccurrenceOptions)
+				getOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
+				getOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
+				getOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
+				getOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
+				getOccurrenceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := findingsService.GetOccurrence(getOccurrenceOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
 	})
 	Describe(`UpdateOccurrence(updateOccurrenceOptions *UpdateOccurrenceOptions) - Operation response error`, func() {
 		updateOccurrencePath := "/v1/testString/providers/testString/occurrences/testString"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -3385,8 +3672,8 @@ var _ = Describe(`FindingsV1`, func() {
 				updateOccurrenceOptionsModel.ID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.ResourceURL = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.Remediation = core.StringPtr("testString")
-				updateOccurrenceOptionsModel.CreateTime = CreateMockDateTime()
-				updateOccurrenceOptionsModel.UpdateTime = CreateMockDateTime()
+				updateOccurrenceOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateOccurrenceOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateOccurrenceOptionsModel.Context = contextModel
 				updateOccurrenceOptionsModel.Finding = findingModel
 				updateOccurrenceOptionsModel.Kpi = kpiModel
@@ -3411,7 +3698,6 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 		})
 	})
-
 	Describe(`UpdateOccurrence(updateOccurrenceOptions *UpdateOccurrenceOptions)`, func() {
 		updateOccurrencePath := "/v1/testString/providers/testString/occurrences/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -3519,8 +3805,8 @@ var _ = Describe(`FindingsV1`, func() {
 				updateOccurrenceOptionsModel.ID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.ResourceURL = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.Remediation = core.StringPtr("testString")
-				updateOccurrenceOptionsModel.CreateTime = CreateMockDateTime()
-				updateOccurrenceOptionsModel.UpdateTime = CreateMockDateTime()
+				updateOccurrenceOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateOccurrenceOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateOccurrenceOptionsModel.Context = contextModel
 				updateOccurrenceOptionsModel.Finding = findingModel
 				updateOccurrenceOptionsModel.Kpi = kpiModel
@@ -3660,8 +3946,8 @@ var _ = Describe(`FindingsV1`, func() {
 				updateOccurrenceOptionsModel.ID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.ResourceURL = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.Remediation = core.StringPtr("testString")
-				updateOccurrenceOptionsModel.CreateTime = CreateMockDateTime()
-				updateOccurrenceOptionsModel.UpdateTime = CreateMockDateTime()
+				updateOccurrenceOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateOccurrenceOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateOccurrenceOptionsModel.Context = contextModel
 				updateOccurrenceOptionsModel.Finding = findingModel
 				updateOccurrenceOptionsModel.Kpi = kpiModel
@@ -3744,8 +4030,8 @@ var _ = Describe(`FindingsV1`, func() {
 				updateOccurrenceOptionsModel.ID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.ResourceURL = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.Remediation = core.StringPtr("testString")
-				updateOccurrenceOptionsModel.CreateTime = CreateMockDateTime()
-				updateOccurrenceOptionsModel.UpdateTime = CreateMockDateTime()
+				updateOccurrenceOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateOccurrenceOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateOccurrenceOptionsModel.Context = contextModel
 				updateOccurrenceOptionsModel.Finding = findingModel
 				updateOccurrenceOptionsModel.Kpi = kpiModel
@@ -3772,8 +4058,105 @@ var _ = Describe(`FindingsV1`, func() {
 				testServer.Close()
 			})
 		})
-	})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
 
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke UpdateOccurrence successfully`, func() {
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(findingsService).ToNot(BeNil())
+
+				// Construct an instance of the Context model
+				contextModel := new(findingsv1.Context)
+				contextModel.Region = core.StringPtr("testString")
+				contextModel.ResourceCRN = core.StringPtr("testString")
+				contextModel.ResourceID = core.StringPtr("testString")
+				contextModel.ResourceName = core.StringPtr("testString")
+				contextModel.ResourceType = core.StringPtr("testString")
+				contextModel.ServiceCRN = core.StringPtr("testString")
+				contextModel.ServiceName = core.StringPtr("testString")
+				contextModel.EnvironmentName = core.StringPtr("testString")
+				contextModel.ComponentName = core.StringPtr("testString")
+				contextModel.ToolchainID = core.StringPtr("testString")
+
+				// Construct an instance of the RemediationStep model
+				remediationStepModel := new(findingsv1.RemediationStep)
+				remediationStepModel.Title = core.StringPtr("testString")
+				remediationStepModel.URL = core.StringPtr("testString")
+
+				// Construct an instance of the SocketAddress model
+				socketAddressModel := new(findingsv1.SocketAddress)
+				socketAddressModel.Address = core.StringPtr("testString")
+				socketAddressModel.Port = core.Int64Ptr(int64(38))
+
+				// Construct an instance of the NetworkConnection model
+				networkConnectionModel := new(findingsv1.NetworkConnection)
+				networkConnectionModel.Direction = core.StringPtr("testString")
+				networkConnectionModel.Protocol = core.StringPtr("testString")
+				networkConnectionModel.Client = socketAddressModel
+				networkConnectionModel.Server = socketAddressModel
+
+				// Construct an instance of the DataTransferred model
+				dataTransferredModel := new(findingsv1.DataTransferred)
+				dataTransferredModel.ClientBytes = core.Int64Ptr(int64(38))
+				dataTransferredModel.ServerBytes = core.Int64Ptr(int64(38))
+				dataTransferredModel.ClientPackets = core.Int64Ptr(int64(38))
+				dataTransferredModel.ServerPackets = core.Int64Ptr(int64(38))
+
+				// Construct an instance of the Finding model
+				findingModel := new(findingsv1.Finding)
+				findingModel.Severity = core.StringPtr("LOW")
+				findingModel.Certainty = core.StringPtr("LOW")
+				findingModel.NextSteps = []findingsv1.RemediationStep{*remediationStepModel}
+				findingModel.NetworkConnection = networkConnectionModel
+				findingModel.DataTransferred = dataTransferredModel
+
+				// Construct an instance of the Kpi model
+				kpiModel := new(findingsv1.Kpi)
+				kpiModel.Value = core.Float64Ptr(float64(72.5))
+				kpiModel.Total = core.Float64Ptr(float64(72.5))
+
+				// Construct an instance of the UpdateOccurrenceOptions model
+				updateOccurrenceOptionsModel := new(findingsv1.UpdateOccurrenceOptions)
+				updateOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
+				updateOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
+				updateOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
+				updateOccurrenceOptionsModel.NoteName = core.StringPtr("testString")
+				updateOccurrenceOptionsModel.Kind = core.StringPtr("FINDING")
+				updateOccurrenceOptionsModel.ID = core.StringPtr("testString")
+				updateOccurrenceOptionsModel.ResourceURL = core.StringPtr("testString")
+				updateOccurrenceOptionsModel.Remediation = core.StringPtr("testString")
+				updateOccurrenceOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateOccurrenceOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateOccurrenceOptionsModel.Context = contextModel
+				updateOccurrenceOptionsModel.Finding = findingModel
+				updateOccurrenceOptionsModel.Kpi = kpiModel
+				updateOccurrenceOptionsModel.ReferenceData = map[string]interface{}{"anyKey": "anyValue"}
+				updateOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
+				updateOccurrenceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := findingsService.UpdateOccurrence(updateOccurrenceOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
 	Describe(`DeleteOccurrence(deleteOccurrenceOptions *DeleteOccurrenceOptions)`, func() {
 		deleteOccurrencePath := "/v1/testString/providers/testString/occurrences/testString"
 		Context(`Using mock server endpoint`, func() {
@@ -3850,137 +4233,9 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 		})
 	})
-	Describe(`Service constructor tests`, func() {
-		It(`Instantiate service client`, func() {
-			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
-				Authenticator: &core.NoAuthAuthenticator{},
-			})
-			Expect(findingsService).ToNot(BeNil())
-			Expect(serviceErr).To(BeNil())
-		})
-		It(`Instantiate service client with error: Invalid URL`, func() {
-			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
-				URL: "{BAD_URL_STRING",
-			})
-			Expect(findingsService).To(BeNil())
-			Expect(serviceErr).ToNot(BeNil())
-		})
-		It(`Instantiate service client with error: Invalid Auth`, func() {
-			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
-				URL: "https://findingsv1/api",
-				Authenticator: &core.BasicAuthenticator{
-					Username: "",
-					Password: "",
-				},
-			})
-			Expect(findingsService).To(BeNil())
-			Expect(serviceErr).ToNot(BeNil())
-		})
-	})
-	Describe(`Service constructor tests using external config`, func() {
-		Context(`Using external config, construct service client instances`, func() {
-			// Map containing environment variables used in testing.
-			var testEnvironment = map[string]string{
-				"FINDINGS_URL": "https://findingsv1/api",
-				"FINDINGS_AUTH_TYPE": "noauth",
-			}
-
-			It(`Create service client using external config successfully`, func() {
-				SetTestEnvironment(testEnvironment)
-				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
-				})
-				Expect(findingsService).ToNot(BeNil())
-				Expect(serviceErr).To(BeNil())
-				ClearTestEnvironment(testEnvironment)
-
-				clone := findingsService.Clone()
-				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != findingsService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(findingsService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(findingsService.Service.Options.Authenticator))
-			})
-			It(`Create service client using external config and set url from constructor successfully`, func() {
-				SetTestEnvironment(testEnvironment)
-				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
-					URL: "https://testService/api",
-				})
-				Expect(findingsService).ToNot(BeNil())
-				Expect(serviceErr).To(BeNil())
-				Expect(findingsService.Service.GetServiceURL()).To(Equal("https://testService/api"))
-				ClearTestEnvironment(testEnvironment)
-
-				clone := findingsService.Clone()
-				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != findingsService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(findingsService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(findingsService.Service.Options.Authenticator))
-			})
-			It(`Create service client using external config and set url programatically successfully`, func() {
-				SetTestEnvironment(testEnvironment)
-				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
-				})
-				err := findingsService.SetServiceURL("https://testService/api")
-				Expect(err).To(BeNil())
-				Expect(findingsService).ToNot(BeNil())
-				Expect(serviceErr).To(BeNil())
-				Expect(findingsService.Service.GetServiceURL()).To(Equal("https://testService/api"))
-				ClearTestEnvironment(testEnvironment)
-
-				clone := findingsService.Clone()
-				Expect(clone).ToNot(BeNil())
-				Expect(clone.Service != findingsService.Service).To(BeTrue())
-				Expect(clone.GetServiceURL()).To(Equal(findingsService.GetServiceURL()))
-				Expect(clone.Service.Options.Authenticator).To(Equal(findingsService.Service.Options.Authenticator))
-			})
-		})
-		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
-			// Map containing environment variables used in testing.
-			var testEnvironment = map[string]string{
-				"FINDINGS_URL": "https://findingsv1/api",
-				"FINDINGS_AUTH_TYPE": "someOtherAuth",
-			}
-
-			SetTestEnvironment(testEnvironment)
-			findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
-			})
-
-			It(`Instantiate service client with error`, func() {
-				Expect(findingsService).To(BeNil())
-				Expect(serviceErr).ToNot(BeNil())
-				ClearTestEnvironment(testEnvironment)
-			})
-		})
-		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
-			// Map containing environment variables used in testing.
-			var testEnvironment = map[string]string{
-				"FINDINGS_AUTH_TYPE":   "NOAuth",
-			}
-
-			SetTestEnvironment(testEnvironment)
-			findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
-				URL: "{BAD_URL_STRING",
-			})
-
-			It(`Instantiate service client with error`, func() {
-				Expect(findingsService).To(BeNil())
-				Expect(serviceErr).ToNot(BeNil())
-				ClearTestEnvironment(testEnvironment)
-			})
-		})
-	})
-	Describe(`Regional endpoint tests`, func() {
-		It(`GetServiceURLForRegion(region string)`, func() {
-			var url string
-			var err error
-			url, err = findingsv1.GetServiceURLForRegion("INVALID_REGION")
-			Expect(url).To(BeEmpty())
-			Expect(err).ToNot(BeNil())
-			fmt.Fprintf(GinkgoWriter, "Expected error: %s\n", err.Error())
-		})
-	})
 	Describe(`ListProviders(listProvidersOptions *ListProvidersOptions) - Operation response error`, func() {
 		listProvidersPath := "/v1/testString/providers"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -4034,7 +4289,6 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 		})
 	})
-
 	Describe(`ListProviders(listProvidersOptions *ListProvidersOptions)`, func() {
 		listProvidersPath := "/v1/testString/providers"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -4194,6 +4448,45 @@ var _ = Describe(`FindingsV1`, func() {
 				testServer.Close()
 			})
 		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke ListProviders successfully`, func() {
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(findingsService).ToNot(BeNil())
+
+				// Construct an instance of the ListProvidersOptions model
+				listProvidersOptionsModel := new(findingsv1.ListProvidersOptions)
+				listProvidersOptionsModel.AccountID = core.StringPtr("testString")
+				listProvidersOptionsModel.TransactionID = core.StringPtr("testString")
+				listProvidersOptionsModel.Limit = core.Int64Ptr(int64(2))
+				listProvidersOptionsModel.Skip = core.Int64Ptr(int64(38))
+				listProvidersOptionsModel.StartProviderID = core.StringPtr("testString")
+				listProvidersOptionsModel.EndProviderID = core.StringPtr("testString")
+				listProvidersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := findingsService.ListProviders(listProvidersOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
 	})
 	Describe(`Model constructor tests`, func() {
 		Context(`Using a service client instance`, func() {
@@ -4323,9 +4616,9 @@ var _ = Describe(`FindingsV1`, func() {
 				createNoteOptionsModel.SetID("testString")
 				createNoteOptionsModel.SetReportedBy(reporterModel)
 				createNoteOptionsModel.SetRelatedURL([]findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel})
-				createNoteOptionsModel.SetExpirationTime(CreateMockDateTime())
-				createNoteOptionsModel.SetCreateTime(CreateMockDateTime())
-				createNoteOptionsModel.SetUpdateTime(CreateMockDateTime())
+				createNoteOptionsModel.SetExpirationTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
+				createNoteOptionsModel.SetCreateTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
+				createNoteOptionsModel.SetUpdateTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
 				createNoteOptionsModel.SetShared(true)
 				createNoteOptionsModel.SetFinding(findingTypeModel)
 				createNoteOptionsModel.SetKpi(kpiTypeModel)
@@ -4342,9 +4635,9 @@ var _ = Describe(`FindingsV1`, func() {
 				Expect(createNoteOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(createNoteOptionsModel.ReportedBy).To(Equal(reporterModel))
 				Expect(createNoteOptionsModel.RelatedURL).To(Equal([]findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}))
-				Expect(createNoteOptionsModel.ExpirationTime).To(Equal(CreateMockDateTime()))
-				Expect(createNoteOptionsModel.CreateTime).To(Equal(CreateMockDateTime()))
-				Expect(createNoteOptionsModel.UpdateTime).To(Equal(CreateMockDateTime()))
+				Expect(createNoteOptionsModel.ExpirationTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
+				Expect(createNoteOptionsModel.CreateTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
+				Expect(createNoteOptionsModel.UpdateTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
 				Expect(createNoteOptionsModel.Shared).To(Equal(core.BoolPtr(true)))
 				Expect(createNoteOptionsModel.Finding).To(Equal(findingTypeModel))
 				Expect(createNoteOptionsModel.Kpi).To(Equal(kpiTypeModel))
@@ -4454,8 +4747,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createOccurrenceOptionsModel.SetID("testString")
 				createOccurrenceOptionsModel.SetResourceURL("testString")
 				createOccurrenceOptionsModel.SetRemediation("testString")
-				createOccurrenceOptionsModel.SetCreateTime(CreateMockDateTime())
-				createOccurrenceOptionsModel.SetUpdateTime(CreateMockDateTime())
+				createOccurrenceOptionsModel.SetCreateTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
+				createOccurrenceOptionsModel.SetUpdateTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
 				createOccurrenceOptionsModel.SetContext(contextModel)
 				createOccurrenceOptionsModel.SetFinding(findingModel)
 				createOccurrenceOptionsModel.SetKpi(kpiModel)
@@ -4471,8 +4764,8 @@ var _ = Describe(`FindingsV1`, func() {
 				Expect(createOccurrenceOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(createOccurrenceOptionsModel.ResourceURL).To(Equal(core.StringPtr("testString")))
 				Expect(createOccurrenceOptionsModel.Remediation).To(Equal(core.StringPtr("testString")))
-				Expect(createOccurrenceOptionsModel.CreateTime).To(Equal(CreateMockDateTime()))
-				Expect(createOccurrenceOptionsModel.UpdateTime).To(Equal(CreateMockDateTime()))
+				Expect(createOccurrenceOptionsModel.CreateTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
+				Expect(createOccurrenceOptionsModel.UpdateTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
 				Expect(createOccurrenceOptionsModel.Context).To(Equal(contextModel))
 				Expect(createOccurrenceOptionsModel.Finding).To(Equal(findingModel))
 				Expect(createOccurrenceOptionsModel.Kpi).To(Equal(kpiModel))
@@ -4819,9 +5112,9 @@ var _ = Describe(`FindingsV1`, func() {
 				updateNoteOptionsModel.SetID("testString")
 				updateNoteOptionsModel.SetReportedBy(reporterModel)
 				updateNoteOptionsModel.SetRelatedURL([]findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel})
-				updateNoteOptionsModel.SetExpirationTime(CreateMockDateTime())
-				updateNoteOptionsModel.SetCreateTime(CreateMockDateTime())
-				updateNoteOptionsModel.SetUpdateTime(CreateMockDateTime())
+				updateNoteOptionsModel.SetExpirationTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
+				updateNoteOptionsModel.SetCreateTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
+				updateNoteOptionsModel.SetUpdateTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
 				updateNoteOptionsModel.SetShared(true)
 				updateNoteOptionsModel.SetFinding(findingTypeModel)
 				updateNoteOptionsModel.SetKpi(kpiTypeModel)
@@ -4839,9 +5132,9 @@ var _ = Describe(`FindingsV1`, func() {
 				Expect(updateNoteOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(updateNoteOptionsModel.ReportedBy).To(Equal(reporterModel))
 				Expect(updateNoteOptionsModel.RelatedURL).To(Equal([]findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}))
-				Expect(updateNoteOptionsModel.ExpirationTime).To(Equal(CreateMockDateTime()))
-				Expect(updateNoteOptionsModel.CreateTime).To(Equal(CreateMockDateTime()))
-				Expect(updateNoteOptionsModel.UpdateTime).To(Equal(CreateMockDateTime()))
+				Expect(updateNoteOptionsModel.ExpirationTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
+				Expect(updateNoteOptionsModel.CreateTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
+				Expect(updateNoteOptionsModel.UpdateTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
 				Expect(updateNoteOptionsModel.Shared).To(Equal(core.BoolPtr(true)))
 				Expect(updateNoteOptionsModel.Finding).To(Equal(findingTypeModel))
 				Expect(updateNoteOptionsModel.Kpi).To(Equal(kpiTypeModel))
@@ -4953,8 +5246,8 @@ var _ = Describe(`FindingsV1`, func() {
 				updateOccurrenceOptionsModel.SetID("testString")
 				updateOccurrenceOptionsModel.SetResourceURL("testString")
 				updateOccurrenceOptionsModel.SetRemediation("testString")
-				updateOccurrenceOptionsModel.SetCreateTime(CreateMockDateTime())
-				updateOccurrenceOptionsModel.SetUpdateTime(CreateMockDateTime())
+				updateOccurrenceOptionsModel.SetCreateTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
+				updateOccurrenceOptionsModel.SetUpdateTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
 				updateOccurrenceOptionsModel.SetContext(contextModel)
 				updateOccurrenceOptionsModel.SetFinding(findingModel)
 				updateOccurrenceOptionsModel.SetKpi(kpiModel)
@@ -4970,8 +5263,8 @@ var _ = Describe(`FindingsV1`, func() {
 				Expect(updateOccurrenceOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(updateOccurrenceOptionsModel.ResourceURL).To(Equal(core.StringPtr("testString")))
 				Expect(updateOccurrenceOptionsModel.Remediation).To(Equal(core.StringPtr("testString")))
-				Expect(updateOccurrenceOptionsModel.CreateTime).To(Equal(CreateMockDateTime()))
-				Expect(updateOccurrenceOptionsModel.UpdateTime).To(Equal(CreateMockDateTime()))
+				Expect(updateOccurrenceOptionsModel.CreateTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
+				Expect(updateOccurrenceOptionsModel.UpdateTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
 				Expect(updateOccurrenceOptionsModel.Context).To(Equal(contextModel))
 				Expect(updateOccurrenceOptionsModel.Finding).To(Equal(findingModel))
 				Expect(updateOccurrenceOptionsModel.Kpi).To(Equal(kpiModel))
@@ -5051,11 +5344,11 @@ var _ = Describe(`FindingsV1`, func() {
 			Expect(mockReader).ToNot(BeNil())
 		})
 		It(`Invoke CreateMockDate() successfully`, func() {
-			mockDate := CreateMockDate()
+			mockDate := CreateMockDate("2019-01-01")
 			Expect(mockDate).ToNot(BeNil())
 		})
 		It(`Invoke CreateMockDateTime() successfully`, func() {
-			mockDateTime := CreateMockDateTime()
+			mockDateTime := CreateMockDateTime("2019-01-01T12:00:00.000Z")
 			Expect(mockDateTime).ToNot(BeNil())
 		})
 	})
@@ -5080,13 +5373,19 @@ func CreateMockReader(mockData string) io.ReadCloser {
 	return ioutil.NopCloser(bytes.NewReader([]byte(mockData)))
 }
 
-func CreateMockDate() *strfmt.Date {
-	d := strfmt.Date(time.Date(2009, time.November, 10, 23, 0, 0, 0, time.UTC))
+func CreateMockDate(mockData string) *strfmt.Date {
+	d, err := core.ParseDate(mockData)
+	if err != nil {
+		return nil
+	}
 	return &d
 }
 
-func CreateMockDateTime() *strfmt.DateTime {
-	d := strfmt.DateTime(time.Date(2009, time.November, 10, 23, 0, 0, 0, time.UTC))
+func CreateMockDateTime(mockData string) *strfmt.DateTime {
+	d, err := core.ParseDateTime(mockData)
+	if err != nil {
+		return nil
+	}
 	return &d
 }
 

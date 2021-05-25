@@ -41,10 +41,10 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 	const externalConfigFile = "../findings_v1.env"
 
 	var (
-		err             error
+		err          error
 		findingsService *findingsv1.FindingsV1
-		serviceURL      string
-		config          map[string]string
+		serviceURL   string
+		config       map[string]string
 	)
 
 	var shouldSkipTest = func() {
@@ -96,9 +96,9 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		It(`PostGraph(postGraphOptions *PostGraphOptions)`, func() {
 
 			postGraphOptions := &findingsv1.PostGraphOptions{
-				AccountID:     core.StringPtr("testString"),
-				Body:          CreateMockReader("This is a mock file."),
-				ContentType:   core.StringPtr("application/json"),
+				AccountID: core.StringPtr("testString"),
+				Body: CreateMockReader("This is a mock file."),
+				ContentType: core.StringPtr("application/json"),
 				TransactionID: core.StringPtr("testString"),
 			}
 
@@ -110,30 +110,30 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`CreateNote - Creates a new 'Note'`, func() {
+	Describe(`CreateNote - Creates a new `Note``, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
 		It(`CreateNote(createNoteOptions *CreateNoteOptions)`, func() {
 
 			reporterModel := &findingsv1.Reporter{
-				ID:    core.StringPtr("testString"),
+				ID: core.StringPtr("testString"),
 				Title: core.StringPtr("testString"),
-				URL:   core.StringPtr("testString"),
+				URL: core.StringPtr("testString"),
 			}
 
 			apiNoteRelatedURLModel := &findingsv1.APINoteRelatedURL{
 				Label: core.StringPtr("testString"),
-				URL:   core.StringPtr("testString"),
+				URL: core.StringPtr("testString"),
 			}
 
 			remediationStepModel := &findingsv1.RemediationStep{
 				Title: core.StringPtr("testString"),
-				URL:   core.StringPtr("testString"),
+				URL: core.StringPtr("testString"),
 			}
 
 			findingTypeModel := &findingsv1.FindingType{
-				Severity:  core.StringPtr("LOW"),
+				Severity: core.StringPtr("LOW"),
 				NextSteps: []findingsv1.RemediationStep{*remediationStepModel},
 			}
 
@@ -142,29 +142,29 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			}
 
 			valueTypeModel := &findingsv1.ValueTypeFindingCountValueType{
-				Kind:             core.StringPtr("FINDING_COUNT"),
+				Kind: core.StringPtr("FINDING_COUNT"),
 				FindingNoteNames: []string{"testString"},
-				Text:             core.StringPtr("testString"),
+				Text: core.StringPtr("testString"),
 			}
 
 			cardElementModel := &findingsv1.CardElementTimeSeriesCardElement{
-				Text:             core.StringPtr("testString"),
-				DefaultInterval:  core.StringPtr("testString"),
-				Kind:             core.StringPtr("TIME_SERIES"),
+				Text: core.StringPtr("testString"),
+				DefaultInterval: core.StringPtr("testString"),
+				Kind: core.StringPtr("TIME_SERIES"),
 				DefaultTimeRange: core.StringPtr("1d"),
-				ValueTypes:       []findingsv1.ValueTypeIntf{valueTypeModel},
+				ValueTypes: []findingsv1.ValueTypeIntf{valueTypeModel},
 			}
 
 			cardModel := &findingsv1.Card{
-				Section:               core.StringPtr("testString"),
-				Title:                 core.StringPtr("testString"),
-				Subtitle:              core.StringPtr("testString"),
-				Order:                 core.Int64Ptr(int64(1)),
-				FindingNoteNames:      []string{"testString"},
+				Section: core.StringPtr("testString"),
+				Title: core.StringPtr("testString"),
+				Subtitle: core.StringPtr("testString"),
+				Order: core.Int64Ptr(int64(1)),
+				FindingNoteNames: []string{"testString"},
 				RequiresConfiguration: core.BoolPtr(true),
-				BadgeText:             core.StringPtr("testString"),
-				BadgeImage:            core.StringPtr("testString"),
-				Elements:              []findingsv1.CardElementIntf{cardElementModel},
+				BadgeText: core.StringPtr("testString"),
+				BadgeImage: core.StringPtr("testString"),
+				Elements: []findingsv1.CardElementIntf{cardElementModel},
 			}
 
 			sectionModel := &findingsv1.Section{
@@ -173,23 +173,23 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			}
 
 			createNoteOptions := &findingsv1.CreateNoteOptions{
-				AccountID:        core.StringPtr("testString"),
-				ProviderID:       core.StringPtr("testString"),
+				AccountID: core.StringPtr("testString"),
+				ProviderID: core.StringPtr("testString"),
 				ShortDescription: core.StringPtr("testString"),
-				LongDescription:  core.StringPtr("testString"),
-				Kind:             core.StringPtr("FINDING"),
-				ID:               core.StringPtr("testString"),
-				ReportedBy:       reporterModel,
-				RelatedURL:       []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel},
-				ExpirationTime:   CreateMockDateTime(),
-				CreateTime:       CreateMockDateTime(),
-				UpdateTime:       CreateMockDateTime(),
-				Shared:           core.BoolPtr(true),
-				Finding:          findingTypeModel,
-				Kpi:              kpiTypeModel,
-				Card:             cardModel,
-				Section:          sectionModel,
-				TransactionID:    core.StringPtr("testString"),
+				LongDescription: core.StringPtr("testString"),
+				Kind: core.StringPtr("FINDING"),
+				ID: core.StringPtr("testString"),
+				ReportedBy: reporterModel,
+				RelatedURL: []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel},
+				ExpirationTime: CreateMockDateTime("2019-01-01T12:00:00.000Z"),
+				CreateTime: CreateMockDateTime("2019-01-01T12:00:00.000Z"),
+				UpdateTime: CreateMockDateTime("2019-01-01T12:00:00.000Z"),
+				Shared: core.BoolPtr(true),
+				Finding: findingTypeModel,
+				Kpi: kpiTypeModel,
+				Card: cardModel,
+				Section: sectionModel,
+				TransactionID: core.StringPtr("testString"),
 			}
 
 			apiNote, response, err := findingsService.CreateNote(createNoteOptions)
@@ -201,18 +201,18 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`ListNotes - Lists all 'Notes' for a given provider`, func() {
+	Describe(`ListNotes - Lists all `Notes` for a given provider`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
 		It(`ListNotes(listNotesOptions *ListNotesOptions)`, func() {
 
 			listNotesOptions := &findingsv1.ListNotesOptions{
-				AccountID:     core.StringPtr("testString"),
-				ProviderID:    core.StringPtr("testString"),
+				AccountID: core.StringPtr("testString"),
+				ProviderID: core.StringPtr("testString"),
 				TransactionID: core.StringPtr("testString"),
-				PageSize:      core.Int64Ptr(int64(2)),
-				PageToken:     core.StringPtr("testString"),
+				PageSize: core.Int64Ptr(int64(2)),
+				PageToken: core.StringPtr("testString"),
 			}
 
 			apiListNotesResponse, response, err := findingsService.ListNotes(listNotesOptions)
@@ -224,16 +224,16 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`GetNote - Returns the requested 'Note'`, func() {
+	Describe(`GetNote - Returns the requested `Note``, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
 		It(`GetNote(getNoteOptions *GetNoteOptions)`, func() {
 
 			getNoteOptions := &findingsv1.GetNoteOptions{
-				AccountID:     core.StringPtr("testString"),
-				ProviderID:    core.StringPtr("testString"),
-				NoteID:        core.StringPtr("testString"),
+				AccountID: core.StringPtr("testString"),
+				ProviderID: core.StringPtr("testString"),
+				NoteID: core.StringPtr("testString"),
 				TransactionID: core.StringPtr("testString"),
 			}
 
@@ -246,30 +246,30 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`UpdateNote - Updates an existing 'Note'`, func() {
+	Describe(`UpdateNote - Updates an existing `Note``, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
 		It(`UpdateNote(updateNoteOptions *UpdateNoteOptions)`, func() {
 
 			reporterModel := &findingsv1.Reporter{
-				ID:    core.StringPtr("testString"),
+				ID: core.StringPtr("testString"),
 				Title: core.StringPtr("testString"),
-				URL:   core.StringPtr("testString"),
+				URL: core.StringPtr("testString"),
 			}
 
 			apiNoteRelatedURLModel := &findingsv1.APINoteRelatedURL{
 				Label: core.StringPtr("testString"),
-				URL:   core.StringPtr("testString"),
+				URL: core.StringPtr("testString"),
 			}
 
 			remediationStepModel := &findingsv1.RemediationStep{
 				Title: core.StringPtr("testString"),
-				URL:   core.StringPtr("testString"),
+				URL: core.StringPtr("testString"),
 			}
 
 			findingTypeModel := &findingsv1.FindingType{
-				Severity:  core.StringPtr("LOW"),
+				Severity: core.StringPtr("LOW"),
 				NextSteps: []findingsv1.RemediationStep{*remediationStepModel},
 			}
 
@@ -278,29 +278,29 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			}
 
 			valueTypeModel := &findingsv1.ValueTypeFindingCountValueType{
-				Kind:             core.StringPtr("FINDING_COUNT"),
+				Kind: core.StringPtr("FINDING_COUNT"),
 				FindingNoteNames: []string{"testString"},
-				Text:             core.StringPtr("testString"),
+				Text: core.StringPtr("testString"),
 			}
 
 			cardElementModel := &findingsv1.CardElementTimeSeriesCardElement{
-				Text:             core.StringPtr("testString"),
-				DefaultInterval:  core.StringPtr("testString"),
-				Kind:             core.StringPtr("TIME_SERIES"),
+				Text: core.StringPtr("testString"),
+				DefaultInterval: core.StringPtr("testString"),
+				Kind: core.StringPtr("TIME_SERIES"),
 				DefaultTimeRange: core.StringPtr("1d"),
-				ValueTypes:       []findingsv1.ValueTypeIntf{valueTypeModel},
+				ValueTypes: []findingsv1.ValueTypeIntf{valueTypeModel},
 			}
 
 			cardModel := &findingsv1.Card{
-				Section:               core.StringPtr("testString"),
-				Title:                 core.StringPtr("testString"),
-				Subtitle:              core.StringPtr("testString"),
-				Order:                 core.Int64Ptr(int64(1)),
-				FindingNoteNames:      []string{"testString"},
+				Section: core.StringPtr("testString"),
+				Title: core.StringPtr("testString"),
+				Subtitle: core.StringPtr("testString"),
+				Order: core.Int64Ptr(int64(1)),
+				FindingNoteNames: []string{"testString"},
 				RequiresConfiguration: core.BoolPtr(true),
-				BadgeText:             core.StringPtr("testString"),
-				BadgeImage:            core.StringPtr("testString"),
-				Elements:              []findingsv1.CardElementIntf{cardElementModel},
+				BadgeText: core.StringPtr("testString"),
+				BadgeImage: core.StringPtr("testString"),
+				Elements: []findingsv1.CardElementIntf{cardElementModel},
 			}
 
 			sectionModel := &findingsv1.Section{
@@ -309,24 +309,24 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			}
 
 			updateNoteOptions := &findingsv1.UpdateNoteOptions{
-				AccountID:        core.StringPtr("testString"),
-				ProviderID:       core.StringPtr("testString"),
-				NoteID:           core.StringPtr("testString"),
+				AccountID: core.StringPtr("testString"),
+				ProviderID: core.StringPtr("testString"),
+				NoteID: core.StringPtr("testString"),
 				ShortDescription: core.StringPtr("testString"),
-				LongDescription:  core.StringPtr("testString"),
-				Kind:             core.StringPtr("FINDING"),
-				ID:               core.StringPtr("testString"),
-				ReportedBy:       reporterModel,
-				RelatedURL:       []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel},
-				ExpirationTime:   CreateMockDateTime(),
-				CreateTime:       CreateMockDateTime(),
-				UpdateTime:       CreateMockDateTime(),
-				Shared:           core.BoolPtr(true),
-				Finding:          findingTypeModel,
-				Kpi:              kpiTypeModel,
-				Card:             cardModel,
-				Section:          sectionModel,
-				TransactionID:    core.StringPtr("testString"),
+				LongDescription: core.StringPtr("testString"),
+				Kind: core.StringPtr("FINDING"),
+				ID: core.StringPtr("testString"),
+				ReportedBy: reporterModel,
+				RelatedURL: []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel},
+				ExpirationTime: CreateMockDateTime("2019-01-01T12:00:00.000Z"),
+				CreateTime: CreateMockDateTime("2019-01-01T12:00:00.000Z"),
+				UpdateTime: CreateMockDateTime("2019-01-01T12:00:00.000Z"),
+				Shared: core.BoolPtr(true),
+				Finding: findingTypeModel,
+				Kpi: kpiTypeModel,
+				Card: cardModel,
+				Section: sectionModel,
+				TransactionID: core.StringPtr("testString"),
 			}
 
 			apiNote, response, err := findingsService.UpdateNote(updateNoteOptions)
@@ -338,16 +338,16 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`GetOccurrenceNote - Gets the 'Note' attached to the given 'Occurrence'`, func() {
+	Describe(`GetOccurrenceNote - Gets the `Note` attached to the given `Occurrence``, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
 		It(`GetOccurrenceNote(getOccurrenceNoteOptions *GetOccurrenceNoteOptions)`, func() {
 
 			getOccurrenceNoteOptions := &findingsv1.GetOccurrenceNoteOptions{
-				AccountID:     core.StringPtr("testString"),
-				ProviderID:    core.StringPtr("testString"),
-				OccurrenceID:  core.StringPtr("testString"),
+				AccountID: core.StringPtr("testString"),
+				ProviderID: core.StringPtr("testString"),
+				OccurrenceID: core.StringPtr("testString"),
 				TransactionID: core.StringPtr("testString"),
 			}
 
@@ -360,55 +360,55 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`CreateOccurrence - Creates a new 'Occurrence'. Use this method to create 'Occurrences' for a resource`, func() {
+	Describe(`CreateOccurrence - Creates a new `Occurrence`. Use this method to create `Occurrences` for a resource`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
 		It(`CreateOccurrence(createOccurrenceOptions *CreateOccurrenceOptions)`, func() {
 
 			contextModel := &findingsv1.Context{
-				Region:          core.StringPtr("testString"),
-				ResourceCRN:     core.StringPtr("testString"),
-				ResourceID:      core.StringPtr("testString"),
-				ResourceName:    core.StringPtr("testString"),
-				ResourceType:    core.StringPtr("testString"),
-				ServiceCRN:      core.StringPtr("testString"),
-				ServiceName:     core.StringPtr("testString"),
+				Region: core.StringPtr("testString"),
+				ResourceCRN: core.StringPtr("testString"),
+				ResourceID: core.StringPtr("testString"),
+				ResourceName: core.StringPtr("testString"),
+				ResourceType: core.StringPtr("testString"),
+				ServiceCRN: core.StringPtr("testString"),
+				ServiceName: core.StringPtr("testString"),
 				EnvironmentName: core.StringPtr("testString"),
-				ComponentName:   core.StringPtr("testString"),
-				ToolchainID:     core.StringPtr("testString"),
+				ComponentName: core.StringPtr("testString"),
+				ToolchainID: core.StringPtr("testString"),
 			}
 
 			remediationStepModel := &findingsv1.RemediationStep{
 				Title: core.StringPtr("testString"),
-				URL:   core.StringPtr("testString"),
+				URL: core.StringPtr("testString"),
 			}
 
 			socketAddressModel := &findingsv1.SocketAddress{
 				Address: core.StringPtr("testString"),
-				Port:    core.Int64Ptr(int64(38)),
+				Port: core.Int64Ptr(int64(38)),
 			}
 
 			networkConnectionModel := &findingsv1.NetworkConnection{
 				Direction: core.StringPtr("testString"),
-				Protocol:  core.StringPtr("testString"),
-				Client:    socketAddressModel,
-				Server:    socketAddressModel,
+				Protocol: core.StringPtr("testString"),
+				Client: socketAddressModel,
+				Server: socketAddressModel,
 			}
 
 			dataTransferredModel := &findingsv1.DataTransferred{
-				ClientBytes:   core.Int64Ptr(int64(38)),
-				ServerBytes:   core.Int64Ptr(int64(38)),
+				ClientBytes: core.Int64Ptr(int64(38)),
+				ServerBytes: core.Int64Ptr(int64(38)),
 				ClientPackets: core.Int64Ptr(int64(38)),
 				ServerPackets: core.Int64Ptr(int64(38)),
 			}
 
 			findingModel := &findingsv1.Finding{
-				Severity:          core.StringPtr("LOW"),
-				Certainty:         core.StringPtr("LOW"),
-				NextSteps:         []findingsv1.RemediationStep{*remediationStepModel},
+				Severity: core.StringPtr("LOW"),
+				Certainty: core.StringPtr("LOW"),
+				NextSteps: []findingsv1.RemediationStep{*remediationStepModel},
 				NetworkConnection: networkConnectionModel,
-				DataTransferred:   dataTransferredModel,
+				DataTransferred: dataTransferredModel,
 			}
 
 			kpiModel := &findingsv1.Kpi{
@@ -417,21 +417,21 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			}
 
 			createOccurrenceOptions := &findingsv1.CreateOccurrenceOptions{
-				AccountID:       core.StringPtr("testString"),
-				ProviderID:      core.StringPtr("testString"),
-				NoteName:        core.StringPtr("testString"),
-				Kind:            core.StringPtr("FINDING"),
-				ID:              core.StringPtr("testString"),
-				ResourceURL:     core.StringPtr("testString"),
-				Remediation:     core.StringPtr("testString"),
-				CreateTime:      CreateMockDateTime(),
-				UpdateTime:      CreateMockDateTime(),
-				Context:         contextModel,
-				Finding:         findingModel,
-				Kpi:             kpiModel,
-				ReferenceData:   map[string]interface{}{"anyKey": "anyValue"},
+				AccountID: core.StringPtr("testString"),
+				ProviderID: core.StringPtr("testString"),
+				NoteName: core.StringPtr("testString"),
+				Kind: core.StringPtr("FINDING"),
+				ID: core.StringPtr("testString"),
+				ResourceURL: core.StringPtr("testString"),
+				Remediation: core.StringPtr("testString"),
+				CreateTime: CreateMockDateTime("2019-01-01T12:00:00.000Z"),
+				UpdateTime: CreateMockDateTime("2019-01-01T12:00:00.000Z"),
+				Context: contextModel,
+				Finding: findingModel,
+				Kpi: kpiModel,
+				ReferenceData: map[string]interface{}{"anyKey": "anyValue"},
 				ReplaceIfExists: core.BoolPtr(true),
-				TransactionID:   core.StringPtr("testString"),
+				TransactionID: core.StringPtr("testString"),
 			}
 
 			apiOccurrence, response, err := findingsService.CreateOccurrence(createOccurrenceOptions)
@@ -443,18 +443,18 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`ListOccurrences - Lists active 'Occurrences' for a given provider matching the filters`, func() {
+	Describe(`ListOccurrences - Lists active `Occurrences` for a given provider matching the filters`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
 		It(`ListOccurrences(listOccurrencesOptions *ListOccurrencesOptions)`, func() {
 
 			listOccurrencesOptions := &findingsv1.ListOccurrencesOptions{
-				AccountID:     core.StringPtr("testString"),
-				ProviderID:    core.StringPtr("testString"),
+				AccountID: core.StringPtr("testString"),
+				ProviderID: core.StringPtr("testString"),
 				TransactionID: core.StringPtr("testString"),
-				PageSize:      core.Int64Ptr(int64(2)),
-				PageToken:     core.StringPtr("testString"),
+				PageSize: core.Int64Ptr(int64(2)),
+				PageToken: core.StringPtr("testString"),
 			}
 
 			apiListOccurrencesResponse, response, err := findingsService.ListOccurrences(listOccurrencesOptions)
@@ -466,19 +466,19 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`ListNoteOccurrences - Lists 'Occurrences' referencing the specified 'Note'. Use this method to get all occurrences referencing your 'Note' across all your customer providers`, func() {
+	Describe(`ListNoteOccurrences - Lists `Occurrences` referencing the specified `Note`. Use this method to get all occurrences referencing your `Note` across all your customer providers`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
 		It(`ListNoteOccurrences(listNoteOccurrencesOptions *ListNoteOccurrencesOptions)`, func() {
 
 			listNoteOccurrencesOptions := &findingsv1.ListNoteOccurrencesOptions{
-				AccountID:     core.StringPtr("testString"),
-				ProviderID:    core.StringPtr("testString"),
-				NoteID:        core.StringPtr("testString"),
+				AccountID: core.StringPtr("testString"),
+				ProviderID: core.StringPtr("testString"),
+				NoteID: core.StringPtr("testString"),
 				TransactionID: core.StringPtr("testString"),
-				PageSize:      core.Int64Ptr(int64(2)),
-				PageToken:     core.StringPtr("testString"),
+				PageSize: core.Int64Ptr(int64(2)),
+				PageToken: core.StringPtr("testString"),
 			}
 
 			apiListNoteOccurrencesResponse, response, err := findingsService.ListNoteOccurrences(listNoteOccurrencesOptions)
@@ -490,16 +490,16 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`GetOccurrence - Returns the requested 'Occurrence'`, func() {
+	Describe(`GetOccurrence - Returns the requested `Occurrence``, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
 		It(`GetOccurrence(getOccurrenceOptions *GetOccurrenceOptions)`, func() {
 
 			getOccurrenceOptions := &findingsv1.GetOccurrenceOptions{
-				AccountID:     core.StringPtr("testString"),
-				ProviderID:    core.StringPtr("testString"),
-				OccurrenceID:  core.StringPtr("testString"),
+				AccountID: core.StringPtr("testString"),
+				ProviderID: core.StringPtr("testString"),
+				OccurrenceID: core.StringPtr("testString"),
 				TransactionID: core.StringPtr("testString"),
 			}
 
@@ -512,55 +512,55 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`UpdateOccurrence - Updates an existing 'Occurrence'`, func() {
+	Describe(`UpdateOccurrence - Updates an existing `Occurrence``, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
 		It(`UpdateOccurrence(updateOccurrenceOptions *UpdateOccurrenceOptions)`, func() {
 
 			contextModel := &findingsv1.Context{
-				Region:          core.StringPtr("testString"),
-				ResourceCRN:     core.StringPtr("testString"),
-				ResourceID:      core.StringPtr("testString"),
-				ResourceName:    core.StringPtr("testString"),
-				ResourceType:    core.StringPtr("testString"),
-				ServiceCRN:      core.StringPtr("testString"),
-				ServiceName:     core.StringPtr("testString"),
+				Region: core.StringPtr("testString"),
+				ResourceCRN: core.StringPtr("testString"),
+				ResourceID: core.StringPtr("testString"),
+				ResourceName: core.StringPtr("testString"),
+				ResourceType: core.StringPtr("testString"),
+				ServiceCRN: core.StringPtr("testString"),
+				ServiceName: core.StringPtr("testString"),
 				EnvironmentName: core.StringPtr("testString"),
-				ComponentName:   core.StringPtr("testString"),
-				ToolchainID:     core.StringPtr("testString"),
+				ComponentName: core.StringPtr("testString"),
+				ToolchainID: core.StringPtr("testString"),
 			}
 
 			remediationStepModel := &findingsv1.RemediationStep{
 				Title: core.StringPtr("testString"),
-				URL:   core.StringPtr("testString"),
+				URL: core.StringPtr("testString"),
 			}
 
 			socketAddressModel := &findingsv1.SocketAddress{
 				Address: core.StringPtr("testString"),
-				Port:    core.Int64Ptr(int64(38)),
+				Port: core.Int64Ptr(int64(38)),
 			}
 
 			networkConnectionModel := &findingsv1.NetworkConnection{
 				Direction: core.StringPtr("testString"),
-				Protocol:  core.StringPtr("testString"),
-				Client:    socketAddressModel,
-				Server:    socketAddressModel,
+				Protocol: core.StringPtr("testString"),
+				Client: socketAddressModel,
+				Server: socketAddressModel,
 			}
 
 			dataTransferredModel := &findingsv1.DataTransferred{
-				ClientBytes:   core.Int64Ptr(int64(38)),
-				ServerBytes:   core.Int64Ptr(int64(38)),
+				ClientBytes: core.Int64Ptr(int64(38)),
+				ServerBytes: core.Int64Ptr(int64(38)),
 				ClientPackets: core.Int64Ptr(int64(38)),
 				ServerPackets: core.Int64Ptr(int64(38)),
 			}
 
 			findingModel := &findingsv1.Finding{
-				Severity:          core.StringPtr("LOW"),
-				Certainty:         core.StringPtr("LOW"),
-				NextSteps:         []findingsv1.RemediationStep{*remediationStepModel},
+				Severity: core.StringPtr("LOW"),
+				Certainty: core.StringPtr("LOW"),
+				NextSteps: []findingsv1.RemediationStep{*remediationStepModel},
 				NetworkConnection: networkConnectionModel,
-				DataTransferred:   dataTransferredModel,
+				DataTransferred: dataTransferredModel,
 			}
 
 			kpiModel := &findingsv1.Kpi{
@@ -569,19 +569,19 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			}
 
 			updateOccurrenceOptions := &findingsv1.UpdateOccurrenceOptions{
-				AccountID:     core.StringPtr("testString"),
-				ProviderID:    core.StringPtr("testString"),
-				OccurrenceID:  core.StringPtr("testString"),
-				NoteName:      core.StringPtr("testString"),
-				Kind:          core.StringPtr("FINDING"),
-				ID:            core.StringPtr("testString"),
-				ResourceURL:   core.StringPtr("testString"),
-				Remediation:   core.StringPtr("testString"),
-				CreateTime:    CreateMockDateTime(),
-				UpdateTime:    CreateMockDateTime(),
-				Context:       contextModel,
-				Finding:       findingModel,
-				Kpi:           kpiModel,
+				AccountID: core.StringPtr("testString"),
+				ProviderID: core.StringPtr("testString"),
+				OccurrenceID: core.StringPtr("testString"),
+				NoteName: core.StringPtr("testString"),
+				Kind: core.StringPtr("FINDING"),
+				ID: core.StringPtr("testString"),
+				ResourceURL: core.StringPtr("testString"),
+				Remediation: core.StringPtr("testString"),
+				CreateTime: CreateMockDateTime("2019-01-01T12:00:00.000Z"),
+				UpdateTime: CreateMockDateTime("2019-01-01T12:00:00.000Z"),
+				Context: contextModel,
+				Finding: findingModel,
+				Kpi: kpiModel,
 				ReferenceData: map[string]interface{}{"anyKey": "anyValue"},
 				TransactionID: core.StringPtr("testString"),
 			}
@@ -595,19 +595,19 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`ListProviders - Lists all 'Providers' for a given account id`, func() {
+	Describe(`ListProviders - Lists all `Providers` for a given account id`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
 		It(`ListProviders(listProvidersOptions *ListProvidersOptions)`, func() {
 
 			listProvidersOptions := &findingsv1.ListProvidersOptions{
-				AccountID:       core.StringPtr("testString"),
-				TransactionID:   core.StringPtr("testString"),
-				Limit:           core.Int64Ptr(int64(2)),
-				Skip:            core.Int64Ptr(int64(38)),
+				AccountID: core.StringPtr("testString"),
+				TransactionID: core.StringPtr("testString"),
+				Limit: core.Int64Ptr(int64(2)),
+				Skip: core.Int64Ptr(int64(38)),
 				StartProviderID: core.StringPtr("testString"),
-				EndProviderID:   core.StringPtr("testString"),
+				EndProviderID: core.StringPtr("testString"),
 			}
 
 			apiListProvidersResponse, response, err := findingsService.ListProviders(listProvidersOptions)
@@ -619,16 +619,16 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`DeleteOccurrence - Deletes the given 'Occurrence' from the system`, func() {
+	Describe(`DeleteOccurrence - Deletes the given `Occurrence` from the system`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
 		It(`DeleteOccurrence(deleteOccurrenceOptions *DeleteOccurrenceOptions)`, func() {
 
 			deleteOccurrenceOptions := &findingsv1.DeleteOccurrenceOptions{
-				AccountID:     core.StringPtr("testString"),
-				ProviderID:    core.StringPtr("testString"),
-				OccurrenceID:  core.StringPtr("testString"),
+				AccountID: core.StringPtr("testString"),
+				ProviderID: core.StringPtr("testString"),
+				OccurrenceID: core.StringPtr("testString"),
 				TransactionID: core.StringPtr("testString"),
 			}
 
@@ -640,16 +640,16 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`DeleteNote - Deletes the given 'Note' from the system`, func() {
+	Describe(`DeleteNote - Deletes the given `Note` from the system`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
 		It(`DeleteNote(deleteNoteOptions *DeleteNoteOptions)`, func() {
 
 			deleteNoteOptions := &findingsv1.DeleteNoteOptions{
-				AccountID:     core.StringPtr("testString"),
-				ProviderID:    core.StringPtr("testString"),
-				NoteID:        core.StringPtr("testString"),
+				AccountID: core.StringPtr("testString"),
+				ProviderID: core.StringPtr("testString"),
+				NoteID: core.StringPtr("testString"),
 				TransactionID: core.StringPtr("testString"),
 			}
 

@@ -20,11 +20,12 @@ package configurationgovernancev1_test
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/ibm-cloud-security/scc-go-sdk/configurationgovernancev1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"os"
 )
 
 /**

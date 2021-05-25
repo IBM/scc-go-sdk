@@ -1,9 +1,0 @@
-{
-  "ProviderID": "sec_advisor_202X_provider",
-  "Kind": "KPI",
-  "ID": "sec_advisor_202X_kpi_occ",
-  "Kpi":{
-      "value":1,
-      "total":1
-    }
-}

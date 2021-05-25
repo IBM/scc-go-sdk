@@ -31,8 +31,5 @@ func ListScopes() {
 		return
 	}
 	fmt.Println("Status Code: ", response.GetStatusCode())
-	fmt.Println("Scope ID: ", *result.Scopes[0].ScopeID)
-	fmt.Println("Created Time: ", *result.Scopes[0].CreatedTime)
-	fmt.Println("Modified Time: ", *result.Scopes[0].ModifiedTime)
 
 }

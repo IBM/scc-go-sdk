@@ -1,3 +1,11 @@
+## [0.0.4](https://github.com/ibm-cloud-security/scc-go-sdk/compare/v0.0.3...v0.0.4) (2021-05-25)
+
+
+### Bug Fixes
+
+* **TRI:** location based service URL supported ([e3c6cf6](https://github.com/ibm-cloud-security/scc-go-sdk/commit/e3c6cf69b78193e3d89edf119ab10d67c161d0a8))
+* **TRI:** region based service URL feature added ([93dd839](https://github.com/ibm-cloud-security/scc-go-sdk/commit/93dd839113eaecc61b3b4fab3f22aac519411085))
+
 ## [0.0.3](https://github.com/ibm-cloud-security/scc-go-sdk/compare/v0.0.2...v0.0.3) (2021-04-28)
 
 

@@ -30,7 +30,7 @@ func ListProfiles() {
 
 	if err != nil {
 		fmt.Println(response.Result)
-		fmt.Println("Failed to create scope: ", err)
+		fmt.Println("Failed to list profiles: ", err)
 		return
 	}
 	fmt.Println(response.StatusCode)

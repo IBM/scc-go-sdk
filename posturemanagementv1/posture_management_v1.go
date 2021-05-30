@@ -199,9 +199,6 @@ func (postureManagement *PostureManagementV1) ListLatestScansWithContext(ctx con
 	}
 
 	builder.AddQuery("account_id", fmt.Sprint(*listLatestScansOptions.AccountID))
-	if listLatestScansOptions.Name != nil {
-		builder.AddQuery("name", fmt.Sprint(*listLatestScansOptions.Name))
-	}
 	if listLatestScansOptions.Offset != nil {
 		builder.AddQuery("offset", fmt.Sprint(*listLatestScansOptions.Offset))
 	}
@@ -310,8 +307,10 @@ func (postureManagement *PostureManagementV1) CreateValidationWithContext(ctx co
 	return
 }
 
-// ScansSummary : Retrieves scan's summary details
-// Retrieves scan's summary details based on scan ID and profile ID.
+// ScansSummary : Retrieve the summary of a specific scan
+// Retrieve the results summary of a validation scan by specifying a scan and profile ID combination. To obtain your
+// profile ID and scan ID for your most recent scan, make a GET request to the
+// "/posture/v1/scans/validations/latest_scans" endpoint.
 func (postureManagement *PostureManagementV1) ScansSummary(scansSummaryOptions *ScansSummaryOptions) (result *Summary, response *core.DetailedResponse, err error) {
 	return postureManagement.ScansSummaryWithContext(context.Background(), scansSummaryOptions)
 }
@@ -334,7 +333,7 @@ func (postureManagement *PostureManagementV1) ScansSummaryWithContext(ctx contex
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v1/scans/{scan_id}/summary`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v1/scans/validations/{scan_id}/summary`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -354,9 +353,6 @@ func (postureManagement *PostureManagementV1) ScansSummaryWithContext(ctx contex
 
 	builder.AddQuery("account_id", fmt.Sprint(*scansSummaryOptions.AccountID))
 	builder.AddQuery("profile_id", fmt.Sprint(*scansSummaryOptions.ProfileID))
-	if scansSummaryOptions.Name != nil {
-		builder.AddQuery("name", fmt.Sprint(*scansSummaryOptions.Name))
-	}
 
 	request, err := builder.Build()
 	if err != nil {
@@ -379,8 +375,8 @@ func (postureManagement *PostureManagementV1) ScansSummaryWithContext(ctx contex
 	return
 }
 
-// ScanSummaries : List of validation runs for a particular scan
-// List all of the summaries for particular scan in your account.
+// ScanSummaries : List the validation summaries for a scan
+// List all of the historical and current validation summaries for a specific scan.
 func (postureManagement *PostureManagementV1) ScanSummaries(scanSummariesOptions *ScanSummariesOptions) (result *SummariesList, response *core.DetailedResponse, err error) {
 	return postureManagement.ScanSummariesWithContext(context.Background(), scanSummariesOptions)
 }
@@ -399,7 +395,7 @@ func (postureManagement *PostureManagementV1) ScanSummariesWithContext(ctx conte
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v1/scans/summaries`, nil)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v1/scans/validations/summaries`, nil)
 	if err != nil {
 		return
 	}
@@ -424,9 +420,6 @@ func (postureManagement *PostureManagementV1) ScanSummariesWithContext(ctx conte
 	}
 	if scanSummariesOptions.GroupProfileID != nil {
 		builder.AddQuery("group_profile_id", fmt.Sprint(*scanSummariesOptions.GroupProfileID))
-	}
-	if scanSummariesOptions.Name != nil {
-		builder.AddQuery("name", fmt.Sprint(*scanSummariesOptions.Name))
 	}
 	if scanSummariesOptions.Offset != nil {
 		builder.AddQuery("offset", fmt.Sprint(*scanSummariesOptions.Offset))
@@ -495,9 +488,6 @@ func (postureManagement *PostureManagementV1) ListProfilesWithContext(ctx contex
 	}
 
 	builder.AddQuery("account_id", fmt.Sprint(*listProfilesOptions.AccountID))
-	if listProfilesOptions.Name != nil {
-		builder.AddQuery("name", fmt.Sprint(*listProfilesOptions.Name))
-	}
 	if listProfilesOptions.Offset != nil {
 		builder.AddQuery("offset", fmt.Sprint(*listProfilesOptions.Offset))
 	}
@@ -648,9 +638,6 @@ func (postureManagement *PostureManagementV1) ListScopesWithContext(ctx context.
 	}
 
 	builder.AddQuery("account_id", fmt.Sprint(*listScopesOptions.AccountID))
-	if listScopesOptions.Name != nil {
-		builder.AddQuery("name", fmt.Sprint(*listScopesOptions.Name))
-	}
 
 	request, err := builder.Build()
 	if err != nil {
@@ -724,11 +711,11 @@ func (postureManagement *PostureManagementV1) CreateCollectorWithContext(ctx con
 	if createCollectorOptions.IsPublic != nil {
 		body["is_public"] = createCollectorOptions.IsPublic
 	}
-	if createCollectorOptions.InstallationType != nil {
-		body["installation_type"] = createCollectorOptions.InstallationType
+	if createCollectorOptions.ManagedBy != nil {
+		body["managed_by"] = createCollectorOptions.ManagedBy
 	}
-	if createCollectorOptions.Passphrase != nil {
-		body["passphrase"] = createCollectorOptions.Passphrase
+	if createCollectorOptions.PassPhrase != nil {
+		body["pass_phrase"] = createCollectorOptions.PassPhrase
 	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
@@ -949,7 +936,7 @@ type Controls struct {
 	ControlID *string `json:"control_id,omitempty"`
 
 	// The control status.
-	ControlStatus *string `json:"control_status,omitempty"`
+	Status *string `json:"status,omitempty"`
 
 	// The external control ID.
 	ExternalControlID *string `json:"external_control_id,omitempty"`
@@ -971,7 +958,7 @@ func UnmarshalControls(m map[string]json.RawMessage, result interface{}) (err er
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "control_status", &obj.ControlStatus)
+	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
 	if err != nil {
 		return
 	}
@@ -1011,17 +998,16 @@ type CreateCollectorOptions struct {
 	// by using a private IP that is accessible only through the IBM Cloud private network.
 	IsPublic *bool
 
-	// Determines whether the collector is IBM or customer-managed virtual machine.
-	//
-	// Use `installed` to allow Security and Compliance Center to create, install, and manage the collector on your behalf.
-	// The collector is installed in an OpenShift cluster and approved automatically for use. Use `managed` if you would
-	// like to install the collector by using your own virtual machine. For more information, check out the
+	// Determines whether the collector is an IBM or customer-managed virtual machine. Use `ibm` to allow Security and
+	// Compliance Center to create, install, and manage the collector on your behalf. The collector is installed in an
+	// OpenShift cluster and approved automatically for use. Use `customer` if you would like to install the collector by
+	// using your own virtual machine. For more information, check out the
 	// [docs](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-collector).
-	InstallationType *string
+	ManagedBy *string
 
 	// To protect the credentials that you add to the service, a passphrase is used to generate a data encryption key. The
 	// key is used to securely store your credentials and prevent anyone from accessing them.
-	Passphrase *string
+	PassPhrase *string
 
 	// The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
 	// sends a transaction ID as a response header of the request.
@@ -1031,16 +1017,15 @@ type CreateCollectorOptions struct {
 	Headers map[string]string
 }
 
-// Constants associated with the CreateCollectorOptions.InstallationType property.
-// Determines whether the collector is IBM or customer-managed virtual machine.
-//
-// Use `installed` to allow Security and Compliance Center to create, install, and manage the collector on your behalf.
-// The collector is installed in an OpenShift cluster and approved automatically for use. Use `managed` if you would
-// like to install the collector by using your own virtual machine. For more information, check out the
+// Constants associated with the CreateCollectorOptions.ManagedBy property.
+// Determines whether the collector is an IBM or customer-managed virtual machine. Use `ibm` to allow Security and
+// Compliance Center to create, install, and manage the collector on your behalf. The collector is installed in an
+// OpenShift cluster and approved automatically for use. Use `customer` if you would like to install the collector by
+// using your own virtual machine. For more information, check out the
 // [docs](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-collector).
 const (
-	CreateCollectorOptionsInstallationTypeInstalledConst = "installed"
-	CreateCollectorOptionsInstallationTypeManagedConst   = "managed"
+	CreateCollectorOptionsManagedByCustomerConst = "customer"
+	CreateCollectorOptionsManagedByIBMConst      = "ibm"
 )
 
 // NewCreateCollectorOptions : Instantiate CreateCollectorOptions
@@ -1074,15 +1059,15 @@ func (options *CreateCollectorOptions) SetIsPublic(isPublic bool) *CreateCollect
 	return options
 }
 
-// SetInstallationType : Allow user to set InstallationType
-func (options *CreateCollectorOptions) SetInstallationType(installationType string) *CreateCollectorOptions {
-	options.InstallationType = core.StringPtr(installationType)
+// SetManagedBy : Allow user to set ManagedBy
+func (options *CreateCollectorOptions) SetManagedBy(managedBy string) *CreateCollectorOptions {
+	options.ManagedBy = core.StringPtr(managedBy)
 	return options
 }
 
-// SetPassphrase : Allow user to set Passphrase
-func (options *CreateCollectorOptions) SetPassphrase(passphrase string) *CreateCollectorOptions {
-	options.Passphrase = core.StringPtr(passphrase)
+// SetPassPhrase : Allow user to set PassPhrase
+func (options *CreateCollectorOptions) SetPassPhrase(passPhrase string) *CreateCollectorOptions {
+	options.PassPhrase = core.StringPtr(passPhrase)
 	return options
 }
 
@@ -1370,7 +1355,7 @@ type GoalApplicabilityCriteria struct {
 	// The software that the profile applies to.
 	SoftwareDetails interface{} `json:"software_details,omitempty"`
 
-	// The operatoring system that the profile applies to.
+	// The operating system that the profile applies to.
 	OsDetails interface{} `json:"os_details,omitempty"`
 
 	// Any additional details about the profile.
@@ -1459,6 +1444,9 @@ type Goals struct {
 	// The goal ID.
 	GoalID *string `json:"goal_id,omitempty"`
 
+	// The goal status.
+	Status *string `json:"status,omitempty"`
+
 	// The severity of the goal.
 	Severity *string `json:"severity,omitempty"`
 
@@ -1483,6 +1471,10 @@ func UnmarshalGoals(m map[string]json.RawMessage, result interface{}) (err error
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "goal_id", &obj.GoalID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
 	if err != nil {
 		return
 	}
@@ -1577,13 +1569,10 @@ type ListLatestScansOptions struct {
 	// sends a transaction ID as a response header of the request.
 	TransactionID *string
 
-	// The name of the scan.
-	Name *string
-
 	// The offset of the profiles.
 	Offset *int64
 
-	// The number of the profiles.
+	// The number of profiles that are included per page?.
 	Limit *int64
 
 	// Allows users to set headers on API requests
@@ -1606,12 +1595,6 @@ func (options *ListLatestScansOptions) SetAccountID(accountID string) *ListLates
 // SetTransactionID : Allow user to set TransactionID
 func (options *ListLatestScansOptions) SetTransactionID(transactionID string) *ListLatestScansOptions {
 	options.TransactionID = core.StringPtr(transactionID)
-	return options
-}
-
-// SetName : Allow user to set Name
-func (options *ListLatestScansOptions) SetName(name string) *ListLatestScansOptions {
-	options.Name = core.StringPtr(name)
 	return options
 }
 
@@ -1642,13 +1625,10 @@ type ListProfilesOptions struct {
 	// sends a transaction ID as a response header of the request.
 	TransactionID *string
 
-	// The name of the profile.
-	Name *string
-
 	// The offset of the profiles.
 	Offset *int64
 
-	// The number of the profiles.
+	// The number of profiles that are included per page?.
 	Limit *int64
 
 	// Allows users to set headers on API requests
@@ -1671,12 +1651,6 @@ func (options *ListProfilesOptions) SetAccountID(accountID string) *ListProfiles
 // SetTransactionID : Allow user to set TransactionID
 func (options *ListProfilesOptions) SetTransactionID(transactionID string) *ListProfilesOptions {
 	options.TransactionID = core.StringPtr(transactionID)
-	return options
-}
-
-// SetName : Allow user to set Name
-func (options *ListProfilesOptions) SetName(name string) *ListProfilesOptions {
-	options.Name = core.StringPtr(name)
 	return options
 }
 
@@ -1707,9 +1681,6 @@ type ListScopesOptions struct {
 	// sends a transaction ID as a response header of the request.
 	TransactionID *string
 
-	// The name of the scope.
-	Name *string
-
 	// Allows users to set headers on API requests
 	Headers map[string]string
 }
@@ -1730,12 +1701,6 @@ func (options *ListScopesOptions) SetAccountID(accountID string) *ListScopesOpti
 // SetTransactionID : Allow user to set TransactionID
 func (options *ListScopesOptions) SetTransactionID(transactionID string) *ListScopesOptions {
 	options.TransactionID = core.StringPtr(transactionID)
-	return options
-}
-
-// SetName : Allow user to set Name
-func (options *ListScopesOptions) SetName(name string) *ListScopesOptions {
-	options.Name = core.StringPtr(name)
 	return options
 }
 
@@ -1910,22 +1875,22 @@ type ProfilesList struct {
 	// The offset of the page.
 	Offset *int64 `json:"offset" validate:"required"`
 
-	// The limit  of the page.
+	// The number of profiles displayed per page.
 	Limit *int64 `json:"limit" validate:"required"`
 
-	// The total count of profile list.
+	// The total number of profiles.
 	TotalCount *int64 `json:"total_count,omitempty"`
 
-	// The url of first page in profiles.
+	// The URL of the first page of profiles.
 	First *ProfilesListFirst `json:"first,omitempty"`
 
-	// The url of last page in profiles.
+	// The URL of the last page of profiles.
 	Last *ProfilesListLast `json:"last,omitempty"`
 
-	// The url of previous page in profiles.
+	// The URL of the previous page of profiles.
 	Previous *ProfilesListPrevious `json:"previous,omitempty"`
 
-	// The url of next page in profiles.
+	// The URL of the next page of profiles.
 	Next *ProfilesListNext `json:"next,omitempty"`
 
 	// Profiles.
@@ -1971,9 +1936,9 @@ func UnmarshalProfilesList(m map[string]json.RawMessage, result interface{}) (er
 	return
 }
 
-// ProfilesListFirst : The url of first page in profiles.
+// ProfilesListFirst : The URL of the first page of profiles.
 type ProfilesListFirst struct {
-	// The url of first page.
+	// The URL of the first page of profiles.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -1988,9 +1953,9 @@ func UnmarshalProfilesListFirst(m map[string]json.RawMessage, result interface{}
 	return
 }
 
-// ProfilesListLast : The url of last page in profiles.
+// ProfilesListLast : The URL of the last page of profiles.
 type ProfilesListLast struct {
-	// The url of last page.
+	// The URL of the last page of profiles.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -2005,9 +1970,9 @@ func UnmarshalProfilesListLast(m map[string]json.RawMessage, result interface{})
 	return
 }
 
-// ProfilesListNext : The url of next page in profiles.
+// ProfilesListNext : The URL of the next page of profiles.
 type ProfilesListNext struct {
-	// The next url of page.
+	// The URL of the next page of profiles.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -2022,9 +1987,9 @@ func UnmarshalProfilesListNext(m map[string]json.RawMessage, result interface{})
 	return
 }
 
-// ProfilesListPrevious : The url of previous page in profiles.
+// ProfilesListPrevious : The URL of the previous page of profiles.
 type ProfilesListPrevious struct {
-	// The previous url of page.
+	// The URL of the previous page of profiles.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -2104,17 +2069,8 @@ type ResourceResult struct {
 	// The expected results of a resource.
 	DisplayExpectedValue *string `json:"display_expected_value,omitempty"`
 
-	// The expected results parameter of a resource.
-	DisplayExpectedValueParam *string `json:"display_expected_value_param,omitempty"`
-
-	// The actual results parameter of a resource.
-	ActualValueParam *string `json:"actual_value_param,omitempty"`
-
 	// The actual results of a resource.
 	ActualValue *string `json:"actual_value,omitempty"`
-
-	// The results information parameter.
-	ResultInfoParam *string `json:"result_info_param,omitempty"`
 
 	// The results information.
 	ResultsInfo *string `json:"results_info,omitempty"`
@@ -2142,19 +2098,7 @@ func UnmarshalResourceResult(m map[string]json.RawMessage, result interface{}) (
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "display_expected_value_param", &obj.DisplayExpectedValueParam)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "actual_value_param", &obj.ActualValueParam)
-	if err != nil {
-		return
-	}
 	err = core.UnmarshalPrimitive(m, "actual_value", &obj.ActualValue)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "result_info_param", &obj.ResultInfoParam)
 	if err != nil {
 		return
 	}
@@ -2562,7 +2506,8 @@ func UnmarshalScanResult(m map[string]json.RawMessage, result interface{}) (err 
 
 // ScanSummariesOptions : The ScanSummaries options.
 type ScanSummariesOptions struct {
-	// Scope ID.
+	// The scope ID. This can be obtained from the Security and Compliance Center UI by clicking on the scope name. The URL
+	// contains the ID.
 	ScopeID *string `validate:"required"`
 
 	// Your IBM Cloud account ID.
@@ -2572,19 +2517,18 @@ type ScanSummariesOptions struct {
 	// sends a transaction ID as a response header of the request.
 	TransactionID *string
 
-	// Profile ID.
+	// The profile ID. This can be obtained from the Security and Compliance Center UI by clicking on the profile name. The
+	// URL contains the ID.
 	ProfileID *string
 
-	// Profile Group ID.
+	// The group profile ID. This can be obtained from the Security and Compliance Center UI by clicking on the group
+	// profile name. The URL contains the ID.
 	GroupProfileID *string
-
-	// The name of the scan.
-	Name *string
 
 	// The offset of the profiles.
 	Offset *int64
 
-	// The number of the profiles.
+	// The number of profiles that are included per page?.
 	Limit *int64
 
 	// Allows users to set headers on API requests
@@ -2629,12 +2573,6 @@ func (options *ScanSummariesOptions) SetGroupProfileID(groupProfileID string) *S
 	return options
 }
 
-// SetName : Allow user to set Name
-func (options *ScanSummariesOptions) SetName(name string) *ScanSummariesOptions {
-	options.Name = core.StringPtr(name)
-	return options
-}
-
 // SetOffset : Allow user to set Offset
 func (options *ScanSummariesOptions) SetOffset(offset int64) *ScanSummariesOptions {
 	options.Offset = core.Int64Ptr(offset)
@@ -2658,22 +2596,22 @@ type ScansList struct {
 	// The offset of the page.
 	Offset *int64 `json:"offset" validate:"required"`
 
-	// The limit  of the page.
+	// The number of scans displayed per page.
 	Limit *int64 `json:"limit" validate:"required"`
 
-	// The total count of scans list.
+	// The total number of scans in the list.
 	TotalCount *int64 `json:"total_count,omitempty"`
 
-	// The url of first page in scans.
+	// The URL of the first page of scans.
 	First *ScansListFirst `json:"first,omitempty"`
 
-	// The url of last page in scans.
+	// The URL of the last page of scans.
 	Last *ScansListLast `json:"last,omitempty"`
 
-	// The url of previous page in scans.
+	// The URL of the previous page of scans.
 	Previous *ScansListPrevious `json:"previous,omitempty"`
 
-	// The url of next page in scans.
+	// The URL of the next page of scans.
 	Next *ScansListNext `json:"next,omitempty"`
 
 	// The details of a scan.
@@ -2719,9 +2657,9 @@ func UnmarshalScansList(m map[string]json.RawMessage, result interface{}) (err e
 	return
 }
 
-// ScansListFirst : The url of first page in scans.
+// ScansListFirst : The URL of the first page of scans.
 type ScansListFirst struct {
-	// The url of first page.
+	// The URL of the first page of scans.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -2736,9 +2674,9 @@ func UnmarshalScansListFirst(m map[string]json.RawMessage, result interface{}) (
 	return
 }
 
-// ScansListLast : The url of last page in scans.
+// ScansListLast : The URL of the last page of scans.
 type ScansListLast struct {
-	// The url of last page.
+	// The URL of the last page of scans.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -2753,9 +2691,9 @@ func UnmarshalScansListLast(m map[string]json.RawMessage, result interface{}) (e
 	return
 }
 
-// ScansListNext : The url of next page in scans.
+// ScansListNext : The URL of the next page of scans.
 type ScansListNext struct {
-	// The next url of page.
+	// The URL of the next page of scans.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -2770,9 +2708,9 @@ func UnmarshalScansListNext(m map[string]json.RawMessage, result interface{}) (e
 	return
 }
 
-// ScansListPrevious : The url of previous page in scans.
+// ScansListPrevious : The URL of the previous page of scans.
 type ScansListPrevious struct {
-	// The previous url of page in scans.
+	// The URL of the previous page of scans.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -2801,9 +2739,6 @@ type ScansSummaryOptions struct {
 	// The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
 	// sends a transaction ID as a response header of the request.
 	TransactionID *string
-
-	// The name of the scan summary.
-	Name *string
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2839,12 +2774,6 @@ func (options *ScansSummaryOptions) SetProfileID(profileID string) *ScansSummary
 // SetTransactionID : Allow user to set TransactionID
 func (options *ScansSummaryOptions) SetTransactionID(transactionID string) *ScansSummaryOptions {
 	options.TransactionID = core.StringPtr(transactionID)
-	return options
-}
-
-// SetName : Allow user to set Name
-func (options *ScansSummaryOptions) SetName(name string) *ScansSummaryOptions {
-	options.Name = core.StringPtr(name)
 	return options
 }
 
@@ -3085,27 +3014,27 @@ func UnmarshalScopesList(m map[string]json.RawMessage, result interface{}) (err 
 	return
 }
 
-// SummariesList : A list of Summaries.
+// SummariesList : A list of scan summaries.
 type SummariesList struct {
 	// The offset of the page.
 	Offset *int64 `json:"offset" validate:"required"`
 
-	// The limit  of the page.
+	// The number of scans displayed per page.
 	Limit *int64 `json:"limit" validate:"required"`
 
-	// The total count of scans summary list.
+	// The total number of scans available in the list of summaries.
 	TotalCount *int64 `json:"total_count,omitempty"`
 
-	// The url of first page in scans summary.
+	// he URL of the first scan summary.
 	First *SummariesListFirst `json:"first,omitempty"`
 
-	// The url of last page in scans summary.
+	// The URL of the last scan summary.
 	Last *SummariesListLast `json:"last,omitempty"`
 
-	// The url of previous page in scans summary.
+	// The URL of the previous scan summary.
 	Previous *SummariesListPrevious `json:"previous,omitempty"`
 
-	// The url of next page in scans summary.
+	// The URL of the previous scan summary.
 	Next *SummariesListNext `json:"next,omitempty"`
 
 	// Summaries.
@@ -3151,9 +3080,9 @@ func UnmarshalSummariesList(m map[string]json.RawMessage, result interface{}) (e
 	return
 }
 
-// SummariesListFirst : The url of first page in scans summary.
+// SummariesListFirst : he URL of the first scan summary.
 type SummariesListFirst struct {
-	// The url of first page.
+	// The URL of the first scan summary.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -3168,9 +3097,9 @@ func UnmarshalSummariesListFirst(m map[string]json.RawMessage, result interface{
 	return
 }
 
-// SummariesListLast : The url of last page in scans summary.
+// SummariesListLast : The URL of the last scan summary.
 type SummariesListLast struct {
-	// The url of last page.
+	// The URL of the last scan summary.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -3185,9 +3114,9 @@ func UnmarshalSummariesListLast(m map[string]json.RawMessage, result interface{}
 	return
 }
 
-// SummariesListNext : The url of next page in scans summary.
+// SummariesListNext : The URL of the previous scan summary.
 type SummariesListNext struct {
-	// The next url of page.
+	// The URL of the next scan summary.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -3202,9 +3131,9 @@ func UnmarshalSummariesListNext(m map[string]json.RawMessage, result interface{}
 	return
 }
 
-// SummariesListPrevious : The url of previous page in scans summary.
+// SummariesListPrevious : The URL of the previous scan summary.
 type SummariesListPrevious struct {
-	// The previous url of page.
+	// The URL of the previous scan summary.
 	Href *string `json:"href,omitempty"`
 }
 

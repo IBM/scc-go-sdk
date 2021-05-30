@@ -23,7 +23,7 @@ func ListScopes() {
 
 	source := service.NewListScopesOptions(accountId)
 
-	result, response, err := service.ListScopes(source)
+	_, response, err := service.ListScopes(source)
 
 	if err != nil {
 		fmt.Println(response.Result)

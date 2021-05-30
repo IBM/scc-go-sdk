@@ -17,7 +17,6 @@ func CreateCollector() {
 	authenticator := &core.IamAuthenticator{
 		ApiKey: apiKey,
 		URL:    url, //use for dev/preprod env
-
 	}
 	service, _ := scc.NewPostureManagementV1(&scc.PostureManagementV1Options{
 		Authenticator: authenticator,
@@ -25,11 +24,11 @@ func CreateCollector() {
 	})
 
 	source := service.NewCreateCollectorOptions(accountId)
-	source.SetCollectorName("jason-test-collector-03")
+	source.SetCollectorName("jason-test-collector-05")
 	source.SetCollectorDescription("jason scope")
-	source.SetInstallationType("installed")
+	source.SetManagedBy("CUSTOMER")
 	source.SetIsPublic(true)
-	source.SetPassphrase("secret")
+	source.SetPassPhrase("secret")
 
 	result, response, err := service.CreateCollector(source)
 

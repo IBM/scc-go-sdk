@@ -7,7 +7,6 @@ travis-ci: test-cov lint tidy
 
 test:
 	go test `go list ./...`
-	find . -name "*.env" -type f -delete
 
 test-cov:
 	go test `go list ./...` ${COVERAGE}

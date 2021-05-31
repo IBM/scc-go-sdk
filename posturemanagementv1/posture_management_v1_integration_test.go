@@ -323,11 +323,40 @@ func getAuthToken() string {
 	return accessData.AccessToken
 }
 
-func hardDeleteScope() {
-	fmt.Println("delete scope")
+func hardDeleteCollector(collectorId string) {
+	authToken := getAuthToken()
+
+	url := "https://asap-dev.compliance.test.cloud.ibm.com/alpha/v1.0/collectors/" + collectorId
+	method := "DELETE"
+
+	client := &http.Client{}
+	req, err := http.NewRequest(method, url, nil)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	req.Header.Add("Content-Type", "multipart/form-data")
+	req.Header.Add("Authorization", authToken)
+	req.Header.Add("REALM", "d194db5f52544a8f953aa539ced9b570")
+	req.Header.Add("transaction-id", "32e2607e-8594-11eb-8124-3c15c2df5030")
+
+	res, err := client.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer res.Body.Close()
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(string(body))
 }
 
-func hardDeleteCollector() {
+func hardDeleteScope() {
 
 }
 

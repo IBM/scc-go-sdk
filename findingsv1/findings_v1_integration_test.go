@@ -98,25 +98,25 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	// Describe(`PostGraph - query findings`, func() {
-	// 	BeforeEach(func() {
-	// 		shouldSkipTest()
-	// 	})
-	// 	It(`PostGraph(postGraphOptions *PostGraphOptions)`, func() {
+	Describe(`PostGraph - query findings`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`PostGraph(postGraphOptions *PostGraphOptions)`, func() {
 
-	// 		postGraphOptions := &findingsv1.PostGraphOptions{
-	// 			AccountID:   &accountID,
-	// 			Body:        CreateMockReader(`{notes{id}}`),
-	// 			ContentType: &("application/graphql"),
-	// 		}
+			postGraphOptions := &findingsv1.PostGraphOptions{
+				AccountID:   &accountID,
+				Body:        CreateMockReader(`{notes{id}}`),
+				ContentType: &("application/graphql"),
+			}
 
-	// 		response, err := findingsService.PostGraph(postGraphOptions)
+			response, err := findingsService.PostGraph(postGraphOptions)
 
-	// 		Expect(err).To(BeNil())
-	// 		Expect(response.StatusCode).To(Equal(200))
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
 
-	// 	})
-	// })
+		})
+	})
 
 	Describe(`CreateNote - Creates a new 'Note' (FINDING)`, func() {
 		BeforeEach(func() {

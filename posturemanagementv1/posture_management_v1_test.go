@@ -35,39 +35,6 @@ import (
 )
 
 var _ = Describe(`PostureManagementV1`, func() {
-
-	Describe(`Integration test`, func() {
-		It(`Create collector`, func() {
-			apiKey := os.Getenv("IAM_API_KEY")
-			url := os.Getenv("IAM_APIKEY_URL")
-			accountId := os.Getenv("ACCOUNT_ID")
-			authenticator := &core.IamAuthenticator{
-				ApiKey: apiKey,
-				URL:    url, //use for dev/preprod env
-			}
-			service, _ := posturemanagementv1.NewPostureManagementV1(&posturemanagementv1.PostureManagementV1Options{
-				Authenticator: authenticator,
-				URL:           "https://asap-dev.compliance.test.cloud.ibm.com", //Specify url or use default
-			})
-
-			source := service.NewCreateCollectorOptions(accountId)
-			source.SetCollectorName("jason-test-collector-05")
-			source.SetCollectorDescription("jason scope")
-			source.SetManagedBy("CUSTOMER")
-			source.SetIsPublic(true)
-			source.SetPassPhrase("secret")
-
-			_, response, err := service.CreateCollector(source)
-
-			if err != nil {
-				fmt.Println(response.Result)
-				fmt.Println("Failed to create collector: ", err)
-				return
-			}
-			Expect(response.StatusCode).To(Equal(200))
-		})
-	})
-
 	var testServer *httptest.Server
 	Describe(`Service constructor tests`, func() {
 		It(`Instantiate service client`, func() {

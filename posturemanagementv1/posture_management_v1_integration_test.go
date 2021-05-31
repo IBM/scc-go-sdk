@@ -17,8 +17,12 @@
 package posturemanagementv1_test
 
 import (
+	"fmt"
+	"github.com/IBM/go-sdk-core/v5/core"
+	"github.com/ibm-cloud-security/scc-go-sdk/posturemanagementv1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"os"
 )
 
 /**
@@ -31,12 +35,37 @@ import (
 
 var _ = Describe(`Jason test`, func() {
 
-	Describe(`canary`, func() {
-		It("should return true", func() {
-			Expect(false).To(Equal(true))
+	Describe(`Integration test`, func() {
+		It(`Create collector`, func() {
+			apiKey := os.Getenv("IAM_API_KEY")
+			url := os.Getenv("IAM_APIKEY_URL")
+			accountId := os.Getenv("ACCOUNT_ID")
+			authenticator := &core.IamAuthenticator{
+				ApiKey: apiKey,
+				URL:    url, //use for dev/preprod env
+			}
+			service, _ := posturemanagementv1.NewPostureManagementV1(&posturemanagementv1.PostureManagementV1Options{
+				Authenticator: authenticator,
+				URL:           "https://asap-dev.compliance.test.cloud.ibm.com", //Specify url or use default
+			})
+
+			source := service.NewCreateCollectorOptions(accountId)
+			source.SetCollectorName("jason-test-collector-05")
+			source.SetCollectorDescription("jason scope")
+			source.SetManagedBy("CUSTOMER")
+			source.SetIsPublic(true)
+			source.SetPassPhrase("secret")
+
+			_, response, err := service.CreateCollector(source)
+
+			if err != nil {
+				fmt.Println(response.Result)
+				fmt.Println("Failed to create collector: ", err)
+				return
+			}
+			Expect(response.StatusCode).To(Equal(200))
 		})
 	})
-
 })
 
 //

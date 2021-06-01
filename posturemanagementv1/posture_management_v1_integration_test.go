@@ -20,6 +20,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/IBM/go-sdk-core/v5/core"
+	"github.com/google/uuid"
 	"github.com/ibm-cloud-security/scc-go-sdk/posturemanagementv1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -39,66 +40,46 @@ import (
 
 var _ = Describe(`SCC test`, func() {
 
+	var collectorId *string
+	apiKey := os.Getenv("IAM_API_KEY")
+	authUrl := os.Getenv("IAM_APIKEY_URL")
+	accountId := os.Getenv("ACCOUNT_ID")
+	apiUrl := os.Getenv("API_URL")
+	authenticator := &core.IamAuthenticator{
+		ApiKey: apiKey,
+		URL:    authUrl, //use for dev/preprod env
+	}
+
 	Describe(`Integration test`, func() {
-		Describe(`Create collector suite`, func() {
+		FDescribe(`Create collector suite`, func() {
 			It(`Create collector`, func() {
-				apiKey := os.Getenv("IAM_API_KEY")
-				authUrl := os.Getenv("IAM_APIKEY_URL")
-				accountId := os.Getenv("ACCOUNT_ID")
-				apiUrl := os.Getenv("API_URL")
-				authenticator := &core.IamAuthenticator{
-					ApiKey: apiKey,
-					URL:    authUrl, //use for dev/preprod env
-				}
 				service, _ := posturemanagementv1.NewPostureManagementV1(&posturemanagementv1.PostureManagementV1Options{
 					Authenticator: authenticator,
 					URL:           apiUrl, //Specify url or use default
 				})
 
 				source := service.NewCreateCollectorOptions(accountId)
-				source.SetCollectorName("jason-test-collector-05")
-				source.SetCollectorDescription("jason scope")
+				uuidWithHyphen := uuid.New().String()
+				source.SetCollectorName("jason-" + uuidWithHyphen)
+				source.SetCollectorDescription("jason collector")
 				source.SetManagedBy("CUSTOMER")
 				source.SetIsPublic(true)
 				source.SetPassPhrase("secret")
 
-				_, response, err := service.CreateCollector(source)
+				reply, response, err := service.CreateCollector(source)
+				collectorId = reply.CollectorID
 
 				if err != nil {
 					fmt.Println(response.Result)
 					fmt.Println("Failed to create collector: ", err)
 					return
 				}
-				Expect(response.StatusCode).To(Equal(200))
+				Expect(response.StatusCode).To(Equal(201))
 			})
 			It(`Delete collector for cleanup`, func() {
-				apiKey := os.Getenv("IAM_API_KEY")
-				url := os.Getenv("IAM_APIKEY_URL")
-				accountId := os.Getenv("ACCOUNT_ID")
-				authenticator := &core.IamAuthenticator{
-					ApiKey: apiKey,
-					URL:    url, //use for dev/preprod env
-				}
-				service, _ := posturemanagementv1.NewPostureManagementV1(&posturemanagementv1.PostureManagementV1Options{
-					Authenticator: authenticator,
-					URL:           "https://asap-dev.compliance.test.cloud.ibm.com", //Specify url or use default
-				})
+				responseCode := hardDeleteCollector(collectorId)
 
-				source := service.NewCreateCollectorOptions(accountId)
-				source.SetCollectorName("jason-test-collector-05")
-				source.SetCollectorDescription("jason scope")
-				source.SetManagedBy("CUSTOMER")
-				source.SetIsPublic(true)
-				source.SetPassPhrase("secret")
-
-				_, response, err := service.CreateCollector(source)
-
-				if err != nil {
-					fmt.Println(response.Result)
-					fmt.Println("Failed to create collector: ", err)
-					return
-				}
-				Expect(response.StatusCode).To(Equal(200))
+				Expect(responseCode).To(Equal(200))
 			})
 		})
 		Describe(`Create scope suite`, func() {
@@ -323,37 +304,28 @@ func getAuthToken() string {
 	return accessData.AccessToken
 }
 
-func hardDeleteCollector(collectorId string) {
+func hardDeleteCollector(collectorId *string) int {
+	accountId := os.Getenv("ACCOUNT_ID")
 	authToken := getAuthToken()
-
-	url := "https://asap-dev.compliance.test.cloud.ibm.com/alpha/v1.0/collectors/" + collectorId
+	collectorIdValue := *collectorId
+	url := "https://asap-dev.compliance.test.cloud.ibm.com/alpha/v1.0/collectors/" + collectorIdValue
 	method := "DELETE"
 
 	client := &http.Client{}
-	req, err := http.NewRequest(method, url, nil)
+	req, _ := http.NewRequest(method, url, nil)
 
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
 	req.Header.Add("Content-Type", "multipart/form-data")
 	req.Header.Add("Authorization", authToken)
-	req.Header.Add("REALM", "d194db5f52544a8f953aa539ced9b570")
+	req.Header.Add("REALM", accountId)
 	req.Header.Add("transaction-id", "32e2607e-8594-11eb-8124-3c15c2df5030")
 
-	res, err := client.Do(req)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+	res, _ := client.Do(req)
 	defer res.Body.Close()
 
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	fmt.Println(string(body))
+	ioutil.ReadAll(res.Body)
+
+	return res.StatusCode
+
 }
 
 func hardDeleteScope() {

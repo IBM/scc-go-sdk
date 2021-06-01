@@ -21,6 +21,7 @@ package notificationsv1_test
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/ibm-cloud-security/scc-go-sdk/notificationsv1"
@@ -39,8 +40,13 @@ import (
 var accountID = os.Getenv("ACCOUNT_ID")
 var testString = "testString"
 var channelID = ""
+var identifier = os.Getenv("TRAVIS_BUILD_NUMBER")
 
 var _ = Describe(`NotificationsV1 Integration Tests`, func() {
+
+	if identifier == "" {
+		identifier = fmt.Sprintf("%d", time.Now().Unix())
+	}
 
 	const externalConfigFile = "../notifications_v1.env"
 
@@ -126,7 +132,7 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 
 			createNotificationChannelOptions := &notificationsv1.CreateNotificationChannelOptions{
 				AccountID:   &accountID,
-				Name:        &testString,
+				Name:        core.StringPtr(fmt.Sprintf("%s-%s", testString, identifier)),
 				Type:        core.StringPtr("Webhook"),
 				Endpoint:    core.StringPtr("https://webhook.site/136fe1e2-3c3f-4bff-925f-391fbb202546"),
 				Description: &testString,
@@ -180,7 +186,7 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 			updateNotificationChannelOptions := &notificationsv1.UpdateNotificationChannelOptions{
 				AccountID:   &accountID,
 				ChannelID:   &channelID,
-				Name:        &testString,
+				Name:        core.StringPtr(fmt.Sprintf("%s-%s", testString, identifier)),
 				Type:        core.StringPtr("Webhook"),
 				Endpoint:    core.StringPtr("https://webhook.site/136fe1e2-3c3f-4bff-925f-391fbb202546"),
 				Description: &testString,
@@ -265,7 +271,7 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 
 			createNotificationChannelOptions := &notificationsv1.CreateNotificationChannelOptions{
 				AccountID:   &accountID,
-				Name:        &testString,
+				Name:        core.StringPtr(fmt.Sprintf("%s-%s", testString, identifier)),
 				Type:        core.StringPtr("Webhook"),
 				Endpoint:    core.StringPtr("https://webhook.site/136fe1e2-3c3f-4bff-925f-391fbb202546"),
 				Description: &testString,

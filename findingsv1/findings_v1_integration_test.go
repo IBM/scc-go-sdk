@@ -21,6 +21,8 @@ package findingsv1_test
 import (
 	"fmt"
 	"os"
+	"strings"
+	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/ibm-cloud-security/scc-go-sdk/findingsv1"
@@ -39,8 +41,13 @@ import (
 var accountID = os.Getenv("ACCOUNT_ID")
 var providerID = os.Getenv("PROVIDER_ID")
 var testString = "testString"
+var identifier = os.Getenv("TRAVIS_BUILD_NUMBER")
 
 var _ = Describe(`FindingsV1 Integration Tests`, func() {
+
+	if identifier == "" {
+		identifier = fmt.Sprintf("%d", time.Now().Unix())
+	}
 
 	if providerID == "" {
 		providerID = "sdk-it"
@@ -107,7 +114,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			postGraphOptions := &findingsv1.PostGraphOptions{
 				AccountID:   &accountID,
 				Body:        CreateMockReader(`{notes{id}}`),
-				ContentType: &("application/graphql"),
+				ContentType: core.StringPtr("application/graphql"),
 			}
 
 			response, err := findingsService.PostGraph(postGraphOptions)
@@ -151,7 +158,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 				ShortDescription: &testString,
 				LongDescription:  &testString,
 				Kind:             core.StringPtr("FINDING"),
-				ID:               core.StringPtr("finding-note"),
+				ID:               core.StringPtr(fmt.Sprintf("finding-note-%s", identifier)),
 				ReportedBy:       reporterModel,
 				RelatedURL:       []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel},
 				ExpirationTime:   CreateMockDateTime("2019-01-01T12:00:00.000Z"),
@@ -190,7 +197,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 				ShortDescription: &testString,
 				LongDescription:  &testString,
 				Kind:             core.StringPtr("KPI"),
-				ID:               core.StringPtr("kpi-note"),
+				ID:               core.StringPtr(fmt.Sprintf("kpi-note-%s", identifier)),
 				ReportedBy:       reporterModel,
 				ExpirationTime:   CreateMockDateTime("2019-01-01T12:00:00.000Z"),
 				Shared:           core.BoolPtr(true),
@@ -237,7 +244,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 				Title:                 &testString,
 				Subtitle:              &testString,
 				Order:                 core.Int64Ptr(int64(1)),
-				FindingNoteNames:      []string{fmt.Sprintf("%s/providers/%s/notes/finding-note", accountID, providerID)},
+				FindingNoteNames:      []string{fmt.Sprintf("%s/providers/%s/notes/finding-note-%s", accountID, providerID, identifier)},
 				RequiresConfiguration: core.BoolPtr(true),
 				BadgeText:             &testString,
 				BadgeImage:            &testString,
@@ -250,7 +257,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 				ShortDescription: &testString,
 				LongDescription:  &testString,
 				Kind:             core.StringPtr("CARD"),
-				ID:               core.StringPtr("card-note"),
+				ID:               core.StringPtr(fmt.Sprintf("card-note-%s", identifier)),
 				ReportedBy:       reporterModel,
 				ExpirationTime:   CreateMockDateTime("2019-01-01T12:00:00.000Z"),
 				Shared:           core.BoolPtr(true),
@@ -289,7 +296,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 				ShortDescription: &testString,
 				LongDescription:  &testString,
 				Kind:             core.StringPtr("SECTION"),
-				ID:               core.StringPtr("section-note"),
+				ID:               core.StringPtr(fmt.Sprintf("section-note-%s", identifier)),
 				ReportedBy:       reporterModel,
 				ExpirationTime:   CreateMockDateTime("2019-01-01T12:00:00.000Z"),
 				Shared:           core.BoolPtr(true),
@@ -334,7 +341,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			getNoteOptions := &findingsv1.GetNoteOptions{
 				AccountID:  &accountID,
 				ProviderID: &providerID,
-				NoteID:     core.StringPtr("finding-note"),
+				NoteID:     core.StringPtr(fmt.Sprintf("finding-note-%s", identifier)),
 			}
 
 			apiNote, response, err := findingsService.GetNote(getNoteOptions)
@@ -376,11 +383,11 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			updateNoteOptions := &findingsv1.UpdateNoteOptions{
 				AccountID:        &accountID,
 				ProviderID:       &providerID,
-				NoteID:           core.StringPtr("finding-note"),
+				NoteID:           core.StringPtr(fmt.Sprintf("finding-note-%s", identifier)),
 				ShortDescription: &testString,
 				LongDescription:  &testString,
 				Kind:             core.StringPtr("FINDING"),
-				ID:               core.StringPtr("finding-note"),
+				ID:               core.StringPtr(fmt.Sprintf("finding-note-%s", identifier)),
 				ReportedBy:       reporterModel,
 				RelatedURL:       []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel},
 				ExpirationTime:   CreateMockDateTime("2019-01-01T12:00:00.000Z"),
@@ -416,11 +423,11 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			updateNoteOptions := &findingsv1.UpdateNoteOptions{
 				AccountID:        &accountID,
 				ProviderID:       &providerID,
-				NoteID:           core.StringPtr("kpi-note"),
+				NoteID:           core.StringPtr(fmt.Sprintf("kpi-note-%s", identifier)),
 				ShortDescription: &testString,
 				LongDescription:  &testString,
 				Kind:             core.StringPtr("KPI"),
-				ID:               core.StringPtr("kpi-note"),
+				ID:               core.StringPtr(fmt.Sprintf("kpi-note-%s", identifier)),
 				ReportedBy:       reporterModel,
 				ExpirationTime:   CreateMockDateTime("2019-01-01T12:00:00.000Z"),
 				Shared:           core.BoolPtr(true),
@@ -466,7 +473,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 				Section:               &testString,
 				Title:                 &testString,
 				Subtitle:              &testString,
-				FindingNoteNames:      []string{fmt.Sprintf("%s/providers/%s/notes/finding-note", accountID, providerID)},
+				FindingNoteNames:      []string{fmt.Sprintf("%s/providers/%s/notes/finding-note-%s", accountID, providerID, identifier)},
 				RequiresConfiguration: core.BoolPtr(true),
 				BadgeText:             &testString,
 				BadgeImage:            &testString,
@@ -476,11 +483,11 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			updateNoteOptions := &findingsv1.UpdateNoteOptions{
 				AccountID:        &accountID,
 				ProviderID:       &providerID,
-				NoteID:           core.StringPtr("card-note"),
+				NoteID:           core.StringPtr(fmt.Sprintf("card-note-%s", identifier)),
 				ShortDescription: &testString,
 				LongDescription:  &testString,
 				Kind:             core.StringPtr("CARD"),
-				ID:               core.StringPtr("card-note"),
+				ID:               core.StringPtr(fmt.Sprintf("card-note-%s", identifier)),
 				ReportedBy:       reporterModel,
 				ExpirationTime:   CreateMockDateTime("2019-01-01T12:00:00.000Z"),
 				Card:             cardModel,
@@ -515,11 +522,11 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			updateNoteOptions := &findingsv1.UpdateNoteOptions{
 				AccountID:        &accountID,
 				ProviderID:       &providerID,
-				NoteID:           core.StringPtr("section-note"),
+				NoteID:           core.StringPtr(fmt.Sprintf("section-note-%s", identifier)),
 				ShortDescription: &testString,
 				LongDescription:  &testString,
 				Kind:             core.StringPtr("SECTION"),
-				ID:               core.StringPtr("section-note"),
+				ID:               core.StringPtr(fmt.Sprintf("section-note-%s", identifier)),
 				ReportedBy:       reporterModel,
 				ExpirationTime:   CreateMockDateTime("2019-01-01T12:00:00.000Z"),
 				Shared:           core.BoolPtr(true),
@@ -589,9 +596,9 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			createOccurrenceOptions := &findingsv1.CreateOccurrenceOptions{
 				AccountID:       &accountID,
 				ProviderID:      &providerID,
-				NoteName:        core.StringPtr(fmt.Sprintf("%s/providers/%s/notes/finding-note", accountID, providerID)),
+				NoteName:        core.StringPtr(fmt.Sprintf("%s/providers/%s/notes/finding-note-%s", accountID, providerID, identifier)),
 				Kind:            core.StringPtr("FINDING"),
-				ID:              core.StringPtr("finding-occurrence"),
+				ID:              core.StringPtr(fmt.Sprintf("finding-occurrence-%s", identifier)),
 				ResourceURL:     &testString,
 				Remediation:     &testString,
 				Context:         contextModel,
@@ -635,9 +642,9 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			createOccurrenceOptions := &findingsv1.CreateOccurrenceOptions{
 				AccountID:       &accountID,
 				ProviderID:      &providerID,
-				NoteName:        core.StringPtr(fmt.Sprintf("%s/providers/%s/notes/kpi-note", accountID, providerID)),
+				NoteName:        core.StringPtr(fmt.Sprintf("%s/providers/%s/notes/kpi-note-%s", accountID, providerID, identifier)),
 				Kind:            core.StringPtr("KPI"),
-				ID:              core.StringPtr("kpi-occurrence"),
+				ID:              core.StringPtr(fmt.Sprintf("kpi-occurrence-%s", identifier)),
 				ResourceURL:     &testString,
 				Remediation:     &testString,
 				Context:         contextModel,
@@ -663,7 +670,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			getOccurrenceNoteOptions := &findingsv1.GetOccurrenceNoteOptions{
 				AccountID:    &accountID,
 				ProviderID:   &providerID,
-				OccurrenceID: core.StringPtr("finding-occurrence"),
+				OccurrenceID: core.StringPtr(fmt.Sprintf("finding-occurrence-%s", identifier)),
 			}
 
 			apiNote, response, err := findingsService.GetOccurrenceNote(getOccurrenceNoteOptions)
@@ -704,7 +711,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			listNoteOccurrencesOptions := &findingsv1.ListNoteOccurrencesOptions{
 				AccountID:  &accountID,
 				ProviderID: &providerID,
-				NoteID:     core.StringPtr("finding-note"),
+				NoteID:     core.StringPtr(fmt.Sprintf("finding-note-%s", identifier)),
 			}
 
 			apiListNoteOccurrencesResponse, response, err := findingsService.ListNoteOccurrences(listNoteOccurrencesOptions)
@@ -725,7 +732,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			getOccurrenceOptions := &findingsv1.GetOccurrenceOptions{
 				AccountID:    &accountID,
 				ProviderID:   &providerID,
-				OccurrenceID: core.StringPtr("finding-occurrence"),
+				OccurrenceID: core.StringPtr(fmt.Sprintf("finding-occurrence-%s", identifier)),
 			}
 
 			apiListOccurrencesResponse, response, err := findingsService.GetOccurrence(getOccurrenceOptions)
@@ -791,10 +798,10 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			updateOccurrenceOptions := &findingsv1.UpdateOccurrenceOptions{
 				AccountID:    &accountID,
 				ProviderID:   &providerID,
-				OccurrenceID: core.StringPtr("finding-occurrence"),
-				NoteName:     core.StringPtr(fmt.Sprintf("%s/providers/%s/notes/finding-note", accountID, providerID)),
+				OccurrenceID: core.StringPtr(fmt.Sprintf("finding-occurrence-%s", identifier)),
+				NoteName:     core.StringPtr(fmt.Sprintf("%s/providers/%s/notes/finding-note-%s", accountID, providerID, identifier)),
 				Kind:         core.StringPtr("FINDING"),
-				ID:           core.StringPtr("finding-occurrence"),
+				ID:           core.StringPtr(fmt.Sprintf("finding-occurrence-%s", identifier)),
 				ResourceURL:  &testString,
 				Remediation:  &testString,
 				Context:      contextModel,
@@ -837,10 +844,10 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			updateOccurrenceOptions := &findingsv1.UpdateOccurrenceOptions{
 				AccountID:    &accountID,
 				ProviderID:   &providerID,
-				OccurrenceID: core.StringPtr("kpi-occurrence"),
-				NoteName:     core.StringPtr(fmt.Sprintf("%s/providers/%s/notes/kpi-note", accountID, providerID)),
+				OccurrenceID: core.StringPtr(fmt.Sprintf("kpi-occurrence-%s", identifier)),
+				NoteName:     core.StringPtr(fmt.Sprintf("%s/providers/%s/notes/kpi-note-%s", accountID, providerID, identifier)),
 				Kind:         core.StringPtr("KPI"),
-				ID:           core.StringPtr("kpi-occurrence"),
+				ID:           core.StringPtr(fmt.Sprintf("kpi-occurrence-%s", identifier)),
 				ResourceURL:  &testString,
 				Remediation:  &testString,
 				Context:      contextModel,
@@ -884,7 +891,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			deleteOccurrenceOptions := &findingsv1.DeleteOccurrenceOptions{
 				AccountID:    &accountID,
 				ProviderID:   &providerID,
-				OccurrenceID: core.StringPtr("finding-occurrence"),
+				OccurrenceID: core.StringPtr(fmt.Sprintf("finding-occurrence-%s", identifier)),
 			}
 
 			response, err := findingsService.DeleteOccurrence(deleteOccurrenceOptions)
@@ -904,7 +911,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			deleteNoteOptions := &findingsv1.DeleteNoteOptions{
 				AccountID:  &accountID,
 				ProviderID: &providerID,
-				NoteID:     core.StringPtr("section-note"),
+				NoteID:     core.StringPtr(fmt.Sprintf("section-note-%s", identifier)),
 			}
 
 			response, err := findingsService.DeleteNote(deleteNoteOptions)
@@ -955,14 +962,17 @@ var _ = AfterSuite(func() {
 	}
 
 	for _, note := range apiListNotesResponse.Notes {
-		deleteNoteOptions := &findingsv1.DeleteNoteOptions{
-			AccountID:  &accountID,
-			ProviderID: &providerID,
-			NoteID:     note.ID,
-		}
-		_, err := findingsService.DeleteNote(deleteNoteOptions)
-		if err != nil {
-			Skip("Error occurred while deleting note for cleanup: " + err.Error())
+		parts := strings.Split(*note.ID, "-")
+		if parts[len(parts)-1] == identifier {
+			deleteNoteOptions := &findingsv1.DeleteNoteOptions{
+				AccountID:  &accountID,
+				ProviderID: &providerID,
+				NoteID:     note.ID,
+			}
+			_, err := findingsService.DeleteNote(deleteNoteOptions)
+			if err != nil {
+				Skip("Error occurred while deleting note for cleanup: " + err.Error())
+			}
 		}
 	}
 
@@ -978,14 +988,17 @@ var _ = AfterSuite(func() {
 	}
 
 	for _, occurrence := range apiListOccurrencesResponse.Occurrences {
-		deleteOccurrenceOptions := &findingsv1.DeleteOccurrenceOptions{
-			AccountID:    &accountID,
-			ProviderID:   &providerID,
-			OccurrenceID: occurrence.ID,
-		}
-		_, err := findingsService.DeleteOccurrence(deleteOccurrenceOptions)
-		if err != nil {
-			Skip("Error occurred while deleting occurrence for cleanup: " + err.Error())
+		parts := strings.Split(*occurrence.ID, "-")
+		if parts[len(parts)-1] == identifier {
+			deleteOccurrenceOptions := &findingsv1.DeleteOccurrenceOptions{
+				AccountID:    &accountID,
+				ProviderID:   &providerID,
+				OccurrenceID: occurrence.ID,
+			}
+			_, err := findingsService.DeleteOccurrence(deleteOccurrenceOptions)
+			if err != nil {
+				Skip("Error occurred while deleting occurrence for cleanup: " + err.Error())
+			}
 		}
 	}
 

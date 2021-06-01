@@ -11,16 +11,11 @@ test:
 test-cov:
 	go test `go list ./...` ${COVERAGE}
 
-test-int: test-dep
+test-int:
 	go test `go list ./...` -tags=integration
 
-test-int-cov: test-dep
+test-int-cov:
 	go test `go list ./...` -tags=integration ${COVERAGE}
-
-test-dep:
-	echo "${FINDINGS_ENV}" | base64 -d >> findings_v1.env
-	echo "${NOTIFICATIONS_ENV}" | base64 -d >> notifications_v1.env
-	# echo "${CONFIGURATION_GOVERNANCE_ENV}" | base64 -d >> configuration_governance_v1.env
 
 lint:
 	golangci-lint run

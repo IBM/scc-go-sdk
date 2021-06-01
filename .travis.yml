@@ -27,11 +27,11 @@ script:
 # This step is required since we use a go module
 - go mod download
 - golangci-lint run
-- make test
-- build/testScript.sh
+- make test-cov
 
 after_success:
   - build/publishCodeCoverage.sh
+  - build/testScript.sh
 
 before_deploy:
 - pip install --user bumpversion

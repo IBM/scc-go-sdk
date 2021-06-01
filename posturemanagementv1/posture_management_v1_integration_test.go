@@ -41,6 +41,7 @@ import (
 var _ = Describe(`SCC test`, func() {
 
 	var collectorId *string
+	uuidWithHyphen := uuid.New().String()
 	apiKey := os.Getenv("IAM_API_KEY")
 	authUrl := os.Getenv("IAM_APIKEY_URL")
 	accountId := os.Getenv("ACCOUNT_ID")
@@ -51,7 +52,7 @@ var _ = Describe(`SCC test`, func() {
 	}
 
 	Describe(`Integration test`, func() {
-		FDescribe(`Create collector suite`, func() {
+		Describe(`Create collector suite`, func() {
 			It(`Create collector`, func() {
 				service, _ := posturemanagementv1.NewPostureManagementV1(&posturemanagementv1.PostureManagementV1Options{
 					Authenticator: authenticator,
@@ -59,7 +60,6 @@ var _ = Describe(`SCC test`, func() {
 				})
 
 				source := service.NewCreateCollectorOptions(accountId)
-				uuidWithHyphen := uuid.New().String()
 				source.SetCollectorName("jason-" + uuidWithHyphen)
 				source.SetCollectorDescription("jason collector")
 				source.SetManagedBy("CUSTOMER")
@@ -84,62 +84,30 @@ var _ = Describe(`SCC test`, func() {
 		})
 		Describe(`Create scope suite`, func() {
 			It(`Create scope`, func() {
-				apiKey := os.Getenv("IAM_API_KEY")
-				url := os.Getenv("IAM_APIKEY_URL")
-				accountId := os.Getenv("ACCOUNT_ID")
-				authenticator := &core.IamAuthenticator{
-					ApiKey: apiKey,
-					URL:    url, //use for dev/preprod env
-				}
 				service, _ := posturemanagementv1.NewPostureManagementV1(&posturemanagementv1.PostureManagementV1Options{
 					Authenticator: authenticator,
-					URL:           "https://asap-dev.compliance.test.cloud.ibm.com", //Specify url or use default
+					URL:           apiUrl, //Specify url or use default
 				})
 
-				source := service.NewCreateCollectorOptions(accountId)
-				source.SetCollectorName("jason-test-collector-05")
-				source.SetCollectorDescription("jason scope")
-				source.SetManagedBy("CUSTOMER")
-				source.SetIsPublic(true)
-				source.SetPassPhrase("secret")
+				source := service.NewCreateScopeOptions(accountId)
+				source.SetScopeName("scope-" + uuidWithHyphen)
+				source.SetScopeDescription("jason scope")
+				source.SetCredentialID("5645")
+				source.SetCollectorIds([]string{"1417"})
+				source.SetEnvironmentType("ibm")
 
-				_, response, err := service.CreateCollector(source)
+				_, response, err := service.CreateScope(source)
 
 				if err != nil {
 					fmt.Println(response.Result)
-					fmt.Println("Failed to create collector: ", err)
+					fmt.Println("Failed to create scope: ", err)
 					return
 				}
 				Expect(response.StatusCode).To(Equal(200))
 			})
 			It(`Delete scope for cleanup`, func() {
-				apiKey := os.Getenv("IAM_API_KEY")
-				url := os.Getenv("IAM_APIKEY_URL")
-				accountId := os.Getenv("ACCOUNT_ID")
-				authenticator := &core.IamAuthenticator{
-					ApiKey: apiKey,
-					URL:    url, //use for dev/preprod env
-				}
-				service, _ := posturemanagementv1.NewPostureManagementV1(&posturemanagementv1.PostureManagementV1Options{
-					Authenticator: authenticator,
-					URL:           "https://asap-dev.compliance.test.cloud.ibm.com", //Specify url or use default
-				})
 
-				source := service.NewCreateCollectorOptions(accountId)
-				source.SetCollectorName("jason-test-collector-05")
-				source.SetCollectorDescription("jason scope")
-				source.SetManagedBy("CUSTOMER")
-				source.SetIsPublic(true)
-				source.SetPassPhrase("secret")
-
-				_, response, err := service.CreateCollector(source)
-
-				if err != nil {
-					fmt.Println(response.Result)
-					fmt.Println("Failed to create collector: ", err)
-					return
-				}
-				Expect(response.StatusCode).To(Equal(200))
+				//Expect(response.StatusCode).To(Equal(200))
 			})
 		})
 
@@ -174,67 +142,13 @@ var _ = Describe(`SCC test`, func() {
 				Expect(response.StatusCode).To(Equal(200))
 			})
 			It(`Delete credential for cleanup`, func() {
-				apiKey := os.Getenv("IAM_API_KEY")
-				url := os.Getenv("IAM_APIKEY_URL")
-				accountId := os.Getenv("ACCOUNT_ID")
-				authenticator := &core.IamAuthenticator{
-					ApiKey: apiKey,
-					URL:    url, //use for dev/preprod env
-				}
-				service, _ := posturemanagementv1.NewPostureManagementV1(&posturemanagementv1.PostureManagementV1Options{
-					Authenticator: authenticator,
-					URL:           "https://asap-dev.compliance.test.cloud.ibm.com", //Specify url or use default
-				})
 
-				source := service.NewCreateCollectorOptions(accountId)
-				source.SetCollectorName("jason-test-collector-05")
-				source.SetCollectorDescription("jason scope")
-				source.SetManagedBy("CUSTOMER")
-				source.SetIsPublic(true)
-				source.SetPassPhrase("secret")
-
-				_, response, err := service.CreateCollector(source)
-
-				if err != nil {
-					fmt.Println(response.Result)
-					fmt.Println("Failed to create collector: ", err)
-					return
-				}
-				Expect(response.StatusCode).To(Equal(200))
+				//Expect(response.StatusCode).To(Equal(200))
 			})
 		})
 
 		Describe(`Create scan`, func() {
 			It(`Create scan`, func() {
-				apiKey := os.Getenv("IAM_API_KEY")
-				url := os.Getenv("IAM_APIKEY_URL")
-				accountId := os.Getenv("ACCOUNT_ID")
-				authenticator := &core.IamAuthenticator{
-					ApiKey: apiKey,
-					URL:    url, //use for dev/preprod env
-				}
-				service, _ := posturemanagementv1.NewPostureManagementV1(&posturemanagementv1.PostureManagementV1Options{
-					Authenticator: authenticator,
-					URL:           "https://asap-dev.compliance.test.cloud.ibm.com", //Specify url or use default
-				})
-
-				source := service.NewCreateCollectorOptions(accountId)
-				source.SetCollectorName("jason-test-collector-05")
-				source.SetCollectorDescription("jason scope")
-				source.SetManagedBy("CUSTOMER")
-				source.SetIsPublic(true)
-				source.SetPassPhrase("secret")
-
-				_, response, err := service.CreateCollector(source)
-
-				if err != nil {
-					fmt.Println(response.Result)
-					fmt.Println("Failed to create collector: ", err)
-					return
-				}
-				Expect(response.StatusCode).To(Equal(200))
-			})
-			It(`Delete credential for cleanup`, func() {
 				apiKey := os.Getenv("IAM_API_KEY")
 				url := os.Getenv("IAM_APIKEY_URL")
 				accountId := os.Getenv("ACCOUNT_ID")
@@ -317,7 +231,7 @@ func hardDeleteCollector(collectorId *string) int {
 	req.Header.Add("Content-Type", "multipart/form-data")
 	req.Header.Add("Authorization", authToken)
 	req.Header.Add("REALM", accountId)
-	req.Header.Add("transaction-id", "32e2607e-8594-11eb-8124-3c15c2df5030")
+	req.Header.Add("transaction-id", uuid.New().String())
 
 	res, _ := client.Do(req)
 	defer res.Body.Close()
@@ -328,8 +242,27 @@ func hardDeleteCollector(collectorId *string) int {
 
 }
 
-func hardDeleteScope() {
+func hardDeleteScope(scopeId *string) int {
+	accountId := os.Getenv("ACCOUNT_ID")
+	authToken := getAuthToken()
+	collectorIdValue := *scopeId
+	url := "https://asap-dev.compliance.test.cloud.ibm.com/alpha/v1.0/schemas/" + collectorIdValue
+	method := "DELETE"
 
+	client := &http.Client{}
+	req, _ := http.NewRequest(method, url, nil)
+
+	req.Header.Add("Content-Type", "multipart/form-data")
+	req.Header.Add("Authorization", authToken)
+	req.Header.Add("REALM", accountId)
+	req.Header.Add("transaction-id", uuid.New().String())
+
+	res, _ := client.Do(req)
+	defer res.Body.Close()
+
+	ioutil.ReadAll(res.Body)
+
+	return res.StatusCode
 }
 
 func hardDeleteCredential() {

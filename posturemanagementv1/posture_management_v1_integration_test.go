@@ -64,9 +64,9 @@ var _ = Describe(`SCC test`, func() {
 				})
 
 				source := service.NewCreateCollectorOptions(accountId)
-				source.SetCollectorName("jason-" + uuidWithHyphen)
-				source.SetCollectorDescription("jason collector")
-				source.SetManagedBy("CUSTOMER")
+				source.SetCollectorName("test-" + uuidWithHyphen)
+				source.SetCollectorDescription("test collector")
+				source.SetManagedBy("customer")
 				source.SetIsPublic(true)
 				source.SetPassPhrase("secret")
 
@@ -95,7 +95,7 @@ var _ = Describe(`SCC test`, func() {
 
 				source := service.NewCreateScopeOptions(accountId)
 				source.SetScopeName("scope-" + uuidWithHyphen)
-				source.SetScopeDescription("jason scope")
+				source.SetScopeDescription("test scope")
 				source.SetCredentialID("5645")
 				source.SetCollectorIds([]string{"1417"})
 				source.SetEnvironmentType("ibm")
@@ -117,8 +117,7 @@ var _ = Describe(`SCC test`, func() {
 
 			})
 		})
-
-		FDescribe(`Create credential suite`, func() {
+		Describe(`Create credential suite`, func() {
 			It(`Create credential`, func() {
 				credentialPath := os.Getenv("CREDENTIAL_PATH")
 				pemPath := os.Getenv("PEM_PATH")
@@ -145,36 +144,26 @@ var _ = Describe(`SCC test`, func() {
 				Expect(reply).ToNot(BeNil())
 			})
 		})
-
-		Describe(`Create scan`, func() {
+		FDescribe(`Create scan`, func() {
 			It(`Create scan`, func() {
-				apiKey := os.Getenv("IAM_API_KEY")
-				url := os.Getenv("IAM_APIKEY_URL")
-				accountId := os.Getenv("ACCOUNT_ID")
-				authenticator := &core.IamAuthenticator{
-					ApiKey: apiKey,
-					URL:    url, //use for dev/preprod env
-				}
 				service, _ := scc.NewPostureManagementV1(&scc.PostureManagementV1Options{
 					Authenticator: authenticator,
 					URL:           "https://asap-dev.compliance.test.cloud.ibm.com", //Specify url or use default
 				})
 
-				source := service.NewCreateCollectorOptions(accountId)
-				source.SetCollectorName("jason-test-collector-05")
-				source.SetCollectorDescription("jason scope")
-				source.SetManagedBy("CUSTOMER")
-				source.SetIsPublic(true)
-				source.SetPassPhrase("secret")
+				source := service.NewScanSummariesOptions("1188", accountId)
+				source.SetProfileID("48")
+				source.SetGroupProfileID("1")
 
-				_, response, err := service.CreateCollector(source)
+				reply, response, err := service.ScanSummaries(source)
 
 				if err != nil {
 					fmt.Println(response.Result)
-					fmt.Println("Failed to create collector: ", err)
+					fmt.Println("Failed to create scan: ", err)
 					return
 				}
 				Expect(response.StatusCode).To(Equal(200))
+				Expect(reply).ToNot(BeNil())
 			})
 		})
 

@@ -63,6 +63,13 @@ var _ = Describe(`SCC test`, func() {
 		URL:    authUrl, //use for dev/preprod env
 	}
 
+	options := scc.PostureManagementV1Options{
+		Authenticator: authenticator,
+		URL:           apiUrl,
+	}
+
+	token := getAuthToken()
+
 	XDescribe(`Integration test`, func() {
 		Describe(`Create collector suite`, func() {
 			It(`Create collector`, func() {
@@ -179,26 +186,26 @@ var _ = Describe(`SCC test`, func() {
 	FDescribe(`Demo`, func() {
 
 		It(`Create Collector`, func() {
-			collectorId = demoCreateCollector()
+			collectorId = demoCreateCollector(options)
 			Expect(collectorId).ToNot(BeNil())
 		})
 		It(`Create Credential`, func() {
-			credentialId = demoCreateCredential()
+			credentialId = demoCreateCredential(options)
 			Expect(credentialId).ToNot(BeNil())
 		})
 		It(`Create Scope`, func() {
 			collectorIds = append(collectorIds, *collectorId)
-			scopeId = demoCreateScope(credentialId, collectorIds)
+			scopeId = demoCreateScope(options, credentialId, collectorIds)
 			Expect(scopeId).ToNot(BeNil())
 		})
 		It(`Discovery`, func() {
-			demoDiscovery(collectorIds, *scopeId)
+			demoDiscovery(&token, collectorIds, *scopeId)
 		})
 		It(`List Scopes`, func() {
-			demoListScope(scopeId)
+			demoListScope(options, scopeId)
 		})
 		It(`List Profiles`, func() {
-			demoListProfiles()
+			demoListProfiles(options)
 		})
 
 	})
@@ -225,10 +232,10 @@ type tlDiscover struct {
 }
 
 func getAuthToken() string {
-	url := "https://iam.test.cloud.ibm.com/identity/token"
+	url := os.Getenv("IAM_APIKEY_URL")
 	method := "POST"
 
-	payload := strings.NewReader("apikey=DjsEbdqjIwuP9bfTyGATAuJ9u55dsMbVNvJ8cVWdzoxz&response_type=cloud_iam&grant_type=urn%3Aibm%3Aparams%3Aoauth%3Agrant-type%3Aapikey")
+	payload := strings.NewReader("apikey=" + os.Getenv("IAM_API_KEY") + "&response_type=cloud_iam&grant_type=urn%3Aibm%3Aparams%3Aoauth%3Agrant-type%3Aapikey")
 
 	client := &http.Client{}
 	req, _ := http.NewRequest(method, url, payload)
@@ -298,10 +305,10 @@ func hardDeleteCredential() {
 
 }
 
-func demoDiscovery(gatewayIds []string, scopeId string) {
+func demoDiscovery(token *string, gatewayIds []string, scopeId string) {
 
 	accountId := os.Getenv("ACCOUNT_ID")
-	authToken := getAuthToken()
+	authToken := *token
 	url := os.Getenv("API_URL") + "/alpha/v1.0/schemas/tldiscover"
 	method := "POST"
 
@@ -338,23 +345,12 @@ func demoDiscovery(gatewayIds []string, scopeId string) {
 
 }
 
-func demoCreateCollector() *string {
+func demoCreateCollector(options scc.PostureManagementV1Options) *string {
 
 	uuidWithHyphen := uuid.New().String()
-	apiKey := os.Getenv("IAM_API_KEY")
-	authUrl := os.Getenv("IAM_APIKEY_URL")
 	accountId := os.Getenv("ACCOUNT_ID")
-	apiUrl := os.Getenv("API_URL")
 
-	authenticator := &core.IamAuthenticator{
-		ApiKey: apiKey,
-		URL:    authUrl, //use for dev/preprod env
-	}
-
-	service, _ := scc.NewPostureManagementV1(&scc.PostureManagementV1Options{
-		Authenticator: authenticator,
-		URL:           apiUrl, //Specify url or use default
-	})
+	service, _ := scc.NewPostureManagementV1(&options)
 
 	source := service.NewCreateCollectorOptions(accountId)
 	source.SetCollectorName("test-" + uuidWithHyphen)
@@ -376,23 +372,12 @@ func demoCreateCollector() *string {
 
 	return collectorId
 }
-func demoCreateCredential() string {
-	apiKey := os.Getenv("IAM_API_KEY")
-	authUrl := os.Getenv("IAM_APIKEY_URL")
+func demoCreateCredential(options scc.PostureManagementV1Options) string {
 	accountId := os.Getenv("ACCOUNT_ID")
-	apiUrl := os.Getenv("API_URL")
 	credentialPath := os.Getenv("CREDENTIAL_PATH")
 	pemPath := os.Getenv("PEM_PATH")
 
-	authenticator := &core.IamAuthenticator{
-		ApiKey: apiKey,
-		URL:    authUrl, //use for dev/preprod env
-	}
-
-	service, _ := scc.NewPostureManagementV1(&scc.PostureManagementV1Options{
-		Authenticator: authenticator,
-		URL:           apiUrl, //Specify url or use default
-	})
+	service, _ := scc.NewPostureManagementV1(&options)
 
 	credentialFile, _ := os.Open(credentialPath)
 	pemFile, _ := os.Open(pemPath)
@@ -409,25 +394,16 @@ func demoCreateCredential() string {
 	}
 
 	Expect(response.StatusCode).To(Equal(201))
+	Expect(reply.CredentialID).ToNot(BeNil())
+	Expect(reply.CreatedTime).ToNot(BeNil())
 
 	return *reply.CredentialID
 }
-func demoCreateScope(credentialId string, collectorIds []string) *string {
+func demoCreateScope(options scc.PostureManagementV1Options, credentialId string, collectorIds []string) *string {
 	uuidWithHyphen := uuid.New().String()
-	apiKey := os.Getenv("IAM_API_KEY")
-	authUrl := os.Getenv("IAM_APIKEY_URL")
 	accountId := os.Getenv("ACCOUNT_ID")
-	apiUrl := os.Getenv("API_URL")
 
-	authenticator := &core.IamAuthenticator{
-		ApiKey: apiKey,
-		URL:    authUrl, //use for dev/preprod env
-	}
-
-	service, _ := scc.NewPostureManagementV1(&scc.PostureManagementV1Options{
-		Authenticator: authenticator,
-		URL:           apiUrl, //Specify url or use default
-	})
+	service, _ := scc.NewPostureManagementV1(&options)
 
 	source := service.NewCreateScopeOptions(accountId)
 	source.SetScopeName("scope-" + uuidWithHyphen)
@@ -445,24 +421,17 @@ func demoCreateScope(credentialId string, collectorIds []string) *string {
 		return nil
 	}
 	Expect(response.StatusCode).To(Equal(201))
+	Expect(reply.ScopeID).ToNot(BeNil())
+	Expect(reply.CreatedTime).ToNot(BeNil())
+	Expect(reply.ModifiedTime).ToNot(BeNil())
 	return scopeId
 }
 
-func demoListScope(scopeId *string) {
-	apiKey := os.Getenv("IAM_API_KEY")
-	authUrl := os.Getenv("IAM_APIKEY_URL")
+func demoListScope(options scc.PostureManagementV1Options, scopeId *string) {
 	accountId := os.Getenv("ACCOUNT_ID")
-	apiUrl := os.Getenv("API_URL")
 
-	authenticator := &core.IamAuthenticator{
-		ApiKey: apiKey,
-		URL:    authUrl, //use for dev/preprod env
-	}
+	service, _ := scc.NewPostureManagementV1(&options)
 
-	service, _ := scc.NewPostureManagementV1(&scc.PostureManagementV1Options{
-		Authenticator: authenticator,
-		URL:           apiUrl, //Specify url or use default
-	})
 	var scopeIdMatch int
 	source := service.NewListScopesOptions(accountId)
 
@@ -481,19 +450,8 @@ func demoListScope(scopeId *string) {
 	Expect(scopeIdMatch).To(Equal(0))
 	Expect(reply.Scopes).ToNot(BeNil())
 }
-func demoListProfiles() {
-	apiKey := os.Getenv("IAM_API_KEY")
-	url := os.Getenv("IAM_APIKEY_URL")
+func demoListProfiles(options scc.PostureManagementV1Options) {
 	accountId := os.Getenv("ACCOUNT_ID")
-	apiUrl := os.Getenv("API_URL")
-	authenticator := &core.IamAuthenticator{
-		ApiKey: apiKey,
-		URL:    url,
-	}
-	options := scc.PostureManagementV1Options{
-		Authenticator: authenticator,
-		URL:           apiUrl,
-	}
 
 	service, _ := scc.NewPostureManagementV1(&options)
 

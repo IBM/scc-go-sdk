@@ -40,7 +40,7 @@ import (
 var accountID = os.Getenv("ACCOUNT_ID")
 var testString = "testString"
 var channelID = ""
-var identifier = os.Getenv("TRAVIS_BUILD_NUMBER")
+var identifier = os.Getenv("TRAVIS_JOB_ID")
 
 var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 

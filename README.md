@@ -10,7 +10,7 @@
 # IBM Cloud Security & Compliance Center Go SDK Version v0.0.4
 
 Go client library to interact with various
-[IBM Cloud Security & Compliance Center APIs](https://cloud.ibm.com/apidocs/security-and-compliance-center).
+[IBM Cloud Security & Compliance Center APIs](https://cloud.ibm.com/docs?tab=api-docs&category=platform_services%2Csecurity).
 
 ## Table of Contents
 <!--

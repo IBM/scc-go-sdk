@@ -1,3 +1,4 @@
+// +build integration
 /**
  * (C) Copyright IBM Corp. 2021.
  *
@@ -41,8 +42,10 @@ import (
 var _ = Describe(`SCC test`, func() {
 
 	var (
-		collectorId *string
-		scopeId     *string
+		collectorId  *string
+		collectorIds []string
+		credentialId string
+		scopeId      *string
 	)
 	uuidWithHyphen := uuid.New().String()
 	apiKey := os.Getenv("IAM_API_KEY")
@@ -55,7 +58,7 @@ var _ = Describe(`SCC test`, func() {
 		URL:    authUrl, //use for dev/preprod env
 	}
 
-	Describe(`Integration test`, func() {
+	XDescribe(`Integration test`, func() {
 		Describe(`Create collector suite`, func() {
 			It(`Create collector`, func() {
 				service, _ := scc.NewPostureManagementV1(&scc.PostureManagementV1Options{
@@ -165,6 +168,22 @@ var _ = Describe(`SCC test`, func() {
 				Expect(response.StatusCode).To(Equal(200))
 				Expect(reply).ToNot(BeNil())
 			})
+		})
+
+	})
+	FDescribe(`Demo`, func() {
+		It(`Create Collector`, func() {
+			collectorId = demoCreateCollector()
+			Expect(collectorId).ToNot(BeNil())
+		})
+		It(`Create Credential`, func() {
+			credentialId = demoCreateCredential()
+			Expect(credentialId).ToNot(BeNil())
+		})
+		It(`Create Scope`, func() {
+			collectorIds = append(collectorIds, *collectorId)
+			scopeId = demoCreateScope(credentialId, collectorIds)
+			Expect(scopeId).ToNot(BeNil())
 		})
 
 	})
@@ -293,7 +312,7 @@ func demoCreateCollector() *string {
 
 	return collectorId
 }
-func demoCreateCredential() *string {
+func demoCreateCredential() string {
 	apiKey := os.Getenv("IAM_API_KEY")
 	authUrl := os.Getenv("IAM_APIKEY_URL")
 	accountId := os.Getenv("ACCOUNT_ID")
@@ -322,10 +341,10 @@ func demoCreateCredential() *string {
 	if err != nil {
 		fmt.Println(response.Result)
 		fmt.Println("Failed to create credential: ", err)
-		return nil
+		return ""
 	}
 
-	return reply.CredentialID
+	return *reply.CredentialID
 }
 func demoCreateScope(credentialId string, collectorIds []string) *string {
 	uuidWithHyphen := uuid.New().String()

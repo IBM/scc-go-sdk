@@ -18,17 +18,19 @@
 package posturemanagementv1_test
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"net/http"
+	"os"
+	"strings"
+
 	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/google/uuid"
 	scc "github.com/ibm-cloud-security/scc-go-sdk/posturemanagementv1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"io/ioutil"
-	"net/http"
-	"os"
-	"strings"
 )
 
 /**
@@ -38,6 +40,8 @@ import (
  *
  * The integration test will automatically skip tests if the required config file is not available.
  */
+
+var accessToken *string
 
 var _ = Describe(`SCC test`, func() {
 
@@ -202,6 +206,13 @@ type access struct {
 	Scope        string `json:"scope"`
 }
 
+type tlDiscover struct {
+	DiscoveryLevel int    `json:"discoveryLevel`
+	GatewayIds     []int  `json:gatewayIds`
+	RequestType    string `json:requestType`
+	SchemaId       int    `json:schemaId`
+}
+
 func getAuthToken() string {
 	url := "https://iam.test.cloud.ibm.com/identity/token"
 	method := "POST"
@@ -221,13 +232,13 @@ func getAuthToken() string {
 	accessData := access{}
 	strBody := string(body)
 	json.Unmarshal([]byte(strBody), &accessData)
-
+	accessToken = &accessData.AccessToken
 	return accessData.AccessToken
 }
 
 func hardDeleteCollector(collectorId *string) int {
 	accountId := os.Getenv("ACCOUNT_ID")
-	authToken := getAuthToken()
+	authToken := accessToken
 	collectorIdValue := *collectorId
 	url := "https://asap-dev.compliance.test.cloud.ibm.com/alpha/v1.0/collectors/" + collectorIdValue
 	method := "DELETE"
@@ -236,7 +247,7 @@ func hardDeleteCollector(collectorId *string) int {
 	req, _ := http.NewRequest(method, url, nil)
 
 	req.Header.Add("Content-Type", "multipart/form-data")
-	req.Header.Add("Authorization", authToken)
+	req.Header.Add("Authorization", *authToken)
 	req.Header.Add("REALM", accountId)
 	req.Header.Add("transaction-id", uuid.New().String())
 
@@ -251,7 +262,7 @@ func hardDeleteCollector(collectorId *string) int {
 
 func hardDeleteScope(scopeId *string) int {
 	accountId := os.Getenv("ACCOUNT_ID")
-	authToken := getAuthToken()
+	authToken := accessToken
 	scopeIdValue := *scopeId
 	url := "https://asap-dev.compliance.test.cloud.ibm.com/alpha/v1.0/schemas/" + scopeIdValue
 	method := "DELETE"
@@ -260,7 +271,7 @@ func hardDeleteScope(scopeId *string) int {
 	req, _ := http.NewRequest(method, url, nil)
 
 	req.Header.Add("Content-Type", "multipart/form-data")
-	req.Header.Add("Authorization", authToken)
+	req.Header.Add("Authorization", *authToken)
 	req.Header.Add("REALM", accountId)
 	req.Header.Add("transaction-id", uuid.New().String())
 
@@ -273,6 +284,36 @@ func hardDeleteScope(scopeId *string) int {
 }
 
 func hardDeleteCredential() {
+
+}
+
+func demoDiscovery() {
+	accountId := os.Getenv("ACCOUNT_ID")
+	authToken := accessToken
+	url := os.Getenv("API_URL") + "/alpha/1.0/schemas/tldiscover"
+	method := "POST"
+
+	tld := tlDiscover{}
+	tld.DiscoveryLevel = 1
+	tld.GatewayIds = []int{1188}
+	tld.RequestType = "TLDISCOVER"
+	tld.SchemaId = 1234
+
+	requestByte, _ := json.Marshal(tld)
+	requestReader := bytes.NewReader(requestByte)
+
+	client := &http.Client{}
+	req, _ := http.NewRequest(method, url, requestReader)
+
+	req.Header.Add("Content-Type", "multipart/form-data")
+	req.Header.Add("Authorization", *authToken)
+	req.Header.Add("REALM", accountId)
+	req.Header.Add("transaction-id", uuid.New().String())
+
+	res, _ := client.Do(req)
+	defer res.Body.Close()
+
+	ioutil.ReadAll(res.Body)
 
 }
 

@@ -1,3 +1,11 @@
+## [0.0.5](https://github.com/ibm-cloud-security/scc-go-sdk/compare/v0.0.4...v0.0.5) (2021-06-02)
+
+
+### Bug Fixes
+
+* **SemanticRelease:** skip CI ops on SR commits ([3ad0c16](https://github.com/ibm-cloud-security/scc-go-sdk/commit/3ad0c16a78db76fc8cbff87accc7989bfbcef09b))
+* **Travis:** after_success has to be used with explicit failure mechanism ([c2c2eae](https://github.com/ibm-cloud-security/scc-go-sdk/commit/c2c2eae5c51b4c26d8eddb443b430f2bba8dc575))
+
 ## [0.0.4](https://github.com/ibm-cloud-security/scc-go-sdk/compare/v0.0.3...v0.0.4) (2021-05-25)
 
 

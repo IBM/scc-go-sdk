@@ -30,8 +30,8 @@ script:
 - make test-cov
 
 after_success:
-  - build/publishCodeCoverage.sh
-  - build/testScript.sh
+  - build/publishCodeCoverage.sh || travis_terminate 1
+  - build/testScript.sh || travis_terminate 1
 
 before_deploy:
 - pip install --user bumpversion

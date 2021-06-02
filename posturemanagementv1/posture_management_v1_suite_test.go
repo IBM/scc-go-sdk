@@ -17,7 +17,6 @@
 package posturemanagementv1_test
 
 import (
-	"log"
 	"testing"
 
 	. "github.com/onsi/ginkgo"
@@ -25,7 +24,6 @@ import (
 )
 
 func TestPostureManagementV1(t *testing.T) {
-	log.Println("testing jason")
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "PostureManagementV1 Suite")
 }

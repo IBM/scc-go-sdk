@@ -24,6 +24,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/IBM/go-sdk-core/v5/core"
@@ -189,6 +190,9 @@ var _ = Describe(`SCC test`, func() {
 			scopeId = demoCreateScope(credentialId, collectorIds)
 			Expect(scopeId).ToNot(BeNil())
 		})
+		It(`Discovery`, func() {
+			demoDiscovery(collectorIds, *scopeId)
+		})
 
 	})
 })
@@ -207,10 +211,10 @@ type access struct {
 }
 
 type tlDiscover struct {
-	DiscoveryLevel int    `json:"discoveryLevel`
-	GatewayIds     []int  `json:gatewayIds`
-	RequestType    string `json:requestType`
-	SchemaId       int    `json:schemaId`
+	DiscoveryLevel int    `json:"discoveryLevel"`
+	GatewayIds     []int  `json:"gatewayIds"`
+	RequestType    string `json:"requestType"`
+	SchemaId       int    `json:"schemaId"`
 }
 
 func getAuthToken() string {
@@ -287,17 +291,25 @@ func hardDeleteCredential() {
 
 }
 
-func demoDiscovery() {
+func demoDiscovery(gatewayIds []string, scopeId string) {
+
 	accountId := os.Getenv("ACCOUNT_ID")
-	authToken := accessToken
-	url := os.Getenv("API_URL") + "/alpha/1.0/schemas/tldiscover"
+	authToken := getAuthToken()
+	url := os.Getenv("API_URL") + "/alpha/v1.0/schemas/tldiscover"
 	method := "POST"
 
 	tld := tlDiscover{}
 	tld.DiscoveryLevel = 1
-	tld.GatewayIds = []int{1188}
 	tld.RequestType = "TLDISCOVER"
-	tld.SchemaId = 1234
+	tld.SchemaId, _ = strconv.Atoi(scopeId)
+
+	for _, i := range gatewayIds {
+		j, err := strconv.Atoi(i)
+		if err != nil {
+			panic(err)
+		}
+		tld.GatewayIds = append(tld.GatewayIds, j)
+	}
 
 	requestByte, _ := json.Marshal(tld)
 	requestReader := bytes.NewReader(requestByte)
@@ -306,7 +318,7 @@ func demoDiscovery() {
 	req, _ := http.NewRequest(method, url, requestReader)
 
 	req.Header.Add("Content-Type", "multipart/form-data")
-	req.Header.Add("Authorization", *authToken)
+	req.Header.Add("Authorization", authToken)
 	req.Header.Add("REALM", accountId)
 	req.Header.Add("transaction-id", uuid.New().String())
 
@@ -314,6 +326,8 @@ func demoDiscovery() {
 	defer res.Body.Close()
 
 	ioutil.ReadAll(res.Body)
+
+	Expect(res.StatusCode).To(Equal(200))
 
 }
 
@@ -351,6 +365,8 @@ func demoCreateCollector() *string {
 		return nil
 	}
 
+	Expect(response.StatusCode).To(Equal(201))
+
 	return collectorId
 }
 func demoCreateCredential() string {
@@ -384,6 +400,8 @@ func demoCreateCredential() string {
 		fmt.Println("Failed to create credential: ", err)
 		return ""
 	}
+
+	Expect(response.StatusCode).To(Equal(201))
 
 	return *reply.CredentialID
 }
@@ -419,6 +437,7 @@ func demoCreateScope(credentialId string, collectorIds []string) *string {
 		fmt.Println("Failed to create scope: ", err)
 		return nil
 	}
+	Expect(response.StatusCode).To(Equal(201))
 	return scopeId
 }
 

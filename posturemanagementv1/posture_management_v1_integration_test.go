@@ -144,7 +144,7 @@ var _ = Describe(`SCC test`, func() {
 				Expect(reply).ToNot(BeNil())
 			})
 		})
-		FDescribe(`Create scan`, func() {
+		Describe(`Create scan`, func() {
 			It(`Create scan`, func() {
 				service, _ := scc.NewPostureManagementV1(&scc.PostureManagementV1Options{
 					Authenticator: authenticator,
@@ -256,3 +256,115 @@ func hardDeleteScope(scopeId *string) int {
 func hardDeleteCredential() {
 
 }
+
+func demoCreateCollector() *string {
+
+	uuidWithHyphen := uuid.New().String()
+	apiKey := os.Getenv("IAM_API_KEY")
+	authUrl := os.Getenv("IAM_APIKEY_URL")
+	accountId := os.Getenv("ACCOUNT_ID")
+	apiUrl := os.Getenv("API_URL")
+
+	authenticator := &core.IamAuthenticator{
+		ApiKey: apiKey,
+		URL:    authUrl, //use for dev/preprod env
+	}
+
+	service, _ := scc.NewPostureManagementV1(&scc.PostureManagementV1Options{
+		Authenticator: authenticator,
+		URL:           apiUrl, //Specify url or use default
+	})
+
+	source := service.NewCreateCollectorOptions(accountId)
+	source.SetCollectorName("test-" + uuidWithHyphen)
+	source.SetCollectorDescription("test collector")
+	source.SetManagedBy("customer")
+	source.SetIsPublic(true)
+	source.SetPassPhrase("secret")
+
+	reply, response, err := service.CreateCollector(source)
+	collectorId := reply.CollectorID
+
+	if err != nil {
+		fmt.Println(response.Result)
+		fmt.Println("Failed to create collector: ", err)
+		return nil
+	}
+
+	return collectorId
+}
+func demoCreateCredential() *string {
+	apiKey := os.Getenv("IAM_API_KEY")
+	authUrl := os.Getenv("IAM_APIKEY_URL")
+	accountId := os.Getenv("ACCOUNT_ID")
+	apiUrl := os.Getenv("API_URL")
+	credentialPath := os.Getenv("CREDENTIAL_PATH")
+	pemPath := os.Getenv("PEM_PATH")
+
+	authenticator := &core.IamAuthenticator{
+		ApiKey: apiKey,
+		URL:    authUrl, //use for dev/preprod env
+	}
+
+	service, _ := scc.NewPostureManagementV1(&scc.PostureManagementV1Options{
+		Authenticator: authenticator,
+		URL:           apiUrl, //Specify url or use default
+	})
+
+	credentialFile, _ := os.Open(credentialPath)
+	pemFile, _ := os.Open(pemPath)
+
+	source := service.NewCreateCredentialOptions(accountId, credentialFile)
+	source.SetPemFile(pemFile)
+
+	reply, response, err := service.CreateCredential(source)
+
+	if err != nil {
+		fmt.Println(response.Result)
+		fmt.Println("Failed to create credential: ", err)
+		return nil
+	}
+
+	return reply.CredentialID
+}
+func demoCreateScope(credentialId string, collectorIds []string) *string {
+	uuidWithHyphen := uuid.New().String()
+	apiKey := os.Getenv("IAM_API_KEY")
+	authUrl := os.Getenv("IAM_APIKEY_URL")
+	accountId := os.Getenv("ACCOUNT_ID")
+	apiUrl := os.Getenv("API_URL")
+
+	authenticator := &core.IamAuthenticator{
+		ApiKey: apiKey,
+		URL:    authUrl, //use for dev/preprod env
+	}
+
+	service, _ := scc.NewPostureManagementV1(&scc.PostureManagementV1Options{
+		Authenticator: authenticator,
+		URL:           apiUrl, //Specify url or use default
+	})
+
+	source := service.NewCreateScopeOptions(accountId)
+	source.SetScopeName("scope-" + uuidWithHyphen)
+	source.SetScopeDescription("test scope")
+	source.SetCredentialID(credentialId)
+	source.SetCollectorIds(collectorIds)
+	source.SetEnvironmentType("ibm")
+
+	reply, response, err := service.CreateScope(source)
+	scopeId := reply.ScopeID
+
+	if err != nil {
+		fmt.Println(response.Result)
+		fmt.Println("Failed to create scope: ", err)
+		return nil
+	}
+	return scopeId
+}
+
+func demoListScope()            {}
+func demoListProfiles()         {}
+func demoCreateScanValidation() {}
+func demoListScans()            {}
+func demoReadScan()             {}
+func demoGetScopeSummary()      {}

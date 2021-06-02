@@ -177,6 +177,7 @@ var _ = Describe(`SCC test`, func() {
 
 	})
 	FDescribe(`Demo`, func() {
+
 		It(`Create Collector`, func() {
 			collectorId = demoCreateCollector()
 			Expect(collectorId).ToNot(BeNil())
@@ -192,6 +193,12 @@ var _ = Describe(`SCC test`, func() {
 		})
 		It(`Discovery`, func() {
 			demoDiscovery(collectorIds, *scopeId)
+		})
+		It(`List Scopes`, func() {
+			demoListScope(scopeId)
+		})
+		It(`List Profiles`, func() {
+			demoListProfiles()
 		})
 
 	})
@@ -317,7 +324,7 @@ func demoDiscovery(gatewayIds []string, scopeId string) {
 	client := &http.Client{}
 	req, _ := http.NewRequest(method, url, requestReader)
 
-	req.Header.Add("Content-Type", "multipart/form-data")
+	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("Authorization", authToken)
 	req.Header.Add("REALM", accountId)
 	req.Header.Add("transaction-id", uuid.New().String())
@@ -441,8 +448,68 @@ func demoCreateScope(credentialId string, collectorIds []string) *string {
 	return scopeId
 }
 
-func demoListScope()            {}
-func demoListProfiles()         {}
+func demoListScope(scopeId *string) {
+	apiKey := os.Getenv("IAM_API_KEY")
+	authUrl := os.Getenv("IAM_APIKEY_URL")
+	accountId := os.Getenv("ACCOUNT_ID")
+	apiUrl := os.Getenv("API_URL")
+
+	authenticator := &core.IamAuthenticator{
+		ApiKey: apiKey,
+		URL:    authUrl, //use for dev/preprod env
+	}
+
+	service, _ := scc.NewPostureManagementV1(&scc.PostureManagementV1Options{
+		Authenticator: authenticator,
+		URL:           apiUrl, //Specify url or use default
+	})
+	var scopeIdMatch int
+	source := service.NewListScopesOptions(accountId)
+
+	reply, response, err := service.ListScopes(source)
+
+	for _, i := range reply.Scopes {
+		scopeIdMatch = strings.Compare(*i.ScopeID, *scopeId)
+	}
+
+	if err != nil {
+		fmt.Println(response.Result)
+		fmt.Println("Failed to create scope: ", err)
+		return
+	}
+	Expect(response.StatusCode).To(Equal(200))
+	Expect(scopeIdMatch).To(Equal(0))
+	Expect(reply.Scopes).ToNot(BeNil())
+}
+func demoListProfiles() {
+	apiKey := os.Getenv("IAM_API_KEY")
+	url := os.Getenv("IAM_APIKEY_URL")
+	accountId := os.Getenv("ACCOUNT_ID")
+	apiUrl := os.Getenv("API_URL")
+	authenticator := &core.IamAuthenticator{
+		ApiKey: apiKey,
+		URL:    url,
+	}
+	options := scc.PostureManagementV1Options{
+		Authenticator: authenticator,
+		URL:           apiUrl,
+	}
+
+	service, _ := scc.NewPostureManagementV1(&options)
+
+	source := service.NewListProfilesOptions(accountId)
+
+	reply, response, err := service.ListProfiles(source)
+
+	if err != nil {
+		fmt.Println(response.Result)
+		fmt.Println("Failed to list profiles: ", err)
+		return
+	}
+
+	Expect(reply.Profiles).ToNot(BeNil())
+	Expect(response.StatusCode).To(Equal(200))
+}
 func demoCreateScanValidation() {}
 func demoListScans()            {}
 func demoReadScan()             {}

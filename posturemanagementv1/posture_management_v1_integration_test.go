@@ -53,7 +53,7 @@ var (
 var _ = Describe(`SCC test`, func() {
 
 	uuidWithHyphen = uuid.New().String()
-	accountId = os.Getenv("ACCOUNT_ID")
+	accountId = os.Getenv("ACCOUNT_ID_POSTURE")
 	apiKey := os.Getenv("IAM_API_KEY")
 	authUrl := os.Getenv("IAM_APIKEY_URL")
 	apiUrl := os.Getenv("API_URL")

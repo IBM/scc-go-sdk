@@ -18,18 +18,13 @@
 package posturemanagementv1_test
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"net/http"
-	"os"
-	"strings"
-
 	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/google/uuid"
 	scc "github.com/ibm-cloud-security/scc-go-sdk/posturemanagementv1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"os"
 )
 
 /**
@@ -41,7 +36,6 @@ import (
  */
 
 var (
-	accessToken    *string
 	uuidWithHyphen string
 	collectorId    *string
 	collectorIds   []string
@@ -102,95 +96,6 @@ var _ = Describe(`SCC test`, func() {
 //
 // Utility functions are declared in the unit test file
 //
-
-type access struct {
-	AccessToken  string `json:"access_token"`
-	RefreshToken string `json:"refresh_token"`
-	TokenType    string `json:"token_type"`
-	ExpiresIn    string `json:"expires_in"`
-	Expiration   string `json:"expiration"`
-	Scope        string `json:"scope"`
-}
-
-type tlDiscover struct {
-	DiscoveryLevel int    `json:"discoveryLevel"`
-	GatewayIds     []int  `json:"gatewayIds"`
-	RequestType    string `json:"requestType"`
-	SchemaId       int    `json:"schemaId"`
-}
-
-func getAuthToken() string {
-	url := os.Getenv("IAM_APIKEY_URL")
-	method := "POST"
-
-	payload := strings.NewReader("apikey=" + os.Getenv("IAM_API_KEY") + "&response_type=cloud_iam&grant_type=urn%3Aibm%3Aparams%3Aoauth%3Agrant-type%3Aapikey")
-
-	client := &http.Client{}
-	req, _ := http.NewRequest(method, url, payload)
-
-	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-
-	res, _ := client.Do(req)
-	defer res.Body.Close()
-
-	body, _ := ioutil.ReadAll(res.Body)
-
-	accessData := access{}
-	strBody := string(body)
-	json.Unmarshal([]byte(strBody), &accessData)
-	accessToken = &accessData.AccessToken
-	return accessData.AccessToken
-}
-
-func hardDeleteCollector(collectorId *string) int {
-	authToken := accessToken
-	collectorIdValue := *collectorId
-	url := "https://asap-dev.compliance.test.cloud.ibm.com/alpha/v1.0/collectors/" + collectorIdValue
-	method := "DELETE"
-
-	client := &http.Client{}
-	req, _ := http.NewRequest(method, url, nil)
-
-	req.Header.Add("Content-Type", "multipart/form-data")
-	req.Header.Add("Authorization", *authToken)
-	req.Header.Add("REALM", accountId)
-	req.Header.Add("transaction-id", uuid.New().String())
-
-	res, _ := client.Do(req)
-	defer res.Body.Close()
-
-	ioutil.ReadAll(res.Body)
-
-	return res.StatusCode
-
-}
-
-func hardDeleteScope(scopeId *string) int {
-	authToken := accessToken
-	scopeIdValue := *scopeId
-	url := "https://asap-dev.compliance.test.cloud.ibm.com/alpha/v1.0/schemas/" + scopeIdValue
-	method := "DELETE"
-
-	client := &http.Client{}
-	req, _ := http.NewRequest(method, url, nil)
-
-	req.Header.Add("Content-Type", "multipart/form-data")
-	req.Header.Add("Authorization", *authToken)
-	req.Header.Add("REALM", accountId)
-	req.Header.Add("transaction-id", uuid.New().String())
-
-	res, _ := client.Do(req)
-	defer res.Body.Close()
-
-	ioutil.ReadAll(res.Body)
-
-	return res.StatusCode
-}
-
-func hardDeleteCredential() {
-
-}
-
 func demoCreateCollector(options scc.PostureManagementV1Options) *string {
 
 	service, _ := scc.NewPostureManagementV1(&options)

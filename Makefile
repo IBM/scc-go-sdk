@@ -1,8 +1,9 @@
 # Makefile to build the project
 
 COVERAGE = -coverprofile=coverage.txt -covermode=atomic
+SHELL := /usr/bin/env bash
 
-all: test lint tidy
+all: test lint fmtcheck tidy
 travis-ci: test-cov lint tidy
 
 test:
@@ -19,6 +20,9 @@ test-int-cov:
 
 lint:
 	golangci-lint run
+
+fmtcheck:
+	diff -u <(echo -n) <(gofmt -d -s .)
 
 tidy:
 	go mod tidy

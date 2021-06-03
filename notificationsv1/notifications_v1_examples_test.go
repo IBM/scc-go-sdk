@@ -24,7 +24,7 @@ import (
 	"os"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/ibm-cloud-security/scc-go-sdk/notificationsv1"
+	"github.com/ibm/scc-go-sdk/notificationsv1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -46,8 +46,8 @@ const externalConfigFile = "../notifications_v1.env"
 
 var (
 	notificationsService *notificationsv1.NotificationsV1
-	config       map[string]string
-	configLoaded bool = false
+	config               map[string]string
+	configLoaded         bool = false
 )
 
 func shouldSkipTest() {

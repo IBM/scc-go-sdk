@@ -32,7 +32,7 @@ import (
 
 	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/go-openapi/strfmt"
-	common "github.com/ibm-cloud-security/scc-go-sdk/common"
+	common "github.com/ibm/scc-go-sdk/common"
 )
 
 // FindingsV1 : API specification for the Findings service.

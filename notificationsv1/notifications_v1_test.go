@@ -29,7 +29,7 @@ import (
 
 	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/go-openapi/strfmt"
-	"github.com/ibm-cloud-security/scc-go-sdk/notificationsv1"
+	"github.com/ibm/scc-go-sdk/notificationsv1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -67,14 +67,13 @@ var _ = Describe(`NotificationsV1`, func() {
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"NOTIFICATIONS_URL": "https://notificationsv1/api",
+				"NOTIFICATIONS_URL":       "https://notificationsv1/api",
 				"NOTIFICATIONS_AUTH_TYPE": "noauth",
 			}
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{
-				})
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{})
 				Expect(notificationsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
@@ -103,8 +102,7 @@ var _ = Describe(`NotificationsV1`, func() {
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{
-				})
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{})
 				err := notificationsService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -122,13 +120,12 @@ var _ = Describe(`NotificationsV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"NOTIFICATIONS_URL": "https://notificationsv1/api",
+				"NOTIFICATIONS_URL":       "https://notificationsv1/api",
 				"NOTIFICATIONS_AUTH_TYPE": "someOtherAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{
-			})
+			notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{})
 
 			It(`Instantiate service client with error`, func() {
 				Expect(notificationsService).To(BeNil())
@@ -139,7 +136,7 @@ var _ = Describe(`NotificationsV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"NOTIFICATIONS_AUTH_TYPE":   "NOAuth",
+				"NOTIFICATIONS_AUTH_TYPE": "NOAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)

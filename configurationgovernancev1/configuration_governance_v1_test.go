@@ -29,7 +29,7 @@ import (
 
 	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/go-openapi/strfmt"
-	"github.com/ibm-cloud-security/scc-go-sdk/configurationgovernancev1"
+	"github.com/ibm/scc-go-sdk/configurationgovernancev1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -67,14 +67,13 @@ var _ = Describe(`ConfigurationGovernanceV1`, func() {
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"CONFIGURATION_GOVERNANCE_URL": "https://configurationgovernancev1/api",
+				"CONFIGURATION_GOVERNANCE_URL":       "https://configurationgovernancev1/api",
 				"CONFIGURATION_GOVERNANCE_AUTH_TYPE": "noauth",
 			}
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				configurationGovernanceService, serviceErr := configurationgovernancev1.NewConfigurationGovernanceV1UsingExternalConfig(&configurationgovernancev1.ConfigurationGovernanceV1Options{
-				})
+				configurationGovernanceService, serviceErr := configurationgovernancev1.NewConfigurationGovernanceV1UsingExternalConfig(&configurationgovernancev1.ConfigurationGovernanceV1Options{})
 				Expect(configurationGovernanceService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
@@ -103,8 +102,7 @@ var _ = Describe(`ConfigurationGovernanceV1`, func() {
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				configurationGovernanceService, serviceErr := configurationgovernancev1.NewConfigurationGovernanceV1UsingExternalConfig(&configurationgovernancev1.ConfigurationGovernanceV1Options{
-				})
+				configurationGovernanceService, serviceErr := configurationgovernancev1.NewConfigurationGovernanceV1UsingExternalConfig(&configurationgovernancev1.ConfigurationGovernanceV1Options{})
 				err := configurationGovernanceService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
 				Expect(configurationGovernanceService).ToNot(BeNil())
@@ -122,13 +120,12 @@ var _ = Describe(`ConfigurationGovernanceV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"CONFIGURATION_GOVERNANCE_URL": "https://configurationgovernancev1/api",
+				"CONFIGURATION_GOVERNANCE_URL":       "https://configurationgovernancev1/api",
 				"CONFIGURATION_GOVERNANCE_AUTH_TYPE": "someOtherAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			configurationGovernanceService, serviceErr := configurationgovernancev1.NewConfigurationGovernanceV1UsingExternalConfig(&configurationgovernancev1.ConfigurationGovernanceV1Options{
-			})
+			configurationGovernanceService, serviceErr := configurationgovernancev1.NewConfigurationGovernanceV1UsingExternalConfig(&configurationgovernancev1.ConfigurationGovernanceV1Options{})
 
 			It(`Instantiate service client with error`, func() {
 				Expect(configurationGovernanceService).To(BeNil())
@@ -139,7 +136,7 @@ var _ = Describe(`ConfigurationGovernanceV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"CONFIGURATION_GOVERNANCE_AUTH_TYPE":   "NOAuth",
+				"CONFIGURATION_GOVERNANCE_AUTH_TYPE": "NOAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)

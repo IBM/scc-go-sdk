@@ -30,7 +30,7 @@ import (
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	common "github.com/ibm-cloud-security/scc-go-sdk/common"
+	common "github.com/ibm/scc-go-sdk/common"
 )
 
 // NotificationsV1 : API specification for the Notifications service.
@@ -112,9 +112,9 @@ func NewNotificationsV1(options *NotificationsV1Options) (service *Notifications
 func GetServiceURLForRegion(region string) (string, error) {
 	var endpoints = map[string]string{
 		"us-south": "https://us-south.secadvisor.cloud.ibm.com/notifications",
-		"us-east": "https://us-south.secadvisor.cloud.ibm.com/notifications",
-		"eu-gb": "https://eu-gb.secadvisor.cloud.ibm.com/notifications",
-		"eu-de": "https://eu.compliance.cloud.ibm.com/si/notifications",
+		"us-east":  "https://us-south.secadvisor.cloud.ibm.com/notifications",
+		"eu-gb":    "https://eu-gb.secadvisor.cloud.ibm.com/notifications",
+		"eu-de":    "https://eu.compliance.cloud.ibm.com/si/notifications",
 	}
 
 	if url, ok := endpoints[region]; ok {
@@ -763,11 +763,11 @@ type ChannelAlertSourceItem struct {
 // The providers that you can receive alerts for. To view your available providers, you can call the
 // /v1/{account_id}/providers endpoint of the Findings API.
 const (
-	ChannelAlertSourceItemProviderNameAllConst = "ALL"
-	ChannelAlertSourceItemProviderNameAtaConst = "ATA"
+	ChannelAlertSourceItemProviderNameAllConst  = "ALL"
+	ChannelAlertSourceItemProviderNameAtaConst  = "ATA"
 	ChannelAlertSourceItemProviderNameCertConst = "CERT"
-	ChannelAlertSourceItemProviderNameNaConst = "NA"
-	ChannelAlertSourceItemProviderNameVaConst = "VA"
+	ChannelAlertSourceItemProviderNameNaConst   = "NA"
+	ChannelAlertSourceItemProviderNameVaConst   = "VA"
 )
 
 // UnmarshalChannelAlertSourceItem unmarshals an instance of ChannelAlertSourceItem from the specified map of raw messages.
@@ -963,18 +963,18 @@ const (
 // Constants associated with the CreateNotificationChannelOptions.Severity property.
 const (
 	CreateNotificationChannelOptionsSeverityCriticalConst = "critical"
-	CreateNotificationChannelOptionsSeverityHighConst = "high"
-	CreateNotificationChannelOptionsSeverityLowConst = "low"
-	CreateNotificationChannelOptionsSeverityMediumConst = "medium"
+	CreateNotificationChannelOptionsSeverityHighConst     = "high"
+	CreateNotificationChannelOptionsSeverityLowConst      = "low"
+	CreateNotificationChannelOptionsSeverityMediumConst   = "medium"
 )
 
 // NewCreateNotificationChannelOptions : Instantiate CreateNotificationChannelOptions
 func (*NotificationsV1) NewCreateNotificationChannelOptions(accountID string, name string, typeVar string, endpoint string) *CreateNotificationChannelOptions {
 	return &CreateNotificationChannelOptions{
 		AccountID: core.StringPtr(accountID),
-		Name: core.StringPtr(name),
-		Type: core.StringPtr(typeVar),
-		Endpoint: core.StringPtr(endpoint),
+		Name:      core.StringPtr(name),
+		Type:      core.StringPtr(typeVar),
+		Endpoint:  core.StringPtr(endpoint),
 	}
 }
 
@@ -1104,7 +1104,7 @@ type DeleteNotificationChannelsOptions struct {
 func (*NotificationsV1) NewDeleteNotificationChannelsOptions(accountID string, body []string) *DeleteNotificationChannelsOptions {
 	return &DeleteNotificationChannelsOptions{
 		AccountID: core.StringPtr(accountID),
-		Body: body,
+		Body:      body,
 	}
 }
 
@@ -1448,9 +1448,9 @@ const (
 // Constants associated with the UpdateNotificationChannelOptions.Severity property.
 const (
 	UpdateNotificationChannelOptionsSeverityCriticalConst = "critical"
-	UpdateNotificationChannelOptionsSeverityHighConst = "high"
-	UpdateNotificationChannelOptionsSeverityLowConst = "low"
-	UpdateNotificationChannelOptionsSeverityMediumConst = "medium"
+	UpdateNotificationChannelOptionsSeverityHighConst     = "high"
+	UpdateNotificationChannelOptionsSeverityLowConst      = "low"
+	UpdateNotificationChannelOptionsSeverityMediumConst   = "medium"
 )
 
 // NewUpdateNotificationChannelOptions : Instantiate UpdateNotificationChannelOptions
@@ -1458,9 +1458,9 @@ func (*NotificationsV1) NewUpdateNotificationChannelOptions(accountID string, ch
 	return &UpdateNotificationChannelOptions{
 		AccountID: core.StringPtr(accountID),
 		ChannelID: core.StringPtr(channelID),
-		Name: core.StringPtr(name),
-		Type: core.StringPtr(typeVar),
-		Endpoint: core.StringPtr(endpoint),
+		Name:      core.StringPtr(name),
+		Type:      core.StringPtr(typeVar),
+		Endpoint:  core.StringPtr(endpoint),
 	}
 }
 

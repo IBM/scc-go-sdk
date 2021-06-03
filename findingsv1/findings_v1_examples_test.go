@@ -24,7 +24,7 @@ import (
 	"os"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/ibm-cloud-security/scc-go-sdk/findingsv1"
+	"github.com/ibm/scc-go-sdk/findingsv1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -46,8 +46,8 @@ const externalConfigFile = "../findings_v1.env"
 
 var (
 	findingsService *findingsv1.FindingsV1
-	config       map[string]string
-	configLoaded bool = false
+	config          map[string]string
+	configLoaded    bool = false
 )
 
 func shouldSkipTest() {
@@ -127,7 +127,7 @@ var _ = Describe(`FindingsV1 Examples Tests`, func() {
 			// begin-createNote
 
 			reporterModel := &findingsv1.Reporter{
-				ID: core.StringPtr("testString"),
+				ID:    core.StringPtr("testString"),
 				Title: core.StringPtr("testString"),
 			}
 
@@ -207,7 +207,7 @@ var _ = Describe(`FindingsV1 Examples Tests`, func() {
 			// begin-updateNote
 
 			reporterModel := &findingsv1.Reporter{
-				ID: core.StringPtr("testString"),
+				ID:    core.StringPtr("testString"),
 				Title: core.StringPtr("testString"),
 			}
 

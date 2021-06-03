@@ -1,3 +1,10 @@
+## [0.0.6](https://github.com/ibm/scc-go-sdk/compare/v0.0.5...v0.0.6) (2021-06-03)
+
+
+### Bug Fixes
+
+* **paths:** movement to new repo ([a5ca2a1](https://github.com/ibm/scc-go-sdk/commit/a5ca2a1a745f9a2c5271e18721abf7cad1e3a146))
+
 ## [0.0.5](https://github.com/ibm-cloud-security/scc-go-sdk/compare/v0.0.4...v0.0.5) (2021-06-02)
 
 

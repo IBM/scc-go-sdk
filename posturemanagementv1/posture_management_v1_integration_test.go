@@ -137,7 +137,7 @@ func demoCreateCredential(options scc.PostureManagementV1Options) string {
 	if err != nil {
 		fmt.Println(response.Result)
 		fmt.Println("Failed to create credential: ", err)
-		return ""
+		return err.Error()
 	}
 
 	Expect(response.StatusCode).To(Equal(201))

@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/google/uuid"
+	examples "github.com/ibm-cloud-security/scc-go-sdk/examples/posturemanagementv1"
 	scc "github.com/ibm-cloud-security/scc-go-sdk/posturemanagementv1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -62,17 +63,25 @@ var _ = Describe(`SCC test`, func() {
 		URL:           apiUrl,
 	}
 
-	Describe(`Demo`, func() {
+	FDescribe(`polling`, func() {
+		It(`should poll`, func() {
+			Eventually(func() bool {
+				return examples.ListScopes(options, "SDK1 JASON TEST", "17891")
+			}, "1200s", "20s").Should(BeTrue())
+		})
+	})
 
-		It(`Create Collector`, func() {
+	XDescribe(`Demo`, func() {
+
+		XIt(`Create Collector`, func() {
 			fmt.Println(`Create Collector`)
 			collectorId = demoCreateCollector(options)
 		})
-		It(`Create Credential`, func() {
+		XIt(`Create Credential`, func() {
 			fmt.Println(`Create Credential`)
 			credentialId = demoCreateCredential(options)
 		})
-		It(`Create Scope`, func() {
+		XIt(`Create Scope`, func() {
 			fmt.Println(`Create Scope`)
 			collectorIds = append(collectorIds, *collectorId)
 			scopeId = demoCreateScope(options, credentialId, collectorIds)
@@ -87,7 +96,18 @@ var _ = Describe(`SCC test`, func() {
 		})
 		It(`Initiate Scan Validation`, func() {
 			fmt.Println(`Create Scan`)
-			demoCreateScanValidation(options, *scopeId, "44")
+			demoCreateScanValidation(options, *scopeId, "48")
+		})
+		It(`List Scan`, func() {
+			fmt.Println(`List Scan`)
+			demoListScans(options)
+		})
+		It(`Read Scan`, func() {
+			fmt.Println(`Read Scan`)
+			summary := demoReadScan(options, "22374102", "48")
+
+			Expect(summary.Controls).ToNot(BeNil())
+
 		})
 
 	})
@@ -177,7 +197,7 @@ func demoListScope(options scc.PostureManagementV1Options, scopeId *string) {
 	service, _ := scc.NewPostureManagementV1(&options)
 
 	//var scopeIdMatch int
-	source := service.NewListScopesOptions(accountId)
+	source := service.NewListScopesOptions(accountId, "name")
 
 	reply, response, err := service.ListScopes(source)
 
@@ -230,5 +250,53 @@ func demoCreateScanValidation(options scc.PostureManagementV1Options, scopeId st
 
 	Expect(response.StatusCode).To(Equal(200))
 	Expect(reply.Message).ToNot(BeNil())
+
+}
+func demoListScans(options scc.PostureManagementV1Options) {
+	service, _ := scc.NewPostureManagementV1(&options)
+
+	source := service.NewListLatestScansOptions(accountId)
+	reply, response, err := service.ListLatestScans(source)
+
+	if err != nil {
+		fmt.Println(response.Result)
+		fmt.Println("Failed to create scan: ", err)
+		return
+	}
+
+	Expect(response.StatusCode).To(Equal(200))
+	Expect(reply.LatestScans).ToNot(BeNil())
+
+}
+
+func demoReadScan(options scc.PostureManagementV1Options, scanId string, profileId string) *scc.Summary {
+	service, _ := scc.NewPostureManagementV1(&options)
+
+	source := service.NewScansSummaryOptions(accountId, scanId, profileId)
+	reply, response, err := service.ScansSummary(source)
+
+	if err != nil {
+		fmt.Println(response.Result)
+		fmt.Println("Failed to create scan: ", err)
+		panic(err)
+	}
+
+	return reply
+}
+
+func demoScanSummary(options scc.PostureManagementV1Options, scopeId string) {
+	service, _ := scc.NewPostureManagementV1(&options)
+
+	source := service.NewScanSummariesOptions(scopeId, accountId)
+	reply, response, err := service.ScanSummaries(source)
+
+	if err != nil {
+		fmt.Println(response.Result)
+		fmt.Println("Failed to create scan: ", err)
+		return
+	}
+
+	Expect(response.StatusCode).To(Equal(200))
+	Expect(reply.Summaries).ToNot(BeNil())
 
 }

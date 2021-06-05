@@ -15,7 +15,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.31.0-902c9336-20210504-161156
+ * IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
  */
 
 // Package posturemanagementv1 : Operations and models for the PostureManagementV1 service
@@ -35,7 +35,7 @@ import (
 	common "github.com/ibm-cloud-security/scc-go-sdk/common"
 )
 
-// PostureManagementV1 : With IBM Cloud® Security and Compliance Center, you can embed checks into your every day
+// PostureManagementV1 : With IBM Cloud�� Security and Compliance Center, you can embed checks into your every day
 // workflows to help manage your current security and compliance posture. By monitoring for risks, you can identify
 // security vulnerabilities and quickly work to mitigate the impact.
 //
@@ -43,6 +43,9 @@ import (
 type PostureManagementV1 struct {
 	Service *core.BaseService
 }
+
+// DefaultServiceURL is the default URL to make service requests to.
+const DefaultServiceURL = "https://us.compliance.cloud.ibm.com"
 
 // DefaultServiceName is the default key used to find external configuration information.
 const DefaultServiceName = "posture_management"
@@ -86,6 +89,7 @@ func NewPostureManagementV1UsingExternalConfig(options *PostureManagementV1Optio
 // NewPostureManagementV1 : constructs an instance of PostureManagementV1 with passed in options.
 func NewPostureManagementV1(options *PostureManagementV1Options) (service *PostureManagementV1, err error) {
 	serviceOptions := &core.ServiceOptions{
+		URL:           DefaultServiceURL,
 		Authenticator: options.Authenticator,
 	}
 
@@ -199,6 +203,9 @@ func (postureManagement *PostureManagementV1) ListLatestScansWithContext(ctx con
 	}
 
 	builder.AddQuery("account_id", fmt.Sprint(*listLatestScansOptions.AccountID))
+	if listLatestScansOptions.Name != nil {
+		builder.AddQuery("name", fmt.Sprint(*listLatestScansOptions.Name))
+	}
 	if listLatestScansOptions.Offset != nil {
 		builder.AddQuery("offset", fmt.Sprint(*listLatestScansOptions.Offset))
 	}
@@ -307,10 +314,8 @@ func (postureManagement *PostureManagementV1) CreateValidationWithContext(ctx co
 	return
 }
 
-// ScansSummary : Retrieve the summary of a specific scan
-// Retrieve the results summary of a validation scan by specifying a scan and profile ID combination. To obtain your
-// profile ID and scan ID for your most recent scan, make a GET request to the
-// "/posture/v1/scans/validations/latest_scans" endpoint.
+// ScansSummary : Retrieves scan's summary details
+// Retrieves scan's summary details based on scan ID and profile ID.
 func (postureManagement *PostureManagementV1) ScansSummary(scansSummaryOptions *ScansSummaryOptions) (result *Summary, response *core.DetailedResponse, err error) {
 	return postureManagement.ScansSummaryWithContext(context.Background(), scansSummaryOptions)
 }
@@ -333,7 +338,7 @@ func (postureManagement *PostureManagementV1) ScansSummaryWithContext(ctx contex
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v1/scans/validations/{scan_id}/summary`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v1/scans/{scan_id}/summary`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -353,6 +358,9 @@ func (postureManagement *PostureManagementV1) ScansSummaryWithContext(ctx contex
 
 	builder.AddQuery("account_id", fmt.Sprint(*scansSummaryOptions.AccountID))
 	builder.AddQuery("profile_id", fmt.Sprint(*scansSummaryOptions.ProfileID))
+	if scansSummaryOptions.Name != nil {
+		builder.AddQuery("name", fmt.Sprint(*scansSummaryOptions.Name))
+	}
 
 	request, err := builder.Build()
 	if err != nil {
@@ -375,8 +383,8 @@ func (postureManagement *PostureManagementV1) ScansSummaryWithContext(ctx contex
 	return
 }
 
-// ScanSummaries : List the validation summaries for a scan
-// List all of the historical and current validation summaries for a specific scan.
+// ScanSummaries : List of validation runs for a particular scan
+// List all of the summaries for particular scan in your account.
 func (postureManagement *PostureManagementV1) ScanSummaries(scanSummariesOptions *ScanSummariesOptions) (result *SummariesList, response *core.DetailedResponse, err error) {
 	return postureManagement.ScanSummariesWithContext(context.Background(), scanSummariesOptions)
 }
@@ -395,7 +403,7 @@ func (postureManagement *PostureManagementV1) ScanSummariesWithContext(ctx conte
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v1/scans/validations/summaries`, nil)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v1/scans/summaries`, nil)
 	if err != nil {
 		return
 	}
@@ -420,6 +428,9 @@ func (postureManagement *PostureManagementV1) ScanSummariesWithContext(ctx conte
 	}
 	if scanSummariesOptions.GroupProfileID != nil {
 		builder.AddQuery("group_profile_id", fmt.Sprint(*scanSummariesOptions.GroupProfileID))
+	}
+	if scanSummariesOptions.Name != nil {
+		builder.AddQuery("name", fmt.Sprint(*scanSummariesOptions.Name))
 	}
 	if scanSummariesOptions.Offset != nil {
 		builder.AddQuery("offset", fmt.Sprint(*scanSummariesOptions.Offset))
@@ -488,6 +499,9 @@ func (postureManagement *PostureManagementV1) ListProfilesWithContext(ctx contex
 	}
 
 	builder.AddQuery("account_id", fmt.Sprint(*listProfilesOptions.AccountID))
+	if listProfilesOptions.Name != nil {
+		builder.AddQuery("name", fmt.Sprint(*listProfilesOptions.Name))
+	}
 	if listProfilesOptions.Offset != nil {
 		builder.AddQuery("offset", fmt.Sprint(*listProfilesOptions.Offset))
 	}
@@ -638,6 +652,9 @@ func (postureManagement *PostureManagementV1) ListScopesWithContext(ctx context.
 	}
 
 	builder.AddQuery("account_id", fmt.Sprint(*listScopesOptions.AccountID))
+	if listScopesOptions.Name != nil {
+		builder.AddQuery("name", fmt.Sprint(*listScopesOptions.Name))
+	}
 
 	request, err := builder.Build()
 	if err != nil {
@@ -936,7 +953,7 @@ type Controls struct {
 	ControlID *string `json:"control_id,omitempty"`
 
 	// The control status.
-	Status *string `json:"status,omitempty"`
+	ControlStatus *string `json:"control_status,omitempty"`
 
 	// The external control ID.
 	ExternalControlID *string `json:"external_control_id,omitempty"`
@@ -958,7 +975,7 @@ func UnmarshalControls(m map[string]json.RawMessage, result interface{}) (err er
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
+	err = core.UnmarshalPrimitive(m, "control_status", &obj.ControlStatus)
 	if err != nil {
 		return
 	}
@@ -998,10 +1015,11 @@ type CreateCollectorOptions struct {
 	// by using a private IP that is accessible only through the IBM Cloud private network.
 	IsPublic *bool
 
-	// Determines whether the collector is an IBM or customer-managed virtual machine. Use `ibm` to allow Security and
-	// Compliance Center to create, install, and manage the collector on your behalf. The collector is installed in an
-	// OpenShift cluster and approved automatically for use. Use `customer` if you would like to install the collector by
-	// using your own virtual machine. For more information, check out the
+	// Determines whether the collector is IBM or customer-managed virtual machine.
+	//
+	// Use `IBM` to allow Security and Compliance Center to create, install, and manage the collector on your behalf. The
+	// collector is installed in an OpenShift cluster and approved automatically for use. Use `CUSTOMER` if you would like
+	// to install the collector by using your own virtual machine. For more information, check out the
 	// [docs](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-collector).
 	ManagedBy *string
 
@@ -1018,14 +1036,15 @@ type CreateCollectorOptions struct {
 }
 
 // Constants associated with the CreateCollectorOptions.ManagedBy property.
-// Determines whether the collector is an IBM or customer-managed virtual machine. Use `ibm` to allow Security and
-// Compliance Center to create, install, and manage the collector on your behalf. The collector is installed in an
-// OpenShift cluster and approved automatically for use. Use `customer` if you would like to install the collector by
-// using your own virtual machine. For more information, check out the
+// Determines whether the collector is IBM or customer-managed virtual machine.
+//
+// Use `IBM` to allow Security and Compliance Center to create, install, and manage the collector on your behalf. The
+// collector is installed in an OpenShift cluster and approved automatically for use. Use `CUSTOMER` if you would like
+// to install the collector by using your own virtual machine. For more information, check out the
 // [docs](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-collector).
 const (
-	CreateCollectorOptionsManagedByCustomerConst = "customer"
-	CreateCollectorOptionsManagedByIBMConst      = "ibm"
+	CreateCollectorOptionsManagedByCustomerConst = "CUSTOMER"
+	CreateCollectorOptionsManagedByIBMConst      = "IBM"
 )
 
 // NewCreateCollectorOptions : Instantiate CreateCollectorOptions
@@ -1036,45 +1055,45 @@ func (*PostureManagementV1) NewCreateCollectorOptions(accountID string) *CreateC
 }
 
 // SetAccountID : Allow user to set AccountID
-func (options *CreateCollectorOptions) SetAccountID(accountID string) *CreateCollectorOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (_options *CreateCollectorOptions) SetAccountID(accountID string) *CreateCollectorOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
 }
 
 // SetCollectorName : Allow user to set CollectorName
-func (options *CreateCollectorOptions) SetCollectorName(collectorName string) *CreateCollectorOptions {
-	options.CollectorName = core.StringPtr(collectorName)
-	return options
+func (_options *CreateCollectorOptions) SetCollectorName(collectorName string) *CreateCollectorOptions {
+	_options.CollectorName = core.StringPtr(collectorName)
+	return _options
 }
 
 // SetCollectorDescription : Allow user to set CollectorDescription
-func (options *CreateCollectorOptions) SetCollectorDescription(collectorDescription string) *CreateCollectorOptions {
-	options.CollectorDescription = core.StringPtr(collectorDescription)
-	return options
+func (_options *CreateCollectorOptions) SetCollectorDescription(collectorDescription string) *CreateCollectorOptions {
+	_options.CollectorDescription = core.StringPtr(collectorDescription)
+	return _options
 }
 
 // SetIsPublic : Allow user to set IsPublic
-func (options *CreateCollectorOptions) SetIsPublic(isPublic bool) *CreateCollectorOptions {
-	options.IsPublic = core.BoolPtr(isPublic)
-	return options
+func (_options *CreateCollectorOptions) SetIsPublic(isPublic bool) *CreateCollectorOptions {
+	_options.IsPublic = core.BoolPtr(isPublic)
+	return _options
 }
 
 // SetManagedBy : Allow user to set ManagedBy
-func (options *CreateCollectorOptions) SetManagedBy(managedBy string) *CreateCollectorOptions {
-	options.ManagedBy = core.StringPtr(managedBy)
-	return options
+func (_options *CreateCollectorOptions) SetManagedBy(managedBy string) *CreateCollectorOptions {
+	_options.ManagedBy = core.StringPtr(managedBy)
+	return _options
 }
 
 // SetPassPhrase : Allow user to set PassPhrase
-func (options *CreateCollectorOptions) SetPassPhrase(passPhrase string) *CreateCollectorOptions {
-	options.PassPhrase = core.StringPtr(passPhrase)
-	return options
+func (_options *CreateCollectorOptions) SetPassPhrase(passPhrase string) *CreateCollectorOptions {
+	_options.PassPhrase = core.StringPtr(passPhrase)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *CreateCollectorOptions) SetTransactionID(transactionID string) *CreateCollectorOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *CreateCollectorOptions) SetTransactionID(transactionID string) *CreateCollectorOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1114,27 +1133,27 @@ func (*PostureManagementV1) NewCreateCredentialOptions(accountID string, credent
 }
 
 // SetAccountID : Allow user to set AccountID
-func (options *CreateCredentialOptions) SetAccountID(accountID string) *CreateCredentialOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (_options *CreateCredentialOptions) SetAccountID(accountID string) *CreateCredentialOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
 }
 
 // SetCredentialDataFile : Allow user to set CredentialDataFile
-func (options *CreateCredentialOptions) SetCredentialDataFile(credentialDataFile io.ReadCloser) *CreateCredentialOptions {
-	options.CredentialDataFile = credentialDataFile
-	return options
+func (_options *CreateCredentialOptions) SetCredentialDataFile(credentialDataFile io.ReadCloser) *CreateCredentialOptions {
+	_options.CredentialDataFile = credentialDataFile
+	return _options
 }
 
 // SetPemFile : Allow user to set PemFile
-func (options *CreateCredentialOptions) SetPemFile(pemFile io.ReadCloser) *CreateCredentialOptions {
-	options.PemFile = pemFile
-	return options
+func (_options *CreateCredentialOptions) SetPemFile(pemFile io.ReadCloser) *CreateCredentialOptions {
+	_options.PemFile = pemFile
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *CreateCredentialOptions) SetTransactionID(transactionID string) *CreateCredentialOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *CreateCredentialOptions) SetTransactionID(transactionID string) *CreateCredentialOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1192,45 +1211,45 @@ func (*PostureManagementV1) NewCreateScopeOptions(accountID string) *CreateScope
 }
 
 // SetAccountID : Allow user to set AccountID
-func (options *CreateScopeOptions) SetAccountID(accountID string) *CreateScopeOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (_options *CreateScopeOptions) SetAccountID(accountID string) *CreateScopeOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
 }
 
 // SetScopeName : Allow user to set ScopeName
-func (options *CreateScopeOptions) SetScopeName(scopeName string) *CreateScopeOptions {
-	options.ScopeName = core.StringPtr(scopeName)
-	return options
+func (_options *CreateScopeOptions) SetScopeName(scopeName string) *CreateScopeOptions {
+	_options.ScopeName = core.StringPtr(scopeName)
+	return _options
 }
 
 // SetScopeDescription : Allow user to set ScopeDescription
-func (options *CreateScopeOptions) SetScopeDescription(scopeDescription string) *CreateScopeOptions {
-	options.ScopeDescription = core.StringPtr(scopeDescription)
-	return options
+func (_options *CreateScopeOptions) SetScopeDescription(scopeDescription string) *CreateScopeOptions {
+	_options.ScopeDescription = core.StringPtr(scopeDescription)
+	return _options
 }
 
 // SetCollectorIds : Allow user to set CollectorIds
-func (options *CreateScopeOptions) SetCollectorIds(collectorIds []string) *CreateScopeOptions {
-	options.CollectorIds = collectorIds
-	return options
+func (_options *CreateScopeOptions) SetCollectorIds(collectorIds []string) *CreateScopeOptions {
+	_options.CollectorIds = collectorIds
+	return _options
 }
 
 // SetCredentialID : Allow user to set CredentialID
-func (options *CreateScopeOptions) SetCredentialID(credentialID string) *CreateScopeOptions {
-	options.CredentialID = core.StringPtr(credentialID)
-	return options
+func (_options *CreateScopeOptions) SetCredentialID(credentialID string) *CreateScopeOptions {
+	_options.CredentialID = core.StringPtr(credentialID)
+	return _options
 }
 
 // SetEnvironmentType : Allow user to set EnvironmentType
-func (options *CreateScopeOptions) SetEnvironmentType(environmentType string) *CreateScopeOptions {
-	options.EnvironmentType = core.StringPtr(environmentType)
-	return options
+func (_options *CreateScopeOptions) SetEnvironmentType(environmentType string) *CreateScopeOptions {
+	_options.EnvironmentType = core.StringPtr(environmentType)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *CreateScopeOptions) SetTransactionID(transactionID string) *CreateScopeOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *CreateScopeOptions) SetTransactionID(transactionID string) *CreateScopeOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1269,33 +1288,33 @@ func (*PostureManagementV1) NewCreateValidationOptions(accountID string) *Create
 }
 
 // SetAccountID : Allow user to set AccountID
-func (options *CreateValidationOptions) SetAccountID(accountID string) *CreateValidationOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (_options *CreateValidationOptions) SetAccountID(accountID string) *CreateValidationOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
 }
 
 // SetScopeID : Allow user to set ScopeID
-func (options *CreateValidationOptions) SetScopeID(scopeID string) *CreateValidationOptions {
-	options.ScopeID = core.StringPtr(scopeID)
-	return options
+func (_options *CreateValidationOptions) SetScopeID(scopeID string) *CreateValidationOptions {
+	_options.ScopeID = core.StringPtr(scopeID)
+	return _options
 }
 
 // SetProfileID : Allow user to set ProfileID
-func (options *CreateValidationOptions) SetProfileID(profileID string) *CreateValidationOptions {
-	options.ProfileID = core.StringPtr(profileID)
-	return options
+func (_options *CreateValidationOptions) SetProfileID(profileID string) *CreateValidationOptions {
+	_options.ProfileID = core.StringPtr(profileID)
+	return _options
 }
 
 // SetGroupProfileID : Allow user to set GroupProfileID
-func (options *CreateValidationOptions) SetGroupProfileID(groupProfileID string) *CreateValidationOptions {
-	options.GroupProfileID = core.StringPtr(groupProfileID)
-	return options
+func (_options *CreateValidationOptions) SetGroupProfileID(groupProfileID string) *CreateValidationOptions {
+	_options.GroupProfileID = core.StringPtr(groupProfileID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *CreateValidationOptions) SetTransactionID(transactionID string) *CreateValidationOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *CreateValidationOptions) SetTransactionID(transactionID string) *CreateValidationOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1355,7 +1374,7 @@ type GoalApplicabilityCriteria struct {
 	// The software that the profile applies to.
 	SoftwareDetails interface{} `json:"software_details,omitempty"`
 
-	// The operating system that the profile applies to.
+	// The operatoring system that the profile applies to.
 	OsDetails interface{} `json:"os_details,omitempty"`
 
 	// Any additional details about the profile.
@@ -1444,9 +1463,6 @@ type Goals struct {
 	// The goal ID.
 	GoalID *string `json:"goal_id,omitempty"`
 
-	// The goal status.
-	Status *string `json:"status,omitempty"`
-
 	// The severity of the goal.
 	Severity *string `json:"severity,omitempty"`
 
@@ -1471,10 +1487,6 @@ func UnmarshalGoals(m map[string]json.RawMessage, result interface{}) (err error
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "goal_id", &obj.GoalID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
 	if err != nil {
 		return
 	}
@@ -1569,10 +1581,13 @@ type ListLatestScansOptions struct {
 	// sends a transaction ID as a response header of the request.
 	TransactionID *string
 
+	// The name of the scan.
+	Name *string
+
 	// The offset of the profiles.
 	Offset *int64
 
-	// The number of profiles that are included per page?.
+	// The number of the profiles.
 	Limit *int64
 
 	// Allows users to set headers on API requests
@@ -1587,27 +1602,33 @@ func (*PostureManagementV1) NewListLatestScansOptions(accountID string) *ListLat
 }
 
 // SetAccountID : Allow user to set AccountID
-func (options *ListLatestScansOptions) SetAccountID(accountID string) *ListLatestScansOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (_options *ListLatestScansOptions) SetAccountID(accountID string) *ListLatestScansOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *ListLatestScansOptions) SetTransactionID(transactionID string) *ListLatestScansOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *ListLatestScansOptions) SetTransactionID(transactionID string) *ListLatestScansOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
+}
+
+// SetName : Allow user to set Name
+func (_options *ListLatestScansOptions) SetName(name string) *ListLatestScansOptions {
+	_options.Name = core.StringPtr(name)
+	return _options
 }
 
 // SetOffset : Allow user to set Offset
-func (options *ListLatestScansOptions) SetOffset(offset int64) *ListLatestScansOptions {
-	options.Offset = core.Int64Ptr(offset)
-	return options
+func (_options *ListLatestScansOptions) SetOffset(offset int64) *ListLatestScansOptions {
+	_options.Offset = core.Int64Ptr(offset)
+	return _options
 }
 
 // SetLimit : Allow user to set Limit
-func (options *ListLatestScansOptions) SetLimit(limit int64) *ListLatestScansOptions {
-	options.Limit = core.Int64Ptr(limit)
-	return options
+func (_options *ListLatestScansOptions) SetLimit(limit int64) *ListLatestScansOptions {
+	_options.Limit = core.Int64Ptr(limit)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1625,10 +1646,13 @@ type ListProfilesOptions struct {
 	// sends a transaction ID as a response header of the request.
 	TransactionID *string
 
+	// The name of the profile.
+	Name *string
+
 	// The offset of the profiles.
 	Offset *int64
 
-	// The number of profiles that are included per page?.
+	// The number of the profiles.
 	Limit *int64
 
 	// Allows users to set headers on API requests
@@ -1643,27 +1667,33 @@ func (*PostureManagementV1) NewListProfilesOptions(accountID string) *ListProfil
 }
 
 // SetAccountID : Allow user to set AccountID
-func (options *ListProfilesOptions) SetAccountID(accountID string) *ListProfilesOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (_options *ListProfilesOptions) SetAccountID(accountID string) *ListProfilesOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *ListProfilesOptions) SetTransactionID(transactionID string) *ListProfilesOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *ListProfilesOptions) SetTransactionID(transactionID string) *ListProfilesOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
+}
+
+// SetName : Allow user to set Name
+func (_options *ListProfilesOptions) SetName(name string) *ListProfilesOptions {
+	_options.Name = core.StringPtr(name)
+	return _options
 }
 
 // SetOffset : Allow user to set Offset
-func (options *ListProfilesOptions) SetOffset(offset int64) *ListProfilesOptions {
-	options.Offset = core.Int64Ptr(offset)
-	return options
+func (_options *ListProfilesOptions) SetOffset(offset int64) *ListProfilesOptions {
+	_options.Offset = core.Int64Ptr(offset)
+	return _options
 }
 
 // SetLimit : Allow user to set Limit
-func (options *ListProfilesOptions) SetLimit(limit int64) *ListProfilesOptions {
-	options.Limit = core.Int64Ptr(limit)
-	return options
+func (_options *ListProfilesOptions) SetLimit(limit int64) *ListProfilesOptions {
+	_options.Limit = core.Int64Ptr(limit)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1681,6 +1711,9 @@ type ListScopesOptions struct {
 	// sends a transaction ID as a response header of the request.
 	TransactionID *string
 
+	// The scope name to be filtered.
+	Name *string
+
 	// Allows users to set headers on API requests
 	Headers map[string]string
 }
@@ -1693,15 +1726,21 @@ func (*PostureManagementV1) NewListScopesOptions(accountID string) *ListScopesOp
 }
 
 // SetAccountID : Allow user to set AccountID
-func (options *ListScopesOptions) SetAccountID(accountID string) *ListScopesOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (_options *ListScopesOptions) SetAccountID(accountID string) *ListScopesOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *ListScopesOptions) SetTransactionID(transactionID string) *ListScopesOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *ListScopesOptions) SetTransactionID(transactionID string) *ListScopesOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
+}
+
+// SetName : Allow user to set Name
+func (_options *ListScopesOptions) SetName(name string) *ListScopesOptions {
+	_options.Name = core.StringPtr(name)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1875,22 +1914,22 @@ type ProfilesList struct {
 	// The offset of the page.
 	Offset *int64 `json:"offset" validate:"required"`
 
-	// The number of profiles displayed per page.
+	// The limit  of the page.
 	Limit *int64 `json:"limit" validate:"required"`
 
-	// The total number of profiles.
+	// The total count of profile list.
 	TotalCount *int64 `json:"total_count,omitempty"`
 
-	// The URL of the first page of profiles.
+	// The url of first page in profiles.
 	First *ProfilesListFirst `json:"first,omitempty"`
 
-	// The URL of the last page of profiles.
+	// The url of last page in profiles.
 	Last *ProfilesListLast `json:"last,omitempty"`
 
-	// The URL of the previous page of profiles.
+	// The url of previous page in profiles.
 	Previous *ProfilesListPrevious `json:"previous,omitempty"`
 
-	// The URL of the next page of profiles.
+	// The url of next page in profiles.
 	Next *ProfilesListNext `json:"next,omitempty"`
 
 	// Profiles.
@@ -1936,9 +1975,9 @@ func UnmarshalProfilesList(m map[string]json.RawMessage, result interface{}) (er
 	return
 }
 
-// ProfilesListFirst : The URL of the first page of profiles.
+// ProfilesListFirst : The url of first page in profiles.
 type ProfilesListFirst struct {
-	// The URL of the first page of profiles.
+	// The url of first page.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -1953,9 +1992,9 @@ func UnmarshalProfilesListFirst(m map[string]json.RawMessage, result interface{}
 	return
 }
 
-// ProfilesListLast : The URL of the last page of profiles.
+// ProfilesListLast : The url of last page in profiles.
 type ProfilesListLast struct {
-	// The URL of the last page of profiles.
+	// The url of last page.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -1970,9 +2009,9 @@ func UnmarshalProfilesListLast(m map[string]json.RawMessage, result interface{})
 	return
 }
 
-// ProfilesListNext : The URL of the next page of profiles.
+// ProfilesListNext : The url of next page in profiles.
 type ProfilesListNext struct {
-	// The URL of the next page of profiles.
+	// The next url of page.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -1987,9 +2026,9 @@ func UnmarshalProfilesListNext(m map[string]json.RawMessage, result interface{})
 	return
 }
 
-// ProfilesListPrevious : The URL of the previous page of profiles.
+// ProfilesListPrevious : The url of previous page in profiles.
 type ProfilesListPrevious struct {
-	// The URL of the previous page of profiles.
+	// The previous url of page.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -2069,8 +2108,17 @@ type ResourceResult struct {
 	// The expected results of a resource.
 	DisplayExpectedValue *string `json:"display_expected_value,omitempty"`
 
+	// The expected results parameter of a resource.
+	DisplayExpectedValueParam *string `json:"display_expected_value_param,omitempty"`
+
+	// The actual results parameter of a resource.
+	ActualValueParam *string `json:"actual_value_param,omitempty"`
+
 	// The actual results of a resource.
 	ActualValue *string `json:"actual_value,omitempty"`
+
+	// The results information parameter.
+	ResultInfoParam *string `json:"result_info_param,omitempty"`
 
 	// The results information.
 	ResultsInfo *string `json:"results_info,omitempty"`
@@ -2098,7 +2146,19 @@ func UnmarshalResourceResult(m map[string]json.RawMessage, result interface{}) (
 	if err != nil {
 		return
 	}
+	err = core.UnmarshalPrimitive(m, "display_expected_value_param", &obj.DisplayExpectedValueParam)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "actual_value_param", &obj.ActualValueParam)
+	if err != nil {
+		return
+	}
 	err = core.UnmarshalPrimitive(m, "actual_value", &obj.ActualValue)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "result_info_param", &obj.ResultInfoParam)
 	if err != nil {
 		return
 	}
@@ -2506,8 +2566,7 @@ func UnmarshalScanResult(m map[string]json.RawMessage, result interface{}) (err 
 
 // ScanSummariesOptions : The ScanSummaries options.
 type ScanSummariesOptions struct {
-	// The scope ID. This can be obtained from the Security and Compliance Center UI by clicking on the scope name. The URL
-	// contains the ID.
+	// Scope ID.
 	ScopeID *string `validate:"required"`
 
 	// Your IBM Cloud account ID.
@@ -2517,18 +2576,19 @@ type ScanSummariesOptions struct {
 	// sends a transaction ID as a response header of the request.
 	TransactionID *string
 
-	// The profile ID. This can be obtained from the Security and Compliance Center UI by clicking on the profile name. The
-	// URL contains the ID.
+	// Profile ID.
 	ProfileID *string
 
-	// The group profile ID. This can be obtained from the Security and Compliance Center UI by clicking on the group
-	// profile name. The URL contains the ID.
+	// Profile Group ID.
 	GroupProfileID *string
+
+	// The name of the scan.
+	Name *string
 
 	// The offset of the profiles.
 	Offset *int64
 
-	// The number of profiles that are included per page?.
+	// The number of the profiles.
 	Limit *int64
 
 	// Allows users to set headers on API requests
@@ -2544,45 +2604,51 @@ func (*PostureManagementV1) NewScanSummariesOptions(scopeID string, accountID st
 }
 
 // SetScopeID : Allow user to set ScopeID
-func (options *ScanSummariesOptions) SetScopeID(scopeID string) *ScanSummariesOptions {
-	options.ScopeID = core.StringPtr(scopeID)
-	return options
+func (_options *ScanSummariesOptions) SetScopeID(scopeID string) *ScanSummariesOptions {
+	_options.ScopeID = core.StringPtr(scopeID)
+	return _options
 }
 
 // SetAccountID : Allow user to set AccountID
-func (options *ScanSummariesOptions) SetAccountID(accountID string) *ScanSummariesOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (_options *ScanSummariesOptions) SetAccountID(accountID string) *ScanSummariesOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *ScanSummariesOptions) SetTransactionID(transactionID string) *ScanSummariesOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *ScanSummariesOptions) SetTransactionID(transactionID string) *ScanSummariesOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetProfileID : Allow user to set ProfileID
-func (options *ScanSummariesOptions) SetProfileID(profileID string) *ScanSummariesOptions {
-	options.ProfileID = core.StringPtr(profileID)
-	return options
+func (_options *ScanSummariesOptions) SetProfileID(profileID string) *ScanSummariesOptions {
+	_options.ProfileID = core.StringPtr(profileID)
+	return _options
 }
 
 // SetGroupProfileID : Allow user to set GroupProfileID
-func (options *ScanSummariesOptions) SetGroupProfileID(groupProfileID string) *ScanSummariesOptions {
-	options.GroupProfileID = core.StringPtr(groupProfileID)
-	return options
+func (_options *ScanSummariesOptions) SetGroupProfileID(groupProfileID string) *ScanSummariesOptions {
+	_options.GroupProfileID = core.StringPtr(groupProfileID)
+	return _options
+}
+
+// SetName : Allow user to set Name
+func (_options *ScanSummariesOptions) SetName(name string) *ScanSummariesOptions {
+	_options.Name = core.StringPtr(name)
+	return _options
 }
 
 // SetOffset : Allow user to set Offset
-func (options *ScanSummariesOptions) SetOffset(offset int64) *ScanSummariesOptions {
-	options.Offset = core.Int64Ptr(offset)
-	return options
+func (_options *ScanSummariesOptions) SetOffset(offset int64) *ScanSummariesOptions {
+	_options.Offset = core.Int64Ptr(offset)
+	return _options
 }
 
 // SetLimit : Allow user to set Limit
-func (options *ScanSummariesOptions) SetLimit(limit int64) *ScanSummariesOptions {
-	options.Limit = core.Int64Ptr(limit)
-	return options
+func (_options *ScanSummariesOptions) SetLimit(limit int64) *ScanSummariesOptions {
+	_options.Limit = core.Int64Ptr(limit)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -2596,22 +2662,22 @@ type ScansList struct {
 	// The offset of the page.
 	Offset *int64 `json:"offset" validate:"required"`
 
-	// The number of scans displayed per page.
+	// The limit  of the page.
 	Limit *int64 `json:"limit" validate:"required"`
 
-	// The total number of scans in the list.
+	// The total count of scans list.
 	TotalCount *int64 `json:"total_count,omitempty"`
 
-	// The URL of the first page of scans.
+	// The url of first page in scans.
 	First *ScansListFirst `json:"first,omitempty"`
 
-	// The URL of the last page of scans.
+	// The url of last page in scans.
 	Last *ScansListLast `json:"last,omitempty"`
 
-	// The URL of the previous page of scans.
+	// The url of previous page in scans.
 	Previous *ScansListPrevious `json:"previous,omitempty"`
 
-	// The URL of the next page of scans.
+	// The url of next page in scans.
 	Next *ScansListNext `json:"next,omitempty"`
 
 	// The details of a scan.
@@ -2657,9 +2723,9 @@ func UnmarshalScansList(m map[string]json.RawMessage, result interface{}) (err e
 	return
 }
 
-// ScansListFirst : The URL of the first page of scans.
+// ScansListFirst : The url of first page in scans.
 type ScansListFirst struct {
-	// The URL of the first page of scans.
+	// The url of first page.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -2674,9 +2740,9 @@ func UnmarshalScansListFirst(m map[string]json.RawMessage, result interface{}) (
 	return
 }
 
-// ScansListLast : The URL of the last page of scans.
+// ScansListLast : The url of last page in scans.
 type ScansListLast struct {
-	// The URL of the last page of scans.
+	// The url of last page.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -2691,9 +2757,9 @@ func UnmarshalScansListLast(m map[string]json.RawMessage, result interface{}) (e
 	return
 }
 
-// ScansListNext : The URL of the next page of scans.
+// ScansListNext : The url of next page in scans.
 type ScansListNext struct {
-	// The URL of the next page of scans.
+	// The next url of page.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -2708,9 +2774,9 @@ func UnmarshalScansListNext(m map[string]json.RawMessage, result interface{}) (e
 	return
 }
 
-// ScansListPrevious : The URL of the previous page of scans.
+// ScansListPrevious : The url of previous page in scans.
 type ScansListPrevious struct {
-	// The URL of the previous page of scans.
+	// The previous url of page in scans.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -2740,6 +2806,9 @@ type ScansSummaryOptions struct {
 	// sends a transaction ID as a response header of the request.
 	TransactionID *string
 
+	// The name of the scan summary.
+	Name *string
+
 	// Allows users to set headers on API requests
 	Headers map[string]string
 }
@@ -2754,27 +2823,33 @@ func (*PostureManagementV1) NewScansSummaryOptions(accountID string, scanID stri
 }
 
 // SetAccountID : Allow user to set AccountID
-func (options *ScansSummaryOptions) SetAccountID(accountID string) *ScansSummaryOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (_options *ScansSummaryOptions) SetAccountID(accountID string) *ScansSummaryOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
 }
 
 // SetScanID : Allow user to set ScanID
-func (options *ScansSummaryOptions) SetScanID(scanID string) *ScansSummaryOptions {
-	options.ScanID = core.StringPtr(scanID)
-	return options
+func (_options *ScansSummaryOptions) SetScanID(scanID string) *ScansSummaryOptions {
+	_options.ScanID = core.StringPtr(scanID)
+	return _options
 }
 
 // SetProfileID : Allow user to set ProfileID
-func (options *ScansSummaryOptions) SetProfileID(profileID string) *ScansSummaryOptions {
-	options.ProfileID = core.StringPtr(profileID)
-	return options
+func (_options *ScansSummaryOptions) SetProfileID(profileID string) *ScansSummaryOptions {
+	_options.ProfileID = core.StringPtr(profileID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *ScansSummaryOptions) SetTransactionID(transactionID string) *ScansSummaryOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *ScansSummaryOptions) SetTransactionID(transactionID string) *ScansSummaryOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
+}
+
+// SetName : Allow user to set Name
+func (_options *ScansSummaryOptions) SetName(name string) *ScansSummaryOptions {
+	_options.Name = core.StringPtr(name)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -3014,27 +3089,27 @@ func UnmarshalScopesList(m map[string]json.RawMessage, result interface{}) (err 
 	return
 }
 
-// SummariesList : A list of scan summaries.
+// SummariesList : A list of Summaries.
 type SummariesList struct {
 	// The offset of the page.
 	Offset *int64 `json:"offset" validate:"required"`
 
-	// The number of scans displayed per page.
+	// The limit  of the page.
 	Limit *int64 `json:"limit" validate:"required"`
 
-	// The total number of scans available in the list of summaries.
+	// The total count of scans summary list.
 	TotalCount *int64 `json:"total_count,omitempty"`
 
-	// he URL of the first scan summary.
+	// The url of first page in scans summary.
 	First *SummariesListFirst `json:"first,omitempty"`
 
-	// The URL of the last scan summary.
+	// The url of last page in scans summary.
 	Last *SummariesListLast `json:"last,omitempty"`
 
-	// The URL of the previous scan summary.
+	// The url of previous page in scans summary.
 	Previous *SummariesListPrevious `json:"previous,omitempty"`
 
-	// The URL of the previous scan summary.
+	// The url of next page in scans summary.
 	Next *SummariesListNext `json:"next,omitempty"`
 
 	// Summaries.
@@ -3080,9 +3155,9 @@ func UnmarshalSummariesList(m map[string]json.RawMessage, result interface{}) (e
 	return
 }
 
-// SummariesListFirst : he URL of the first scan summary.
+// SummariesListFirst : The url of first page in scans summary.
 type SummariesListFirst struct {
-	// The URL of the first scan summary.
+	// The url of first page.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -3097,9 +3172,9 @@ func UnmarshalSummariesListFirst(m map[string]json.RawMessage, result interface{
 	return
 }
 
-// SummariesListLast : The URL of the last scan summary.
+// SummariesListLast : The url of last page in scans summary.
 type SummariesListLast struct {
-	// The URL of the last scan summary.
+	// The url of last page.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -3114,9 +3189,9 @@ func UnmarshalSummariesListLast(m map[string]json.RawMessage, result interface{}
 	return
 }
 
-// SummariesListNext : The URL of the previous scan summary.
+// SummariesListNext : The url of next page in scans summary.
 type SummariesListNext struct {
-	// The URL of the next scan summary.
+	// The next url of page.
 	Href *string `json:"href,omitempty"`
 }
 
@@ -3131,9 +3206,9 @@ func UnmarshalSummariesListNext(m map[string]json.RawMessage, result interface{}
 	return
 }
 
-// SummariesListPrevious : The URL of the previous scan summary.
+// SummariesListPrevious : The url of previous page in scans summary.
 type SummariesListPrevious struct {
-	// The URL of the previous scan summary.
+	// The previous url of page.
 	Href *string `json:"href,omitempty"`
 }
 

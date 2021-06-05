@@ -43,6 +43,8 @@ var (
 	credentialId   string
 	accountId      string
 	scopeId        *string
+	scanId         string
+	scopeName      *string
 )
 
 var _ = Describe(`SCC test`, func() {
@@ -63,50 +65,86 @@ var _ = Describe(`SCC test`, func() {
 		URL:           apiUrl,
 	}
 
-	FDescribe(`polling`, func() {
+	XDescribe(`polling`, func() {
 		It(`should poll`, func() {
-			Eventually(func() bool {
-				return examples.ListScopes(options, "SDK1 JASON TEST", "17891")
-			}, "1200s", "20s").Should(BeTrue())
 		})
 	})
 
-	XDescribe(`Demo`, func() {
+	FDescribe(`Demo`, func() {
 
+		//TODO fix collector issue -- skip for now
 		XIt(`Create Collector`, func() {
 			fmt.Println(`Create Collector`)
-			collectorId = demoCreateCollector(options)
+			statusCode, id := examples.CreateCollector(options, accountId)
+			Expect(statusCode).To(Equal(201))
+			Expect(id).NotTo(BeNil())
 		})
+
+		//new credential to be created
 		XIt(`Create Credential`, func() {
 			fmt.Println(`Create Credential`)
-			credentialId = demoCreateCredential(options)
+			var statusCode int
+			credentialPath := os.Getenv("CREDENTIAL_PATH")
+			pemPath := os.Getenv("PEM_PATH")
+			credentialId, statusCode = examples.CreateCredentials(options, accountId, credentialPath, pemPath)
+			Expect(statusCode).To(Equal(201))
+			Expect(credentialId).NotTo(BeNil())
 		})
-		XIt(`Create Scope`, func() {
+
+		//TODO override collector id for now until create collector is resolved
+		It(`Create Scope`, func() {
 			fmt.Println(`Create Scope`)
-			collectorIds = append(collectorIds, *collectorId)
-			scopeId = demoCreateScope(options, credentialId, collectorIds)
+			collectorId := "822"
+			collectorIds = append(collectorIds, collectorId)
+			var statusCode int
+			credentialId = "1587"
+			statusCode, scopeId, scopeName = examples.CreateScope(options, credentialId, collectorIds)
+			fmt.Println("created scope id: " + *scopeId)
+			fmt.Println("created scope name: " + *scopeName)
+
+			Expect(statusCode).To(Equal(201))
+			Expect(scopeId).ToNot(BeNil())
+			Expect(scopeName).ToNot(BeNil())
 		})
+
 		It(`List Scopes`, func() {
 			fmt.Println(`List Scopes`)
 			demoListScope(options, scopeId)
+
+			Eventually(func() bool {
+				var isCompleted bool
+				isCompleted, scanId = examples.ListScopes(options, accountId, *scopeName, *scopeId, "discovery_completed")
+				return isCompleted
+			}, "12000s", "20s").Should(BeTrue())
 		})
+
 		It(`List Profiles`, func() {
 			fmt.Println(`List Profiles`)
-			demoListProfiles(options)
+			statusCode, profileList := examples.ListProfiles(options, accountId)
+			Expect(statusCode).To(Equal(200))
+			Expect(profileList).ToNot(BeNil())
 		})
+
 		It(`Initiate Scan Validation`, func() {
 			fmt.Println(`Create Scan`)
-			demoCreateScanValidation(options, *scopeId, "48")
+			statusCode, message := examples.InitiateValidationScan(options, accountId, *scopeId, "48")
+			fmt.Println("message: " + *message)
+			Expect(statusCode).To(Equal(202))
+			Expect(message).ToNot(BeNil())
 		})
-		It(`List Scan`, func() {
-			fmt.Println(`List Scan`)
-			demoListScans(options)
+		It(`Check Scan Status`, func() {
+			fmt.Println(`Check Scan status`)
+			Eventually(func() bool {
+				var isCompleted bool
+				isCompleted, scanId = examples.ListScopes(options, accountId, *scopeName, *scopeId, "validation_completed")
+				return isCompleted
+			}, "12000s", "20s").Should(BeTrue())
 		})
-		It(`Read Scan`, func() {
-			fmt.Println(`Read Scan`)
-			summary := demoReadScan(options, "22374102", "48")
-
-			Expect(summary.Controls).ToNot(BeNil())
+		It(`List latest scans`, func() {
+			fmt.Println(`List latest scans`)
+			statusCode, list := examples.ListLatestScans(options, accountId, scanId)
+			Expect(statusCode).To(Equal(200))
+			Expect(list).ToNot(BeNil())
 
 		})
 
@@ -197,7 +235,7 @@ func demoListScope(options scc.PostureManagementV1Options, scopeId *string) {
 	service, _ := scc.NewPostureManagementV1(&options)
 
 	//var scopeIdMatch int
-	source := service.NewListScopesOptions(accountId, "name")
+	source := service.NewListScopesOptions(accountId)
 
 	reply, response, err := service.ListScopes(source)
 

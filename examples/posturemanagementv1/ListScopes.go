@@ -2,26 +2,16 @@ package examples
 
 import (
 	"fmt"
-	"github.com/IBM/go-sdk-core/v5/core"
 	scc "github.com/ibm-cloud-security/scc-go-sdk/posturemanagementv1"
-	"os"
 )
 
-func ListScopes(options scc.PostureManagementV1Options, scopeName string, scopeId string) bool {
-	apiKey := os.Getenv("IAM_API_KEY")
-	url := os.Getenv("IAM_APIKEY_URL")
-	accountId := os.Getenv("ACCOUNT_ID_POSTURE")
-	authenticator := &core.IamAuthenticator{
-		ApiKey: apiKey,
-		URL:    url, //use for dev/preprod env
+func ListScopes(options scc.PostureManagementV1Options, accountId string, scopeName string, scopeId string, matchString string) (bool, string) {
 
-	}
-	service, _ := scc.NewPostureManagementV1(&scc.PostureManagementV1Options{
-		Authenticator: authenticator,
-		URL:           "https://asap-dev.compliance.test.cloud.ibm.com", //Specify url or use default
-	})
+	var scanId string
 
-	source := service.NewListScopesOptions(accountId, scopeName)
+	service, _ := scc.NewPostureManagementV1(&options)
+
+	source := service.NewListScopesOptions(accountId)
 	source.SetName(scopeName)
 
 	reply, response, err := service.ListScopes(source)
@@ -38,12 +28,13 @@ func ListScopes(options scc.PostureManagementV1Options, scopeName string, scopeI
 			fmt.Println("scope name " + *scope.Name)
 			if scope.Scans != nil {
 				for _, scans := range scope.Scans {
-					fmt.Println("scan id " + *scans.ScanID)
+					scanId = *scans.ScanID
+					fmt.Println("scan id " + scanId)
 					fmt.Println("scan status " + *scans.Status)
-					//if *scans.Status == "validation_completed" {
-					if *scans.Status == "discovery_completed" {
-						fmt.Println("discovery completed. test pass")
-						return true
+					//if *scans.Status == "discovery_completed" {
+					if *scans.Status == matchString {
+						fmt.Println("test pass")
+						return true, scanId
 					}
 				}
 			} else {
@@ -53,6 +44,6 @@ func ListScopes(options scc.PostureManagementV1Options, scopeName string, scopeI
 	}
 
 	fmt.Println("in progress, re-checking...")
-	return false
+	return false, scanId
 
 }

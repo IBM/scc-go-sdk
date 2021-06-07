@@ -17,9 +17,10 @@
 package configurationgovernancev1_test
 
 import (
+	"testing"
+
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"testing"
 )
 
 func TestConfigurationGovernanceV1(t *testing.T) {

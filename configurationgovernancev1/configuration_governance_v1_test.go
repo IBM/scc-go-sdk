@@ -20,17 +20,18 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/go-openapi/strfmt"
-	"github.com/ibm-cloud-security/scc-go-sdk/configurationgovernancev1"
-	. "github.com/onsi/ginkgo"
-	. "github.com/onsi/gomega"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"time"
+
+	"github.com/IBM/go-sdk-core/v5/core"
+	"github.com/go-openapi/strfmt"
+	"github.com/ibm/scc-go-sdk/configurationgovernancev1"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
 var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
@@ -66,14 +67,13 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"CONFIGURATION_GOVERNANCE_URL": "https://configurationgovernancev1/api",
+				"CONFIGURATION_GOVERNANCE_URL":       "https://configurationgovernancev1/api",
 				"CONFIGURATION_GOVERNANCE_AUTH_TYPE": "noauth",
 			}
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				configurationGovernanceService, serviceErr := configurationgovernancev1.NewConfigurationGovernanceV1UsingExternalConfig(&configurationgovernancev1.ConfigurationGovernanceV1Options{
-				})
+				configurationGovernanceService, serviceErr := configurationgovernancev1.NewConfigurationGovernanceV1UsingExternalConfig(&configurationgovernancev1.ConfigurationGovernanceV1Options{})
 				Expect(configurationGovernanceService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
@@ -102,8 +102,7 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				configurationGovernanceService, serviceErr := configurationgovernancev1.NewConfigurationGovernanceV1UsingExternalConfig(&configurationgovernancev1.ConfigurationGovernanceV1Options{
-				})
+				configurationGovernanceService, serviceErr := configurationgovernancev1.NewConfigurationGovernanceV1UsingExternalConfig(&configurationgovernancev1.ConfigurationGovernanceV1Options{})
 				err := configurationGovernanceService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
 				Expect(configurationGovernanceService).ToNot(BeNil())
@@ -121,13 +120,12 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"CONFIGURATION_GOVERNANCE_URL": "https://configurationgovernancev1/api",
+				"CONFIGURATION_GOVERNANCE_URL":       "https://configurationgovernancev1/api",
 				"CONFIGURATION_GOVERNANCE_AUTH_TYPE": "someOtherAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			configurationGovernanceService, serviceErr := configurationgovernancev1.NewConfigurationGovernanceV1UsingExternalConfig(&configurationgovernancev1.ConfigurationGovernanceV1Options{
-			})
+			configurationGovernanceService, serviceErr := configurationgovernancev1.NewConfigurationGovernanceV1UsingExternalConfig(&configurationgovernancev1.ConfigurationGovernanceV1Options{})
 
 			It(`Instantiate service client with error`, func() {
 				Expect(configurationGovernanceService).To(BeNil())
@@ -138,7 +136,7 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"CONFIGURATION_GOVERNANCE_AUTH_TYPE":   "NOAuth",
+				"CONFIGURATION_GOVERNANCE_AUTH_TYPE": "NOAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
@@ -157,6 +155,18 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 		It(`GetServiceURLForRegion(region string)`, func() {
 			var url string
 			var err error
+			url, err = configurationgovernancev1.GetServiceURLForRegion("us-south")
+			Expect(url).To(Equal("https://us.compliance.cloud.ibm.com"))
+			Expect(err).To(BeNil())
+
+			url, err = configurationgovernancev1.GetServiceURLForRegion("us-east")
+			Expect(url).To(Equal("https://us.compliance.cloud.ibm.com"))
+			Expect(err).To(BeNil())
+
+			url, err = configurationgovernancev1.GetServiceURLForRegion("eu-de")
+			Expect(url).To(Equal("https://eu.compliance.cloud.ibm.com"))
+			Expect(err).To(BeNil())
+
 			url, err = configurationgovernancev1.GetServiceURLForRegion("INVALID_REGION")
 			Expect(url).To(BeEmpty())
 			Expect(err).ToNot(BeNil())
@@ -165,7 +175,7 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 	})
 	Describe(`CreateRules(createRulesOptions *CreateRulesOptions) - Operation response error`, func() {
 		createRulesPath := "/config/v1/rules"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -255,7 +265,6 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 			})
 		})
 	})
-
 	Describe(`CreateRules(createRulesOptions *CreateRulesOptions)`, func() {
 		createRulesPath := "/config/v1/rules"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -559,10 +568,89 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 				testServer.Close()
 			})
 		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(201)
+				}))
+			})
+			It(`Invoke CreateRules successfully`, func() {
+				configurationGovernanceService, serviceErr := configurationgovernancev1.NewConfigurationGovernanceV1(&configurationgovernancev1.ConfigurationGovernanceV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(configurationGovernanceService).ToNot(BeNil())
+
+				// Construct an instance of the TargetResourceAdditionalTargetAttributesItem model
+				targetResourceAdditionalTargetAttributesItemModel := new(configurationgovernancev1.TargetResourceAdditionalTargetAttributesItem)
+				targetResourceAdditionalTargetAttributesItemModel.Name = core.StringPtr("resource_id")
+				targetResourceAdditionalTargetAttributesItemModel.Value = core.StringPtr("81f3db5e-f9db-4c46-9de3-a4a76e66adbf")
+				targetResourceAdditionalTargetAttributesItemModel.Operator = core.StringPtr("string_equals")
+
+				// Construct an instance of the TargetResource model
+				targetResourceModel := new(configurationgovernancev1.TargetResource)
+				targetResourceModel.ServiceName = core.StringPtr("iam-groups")
+				targetResourceModel.ResourceKind = core.StringPtr("service")
+				targetResourceModel.AdditionalTargetAttributes = []configurationgovernancev1.TargetResourceAdditionalTargetAttributesItem{*targetResourceAdditionalTargetAttributesItemModel}
+
+				// Construct an instance of the RuleConditionSingleProperty model
+				ruleConditionModel := new(configurationgovernancev1.RuleConditionSingleProperty)
+				ruleConditionModel.Description = core.StringPtr("testString")
+				ruleConditionModel.Property = core.StringPtr("public_access_enabled")
+				ruleConditionModel.Operator = core.StringPtr("is_false")
+				ruleConditionModel.Value = core.StringPtr("testString")
+
+				// Construct an instance of the RuleRequiredConfigMultiplePropertiesConditionAnd model
+				ruleRequiredConfigModel := new(configurationgovernancev1.RuleRequiredConfigMultiplePropertiesConditionAnd)
+				ruleRequiredConfigModel.Description = core.StringPtr("Public access check")
+				ruleRequiredConfigModel.And = []configurationgovernancev1.RuleConditionIntf{ruleConditionModel}
+
+				// Construct an instance of the EnforcementAction model
+				enforcementActionModel := new(configurationgovernancev1.EnforcementAction)
+				enforcementActionModel.Action = core.StringPtr("disallow")
+
+				// Construct an instance of the RuleRequest model
+				ruleRequestModel := new(configurationgovernancev1.RuleRequest)
+				ruleRequestModel.AccountID = core.StringPtr("531fc3e28bfc43c5a2cea07786d93f5c")
+				ruleRequestModel.Name = core.StringPtr("Disable public access")
+				ruleRequestModel.Description = core.StringPtr("Ensure that public access to account resources is disabled.")
+				ruleRequestModel.RuleType = core.StringPtr("user_defined")
+				ruleRequestModel.Target = targetResourceModel
+				ruleRequestModel.RequiredConfig = ruleRequiredConfigModel
+				ruleRequestModel.EnforcementActions = []configurationgovernancev1.EnforcementAction{*enforcementActionModel}
+				ruleRequestModel.Labels = []string{"Access", "IAM"}
+
+				// Construct an instance of the CreateRuleRequest model
+				createRuleRequestModel := new(configurationgovernancev1.CreateRuleRequest)
+				createRuleRequestModel.RequestID = core.StringPtr("3cebc877-58e7-44a5-a292-32114fa73558")
+				createRuleRequestModel.Rule = ruleRequestModel
+
+				// Construct an instance of the CreateRulesOptions model
+				createRulesOptionsModel := new(configurationgovernancev1.CreateRulesOptions)
+				createRulesOptionsModel.Rules = []configurationgovernancev1.CreateRuleRequest{*createRuleRequestModel}
+				createRulesOptionsModel.TransactionID = core.StringPtr("testString")
+				createRulesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := configurationGovernanceService.CreateRules(createRulesOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
 	})
 	Describe(`ListRules(listRulesOptions *ListRulesOptions) - Operation response error`, func() {
 		listRulesPath := "/config/v1/rules"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -619,7 +707,6 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 			})
 		})
 	})
-
 	Describe(`ListRules(listRulesOptions *ListRulesOptions)`, func() {
 		listRulesPath := "/config/v1/rules"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -786,10 +873,50 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 				testServer.Close()
 			})
 		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke ListRules successfully`, func() {
+				configurationGovernanceService, serviceErr := configurationgovernancev1.NewConfigurationGovernanceV1(&configurationgovernancev1.ConfigurationGovernanceV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(configurationGovernanceService).ToNot(BeNil())
+
+				// Construct an instance of the ListRulesOptions model
+				listRulesOptionsModel := new(configurationgovernancev1.ListRulesOptions)
+				listRulesOptionsModel.AccountID = core.StringPtr("531fc3e28bfc43c5a2cea07786d93f5c")
+				listRulesOptionsModel.TransactionID = core.StringPtr("testString")
+				listRulesOptionsModel.Attached = core.BoolPtr(true)
+				listRulesOptionsModel.Labels = core.StringPtr("SOC2,ITCS300")
+				listRulesOptionsModel.Scopes = core.StringPtr("scope_id")
+				listRulesOptionsModel.Limit = core.Int64Ptr(int64(1000))
+				listRulesOptionsModel.Offset = core.Int64Ptr(int64(38))
+				listRulesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := configurationGovernanceService.ListRules(listRulesOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
 	})
 	Describe(`GetRule(getRuleOptions *GetRuleOptions) - Operation response error`, func() {
 		getRulePath := "/config/v1/rules/testString"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -835,7 +962,6 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 			})
 		})
 	})
-
 	Describe(`GetRule(getRuleOptions *GetRuleOptions)`, func() {
 		getRulePath := "/config/v1/rules/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -975,10 +1101,45 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 				testServer.Close()
 			})
 		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke GetRule successfully`, func() {
+				configurationGovernanceService, serviceErr := configurationgovernancev1.NewConfigurationGovernanceV1(&configurationgovernancev1.ConfigurationGovernanceV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(configurationGovernanceService).ToNot(BeNil())
+
+				// Construct an instance of the GetRuleOptions model
+				getRuleOptionsModel := new(configurationgovernancev1.GetRuleOptions)
+				getRuleOptionsModel.RuleID = core.StringPtr("testString")
+				getRuleOptionsModel.TransactionID = core.StringPtr("testString")
+				getRuleOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := configurationGovernanceService.GetRule(getRuleOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
 	})
 	Describe(`UpdateRule(updateRuleOptions *UpdateRuleOptions) - Operation response error`, func() {
 		updateRulePath := "/config/v1/rules/testString"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -1058,7 +1219,6 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 			})
 		})
 	})
-
 	Describe(`UpdateRule(updateRuleOptions *UpdateRuleOptions)`, func() {
 		updateRulePath := "/config/v1/rules/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -1330,8 +1490,74 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 				testServer.Close()
 			})
 		})
-	})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
 
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke UpdateRule successfully`, func() {
+				configurationGovernanceService, serviceErr := configurationgovernancev1.NewConfigurationGovernanceV1(&configurationgovernancev1.ConfigurationGovernanceV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(configurationGovernanceService).ToNot(BeNil())
+
+				// Construct an instance of the TargetResourceAdditionalTargetAttributesItem model
+				targetResourceAdditionalTargetAttributesItemModel := new(configurationgovernancev1.TargetResourceAdditionalTargetAttributesItem)
+				targetResourceAdditionalTargetAttributesItemModel.Name = core.StringPtr("testString")
+				targetResourceAdditionalTargetAttributesItemModel.Value = core.StringPtr("testString")
+				targetResourceAdditionalTargetAttributesItemModel.Operator = core.StringPtr("string_equals")
+
+				// Construct an instance of the TargetResource model
+				targetResourceModel := new(configurationgovernancev1.TargetResource)
+				targetResourceModel.ServiceName = core.StringPtr("iam-groups")
+				targetResourceModel.ResourceKind = core.StringPtr("service")
+				targetResourceModel.AdditionalTargetAttributes = []configurationgovernancev1.TargetResourceAdditionalTargetAttributesItem{*targetResourceAdditionalTargetAttributesItemModel}
+
+				// Construct an instance of the RuleRequiredConfigSingleProperty model
+				ruleRequiredConfigModel := new(configurationgovernancev1.RuleRequiredConfigSingleProperty)
+				ruleRequiredConfigModel.Description = core.StringPtr("testString")
+				ruleRequiredConfigModel.Property = core.StringPtr("public_access_enabled")
+				ruleRequiredConfigModel.Operator = core.StringPtr("is_false")
+				ruleRequiredConfigModel.Value = core.StringPtr("testString")
+
+				// Construct an instance of the EnforcementAction model
+				enforcementActionModel := new(configurationgovernancev1.EnforcementAction)
+				enforcementActionModel.Action = core.StringPtr("audit_log")
+
+				// Construct an instance of the UpdateRuleOptions model
+				updateRuleOptionsModel := new(configurationgovernancev1.UpdateRuleOptions)
+				updateRuleOptionsModel.RuleID = core.StringPtr("testString")
+				updateRuleOptionsModel.IfMatch = core.StringPtr("testString")
+				updateRuleOptionsModel.Name = core.StringPtr("Disable public access")
+				updateRuleOptionsModel.Description = core.StringPtr("Ensure that public access to account resources is disabled.")
+				updateRuleOptionsModel.Target = targetResourceModel
+				updateRuleOptionsModel.RequiredConfig = ruleRequiredConfigModel
+				updateRuleOptionsModel.EnforcementActions = []configurationgovernancev1.EnforcementAction{*enforcementActionModel}
+				updateRuleOptionsModel.AccountID = core.StringPtr("531fc3e28bfc43c5a2cea07786d93f5c")
+				updateRuleOptionsModel.RuleType = core.StringPtr("user_defined")
+				updateRuleOptionsModel.Labels = []string{"SOC2", "ITCS300"}
+				updateRuleOptionsModel.TransactionID = core.StringPtr("testString")
+				updateRuleOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := configurationGovernanceService.UpdateRule(updateRuleOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
 	Describe(`DeleteRule(deleteRuleOptions *DeleteRuleOptions)`, func() {
 		deleteRulePath := "/config/v1/rules/testString"
 		Context(`Using mock server endpoint`, func() {
@@ -1406,7 +1632,7 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 	})
 	Describe(`CreateRuleAttachments(createRuleAttachmentsOptions *CreateRuleAttachmentsOptions) - Operation response error`, func() {
 		createRuleAttachmentsPath := "/config/v1/rules/testString/attachments"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -1465,7 +1691,6 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 			})
 		})
 	})
-
 	Describe(`CreateRuleAttachments(createRuleAttachmentsOptions *CreateRuleAttachmentsOptions)`, func() {
 		createRuleAttachmentsPath := "/config/v1/rules/testString/attachments"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -1676,10 +1901,58 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 				testServer.Close()
 			})
 		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(201)
+				}))
+			})
+			It(`Invoke CreateRuleAttachments successfully`, func() {
+				configurationGovernanceService, serviceErr := configurationgovernancev1.NewConfigurationGovernanceV1(&configurationgovernancev1.ConfigurationGovernanceV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(configurationGovernanceService).ToNot(BeNil())
+
+				// Construct an instance of the RuleScope model
+				ruleScopeModel := new(configurationgovernancev1.RuleScope)
+				ruleScopeModel.Note = core.StringPtr("My enterprise")
+				ruleScopeModel.ScopeID = core.StringPtr("282cf433ac91493ba860480d92519990")
+				ruleScopeModel.ScopeType = core.StringPtr("enterprise")
+
+				// Construct an instance of the RuleAttachmentRequest model
+				ruleAttachmentRequestModel := new(configurationgovernancev1.RuleAttachmentRequest)
+				ruleAttachmentRequestModel.AccountID = core.StringPtr("531fc3e28bfc43c5a2cea07786d93f5c")
+				ruleAttachmentRequestModel.IncludedScope = ruleScopeModel
+				ruleAttachmentRequestModel.ExcludedScopes = []configurationgovernancev1.RuleScope{*ruleScopeModel}
+
+				// Construct an instance of the CreateRuleAttachmentsOptions model
+				createRuleAttachmentsOptionsModel := new(configurationgovernancev1.CreateRuleAttachmentsOptions)
+				createRuleAttachmentsOptionsModel.RuleID = core.StringPtr("testString")
+				createRuleAttachmentsOptionsModel.Attachments = []configurationgovernancev1.RuleAttachmentRequest{*ruleAttachmentRequestModel}
+				createRuleAttachmentsOptionsModel.TransactionID = core.StringPtr("testString")
+				createRuleAttachmentsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := configurationGovernanceService.CreateRuleAttachments(createRuleAttachmentsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
 	})
 	Describe(`ListRuleAttachments(listRuleAttachmentsOptions *ListRuleAttachmentsOptions) - Operation response error`, func() {
 		listRuleAttachmentsPath := "/config/v1/rules/testString/attachments"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -1729,7 +2002,6 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 			})
 		})
 	})
-
 	Describe(`ListRuleAttachments(listRuleAttachmentsOptions *ListRuleAttachmentsOptions)`, func() {
 		listRuleAttachmentsPath := "/config/v1/rules/testString/attachments"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -1879,10 +2151,47 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 				testServer.Close()
 			})
 		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke ListRuleAttachments successfully`, func() {
+				configurationGovernanceService, serviceErr := configurationgovernancev1.NewConfigurationGovernanceV1(&configurationgovernancev1.ConfigurationGovernanceV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(configurationGovernanceService).ToNot(BeNil())
+
+				// Construct an instance of the ListRuleAttachmentsOptions model
+				listRuleAttachmentsOptionsModel := new(configurationgovernancev1.ListRuleAttachmentsOptions)
+				listRuleAttachmentsOptionsModel.RuleID = core.StringPtr("testString")
+				listRuleAttachmentsOptionsModel.TransactionID = core.StringPtr("testString")
+				listRuleAttachmentsOptionsModel.Limit = core.Int64Ptr(int64(1000))
+				listRuleAttachmentsOptionsModel.Offset = core.Int64Ptr(int64(38))
+				listRuleAttachmentsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := configurationGovernanceService.ListRuleAttachments(listRuleAttachmentsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
 	})
 	Describe(`GetRuleAttachment(getRuleAttachmentOptions *GetRuleAttachmentOptions) - Operation response error`, func() {
 		getRuleAttachmentPath := "/config/v1/rules/testString/attachments/testString"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -1929,7 +2238,6 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 			})
 		})
 	})
-
 	Describe(`GetRuleAttachment(getRuleAttachmentOptions *GetRuleAttachmentOptions)`, func() {
 		getRuleAttachmentPath := "/config/v1/rules/testString/attachments/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -2072,10 +2380,46 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 				testServer.Close()
 			})
 		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke GetRuleAttachment successfully`, func() {
+				configurationGovernanceService, serviceErr := configurationgovernancev1.NewConfigurationGovernanceV1(&configurationgovernancev1.ConfigurationGovernanceV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(configurationGovernanceService).ToNot(BeNil())
+
+				// Construct an instance of the GetRuleAttachmentOptions model
+				getRuleAttachmentOptionsModel := new(configurationgovernancev1.GetRuleAttachmentOptions)
+				getRuleAttachmentOptionsModel.RuleID = core.StringPtr("testString")
+				getRuleAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
+				getRuleAttachmentOptionsModel.TransactionID = core.StringPtr("testString")
+				getRuleAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := configurationGovernanceService.GetRuleAttachment(getRuleAttachmentOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
 	})
 	Describe(`UpdateRuleAttachment(updateRuleAttachmentOptions *UpdateRuleAttachmentOptions) - Operation response error`, func() {
 		updateRuleAttachmentPath := "/config/v1/rules/testString/attachments/testString"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -2134,7 +2478,6 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 			})
 		})
 	})
-
 	Describe(`UpdateRuleAttachment(updateRuleAttachmentOptions *UpdateRuleAttachmentOptions)`, func() {
 		updateRuleAttachmentPath := "/config/v1/rules/testString/attachments/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -2343,8 +2686,53 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 				testServer.Close()
 			})
 		})
-	})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
 
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke UpdateRuleAttachment successfully`, func() {
+				configurationGovernanceService, serviceErr := configurationgovernancev1.NewConfigurationGovernanceV1(&configurationgovernancev1.ConfigurationGovernanceV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(configurationGovernanceService).ToNot(BeNil())
+
+				// Construct an instance of the RuleScope model
+				ruleScopeModel := new(configurationgovernancev1.RuleScope)
+				ruleScopeModel.Note = core.StringPtr("My enterprise")
+				ruleScopeModel.ScopeID = core.StringPtr("282cf433ac91493ba860480d92519990")
+				ruleScopeModel.ScopeType = core.StringPtr("enterprise")
+
+				// Construct an instance of the UpdateRuleAttachmentOptions model
+				updateRuleAttachmentOptionsModel := new(configurationgovernancev1.UpdateRuleAttachmentOptions)
+				updateRuleAttachmentOptionsModel.RuleID = core.StringPtr("testString")
+				updateRuleAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
+				updateRuleAttachmentOptionsModel.IfMatch = core.StringPtr("testString")
+				updateRuleAttachmentOptionsModel.AccountID = core.StringPtr("531fc3e28bfc43c5a2cea07786d93f5c")
+				updateRuleAttachmentOptionsModel.IncludedScope = ruleScopeModel
+				updateRuleAttachmentOptionsModel.ExcludedScopes = []configurationgovernancev1.RuleScope{*ruleScopeModel}
+				updateRuleAttachmentOptionsModel.TransactionID = core.StringPtr("testString")
+				updateRuleAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := configurationGovernanceService.UpdateRuleAttachment(updateRuleAttachmentOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
 	Describe(`DeleteRuleAttachment(deleteRuleAttachmentOptions *DeleteRuleAttachmentOptions)`, func() {
 		deleteRuleAttachmentPath := "/config/v1/rules/testString/attachments/testString"
 		Context(`Using mock server endpoint`, func() {
@@ -2857,11 +3245,11 @@ var _ = XDescribe(`ConfigurationGovernanceV1`, func() {
 			Expect(mockReader).ToNot(BeNil())
 		})
 		It(`Invoke CreateMockDate() successfully`, func() {
-			mockDate := CreateMockDate()
+			mockDate := CreateMockDate("2019-01-01")
 			Expect(mockDate).ToNot(BeNil())
 		})
 		It(`Invoke CreateMockDateTime() successfully`, func() {
-			mockDateTime := CreateMockDateTime()
+			mockDateTime := CreateMockDateTime("2019-01-01T12:00:00.000Z")
 			Expect(mockDateTime).ToNot(BeNil())
 		})
 	})
@@ -2886,13 +3274,19 @@ func CreateMockReader(mockData string) io.ReadCloser {
 	return ioutil.NopCloser(bytes.NewReader([]byte(mockData)))
 }
 
-func CreateMockDate() *strfmt.Date {
-	d := strfmt.Date(time.Date(2009, time.November, 10, 23, 0, 0, 0, time.UTC))
+func CreateMockDate(mockData string) *strfmt.Date {
+	d, err := core.ParseDate(mockData)
+	if err != nil {
+		return nil
+	}
 	return &d
 }
 
-func CreateMockDateTime() *strfmt.DateTime {
-	d := strfmt.DateTime(time.Date(2009, time.November, 10, 23, 0, 0, 0, time.UTC))
+func CreateMockDateTime(mockData string) *strfmt.DateTime {
+	d, err := core.ParseDateTime(mockData)
+	if err != nil {
+		return nil
+	}
 	return &d
 }
 

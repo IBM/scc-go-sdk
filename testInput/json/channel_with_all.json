@@ -1,9 +1,0 @@
-{
-    "name": "sdkTest_channel_all",
-    "type": "Webhook",
-    "description": "channel with alert source",
-    "endpoint": "https://ss.ss",
-    "alert_source": [{"provider_name": "VA", "finding_types": ["ALL"]}, {"provider_name": "CERT", "finding_types": ["expired_cert", "expiring_1day_cert"]}],
-    "severity": ["low", "high"],
-    "enabled": true
-  }

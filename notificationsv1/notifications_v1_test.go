@@ -20,17 +20,18 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/go-openapi/strfmt"
-	"github.com/ibm-cloud-security/scc-go-sdk/notificationsv1"
-	. "github.com/onsi/ginkgo"
-	. "github.com/onsi/gomega"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"time"
+
+	"github.com/IBM/go-sdk-core/v5/core"
+	"github.com/go-openapi/strfmt"
+	"github.com/ibm/scc-go-sdk/notificationsv1"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
 var _ = XDescribe(`NotificationsV1`, func() {
@@ -66,14 +67,13 @@ var _ = XDescribe(`NotificationsV1`, func() {
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"NOTIFICATIONS_URL": "https://notificationsv1/api",
+				"NOTIFICATIONS_URL":       "https://notificationsv1/api",
 				"NOTIFICATIONS_AUTH_TYPE": "noauth",
 			}
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{
-				})
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{})
 				Expect(notificationsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
@@ -102,8 +102,7 @@ var _ = XDescribe(`NotificationsV1`, func() {
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{
-				})
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{})
 				err := notificationsService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -121,13 +120,12 @@ var _ = XDescribe(`NotificationsV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"NOTIFICATIONS_URL": "https://notificationsv1/api",
+				"NOTIFICATIONS_URL":       "https://notificationsv1/api",
 				"NOTIFICATIONS_AUTH_TYPE": "someOtherAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{
-			})
+			notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{})
 
 			It(`Instantiate service client with error`, func() {
 				Expect(notificationsService).To(BeNil())
@@ -138,7 +136,7 @@ var _ = XDescribe(`NotificationsV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"NOTIFICATIONS_AUTH_TYPE":   "NOAuth",
+				"NOTIFICATIONS_AUTH_TYPE": "NOAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
@@ -157,6 +155,22 @@ var _ = XDescribe(`NotificationsV1`, func() {
 		It(`GetServiceURLForRegion(region string)`, func() {
 			var url string
 			var err error
+			url, err = notificationsv1.GetServiceURLForRegion("us-south")
+			Expect(url).To(Equal("https://us-south.secadvisor.cloud.ibm.com/notifications"))
+			Expect(err).To(BeNil())
+
+			url, err = notificationsv1.GetServiceURLForRegion("us-east")
+			Expect(url).To(Equal("https://us-south.secadvisor.cloud.ibm.com/notifications"))
+			Expect(err).To(BeNil())
+
+			url, err = notificationsv1.GetServiceURLForRegion("eu-gb")
+			Expect(url).To(Equal("https://eu-gb.secadvisor.cloud.ibm.com/notifications"))
+			Expect(err).To(BeNil())
+
+			url, err = notificationsv1.GetServiceURLForRegion("eu-de")
+			Expect(url).To(Equal("https://eu.compliance.cloud.ibm.com/si/notifications"))
+			Expect(err).To(BeNil())
+
 			url, err = notificationsv1.GetServiceURLForRegion("INVALID_REGION")
 			Expect(url).To(BeEmpty())
 			Expect(err).ToNot(BeNil())
@@ -165,7 +179,7 @@ var _ = XDescribe(`NotificationsV1`, func() {
 	})
 	Describe(`ListAllChannels(listAllChannelsOptions *ListAllChannelsOptions) - Operation response error`, func() {
 		listAllChannelsPath := "/v1/testString/notifications/channels"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -215,7 +229,6 @@ var _ = XDescribe(`NotificationsV1`, func() {
 			})
 		})
 	})
-
 	Describe(`ListAllChannels(listAllChannelsOptions *ListAllChannelsOptions)`, func() {
 		listAllChannelsPath := "/v1/testString/notifications/channels"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -365,10 +378,47 @@ var _ = XDescribe(`NotificationsV1`, func() {
 				testServer.Close()
 			})
 		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke ListAllChannels successfully`, func() {
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
+
+				// Construct an instance of the ListAllChannelsOptions model
+				listAllChannelsOptionsModel := new(notificationsv1.ListAllChannelsOptions)
+				listAllChannelsOptionsModel.AccountID = core.StringPtr("testString")
+				listAllChannelsOptionsModel.TransactionID = core.StringPtr("testString")
+				listAllChannelsOptionsModel.Limit = core.Int64Ptr(int64(38))
+				listAllChannelsOptionsModel.Skip = core.Int64Ptr(int64(38))
+				listAllChannelsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := notificationsService.ListAllChannels(listAllChannelsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
 	})
 	Describe(`CreateNotificationChannel(createNotificationChannelOptions *CreateNotificationChannelOptions) - Operation response error`, func() {
 		createNotificationChannelPath := "/v1/testString/notifications/channels"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -426,7 +476,6 @@ var _ = XDescribe(`NotificationsV1`, func() {
 			})
 		})
 	})
-
 	Describe(`CreateNotificationChannel(createNotificationChannelOptions *CreateNotificationChannelOptions)`, func() {
 		createNotificationChannelPath := "/v1/testString/notifications/channels"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -634,10 +683,57 @@ var _ = XDescribe(`NotificationsV1`, func() {
 				testServer.Close()
 			})
 		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke CreateNotificationChannel successfully`, func() {
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
+
+				// Construct an instance of the NotificationChannelAlertSourceItem model
+				notificationChannelAlertSourceItemModel := new(notificationsv1.NotificationChannelAlertSourceItem)
+				notificationChannelAlertSourceItemModel.ProviderName = core.StringPtr("testString")
+				notificationChannelAlertSourceItemModel.FindingTypes = []string{"testString"}
+
+				// Construct an instance of the CreateNotificationChannelOptions model
+				createNotificationChannelOptionsModel := new(notificationsv1.CreateNotificationChannelOptions)
+				createNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
+				createNotificationChannelOptionsModel.Name = core.StringPtr("testString")
+				createNotificationChannelOptionsModel.Type = core.StringPtr("Webhook")
+				createNotificationChannelOptionsModel.Endpoint = core.StringPtr("testString")
+				createNotificationChannelOptionsModel.Description = core.StringPtr("testString")
+				createNotificationChannelOptionsModel.Severity = []string{"low"}
+				createNotificationChannelOptionsModel.Enabled = core.BoolPtr(true)
+				createNotificationChannelOptionsModel.AlertSource = []notificationsv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}
+				createNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
+				createNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := notificationsService.CreateNotificationChannel(createNotificationChannelOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
 	})
 	Describe(`DeleteNotificationChannels(deleteNotificationChannelsOptions *DeleteNotificationChannelsOptions) - Operation response error`, func() {
 		deleteNotificationChannelsPath := "/v1/testString/notifications/channels"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -684,7 +780,6 @@ var _ = XDescribe(`NotificationsV1`, func() {
 			})
 		})
 	})
-
 	Describe(`DeleteNotificationChannels(deleteNotificationChannelsOptions *DeleteNotificationChannelsOptions)`, func() {
 		deleteNotificationChannelsPath := "/v1/testString/notifications/channels"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -859,10 +954,46 @@ var _ = XDescribe(`NotificationsV1`, func() {
 				testServer.Close()
 			})
 		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke DeleteNotificationChannels successfully`, func() {
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
+
+				// Construct an instance of the DeleteNotificationChannelsOptions model
+				deleteNotificationChannelsOptionsModel := new(notificationsv1.DeleteNotificationChannelsOptions)
+				deleteNotificationChannelsOptionsModel.AccountID = core.StringPtr("testString")
+				deleteNotificationChannelsOptionsModel.Body = []string{"testString"}
+				deleteNotificationChannelsOptionsModel.TransactionID = core.StringPtr("testString")
+				deleteNotificationChannelsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := notificationsService.DeleteNotificationChannels(deleteNotificationChannelsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
 	})
 	Describe(`DeleteNotificationChannel(deleteNotificationChannelOptions *DeleteNotificationChannelOptions) - Operation response error`, func() {
 		deleteNotificationChannelPath := "/v1/testString/notifications/channels/testString"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -909,7 +1040,6 @@ var _ = XDescribe(`NotificationsV1`, func() {
 			})
 		})
 	})
-
 	Describe(`DeleteNotificationChannel(deleteNotificationChannelOptions *DeleteNotificationChannelOptions)`, func() {
 		deleteNotificationChannelPath := "/v1/testString/notifications/channels/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -1052,10 +1182,46 @@ var _ = XDescribe(`NotificationsV1`, func() {
 				testServer.Close()
 			})
 		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke DeleteNotificationChannel successfully`, func() {
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
+
+				// Construct an instance of the DeleteNotificationChannelOptions model
+				deleteNotificationChannelOptionsModel := new(notificationsv1.DeleteNotificationChannelOptions)
+				deleteNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
+				deleteNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
+				deleteNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
+				deleteNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := notificationsService.DeleteNotificationChannel(deleteNotificationChannelOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
 	})
 	Describe(`GetNotificationChannel(getNotificationChannelOptions *GetNotificationChannelOptions) - Operation response error`, func() {
 		getNotificationChannelPath := "/v1/testString/notifications/channels/testString"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -1102,7 +1268,6 @@ var _ = XDescribe(`NotificationsV1`, func() {
 			})
 		})
 	})
-
 	Describe(`GetNotificationChannel(getNotificationChannelOptions *GetNotificationChannelOptions)`, func() {
 		getNotificationChannelPath := "/v1/testString/notifications/channels/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -1245,10 +1410,46 @@ var _ = XDescribe(`NotificationsV1`, func() {
 				testServer.Close()
 			})
 		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke GetNotificationChannel successfully`, func() {
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetNotificationChannelOptions model
+				getNotificationChannelOptionsModel := new(notificationsv1.GetNotificationChannelOptions)
+				getNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
+				getNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
+				getNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
+				getNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := notificationsService.GetNotificationChannel(getNotificationChannelOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
 	})
 	Describe(`UpdateNotificationChannel(updateNotificationChannelOptions *UpdateNotificationChannelOptions) - Operation response error`, func() {
 		updateNotificationChannelPath := "/v1/testString/notifications/channels/testString"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -1307,7 +1508,6 @@ var _ = XDescribe(`NotificationsV1`, func() {
 			})
 		})
 	})
-
 	Describe(`UpdateNotificationChannel(updateNotificationChannelOptions *UpdateNotificationChannelOptions)`, func() {
 		updateNotificationChannelPath := "/v1/testString/notifications/channels/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -1518,10 +1718,58 @@ var _ = XDescribe(`NotificationsV1`, func() {
 				testServer.Close()
 			})
 		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke UpdateNotificationChannel successfully`, func() {
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
+
+				// Construct an instance of the NotificationChannelAlertSourceItem model
+				notificationChannelAlertSourceItemModel := new(notificationsv1.NotificationChannelAlertSourceItem)
+				notificationChannelAlertSourceItemModel.ProviderName = core.StringPtr("testString")
+				notificationChannelAlertSourceItemModel.FindingTypes = []string{"testString"}
+
+				// Construct an instance of the UpdateNotificationChannelOptions model
+				updateNotificationChannelOptionsModel := new(notificationsv1.UpdateNotificationChannelOptions)
+				updateNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
+				updateNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
+				updateNotificationChannelOptionsModel.Name = core.StringPtr("testString")
+				updateNotificationChannelOptionsModel.Type = core.StringPtr("Webhook")
+				updateNotificationChannelOptionsModel.Endpoint = core.StringPtr("testString")
+				updateNotificationChannelOptionsModel.Description = core.StringPtr("testString")
+				updateNotificationChannelOptionsModel.Severity = []string{"low"}
+				updateNotificationChannelOptionsModel.Enabled = core.BoolPtr(true)
+				updateNotificationChannelOptionsModel.AlertSource = []notificationsv1.NotificationChannelAlertSourceItem{*notificationChannelAlertSourceItemModel}
+				updateNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
+				updateNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := notificationsService.UpdateNotificationChannel(updateNotificationChannelOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
 	})
 	Describe(`TestNotificationChannel(testNotificationChannelOptions *TestNotificationChannelOptions) - Operation response error`, func() {
 		testNotificationChannelPath := "/v1/testString/notifications/channels/testString/test"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -1568,7 +1816,6 @@ var _ = XDescribe(`NotificationsV1`, func() {
 			})
 		})
 	})
-
 	Describe(`TestNotificationChannel(testNotificationChannelOptions *TestNotificationChannelOptions)`, func() {
 		testNotificationChannelPath := "/v1/testString/notifications/channels/testString/test"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -1711,10 +1958,46 @@ var _ = XDescribe(`NotificationsV1`, func() {
 				testServer.Close()
 			})
 		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke TestNotificationChannel successfully`, func() {
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
+
+				// Construct an instance of the TestNotificationChannelOptions model
+				testNotificationChannelOptionsModel := new(notificationsv1.TestNotificationChannelOptions)
+				testNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
+				testNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
+				testNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
+				testNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := notificationsService.TestNotificationChannel(testNotificationChannelOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
 	})
 	Describe(`GetPublicKey(getPublicKeyOptions *GetPublicKeyOptions) - Operation response error`, func() {
 		getPublicKeyPath := "/v1/testString/notifications/public_key"
-		Context(`Using mock server endpoint`, func() {
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
@@ -1760,7 +2043,6 @@ var _ = XDescribe(`NotificationsV1`, func() {
 			})
 		})
 	})
-
 	Describe(`GetPublicKey(getPublicKeyOptions *GetPublicKeyOptions)`, func() {
 		getPublicKeyPath := "/v1/testString/notifications/public_key"
 		Context(`Using mock server endpoint with timeout`, func() {
@@ -1894,6 +2176,41 @@ var _ = XDescribe(`NotificationsV1`, func() {
 				result, response, operationErr = notificationsService.GetPublicKey(getPublicKeyOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke GetPublicKey successfully`, func() {
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(notificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetPublicKeyOptions model
+				getPublicKeyOptionsModel := new(notificationsv1.GetPublicKeyOptions)
+				getPublicKeyOptionsModel.AccountID = core.StringPtr("testString")
+				getPublicKeyOptionsModel.TransactionID = core.StringPtr("testString")
+				getPublicKeyOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := notificationsService.GetPublicKey(getPublicKeyOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
 				Expect(result).To(BeNil())
 			})
 			AfterEach(func() {
@@ -2094,11 +2411,11 @@ var _ = XDescribe(`NotificationsV1`, func() {
 			Expect(mockReader).ToNot(BeNil())
 		})
 		It(`Invoke CreateMockDate() successfully`, func() {
-			mockDate := CreateMockDate()
+			mockDate := CreateMockDate("2019-01-01")
 			Expect(mockDate).ToNot(BeNil())
 		})
 		It(`Invoke CreateMockDateTime() successfully`, func() {
-			mockDateTime := CreateMockDateTime()
+			mockDateTime := CreateMockDateTime("2019-01-01T12:00:00.000Z")
 			Expect(mockDateTime).ToNot(BeNil())
 		})
 	})
@@ -2123,13 +2440,19 @@ func CreateMockReader(mockData string) io.ReadCloser {
 	return ioutil.NopCloser(bytes.NewReader([]byte(mockData)))
 }
 
-func CreateMockDate() *strfmt.Date {
-	d := strfmt.Date(time.Date(2009, time.November, 10, 23, 0, 0, 0, time.UTC))
+func CreateMockDate(mockData string) *strfmt.Date {
+	d, err := core.ParseDate(mockData)
+	if err != nil {
+		return nil
+	}
 	return &d
 }
 
-func CreateMockDateTime() *strfmt.DateTime {
-	d := strfmt.DateTime(time.Date(2009, time.November, 10, 23, 0, 0, 0, time.UTC))
+func CreateMockDateTime(mockData string) *strfmt.DateTime {
+	d, err := core.ParseDateTime(mockData)
+	if err != nil {
+		return nil
+	}
 	return &d
 }
 

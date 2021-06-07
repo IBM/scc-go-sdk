@@ -69,10 +69,10 @@ var _ = Describe(`SCC test`, func() {
 		})
 	})
 
-	FDescribe(`Demo`, func() {
+	Describe(`Demo`, func() {
 
 		//TODO fix collector issue -- skip for now
-		XIt(`Create Collector`, func() {
+		It(`Create Collector`, func() {
 			fmt.Println(`Create Collector`)
 			statusCode, id := examples.CreateCollector(options, accountId)
 			Expect(statusCode).To(Equal(201))
@@ -80,7 +80,7 @@ var _ = Describe(`SCC test`, func() {
 		})
 
 		//new credential to be created
-		FIt(`Create Credential`, func() {
+		It(`Create Credential`, func() {
 			fmt.Println(`Create Credential`)
 			var statusCode int
 			credentialPath := os.Getenv("CREDENTIAL_PATH")
@@ -91,7 +91,7 @@ var _ = Describe(`SCC test`, func() {
 		})
 
 		//TODO override collector id for now until create collector is resolved
-		It(`Create Scope`, func() {
+		XIt(`Create Scope`, func() {
 			fmt.Println(`Create Scope`)
 			collectorId := "822"
 			collectorIds = append(collectorIds, collectorId)
@@ -106,7 +106,7 @@ var _ = Describe(`SCC test`, func() {
 			Expect(scopeName).ToNot(BeNil())
 		})
 
-		It(`List Scopes`, func() {
+		XIt(`List Scopes`, func() {
 			fmt.Println(`List Scopes`)
 			demoListScope(options, scopeId)
 
@@ -131,7 +131,7 @@ var _ = Describe(`SCC test`, func() {
 			Expect(statusCode).To(Equal(202))
 			Expect(message).ToNot(BeNil())
 		})
-		It(`Check Scan Status`, func() {
+		XIt(`Check Scan Status`, func() {
 			fmt.Println(`Check Scan status`)
 			Eventually(func() bool {
 				var isCompleted bool

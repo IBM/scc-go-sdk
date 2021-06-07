@@ -1,3 +1,26 @@
+## [0.0.6](https://github.com/ibm/scc-go-sdk/compare/v0.0.5...v0.0.6) (2021-06-03)
+
+
+### Bug Fixes
+
+* **paths:** movement to new repo ([a5ca2a1](https://github.com/ibm/scc-go-sdk/commit/a5ca2a1a745f9a2c5271e18721abf7cad1e3a146))
+
+## [0.0.5](https://github.com/ibm-cloud-security/scc-go-sdk/compare/v0.0.4...v0.0.5) (2021-06-02)
+
+
+### Bug Fixes
+
+* **SemanticRelease:** skip CI ops on SR commits ([3ad0c16](https://github.com/ibm-cloud-security/scc-go-sdk/commit/3ad0c16a78db76fc8cbff87accc7989bfbcef09b))
+* **Travis:** after_success has to be used with explicit failure mechanism ([c2c2eae](https://github.com/ibm-cloud-security/scc-go-sdk/commit/c2c2eae5c51b4c26d8eddb443b430f2bba8dc575))
+
+## [0.0.4](https://github.com/ibm-cloud-security/scc-go-sdk/compare/v0.0.3...v0.0.4) (2021-05-25)
+
+
+### Bug Fixes
+
+* **TRI:** location based service URL supported ([e3c6cf6](https://github.com/ibm-cloud-security/scc-go-sdk/commit/e3c6cf69b78193e3d89edf119ab10d67c161d0a8))
+* **TRI:** region based service URL feature added ([93dd839](https://github.com/ibm-cloud-security/scc-go-sdk/commit/93dd839113eaecc61b3b4fab3f22aac519411085))
+
 ## [0.0.3](https://github.com/ibm-cloud-security/scc-go-sdk/compare/v0.0.2...v0.0.3) (2021-04-28)
 
 

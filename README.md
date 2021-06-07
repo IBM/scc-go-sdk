@@ -1,15 +1,16 @@
-[![Build Status](https://travis-ci.com/ibm-cloud-security/scc-go-sdk.svg?branch=main)](https://travis-ci.com/github/ibm-cloud-security/scc-go-sdk)
-[![Release](https://img.shields.io/github/v/release/ibm-cloud-security/scc-go-sdk)](https://img.shields.io/github/v/release/ibm-cloud-security/scc-go-sdk)
-[![Go Reference](https://pkg.go.dev/badge/github.com/ibm-cloud-security/scc-go-sdk.svg)](https://pkg.go.dev/github.com/ibm-cloud-security/scc-go-sdk)
-![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/ibm-cloud-security/scc-go-sdk)
+[![Build Status](https://travis-ci.com/IBM/scc-go-sdk.svg?branch=main)](https://travis-ci.com/github/IBM/scc-go-sdk)
+[![Release](https://img.shields.io/github/v/release/IBM/scc-go-sdk)](https://img.shields.io/github/v/release/IBM/scc-go-sdk)
+[![Go Reference](https://pkg.go.dev/badge/github.com/IBM/scc-go-sdk.svg)](https://pkg.go.dev/github.com/IBM/scc-go-sdk)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/IBM/scc-go-sdk)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![codecov](https://codecov.io/gh/IBM/scc-go-sdk/branch/main/graph/badge.svg?token=59EXPRL5V5)](https://codecov.io/gh/IBM/scc-go-sdk)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 
-# IBM Cloud Security & Compliance Center Go SDK Version v0.0.3
+# IBM Cloud Security & Compliance Center Go SDK Version v0.0.6
 
 Go client library to interact with various
-[IBM Cloud Security & Compliance Center APIs](https://cloud.ibm.com/apidocs/security-and-compliance-center).
+[IBM Cloud Security & Compliance Center APIs](https://cloud.ibm.com/docs?tab=api-docs&category=platform_services%2Csecurity).
 
 ## Table of Contents
 <!--
@@ -42,11 +43,11 @@ Go client library to interact with various
 
 The IBM Cloud Security & Compliance Center Go SDK allows developers to programmatically interact with the following IBM Cloud services:
 
-Service Name | Package name 
---- | --- 
-[Findings](https://cloud.ibm.com/apidocs/security-advisor/findings) | findingsv1
-[Notifications](https://cloud.ibm.com/apidocs/security-advisor/notifications) | notificationsv1
-[Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config) | configurationgovernancev1
+| Service Name                                                                         | Package name              |
+| ------------------------------------------------------------------------------------ | ------------------------- |
+| [Findings](https://cloud.ibm.com/apidocs/security-advisor/findings)                  | findingsv1                |
+| [Notifications](https://cloud.ibm.com/apidocs/security-advisor/notifications)        | notificationsv1           |
+| [Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config) | configurationgovernancev1 |
 
 ## Prerequisites
 
@@ -58,7 +59,7 @@ Service Name | Package name
 * Go version 1.12 or above.
 
 ## Installation
-The current version of this SDK: v0.0.3
+The current version of this SDK: v0.0.6
 
 ### Go modules  
 If your application uses Go modules for dependency management (recommended), just add an import for each service 
@@ -67,7 +68,7 @@ Here is an example:
 
 ```go
 import (
-	"github.com/ibm-cloud-security/scc-go-sdk/findingsv1"
+	"github.com/ibm/scc-go-sdk/findingsv1"
 )
 ```
 Next, run `go build` or `go mod tidy` to download and install the new dependencies and update your application's
@@ -80,7 +81,7 @@ See the service table above to find the appropriate package name for the service
 ### `go get` command  
 Alternatively, you can use the `go get` command to download and install the appropriate packages needed by your application:
 ```
-go get -u github.com/ibm-cloud-security/scc-go-sdk/findingsv1
+go get -u github.com/ibm/scc-go-sdk/findingsv1
 ```
 Be sure to use the appropriate package name from the service table above for the services used by your application.
 
@@ -96,7 +97,7 @@ please ask a question at
 
 ## Issues
 If you encounter an issue with the project, you are welcome to submit a
-[bug report](https://github.com/ibm-cloud-security/scc-go-sdk/issues).
+[bug report](https://github.com/ibm/scc-go-sdk/issues).
 Before that, please search for similar issues. It's possible that someone has already reported the problem.
 
 ## Open source @ IBM

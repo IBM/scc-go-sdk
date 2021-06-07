@@ -1,7 +1,7 @@
 // +build examples
 
 /**
- * (C) Copyright IBM Corp. 2020, 2021.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,8 +24,7 @@ import (
 	"os"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/google/uuid"
-	"github.com/ibm-cloud-security/scc-go-sdk/configurationgovernancev1"
+	"github.com/ibm/scc-go-sdk/configurationgovernancev1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -34,45 +33,27 @@ import (
 // This file provides an example of how to use the Configuration Governance service.
 //
 // The following configuration properties are assumed to be defined:
-//
-// CONFIGURATION_GOVERNANCE_URL=<service url>
-// CONFIGURATION_GOVERNANCE_AUTHTYPE=iam
-// CONFIGURATION_GOVERNANCE_APIKEY=<IAM api key of user with authority to create rules>
-// CONFIGURATION_GOVERNANCE_AUTH_URL=<IAM token service URL - omit this if using the production environment>
-// CONFIGURATION_GOVERNANCE_ACCOUNT_ID=<the id of the account under which rules/attachments should be created>
-// CONFIGURATION_GOVERNANCE_EXAMPLE_SERVICE_NAME=<the name of the service to be associated with rule>
-// CONFIGURATION_GOVERNANCE_ENTERPRISE_SCOPE_ID=<the id of the "enterprise" scope to be used in the examples>
-// CONFIGURATION_GOVERNANCE_SUBACCT_SCOPE_ID=<the id of the "leaf account" scope to be used in the examples>
+// CONFIGURATION_GOVERNANCE_URL=<service base url>
+// CONFIGURATION_GOVERNANCE_AUTH_TYPE=iam
+// CONFIGURATION_GOVERNANCE_APIKEY=<IAM apikey>
+// CONFIGURATION_GOVERNANCE_AUTH_URL=<IAM token service base URL - omit this if using the production environment>
 //
 // These configuration properties can be exported as environment variables, or stored
 // in a configuration file and then:
 // export IBM_CREDENTIALS_FILE=<name of configuration file>
 //
-const externalConfigFile = "../configuration_governance.env"
+const externalConfigFile = "../configuration_governance_v1.env"
 
 var (
 	configurationGovernanceService *configurationgovernancev1.ConfigurationGovernanceV1
 	config                         map[string]string
 	configLoaded                   bool = false
-
-	// Test-related configuration properties.
-	accountID         string
-	serviceName       string
-	enterpriseScopeID string
-	subacctScopeID    string
-
-	transactionID string = uuid.New().String()
 )
 
-// Global variables to hold various values shared between operations
+// Globlal variables to hold link values
 var (
+	ruleAttachmentIDLink string
 	ruleIDLink           string
-	ruleToUpdateLink     *configurationgovernancev1.Rule
-	ruleToUpdateEtagLink string
-
-	attachmentIDLink           string
-	attachmentToUpdateLink     *configurationgovernancev1.Attachment
-	attachmentToUpdateEtagLink string
 )
 
 func shouldSkipTest() {
@@ -97,14 +78,6 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 			}
 
 			configLoaded = len(config) > 0
-
-			if configLoaded {
-				// Retrieve test-related properties from the external configuration.
-				accountID = config["ACCOUNT_ID"]
-				serviceName = config["EXAMPLE_SERVICE_NAME"]
-				enterpriseScopeID = config["ENTERPRISE_SCOPE_ID"]
-				subacctScopeID = config["SUBACCT_SCOPE_ID"]
-			}
 		})
 	})
 
@@ -119,10 +92,8 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 
 			configurationGovernanceServiceOptions := &configurationgovernancev1.ConfigurationGovernanceV1Options{}
 
-			configurationGovernanceService, err =
-				configurationgovernancev1.NewConfigurationGovernanceV1UsingExternalConfig(
-					configurationGovernanceServiceOptions,
-				)
+			configurationGovernanceService, err = configurationgovernancev1.NewConfigurationGovernanceV1UsingExternalConfig(configurationGovernanceServiceOptions)
+
 			if err != nil {
 				panic(err)
 			}
@@ -138,82 +109,117 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`CreateRules request example`, func() {
+			fmt.Println("\nCreateRules() result:")
 			// begin-create_rules
 
+			targetResourceModel := &configurationgovernancev1.TargetResource{
+				ServiceName:  core.StringPtr("iam-groups"),
+				ResourceKind: core.StringPtr("service"),
+			}
+
+			ruleConditionModel := &configurationgovernancev1.RuleConditionSingleProperty{
+				Property: core.StringPtr("public_access_enabled"),
+				Operator: core.StringPtr("is_false"),
+			}
+
+			ruleRequiredConfigModel := &configurationgovernancev1.RuleRequiredConfigMultiplePropertiesConditionAnd{
+				Description: core.StringPtr("Public access check"),
+				And:         []configurationgovernancev1.RuleConditionIntf{ruleConditionModel},
+			}
+
+			enforcementActionModel := &configurationgovernancev1.EnforcementAction{
+				Action: core.StringPtr("disallow"),
+			}
+
 			ruleRequestModel := &configurationgovernancev1.RuleRequest{
-				AccountID:   &accountID,
-				Name:        core.StringPtr("Disable public access"),
-				Description: core.StringPtr("Ensure that public access to account resources is disabled."),
-				Target: &configurationgovernancev1.TargetResource{
-					ServiceName:  &serviceName,
-					ResourceKind: core.StringPtr("service"),
-				},
-				RequiredConfig: &configurationgovernancev1.RuleRequiredConfigSingleProperty{
-					Description: core.StringPtr("Ensure public access is disabled."),
-					Property:    core.StringPtr("public_access_enabled"),
-					Operator:    core.StringPtr("is_false"),
-				},
-				EnforcementActions: []configurationgovernancev1.EnforcementAction{
-					configurationgovernancev1.EnforcementAction{
-						Action: core.StringPtr("audit_log"),
-					},
-					configurationgovernancev1.EnforcementAction{
-						Action: core.StringPtr("disallow"),
-					},
-				},
-				Labels: []string{"test_label"},
+				AccountID:          core.StringPtr("531fc3e28bfc43c5a2cea07786d93f5c"),
+				Name:               core.StringPtr("Disable public access"),
+				Description:        core.StringPtr("Ensure that public access to account resources is disabled."),
+				Target:             targetResourceModel,
+				RequiredConfig:     ruleRequiredConfigModel,
+				EnforcementActions: []configurationgovernancev1.EnforcementAction{*enforcementActionModel},
+				Labels:             []string{"Access", "IAM"},
+			}
+
+			createRuleRequestModel := &configurationgovernancev1.CreateRuleRequest{
+				RequestID: core.StringPtr("3cebc877-58e7-44a5-a292-32114fa73558"),
+				Rule:      ruleRequestModel,
 			}
 
 			createRulesOptions := configurationGovernanceService.NewCreateRulesOptions(
-				[]configurationgovernancev1.CreateRuleRequest{
-					configurationgovernancev1.CreateRuleRequest{
-						Rule: ruleRequestModel,
-					},
-				},
+				[]configurationgovernancev1.CreateRuleRequest{*createRuleRequestModel},
 			)
-			createRulesOptions.SetTransactionID(uuid.New().String())
 
 			createRulesResponse, response, err := configurationGovernanceService.CreateRules(createRulesOptions)
-			// For a 207 status code, check the response entry for an error
-			if response.StatusCode == 207 {
-				for _, responseEntry := range createRulesResponse.Rules {
-					if *responseEntry.StatusCode > int64(299) {
-						err = fmt.Errorf("%s: %s", *responseEntry.Errors[0].Code, *responseEntry.Errors[0].Message)
-					}
-				}
-			}
 			if err != nil {
 				panic(err)
 			}
 			b, _ := json.MarshalIndent(createRulesResponse, "", "  ")
-			fmt.Printf("\nCreateRules() result:\n%s\n", string(b))
+			fmt.Println(string(b))
 
 			// end-create_rules
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(createRulesResponse).ToNot(BeNil())
-			Expect(createRulesResponse.Rules).ToNot(BeEmpty())
-			Expect(createRulesResponse.Rules[0]).ToNot(BeNil())
-			Expect(createRulesResponse.Rules[0].Rule).ToNot(BeNil())
-			Expect(createRulesResponse.Rules[0].Rule.RuleID).ToNot(BeNil())
 
 			ruleIDLink = *createRulesResponse.Rules[0].Rule.RuleID
-			Expect(ruleIDLink).ToNot(BeEmpty())
+
+		})
+		It(`CreateRuleAttachments request example`, func() {
+			fmt.Println("\nCreateRuleAttachments() result:")
+			// begin-create_rule_attachments
+
+			ruleScopeModel := &configurationgovernancev1.RuleScope{
+				Note:      core.StringPtr("My enterprise"),
+				ScopeID:   core.StringPtr("282cf433ac91493ba860480d92519990"),
+				ScopeType: core.StringPtr("enterprise"),
+			}
+
+			ruleAttachmentRequestModel := &configurationgovernancev1.RuleAttachmentRequest{
+				AccountID:      core.StringPtr("531fc3e28bfc43c5a2cea07786d93f5c"),
+				IncludedScope:  ruleScopeModel,
+				ExcludedScopes: []configurationgovernancev1.RuleScope{*ruleScopeModel},
+			}
+
+			createRuleAttachmentsOptions := configurationGovernanceService.NewCreateRuleAttachmentsOptions(
+				ruleIDLink,
+				[]configurationgovernancev1.RuleAttachmentRequest{*ruleAttachmentRequestModel},
+			)
+
+			createRuleAttachmentsResponse, response, err := configurationGovernanceService.CreateRuleAttachments(createRuleAttachmentsOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(createRuleAttachmentsResponse, "", "  ")
+			fmt.Println(string(b))
+
+			// end-create_rule_attachments
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(createRuleAttachmentsResponse).ToNot(BeNil())
+
+			ruleAttachmentIDLink = *createRuleAttachmentsResponse.Attachments[0].AttachmentID
+
 		})
 		It(`ListRules request example`, func() {
+			fmt.Println("\nListRules() result:")
 			// begin-list_rules
 
-			listRulesOptions := configurationGovernanceService.NewListRulesOptions(accountID)
-			listRulesOptions.SetLabels("test_label")
-			listRulesOptions.SetTransactionID(uuid.New().String())
+			listRulesOptions := configurationGovernanceService.NewListRulesOptions(
+				"531fc3e28bfc43c5a2cea07786d93f5c",
+			)
+			listRulesOptions.SetAttached(true)
+			listRulesOptions.SetLabels("SOC2,ITCS300")
+			listRulesOptions.SetScopes("scope_id")
 
 			ruleList, response, err := configurationGovernanceService.ListRules(listRulesOptions)
 			if err != nil {
 				panic(err)
 			}
 			b, _ := json.MarshalIndent(ruleList, "", "  ")
-			fmt.Printf("\nListRules() result:\n%s\n", string(b))
+			fmt.Println(string(b))
 
 			// end-list_rules
 
@@ -223,19 +229,19 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 
 		})
 		It(`GetRule request example`, func() {
-			Expect(ruleIDLink).ToNot(BeEmpty())
-
+			fmt.Println("\nGetRule() result:")
 			// begin-get_rule
 
-			getRuleOptions := configurationGovernanceService.NewGetRuleOptions(ruleIDLink)
-			getRuleOptions.SetTransactionID(uuid.New().String())
+			getRuleOptions := configurationGovernanceService.NewGetRuleOptions(
+				ruleIDLink,
+			)
 
 			rule, response, err := configurationGovernanceService.GetRule(getRuleOptions)
 			if err != nil {
 				panic(err)
 			}
 			b, _ := json.MarshalIndent(rule, "", "  ")
-			fmt.Printf("\nGetRule() result:\n%s\n", string(b))
+			fmt.Println(string(b))
 
 			// end-get_rule
 
@@ -243,41 +249,51 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(rule).ToNot(BeNil())
 
-			ruleToUpdateLink = rule
-
-			// Retrieve the Etag header from the response for use in the UpdateRule() operation.
-			ruleToUpdateEtagLink = response.GetHeaders().Get("Etag")
-			Expect(ruleToUpdateEtagLink).ToNot(BeEmpty())
-
 		})
 		It(`UpdateRule request example`, func() {
-			Expect(ruleIDLink).ToNot(BeEmpty())
-			Expect(ruleToUpdateLink).ToNot(BeNil())
-			Expect(ruleToUpdateEtagLink).ToNot(BeEmpty())
-
+			fmt.Println("\nUpdateRule() result:")
 			// begin-update_rule
 
-			// Update the existing rule's description.
+			targetResourceAdditionalTargetAttributesItemModel := &configurationgovernancev1.TargetResourceAdditionalTargetAttributesItem{
+				Name:     core.StringPtr("testString"),
+				Value:    core.StringPtr("testString"),
+				Operator: core.StringPtr("string_equals"),
+			}
+
+			targetResourceModel := &configurationgovernancev1.TargetResource{
+				ServiceName:                core.StringPtr("iam-groups"),
+				ResourceKind:               core.StringPtr("service"),
+				AdditionalTargetAttributes: []configurationgovernancev1.TargetResourceAdditionalTargetAttributesItem{*targetResourceAdditionalTargetAttributesItemModel},
+			}
+
+			ruleRequiredConfigModel := &configurationgovernancev1.RuleRequiredConfigSingleProperty{
+				Property: core.StringPtr("public_access_enabled"),
+				Operator: core.StringPtr("is_false"),
+			}
+
+			enforcementActionModel := &configurationgovernancev1.EnforcementAction{
+				Action: core.StringPtr("audit_log"),
+			}
+
 			updateRuleOptions := configurationGovernanceService.NewUpdateRuleOptions(
 				ruleIDLink,
-				ruleToUpdateEtagLink,
-				*ruleToUpdateLink.Name,
-				"This is an updated description.",
-				ruleToUpdateLink.Target,
-				ruleToUpdateLink.RequiredConfig,
-				ruleToUpdateLink.EnforcementActions,
+				"testString",
+				"Disable public access",
+				"Ensure that public access to account resources is disabled.",
+				targetResourceModel,
+				ruleRequiredConfigModel,
+				[]configurationgovernancev1.EnforcementAction{*enforcementActionModel},
 			)
-			updateRuleOptions.SetAccountID(*ruleToUpdateLink.AccountID)
-			updateRuleOptions.SetRuleType(*ruleToUpdateLink.RuleType)
-			updateRuleOptions.SetLabels(ruleToUpdateLink.Labels)
-			updateRuleOptions.SetTransactionID(uuid.New().String())
+			updateRuleOptions.SetAccountID("531fc3e28bfc43c5a2cea07786d93f5c")
+			updateRuleOptions.SetRuleType("user_defined")
+			updateRuleOptions.SetLabels([]string{"SOC2", "ITCS300"})
 
 			rule, response, err := configurationGovernanceService.UpdateRule(updateRuleOptions)
 			if err != nil {
 				panic(err)
 			}
 			b, _ := json.MarshalIndent(rule, "", "  ")
-			fmt.Printf("\nUpdateRule() result:\n%s\n", string(b))
+			fmt.Println(string(b))
 
 			// end-update_rule
 
@@ -286,184 +302,122 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 			Expect(rule).ToNot(BeNil())
 
 		})
-		It(`CreateAttachments request example`, func() {
-			Expect(ruleIDLink).ToNot(BeEmpty())
+		It(`ListRuleAttachments request example`, func() {
+			fmt.Println("\nListRuleAttachments() result:")
+			// begin-list_rule_attachments
 
-			// begin-create_attachments
-
-			createAttachmentRequest := configurationgovernancev1.AttachmentRequest{
-				AccountID: &accountID,
-				IncludedScope: &configurationgovernancev1.RuleScope{
-					Note:      core.StringPtr("My enterprise"),
-					ScopeID:   &enterpriseScopeID,
-					ScopeType: core.StringPtr("enterprise"),
-				},
-				ExcludedScopes: []configurationgovernancev1.RuleScope{
-					configurationgovernancev1.RuleScope{
-						Note:      core.StringPtr("leaf account"),
-						ScopeID:   &subacctScopeID,
-						ScopeType: core.StringPtr("enterprise.account"),
-					},
-				},
-			}
-
-			createAttachmentsOptions := configurationGovernanceService.NewCreateAttachmentsOptions(
+			listRuleAttachmentsOptions := configurationGovernanceService.NewListRuleAttachmentsOptions(
 				ruleIDLink,
-				[]configurationgovernancev1.AttachmentRequest{
-					createAttachmentRequest,
-				},
 			)
-			createAttachmentsOptions.SetTransactionID(uuid.New().String())
 
-			createAttachmentsResponse, response, err := configurationGovernanceService.CreateAttachments(createAttachmentsOptions)
+			ruleAttachmentList, response, err := configurationGovernanceService.ListRuleAttachments(listRuleAttachmentsOptions)
 			if err != nil {
 				panic(err)
 			}
-			b, _ := json.MarshalIndent(createAttachmentsResponse, "", "  ")
-			fmt.Printf("\nCreateAttachments() result:\n%s\n", string(b))
+			b, _ := json.MarshalIndent(ruleAttachmentList, "", "  ")
+			fmt.Println(string(b))
 
-			// end-create_attachments
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(201))
-			Expect(createAttachmentsResponse).ToNot(BeNil())
-			Expect(createAttachmentsResponse.Attachments).ToNot(BeEmpty())
-			Expect(createAttachmentsResponse.Attachments[0]).ToNot(BeNil())
-			Expect(createAttachmentsResponse.Attachments[0].AttachmentID).ToNot(BeNil())
-
-			attachmentIDLink = *createAttachmentsResponse.Attachments[0].AttachmentID
-			Expect(attachmentIDLink).ToNot(BeEmpty())
-
-		})
-		It(`ListAttachments request example`, func() {
-			Expect(ruleIDLink).ToNot(BeEmpty())
-
-			// begin-list_attachments
-
-			listAttachmentsOptions := configurationGovernanceService.NewListAttachmentsOptions(ruleIDLink)
-			listAttachmentsOptions.SetTransactionID(uuid.New().String())
-
-			attachmentList, response, err := configurationGovernanceService.ListAttachments(listAttachmentsOptions)
-			if err != nil {
-				panic(err)
-			}
-			b, _ := json.MarshalIndent(attachmentList, "", "  ")
-			fmt.Printf("\nListAttachments() result:\n%s\n", string(b))
-
-			// end-list_attachments
+			// end-list_rule_attachments
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
-			Expect(attachmentList).ToNot(BeNil())
+			Expect(ruleAttachmentList).ToNot(BeNil())
+
 		})
-		It(`GetAttachment request example`, func() {
-			Expect(ruleIDLink).ToNot(BeEmpty())
-			Expect(attachmentIDLink).ToNot(BeEmpty())
+		It(`GetRuleAttachment request example`, func() {
+			fmt.Println("\nGetRuleAttachment() result:")
+			// begin-get_rule_attachment
 
-			// begin-get_attachment
-
-			getAttachmentOptions := configurationGovernanceService.NewGetAttachmentOptions(
+			getRuleAttachmentOptions := configurationGovernanceService.NewGetRuleAttachmentOptions(
 				ruleIDLink,
-				attachmentIDLink,
+				ruleAttachmentIDLink,
 			)
-			getAttachmentOptions.SetTransactionID(uuid.New().String())
 
-			attachment, response, err := configurationGovernanceService.GetAttachment(getAttachmentOptions)
+			ruleAttachment, response, err := configurationGovernanceService.GetRuleAttachment(getRuleAttachmentOptions)
 			if err != nil {
 				panic(err)
 			}
-			b, _ := json.MarshalIndent(attachment, "", "  ")
-			fmt.Printf("\nGetAttachment() result:\n%s\n", string(b))
+			b, _ := json.MarshalIndent(ruleAttachment, "", "  ")
+			fmt.Println(string(b))
 
-			// end-get_attachment
+			// end-get_rule_attachment
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
-			Expect(attachment).ToNot(BeNil())
+			Expect(ruleAttachment).ToNot(BeNil())
 
-			attachmentToUpdateLink = attachment
-
-			// Retrieve the Etag header from the response for use in the update operation.
-			attachmentToUpdateEtagLink = response.GetHeaders().Get("Etag")
-			Expect(attachmentToUpdateEtagLink).ToNot(BeEmpty())
 		})
-		It(`UpdateAttachment request example`, func() {
-			Expect(ruleIDLink).ToNot(BeEmpty())
-			Expect(attachmentIDLink).ToNot(BeEmpty())
-			Expect(attachmentToUpdateLink).ToNot(BeNil())
-			Expect(attachmentToUpdateEtagLink).ToNot(BeEmpty())
+		It(`UpdateRuleAttachment request example`, func() {
+			fmt.Println("\nUpdateRuleAttachment() result:")
+			// begin-update_rule_attachment
 
-			// begin-update_attachment
-
-			// Update the Note field within the existing attachment's IncludedScope.
-			updatedIncludedScope := &configurationgovernancev1.RuleScope{
-				Note:      core.StringPtr("This is a new note."),
-				ScopeID:   attachmentToUpdateLink.IncludedScope.ScopeID,
-				ScopeType: attachmentToUpdateLink.IncludedScope.ScopeType,
+			ruleScopeModel := &configurationgovernancev1.RuleScope{
+				Note:      core.StringPtr("My enterprise"),
+				ScopeID:   core.StringPtr("282cf433ac91493ba860480d92519990"),
+				ScopeType: core.StringPtr("enterprise"),
 			}
 
-			updateAttachmentOptions := configurationGovernanceService.NewUpdateAttachmentOptions(
+			updateRuleAttachmentOptions := configurationGovernanceService.NewUpdateRuleAttachmentOptions(
 				ruleIDLink,
-				attachmentIDLink,
-				attachmentToUpdateEtagLink,
-				*attachmentToUpdateLink.AccountID,
-				updatedIncludedScope,
+				ruleAttachmentIDLink,
+				"testString",
+				"531fc3e28bfc43c5a2cea07786d93f5c",
+				ruleScopeModel,
 			)
-			updateAttachmentOptions.SetExcludedScopes(attachmentToUpdateLink.ExcludedScopes)
-			updateAttachmentOptions.SetTransactionID(uuid.New().String())
+			updateRuleAttachmentOptions.SetExcludedScopes([]configurationgovernancev1.RuleScope{*ruleScopeModel})
 
-			attachment, response, err := configurationGovernanceService.UpdateAttachment(updateAttachmentOptions)
+			templateAttachment, response, err := configurationGovernanceService.UpdateRuleAttachment(updateRuleAttachmentOptions)
 			if err != nil {
 				panic(err)
 			}
-			b, _ := json.MarshalIndent(attachment, "", "  ")
-			fmt.Printf("UpdateAttachment() result:\n%s\n", string(b))
+			b, _ := json.MarshalIndent(templateAttachment, "", "  ")
+			fmt.Println(string(b))
 
-			// end-update_attachment
+			// end-update_rule_attachment
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
-			Expect(attachment).ToNot(BeNil())
+			Expect(templateAttachment).ToNot(BeNil())
+
 		})
-		It(`DeleteAttachment request example`, func() {
-			Expect(ruleIDLink).ToNot(BeEmpty())
-			Expect(attachmentIDLink).ToNot(BeEmpty())
+		It(`DeleteRuleAttachment request example`, func() {
+			// begin-delete_rule_attachment
 
-			// begin-delete_attachment
-
-			deleteAttachmentOptions := configurationGovernanceService.NewDeleteAttachmentOptions(
+			deleteRuleAttachmentOptions := configurationGovernanceService.NewDeleteRuleAttachmentOptions(
 				ruleIDLink,
-				attachmentIDLink,
+				ruleAttachmentIDLink,
 			)
 
-			response, err := configurationGovernanceService.DeleteAttachment(deleteAttachmentOptions)
+			response, err := configurationGovernanceService.DeleteRuleAttachment(deleteRuleAttachmentOptions)
 			if err != nil {
 				panic(err)
 			}
-			fmt.Printf("DeleteAttachment() response status code: %d\n", response.StatusCode)
 
-			// end-delete_attachment
+			// end-delete_rule_attachment
+			fmt.Printf("\nDeleteRuleAttachment() response status code: %d\n", response.StatusCode)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(204))
+
 		})
 		It(`DeleteRule request example`, func() {
-			Expect(ruleIDLink).ToNot(BeEmpty())
-
 			// begin-delete_rule
 
-			deleteRuleOptions := configurationGovernanceService.NewDeleteRuleOptions(ruleIDLink)
+			deleteRuleOptions := configurationGovernanceService.NewDeleteRuleOptions(
+				ruleIDLink,
+			)
 
 			response, err := configurationGovernanceService.DeleteRule(deleteRuleOptions)
 			if err != nil {
 				panic(err)
 			}
-			fmt.Printf("DeleteRule() response status code: %d\n", response.StatusCode)
 
 			// end-delete_rule
+			fmt.Printf("\nDeleteRule() response status code: %d\n", response.StatusCode)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(204))
+
 		})
 	})
 })

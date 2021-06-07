@@ -400,7 +400,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Invoke operation
 				result, response, operationErr := postureManagementService.ListLatestScans(listLatestScansOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
 				// Verify a nil result
@@ -673,7 +673,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Invoke operation
 				result, response, operationErr := postureManagementService.CreateValidation(createValidationOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
 				// Verify a nil result
@@ -920,7 +920,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Invoke operation
 				result, response, operationErr := postureManagementService.ScansSummary(scansSummaryOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
 				// Verify a nil result
@@ -1186,7 +1186,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Invoke operation
 				result, response, operationErr := postureManagementService.ScanSummaries(scanSummariesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
 				// Verify a nil result
@@ -1436,7 +1436,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Invoke operation
 				result, response, operationErr := postureManagementService.ListProfiles(listProfilesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
 				// Verify a nil result
@@ -1719,7 +1719,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Invoke operation
 				result, response, operationErr := postureManagementService.CreateScope(createScopeOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
 				// Verify a nil result
@@ -1953,7 +1953,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Invoke operation
 				result, response, operationErr := postureManagementService.ListScopes(listScopesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
 				// Verify a nil result
@@ -2236,7 +2236,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Invoke operation
 				result, response, operationErr := postureManagementService.CreateCollector(createCollectorOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
 				// Verify a nil result
@@ -2472,7 +2472,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Invoke operation
 				result, response, operationErr := postureManagementService.CreateCredential(createCredentialOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
 				// Verify a nil result

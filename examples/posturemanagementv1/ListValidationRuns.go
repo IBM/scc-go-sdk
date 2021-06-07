@@ -15,7 +15,7 @@ func ListValiadationRuns(options scc.PostureManagementV1Options, accountId strin
 	if err != nil {
 		fmt.Println(response.Result)
 		fmt.Println("Failed to list validation runs: ", err)
-		return 500, *reply
+		return 500, scc.SummariesList{}
 	}
 
 	return response.StatusCode, *reply

@@ -20,7 +20,6 @@ package posturemanagementv1_test
 import (
 	"fmt"
 	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/google/uuid"
 	examples "github.com/ibm-cloud-security/scc-go-sdk/examples/posturemanagementv1"
 	scc "github.com/ibm-cloud-security/scc-go-sdk/posturemanagementv1"
 	. "github.com/onsi/ginkgo"
@@ -37,26 +36,23 @@ import (
  */
 
 var (
-	err            error
-	serviceURL     string
-	config         map[string]string
-	uuidWithHyphen string
-	collectorIds   []string
-	credentialId   string
-	accountId      string
-	apiKey         string
-	authUrl        string
-	apiUrl         string
-	scopeId        *string
-	scanId         string
-	scopeName      *string
-	authenticator  core.IamAuthenticator
-	options        scc.PostureManagementV1Options
+	err           error
+	config        map[string]string
+	collectorIds  []string
+	credentialId  string
+	accountId     string
+	apiKey        string
+	authUrl       string
+	apiUrl        string
+	scopeId       *string
+	scanId        string
+	scopeName     *string
+	authenticator core.IamAuthenticator
+	options       scc.PostureManagementV1Options
 )
 
 var _ = Describe(`SCC test`, func() {
 	const externalConfigFile = "../posture_management_v1.env"
-	uuidWithHyphen = uuid.New().String()
 
 	Describe(`Demo`, func() {
 
@@ -66,7 +62,10 @@ var _ = Describe(`SCC test`, func() {
 				Skip("External configuration file not found, skipping tests: " + err.Error())
 			}
 
-			os.Setenv("IBM_CREDENTIALS_FILE", externalConfigFile)
+			err = os.Setenv("IBM_CREDENTIALS_FILE", externalConfigFile)
+			if err != nil {
+				return
+			}
 			config, err = core.GetServiceProperties(scc.DefaultServiceName)
 			if err != nil {
 				Skip("Error loading service properties, skipping tests: " + err.Error())
@@ -189,7 +188,7 @@ var _ = Describe(`SCC test`, func() {
 
 		It(`List Validation Runs`, func() {
 			fmt.Println(`List Validation Runs`)
-			statusCode, list := examples.ListValiadationRuns(options, accountId, *scopeId, "48")
+			statusCode, list := examples.ListValiadationRuns(options, accountId, "17885", "48")
 			Expect(statusCode).To(Equal(200))
 			Expect(list).ToNot(BeNil())
 		})

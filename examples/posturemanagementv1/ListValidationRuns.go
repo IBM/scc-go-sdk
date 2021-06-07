@@ -24,8 +24,9 @@ func ListValiadationRuns() {
 		Authenticator: authenticator,
 		URL:           "https://asap-dev.compliance.test.cloud.ibm.com", //Specify url or use default
 	})
+	var profileId string
 
-	source := service.NewScanSummariesOptions(scopeId, accountId)
+	source := service.NewScanSummariesOptions(scopeId, accountId, profileId)
 
 	_, response, err := service.ScanSummaries(source)
 

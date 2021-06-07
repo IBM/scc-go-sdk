@@ -64,11 +64,6 @@ var _ = Describe(`SCC test`, func() {
 		URL:           apiUrl,
 	}
 
-	XDescribe(`polling`, func() {
-		It(`should poll`, func() {
-		})
-	})
-
 	Describe(`Demo`, func() {
 
 		//TODO fix collector issue -- skip for now
@@ -91,7 +86,7 @@ var _ = Describe(`SCC test`, func() {
 		})
 
 		//TODO override collector id for now until create collector is resolved
-		XIt(`Create Scope`, func() {
+		It(`Create Scope`, func() {
 			fmt.Println(`Create Scope`)
 			collectorId := "822"
 			collectorIds = append(collectorIds, collectorId)

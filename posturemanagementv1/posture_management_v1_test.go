@@ -400,7 +400,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Invoke operation
 				result, response, operationErr := postureManagementService.ListLatestScans(listLatestScansOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
 				// Verify a nil result
@@ -673,7 +673,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Invoke operation
 				result, response, operationErr := postureManagementService.CreateValidation(createValidationOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
 				// Verify a nil result
@@ -685,7 +685,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 		})
 	})
 	Describe(`ScansSummary(scansSummaryOptions *ScansSummaryOptions) - Operation response error`, func() {
-		scansSummaryPath := "/posture/v1/scans/testString/summary"
+		scansSummaryPath := "/posture/v1/scans/validations/testString/summary"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -739,7 +739,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 		})
 	})
 	Describe(`ScansSummary(scansSummaryOptions *ScansSummaryOptions)`, func() {
-		scansSummaryPath := "/posture/v1/scans/testString/summary"
+		scansSummaryPath := "/posture/v1/scans/validations/testString/summary"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -760,7 +760,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"scan_id": "4", "discovery_id": "8", "profile_id": "50", "profile_name": "CIS IBM Foundations Benchmark 1.0.0", "scope_id": "2", "controls": [{"control_id": "7907", "control_status": "UNABLE_TO_PERFORM", "external_control_id": "50", "control_desciption": "CIS IBM Foundations Benchmark 1.0.0", "goals": [{"goal_description": "Check whether API keys unused for 180 days are detected and optionally disabled", "goal_id": "3000039", "severity": "Medium", "completed_time": "2021-04-16T05:32:44.000Z", "error": "N/A", "resource_result": [{"resource_name": "PasswordPolicy", "resourc_type": "Identity and Access Management", "resource_status": "PASS", "display_expected_value": "IBMid password policy should be required at least one lowercase letter", "display_expected_value_param": "{"ibm_minimum_password_length_ev":"8"}", "actual_value_param": """"", "actual_value": "ActualValue", "result_info_param": """"", "results_info": "IBMid password policy minimum password length is set to 8", "na_reason": "("isBootVolume": "True")"}], "goal_applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}}], "resource_statistics": {"resource_pass_count": 4, "resource_fail_count": 4, "resource_u2p_count": 4, "resource_na_count": 4}}]}`)
+					fmt.Fprintf(res, "%s", `{"scan_id": "4", "discovery_id": "8", "profile_id": "50", "profile_name": "CIS IBM Foundations Benchmark 1.0.0", "scope_id": "2", "controls": [{"control_id": "7907", "status": "UNABLE_TO_PERFORM", "external_control_id": "50", "control_desciption": "CIS IBM Foundations Benchmark 1.0.0", "goals": [{"goal_description": "Check whether API keys unused for 180 days are detected and optionally disabled", "goal_id": "3000039", "status": "PASS", "severity": "Medium", "completed_time": "2021-04-16T05:32:44.000Z", "error": "N/A", "resource_result": [{"resource_name": "PasswordPolicy", "resourc_type": "Identity and Access Management", "resource_status": "PASS", "display_expected_value": "IBMid password policy should be required at least one lowercase letter", "actual_value": "ActualValue", "results_info": "IBMid password policy minimum password length is set to 8", "na_reason": "("isBootVolume": "True")"}], "goal_applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}}], "resource_statistics": {"resource_pass_count": 4, "resource_fail_count": 4, "resource_u2p_count": 4, "resource_na_count": 4}}]}`)
 				}))
 			})
 			It(`Invoke ScansSummary successfully with retries`, func() {
@@ -791,9 +791,9 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Disable retries and test again
 				postureManagementService.DisableRetries()
 				result, response, operationErr := postureManagementService.ScansSummary(scansSummaryOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
+				Expect(result).ToNot(BeNil())
 
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
@@ -823,7 +823,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"scan_id": "4", "discovery_id": "8", "profile_id": "50", "profile_name": "CIS IBM Foundations Benchmark 1.0.0", "scope_id": "2", "controls": [{"control_id": "7907", "control_status": "UNABLE_TO_PERFORM", "external_control_id": "50", "control_desciption": "CIS IBM Foundations Benchmark 1.0.0", "goals": [{"goal_description": "Check whether API keys unused for 180 days are detected and optionally disabled", "goal_id": "3000039", "severity": "Medium", "completed_time": "2021-04-16T05:32:44.000Z", "error": "N/A", "resource_result": [{"resource_name": "PasswordPolicy", "resourc_type": "Identity and Access Management", "resource_status": "PASS", "display_expected_value": "IBMid password policy should be required at least one lowercase letter", "display_expected_value_param": "{"ibm_minimum_password_length_ev":"8"}", "actual_value_param": """"", "actual_value": "ActualValue", "result_info_param": """"", "results_info": "IBMid password policy minimum password length is set to 8", "na_reason": "("isBootVolume": "True")"}], "goal_applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}}], "resource_statistics": {"resource_pass_count": 4, "resource_fail_count": 4, "resource_u2p_count": 4, "resource_na_count": 4}}]}`)
+					fmt.Fprintf(res, "%s", `{"scan_id": "4", "discovery_id": "8", "profile_id": "50", "profile_name": "CIS IBM Foundations Benchmark 1.0.0", "scope_id": "2", "controls": [{"control_id": "7907", "status": "UNABLE_TO_PERFORM", "external_control_id": "50", "control_desciption": "CIS IBM Foundations Benchmark 1.0.0", "goals": [{"goal_description": "Check whether API keys unused for 180 days are detected and optionally disabled", "goal_id": "3000039", "status": "PASS", "severity": "Medium", "completed_time": "2021-04-16T05:32:44.000Z", "error": "N/A", "resource_result": [{"resource_name": "PasswordPolicy", "resourc_type": "Identity and Access Management", "resource_status": "PASS", "display_expected_value": "IBMid password policy should be required at least one lowercase letter", "actual_value": "ActualValue", "results_info": "IBMid password policy minimum password length is set to 8", "na_reason": "("isBootVolume": "True")"}], "goal_applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}}], "resource_statistics": {"resource_pass_count": 4, "resource_fail_count": 4, "resource_u2p_count": 4, "resource_na_count": 4}}]}`)
 				}))
 			})
 			It(`Invoke ScansSummary successfully`, func() {
@@ -851,9 +851,9 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Invoke operation with valid options model (positive test)
 				result, response, operationErr = postureManagementService.ScansSummary(scansSummaryOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
+				Expect(result).ToNot(BeNil())
 
 			})
 			It(`Invoke ScansSummary with error: Operation validation and request error`, func() {
@@ -920,7 +920,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Invoke operation
 				result, response, operationErr := postureManagementService.ScansSummary(scansSummaryOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
 				// Verify a nil result
@@ -932,7 +932,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 		})
 	})
 	Describe(`ScanSummaries(scanSummariesOptions *ScanSummariesOptions) - Operation response error`, func() {
-		scanSummariesPath := "/posture/v1/scans/summaries"
+		scanSummariesPath := "/posture/v1/scans/validations/summaries"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -947,7 +947,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 					Expect(req.URL.Query()["account_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["profile_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["group_profile_id"]).To(Equal([]string{"testString"}))
-					Expect(req.URL.Query()["name"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["offset"]).To(Equal([]string{fmt.Sprint(int64(38))}))
 					Expect(req.URL.Query()["limit"]).To(Equal([]string{fmt.Sprint(int64(100))}))
 					res.Header().Set("Content-type", "application/json")
@@ -967,10 +966,9 @@ var _ = Describe(`PostureManagementV1`, func() {
 				scanSummariesOptionsModel := new(posturemanagementv1.ScanSummariesOptions)
 				scanSummariesOptionsModel.ScopeID = core.StringPtr("testString")
 				scanSummariesOptionsModel.AccountID = core.StringPtr("testString")
-				scanSummariesOptionsModel.TransactionID = core.StringPtr("testString")
 				scanSummariesOptionsModel.ProfileID = core.StringPtr("testString")
+				scanSummariesOptionsModel.TransactionID = core.StringPtr("testString")
 				scanSummariesOptionsModel.GroupProfileID = core.StringPtr("testString")
-				scanSummariesOptionsModel.Name = core.StringPtr("testString")
 				scanSummariesOptionsModel.Offset = core.Int64Ptr(int64(38))
 				scanSummariesOptionsModel.Limit = core.Int64Ptr(int64(100))
 				scanSummariesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -993,7 +991,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 		})
 	})
 	Describe(`ScanSummaries(scanSummariesOptions *ScanSummariesOptions)`, func() {
-		scanSummariesPath := "/posture/v1/scans/summaries"
+		scanSummariesPath := "/posture/v1/scans/validations/summaries"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -1009,7 +1007,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 					Expect(req.URL.Query()["account_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["profile_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["group_profile_id"]).To(Equal([]string{"testString"}))
-					Expect(req.URL.Query()["name"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["offset"]).To(Equal([]string{fmt.Sprint(int64(38))}))
 					Expect(req.URL.Query()["limit"]).To(Equal([]string{fmt.Sprint(int64(100))}))
 					// Sleep a short time to support a timeout test
@@ -1034,10 +1031,9 @@ var _ = Describe(`PostureManagementV1`, func() {
 				scanSummariesOptionsModel := new(posturemanagementv1.ScanSummariesOptions)
 				scanSummariesOptionsModel.ScopeID = core.StringPtr("testString")
 				scanSummariesOptionsModel.AccountID = core.StringPtr("testString")
-				scanSummariesOptionsModel.TransactionID = core.StringPtr("testString")
 				scanSummariesOptionsModel.ProfileID = core.StringPtr("testString")
+				scanSummariesOptionsModel.TransactionID = core.StringPtr("testString")
 				scanSummariesOptionsModel.GroupProfileID = core.StringPtr("testString")
-				scanSummariesOptionsModel.Name = core.StringPtr("testString")
 				scanSummariesOptionsModel.Offset = core.Int64Ptr(int64(38))
 				scanSummariesOptionsModel.Limit = core.Int64Ptr(int64(100))
 				scanSummariesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1082,7 +1078,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 					Expect(req.URL.Query()["account_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["profile_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["group_profile_id"]).To(Equal([]string{"testString"}))
-					Expect(req.URL.Query()["name"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["offset"]).To(Equal([]string{fmt.Sprint(int64(38))}))
 					Expect(req.URL.Query()["limit"]).To(Equal([]string{fmt.Sprint(int64(100))}))
 					// Set mock response
@@ -1109,10 +1104,9 @@ var _ = Describe(`PostureManagementV1`, func() {
 				scanSummariesOptionsModel := new(posturemanagementv1.ScanSummariesOptions)
 				scanSummariesOptionsModel.ScopeID = core.StringPtr("testString")
 				scanSummariesOptionsModel.AccountID = core.StringPtr("testString")
-				scanSummariesOptionsModel.TransactionID = core.StringPtr("testString")
 				scanSummariesOptionsModel.ProfileID = core.StringPtr("testString")
+				scanSummariesOptionsModel.TransactionID = core.StringPtr("testString")
 				scanSummariesOptionsModel.GroupProfileID = core.StringPtr("testString")
-				scanSummariesOptionsModel.Name = core.StringPtr("testString")
 				scanSummariesOptionsModel.Offset = core.Int64Ptr(int64(38))
 				scanSummariesOptionsModel.Limit = core.Int64Ptr(int64(100))
 				scanSummariesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1136,10 +1130,9 @@ var _ = Describe(`PostureManagementV1`, func() {
 				scanSummariesOptionsModel := new(posturemanagementv1.ScanSummariesOptions)
 				scanSummariesOptionsModel.ScopeID = core.StringPtr("testString")
 				scanSummariesOptionsModel.AccountID = core.StringPtr("testString")
-				scanSummariesOptionsModel.TransactionID = core.StringPtr("testString")
 				scanSummariesOptionsModel.ProfileID = core.StringPtr("testString")
+				scanSummariesOptionsModel.TransactionID = core.StringPtr("testString")
 				scanSummariesOptionsModel.GroupProfileID = core.StringPtr("testString")
-				scanSummariesOptionsModel.Name = core.StringPtr("testString")
 				scanSummariesOptionsModel.Offset = core.Int64Ptr(int64(38))
 				scanSummariesOptionsModel.Limit = core.Int64Ptr(int64(100))
 				scanSummariesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1184,17 +1177,16 @@ var _ = Describe(`PostureManagementV1`, func() {
 				scanSummariesOptionsModel := new(posturemanagementv1.ScanSummariesOptions)
 				scanSummariesOptionsModel.ScopeID = core.StringPtr("testString")
 				scanSummariesOptionsModel.AccountID = core.StringPtr("testString")
-				scanSummariesOptionsModel.TransactionID = core.StringPtr("testString")
 				scanSummariesOptionsModel.ProfileID = core.StringPtr("testString")
+				scanSummariesOptionsModel.TransactionID = core.StringPtr("testString")
 				scanSummariesOptionsModel.GroupProfileID = core.StringPtr("testString")
-				scanSummariesOptionsModel.Name = core.StringPtr("testString")
 				scanSummariesOptionsModel.Offset = core.Int64Ptr(int64(38))
 				scanSummariesOptionsModel.Limit = core.Int64Ptr(int64(100))
 				scanSummariesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation
 				result, response, operationErr := postureManagementService.ScanSummaries(scanSummariesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
 				// Verify a nil result
@@ -1444,7 +1436,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Invoke operation
 				result, response, operationErr := postureManagementService.ListProfiles(listProfilesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
 				// Verify a nil result
@@ -1484,8 +1476,8 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the CreateScopeOptions model
 				createScopeOptionsModel := new(posturemanagementv1.CreateScopeOptions)
 				createScopeOptionsModel.AccountID = core.StringPtr("testString")
-				createScopeOptionsModel.ScopeName = core.StringPtr("IBMSchema-new-048-test")
-				createScopeOptionsModel.ScopeDescription = core.StringPtr("IBMSchema")
+				createScopeOptionsModel.ScopeName = core.StringPtr("IBM-Scope-new-048-test")
+				createScopeOptionsModel.ScopeDescription = core.StringPtr("IBM Scope Example")
 				createScopeOptionsModel.CollectorIds = []string{"20"}
 				createScopeOptionsModel.CredentialID = core.StringPtr("5")
 				createScopeOptionsModel.EnvironmentType = core.StringPtr("ibm")
@@ -1560,8 +1552,8 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the CreateScopeOptions model
 				createScopeOptionsModel := new(posturemanagementv1.CreateScopeOptions)
 				createScopeOptionsModel.AccountID = core.StringPtr("testString")
-				createScopeOptionsModel.ScopeName = core.StringPtr("IBMSchema-new-048-test")
-				createScopeOptionsModel.ScopeDescription = core.StringPtr("IBMSchema")
+				createScopeOptionsModel.ScopeName = core.StringPtr("IBM-Scope-new-048-test")
+				createScopeOptionsModel.ScopeDescription = core.StringPtr("IBM Scope Example")
 				createScopeOptionsModel.CollectorIds = []string{"20"}
 				createScopeOptionsModel.CredentialID = core.StringPtr("5")
 				createScopeOptionsModel.EnvironmentType = core.StringPtr("ibm")
@@ -1644,8 +1636,8 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the CreateScopeOptions model
 				createScopeOptionsModel := new(posturemanagementv1.CreateScopeOptions)
 				createScopeOptionsModel.AccountID = core.StringPtr("testString")
-				createScopeOptionsModel.ScopeName = core.StringPtr("IBMSchema-new-048-test")
-				createScopeOptionsModel.ScopeDescription = core.StringPtr("IBMSchema")
+				createScopeOptionsModel.ScopeName = core.StringPtr("IBM-Scope-new-048-test")
+				createScopeOptionsModel.ScopeDescription = core.StringPtr("IBM Scope Example")
 				createScopeOptionsModel.CollectorIds = []string{"20"}
 				createScopeOptionsModel.CredentialID = core.StringPtr("5")
 				createScopeOptionsModel.EnvironmentType = core.StringPtr("ibm")
@@ -1670,8 +1662,8 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the CreateScopeOptions model
 				createScopeOptionsModel := new(posturemanagementv1.CreateScopeOptions)
 				createScopeOptionsModel.AccountID = core.StringPtr("testString")
-				createScopeOptionsModel.ScopeName = core.StringPtr("IBMSchema-new-048-test")
-				createScopeOptionsModel.ScopeDescription = core.StringPtr("IBMSchema")
+				createScopeOptionsModel.ScopeName = core.StringPtr("IBM-Scope-new-048-test")
+				createScopeOptionsModel.ScopeDescription = core.StringPtr("IBM Scope Example")
 				createScopeOptionsModel.CollectorIds = []string{"20"}
 				createScopeOptionsModel.CredentialID = core.StringPtr("5")
 				createScopeOptionsModel.EnvironmentType = core.StringPtr("ibm")
@@ -1717,8 +1709,8 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the CreateScopeOptions model
 				createScopeOptionsModel := new(posturemanagementv1.CreateScopeOptions)
 				createScopeOptionsModel.AccountID = core.StringPtr("testString")
-				createScopeOptionsModel.ScopeName = core.StringPtr("IBMSchema-new-048-test")
-				createScopeOptionsModel.ScopeDescription = core.StringPtr("IBMSchema")
+				createScopeOptionsModel.ScopeName = core.StringPtr("IBM-Scope-new-048-test")
+				createScopeOptionsModel.ScopeDescription = core.StringPtr("IBM Scope Example")
 				createScopeOptionsModel.CollectorIds = []string{"20"}
 				createScopeOptionsModel.CredentialID = core.StringPtr("5")
 				createScopeOptionsModel.EnvironmentType = core.StringPtr("ibm")
@@ -1727,7 +1719,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Invoke operation
 				result, response, operationErr := postureManagementService.CreateScope(createScopeOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
 				// Verify a nil result
@@ -1961,7 +1953,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Invoke operation
 				result, response, operationErr := postureManagementService.ListScopes(listScopesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
 				// Verify a nil result
@@ -2001,10 +1993,10 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the CreateCollectorOptions model
 				createCollectorOptionsModel := new(posturemanagementv1.CreateCollectorOptions)
 				createCollectorOptionsModel.AccountID = core.StringPtr("testString")
-				createCollectorOptionsModel.CollectorName = core.StringPtr("IBMSchema-new-048-test")
-				createCollectorOptionsModel.CollectorDescription = core.StringPtr("IBMSchema")
+				createCollectorOptionsModel.CollectorName = core.StringPtr("IBM-collector-sample")
+				createCollectorOptionsModel.CollectorDescription = core.StringPtr("sample collector")
 				createCollectorOptionsModel.IsPublic = core.BoolPtr(true)
-				createCollectorOptionsModel.ManagedBy = core.StringPtr("IBM")
+				createCollectorOptionsModel.ManagedBy = core.StringPtr("ibm")
 				createCollectorOptionsModel.PassPhrase = core.StringPtr("secret")
 				createCollectorOptionsModel.TransactionID = core.StringPtr("testString")
 				createCollectorOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -2077,10 +2069,10 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the CreateCollectorOptions model
 				createCollectorOptionsModel := new(posturemanagementv1.CreateCollectorOptions)
 				createCollectorOptionsModel.AccountID = core.StringPtr("testString")
-				createCollectorOptionsModel.CollectorName = core.StringPtr("IBMSchema-new-048-test")
-				createCollectorOptionsModel.CollectorDescription = core.StringPtr("IBMSchema")
+				createCollectorOptionsModel.CollectorName = core.StringPtr("IBM-collector-sample")
+				createCollectorOptionsModel.CollectorDescription = core.StringPtr("sample collector")
 				createCollectorOptionsModel.IsPublic = core.BoolPtr(true)
-				createCollectorOptionsModel.ManagedBy = core.StringPtr("IBM")
+				createCollectorOptionsModel.ManagedBy = core.StringPtr("ibm")
 				createCollectorOptionsModel.PassPhrase = core.StringPtr("secret")
 				createCollectorOptionsModel.TransactionID = core.StringPtr("testString")
 				createCollectorOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -2161,10 +2153,10 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the CreateCollectorOptions model
 				createCollectorOptionsModel := new(posturemanagementv1.CreateCollectorOptions)
 				createCollectorOptionsModel.AccountID = core.StringPtr("testString")
-				createCollectorOptionsModel.CollectorName = core.StringPtr("IBMSchema-new-048-test")
-				createCollectorOptionsModel.CollectorDescription = core.StringPtr("IBMSchema")
+				createCollectorOptionsModel.CollectorName = core.StringPtr("IBM-collector-sample")
+				createCollectorOptionsModel.CollectorDescription = core.StringPtr("sample collector")
 				createCollectorOptionsModel.IsPublic = core.BoolPtr(true)
-				createCollectorOptionsModel.ManagedBy = core.StringPtr("IBM")
+				createCollectorOptionsModel.ManagedBy = core.StringPtr("ibm")
 				createCollectorOptionsModel.PassPhrase = core.StringPtr("secret")
 				createCollectorOptionsModel.TransactionID = core.StringPtr("testString")
 				createCollectorOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -2187,10 +2179,10 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the CreateCollectorOptions model
 				createCollectorOptionsModel := new(posturemanagementv1.CreateCollectorOptions)
 				createCollectorOptionsModel.AccountID = core.StringPtr("testString")
-				createCollectorOptionsModel.CollectorName = core.StringPtr("IBMSchema-new-048-test")
-				createCollectorOptionsModel.CollectorDescription = core.StringPtr("IBMSchema")
+				createCollectorOptionsModel.CollectorName = core.StringPtr("IBM-collector-sample")
+				createCollectorOptionsModel.CollectorDescription = core.StringPtr("sample collector")
 				createCollectorOptionsModel.IsPublic = core.BoolPtr(true)
-				createCollectorOptionsModel.ManagedBy = core.StringPtr("IBM")
+				createCollectorOptionsModel.ManagedBy = core.StringPtr("ibm")
 				createCollectorOptionsModel.PassPhrase = core.StringPtr("secret")
 				createCollectorOptionsModel.TransactionID = core.StringPtr("testString")
 				createCollectorOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -2234,17 +2226,17 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the CreateCollectorOptions model
 				createCollectorOptionsModel := new(posturemanagementv1.CreateCollectorOptions)
 				createCollectorOptionsModel.AccountID = core.StringPtr("testString")
-				createCollectorOptionsModel.CollectorName = core.StringPtr("IBMSchema-new-048-test")
-				createCollectorOptionsModel.CollectorDescription = core.StringPtr("IBMSchema")
+				createCollectorOptionsModel.CollectorName = core.StringPtr("IBM-collector-sample")
+				createCollectorOptionsModel.CollectorDescription = core.StringPtr("sample collector")
 				createCollectorOptionsModel.IsPublic = core.BoolPtr(true)
-				createCollectorOptionsModel.ManagedBy = core.StringPtr("IBM")
+				createCollectorOptionsModel.ManagedBy = core.StringPtr("ibm")
 				createCollectorOptionsModel.PassPhrase = core.StringPtr("secret")
 				createCollectorOptionsModel.TransactionID = core.StringPtr("testString")
 				createCollectorOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation
 				result, response, operationErr := postureManagementService.CreateCollector(createCollectorOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
 				// Verify a nil result
@@ -2480,7 +2472,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Invoke operation
 				result, response, operationErr := postureManagementService.CreateCredential(createCredentialOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
 				// Verify a nil result
@@ -2502,19 +2494,19 @@ var _ = Describe(`PostureManagementV1`, func() {
 				accountID := "testString"
 				createCollectorOptionsModel := postureManagementService.NewCreateCollectorOptions(accountID)
 				createCollectorOptionsModel.SetAccountID("testString")
-				createCollectorOptionsModel.SetCollectorName("IBMSchema-new-048-test")
-				createCollectorOptionsModel.SetCollectorDescription("IBMSchema")
+				createCollectorOptionsModel.SetCollectorName("IBM-collector-sample")
+				createCollectorOptionsModel.SetCollectorDescription("sample collector")
 				createCollectorOptionsModel.SetIsPublic(true)
-				createCollectorOptionsModel.SetManagedBy("IBM")
+				createCollectorOptionsModel.SetManagedBy("ibm")
 				createCollectorOptionsModel.SetPassPhrase("secret")
 				createCollectorOptionsModel.SetTransactionID("testString")
 				createCollectorOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(createCollectorOptionsModel).ToNot(BeNil())
 				Expect(createCollectorOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
-				Expect(createCollectorOptionsModel.CollectorName).To(Equal(core.StringPtr("IBMSchema-new-048-test")))
-				Expect(createCollectorOptionsModel.CollectorDescription).To(Equal(core.StringPtr("IBMSchema")))
+				Expect(createCollectorOptionsModel.CollectorName).To(Equal(core.StringPtr("IBM-collector-sample")))
+				Expect(createCollectorOptionsModel.CollectorDescription).To(Equal(core.StringPtr("sample collector")))
 				Expect(createCollectorOptionsModel.IsPublic).To(Equal(core.BoolPtr(true)))
-				Expect(createCollectorOptionsModel.ManagedBy).To(Equal(core.StringPtr("IBM")))
+				Expect(createCollectorOptionsModel.ManagedBy).To(Equal(core.StringPtr("ibm")))
 				Expect(createCollectorOptionsModel.PassPhrase).To(Equal(core.StringPtr("secret")))
 				Expect(createCollectorOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(createCollectorOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
@@ -2541,8 +2533,8 @@ var _ = Describe(`PostureManagementV1`, func() {
 				accountID := "testString"
 				createScopeOptionsModel := postureManagementService.NewCreateScopeOptions(accountID)
 				createScopeOptionsModel.SetAccountID("testString")
-				createScopeOptionsModel.SetScopeName("IBMSchema-new-048-test")
-				createScopeOptionsModel.SetScopeDescription("IBMSchema")
+				createScopeOptionsModel.SetScopeName("IBM-Scope-new-048-test")
+				createScopeOptionsModel.SetScopeDescription("IBM Scope Example")
 				createScopeOptionsModel.SetCollectorIds([]string{"20"})
 				createScopeOptionsModel.SetCredentialID("5")
 				createScopeOptionsModel.SetEnvironmentType("ibm")
@@ -2550,8 +2542,8 @@ var _ = Describe(`PostureManagementV1`, func() {
 				createScopeOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(createScopeOptionsModel).ToNot(BeNil())
 				Expect(createScopeOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
-				Expect(createScopeOptionsModel.ScopeName).To(Equal(core.StringPtr("IBMSchema-new-048-test")))
-				Expect(createScopeOptionsModel.ScopeDescription).To(Equal(core.StringPtr("IBMSchema")))
+				Expect(createScopeOptionsModel.ScopeName).To(Equal(core.StringPtr("IBM-Scope-new-048-test")))
+				Expect(createScopeOptionsModel.ScopeDescription).To(Equal(core.StringPtr("IBM Scope Example")))
 				Expect(createScopeOptionsModel.CollectorIds).To(Equal([]string{"20"}))
 				Expect(createScopeOptionsModel.CredentialID).To(Equal(core.StringPtr("5")))
 				Expect(createScopeOptionsModel.EnvironmentType).To(Equal(core.StringPtr("ibm")))
@@ -2630,23 +2622,22 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the ScanSummariesOptions model
 				scopeID := "testString"
 				accountID := "testString"
-				scanSummariesOptionsModel := postureManagementService.NewScanSummariesOptions(scopeID, accountID)
+				profileID := "testString"
+				scanSummariesOptionsModel := postureManagementService.NewScanSummariesOptions(scopeID, accountID, profileID)
 				scanSummariesOptionsModel.SetScopeID("testString")
 				scanSummariesOptionsModel.SetAccountID("testString")
-				scanSummariesOptionsModel.SetTransactionID("testString")
 				scanSummariesOptionsModel.SetProfileID("testString")
+				scanSummariesOptionsModel.SetTransactionID("testString")
 				scanSummariesOptionsModel.SetGroupProfileID("testString")
-				scanSummariesOptionsModel.SetName("testString")
 				scanSummariesOptionsModel.SetOffset(int64(38))
 				scanSummariesOptionsModel.SetLimit(int64(100))
 				scanSummariesOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(scanSummariesOptionsModel).ToNot(BeNil())
 				Expect(scanSummariesOptionsModel.ScopeID).To(Equal(core.StringPtr("testString")))
 				Expect(scanSummariesOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
-				Expect(scanSummariesOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(scanSummariesOptionsModel.ProfileID).To(Equal(core.StringPtr("testString")))
+				Expect(scanSummariesOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(scanSummariesOptionsModel.GroupProfileID).To(Equal(core.StringPtr("testString")))
-				Expect(scanSummariesOptionsModel.Name).To(Equal(core.StringPtr("testString")))
 				Expect(scanSummariesOptionsModel.Offset).To(Equal(core.Int64Ptr(int64(38))))
 				Expect(scanSummariesOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(100))))
 				Expect(scanSummariesOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))

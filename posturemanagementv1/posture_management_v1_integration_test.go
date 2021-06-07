@@ -38,7 +38,6 @@ import (
 
 var (
 	uuidWithHyphen string
-	collectorId    *string
 	collectorIds   []string
 	credentialId   string
 	accountId      string
@@ -81,7 +80,7 @@ var _ = Describe(`SCC test`, func() {
 		})
 
 		//new credential to be created
-		XIt(`Create Credential`, func() {
+		FIt(`Create Credential`, func() {
 			fmt.Println(`Create Credential`)
 			var statusCode int
 			credentialPath := os.Getenv("CREDENTIAL_PATH")
@@ -154,80 +153,6 @@ var _ = Describe(`SCC test`, func() {
 //
 // Utility functions are declared in the unit test file
 //
-func demoCreateCollector(options scc.PostureManagementV1Options) *string {
-
-	service, _ := scc.NewPostureManagementV1(&options)
-
-	source := service.NewCreateCollectorOptions(accountId)
-	source.SetCollectorName("test-" + uuidWithHyphen)
-	source.SetCollectorDescription("test collector")
-	source.SetManagedBy("customer")
-	source.SetIsPublic(true)
-	source.SetPassPhrase("secret")
-
-	reply, response, err := service.CreateCollector(source)
-	collectorId := reply.CollectorID
-
-	if err != nil {
-		fmt.Println(response.Result)
-		fmt.Println("Failed to create collector: ", err)
-		return nil
-	}
-
-	Expect(response.StatusCode).To(Equal(201))
-
-	return collectorId
-}
-func demoCreateCredential(options scc.PostureManagementV1Options) string {
-	credentialPath := os.Getenv("CREDENTIAL_PATH")
-	pemPath := os.Getenv("PEM_PATH")
-
-	service, _ := scc.NewPostureManagementV1(&options)
-
-	credentialFile, _ := os.Open(credentialPath)
-	pemFile, _ := os.Open(pemPath)
-
-	source := service.NewCreateCredentialOptions(accountId, credentialFile)
-	source.SetPemFile(pemFile)
-
-	reply, response, err := service.CreateCredential(source)
-
-	if err != nil {
-		fmt.Println(response.Result)
-		fmt.Println("Failed to create credential: ", err)
-		return err.Error()
-	}
-
-	Expect(response.StatusCode).To(Equal(201))
-	Expect(reply.CredentialID).ToNot(BeNil())
-	Expect(reply.CreatedTime).ToNot(BeNil())
-
-	return *reply.CredentialID
-}
-func demoCreateScope(options scc.PostureManagementV1Options, credentialId string, collectorIds []string) *string {
-	service, _ := scc.NewPostureManagementV1(&options)
-
-	source := service.NewCreateScopeOptions(accountId)
-	source.SetScopeName("scope-" + uuidWithHyphen)
-	source.SetScopeDescription("test scope")
-	source.SetCredentialID(credentialId)
-	source.SetCollectorIds(collectorIds)
-	source.SetEnvironmentType("ibm")
-
-	reply, response, err := service.CreateScope(source)
-	scopeId := reply.ScopeID
-
-	if err != nil {
-		fmt.Println(response.Result)
-		fmt.Println("Failed to create scope: ", err)
-		return nil
-	}
-	Expect(response.StatusCode).To(Equal(201))
-	Expect(reply.ScopeID).ToNot(BeNil())
-	Expect(reply.CreatedTime).ToNot(BeNil())
-	Expect(reply.ModifiedTime).ToNot(BeNil())
-	return scopeId
-}
 
 //TODO: add query parameter name to verify discovery
 func demoListScope(options scc.PostureManagementV1Options, scopeId *string) {
@@ -323,9 +248,10 @@ func demoReadScan(options scc.PostureManagementV1Options, scanId string, profile
 }
 
 func demoScanSummary(options scc.PostureManagementV1Options, scopeId string) {
+	var profileId string
 	service, _ := scc.NewPostureManagementV1(&options)
 
-	source := service.NewScanSummariesOptions(scopeId, accountId)
+	source := service.NewScanSummariesOptions(scopeId, accountId, profileId)
 	reply, response, err := service.ScanSummaries(source)
 
 	if err != nil {

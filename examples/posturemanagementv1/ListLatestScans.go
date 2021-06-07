@@ -5,7 +5,7 @@ import (
 	scc "github.com/ibm-cloud-security/scc-go-sdk/posturemanagementv1"
 )
 
-func ListLatestScans(options scc.PostureManagementV1Options, accountId string, scanId string) (int, []scc.ScanItem) {
+func ListLatestScans(options scc.PostureManagementV1Options, accountId string) (int, []scc.ScanItem) {
 	service, _ := scc.NewPostureManagementV1(&options)
 
 	source := service.NewListLatestScansOptions(accountId)

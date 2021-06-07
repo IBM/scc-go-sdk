@@ -37,34 +37,72 @@ import (
  */
 
 var (
+	err            error
+	serviceURL     string
+	config         map[string]string
 	uuidWithHyphen string
 	collectorIds   []string
 	credentialId   string
 	accountId      string
+	apiKey         string
+	authUrl        string
+	apiUrl         string
 	scopeId        *string
 	scanId         string
 	scopeName      *string
+	authenticator  core.IamAuthenticator
+	options        scc.PostureManagementV1Options
 )
 
 var _ = Describe(`SCC test`, func() {
-
+	const externalConfigFile = "../posture_management_v1.env"
 	uuidWithHyphen = uuid.New().String()
-	accountId = os.Getenv("ACCOUNT_ID_POSTURE")
-	apiKey := os.Getenv("IAM_API_KEY")
-	authUrl := os.Getenv("IAM_APIKEY_URL")
-	apiUrl := os.Getenv("API_URL")
-
-	authenticator := &core.IamAuthenticator{
-		ApiKey: apiKey,
-		URL:    authUrl, //use for dev/preprod env
-	}
-
-	options := scc.PostureManagementV1Options{
-		Authenticator: authenticator,
-		URL:           apiUrl,
-	}
 
 	Describe(`Demo`, func() {
+
+		BeforeEach(func() {
+			_, err = os.Stat(externalConfigFile)
+			if err != nil {
+				Skip("External configuration file not found, skipping tests: " + err.Error())
+			}
+
+			os.Setenv("IBM_CREDENTIALS_FILE", externalConfigFile)
+			config, err = core.GetServiceProperties(scc.DefaultServiceName)
+			if err != nil {
+				Skip("Error loading service properties, skipping tests: " + err.Error())
+			}
+
+			accountId = config["ACCOUNT_ID"]
+			if accountId == "" {
+				Skip("Unable to load account configuration property, skipping tests")
+			}
+
+			apiKey = config["IAM_API_KEY"]
+			if apiKey == "" {
+				Skip("Unable to load API key configuration property, skipping tests")
+			}
+
+			authUrl = config["IAM_APIKEY_URL"]
+			if authUrl == "" {
+				Skip("Unable to load auth URL configuration property, skipping tests")
+			}
+
+			apiUrl = config["API_URL"]
+			if apiUrl == "" {
+				Skip("Unable to load API URL configuration property, skipping tests")
+			}
+
+			authenticator = core.IamAuthenticator{
+				ApiKey: apiKey,
+				URL:    authUrl,
+			}
+
+			options = scc.PostureManagementV1Options{
+				Authenticator: &authenticator,
+				URL:           apiUrl,
+			}
+
+		})
 
 		//TODO fix collector issue -- skip for now
 		It(`Create Collector`, func() {
@@ -78,8 +116,8 @@ var _ = Describe(`SCC test`, func() {
 		It(`Create Credential`, func() {
 			fmt.Println(`Create Credential`)
 			var statusCode int
-			credentialPath := os.Getenv("CREDENTIAL_PATH")
-			pemPath := os.Getenv("PEM_PATH")
+			credentialPath := config["CREDENTIAL_PATH"]
+			pemPath := config["PEM_PATH"]
 			credentialId, statusCode = examples.CreateCredentials(options, accountId, credentialPath, pemPath)
 			Expect(statusCode).To(Equal(201))
 			Expect(credentialId).NotTo(BeNil())
@@ -92,7 +130,7 @@ var _ = Describe(`SCC test`, func() {
 			collectorIds = append(collectorIds, collectorId)
 			var statusCode int
 			credentialId = "1587"
-			statusCode, scopeId, scopeName = examples.CreateScope(options, credentialId, collectorIds)
+			statusCode, scopeId, scopeName = examples.CreateScope(options, accountId, credentialId, collectorIds)
 			fmt.Println("created scope id: " + *scopeId)
 			fmt.Println("created scope name: " + *scopeName)
 
@@ -136,10 +174,24 @@ var _ = Describe(`SCC test`, func() {
 		})
 		It(`List latest scans`, func() {
 			fmt.Println(`List latest scans`)
-			statusCode, list := examples.ListLatestScans(options, accountId, scanId)
+			statusCode, list := examples.ListLatestScans(options, accountId)
+			Expect(statusCode).To(Equal(200))
+			scanId = *list[0].ScanID
+			Expect(list).ToNot(BeNil())
+		})
+
+		It(`Read scan`, func() {
+			fmt.Println(`Read scan summary details`)
+			statusCode, list := examples.RetrieveScanSummary(options, accountId, scanId, "48")
 			Expect(statusCode).To(Equal(200))
 			Expect(list).ToNot(BeNil())
+		})
 
+		It(`List Validation Runs`, func() {
+			fmt.Println(`List Validation Runs`)
+			statusCode, list := examples.ListValiadationRuns(options, accountId, *scopeId, "48")
+			Expect(statusCode).To(Equal(200))
+			Expect(list).ToNot(BeNil())
 		})
 
 	})

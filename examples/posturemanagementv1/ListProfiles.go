@@ -16,11 +16,11 @@ func ListProfiles(options scc.PostureManagementV1Options, accountId string) (int
 		panic(err)
 	}
 
-	for _, profile := range reply.Profiles {
-		fmt.Println("profile id: " + *profile.ProfileID)
-		fmt.Println("profile name: " + *profile.Name)
-		fmt.Println("profile description: " + *profile.Description)
-	}
+	//for _, profile := range reply.Profiles {
+	//	fmt.Println("profile id: " + *profile.ProfileID)
+	//	fmt.Println("profile name: " + *profile.Name)
+	//	fmt.Println("profile description: " + *profile.Description)
+	//}
 
 	return response.StatusCode, reply.Profiles
 }

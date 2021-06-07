@@ -13,8 +13,7 @@ import (
 	"strings"
 )
 
-func CreateScope(options scc.PostureManagementV1Options, credentialId string, collectorIds []string) (int, *string, *string) {
-	accountId := os.Getenv("ACCOUNT_ID_POSTURE")
+func CreateScope(options scc.PostureManagementV1Options, accountId string, credentialId string, collectorIds []string) (int, *string, *string) {
 	service, _ := scc.NewPostureManagementV1(&options)
 
 	source := service.NewCreateScopeOptions(accountId)

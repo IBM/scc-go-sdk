@@ -2,7 +2,7 @@ package examples
 
 import (
 	"fmt"
-	scc "github.com/ibm-cloud-security/scc-go-sdk/posturemanagementv1"
+	scc "github.com/ibm/scc-go-sdk/posturemanagementv1"
 )
 
 func ListValiadationRuns(options scc.PostureManagementV1Options, accountId string, scopeId string, profileId string) (int, scc.SummariesList) {

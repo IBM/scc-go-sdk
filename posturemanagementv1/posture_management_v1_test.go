@@ -29,7 +29,7 @@ import (
 
 	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/go-openapi/strfmt"
-	"github.com/ibm-cloud-security/scc-go-sdk/posturemanagementv1"
+	"github.com/ibm/scc-go-sdk/posturemanagementv1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )

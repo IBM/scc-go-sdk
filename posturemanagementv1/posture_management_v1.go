@@ -31,8 +31,8 @@ import (
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	common "github.com/IBM/scc-go-sdk/common"
 	"github.com/go-openapi/strfmt"
+	common "github.com/ibm/scc-go-sdk/common"
 )
 
 // PostureManagementV1 : With IBM Cloud® Security and Compliance Center, you can embed checks into your every day
@@ -1039,7 +1039,7 @@ type CreateCollectorOptions struct {
 // [docs](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-collector).
 const (
 	CreateCollectorOptionsManagedByCustomerConst = "customer"
-	CreateCollectorOptionsManagedByIBMConst = "ibm"
+	CreateCollectorOptionsManagedByIBMConst      = "ibm"
 )
 
 // NewCreateCollectorOptions : Instantiate CreateCollectorOptions
@@ -1122,7 +1122,7 @@ type CreateCredentialOptions struct {
 // NewCreateCredentialOptions : Instantiate CreateCredentialOptions
 func (*PostureManagementV1) NewCreateCredentialOptions(accountID string, credentialDataFile io.ReadCloser) *CreateCredentialOptions {
 	return &CreateCredentialOptions{
-		AccountID: core.StringPtr(accountID),
+		AccountID:          core.StringPtr(accountID),
 		CredentialDataFile: credentialDataFile,
 	}
 }
@@ -1188,14 +1188,14 @@ type CreateScopeOptions struct {
 // Constants associated with the CreateScopeOptions.EnvironmentType property.
 // The environment that the scope is targeted to.
 const (
-	CreateScopeOptionsEnvironmentTypeAwsConst = "aws"
-	CreateScopeOptionsEnvironmentTypeAzureConst = "azure"
-	CreateScopeOptionsEnvironmentTypeGcpConst = "gcp"
-	CreateScopeOptionsEnvironmentTypeHostedConst = "hosted"
-	CreateScopeOptionsEnvironmentTypeIBMConst = "ibm"
+	CreateScopeOptionsEnvironmentTypeAwsConst       = "aws"
+	CreateScopeOptionsEnvironmentTypeAzureConst     = "azure"
+	CreateScopeOptionsEnvironmentTypeGcpConst       = "gcp"
+	CreateScopeOptionsEnvironmentTypeHostedConst    = "hosted"
+	CreateScopeOptionsEnvironmentTypeIBMConst       = "ibm"
 	CreateScopeOptionsEnvironmentTypeOnPremiseConst = "on_premise"
 	CreateScopeOptionsEnvironmentTypeOpenstackConst = "openstack"
-	CreateScopeOptionsEnvironmentTypeServicesConst = "services"
+	CreateScopeOptionsEnvironmentTypeServicesConst  = "services"
 )
 
 // NewCreateScopeOptions : Instantiate CreateScopeOptions
@@ -1539,12 +1539,12 @@ type GroupProfileResult struct {
 // The type of profile. To learn more about profile types, check out the [docs]
 // (https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-profiles).
 const (
-	GroupProfileResultProfileTypeAuthoredConst = "authored"
-	GroupProfileResultProfileTypeCustomConst = "custom"
-	GroupProfileResultProfileTypeStandardConst = "standard"
+	GroupProfileResultProfileTypeAuthoredConst            = "authored"
+	GroupProfileResultProfileTypeCustomConst              = "custom"
+	GroupProfileResultProfileTypeStandardConst            = "standard"
 	GroupProfileResultProfileTypeStandardCertificateConst = "standard_certificate"
-	GroupProfileResultProfileTypeStandardCvConst = "standard_cv"
-	GroupProfileResultProfileTypeTemmplategroupConst = "temmplategroup"
+	GroupProfileResultProfileTypeStandardCvConst          = "standard_cv"
+	GroupProfileResultProfileTypeTemmplategroupConst      = "temmplategroup"
 )
 
 // UnmarshalGroupProfileResult unmarshals an instance of GroupProfileResult from the specified map of raw messages.
@@ -1796,8 +1796,8 @@ type ProfileItem struct {
 // Constants associated with the ProfileItem.ProfileType property.
 // The type of profile.
 const (
-	ProfileItemProfileTypeCustomConst = "custom"
-	ProfileItemProfileTypePredefinedConst = "predefined"
+	ProfileItemProfileTypeCustomConst        = "custom"
+	ProfileItemProfileTypePredefinedConst    = "predefined"
 	ProfileItemProfileTypeTemplateGroupConst = "template_group"
 )
 
@@ -1880,12 +1880,12 @@ type ProfileResult struct {
 // The type of profile. To learn more about profile types, check out the [docs]
 // (https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-profiles).
 const (
-	ProfileResultProfileTypeAuthoredConst = "authored"
-	ProfileResultProfileTypeCustomConst = "custom"
-	ProfileResultProfileTypeStandardConst = "standard"
+	ProfileResultProfileTypeAuthoredConst            = "authored"
+	ProfileResultProfileTypeCustomConst              = "custom"
+	ProfileResultProfileTypeStandardConst            = "standard"
 	ProfileResultProfileTypeStandardCertificateConst = "standard_certificate"
-	ProfileResultProfileTypeStandardCvConst = "standard_cv"
-	ProfileResultProfileTypeTemmplategroupConst = "temmplategroup"
+	ProfileResultProfileTypeStandardCvConst          = "standard_cv"
+	ProfileResultProfileTypeTemmplategroupConst      = "temmplategroup"
 )
 
 // UnmarshalProfileResult unmarshals an instance of ProfileResult from the specified map of raw messages.
@@ -2065,12 +2065,12 @@ type ProfilesResult struct {
 // The type of profile. To learn more about profile types, check out the [docs]
 // (https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-profiles).
 const (
-	ProfilesResultProfileTypeAuthoredConst = "authored"
-	ProfilesResultProfileTypeCustomConst = "custom"
-	ProfilesResultProfileTypeStandardConst = "standard"
+	ProfilesResultProfileTypeAuthoredConst            = "authored"
+	ProfilesResultProfileTypeCustomConst              = "custom"
+	ProfilesResultProfileTypeStandardConst            = "standard"
 	ProfilesResultProfileTypeStandardCertificateConst = "standard_certificate"
-	ProfilesResultProfileTypeStandardCvConst = "standard_cv"
-	ProfilesResultProfileTypeTemmplategroupConst = "temmplategroup"
+	ProfilesResultProfileTypeStandardCvConst          = "standard_cv"
+	ProfilesResultProfileTypeTemmplategroupConst      = "temmplategroup"
 )
 
 // UnmarshalProfilesResult unmarshals an instance of ProfilesResult from the specified map of raw messages.
@@ -2282,46 +2282,46 @@ type Scan struct {
 // Constants associated with the Scan.Status property.
 // The status of the collector as it completes a scan.
 const (
-	ScanStatusAbortTaskRequestCompletedConst = "abort_task_request_completed"
-	ScanStatusAbortTaskRequestFailedConst = "abort_task_request_failed"
-	ScanStatusAbortTaskRequestReceivedConst = "abort_task_request_received"
-	ScanStatusControllerAbortedConst = "controller_aborted"
-	ScanStatusDiscoveryCompletedConst = "discovery_completed"
-	ScanStatusDiscoveryInProgressConst = "discovery_in_progress"
-	ScanStatusDiscoveryResultPostedNoErrorConst = "discovery_result_posted_no_error"
-	ScanStatusDiscoveryResultPostedWithErrorConst = "discovery_result_posted_with_error"
-	ScanStatusDiscoveryStartedConst = "discovery_started"
-	ScanStatusErrorInAbortTaskRequestConst = "error_in_abort_task_request"
-	ScanStatusErrorInDiscoveryConst = "error_in_discovery"
-	ScanStatusErrorInFactCollectionConst = "error_in_fact_collection"
-	ScanStatusErrorInFactValidationConst = "error_in_fact_validation"
-	ScanStatusErrorInInventoryConst = "error_in_inventory"
-	ScanStatusErrorInRemediationConst = "error_in_remediation"
-	ScanStatusErrorInValidationConst = "error_in_validation"
-	ScanStatusFactCollectionCompletedConst = "fact_collection_completed"
-	ScanStatusFactCollectionInProgressConst = "fact_collection_in_progress"
-	ScanStatusFactCollectionStartedConst = "fact_collection_started"
-	ScanStatusFactValidationCompletedConst = "fact_validation_completed"
-	ScanStatusFactValidationInProgressConst = "fact_validation_in_progress"
-	ScanStatusFactValidationStartedConst = "fact_validation_started"
-	ScanStatusGatewayAbortedConst = "gateway_aborted"
-	ScanStatusInventoryCompletedConst = "inventory_completed"
-	ScanStatusInventoryCompletedWithErrorConst = "inventory_completed_with_error"
-	ScanStatusInventoryInProgressConst = "inventory_in_progress"
-	ScanStatusInventoryStartedConst = "inventory_started"
-	ScanStatusNotAcceptedConst = "not_accepted"
-	ScanStatusPendingConst = "pending"
-	ScanStatusRemediationCompletedConst = "remediation_completed"
-	ScanStatusRemediationInProgressConst = "remediation_in_progress"
-	ScanStatusRemediationStartedConst = "remediation_started"
-	ScanStatusSentToCollectorConst = "sent_to_collector"
-	ScanStatusUserAbortedConst = "user_aborted"
-	ScanStatusValidationCompletedConst = "validation_completed"
-	ScanStatusValidationInProgressConst = "validation_in_progress"
-	ScanStatusValidationResultPostedNoErrorConst = "validation_result_posted_no_error"
+	ScanStatusAbortTaskRequestCompletedConst       = "abort_task_request_completed"
+	ScanStatusAbortTaskRequestFailedConst          = "abort_task_request_failed"
+	ScanStatusAbortTaskRequestReceivedConst        = "abort_task_request_received"
+	ScanStatusControllerAbortedConst               = "controller_aborted"
+	ScanStatusDiscoveryCompletedConst              = "discovery_completed"
+	ScanStatusDiscoveryInProgressConst             = "discovery_in_progress"
+	ScanStatusDiscoveryResultPostedNoErrorConst    = "discovery_result_posted_no_error"
+	ScanStatusDiscoveryResultPostedWithErrorConst  = "discovery_result_posted_with_error"
+	ScanStatusDiscoveryStartedConst                = "discovery_started"
+	ScanStatusErrorInAbortTaskRequestConst         = "error_in_abort_task_request"
+	ScanStatusErrorInDiscoveryConst                = "error_in_discovery"
+	ScanStatusErrorInFactCollectionConst           = "error_in_fact_collection"
+	ScanStatusErrorInFactValidationConst           = "error_in_fact_validation"
+	ScanStatusErrorInInventoryConst                = "error_in_inventory"
+	ScanStatusErrorInRemediationConst              = "error_in_remediation"
+	ScanStatusErrorInValidationConst               = "error_in_validation"
+	ScanStatusFactCollectionCompletedConst         = "fact_collection_completed"
+	ScanStatusFactCollectionInProgressConst        = "fact_collection_in_progress"
+	ScanStatusFactCollectionStartedConst           = "fact_collection_started"
+	ScanStatusFactValidationCompletedConst         = "fact_validation_completed"
+	ScanStatusFactValidationInProgressConst        = "fact_validation_in_progress"
+	ScanStatusFactValidationStartedConst           = "fact_validation_started"
+	ScanStatusGatewayAbortedConst                  = "gateway_aborted"
+	ScanStatusInventoryCompletedConst              = "inventory_completed"
+	ScanStatusInventoryCompletedWithErrorConst     = "inventory_completed_with_error"
+	ScanStatusInventoryInProgressConst             = "inventory_in_progress"
+	ScanStatusInventoryStartedConst                = "inventory_started"
+	ScanStatusNotAcceptedConst                     = "not_accepted"
+	ScanStatusPendingConst                         = "pending"
+	ScanStatusRemediationCompletedConst            = "remediation_completed"
+	ScanStatusRemediationInProgressConst           = "remediation_in_progress"
+	ScanStatusRemediationStartedConst              = "remediation_started"
+	ScanStatusSentToCollectorConst                 = "sent_to_collector"
+	ScanStatusUserAbortedConst                     = "user_aborted"
+	ScanStatusValidationCompletedConst             = "validation_completed"
+	ScanStatusValidationInProgressConst            = "validation_in_progress"
+	ScanStatusValidationResultPostedNoErrorConst   = "validation_result_posted_no_error"
 	ScanStatusValidationResultPostedWithErrorConst = "validation_result_posted_with_error"
-	ScanStatusValidationStartedConst = "validation_started"
-	ScanStatusWaitingForRefineConst = "waiting_for_refine"
+	ScanStatusValidationStartedConst               = "validation_started"
+	ScanStatusWaitingForRefineConst                = "waiting_for_refine"
 )
 
 // UnmarshalScan unmarshals an instance of Scan from the specified map of raw messages.
@@ -2394,12 +2394,12 @@ type ScanItem struct {
 // The type of profile. To learn more about profile types, check out the [docs]
 // (https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-profiles).
 const (
-	ScanItemProfileTypeAuthoredConst = "authored"
-	ScanItemProfileTypeCustomConst = "custom"
-	ScanItemProfileTypeStandardConst = "standard"
+	ScanItemProfileTypeAuthoredConst            = "authored"
+	ScanItemProfileTypeCustomConst              = "custom"
+	ScanItemProfileTypeStandardConst            = "standard"
 	ScanItemProfileTypeStandardCertificateConst = "standard_certificate"
-	ScanItemProfileTypeStandardCvConst = "standard_cv"
-	ScanItemProfileTypeTemmplategroupConst = "temmplategroup"
+	ScanItemProfileTypeStandardCvConst          = "standard_cv"
+	ScanItemProfileTypeTemmplategroupConst      = "temmplategroup"
 )
 
 // UnmarshalScanItem unmarshals an instance of ScanItem from the specified map of raw messages.
@@ -2578,7 +2578,7 @@ type ScanSummariesOptions struct {
 // NewScanSummariesOptions : Instantiate ScanSummariesOptions
 func (*PostureManagementV1) NewScanSummariesOptions(scopeID string, accountID string, profileID string) *ScanSummariesOptions {
 	return &ScanSummariesOptions{
-		ScopeID: core.StringPtr(scopeID),
+		ScopeID:   core.StringPtr(scopeID),
 		AccountID: core.StringPtr(accountID),
 		ProfileID: core.StringPtr(profileID),
 	}
@@ -2792,7 +2792,7 @@ type ScansSummaryOptions struct {
 func (*PostureManagementV1) NewScansSummaryOptions(accountID string, scanID string, profileID string) *ScansSummaryOptions {
 	return &ScansSummaryOptions{
 		AccountID: core.StringPtr(accountID),
-		ScanID: core.StringPtr(scanID),
+		ScanID:    core.StringPtr(scanID),
 		ProfileID: core.StringPtr(profileID),
 	}
 }
@@ -2863,14 +2863,14 @@ type Scope struct {
 // Constants associated with the Scope.EnvironmentType property.
 // The environment that the scope is targeted to.
 const (
-	ScopeEnvironmentTypeAwsConst = "aws"
-	ScopeEnvironmentTypeAzureConst = "azure"
-	ScopeEnvironmentTypeGcpConst = "gcp"
-	ScopeEnvironmentTypeHostedConst = "hosted"
-	ScopeEnvironmentTypeIBMConst = "ibm"
+	ScopeEnvironmentTypeAwsConst       = "aws"
+	ScopeEnvironmentTypeAzureConst     = "azure"
+	ScopeEnvironmentTypeGcpConst       = "gcp"
+	ScopeEnvironmentTypeHostedConst    = "hosted"
+	ScopeEnvironmentTypeIBMConst       = "ibm"
 	ScopeEnvironmentTypeOnPremiseConst = "on_premise"
 	ScopeEnvironmentTypeOpenstackConst = "openstack"
-	ScopeEnvironmentTypeServicesConst = "services"
+	ScopeEnvironmentTypeServicesConst  = "services"
 )
 
 // UnmarshalScope unmarshals an instance of Scope from the specified map of raw messages.
@@ -2960,28 +2960,28 @@ type ScopeItem struct {
 // Constants associated with the ScopeItem.EnvironmentType property.
 // The environment that the scope is targeted to.
 const (
-	ScopeItemEnvironmentTypeAwsConst = "aws"
-	ScopeItemEnvironmentTypeAzureConst = "azure"
-	ScopeItemEnvironmentTypeGcpConst = "gcp"
-	ScopeItemEnvironmentTypeHostedConst = "hosted"
-	ScopeItemEnvironmentTypeIBMConst = "ibm"
+	ScopeItemEnvironmentTypeAwsConst       = "aws"
+	ScopeItemEnvironmentTypeAzureConst     = "azure"
+	ScopeItemEnvironmentTypeGcpConst       = "gcp"
+	ScopeItemEnvironmentTypeHostedConst    = "hosted"
+	ScopeItemEnvironmentTypeIBMConst       = "ibm"
 	ScopeItemEnvironmentTypeOnPremiseConst = "on_premise"
 	ScopeItemEnvironmentTypeOpenstackConst = "openstack"
-	ScopeItemEnvironmentTypeServicesConst = "services"
+	ScopeItemEnvironmentTypeServicesConst  = "services"
 )
 
 // Constants associated with the ScopeItem.LastScanType property.
 // The last type of scan that was run on the scope.
 const (
-	ScopeItemLastScanTypeAbortTasksConst = "abort_tasks"
-	ScopeItemLastScanTypeDiscoveryConst = "discovery"
-	ScopeItemLastScanTypeEvidenceConst = "evidence"
+	ScopeItemLastScanTypeAbortTasksConst     = "abort_tasks"
+	ScopeItemLastScanTypeDiscoveryConst      = "discovery"
+	ScopeItemLastScanTypeEvidenceConst       = "evidence"
 	ScopeItemLastScanTypeFactCollectionConst = "fact_collection"
 	ScopeItemLastScanTypeFactValidationConst = "fact_validation"
-	ScopeItemLastScanTypeInventoryConst = "inventory"
-	ScopeItemLastScanTypeRemediationConst = "remediation"
-	ScopeItemLastScanTypeScriptConst = "script"
-	ScopeItemLastScanTypeValidationConst = "validation"
+	ScopeItemLastScanTypeInventoryConst      = "inventory"
+	ScopeItemLastScanTypeRemediationConst    = "remediation"
+	ScopeItemLastScanTypeScriptConst         = "script"
+	ScopeItemLastScanTypeValidationConst     = "validation"
 )
 
 // UnmarshalScopeItem unmarshals an instance of ScopeItem from the specified map of raw messages.
@@ -3286,46 +3286,46 @@ type SummaryItem struct {
 // Constants associated with the SummaryItem.Status property.
 // The status of the collector as it completes a scan.
 const (
-	SummaryItemStatusAbortTaskRequestCompletedConst = "abort_task_request_completed"
-	SummaryItemStatusAbortTaskRequestFailedConst = "abort_task_request_failed"
-	SummaryItemStatusAbortTaskRequestReceivedConst = "abort_task_request_received"
-	SummaryItemStatusControllerAbortedConst = "controller_aborted"
-	SummaryItemStatusDiscoveryCompletedConst = "discovery_completed"
-	SummaryItemStatusDiscoveryInProgressConst = "discovery_in_progress"
-	SummaryItemStatusDiscoveryResultPostedNoErrorConst = "discovery_result_posted_no_error"
-	SummaryItemStatusDiscoveryResultPostedWithErrorConst = "discovery_result_posted_with_error"
-	SummaryItemStatusDiscoveryStartedConst = "discovery_started"
-	SummaryItemStatusErrorInAbortTaskRequestConst = "error_in_abort_task_request"
-	SummaryItemStatusErrorInDiscoveryConst = "error_in_discovery"
-	SummaryItemStatusErrorInFactCollectionConst = "error_in_fact_collection"
-	SummaryItemStatusErrorInFactValidationConst = "error_in_fact_validation"
-	SummaryItemStatusErrorInInventoryConst = "error_in_inventory"
-	SummaryItemStatusErrorInRemediationConst = "error_in_remediation"
-	SummaryItemStatusErrorInValidationConst = "error_in_validation"
-	SummaryItemStatusFactCollectionCompletedConst = "fact_collection_completed"
-	SummaryItemStatusFactCollectionInProgressConst = "fact_collection_in_progress"
-	SummaryItemStatusFactCollectionStartedConst = "fact_collection_started"
-	SummaryItemStatusFactValidationCompletedConst = "fact_validation_completed"
-	SummaryItemStatusFactValidationInProgressConst = "fact_validation_in_progress"
-	SummaryItemStatusFactValidationStartedConst = "fact_validation_started"
-	SummaryItemStatusGatewayAbortedConst = "gateway_aborted"
-	SummaryItemStatusInventoryCompletedConst = "inventory_completed"
-	SummaryItemStatusInventoryCompletedWithErrorConst = "inventory_completed_with_error"
-	SummaryItemStatusInventoryInProgressConst = "inventory_in_progress"
-	SummaryItemStatusInventoryStartedConst = "inventory_started"
-	SummaryItemStatusNotAcceptedConst = "not_accepted"
-	SummaryItemStatusPendingConst = "pending"
-	SummaryItemStatusRemediationCompletedConst = "remediation_completed"
-	SummaryItemStatusRemediationInProgressConst = "remediation_in_progress"
-	SummaryItemStatusRemediationStartedConst = "remediation_started"
-	SummaryItemStatusSentToCollectorConst = "sent_to_collector"
-	SummaryItemStatusUserAbortedConst = "user_aborted"
-	SummaryItemStatusValidationCompletedConst = "validation_completed"
-	SummaryItemStatusValidationInProgressConst = "validation_in_progress"
-	SummaryItemStatusValidationResultPostedNoErrorConst = "validation_result_posted_no_error"
+	SummaryItemStatusAbortTaskRequestCompletedConst       = "abort_task_request_completed"
+	SummaryItemStatusAbortTaskRequestFailedConst          = "abort_task_request_failed"
+	SummaryItemStatusAbortTaskRequestReceivedConst        = "abort_task_request_received"
+	SummaryItemStatusControllerAbortedConst               = "controller_aborted"
+	SummaryItemStatusDiscoveryCompletedConst              = "discovery_completed"
+	SummaryItemStatusDiscoveryInProgressConst             = "discovery_in_progress"
+	SummaryItemStatusDiscoveryResultPostedNoErrorConst    = "discovery_result_posted_no_error"
+	SummaryItemStatusDiscoveryResultPostedWithErrorConst  = "discovery_result_posted_with_error"
+	SummaryItemStatusDiscoveryStartedConst                = "discovery_started"
+	SummaryItemStatusErrorInAbortTaskRequestConst         = "error_in_abort_task_request"
+	SummaryItemStatusErrorInDiscoveryConst                = "error_in_discovery"
+	SummaryItemStatusErrorInFactCollectionConst           = "error_in_fact_collection"
+	SummaryItemStatusErrorInFactValidationConst           = "error_in_fact_validation"
+	SummaryItemStatusErrorInInventoryConst                = "error_in_inventory"
+	SummaryItemStatusErrorInRemediationConst              = "error_in_remediation"
+	SummaryItemStatusErrorInValidationConst               = "error_in_validation"
+	SummaryItemStatusFactCollectionCompletedConst         = "fact_collection_completed"
+	SummaryItemStatusFactCollectionInProgressConst        = "fact_collection_in_progress"
+	SummaryItemStatusFactCollectionStartedConst           = "fact_collection_started"
+	SummaryItemStatusFactValidationCompletedConst         = "fact_validation_completed"
+	SummaryItemStatusFactValidationInProgressConst        = "fact_validation_in_progress"
+	SummaryItemStatusFactValidationStartedConst           = "fact_validation_started"
+	SummaryItemStatusGatewayAbortedConst                  = "gateway_aborted"
+	SummaryItemStatusInventoryCompletedConst              = "inventory_completed"
+	SummaryItemStatusInventoryCompletedWithErrorConst     = "inventory_completed_with_error"
+	SummaryItemStatusInventoryInProgressConst             = "inventory_in_progress"
+	SummaryItemStatusInventoryStartedConst                = "inventory_started"
+	SummaryItemStatusNotAcceptedConst                     = "not_accepted"
+	SummaryItemStatusPendingConst                         = "pending"
+	SummaryItemStatusRemediationCompletedConst            = "remediation_completed"
+	SummaryItemStatusRemediationInProgressConst           = "remediation_in_progress"
+	SummaryItemStatusRemediationStartedConst              = "remediation_started"
+	SummaryItemStatusSentToCollectorConst                 = "sent_to_collector"
+	SummaryItemStatusUserAbortedConst                     = "user_aborted"
+	SummaryItemStatusValidationCompletedConst             = "validation_completed"
+	SummaryItemStatusValidationInProgressConst            = "validation_in_progress"
+	SummaryItemStatusValidationResultPostedNoErrorConst   = "validation_result_posted_no_error"
 	SummaryItemStatusValidationResultPostedWithErrorConst = "validation_result_posted_with_error"
-	SummaryItemStatusValidationStartedConst = "validation_started"
-	SummaryItemStatusWaitingForRefineConst = "waiting_for_refine"
+	SummaryItemStatusValidationStartedConst               = "validation_started"
+	SummaryItemStatusWaitingForRefineConst                = "waiting_for_refine"
 )
 
 // UnmarshalSummaryItem unmarshals an instance of SummaryItem from the specified map of raw messages.

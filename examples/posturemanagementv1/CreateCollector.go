@@ -3,7 +3,7 @@ package examples
 import (
 	"fmt"
 	"github.com/google/uuid"
-	scc "github.com/ibm-cloud-security/scc-go-sdk/posturemanagementv1"
+	scc "github.com/ibm/scc-go-sdk/posturemanagementv1"
 )
 
 func CreateCollector(options scc.PostureManagementV1Options, accountId string) (int, *string) {

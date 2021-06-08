@@ -20,8 +20,8 @@ package posturemanagementv1_test
 import (
 	"fmt"
 	"github.com/IBM/go-sdk-core/v5/core"
-	examples "github.com/ibm-cloud-security/scc-go-sdk/examples/posturemanagementv1"
-	scc "github.com/ibm-cloud-security/scc-go-sdk/posturemanagementv1"
+	examples "github.com/ibm/scc-go-sdk/examples/posturemanagementv1"
+	scc "github.com/ibm/scc-go-sdk/posturemanagementv1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"os"
@@ -39,6 +39,7 @@ var (
 	err           error
 	config        map[string]string
 	collectorIds  []string
+	collectorId   string
 	credentialId  string
 	accountId     string
 	apiKey        string
@@ -107,11 +108,14 @@ var _ = Describe(`SCC test`, func() {
 		It(`Create Collector`, func() {
 			fmt.Println(`Create Collector`)
 			statusCode, id := examples.CreateCollector(options, accountId)
+			collectorId = *id
 			Expect(statusCode).To(Equal(201))
-			Expect(id).NotTo(BeNil())
+			Expect(collectorId).NotTo(BeNil())
+
+			fmt.Println("Collector Id: " + collectorId)
+			fmt.Println(`Create Collector Successful`)
 		})
 
-		//new credential to be created
 		It(`Create Credential`, func() {
 			fmt.Println(`Create Credential`)
 			var statusCode int
@@ -120,22 +124,25 @@ var _ = Describe(`SCC test`, func() {
 			credentialId, statusCode = examples.CreateCredentials(options, accountId, credentialPath, pemPath)
 			Expect(statusCode).To(Equal(201))
 			Expect(credentialId).NotTo(BeNil())
+			fmt.Println("Credential Id: " + credentialId)
+			fmt.Println(`Create Credential Successful`)
 		})
 
 		//TODO override collector id for now until create collector is resolved
 		It(`Create Scope`, func() {
-			fmt.Println(`Create Scope`)
-			collectorId := "822"
-			collectorIds = append(collectorIds, collectorId)
+			fmt.Println(`Create Scope Started`)
 			var statusCode int
+			collectorId = "822"
 			credentialId = "1587"
+			collectorIds = append(collectorIds, collectorId)
 			statusCode, scopeId, scopeName = examples.CreateScope(options, accountId, credentialId, collectorIds)
-			fmt.Println("created scope id: " + *scopeId)
-			fmt.Println("created scope name: " + *scopeName)
 
 			Expect(statusCode).To(Equal(201))
 			Expect(scopeId).ToNot(BeNil())
 			Expect(scopeName).ToNot(BeNil())
+			fmt.Println("created scope id: " + *scopeId)
+			fmt.Println("created scope name: " + *scopeName)
+			fmt.Println(`Create Scope Successful`)
 		})
 
 		XIt(`List Scopes`, func() {
@@ -147,6 +154,7 @@ var _ = Describe(`SCC test`, func() {
 				isCompleted, scanId = examples.ListScopes(options, accountId, *scopeName, *scopeId, "discovery_completed")
 				return isCompleted
 			}, "12000s", "20s").Should(BeTrue())
+			fmt.Println(`List Scope Successful`)
 		})
 
 		It(`List Profiles`, func() {
@@ -154,6 +162,7 @@ var _ = Describe(`SCC test`, func() {
 			statusCode, profileList := examples.ListProfiles(options, accountId)
 			Expect(statusCode).To(Equal(200))
 			Expect(profileList).ToNot(BeNil())
+			fmt.Println(`List Profiles Successful`)
 		})
 
 		It(`Initiate Scan Validation`, func() {
@@ -162,6 +171,7 @@ var _ = Describe(`SCC test`, func() {
 			fmt.Println("message: " + *message)
 			Expect(statusCode).To(Equal(202))
 			Expect(message).ToNot(BeNil())
+			fmt.Println(`Create Scan Successful`)
 		})
 		XIt(`Check Scan Status`, func() {
 			fmt.Println(`Check Scan status`)
@@ -177,6 +187,8 @@ var _ = Describe(`SCC test`, func() {
 			Expect(statusCode).To(Equal(200))
 			scanId = *list[0].ScanID
 			Expect(list).ToNot(BeNil())
+			fmt.Println(`List latest scans successful`)
+
 		})
 
 		It(`Read scan`, func() {
@@ -184,6 +196,7 @@ var _ = Describe(`SCC test`, func() {
 			statusCode, list := examples.RetrieveScanSummary(options, accountId, scanId, "48")
 			Expect(statusCode).To(Equal(200))
 			Expect(list).ToNot(BeNil())
+			fmt.Println(`Read scan summary details successful`)
 		})
 
 		It(`List Validation Runs`, func() {
@@ -191,6 +204,7 @@ var _ = Describe(`SCC test`, func() {
 			statusCode, list := examples.ListValiadationRuns(options, accountId, "17885", "48")
 			Expect(statusCode).To(Equal(200))
 			Expect(list).ToNot(BeNil())
+			fmt.Println(`List Validation Runs Successful`)
 		})
 
 	})

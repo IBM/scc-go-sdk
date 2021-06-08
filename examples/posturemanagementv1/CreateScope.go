@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/google/uuid"
-	scc "github.com/ibm-cloud-security/scc-go-sdk/posturemanagementv1"
+	scc "github.com/ibm/scc-go-sdk/posturemanagementv1"
 	"io/ioutil"
 	"net/http"
 	"os"

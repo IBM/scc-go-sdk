@@ -2,7 +2,7 @@ package examples
 
 import (
 	"fmt"
-	scc "github.com/ibm-cloud-security/scc-go-sdk/posturemanagementv1"
+	scc "github.com/ibm/scc-go-sdk/posturemanagementv1"
 )
 
 func ListLatestScans(options scc.PostureManagementV1Options, accountId string) (int, []scc.ScanItem) {

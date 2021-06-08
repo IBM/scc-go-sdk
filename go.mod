@@ -1,4 +1,4 @@
-module github.com/ibm-cloud-security/scc-go-sdk
+module github.com/ibm/scc-go-sdk
 
 go 1.14
 

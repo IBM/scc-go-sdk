@@ -52,7 +52,7 @@ var (
 	options       scc.PostureManagementV1Options
 )
 
-var _ = XDescribe(`SCC test`, func() {
+var _ = Describe(`SCC test`, func() {
 	const externalConfigFile = "../posture_management_v1.env"
 
 	Describe(`Demo`, func() {
@@ -145,7 +145,7 @@ var _ = XDescribe(`SCC test`, func() {
 			fmt.Println(`Create Scope Successful`)
 		})
 
-		It(`List Scopes`, func() {
+		XIt(`List Scopes`, func() {
 			fmt.Println(`List Scopes`)
 			demoListScope(options, scopeId)
 

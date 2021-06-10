@@ -232,7 +232,7 @@ func (findings *FindingsV1) PostGraphWithContext(ctx context.Context, postGraphO
 		builder.AddHeader("Transaction-Id", fmt.Sprint(*postGraphOptions.TransactionID))
 	}
 
-	_, err = builder.SetBodyContent(core.StringNilMapper(postGraphOptions.ContentType), postGraphOptions.Body, nil, postGraphOptions.Body)
+	_, err = builder.SetBodyContent(core.StringNilMapper(postGraphOptions.ContentType), nil, nil, postGraphOptions.Body)
 	if err != nil {
 		return
 	}

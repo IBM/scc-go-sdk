@@ -84,7 +84,9 @@ var _ = Describe(`FindingsV1 Examples Tests`, func() {
 
 			// begin-common
 
-			findingsServiceOptions := &findingsv1.FindingsV1Options{}
+			findingsServiceOptions := &findingsv1.FindingsV1Options{
+				AccountID: core.StringPtr("testString"),
+			}
 
 			findingsService, err = findingsv1.NewFindingsV1UsingExternalConfig(findingsServiceOptions)
 
@@ -105,9 +107,7 @@ var _ = Describe(`FindingsV1 Examples Tests`, func() {
 		It(`PostGraph request example`, func() {
 			// begin-postGraph
 
-			postGraphOptions := findingsService.NewPostGraphOptions(
-				"testString",
-			)
+			postGraphOptions := findingsService.NewPostGraphOptions()
 			postGraphOptions.SetBody(CreateMockReader("This is a mock file."))
 
 			response, err := findingsService.PostGraph(postGraphOptions)
@@ -132,7 +132,6 @@ var _ = Describe(`FindingsV1 Examples Tests`, func() {
 			}
 
 			createNoteOptions := findingsService.NewCreateNoteOptions(
-				"testString",
 				"testString",
 				"testString",
 				"testString",
@@ -161,7 +160,6 @@ var _ = Describe(`FindingsV1 Examples Tests`, func() {
 
 			listNotesOptions := findingsService.NewListNotesOptions(
 				"testString",
-				"testString",
 			)
 
 			apiListNotesResponse, response, err := findingsService.ListNotes(listNotesOptions)
@@ -183,7 +181,6 @@ var _ = Describe(`FindingsV1 Examples Tests`, func() {
 			// begin-getNote
 
 			getNoteOptions := findingsService.NewGetNoteOptions(
-				"testString",
 				"testString",
 				"testString",
 			)
@@ -216,7 +213,6 @@ var _ = Describe(`FindingsV1 Examples Tests`, func() {
 				"testString",
 				"testString",
 				"testString",
-				"testString",
 				"FINDING",
 				"testString",
 				reporterModel,
@@ -243,7 +239,6 @@ var _ = Describe(`FindingsV1 Examples Tests`, func() {
 			getOccurrenceNoteOptions := findingsService.NewGetOccurrenceNoteOptions(
 				"testString",
 				"testString",
-				"testString",
 			)
 
 			apiNote, response, err := findingsService.GetOccurrenceNote(getOccurrenceNoteOptions)
@@ -265,7 +260,6 @@ var _ = Describe(`FindingsV1 Examples Tests`, func() {
 			// begin-createOccurrence
 
 			createOccurrenceOptions := findingsService.NewCreateOccurrenceOptions(
-				"testString",
 				"testString",
 				"testString",
 				"FINDING",
@@ -292,7 +286,6 @@ var _ = Describe(`FindingsV1 Examples Tests`, func() {
 
 			listOccurrencesOptions := findingsService.NewListOccurrencesOptions(
 				"testString",
-				"testString",
 			)
 
 			apiListOccurrencesResponse, response, err := findingsService.ListOccurrences(listOccurrencesOptions)
@@ -316,7 +309,6 @@ var _ = Describe(`FindingsV1 Examples Tests`, func() {
 			listNoteOccurrencesOptions := findingsService.NewListNoteOccurrencesOptions(
 				"testString",
 				"testString",
-				"testString",
 			)
 
 			apiListNoteOccurrencesResponse, response, err := findingsService.ListNoteOccurrences(listNoteOccurrencesOptions)
@@ -338,7 +330,6 @@ var _ = Describe(`FindingsV1 Examples Tests`, func() {
 			// begin-getOccurrence
 
 			getOccurrenceOptions := findingsService.NewGetOccurrenceOptions(
-				"testString",
 				"testString",
 				"testString",
 			)
@@ -365,7 +356,6 @@ var _ = Describe(`FindingsV1 Examples Tests`, func() {
 				"testString",
 				"testString",
 				"testString",
-				"testString",
 				"FINDING",
 				"testString",
 			)
@@ -388,9 +378,7 @@ var _ = Describe(`FindingsV1 Examples Tests`, func() {
 			fmt.Println("\nListProviders() result:")
 			// begin-listProviders
 
-			listProvidersOptions := findingsService.NewListProvidersOptions(
-				"testString",
-			)
+			listProvidersOptions := findingsService.NewListProvidersOptions()
 
 			apiListProvidersResponse, response, err := findingsService.ListProviders(listProvidersOptions)
 			if err != nil {
@@ -412,7 +400,6 @@ var _ = Describe(`FindingsV1 Examples Tests`, func() {
 			deleteOccurrenceOptions := findingsService.NewDeleteOccurrenceOptions(
 				"testString",
 				"testString",
-				"testString",
 			)
 
 			response, err := findingsService.DeleteOccurrence(deleteOccurrenceOptions)
@@ -431,7 +418,6 @@ var _ = Describe(`FindingsV1 Examples Tests`, func() {
 			// begin-deleteNote
 
 			deleteNoteOptions := findingsService.NewDeleteNoteOptions(
-				"testString",
 				"testString",
 				"testString",
 			)

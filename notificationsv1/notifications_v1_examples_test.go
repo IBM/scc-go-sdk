@@ -84,7 +84,9 @@ var _ = Describe(`NotificationsV1 Examples Tests`, func() {
 
 			// begin-common
 
-			notificationsServiceOptions := &notificationsv1.NotificationsV1Options{}
+			notificationsServiceOptions := &notificationsv1.NotificationsV1Options{
+				AccountID: core.StringPtr("testString"),
+			}
 
 			notificationsService, err = notificationsv1.NewNotificationsV1UsingExternalConfig(notificationsServiceOptions)
 
@@ -106,9 +108,7 @@ var _ = Describe(`NotificationsV1 Examples Tests`, func() {
 			fmt.Println("\nListAllChannels() result:")
 			// begin-listAllChannels
 
-			listAllChannelsOptions := notificationsService.NewListAllChannelsOptions(
-				"testString",
-			)
+			listAllChannelsOptions := notificationsService.NewListAllChannelsOptions()
 
 			channelsList, response, err := notificationsService.ListAllChannels(listAllChannelsOptions)
 			if err != nil {
@@ -129,7 +129,6 @@ var _ = Describe(`NotificationsV1 Examples Tests`, func() {
 			// begin-createNotificationChannel
 
 			createNotificationChannelOptions := notificationsService.NewCreateNotificationChannelOptions(
-				"testString",
 				"testString",
 				"Webhook",
 				"testString",
@@ -155,7 +154,6 @@ var _ = Describe(`NotificationsV1 Examples Tests`, func() {
 
 			getNotificationChannelOptions := notificationsService.NewGetNotificationChannelOptions(
 				"testString",
-				"testString",
 			)
 
 			channelGet, response, err := notificationsService.GetNotificationChannel(getNotificationChannelOptions)
@@ -177,7 +175,6 @@ var _ = Describe(`NotificationsV1 Examples Tests`, func() {
 			// begin-updateNotificationChannel
 
 			updateNotificationChannelOptions := notificationsService.NewUpdateNotificationChannelOptions(
-				"testString",
 				"testString",
 				"testString",
 				"Webhook",
@@ -204,7 +201,6 @@ var _ = Describe(`NotificationsV1 Examples Tests`, func() {
 
 			testNotificationChannelOptions := notificationsService.NewTestNotificationChannelOptions(
 				"testString",
-				"testString",
 			)
 
 			testChannel, response, err := notificationsService.TestNotificationChannel(testNotificationChannelOptions)
@@ -225,9 +221,7 @@ var _ = Describe(`NotificationsV1 Examples Tests`, func() {
 			fmt.Println("\nGetPublicKey() result:")
 			// begin-getPublicKey
 
-			getPublicKeyOptions := notificationsService.NewGetPublicKeyOptions(
-				"testString",
-			)
+			getPublicKeyOptions := notificationsService.NewGetPublicKeyOptions()
 
 			publicKeyGet, response, err := notificationsService.GetPublicKey(getPublicKeyOptions)
 			if err != nil {
@@ -248,7 +242,6 @@ var _ = Describe(`NotificationsV1 Examples Tests`, func() {
 			// begin-deleteNotificationChannels
 
 			deleteNotificationChannelsOptions := notificationsService.NewDeleteNotificationChannelsOptions(
-				"testString",
 				[]string{"testString"},
 			)
 
@@ -271,7 +264,6 @@ var _ = Describe(`NotificationsV1 Examples Tests`, func() {
 			// begin-deleteNotificationChannel
 
 			deleteNotificationChannelOptions := notificationsService.NewDeleteNotificationChannelOptions(
-				"testString",
 				"testString",
 			)
 

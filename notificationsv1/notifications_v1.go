@@ -30,7 +30,7 @@ import (
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	common "github.com/ibm/scc-go-sdk/common"
+	common "github.com/IBM/scc-go-sdk/common"
 )
 
 // NotificationsV1 : API specification for the Notifications service.

@@ -28,8 +28,8 @@ import (
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
+	"github.com/IBM/scc-go-sdk/findingsv1"
 	"github.com/go-openapi/strfmt"
-	"github.com/ibm/scc-go-sdk/findingsv1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -67,13 +67,14 @@ var _ = Describe(`FindingsV1`, func() {
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"FINDINGS_URL":       "https://findingsv1/api",
+				"FINDINGS_URL": "https://findingsv1/api",
 				"FINDINGS_AUTH_TYPE": "noauth",
 			}
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{})
+				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
+				})
 				Expect(findingsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
@@ -102,7 +103,8 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{})
+				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
+				})
 				err := findingsService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -120,12 +122,13 @@ var _ = Describe(`FindingsV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"FINDINGS_URL":       "https://findingsv1/api",
+				"FINDINGS_URL": "https://findingsv1/api",
 				"FINDINGS_AUTH_TYPE": "someOtherAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{})
+			findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
+			})
 
 			It(`Instantiate service client with error`, func() {
 				Expect(findingsService).To(BeNil())
@@ -136,7 +139,7 @@ var _ = Describe(`FindingsV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"FINDINGS_AUTH_TYPE": "NOAuth",
+				"FINDINGS_AUTH_TYPE":   "NOAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
@@ -4457,8 +4460,8 @@ var _ = Describe(`FindingsV1`, func() {
 				subtitle := "testString"
 				findingNoteNames := []string{"testString"}
 				elements := []findingsv1.CardElementIntf{}
-				model, err := findingsService.NewCard(section, title, subtitle, findingNoteNames, elements)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewCard(section, title, subtitle, findingNoteNames, elements)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewCreateNoteOptions successfully`, func() {
@@ -4761,8 +4764,8 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 			It(`Invoke NewFindingType successfully`, func() {
 				severity := "LOW"
-				model, err := findingsService.NewFindingType(severity)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewFindingType(severity)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewGetNoteOptions successfully`, func() {
@@ -4821,14 +4824,14 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 			It(`Invoke NewKpi successfully`, func() {
 				value := float64(72.5)
-				model, err := findingsService.NewKpi(value)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewKpi(value)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewKpiType successfully`, func() {
 				aggregationType := "SUM"
-				model, err := findingsService.NewKpiType(aggregationType)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewKpiType(aggregationType)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewListNoteOccurrencesOptions successfully`, func() {
@@ -4930,21 +4933,21 @@ var _ = Describe(`FindingsV1`, func() {
 			It(`Invoke NewReporter successfully`, func() {
 				id := "testString"
 				title := "testString"
-				model, err := findingsService.NewReporter(id, title)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewReporter(id, title)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewSection successfully`, func() {
 				title := "testString"
 				image := "testString"
-				model, err := findingsService.NewSection(title, image)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewSection(title, image)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewSocketAddress successfully`, func() {
 				address := "testString"
-				model, err := findingsService.NewSocketAddress(address)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewSocketAddress(address)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewUpdateNoteOptions successfully`, func() {
@@ -5225,24 +5228,24 @@ var _ = Describe(`FindingsV1`, func() {
 			It(`Invoke NewAPINoteRelatedURL successfully`, func() {
 				label := "testString"
 				url := "testString"
-				model, err := findingsService.NewAPINoteRelatedURL(label, url)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewAPINoteRelatedURL(label, url)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewAPIOccurrence successfully`, func() {
 				noteName := "testString"
 				kind := "FINDING"
 				id := "testString"
-				model, err := findingsService.NewAPIOccurrence(noteName, kind, id)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewAPIOccurrence(noteName, kind, id)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewCardElementBreakdownCardElement successfully`, func() {
 				text := "testString"
 				kind := "BREAKDOWN"
 				valueTypes := []findingsv1.ValueTypeIntf{}
-				model, err := findingsService.NewCardElementBreakdownCardElement(text, kind, valueTypes)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewCardElementBreakdownCardElement(text, kind, valueTypes)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewCardElementNumericCardElement successfully`, func() {
@@ -5256,24 +5259,24 @@ var _ = Describe(`FindingsV1`, func() {
 				text := "testString"
 				kind := "TIME_SERIES"
 				valueTypes := []findingsv1.ValueTypeIntf{}
-				model, err := findingsService.NewCardElementTimeSeriesCardElement(text, kind, valueTypes)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewCardElementTimeSeriesCardElement(text, kind, valueTypes)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewValueTypeFindingCountValueType successfully`, func() {
 				kind := "FINDING_COUNT"
 				findingNoteNames := []string{"testString"}
 				text := "testString"
-				model, err := findingsService.NewValueTypeFindingCountValueType(kind, findingNoteNames, text)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewValueTypeFindingCountValueType(kind, findingNoteNames, text)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewValueTypeKpiValueType successfully`, func() {
 				kind := "KPI"
 				kpiNoteName := "testString"
 				text := "testString"
-				model, err := findingsService.NewValueTypeKpiValueType(kind, kpiNoteName, text)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewValueTypeKpiValueType(kind, kpiNoteName, text)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 		})

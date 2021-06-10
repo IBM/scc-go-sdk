@@ -93,7 +93,10 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 				Skip("Unable to load IAM configuration property, skipping tests")
 			}
 
-			credentialString = "{\"credential_name\":\"SDK CREDENTIALS PIPELINE TEST\",\"credential_description\":\"DEMO CREDENTIALS\",\"purpose\":\"discovery_fact_collection_remediation\",\"enabled\":true,\"credential_group\":{},\"credential_type\":\"ibm_cloud\",\"ibm_cloud\":{\"ibm_api_key\":\"lkjb1rsBsqGKyPBXL7YRwmd-JUl9fI38Ntym0RarZGD-\"}}"
+			credentialString = config["CREDENTIALS"]
+			if credentialString == "" {
+				Skip("Unable to load credentials configuration property, skipping tests")
+			}
 
 			authenticator = core.IamAuthenticator{
 				ApiKey: apiKey,

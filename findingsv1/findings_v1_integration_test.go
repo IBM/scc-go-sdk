@@ -41,7 +41,7 @@ import (
 var accountID = os.Getenv("ACCOUNT_ID")
 var providerID = os.Getenv("PROVIDER_ID")
 var testString = "testString"
-var identifier = os.Getenv("TRAVIS_JOB_ID")
+var identifier = os.Getenv("GITHUB_SHA")
 
 var _ = Describe(`FindingsV1 Integration Tests`, func() {
 

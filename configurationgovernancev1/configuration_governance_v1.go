@@ -30,8 +30,8 @@ import (
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
+	common "github.com/IBM/scc-go-sdk/common"
 	"github.com/go-openapi/strfmt"
-	common "github.com/ibm/scc-go-sdk/common"
 )
 
 // ConfigurationGovernanceV1 : API specification for the Configuration Governance service.

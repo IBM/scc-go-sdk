@@ -15,7 +15,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.32.0-4c6a3129-20210514-210323
+ * IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
  */
 
 // Package notificationsv1 : Operations and models for the NotificationsV1 service
@@ -30,7 +30,7 @@ import (
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	common "github.com/ibm/scc-go-sdk/common"
+	common "github.com/IBM/scc-go-sdk/common"
 )
 
 // NotificationsV1 : API specification for the Notifications service.
@@ -979,57 +979,57 @@ func (*NotificationsV1) NewCreateNotificationChannelOptions(accountID string, na
 }
 
 // SetAccountID : Allow user to set AccountID
-func (options *CreateNotificationChannelOptions) SetAccountID(accountID string) *CreateNotificationChannelOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (_options *CreateNotificationChannelOptions) SetAccountID(accountID string) *CreateNotificationChannelOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
 }
 
 // SetName : Allow user to set Name
-func (options *CreateNotificationChannelOptions) SetName(name string) *CreateNotificationChannelOptions {
-	options.Name = core.StringPtr(name)
-	return options
+func (_options *CreateNotificationChannelOptions) SetName(name string) *CreateNotificationChannelOptions {
+	_options.Name = core.StringPtr(name)
+	return _options
 }
 
 // SetType : Allow user to set Type
-func (options *CreateNotificationChannelOptions) SetType(typeVar string) *CreateNotificationChannelOptions {
-	options.Type = core.StringPtr(typeVar)
-	return options
+func (_options *CreateNotificationChannelOptions) SetType(typeVar string) *CreateNotificationChannelOptions {
+	_options.Type = core.StringPtr(typeVar)
+	return _options
 }
 
 // SetEndpoint : Allow user to set Endpoint
-func (options *CreateNotificationChannelOptions) SetEndpoint(endpoint string) *CreateNotificationChannelOptions {
-	options.Endpoint = core.StringPtr(endpoint)
-	return options
+func (_options *CreateNotificationChannelOptions) SetEndpoint(endpoint string) *CreateNotificationChannelOptions {
+	_options.Endpoint = core.StringPtr(endpoint)
+	return _options
 }
 
 // SetDescription : Allow user to set Description
-func (options *CreateNotificationChannelOptions) SetDescription(description string) *CreateNotificationChannelOptions {
-	options.Description = core.StringPtr(description)
-	return options
+func (_options *CreateNotificationChannelOptions) SetDescription(description string) *CreateNotificationChannelOptions {
+	_options.Description = core.StringPtr(description)
+	return _options
 }
 
 // SetSeverity : Allow user to set Severity
-func (options *CreateNotificationChannelOptions) SetSeverity(severity []string) *CreateNotificationChannelOptions {
-	options.Severity = severity
-	return options
+func (_options *CreateNotificationChannelOptions) SetSeverity(severity []string) *CreateNotificationChannelOptions {
+	_options.Severity = severity
+	return _options
 }
 
 // SetEnabled : Allow user to set Enabled
-func (options *CreateNotificationChannelOptions) SetEnabled(enabled bool) *CreateNotificationChannelOptions {
-	options.Enabled = core.BoolPtr(enabled)
-	return options
+func (_options *CreateNotificationChannelOptions) SetEnabled(enabled bool) *CreateNotificationChannelOptions {
+	_options.Enabled = core.BoolPtr(enabled)
+	return _options
 }
 
 // SetAlertSource : Allow user to set AlertSource
-func (options *CreateNotificationChannelOptions) SetAlertSource(alertSource []NotificationChannelAlertSourceItem) *CreateNotificationChannelOptions {
-	options.AlertSource = alertSource
-	return options
+func (_options *CreateNotificationChannelOptions) SetAlertSource(alertSource []NotificationChannelAlertSourceItem) *CreateNotificationChannelOptions {
+	_options.AlertSource = alertSource
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *CreateNotificationChannelOptions) SetTransactionID(transactionID string) *CreateNotificationChannelOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *CreateNotificationChannelOptions) SetTransactionID(transactionID string) *CreateNotificationChannelOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1062,21 +1062,21 @@ func (*NotificationsV1) NewDeleteNotificationChannelOptions(accountID string, ch
 }
 
 // SetAccountID : Allow user to set AccountID
-func (options *DeleteNotificationChannelOptions) SetAccountID(accountID string) *DeleteNotificationChannelOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (_options *DeleteNotificationChannelOptions) SetAccountID(accountID string) *DeleteNotificationChannelOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
 }
 
 // SetChannelID : Allow user to set ChannelID
-func (options *DeleteNotificationChannelOptions) SetChannelID(channelID string) *DeleteNotificationChannelOptions {
-	options.ChannelID = core.StringPtr(channelID)
-	return options
+func (_options *DeleteNotificationChannelOptions) SetChannelID(channelID string) *DeleteNotificationChannelOptions {
+	_options.ChannelID = core.StringPtr(channelID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *DeleteNotificationChannelOptions) SetTransactionID(transactionID string) *DeleteNotificationChannelOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *DeleteNotificationChannelOptions) SetTransactionID(transactionID string) *DeleteNotificationChannelOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1109,21 +1109,21 @@ func (*NotificationsV1) NewDeleteNotificationChannelsOptions(accountID string, b
 }
 
 // SetAccountID : Allow user to set AccountID
-func (options *DeleteNotificationChannelsOptions) SetAccountID(accountID string) *DeleteNotificationChannelsOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (_options *DeleteNotificationChannelsOptions) SetAccountID(accountID string) *DeleteNotificationChannelsOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
 }
 
 // SetBody : Allow user to set Body
-func (options *DeleteNotificationChannelsOptions) SetBody(body []string) *DeleteNotificationChannelsOptions {
-	options.Body = body
-	return options
+func (_options *DeleteNotificationChannelsOptions) SetBody(body []string) *DeleteNotificationChannelsOptions {
+	_options.Body = body
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *DeleteNotificationChannelsOptions) SetTransactionID(transactionID string) *DeleteNotificationChannelsOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *DeleteNotificationChannelsOptions) SetTransactionID(transactionID string) *DeleteNotificationChannelsOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1156,21 +1156,21 @@ func (*NotificationsV1) NewGetNotificationChannelOptions(accountID string, chann
 }
 
 // SetAccountID : Allow user to set AccountID
-func (options *GetNotificationChannelOptions) SetAccountID(accountID string) *GetNotificationChannelOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (_options *GetNotificationChannelOptions) SetAccountID(accountID string) *GetNotificationChannelOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
 }
 
 // SetChannelID : Allow user to set ChannelID
-func (options *GetNotificationChannelOptions) SetChannelID(channelID string) *GetNotificationChannelOptions {
-	options.ChannelID = core.StringPtr(channelID)
-	return options
+func (_options *GetNotificationChannelOptions) SetChannelID(channelID string) *GetNotificationChannelOptions {
+	_options.ChannelID = core.StringPtr(channelID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *GetNotificationChannelOptions) SetTransactionID(transactionID string) *GetNotificationChannelOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *GetNotificationChannelOptions) SetTransactionID(transactionID string) *GetNotificationChannelOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1199,15 +1199,15 @@ func (*NotificationsV1) NewGetPublicKeyOptions(accountID string) *GetPublicKeyOp
 }
 
 // SetAccountID : Allow user to set AccountID
-func (options *GetPublicKeyOptions) SetAccountID(accountID string) *GetPublicKeyOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (_options *GetPublicKeyOptions) SetAccountID(accountID string) *GetPublicKeyOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *GetPublicKeyOptions) SetTransactionID(transactionID string) *GetPublicKeyOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *GetPublicKeyOptions) SetTransactionID(transactionID string) *GetPublicKeyOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1242,27 +1242,27 @@ func (*NotificationsV1) NewListAllChannelsOptions(accountID string) *ListAllChan
 }
 
 // SetAccountID : Allow user to set AccountID
-func (options *ListAllChannelsOptions) SetAccountID(accountID string) *ListAllChannelsOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (_options *ListAllChannelsOptions) SetAccountID(accountID string) *ListAllChannelsOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *ListAllChannelsOptions) SetTransactionID(transactionID string) *ListAllChannelsOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *ListAllChannelsOptions) SetTransactionID(transactionID string) *ListAllChannelsOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetLimit : Allow user to set Limit
-func (options *ListAllChannelsOptions) SetLimit(limit int64) *ListAllChannelsOptions {
-	options.Limit = core.Int64Ptr(limit)
-	return options
+func (_options *ListAllChannelsOptions) SetLimit(limit int64) *ListAllChannelsOptions {
+	_options.Limit = core.Int64Ptr(limit)
+	return _options
 }
 
 // SetSkip : Allow user to set Skip
-func (options *ListAllChannelsOptions) SetSkip(skip int64) *ListAllChannelsOptions {
-	options.Skip = core.Int64Ptr(skip)
-	return options
+func (_options *ListAllChannelsOptions) SetSkip(skip int64) *ListAllChannelsOptions {
+	_options.Skip = core.Int64Ptr(skip)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1301,11 +1301,11 @@ type NotificationChannelAlertSourceItem struct {
 }
 
 // NewNotificationChannelAlertSourceItem : Instantiate NotificationChannelAlertSourceItem (Generic Model Constructor)
-func (*NotificationsV1) NewNotificationChannelAlertSourceItem(providerName string) (model *NotificationChannelAlertSourceItem, err error) {
-	model = &NotificationChannelAlertSourceItem{
+func (*NotificationsV1) NewNotificationChannelAlertSourceItem(providerName string) (_model *NotificationChannelAlertSourceItem, err error) {
+	_model = &NotificationChannelAlertSourceItem{
 		ProviderName: core.StringPtr(providerName),
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -1381,21 +1381,21 @@ func (*NotificationsV1) NewTestNotificationChannelOptions(accountID string, chan
 }
 
 // SetAccountID : Allow user to set AccountID
-func (options *TestNotificationChannelOptions) SetAccountID(accountID string) *TestNotificationChannelOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (_options *TestNotificationChannelOptions) SetAccountID(accountID string) *TestNotificationChannelOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
 }
 
 // SetChannelID : Allow user to set ChannelID
-func (options *TestNotificationChannelOptions) SetChannelID(channelID string) *TestNotificationChannelOptions {
-	options.ChannelID = core.StringPtr(channelID)
-	return options
+func (_options *TestNotificationChannelOptions) SetChannelID(channelID string) *TestNotificationChannelOptions {
+	_options.ChannelID = core.StringPtr(channelID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *TestNotificationChannelOptions) SetTransactionID(transactionID string) *TestNotificationChannelOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *TestNotificationChannelOptions) SetTransactionID(transactionID string) *TestNotificationChannelOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1465,63 +1465,63 @@ func (*NotificationsV1) NewUpdateNotificationChannelOptions(accountID string, ch
 }
 
 // SetAccountID : Allow user to set AccountID
-func (options *UpdateNotificationChannelOptions) SetAccountID(accountID string) *UpdateNotificationChannelOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (_options *UpdateNotificationChannelOptions) SetAccountID(accountID string) *UpdateNotificationChannelOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
 }
 
 // SetChannelID : Allow user to set ChannelID
-func (options *UpdateNotificationChannelOptions) SetChannelID(channelID string) *UpdateNotificationChannelOptions {
-	options.ChannelID = core.StringPtr(channelID)
-	return options
+func (_options *UpdateNotificationChannelOptions) SetChannelID(channelID string) *UpdateNotificationChannelOptions {
+	_options.ChannelID = core.StringPtr(channelID)
+	return _options
 }
 
 // SetName : Allow user to set Name
-func (options *UpdateNotificationChannelOptions) SetName(name string) *UpdateNotificationChannelOptions {
-	options.Name = core.StringPtr(name)
-	return options
+func (_options *UpdateNotificationChannelOptions) SetName(name string) *UpdateNotificationChannelOptions {
+	_options.Name = core.StringPtr(name)
+	return _options
 }
 
 // SetType : Allow user to set Type
-func (options *UpdateNotificationChannelOptions) SetType(typeVar string) *UpdateNotificationChannelOptions {
-	options.Type = core.StringPtr(typeVar)
-	return options
+func (_options *UpdateNotificationChannelOptions) SetType(typeVar string) *UpdateNotificationChannelOptions {
+	_options.Type = core.StringPtr(typeVar)
+	return _options
 }
 
 // SetEndpoint : Allow user to set Endpoint
-func (options *UpdateNotificationChannelOptions) SetEndpoint(endpoint string) *UpdateNotificationChannelOptions {
-	options.Endpoint = core.StringPtr(endpoint)
-	return options
+func (_options *UpdateNotificationChannelOptions) SetEndpoint(endpoint string) *UpdateNotificationChannelOptions {
+	_options.Endpoint = core.StringPtr(endpoint)
+	return _options
 }
 
 // SetDescription : Allow user to set Description
-func (options *UpdateNotificationChannelOptions) SetDescription(description string) *UpdateNotificationChannelOptions {
-	options.Description = core.StringPtr(description)
-	return options
+func (_options *UpdateNotificationChannelOptions) SetDescription(description string) *UpdateNotificationChannelOptions {
+	_options.Description = core.StringPtr(description)
+	return _options
 }
 
 // SetSeverity : Allow user to set Severity
-func (options *UpdateNotificationChannelOptions) SetSeverity(severity []string) *UpdateNotificationChannelOptions {
-	options.Severity = severity
-	return options
+func (_options *UpdateNotificationChannelOptions) SetSeverity(severity []string) *UpdateNotificationChannelOptions {
+	_options.Severity = severity
+	return _options
 }
 
 // SetEnabled : Allow user to set Enabled
-func (options *UpdateNotificationChannelOptions) SetEnabled(enabled bool) *UpdateNotificationChannelOptions {
-	options.Enabled = core.BoolPtr(enabled)
-	return options
+func (_options *UpdateNotificationChannelOptions) SetEnabled(enabled bool) *UpdateNotificationChannelOptions {
+	_options.Enabled = core.BoolPtr(enabled)
+	return _options
 }
 
 // SetAlertSource : Allow user to set AlertSource
-func (options *UpdateNotificationChannelOptions) SetAlertSource(alertSource []NotificationChannelAlertSourceItem) *UpdateNotificationChannelOptions {
-	options.AlertSource = alertSource
-	return options
+func (_options *UpdateNotificationChannelOptions) SetAlertSource(alertSource []NotificationChannelAlertSourceItem) *UpdateNotificationChannelOptions {
+	_options.AlertSource = alertSource
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *UpdateNotificationChannelOptions) SetTransactionID(transactionID string) *UpdateNotificationChannelOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *UpdateNotificationChannelOptions) SetTransactionID(transactionID string) *UpdateNotificationChannelOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers

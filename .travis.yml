@@ -46,4 +46,4 @@ deploy:
     on:
       branch: main
     skip_cleanup: true
-    script: npx semantic-release --repository-url https://${GH_TOKEN}@github.com/ibm/scc-go-sdk --debug
+    script: npx semantic-release --repository-url https://${GH_TOKEN}@github.com/IBM/scc-go-sdk --debug

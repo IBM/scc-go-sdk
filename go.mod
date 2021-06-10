@@ -1,4 +1,4 @@
-module github.com/ibm/scc-go-sdk
+module github.com/IBM/scc-go-sdk
 
 go 1.14
 

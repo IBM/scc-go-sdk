@@ -28,8 +28,8 @@ import (
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
+	"github.com/IBM/scc-go-sdk/notificationsv1"
 	"github.com/go-openapi/strfmt"
-	"github.com/ibm/scc-go-sdk/notificationsv1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -2336,8 +2336,8 @@ var _ = Describe(`NotificationsV1`, func() {
 			})
 			It(`Invoke NewNotificationChannelAlertSourceItem successfully`, func() {
 				providerName := "testString"
-				model, err := notificationsService.NewNotificationChannelAlertSourceItem(providerName)
-				Expect(model).ToNot(BeNil())
+				_model, err := notificationsService.NewNotificationChannelAlertSourceItem(providerName)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewTestNotificationChannelOptions successfully`, func() {

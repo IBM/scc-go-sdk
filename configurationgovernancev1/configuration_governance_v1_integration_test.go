@@ -23,7 +23,7 @@ import (
 	"os"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/ibm/scc-go-sdk/configurationgovernancev1"
+	"github.com/IBM/scc-go-sdk/configurationgovernancev1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )

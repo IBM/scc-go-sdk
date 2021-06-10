@@ -3187,6 +3187,9 @@ type APIListProvidersResponse struct {
 
 	// The offset is the index of the item from which you want to start returning data from. Default is 0.
 	Skip *int64 `json:"skip,omitempty"`
+
+	// The total number of providers available.
+	TotalCount *int64 `json:"total_count,omitempty"`
 }
 
 // UnmarshalAPIListProvidersResponse unmarshals an instance of APIListProvidersResponse from the specified map of raw messages.
@@ -3201,6 +3204,10 @@ func UnmarshalAPIListProvidersResponse(m map[string]json.RawMessage, result inte
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "skip", &obj.Skip)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
 		return
 	}

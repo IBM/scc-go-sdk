@@ -95,7 +95,9 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 		It("Successfully construct the service client instance", func() {
 
-			findingsServiceOptions := &findingsv1.FindingsV1Options{}
+			findingsServiceOptions := &findingsv1.FindingsV1Options{
+				AccountID: core.StringPtr(accountID),
+			}
 
 			findingsService, err = findingsv1.NewFindingsV1UsingExternalConfig(findingsServiceOptions)
 
@@ -112,7 +114,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		It(`PostGraph(postGraphOptions *PostGraphOptions)`, func() {
 
 			postGraphOptions := &findingsv1.PostGraphOptions{
-				AccountID:   &accountID,
 				Body:        CreateMockReader(`{notes{id}}`),
 				ContentType: core.StringPtr("application/graphql"),
 			}
@@ -153,7 +154,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			}
 
 			createNoteOptions := &findingsv1.CreateNoteOptions{
-				AccountID:        &accountID,
 				ProviderID:       &providerID,
 				ShortDescription: &testString,
 				LongDescription:  &testString,
@@ -192,7 +192,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			}
 
 			createNoteOptions := &findingsv1.CreateNoteOptions{
-				AccountID:        &accountID,
 				ProviderID:       &providerID,
 				ShortDescription: &testString,
 				LongDescription:  &testString,
@@ -252,7 +251,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			}
 
 			createNoteOptions := &findingsv1.CreateNoteOptions{
-				AccountID:        &accountID,
 				ProviderID:       &providerID,
 				ShortDescription: &testString,
 				LongDescription:  &testString,
@@ -291,7 +289,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			}
 
 			createNoteOptions := &findingsv1.CreateNoteOptions{
-				AccountID:        &accountID,
 				ProviderID:       &providerID,
 				ShortDescription: &testString,
 				LongDescription:  &testString,
@@ -319,7 +316,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		It(`ListNotes(listNotesOptions *ListNotesOptions)`, func() {
 
 			listNotesOptions := &findingsv1.ListNotesOptions{
-				AccountID:  &accountID,
 				ProviderID: &providerID,
 			}
 
@@ -339,7 +335,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		It(`GetNote(getNoteOptions *GetNoteOptions)`, func() {
 
 			getNoteOptions := &findingsv1.GetNoteOptions{
-				AccountID:  &accountID,
 				ProviderID: &providerID,
 				NoteID:     core.StringPtr(fmt.Sprintf("finding-note-%s", identifier)),
 			}
@@ -381,7 +376,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			}
 
 			updateNoteOptions := &findingsv1.UpdateNoteOptions{
-				AccountID:        &accountID,
 				ProviderID:       &providerID,
 				NoteID:           core.StringPtr(fmt.Sprintf("finding-note-%s", identifier)),
 				ShortDescription: &testString,
@@ -421,7 +415,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			}
 
 			updateNoteOptions := &findingsv1.UpdateNoteOptions{
-				AccountID:        &accountID,
 				ProviderID:       &providerID,
 				NoteID:           core.StringPtr(fmt.Sprintf("kpi-note-%s", identifier)),
 				ShortDescription: &testString,
@@ -481,7 +474,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			}
 
 			updateNoteOptions := &findingsv1.UpdateNoteOptions{
-				AccountID:        &accountID,
 				ProviderID:       &providerID,
 				NoteID:           core.StringPtr(fmt.Sprintf("card-note-%s", identifier)),
 				ShortDescription: &testString,
@@ -520,7 +512,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			}
 
 			updateNoteOptions := &findingsv1.UpdateNoteOptions{
-				AccountID:        &accountID,
 				ProviderID:       &providerID,
 				NoteID:           core.StringPtr(fmt.Sprintf("section-note-%s", identifier)),
 				ShortDescription: &testString,
@@ -594,7 +585,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			}
 
 			createOccurrenceOptions := &findingsv1.CreateOccurrenceOptions{
-				AccountID:       &accountID,
 				ProviderID:      &providerID,
 				NoteName:        core.StringPtr(fmt.Sprintf("%s/providers/%s/notes/finding-note-%s", accountID, providerID, identifier)),
 				Kind:            core.StringPtr("FINDING"),
@@ -640,7 +630,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			}
 
 			createOccurrenceOptions := &findingsv1.CreateOccurrenceOptions{
-				AccountID:       &accountID,
 				ProviderID:      &providerID,
 				NoteName:        core.StringPtr(fmt.Sprintf("%s/providers/%s/notes/kpi-note-%s", accountID, providerID, identifier)),
 				Kind:            core.StringPtr("KPI"),
@@ -668,7 +657,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		It(`GetOccurrenceNote(getOccurrenceNoteOptions *GetOccurrenceNoteOptions)`, func() {
 
 			getOccurrenceNoteOptions := &findingsv1.GetOccurrenceNoteOptions{
-				AccountID:    &accountID,
 				ProviderID:   &providerID,
 				OccurrenceID: core.StringPtr(fmt.Sprintf("finding-occurrence-%s", identifier)),
 			}
@@ -689,7 +677,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		It(`ListOccurrences(listOccurrencesOptions *ListOccurrencesOptions)`, func() {
 
 			listOccurrencesOptions := &findingsv1.ListOccurrencesOptions{
-				AccountID:  &accountID,
 				ProviderID: &providerID,
 			}
 
@@ -709,7 +696,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		It(`ListNoteOccurrences(listNoteOccurrencesOptions *ListNoteOccurrencesOptions)`, func() {
 
 			listNoteOccurrencesOptions := &findingsv1.ListNoteOccurrencesOptions{
-				AccountID:  &accountID,
 				ProviderID: &providerID,
 				NoteID:     core.StringPtr(fmt.Sprintf("finding-note-%s", identifier)),
 			}
@@ -730,7 +716,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		It(`GetOccurrence(getOccurrenceOptions *GetOccurrenceOptions)`, func() {
 
 			getOccurrenceOptions := &findingsv1.GetOccurrenceOptions{
-				AccountID:    &accountID,
 				ProviderID:   &providerID,
 				OccurrenceID: core.StringPtr(fmt.Sprintf("finding-occurrence-%s", identifier)),
 			}
@@ -796,7 +781,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			}
 
 			updateOccurrenceOptions := &findingsv1.UpdateOccurrenceOptions{
-				AccountID:    &accountID,
 				ProviderID:   &providerID,
 				OccurrenceID: core.StringPtr(fmt.Sprintf("finding-occurrence-%s", identifier)),
 				NoteName:     core.StringPtr(fmt.Sprintf("%s/providers/%s/notes/finding-note-%s", accountID, providerID, identifier)),
@@ -842,7 +826,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			}
 
 			updateOccurrenceOptions := &findingsv1.UpdateOccurrenceOptions{
-				AccountID:    &accountID,
 				ProviderID:   &providerID,
 				OccurrenceID: core.StringPtr(fmt.Sprintf("kpi-occurrence-%s", identifier)),
 				NoteName:     core.StringPtr(fmt.Sprintf("%s/providers/%s/notes/kpi-note-%s", accountID, providerID, identifier)),
@@ -869,9 +852,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 		It(`ListProviders(listProvidersOptions *ListProvidersOptions)`, func() {
 
-			listProvidersOptions := &findingsv1.ListProvidersOptions{
-				AccountID: &accountID,
-			}
+			listProvidersOptions := &findingsv1.ListProvidersOptions{}
 
 			apiListProvidersResponse, response, err := findingsService.ListProviders(listProvidersOptions)
 
@@ -889,7 +870,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		It(`DeleteOccurrence(deleteOccurrenceOptions *DeleteOccurrenceOptions)`, func() {
 
 			deleteOccurrenceOptions := &findingsv1.DeleteOccurrenceOptions{
-				AccountID:    &accountID,
 				ProviderID:   &providerID,
 				OccurrenceID: core.StringPtr(fmt.Sprintf("finding-occurrence-%s", identifier)),
 			}
@@ -909,7 +889,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		It(`DeleteNote(deleteNoteOptions *DeleteNoteOptions)`, func() {
 
 			deleteNoteOptions := &findingsv1.DeleteNoteOptions{
-				AccountID:  &accountID,
 				ProviderID: &providerID,
 				NoteID:     core.StringPtr(fmt.Sprintf("section-note-%s", identifier)),
 			}
@@ -946,13 +925,14 @@ var _ = AfterSuite(func() {
 
 	fmt.Printf("cleaning up account: %s with provider: %s\n", accountID, providerID)
 
-	findingsServiceOptions := &findingsv1.FindingsV1Options{}
+	findingsServiceOptions := &findingsv1.FindingsV1Options{
+		AccountID: core.StringPtr(accountID),
+	}
 
 	findingsService, err := findingsv1.NewFindingsV1UsingExternalConfig(findingsServiceOptions)
 
 	// list notes and delete one by one
 	listNotesOptions := &findingsv1.ListNotesOptions{
-		AccountID:  &accountID,
 		ProviderID: &providerID,
 	}
 
@@ -965,7 +945,6 @@ var _ = AfterSuite(func() {
 		parts := strings.Split(*note.ID, "-")
 		if parts[len(parts)-1] == identifier {
 			deleteNoteOptions := &findingsv1.DeleteNoteOptions{
-				AccountID:  &accountID,
 				ProviderID: &providerID,
 				NoteID:     note.ID,
 			}
@@ -978,7 +957,6 @@ var _ = AfterSuite(func() {
 
 	// list occurrences and delete one by one
 	listOccurrencesOptions := &findingsv1.ListOccurrencesOptions{
-		AccountID:  &accountID,
 		ProviderID: &providerID,
 	}
 
@@ -991,7 +969,6 @@ var _ = AfterSuite(func() {
 		parts := strings.Split(*occurrence.ID, "-")
 		if parts[len(parts)-1] == identifier {
 			deleteOccurrenceOptions := &findingsv1.DeleteOccurrenceOptions{
-				AccountID:    &accountID,
 				ProviderID:   &providerID,
 				OccurrenceID: occurrence.ID,
 			}
@@ -1005,9 +982,7 @@ var _ = AfterSuite(func() {
 	fmt.Printf("cleanup was successful\n")
 
 	// cross checking if the provider is there or not
-	listProvidersOptions := &findingsv1.ListProvidersOptions{
-		AccountID: &accountID,
-	}
+	listProvidersOptions := &findingsv1.ListProvidersOptions{}
 
 	apiListProvidersResponse, _, err := findingsService.ListProviders(listProvidersOptions)
 	for _, provider := range apiListProvidersResponse.Providers {

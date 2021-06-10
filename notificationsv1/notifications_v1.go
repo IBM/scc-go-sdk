@@ -38,6 +38,9 @@ import (
 // Version: 1.0.0
 type NotificationsV1 struct {
 	Service *core.BaseService
+
+	// Account ID.
+	AccountID *string
 }
 
 // DefaultServiceURL is the default URL to make service requests to.
@@ -51,6 +54,9 @@ type NotificationsV1Options struct {
 	ServiceName   string
 	URL           string
 	Authenticator core.Authenticator
+
+	// Account ID.
+	AccountID *string `validate:"required"`
 }
 
 // NewNotificationsV1UsingExternalConfig : constructs an instance of NotificationsV1 with passed in options and external configuration.
@@ -89,6 +95,11 @@ func NewNotificationsV1(options *NotificationsV1Options) (service *Notifications
 		Authenticator: options.Authenticator,
 	}
 
+	err = core.ValidateStruct(options, "options")
+	if err != nil {
+		return
+	}
+
 	baseService, err := core.NewBaseService(serviceOptions)
 	if err != nil {
 		return
@@ -102,7 +113,8 @@ func NewNotificationsV1(options *NotificationsV1Options) (service *Notifications
 	}
 
 	service = &NotificationsV1{
-		Service: baseService,
+		Service:   baseService,
+		AccountID: options.AccountID,
 	}
 
 	return
@@ -177,17 +189,13 @@ func (notifications *NotificationsV1) ListAllChannels(listAllChannelsOptions *Li
 
 // ListAllChannelsWithContext is an alternate form of the ListAllChannels method which supports a Context parameter
 func (notifications *NotificationsV1) ListAllChannelsWithContext(ctx context.Context, listAllChannelsOptions *ListAllChannelsOptions) (result *ChannelsList, response *core.DetailedResponse, err error) {
-	err = core.ValidateNotNil(listAllChannelsOptions, "listAllChannelsOptions cannot be nil")
-	if err != nil {
-		return
-	}
 	err = core.ValidateStruct(listAllChannelsOptions, "listAllChannelsOptions")
 	if err != nil {
 		return
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *listAllChannelsOptions.AccountID,
+		"account_id": *notifications.AccountID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
@@ -257,7 +265,7 @@ func (notifications *NotificationsV1) CreateNotificationChannelWithContext(ctx c
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *createNotificationChannelOptions.AccountID,
+		"account_id": *notifications.AccountID,
 	}
 
 	builder := core.NewRequestBuilder(core.POST)
@@ -348,7 +356,7 @@ func (notifications *NotificationsV1) DeleteNotificationChannelsWithContext(ctx 
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *deleteNotificationChannelsOptions.AccountID,
+		"account_id": *notifications.AccountID,
 	}
 
 	builder := core.NewRequestBuilder(core.DELETE)
@@ -417,7 +425,7 @@ func (notifications *NotificationsV1) DeleteNotificationChannelWithContext(ctx c
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *deleteNotificationChannelOptions.AccountID,
+		"account_id": *notifications.AccountID,
 		"channel_id": *deleteNotificationChannelOptions.ChannelID,
 	}
 
@@ -481,7 +489,7 @@ func (notifications *NotificationsV1) GetNotificationChannelWithContext(ctx cont
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *getNotificationChannelOptions.AccountID,
+		"account_id": *notifications.AccountID,
 		"channel_id": *getNotificationChannelOptions.ChannelID,
 	}
 
@@ -545,7 +553,7 @@ func (notifications *NotificationsV1) UpdateNotificationChannelWithContext(ctx c
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *updateNotificationChannelOptions.AccountID,
+		"account_id": *notifications.AccountID,
 		"channel_id": *updateNotificationChannelOptions.ChannelID,
 	}
 
@@ -637,7 +645,7 @@ func (notifications *NotificationsV1) TestNotificationChannelWithContext(ctx con
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *testNotificationChannelOptions.AccountID,
+		"account_id": *notifications.AccountID,
 		"channel_id": *testNotificationChannelOptions.ChannelID,
 	}
 
@@ -691,17 +699,13 @@ func (notifications *NotificationsV1) GetPublicKey(getPublicKeyOptions *GetPubli
 
 // GetPublicKeyWithContext is an alternate form of the GetPublicKey method which supports a Context parameter
 func (notifications *NotificationsV1) GetPublicKeyWithContext(ctx context.Context, getPublicKeyOptions *GetPublicKeyOptions) (result *PublicKeyGet, response *core.DetailedResponse, err error) {
-	err = core.ValidateNotNil(getPublicKeyOptions, "getPublicKeyOptions cannot be nil")
-	if err != nil {
-		return
-	}
 	err = core.ValidateStruct(getPublicKeyOptions, "getPublicKeyOptions")
 	if err != nil {
 		return
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *getPublicKeyOptions.AccountID,
+		"account_id": *notifications.AccountID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
@@ -924,9 +928,6 @@ func UnmarshalChannelsList(m map[string]json.RawMessage, result interface{}) (er
 
 // CreateNotificationChannelOptions : The CreateNotificationChannel options.
 type CreateNotificationChannelOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// The name of the notification channel in the form "v1/{account_id}/notifications/channelName".
 	Name *string `validate:"required"`
 
@@ -969,19 +970,12 @@ const (
 )
 
 // NewCreateNotificationChannelOptions : Instantiate CreateNotificationChannelOptions
-func (*NotificationsV1) NewCreateNotificationChannelOptions(accountID string, name string, typeVar string, endpoint string) *CreateNotificationChannelOptions {
+func (*NotificationsV1) NewCreateNotificationChannelOptions(name string, typeVar string, endpoint string) *CreateNotificationChannelOptions {
 	return &CreateNotificationChannelOptions{
-		AccountID: core.StringPtr(accountID),
-		Name:      core.StringPtr(name),
-		Type:      core.StringPtr(typeVar),
-		Endpoint:  core.StringPtr(endpoint),
+		Name:     core.StringPtr(name),
+		Type:     core.StringPtr(typeVar),
+		Endpoint: core.StringPtr(endpoint),
 	}
-}
-
-// SetAccountID : Allow user to set AccountID
-func (_options *CreateNotificationChannelOptions) SetAccountID(accountID string) *CreateNotificationChannelOptions {
-	_options.AccountID = core.StringPtr(accountID)
-	return _options
 }
 
 // SetName : Allow user to set Name
@@ -1040,9 +1034,6 @@ func (options *CreateNotificationChannelOptions) SetHeaders(param map[string]str
 
 // DeleteNotificationChannelOptions : The DeleteNotificationChannel options.
 type DeleteNotificationChannelOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// Channel ID.
 	ChannelID *string `validate:"required,ne="`
 
@@ -1054,17 +1045,10 @@ type DeleteNotificationChannelOptions struct {
 }
 
 // NewDeleteNotificationChannelOptions : Instantiate DeleteNotificationChannelOptions
-func (*NotificationsV1) NewDeleteNotificationChannelOptions(accountID string, channelID string) *DeleteNotificationChannelOptions {
+func (*NotificationsV1) NewDeleteNotificationChannelOptions(channelID string) *DeleteNotificationChannelOptions {
 	return &DeleteNotificationChannelOptions{
-		AccountID: core.StringPtr(accountID),
 		ChannelID: core.StringPtr(channelID),
 	}
-}
-
-// SetAccountID : Allow user to set AccountID
-func (_options *DeleteNotificationChannelOptions) SetAccountID(accountID string) *DeleteNotificationChannelOptions {
-	_options.AccountID = core.StringPtr(accountID)
-	return _options
 }
 
 // SetChannelID : Allow user to set ChannelID
@@ -1087,9 +1071,6 @@ func (options *DeleteNotificationChannelOptions) SetHeaders(param map[string]str
 
 // DeleteNotificationChannelsOptions : The DeleteNotificationChannels options.
 type DeleteNotificationChannelsOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// Body for bulk delete notification channels.
 	Body []string `validate:"required"`
 
@@ -1101,17 +1082,10 @@ type DeleteNotificationChannelsOptions struct {
 }
 
 // NewDeleteNotificationChannelsOptions : Instantiate DeleteNotificationChannelsOptions
-func (*NotificationsV1) NewDeleteNotificationChannelsOptions(accountID string, body []string) *DeleteNotificationChannelsOptions {
+func (*NotificationsV1) NewDeleteNotificationChannelsOptions(body []string) *DeleteNotificationChannelsOptions {
 	return &DeleteNotificationChannelsOptions{
-		AccountID: core.StringPtr(accountID),
-		Body:      body,
+		Body: body,
 	}
-}
-
-// SetAccountID : Allow user to set AccountID
-func (_options *DeleteNotificationChannelsOptions) SetAccountID(accountID string) *DeleteNotificationChannelsOptions {
-	_options.AccountID = core.StringPtr(accountID)
-	return _options
 }
 
 // SetBody : Allow user to set Body
@@ -1134,9 +1108,6 @@ func (options *DeleteNotificationChannelsOptions) SetHeaders(param map[string]st
 
 // GetNotificationChannelOptions : The GetNotificationChannel options.
 type GetNotificationChannelOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// Channel ID.
 	ChannelID *string `validate:"required,ne="`
 
@@ -1148,17 +1119,10 @@ type GetNotificationChannelOptions struct {
 }
 
 // NewGetNotificationChannelOptions : Instantiate GetNotificationChannelOptions
-func (*NotificationsV1) NewGetNotificationChannelOptions(accountID string, channelID string) *GetNotificationChannelOptions {
+func (*NotificationsV1) NewGetNotificationChannelOptions(channelID string) *GetNotificationChannelOptions {
 	return &GetNotificationChannelOptions{
-		AccountID: core.StringPtr(accountID),
 		ChannelID: core.StringPtr(channelID),
 	}
-}
-
-// SetAccountID : Allow user to set AccountID
-func (_options *GetNotificationChannelOptions) SetAccountID(accountID string) *GetNotificationChannelOptions {
-	_options.AccountID = core.StringPtr(accountID)
-	return _options
 }
 
 // SetChannelID : Allow user to set ChannelID
@@ -1181,9 +1145,6 @@ func (options *GetNotificationChannelOptions) SetHeaders(param map[string]string
 
 // GetPublicKeyOptions : The GetPublicKey options.
 type GetPublicKeyOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// The transaction id for the request in uuid v4 format.
 	TransactionID *string
 
@@ -1192,16 +1153,8 @@ type GetPublicKeyOptions struct {
 }
 
 // NewGetPublicKeyOptions : Instantiate GetPublicKeyOptions
-func (*NotificationsV1) NewGetPublicKeyOptions(accountID string) *GetPublicKeyOptions {
-	return &GetPublicKeyOptions{
-		AccountID: core.StringPtr(accountID),
-	}
-}
-
-// SetAccountID : Allow user to set AccountID
-func (_options *GetPublicKeyOptions) SetAccountID(accountID string) *GetPublicKeyOptions {
-	_options.AccountID = core.StringPtr(accountID)
-	return _options
+func (*NotificationsV1) NewGetPublicKeyOptions() *GetPublicKeyOptions {
+	return &GetPublicKeyOptions{}
 }
 
 // SetTransactionID : Allow user to set TransactionID
@@ -1218,9 +1171,6 @@ func (options *GetPublicKeyOptions) SetHeaders(param map[string]string) *GetPubl
 
 // ListAllChannelsOptions : The ListAllChannels options.
 type ListAllChannelsOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// The transaction id for the request in uuid v4 format.
 	TransactionID *string
 
@@ -1235,16 +1185,8 @@ type ListAllChannelsOptions struct {
 }
 
 // NewListAllChannelsOptions : Instantiate ListAllChannelsOptions
-func (*NotificationsV1) NewListAllChannelsOptions(accountID string) *ListAllChannelsOptions {
-	return &ListAllChannelsOptions{
-		AccountID: core.StringPtr(accountID),
-	}
-}
-
-// SetAccountID : Allow user to set AccountID
-func (_options *ListAllChannelsOptions) SetAccountID(accountID string) *ListAllChannelsOptions {
-	_options.AccountID = core.StringPtr(accountID)
-	return _options
+func (*NotificationsV1) NewListAllChannelsOptions() *ListAllChannelsOptions {
+	return &ListAllChannelsOptions{}
 }
 
 // SetTransactionID : Allow user to set TransactionID
@@ -1359,9 +1301,6 @@ func UnmarshalTestChannel(m map[string]json.RawMessage, result interface{}) (err
 
 // TestNotificationChannelOptions : The TestNotificationChannel options.
 type TestNotificationChannelOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// Channel ID.
 	ChannelID *string `validate:"required,ne="`
 
@@ -1373,17 +1312,10 @@ type TestNotificationChannelOptions struct {
 }
 
 // NewTestNotificationChannelOptions : Instantiate TestNotificationChannelOptions
-func (*NotificationsV1) NewTestNotificationChannelOptions(accountID string, channelID string) *TestNotificationChannelOptions {
+func (*NotificationsV1) NewTestNotificationChannelOptions(channelID string) *TestNotificationChannelOptions {
 	return &TestNotificationChannelOptions{
-		AccountID: core.StringPtr(accountID),
 		ChannelID: core.StringPtr(channelID),
 	}
-}
-
-// SetAccountID : Allow user to set AccountID
-func (_options *TestNotificationChannelOptions) SetAccountID(accountID string) *TestNotificationChannelOptions {
-	_options.AccountID = core.StringPtr(accountID)
-	return _options
 }
 
 // SetChannelID : Allow user to set ChannelID
@@ -1406,9 +1338,6 @@ func (options *TestNotificationChannelOptions) SetHeaders(param map[string]strin
 
 // UpdateNotificationChannelOptions : The UpdateNotificationChannel options.
 type UpdateNotificationChannelOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// Channel ID.
 	ChannelID *string `validate:"required,ne="`
 
@@ -1454,20 +1383,13 @@ const (
 )
 
 // NewUpdateNotificationChannelOptions : Instantiate UpdateNotificationChannelOptions
-func (*NotificationsV1) NewUpdateNotificationChannelOptions(accountID string, channelID string, name string, typeVar string, endpoint string) *UpdateNotificationChannelOptions {
+func (*NotificationsV1) NewUpdateNotificationChannelOptions(channelID string, name string, typeVar string, endpoint string) *UpdateNotificationChannelOptions {
 	return &UpdateNotificationChannelOptions{
-		AccountID: core.StringPtr(accountID),
 		ChannelID: core.StringPtr(channelID),
 		Name:      core.StringPtr(name),
 		Type:      core.StringPtr(typeVar),
 		Endpoint:  core.StringPtr(endpoint),
 	}
-}
-
-// SetAccountID : Allow user to set AccountID
-func (_options *UpdateNotificationChannelOptions) SetAccountID(accountID string) *UpdateNotificationChannelOptions {
-	_options.AccountID = core.StringPtr(accountID)
-	return _options
 }
 
 // SetChannelID : Allow user to set ChannelID

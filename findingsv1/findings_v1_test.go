@@ -28,8 +28,8 @@ import (
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
+	"github.com/IBM/scc-go-sdk/findingsv1"
 	"github.com/go-openapi/strfmt"
-	"github.com/ibm/scc-go-sdk/findingsv1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -37,23 +37,27 @@ import (
 var _ = Describe(`FindingsV1`, func() {
 	var testServer *httptest.Server
 	Describe(`Service constructor tests`, func() {
+		accountID := "testString"
 		It(`Instantiate service client`, func() {
 			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 				Authenticator: &core.NoAuthAuthenticator{},
+				AccountID:     core.StringPtr(accountID),
 			})
 			Expect(findingsService).ToNot(BeNil())
 			Expect(serviceErr).To(BeNil())
 		})
 		It(`Instantiate service client with error: Invalid URL`, func() {
 			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
-				URL: "{BAD_URL_STRING",
+				URL:       "{BAD_URL_STRING",
+				AccountID: core.StringPtr(accountID),
 			})
 			Expect(findingsService).To(BeNil())
 			Expect(serviceErr).ToNot(BeNil())
 		})
 		It(`Instantiate service client with error: Invalid Auth`, func() {
 			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
-				URL: "https://findingsv1/api",
+				URL:       "https://findingsv1/api",
+				AccountID: core.StringPtr(accountID),
 				Authenticator: &core.BasicAuthenticator{
 					Username: "",
 					Password: "",
@@ -62,8 +66,14 @@ var _ = Describe(`FindingsV1`, func() {
 			Expect(findingsService).To(BeNil())
 			Expect(serviceErr).ToNot(BeNil())
 		})
+		It(`Instantiate service client with error: Validation Error`, func() {
+			findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{})
+			Expect(findingsService).To(BeNil())
+			Expect(serviceErr).ToNot(BeNil())
+		})
 	})
 	Describe(`Service constructor tests using external config`, func() {
+		accountID := "testString"
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
@@ -73,7 +83,9 @@ var _ = Describe(`FindingsV1`, func() {
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{})
+				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
+					AccountID: core.StringPtr(accountID),
+				})
 				Expect(findingsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
@@ -87,7 +99,8 @@ var _ = Describe(`FindingsV1`, func() {
 			It(`Create service client using external config and set url from constructor successfully`, func() {
 				SetTestEnvironment(testEnvironment)
 				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
-					URL: "https://testService/api",
+					URL:       "https://testService/api",
+					AccountID: core.StringPtr(accountID),
 				})
 				Expect(findingsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
@@ -102,7 +115,9 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{})
+				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
+					AccountID: core.StringPtr(accountID),
+				})
 				err := findingsService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -125,7 +140,9 @@ var _ = Describe(`FindingsV1`, func() {
 			}
 
 			SetTestEnvironment(testEnvironment)
-			findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{})
+			findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
+				AccountID: core.StringPtr(accountID),
+			})
 
 			It(`Instantiate service client with error`, func() {
 				Expect(findingsService).To(BeNil())
@@ -141,7 +158,8 @@ var _ = Describe(`FindingsV1`, func() {
 
 			SetTestEnvironment(testEnvironment)
 			findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
-				URL: "{BAD_URL_STRING",
+				URL:       "{BAD_URL_STRING",
+				AccountID: core.StringPtr(accountID),
 			})
 
 			It(`Instantiate service client with error`, func() {
@@ -178,6 +196,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`PostGraph(postGraphOptions *PostGraphOptions)`, func() {
+		accountID := "testString"
 		postGraphPath := "/v1/testString/graph"
 		Context(`Using mock server endpoint`, func() {
 			BeforeEach(func() {
@@ -215,6 +234,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -226,7 +246,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the PostGraphOptions model
 				postGraphOptionsModel := new(findingsv1.PostGraphOptions)
-				postGraphOptionsModel.AccountID = core.StringPtr("testString")
 				postGraphOptionsModel.Body = CreateMockReader("This is a mock file.")
 				postGraphOptionsModel.ContentType = core.StringPtr("application/json")
 				postGraphOptionsModel.TransactionID = core.StringPtr("testString")
@@ -237,17 +256,17 @@ var _ = Describe(`FindingsV1`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 			})
-			It(`Invoke PostGraph with error: Operation validation and request error`, func() {
+			It(`Invoke PostGraph with error: Operation request error`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the PostGraphOptions model
 				postGraphOptionsModel := new(findingsv1.PostGraphOptions)
-				postGraphOptionsModel.AccountID = core.StringPtr("testString")
 				postGraphOptionsModel.Body = CreateMockReader("This is a mock file.")
 				postGraphOptionsModel.ContentType = core.StringPtr("application/json")
 				postGraphOptionsModel.TransactionID = core.StringPtr("testString")
@@ -259,12 +278,6 @@ var _ = Describe(`FindingsV1`, func() {
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
-				// Construct a second instance of the PostGraphOptions model with no property values
-				postGraphOptionsModelNew := new(findingsv1.PostGraphOptions)
-				// Invoke operation with invalid model (negative test)
-				response, operationErr = findingsService.PostGraph(postGraphOptionsModelNew)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).To(BeNil())
 			})
 			AfterEach(func() {
 				testServer.Close()
@@ -272,6 +285,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`CreateNote(createNoteOptions *CreateNoteOptions) - Operation response error`, func() {
+		accountID := "testString"
 		createNotePath := "/v1/testString/providers/testString/notes"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
@@ -292,6 +306,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -354,7 +369,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the CreateNoteOptions model
 				createNoteOptionsModel := new(findingsv1.CreateNoteOptions)
-				createNoteOptionsModel.AccountID = core.StringPtr("testString")
 				createNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				createNoteOptionsModel.ShortDescription = core.StringPtr("testString")
 				createNoteOptionsModel.LongDescription = core.StringPtr("testString")
@@ -389,6 +403,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`CreateNote(createNoteOptions *CreateNoteOptions)`, func() {
+		accountID := "testString"
 		createNotePath := "/v1/testString/providers/testString/notes"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
@@ -430,6 +445,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -493,7 +509,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the CreateNoteOptions model
 				createNoteOptionsModel := new(findingsv1.CreateNoteOptions)
-				createNoteOptionsModel.AccountID = core.StringPtr("testString")
 				createNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				createNoteOptionsModel.ShortDescription = core.StringPtr("testString")
 				createNoteOptionsModel.LongDescription = core.StringPtr("testString")
@@ -572,6 +587,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -640,7 +656,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the CreateNoteOptions model
 				createNoteOptionsModel := new(findingsv1.CreateNoteOptions)
-				createNoteOptionsModel.AccountID = core.StringPtr("testString")
 				createNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				createNoteOptionsModel.ShortDescription = core.StringPtr("testString")
 				createNoteOptionsModel.LongDescription = core.StringPtr("testString")
@@ -668,6 +683,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -730,7 +746,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the CreateNoteOptions model
 				createNoteOptionsModel := new(findingsv1.CreateNoteOptions)
-				createNoteOptionsModel.AccountID = core.StringPtr("testString")
 				createNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				createNoteOptionsModel.ShortDescription = core.StringPtr("testString")
 				createNoteOptionsModel.LongDescription = core.StringPtr("testString")
@@ -779,6 +794,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -841,7 +857,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the CreateNoteOptions model
 				createNoteOptionsModel := new(findingsv1.CreateNoteOptions)
-				createNoteOptionsModel.AccountID = core.StringPtr("testString")
 				createNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				createNoteOptionsModel.ShortDescription = core.StringPtr("testString")
 				createNoteOptionsModel.LongDescription = core.StringPtr("testString")
@@ -872,6 +887,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`ListNotes(listNotesOptions *ListNotesOptions) - Operation response error`, func() {
+		accountID := "testString"
 		listNotesPath := "/v1/testString/providers/testString/notes"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
@@ -894,13 +910,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the ListNotesOptions model
 				listNotesOptionsModel := new(findingsv1.ListNotesOptions)
-				listNotesOptionsModel.AccountID = core.StringPtr("testString")
 				listNotesOptionsModel.ProviderID = core.StringPtr("testString")
 				listNotesOptionsModel.TransactionID = core.StringPtr("testString")
 				listNotesOptionsModel.PageSize = core.Int64Ptr(int64(2))
@@ -925,6 +941,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`ListNotes(listNotesOptions *ListNotesOptions)`, func() {
+		accountID := "testString"
 		listNotesPath := "/v1/testString/providers/testString/notes"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
@@ -952,6 +969,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -959,7 +977,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the ListNotesOptions model
 				listNotesOptionsModel := new(findingsv1.ListNotesOptions)
-				listNotesOptionsModel.AccountID = core.StringPtr("testString")
 				listNotesOptionsModel.ProviderID = core.StringPtr("testString")
 				listNotesOptionsModel.TransactionID = core.StringPtr("testString")
 				listNotesOptionsModel.PageSize = core.Int64Ptr(int64(2))
@@ -1014,6 +1031,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -1026,7 +1044,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the ListNotesOptions model
 				listNotesOptionsModel := new(findingsv1.ListNotesOptions)
-				listNotesOptionsModel.AccountID = core.StringPtr("testString")
 				listNotesOptionsModel.ProviderID = core.StringPtr("testString")
 				listNotesOptionsModel.TransactionID = core.StringPtr("testString")
 				listNotesOptionsModel.PageSize = core.Int64Ptr(int64(2))
@@ -1044,13 +1061,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the ListNotesOptions model
 				listNotesOptionsModel := new(findingsv1.ListNotesOptions)
-				listNotesOptionsModel.AccountID = core.StringPtr("testString")
 				listNotesOptionsModel.ProviderID = core.StringPtr("testString")
 				listNotesOptionsModel.TransactionID = core.StringPtr("testString")
 				listNotesOptionsModel.PageSize = core.Int64Ptr(int64(2))
@@ -1089,13 +1106,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the ListNotesOptions model
 				listNotesOptionsModel := new(findingsv1.ListNotesOptions)
-				listNotesOptionsModel.AccountID = core.StringPtr("testString")
 				listNotesOptionsModel.ProviderID = core.StringPtr("testString")
 				listNotesOptionsModel.TransactionID = core.StringPtr("testString")
 				listNotesOptionsModel.PageSize = core.Int64Ptr(int64(2))
@@ -1116,6 +1133,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`GetNote(getNoteOptions *GetNoteOptions) - Operation response error`, func() {
+		accountID := "testString"
 		getNotePath := "/v1/testString/providers/testString/notes/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
@@ -1136,13 +1154,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the GetNoteOptions model
 				getNoteOptionsModel := new(findingsv1.GetNoteOptions)
-				getNoteOptionsModel.AccountID = core.StringPtr("testString")
 				getNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				getNoteOptionsModel.NoteID = core.StringPtr("testString")
 				getNoteOptionsModel.TransactionID = core.StringPtr("testString")
@@ -1166,6 +1184,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`GetNote(getNoteOptions *GetNoteOptions)`, func() {
+		accountID := "testString"
 		getNotePath := "/v1/testString/providers/testString/notes/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
@@ -1191,6 +1210,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -1198,7 +1218,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the GetNoteOptions model
 				getNoteOptionsModel := new(findingsv1.GetNoteOptions)
-				getNoteOptionsModel.AccountID = core.StringPtr("testString")
 				getNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				getNoteOptionsModel.NoteID = core.StringPtr("testString")
 				getNoteOptionsModel.TransactionID = core.StringPtr("testString")
@@ -1250,6 +1269,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -1262,7 +1282,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the GetNoteOptions model
 				getNoteOptionsModel := new(findingsv1.GetNoteOptions)
-				getNoteOptionsModel.AccountID = core.StringPtr("testString")
 				getNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				getNoteOptionsModel.NoteID = core.StringPtr("testString")
 				getNoteOptionsModel.TransactionID = core.StringPtr("testString")
@@ -1279,13 +1298,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the GetNoteOptions model
 				getNoteOptionsModel := new(findingsv1.GetNoteOptions)
-				getNoteOptionsModel.AccountID = core.StringPtr("testString")
 				getNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				getNoteOptionsModel.NoteID = core.StringPtr("testString")
 				getNoteOptionsModel.TransactionID = core.StringPtr("testString")
@@ -1323,13 +1342,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the GetNoteOptions model
 				getNoteOptionsModel := new(findingsv1.GetNoteOptions)
-				getNoteOptionsModel.AccountID = core.StringPtr("testString")
 				getNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				getNoteOptionsModel.NoteID = core.StringPtr("testString")
 				getNoteOptionsModel.TransactionID = core.StringPtr("testString")
@@ -1349,6 +1368,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`UpdateNote(updateNoteOptions *UpdateNoteOptions) - Operation response error`, func() {
+		accountID := "testString"
 		updateNotePath := "/v1/testString/providers/testString/notes/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
@@ -1369,6 +1389,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -1431,7 +1452,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the UpdateNoteOptions model
 				updateNoteOptionsModel := new(findingsv1.UpdateNoteOptions)
-				updateNoteOptionsModel.AccountID = core.StringPtr("testString")
 				updateNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				updateNoteOptionsModel.NoteID = core.StringPtr("testString")
 				updateNoteOptionsModel.ShortDescription = core.StringPtr("testString")
@@ -1467,6 +1487,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`UpdateNote(updateNoteOptions *UpdateNoteOptions)`, func() {
+		accountID := "testString"
 		updateNotePath := "/v1/testString/providers/testString/notes/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
@@ -1508,6 +1529,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -1571,7 +1593,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the UpdateNoteOptions model
 				updateNoteOptionsModel := new(findingsv1.UpdateNoteOptions)
-				updateNoteOptionsModel.AccountID = core.StringPtr("testString")
 				updateNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				updateNoteOptionsModel.NoteID = core.StringPtr("testString")
 				updateNoteOptionsModel.ShortDescription = core.StringPtr("testString")
@@ -1651,6 +1672,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -1719,7 +1741,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the UpdateNoteOptions model
 				updateNoteOptionsModel := new(findingsv1.UpdateNoteOptions)
-				updateNoteOptionsModel.AccountID = core.StringPtr("testString")
 				updateNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				updateNoteOptionsModel.NoteID = core.StringPtr("testString")
 				updateNoteOptionsModel.ShortDescription = core.StringPtr("testString")
@@ -1748,6 +1769,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -1810,7 +1832,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the UpdateNoteOptions model
 				updateNoteOptionsModel := new(findingsv1.UpdateNoteOptions)
-				updateNoteOptionsModel.AccountID = core.StringPtr("testString")
 				updateNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				updateNoteOptionsModel.NoteID = core.StringPtr("testString")
 				updateNoteOptionsModel.ShortDescription = core.StringPtr("testString")
@@ -1860,6 +1881,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -1922,7 +1944,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the UpdateNoteOptions model
 				updateNoteOptionsModel := new(findingsv1.UpdateNoteOptions)
-				updateNoteOptionsModel.AccountID = core.StringPtr("testString")
 				updateNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				updateNoteOptionsModel.NoteID = core.StringPtr("testString")
 				updateNoteOptionsModel.ShortDescription = core.StringPtr("testString")
@@ -1954,6 +1975,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`DeleteNote(deleteNoteOptions *DeleteNoteOptions)`, func() {
+		accountID := "testString"
 		deleteNotePath := "/v1/testString/providers/testString/notes/testString"
 		Context(`Using mock server endpoint`, func() {
 			BeforeEach(func() {
@@ -1973,6 +1995,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -1984,7 +2007,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the DeleteNoteOptions model
 				deleteNoteOptionsModel := new(findingsv1.DeleteNoteOptions)
-				deleteNoteOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				deleteNoteOptionsModel.NoteID = core.StringPtr("testString")
 				deleteNoteOptionsModel.TransactionID = core.StringPtr("testString")
@@ -1999,13 +2021,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteNoteOptions model
 				deleteNoteOptionsModel := new(findingsv1.DeleteNoteOptions)
-				deleteNoteOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				deleteNoteOptionsModel.NoteID = core.StringPtr("testString")
 				deleteNoteOptionsModel.TransactionID = core.StringPtr("testString")
@@ -2030,6 +2052,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`GetOccurrenceNote(getOccurrenceNoteOptions *GetOccurrenceNoteOptions) - Operation response error`, func() {
+		accountID := "testString"
 		getOccurrenceNotePath := "/v1/testString/providers/testString/occurrences/testString/note"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
@@ -2050,13 +2073,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the GetOccurrenceNoteOptions model
 				getOccurrenceNoteOptionsModel := new(findingsv1.GetOccurrenceNoteOptions)
-				getOccurrenceNoteOptionsModel.AccountID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.OccurrenceID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.TransactionID = core.StringPtr("testString")
@@ -2080,6 +2103,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`GetOccurrenceNote(getOccurrenceNoteOptions *GetOccurrenceNoteOptions)`, func() {
+		accountID := "testString"
 		getOccurrenceNotePath := "/v1/testString/providers/testString/occurrences/testString/note"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
@@ -2105,6 +2129,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -2112,7 +2137,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the GetOccurrenceNoteOptions model
 				getOccurrenceNoteOptionsModel := new(findingsv1.GetOccurrenceNoteOptions)
-				getOccurrenceNoteOptionsModel.AccountID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.OccurrenceID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.TransactionID = core.StringPtr("testString")
@@ -2164,6 +2188,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -2176,7 +2201,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the GetOccurrenceNoteOptions model
 				getOccurrenceNoteOptionsModel := new(findingsv1.GetOccurrenceNoteOptions)
-				getOccurrenceNoteOptionsModel.AccountID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.OccurrenceID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.TransactionID = core.StringPtr("testString")
@@ -2193,13 +2217,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the GetOccurrenceNoteOptions model
 				getOccurrenceNoteOptionsModel := new(findingsv1.GetOccurrenceNoteOptions)
-				getOccurrenceNoteOptionsModel.AccountID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.OccurrenceID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.TransactionID = core.StringPtr("testString")
@@ -2237,13 +2261,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the GetOccurrenceNoteOptions model
 				getOccurrenceNoteOptionsModel := new(findingsv1.GetOccurrenceNoteOptions)
-				getOccurrenceNoteOptionsModel.AccountID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.ProviderID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.OccurrenceID = core.StringPtr("testString")
 				getOccurrenceNoteOptionsModel.TransactionID = core.StringPtr("testString")
@@ -2263,6 +2287,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`CreateOccurrence(createOccurrenceOptions *CreateOccurrenceOptions) - Operation response error`, func() {
+		accountID := "testString"
 		createOccurrencePath := "/v1/testString/providers/testString/occurrences"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
@@ -2285,6 +2310,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -2341,7 +2367,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the CreateOccurrenceOptions model
 				createOccurrenceOptionsModel := new(findingsv1.CreateOccurrenceOptions)
-				createOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.NoteName = core.StringPtr("testString")
 				createOccurrenceOptionsModel.Kind = core.StringPtr("FINDING")
@@ -2374,6 +2399,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`CreateOccurrence(createOccurrenceOptions *CreateOccurrenceOptions)`, func() {
+		accountID := "testString"
 		createOccurrencePath := "/v1/testString/providers/testString/occurrences"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
@@ -2417,6 +2443,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -2474,7 +2501,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the CreateOccurrenceOptions model
 				createOccurrenceOptionsModel := new(findingsv1.CreateOccurrenceOptions)
-				createOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.NoteName = core.StringPtr("testString")
 				createOccurrenceOptionsModel.Kind = core.StringPtr("FINDING")
@@ -2553,6 +2579,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -2615,7 +2642,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the CreateOccurrenceOptions model
 				createOccurrenceOptionsModel := new(findingsv1.CreateOccurrenceOptions)
-				createOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.NoteName = core.StringPtr("testString")
 				createOccurrenceOptionsModel.Kind = core.StringPtr("FINDING")
@@ -2641,6 +2667,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -2697,7 +2724,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the CreateOccurrenceOptions model
 				createOccurrenceOptionsModel := new(findingsv1.CreateOccurrenceOptions)
-				createOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.NoteName = core.StringPtr("testString")
 				createOccurrenceOptionsModel.Kind = core.StringPtr("FINDING")
@@ -2744,6 +2770,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -2800,7 +2827,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the CreateOccurrenceOptions model
 				createOccurrenceOptionsModel := new(findingsv1.CreateOccurrenceOptions)
-				createOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.NoteName = core.StringPtr("testString")
 				createOccurrenceOptionsModel.Kind = core.StringPtr("FINDING")
@@ -2829,6 +2855,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`ListOccurrences(listOccurrencesOptions *ListOccurrencesOptions) - Operation response error`, func() {
+		accountID := "testString"
 		listOccurrencesPath := "/v1/testString/providers/testString/occurrences"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
@@ -2851,13 +2878,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the ListOccurrencesOptions model
 				listOccurrencesOptionsModel := new(findingsv1.ListOccurrencesOptions)
-				listOccurrencesOptionsModel.AccountID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.ProviderID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.TransactionID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.PageSize = core.Int64Ptr(int64(2))
@@ -2882,6 +2909,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`ListOccurrences(listOccurrencesOptions *ListOccurrencesOptions)`, func() {
+		accountID := "testString"
 		listOccurrencesPath := "/v1/testString/providers/testString/occurrences"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
@@ -2909,6 +2937,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -2916,7 +2945,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the ListOccurrencesOptions model
 				listOccurrencesOptionsModel := new(findingsv1.ListOccurrencesOptions)
-				listOccurrencesOptionsModel.AccountID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.ProviderID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.TransactionID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.PageSize = core.Int64Ptr(int64(2))
@@ -2971,6 +2999,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -2983,7 +3012,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the ListOccurrencesOptions model
 				listOccurrencesOptionsModel := new(findingsv1.ListOccurrencesOptions)
-				listOccurrencesOptionsModel.AccountID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.ProviderID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.TransactionID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.PageSize = core.Int64Ptr(int64(2))
@@ -3001,13 +3029,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the ListOccurrencesOptions model
 				listOccurrencesOptionsModel := new(findingsv1.ListOccurrencesOptions)
-				listOccurrencesOptionsModel.AccountID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.ProviderID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.TransactionID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.PageSize = core.Int64Ptr(int64(2))
@@ -3046,13 +3074,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the ListOccurrencesOptions model
 				listOccurrencesOptionsModel := new(findingsv1.ListOccurrencesOptions)
-				listOccurrencesOptionsModel.AccountID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.ProviderID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.TransactionID = core.StringPtr("testString")
 				listOccurrencesOptionsModel.PageSize = core.Int64Ptr(int64(2))
@@ -3073,6 +3101,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`ListNoteOccurrences(listNoteOccurrencesOptions *ListNoteOccurrencesOptions) - Operation response error`, func() {
+		accountID := "testString"
 		listNoteOccurrencesPath := "/v1/testString/providers/testString/notes/testString/occurrences"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
@@ -3095,13 +3124,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the ListNoteOccurrencesOptions model
 				listNoteOccurrencesOptionsModel := new(findingsv1.ListNoteOccurrencesOptions)
-				listNoteOccurrencesOptionsModel.AccountID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.ProviderID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.NoteID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.TransactionID = core.StringPtr("testString")
@@ -3127,6 +3156,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`ListNoteOccurrences(listNoteOccurrencesOptions *ListNoteOccurrencesOptions)`, func() {
+		accountID := "testString"
 		listNoteOccurrencesPath := "/v1/testString/providers/testString/notes/testString/occurrences"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
@@ -3154,6 +3184,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -3161,7 +3192,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the ListNoteOccurrencesOptions model
 				listNoteOccurrencesOptionsModel := new(findingsv1.ListNoteOccurrencesOptions)
-				listNoteOccurrencesOptionsModel.AccountID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.ProviderID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.NoteID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.TransactionID = core.StringPtr("testString")
@@ -3217,6 +3247,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -3229,7 +3260,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the ListNoteOccurrencesOptions model
 				listNoteOccurrencesOptionsModel := new(findingsv1.ListNoteOccurrencesOptions)
-				listNoteOccurrencesOptionsModel.AccountID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.ProviderID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.NoteID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.TransactionID = core.StringPtr("testString")
@@ -3248,13 +3278,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the ListNoteOccurrencesOptions model
 				listNoteOccurrencesOptionsModel := new(findingsv1.ListNoteOccurrencesOptions)
-				listNoteOccurrencesOptionsModel.AccountID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.ProviderID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.NoteID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.TransactionID = core.StringPtr("testString")
@@ -3294,13 +3324,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the ListNoteOccurrencesOptions model
 				listNoteOccurrencesOptionsModel := new(findingsv1.ListNoteOccurrencesOptions)
-				listNoteOccurrencesOptionsModel.AccountID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.ProviderID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.NoteID = core.StringPtr("testString")
 				listNoteOccurrencesOptionsModel.TransactionID = core.StringPtr("testString")
@@ -3322,6 +3352,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`GetOccurrence(getOccurrenceOptions *GetOccurrenceOptions) - Operation response error`, func() {
+		accountID := "testString"
 		getOccurrencePath := "/v1/testString/providers/testString/occurrences/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
@@ -3342,13 +3373,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the GetOccurrenceOptions model
 				getOccurrenceOptionsModel := new(findingsv1.GetOccurrenceOptions)
-				getOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
@@ -3372,6 +3403,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`GetOccurrence(getOccurrenceOptions *GetOccurrenceOptions)`, func() {
+		accountID := "testString"
 		getOccurrencePath := "/v1/testString/providers/testString/occurrences/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
@@ -3397,6 +3429,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -3404,7 +3437,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the GetOccurrenceOptions model
 				getOccurrenceOptionsModel := new(findingsv1.GetOccurrenceOptions)
-				getOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
@@ -3456,6 +3488,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -3468,7 +3501,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the GetOccurrenceOptions model
 				getOccurrenceOptionsModel := new(findingsv1.GetOccurrenceOptions)
-				getOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
@@ -3485,13 +3517,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the GetOccurrenceOptions model
 				getOccurrenceOptionsModel := new(findingsv1.GetOccurrenceOptions)
-				getOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
@@ -3529,13 +3561,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the GetOccurrenceOptions model
 				getOccurrenceOptionsModel := new(findingsv1.GetOccurrenceOptions)
-				getOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
 				getOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
@@ -3555,6 +3587,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`UpdateOccurrence(updateOccurrenceOptions *UpdateOccurrenceOptions) - Operation response error`, func() {
+		accountID := "testString"
 		updateOccurrencePath := "/v1/testString/providers/testString/occurrences/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
@@ -3575,6 +3608,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -3631,7 +3665,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the UpdateOccurrenceOptions model
 				updateOccurrenceOptionsModel := new(findingsv1.UpdateOccurrenceOptions)
-				updateOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.NoteName = core.StringPtr("testString")
@@ -3664,6 +3697,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`UpdateOccurrence(updateOccurrenceOptions *UpdateOccurrenceOptions)`, func() {
+		accountID := "testString"
 		updateOccurrencePath := "/v1/testString/providers/testString/occurrences/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
@@ -3705,6 +3739,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -3762,7 +3797,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the UpdateOccurrenceOptions model
 				updateOccurrenceOptionsModel := new(findingsv1.UpdateOccurrenceOptions)
-				updateOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.NoteName = core.StringPtr("testString")
@@ -3839,6 +3873,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -3901,7 +3936,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the UpdateOccurrenceOptions model
 				updateOccurrenceOptionsModel := new(findingsv1.UpdateOccurrenceOptions)
-				updateOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.NoteName = core.StringPtr("testString")
@@ -3927,6 +3961,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -3983,7 +4018,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the UpdateOccurrenceOptions model
 				updateOccurrenceOptionsModel := new(findingsv1.UpdateOccurrenceOptions)
-				updateOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.NoteName = core.StringPtr("testString")
@@ -4030,6 +4064,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -4086,7 +4121,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the UpdateOccurrenceOptions model
 				updateOccurrenceOptionsModel := new(findingsv1.UpdateOccurrenceOptions)
-				updateOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.NoteName = core.StringPtr("testString")
@@ -4115,6 +4149,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`DeleteOccurrence(deleteOccurrenceOptions *DeleteOccurrenceOptions)`, func() {
+		accountID := "testString"
 		deleteOccurrencePath := "/v1/testString/providers/testString/occurrences/testString"
 		Context(`Using mock server endpoint`, func() {
 			BeforeEach(func() {
@@ -4134,6 +4169,7 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -4145,7 +4181,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the DeleteOccurrenceOptions model
 				deleteOccurrenceOptionsModel := new(findingsv1.DeleteOccurrenceOptions)
-				deleteOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				deleteOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				deleteOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
 				deleteOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
@@ -4160,13 +4195,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteOccurrenceOptions model
 				deleteOccurrenceOptionsModel := new(findingsv1.DeleteOccurrenceOptions)
-				deleteOccurrenceOptionsModel.AccountID = core.StringPtr("testString")
 				deleteOccurrenceOptionsModel.ProviderID = core.StringPtr("testString")
 				deleteOccurrenceOptionsModel.OccurrenceID = core.StringPtr("testString")
 				deleteOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
@@ -4191,6 +4226,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`ListProviders(listProvidersOptions *ListProvidersOptions) - Operation response error`, func() {
+		accountID := "testString"
 		listProvidersPath := "/v1/testString/providers"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
@@ -4215,13 +4251,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the ListProvidersOptions model
 				listProvidersOptionsModel := new(findingsv1.ListProvidersOptions)
-				listProvidersOptionsModel.AccountID = core.StringPtr("testString")
 				listProvidersOptionsModel.TransactionID = core.StringPtr("testString")
 				listProvidersOptionsModel.Limit = core.Int64Ptr(int64(2))
 				listProvidersOptionsModel.Skip = core.Int64Ptr(int64(38))
@@ -4247,6 +4283,7 @@ var _ = Describe(`FindingsV1`, func() {
 		})
 	})
 	Describe(`ListProviders(listProvidersOptions *ListProvidersOptions)`, func() {
+		accountID := "testString"
 		listProvidersPath := "/v1/testString/providers"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
@@ -4269,13 +4306,14 @@ var _ = Describe(`FindingsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"providers": [{"name": "Name", "id": "ID"}]}`)
+					fmt.Fprintf(res, "%s", `{"providers": [{"name": "Name", "id": "ID"}], "limit": 5, "skip": 4}`)
 				}))
 			})
 			It(`Invoke ListProviders successfully with retries`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -4283,7 +4321,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the ListProvidersOptions model
 				listProvidersOptionsModel := new(findingsv1.ListProvidersOptions)
-				listProvidersOptionsModel.AccountID = core.StringPtr("testString")
 				listProvidersOptionsModel.TransactionID = core.StringPtr("testString")
 				listProvidersOptionsModel.Limit = core.Int64Ptr(int64(2))
 				listProvidersOptionsModel.Skip = core.Int64Ptr(int64(38))
@@ -4334,13 +4371,14 @@ var _ = Describe(`FindingsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"providers": [{"name": "Name", "id": "ID"}]}`)
+					fmt.Fprintf(res, "%s", `{"providers": [{"name": "Name", "id": "ID"}], "limit": 5, "skip": 4}`)
 				}))
 			})
 			It(`Invoke ListProviders successfully`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -4353,7 +4391,6 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the ListProvidersOptions model
 				listProvidersOptionsModel := new(findingsv1.ListProvidersOptions)
-				listProvidersOptionsModel.AccountID = core.StringPtr("testString")
 				listProvidersOptionsModel.TransactionID = core.StringPtr("testString")
 				listProvidersOptionsModel.Limit = core.Int64Ptr(int64(2))
 				listProvidersOptionsModel.Skip = core.Int64Ptr(int64(38))
@@ -4368,17 +4405,17 @@ var _ = Describe(`FindingsV1`, func() {
 				Expect(result).ToNot(BeNil())
 
 			})
-			It(`Invoke ListProviders with error: Operation validation and request error`, func() {
+			It(`Invoke ListProviders with error: Operation request error`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the ListProvidersOptions model
 				listProvidersOptionsModel := new(findingsv1.ListProvidersOptions)
-				listProvidersOptionsModel.AccountID = core.StringPtr("testString")
 				listProvidersOptionsModel.TransactionID = core.StringPtr("testString")
 				listProvidersOptionsModel.Limit = core.Int64Ptr(int64(2))
 				listProvidersOptionsModel.Skip = core.Int64Ptr(int64(38))
@@ -4391,13 +4428,6 @@ var _ = Describe(`FindingsV1`, func() {
 				result, response, operationErr := findingsService.ListProviders(listProvidersOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-				// Construct a second instance of the ListProvidersOptions model with no property values
-				listProvidersOptionsModelNew := new(findingsv1.ListProvidersOptions)
-				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = findingsService.ListProviders(listProvidersOptionsModelNew)
-				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 			})
@@ -4418,13 +4448,13 @@ var _ = Describe(`FindingsV1`, func() {
 				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
 
 				// Construct an instance of the ListProvidersOptions model
 				listProvidersOptionsModel := new(findingsv1.ListProvidersOptions)
-				listProvidersOptionsModel.AccountID = core.StringPtr("testString")
 				listProvidersOptionsModel.TransactionID = core.StringPtr("testString")
 				listProvidersOptionsModel.Limit = core.Int64Ptr(int64(2))
 				listProvidersOptionsModel.Skip = core.Int64Ptr(int64(38))
@@ -4447,9 +4477,11 @@ var _ = Describe(`FindingsV1`, func() {
 	})
 	Describe(`Model constructor tests`, func() {
 		Context(`Using a service client instance`, func() {
+			accountID := "testString"
 			findingsService, _ := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
 				URL:           "http://findingsv1modelgenerator.com",
 				Authenticator: &core.NoAuthAuthenticator{},
+				AccountID:     core.StringPtr(accountID),
 			})
 			It(`Invoke NewCard successfully`, func() {
 				section := "testString"
@@ -4457,8 +4489,8 @@ var _ = Describe(`FindingsV1`, func() {
 				subtitle := "testString"
 				findingNoteNames := []string{"testString"}
 				elements := []findingsv1.CardElementIntf{}
-				model, err := findingsService.NewCard(section, title, subtitle, findingNoteNames, elements)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewCard(section, title, subtitle, findingNoteNames, elements)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewCreateNoteOptions successfully`, func() {
@@ -4557,15 +4589,13 @@ var _ = Describe(`FindingsV1`, func() {
 				Expect(sectionModel.Image).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the CreateNoteOptions model
-				accountID := "testString"
 				providerID := "testString"
 				createNoteOptionsShortDescription := "testString"
 				createNoteOptionsLongDescription := "testString"
 				createNoteOptionsKind := "FINDING"
 				createNoteOptionsID := "testString"
 				var createNoteOptionsReportedBy *findingsv1.Reporter = nil
-				createNoteOptionsModel := findingsService.NewCreateNoteOptions(accountID, providerID, createNoteOptionsShortDescription, createNoteOptionsLongDescription, createNoteOptionsKind, createNoteOptionsID, createNoteOptionsReportedBy)
-				createNoteOptionsModel.SetAccountID("testString")
+				createNoteOptionsModel := findingsService.NewCreateNoteOptions(providerID, createNoteOptionsShortDescription, createNoteOptionsLongDescription, createNoteOptionsKind, createNoteOptionsID, createNoteOptionsReportedBy)
 				createNoteOptionsModel.SetProviderID("testString")
 				createNoteOptionsModel.SetShortDescription("testString")
 				createNoteOptionsModel.SetLongDescription("testString")
@@ -4582,7 +4612,6 @@ var _ = Describe(`FindingsV1`, func() {
 				createNoteOptionsModel.SetTransactionID("testString")
 				createNoteOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(createNoteOptionsModel).ToNot(BeNil())
-				Expect(createNoteOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(createNoteOptionsModel.ProviderID).To(Equal(core.StringPtr("testString")))
 				Expect(createNoteOptionsModel.ShortDescription).To(Equal(core.StringPtr("testString")))
 				Expect(createNoteOptionsModel.LongDescription).To(Equal(core.StringPtr("testString")))
@@ -4687,13 +4716,11 @@ var _ = Describe(`FindingsV1`, func() {
 				Expect(kpiModel.Total).To(Equal(core.Float64Ptr(float64(72.5))))
 
 				// Construct an instance of the CreateOccurrenceOptions model
-				accountID := "testString"
 				providerID := "testString"
 				createOccurrenceOptionsNoteName := "testString"
 				createOccurrenceOptionsKind := "FINDING"
 				createOccurrenceOptionsID := "testString"
-				createOccurrenceOptionsModel := findingsService.NewCreateOccurrenceOptions(accountID, providerID, createOccurrenceOptionsNoteName, createOccurrenceOptionsKind, createOccurrenceOptionsID)
-				createOccurrenceOptionsModel.SetAccountID("testString")
+				createOccurrenceOptionsModel := findingsService.NewCreateOccurrenceOptions(providerID, createOccurrenceOptionsNoteName, createOccurrenceOptionsKind, createOccurrenceOptionsID)
 				createOccurrenceOptionsModel.SetProviderID("testString")
 				createOccurrenceOptionsModel.SetNoteName("testString")
 				createOccurrenceOptionsModel.SetKind("FINDING")
@@ -4708,7 +4735,6 @@ var _ = Describe(`FindingsV1`, func() {
 				createOccurrenceOptionsModel.SetTransactionID("testString")
 				createOccurrenceOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(createOccurrenceOptionsModel).ToNot(BeNil())
-				Expect(createOccurrenceOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(createOccurrenceOptionsModel.ProviderID).To(Equal(core.StringPtr("testString")))
 				Expect(createOccurrenceOptionsModel.NoteName).To(Equal(core.StringPtr("testString")))
 				Expect(createOccurrenceOptionsModel.Kind).To(Equal(core.StringPtr("FINDING")))
@@ -4725,17 +4751,14 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 			It(`Invoke NewDeleteNoteOptions successfully`, func() {
 				// Construct an instance of the DeleteNoteOptions model
-				accountID := "testString"
 				providerID := "testString"
 				noteID := "testString"
-				deleteNoteOptionsModel := findingsService.NewDeleteNoteOptions(accountID, providerID, noteID)
-				deleteNoteOptionsModel.SetAccountID("testString")
+				deleteNoteOptionsModel := findingsService.NewDeleteNoteOptions(providerID, noteID)
 				deleteNoteOptionsModel.SetProviderID("testString")
 				deleteNoteOptionsModel.SetNoteID("testString")
 				deleteNoteOptionsModel.SetTransactionID("testString")
 				deleteNoteOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(deleteNoteOptionsModel).ToNot(BeNil())
-				Expect(deleteNoteOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(deleteNoteOptionsModel.ProviderID).To(Equal(core.StringPtr("testString")))
 				Expect(deleteNoteOptionsModel.NoteID).To(Equal(core.StringPtr("testString")))
 				Expect(deleteNoteOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
@@ -4743,17 +4766,14 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 			It(`Invoke NewDeleteOccurrenceOptions successfully`, func() {
 				// Construct an instance of the DeleteOccurrenceOptions model
-				accountID := "testString"
 				providerID := "testString"
 				occurrenceID := "testString"
-				deleteOccurrenceOptionsModel := findingsService.NewDeleteOccurrenceOptions(accountID, providerID, occurrenceID)
-				deleteOccurrenceOptionsModel.SetAccountID("testString")
+				deleteOccurrenceOptionsModel := findingsService.NewDeleteOccurrenceOptions(providerID, occurrenceID)
 				deleteOccurrenceOptionsModel.SetProviderID("testString")
 				deleteOccurrenceOptionsModel.SetOccurrenceID("testString")
 				deleteOccurrenceOptionsModel.SetTransactionID("testString")
 				deleteOccurrenceOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(deleteOccurrenceOptionsModel).ToNot(BeNil())
-				Expect(deleteOccurrenceOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(deleteOccurrenceOptionsModel.ProviderID).To(Equal(core.StringPtr("testString")))
 				Expect(deleteOccurrenceOptionsModel.OccurrenceID).To(Equal(core.StringPtr("testString")))
 				Expect(deleteOccurrenceOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
@@ -4761,23 +4781,20 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 			It(`Invoke NewFindingType successfully`, func() {
 				severity := "LOW"
-				model, err := findingsService.NewFindingType(severity)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewFindingType(severity)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewGetNoteOptions successfully`, func() {
 				// Construct an instance of the GetNoteOptions model
-				accountID := "testString"
 				providerID := "testString"
 				noteID := "testString"
-				getNoteOptionsModel := findingsService.NewGetNoteOptions(accountID, providerID, noteID)
-				getNoteOptionsModel.SetAccountID("testString")
+				getNoteOptionsModel := findingsService.NewGetNoteOptions(providerID, noteID)
 				getNoteOptionsModel.SetProviderID("testString")
 				getNoteOptionsModel.SetNoteID("testString")
 				getNoteOptionsModel.SetTransactionID("testString")
 				getNoteOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(getNoteOptionsModel).ToNot(BeNil())
-				Expect(getNoteOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(getNoteOptionsModel.ProviderID).To(Equal(core.StringPtr("testString")))
 				Expect(getNoteOptionsModel.NoteID).To(Equal(core.StringPtr("testString")))
 				Expect(getNoteOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
@@ -4785,17 +4802,14 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 			It(`Invoke NewGetOccurrenceNoteOptions successfully`, func() {
 				// Construct an instance of the GetOccurrenceNoteOptions model
-				accountID := "testString"
 				providerID := "testString"
 				occurrenceID := "testString"
-				getOccurrenceNoteOptionsModel := findingsService.NewGetOccurrenceNoteOptions(accountID, providerID, occurrenceID)
-				getOccurrenceNoteOptionsModel.SetAccountID("testString")
+				getOccurrenceNoteOptionsModel := findingsService.NewGetOccurrenceNoteOptions(providerID, occurrenceID)
 				getOccurrenceNoteOptionsModel.SetProviderID("testString")
 				getOccurrenceNoteOptionsModel.SetOccurrenceID("testString")
 				getOccurrenceNoteOptionsModel.SetTransactionID("testString")
 				getOccurrenceNoteOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(getOccurrenceNoteOptionsModel).ToNot(BeNil())
-				Expect(getOccurrenceNoteOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(getOccurrenceNoteOptionsModel.ProviderID).To(Equal(core.StringPtr("testString")))
 				Expect(getOccurrenceNoteOptionsModel.OccurrenceID).To(Equal(core.StringPtr("testString")))
 				Expect(getOccurrenceNoteOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
@@ -4803,17 +4817,14 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 			It(`Invoke NewGetOccurrenceOptions successfully`, func() {
 				// Construct an instance of the GetOccurrenceOptions model
-				accountID := "testString"
 				providerID := "testString"
 				occurrenceID := "testString"
-				getOccurrenceOptionsModel := findingsService.NewGetOccurrenceOptions(accountID, providerID, occurrenceID)
-				getOccurrenceOptionsModel.SetAccountID("testString")
+				getOccurrenceOptionsModel := findingsService.NewGetOccurrenceOptions(providerID, occurrenceID)
 				getOccurrenceOptionsModel.SetProviderID("testString")
 				getOccurrenceOptionsModel.SetOccurrenceID("testString")
 				getOccurrenceOptionsModel.SetTransactionID("testString")
 				getOccurrenceOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(getOccurrenceOptionsModel).ToNot(BeNil())
-				Expect(getOccurrenceOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(getOccurrenceOptionsModel.ProviderID).To(Equal(core.StringPtr("testString")))
 				Expect(getOccurrenceOptionsModel.OccurrenceID).To(Equal(core.StringPtr("testString")))
 				Expect(getOccurrenceOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
@@ -4821,23 +4832,21 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 			It(`Invoke NewKpi successfully`, func() {
 				value := float64(72.5)
-				model, err := findingsService.NewKpi(value)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewKpi(value)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewKpiType successfully`, func() {
 				aggregationType := "SUM"
-				model, err := findingsService.NewKpiType(aggregationType)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewKpiType(aggregationType)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewListNoteOccurrencesOptions successfully`, func() {
 				// Construct an instance of the ListNoteOccurrencesOptions model
-				accountID := "testString"
 				providerID := "testString"
 				noteID := "testString"
-				listNoteOccurrencesOptionsModel := findingsService.NewListNoteOccurrencesOptions(accountID, providerID, noteID)
-				listNoteOccurrencesOptionsModel.SetAccountID("testString")
+				listNoteOccurrencesOptionsModel := findingsService.NewListNoteOccurrencesOptions(providerID, noteID)
 				listNoteOccurrencesOptionsModel.SetProviderID("testString")
 				listNoteOccurrencesOptionsModel.SetNoteID("testString")
 				listNoteOccurrencesOptionsModel.SetTransactionID("testString")
@@ -4845,7 +4854,6 @@ var _ = Describe(`FindingsV1`, func() {
 				listNoteOccurrencesOptionsModel.SetPageToken("testString")
 				listNoteOccurrencesOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(listNoteOccurrencesOptionsModel).ToNot(BeNil())
-				Expect(listNoteOccurrencesOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(listNoteOccurrencesOptionsModel.ProviderID).To(Equal(core.StringPtr("testString")))
 				Expect(listNoteOccurrencesOptionsModel.NoteID).To(Equal(core.StringPtr("testString")))
 				Expect(listNoteOccurrencesOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
@@ -4855,17 +4863,14 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 			It(`Invoke NewListNotesOptions successfully`, func() {
 				// Construct an instance of the ListNotesOptions model
-				accountID := "testString"
 				providerID := "testString"
-				listNotesOptionsModel := findingsService.NewListNotesOptions(accountID, providerID)
-				listNotesOptionsModel.SetAccountID("testString")
+				listNotesOptionsModel := findingsService.NewListNotesOptions(providerID)
 				listNotesOptionsModel.SetProviderID("testString")
 				listNotesOptionsModel.SetTransactionID("testString")
 				listNotesOptionsModel.SetPageSize(int64(2))
 				listNotesOptionsModel.SetPageToken("testString")
 				listNotesOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(listNotesOptionsModel).ToNot(BeNil())
-				Expect(listNotesOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(listNotesOptionsModel.ProviderID).To(Equal(core.StringPtr("testString")))
 				Expect(listNotesOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(listNotesOptionsModel.PageSize).To(Equal(core.Int64Ptr(int64(2))))
@@ -4874,17 +4879,14 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 			It(`Invoke NewListOccurrencesOptions successfully`, func() {
 				// Construct an instance of the ListOccurrencesOptions model
-				accountID := "testString"
 				providerID := "testString"
-				listOccurrencesOptionsModel := findingsService.NewListOccurrencesOptions(accountID, providerID)
-				listOccurrencesOptionsModel.SetAccountID("testString")
+				listOccurrencesOptionsModel := findingsService.NewListOccurrencesOptions(providerID)
 				listOccurrencesOptionsModel.SetProviderID("testString")
 				listOccurrencesOptionsModel.SetTransactionID("testString")
 				listOccurrencesOptionsModel.SetPageSize(int64(2))
 				listOccurrencesOptionsModel.SetPageToken("testString")
 				listOccurrencesOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(listOccurrencesOptionsModel).ToNot(BeNil())
-				Expect(listOccurrencesOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(listOccurrencesOptionsModel.ProviderID).To(Equal(core.StringPtr("testString")))
 				Expect(listOccurrencesOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(listOccurrencesOptionsModel.PageSize).To(Equal(core.Int64Ptr(int64(2))))
@@ -4893,9 +4895,7 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 			It(`Invoke NewListProvidersOptions successfully`, func() {
 				// Construct an instance of the ListProvidersOptions model
-				accountID := "testString"
-				listProvidersOptionsModel := findingsService.NewListProvidersOptions(accountID)
-				listProvidersOptionsModel.SetAccountID("testString")
+				listProvidersOptionsModel := findingsService.NewListProvidersOptions()
 				listProvidersOptionsModel.SetTransactionID("testString")
 				listProvidersOptionsModel.SetLimit(int64(2))
 				listProvidersOptionsModel.SetSkip(int64(38))
@@ -4903,7 +4903,6 @@ var _ = Describe(`FindingsV1`, func() {
 				listProvidersOptionsModel.SetEndProviderID("testString")
 				listProvidersOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(listProvidersOptionsModel).ToNot(BeNil())
-				Expect(listProvidersOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(listProvidersOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(listProvidersOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(2))))
 				Expect(listProvidersOptionsModel.Skip).To(Equal(core.Int64Ptr(int64(38))))
@@ -4913,15 +4912,12 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 			It(`Invoke NewPostGraphOptions successfully`, func() {
 				// Construct an instance of the PostGraphOptions model
-				accountID := "testString"
-				postGraphOptionsModel := findingsService.NewPostGraphOptions(accountID)
-				postGraphOptionsModel.SetAccountID("testString")
+				postGraphOptionsModel := findingsService.NewPostGraphOptions()
 				postGraphOptionsModel.SetBody(CreateMockReader("This is a mock file."))
 				postGraphOptionsModel.SetContentType("application/json")
 				postGraphOptionsModel.SetTransactionID("testString")
 				postGraphOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(postGraphOptionsModel).ToNot(BeNil())
-				Expect(postGraphOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(postGraphOptionsModel.Body).To(Equal(CreateMockReader("This is a mock file.")))
 				Expect(postGraphOptionsModel.ContentType).To(Equal(core.StringPtr("application/json")))
 				Expect(postGraphOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
@@ -4930,21 +4926,21 @@ var _ = Describe(`FindingsV1`, func() {
 			It(`Invoke NewReporter successfully`, func() {
 				id := "testString"
 				title := "testString"
-				model, err := findingsService.NewReporter(id, title)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewReporter(id, title)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewSection successfully`, func() {
 				title := "testString"
 				image := "testString"
-				model, err := findingsService.NewSection(title, image)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewSection(title, image)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewSocketAddress successfully`, func() {
 				address := "testString"
-				model, err := findingsService.NewSocketAddress(address)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewSocketAddress(address)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewUpdateNoteOptions successfully`, func() {
@@ -5043,7 +5039,6 @@ var _ = Describe(`FindingsV1`, func() {
 				Expect(sectionModel.Image).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the UpdateNoteOptions model
-				accountID := "testString"
 				providerID := "testString"
 				noteID := "testString"
 				updateNoteOptionsShortDescription := "testString"
@@ -5051,8 +5046,7 @@ var _ = Describe(`FindingsV1`, func() {
 				updateNoteOptionsKind := "FINDING"
 				updateNoteOptionsID := "testString"
 				var updateNoteOptionsReportedBy *findingsv1.Reporter = nil
-				updateNoteOptionsModel := findingsService.NewUpdateNoteOptions(accountID, providerID, noteID, updateNoteOptionsShortDescription, updateNoteOptionsLongDescription, updateNoteOptionsKind, updateNoteOptionsID, updateNoteOptionsReportedBy)
-				updateNoteOptionsModel.SetAccountID("testString")
+				updateNoteOptionsModel := findingsService.NewUpdateNoteOptions(providerID, noteID, updateNoteOptionsShortDescription, updateNoteOptionsLongDescription, updateNoteOptionsKind, updateNoteOptionsID, updateNoteOptionsReportedBy)
 				updateNoteOptionsModel.SetProviderID("testString")
 				updateNoteOptionsModel.SetNoteID("testString")
 				updateNoteOptionsModel.SetShortDescription("testString")
@@ -5070,7 +5064,6 @@ var _ = Describe(`FindingsV1`, func() {
 				updateNoteOptionsModel.SetTransactionID("testString")
 				updateNoteOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(updateNoteOptionsModel).ToNot(BeNil())
-				Expect(updateNoteOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(updateNoteOptionsModel.ProviderID).To(Equal(core.StringPtr("testString")))
 				Expect(updateNoteOptionsModel.NoteID).To(Equal(core.StringPtr("testString")))
 				Expect(updateNoteOptionsModel.ShortDescription).To(Equal(core.StringPtr("testString")))
@@ -5176,14 +5169,12 @@ var _ = Describe(`FindingsV1`, func() {
 				Expect(kpiModel.Total).To(Equal(core.Float64Ptr(float64(72.5))))
 
 				// Construct an instance of the UpdateOccurrenceOptions model
-				accountID := "testString"
 				providerID := "testString"
 				occurrenceID := "testString"
 				updateOccurrenceOptionsNoteName := "testString"
 				updateOccurrenceOptionsKind := "FINDING"
 				updateOccurrenceOptionsID := "testString"
-				updateOccurrenceOptionsModel := findingsService.NewUpdateOccurrenceOptions(accountID, providerID, occurrenceID, updateOccurrenceOptionsNoteName, updateOccurrenceOptionsKind, updateOccurrenceOptionsID)
-				updateOccurrenceOptionsModel.SetAccountID("testString")
+				updateOccurrenceOptionsModel := findingsService.NewUpdateOccurrenceOptions(providerID, occurrenceID, updateOccurrenceOptionsNoteName, updateOccurrenceOptionsKind, updateOccurrenceOptionsID)
 				updateOccurrenceOptionsModel.SetProviderID("testString")
 				updateOccurrenceOptionsModel.SetOccurrenceID("testString")
 				updateOccurrenceOptionsModel.SetNoteName("testString")
@@ -5198,7 +5189,6 @@ var _ = Describe(`FindingsV1`, func() {
 				updateOccurrenceOptionsModel.SetTransactionID("testString")
 				updateOccurrenceOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(updateOccurrenceOptionsModel).ToNot(BeNil())
-				Expect(updateOccurrenceOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(updateOccurrenceOptionsModel.ProviderID).To(Equal(core.StringPtr("testString")))
 				Expect(updateOccurrenceOptionsModel.OccurrenceID).To(Equal(core.StringPtr("testString")))
 				Expect(updateOccurrenceOptionsModel.NoteName).To(Equal(core.StringPtr("testString")))
@@ -5225,24 +5215,24 @@ var _ = Describe(`FindingsV1`, func() {
 			It(`Invoke NewAPINoteRelatedURL successfully`, func() {
 				label := "testString"
 				url := "testString"
-				model, err := findingsService.NewAPINoteRelatedURL(label, url)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewAPINoteRelatedURL(label, url)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewAPIOccurrence successfully`, func() {
 				noteName := "testString"
 				kind := "FINDING"
 				id := "testString"
-				model, err := findingsService.NewAPIOccurrence(noteName, kind, id)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewAPIOccurrence(noteName, kind, id)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewCardElementBreakdownCardElement successfully`, func() {
 				text := "testString"
 				kind := "BREAKDOWN"
 				valueTypes := []findingsv1.ValueTypeIntf{}
-				model, err := findingsService.NewCardElementBreakdownCardElement(text, kind, valueTypes)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewCardElementBreakdownCardElement(text, kind, valueTypes)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewCardElementNumericCardElement successfully`, func() {
@@ -5256,24 +5246,24 @@ var _ = Describe(`FindingsV1`, func() {
 				text := "testString"
 				kind := "TIME_SERIES"
 				valueTypes := []findingsv1.ValueTypeIntf{}
-				model, err := findingsService.NewCardElementTimeSeriesCardElement(text, kind, valueTypes)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewCardElementTimeSeriesCardElement(text, kind, valueTypes)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewValueTypeFindingCountValueType successfully`, func() {
 				kind := "FINDING_COUNT"
 				findingNoteNames := []string{"testString"}
 				text := "testString"
-				model, err := findingsService.NewValueTypeFindingCountValueType(kind, findingNoteNames, text)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewValueTypeFindingCountValueType(kind, findingNoteNames, text)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewValueTypeKpiValueType successfully`, func() {
 				kind := "KPI"
 				kpiNoteName := "testString"
 				text := "testString"
-				model, err := findingsService.NewValueTypeKpiValueType(kind, kpiNoteName, text)
-				Expect(model).ToNot(BeNil())
+				_model, err := findingsService.NewValueTypeKpiValueType(kind, kpiNoteName, text)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 		})

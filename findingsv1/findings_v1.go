@@ -15,7 +15,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.32.0-4c6a3129-20210514-210323
+ * IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
  */
 
 // Package findingsv1 : Operations and models for the FindingsV1 service
@@ -31,8 +31,8 @@ import (
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
+	common "github.com/IBM/scc-go-sdk/common"
 	"github.com/go-openapi/strfmt"
-	common "github.com/ibm/scc-go-sdk/common"
 )
 
 // FindingsV1 : API specification for the Findings service.
@@ -40,6 +40,9 @@ import (
 // Version: 1.0.0
 type FindingsV1 struct {
 	Service *core.BaseService
+
+	// Account ID.
+	AccountID *string
 }
 
 // DefaultServiceURL is the default URL to make service requests to.
@@ -53,6 +56,9 @@ type FindingsV1Options struct {
 	ServiceName   string
 	URL           string
 	Authenticator core.Authenticator
+
+	// Account ID.
+	AccountID *string `validate:"required"`
 }
 
 // NewFindingsV1UsingExternalConfig : constructs an instance of FindingsV1 with passed in options and external configuration.
@@ -91,6 +97,11 @@ func NewFindingsV1(options *FindingsV1Options) (service *FindingsV1, err error) 
 		Authenticator: options.Authenticator,
 	}
 
+	err = core.ValidateStruct(options, "options")
+	if err != nil {
+		return
+	}
+
 	baseService, err := core.NewBaseService(serviceOptions)
 	if err != nil {
 		return
@@ -104,7 +115,8 @@ func NewFindingsV1(options *FindingsV1Options) (service *FindingsV1, err error) 
 	}
 
 	service = &FindingsV1{
-		Service: baseService,
+		Service:   baseService,
+		AccountID: options.AccountID,
 	}
 
 	return
@@ -193,7 +205,7 @@ func (findings *FindingsV1) PostGraphWithContext(ctx context.Context, postGraphO
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *postGraphOptions.AccountID,
+		"account_id": *findings.AccountID,
 	}
 
 	builder := core.NewRequestBuilder(core.POST)
@@ -220,7 +232,7 @@ func (findings *FindingsV1) PostGraphWithContext(ctx context.Context, postGraphO
 		builder.AddHeader("Transaction-Id", fmt.Sprint(*postGraphOptions.TransactionID))
 	}
 
-	_, err = builder.SetBodyContent(core.StringNilMapper(postGraphOptions.ContentType), nil, nil, postGraphOptions.Body)
+	_, err = builder.SetBodyContent(core.StringNilMapper(postGraphOptions.ContentType), postGraphOptions.Body, nil, postGraphOptions.Body)
 	if err != nil {
 		return
 	}
@@ -252,7 +264,7 @@ func (findings *FindingsV1) CreateNoteWithContext(ctx context.Context, createNot
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":  *createNoteOptions.AccountID,
+		"account_id":  *findings.AccountID,
 		"provider_id": *createNoteOptions.ProviderID,
 	}
 
@@ -358,7 +370,7 @@ func (findings *FindingsV1) ListNotesWithContext(ctx context.Context, listNotesO
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":  *listNotesOptions.AccountID,
+		"account_id":  *findings.AccountID,
 		"provider_id": *listNotesOptions.ProviderID,
 	}
 
@@ -428,7 +440,7 @@ func (findings *FindingsV1) GetNoteWithContext(ctx context.Context, getNoteOptio
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":  *getNoteOptions.AccountID,
+		"account_id":  *findings.AccountID,
 		"provider_id": *getNoteOptions.ProviderID,
 		"note_id":     *getNoteOptions.NoteID,
 	}
@@ -492,7 +504,7 @@ func (findings *FindingsV1) UpdateNoteWithContext(ctx context.Context, updateNot
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":  *updateNoteOptions.AccountID,
+		"account_id":  *findings.AccountID,
 		"provider_id": *updateNoteOptions.ProviderID,
 		"note_id":     *updateNoteOptions.NoteID,
 	}
@@ -599,7 +611,7 @@ func (findings *FindingsV1) DeleteNoteWithContext(ctx context.Context, deleteNot
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":  *deleteNoteOptions.AccountID,
+		"account_id":  *findings.AccountID,
 		"provider_id": *deleteNoteOptions.ProviderID,
 		"note_id":     *deleteNoteOptions.NoteID,
 	}
@@ -652,7 +664,7 @@ func (findings *FindingsV1) GetOccurrenceNoteWithContext(ctx context.Context, ge
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":    *getOccurrenceNoteOptions.AccountID,
+		"account_id":    *findings.AccountID,
 		"provider_id":   *getOccurrenceNoteOptions.ProviderID,
 		"occurrence_id": *getOccurrenceNoteOptions.OccurrenceID,
 	}
@@ -716,7 +728,7 @@ func (findings *FindingsV1) CreateOccurrenceWithContext(ctx context.Context, cre
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":  *createOccurrenceOptions.AccountID,
+		"account_id":  *findings.AccountID,
 		"provider_id": *createOccurrenceOptions.ProviderID,
 	}
 
@@ -816,7 +828,7 @@ func (findings *FindingsV1) ListOccurrencesWithContext(ctx context.Context, list
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":  *listOccurrencesOptions.AccountID,
+		"account_id":  *findings.AccountID,
 		"provider_id": *listOccurrencesOptions.ProviderID,
 	}
 
@@ -886,7 +898,7 @@ func (findings *FindingsV1) ListNoteOccurrencesWithContext(ctx context.Context, 
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":  *listNoteOccurrencesOptions.AccountID,
+		"account_id":  *findings.AccountID,
 		"provider_id": *listNoteOccurrencesOptions.ProviderID,
 		"note_id":     *listNoteOccurrencesOptions.NoteID,
 	}
@@ -957,7 +969,7 @@ func (findings *FindingsV1) GetOccurrenceWithContext(ctx context.Context, getOcc
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":    *getOccurrenceOptions.AccountID,
+		"account_id":    *findings.AccountID,
 		"provider_id":   *getOccurrenceOptions.ProviderID,
 		"occurrence_id": *getOccurrenceOptions.OccurrenceID,
 	}
@@ -1021,7 +1033,7 @@ func (findings *FindingsV1) UpdateOccurrenceWithContext(ctx context.Context, upd
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":    *updateOccurrenceOptions.AccountID,
+		"account_id":    *findings.AccountID,
 		"provider_id":   *updateOccurrenceOptions.ProviderID,
 		"occurrence_id": *updateOccurrenceOptions.OccurrenceID,
 	}
@@ -1119,7 +1131,7 @@ func (findings *FindingsV1) DeleteOccurrenceWithContext(ctx context.Context, del
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id":    *deleteOccurrenceOptions.AccountID,
+		"account_id":    *findings.AccountID,
 		"provider_id":   *deleteOccurrenceOptions.ProviderID,
 		"occurrence_id": *deleteOccurrenceOptions.OccurrenceID,
 	}
@@ -1162,17 +1174,13 @@ func (findings *FindingsV1) ListProviders(listProvidersOptions *ListProvidersOpt
 
 // ListProvidersWithContext is an alternate form of the ListProviders method which supports a Context parameter
 func (findings *FindingsV1) ListProvidersWithContext(ctx context.Context, listProvidersOptions *ListProvidersOptions) (result *APIListProvidersResponse, response *core.DetailedResponse, err error) {
-	err = core.ValidateNotNil(listProvidersOptions, "listProvidersOptions cannot be nil")
-	if err != nil {
-		return
-	}
 	err = core.ValidateStruct(listProvidersOptions, "listProvidersOptions")
 	if err != nil {
 		return
 	}
 
 	pathParamsMap := map[string]string{
-		"account_id": *listProvidersOptions.AccountID,
+		"account_id": *findings.AccountID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
@@ -1260,15 +1268,15 @@ type Card struct {
 }
 
 // NewCard : Instantiate Card (Generic Model Constructor)
-func (*FindingsV1) NewCard(section string, title string, subtitle string, findingNoteNames []string, elements []CardElementIntf) (model *Card, err error) {
-	model = &Card{
+func (*FindingsV1) NewCard(section string, title string, subtitle string, findingNoteNames []string, elements []CardElementIntf) (_model *Card, err error) {
+	_model = &Card{
 		Section:          core.StringPtr(section),
 		Title:            core.StringPtr(title),
 		Subtitle:         core.StringPtr(subtitle),
 		FindingNoteNames: findingNoteNames,
 		Elements:         elements,
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -1468,9 +1476,6 @@ func UnmarshalContext(m map[string]json.RawMessage, result interface{}) (err err
 
 // CreateNoteOptions : The CreateNote options.
 type CreateNoteOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// Part of `parent`. This field contains the provider_id for example: providers/{provider_id}.
 	ProviderID *string `validate:"required,ne="`
 
@@ -1538,9 +1543,8 @@ const (
 )
 
 // NewCreateNoteOptions : Instantiate CreateNoteOptions
-func (*FindingsV1) NewCreateNoteOptions(accountID string, providerID string, shortDescription string, longDescription string, kind string, id string, reportedBy *Reporter) *CreateNoteOptions {
+func (*FindingsV1) NewCreateNoteOptions(providerID string, shortDescription string, longDescription string, kind string, id string, reportedBy *Reporter) *CreateNoteOptions {
 	return &CreateNoteOptions{
-		AccountID:        core.StringPtr(accountID),
 		ProviderID:       core.StringPtr(providerID),
 		ShortDescription: core.StringPtr(shortDescription),
 		LongDescription:  core.StringPtr(longDescription),
@@ -1550,94 +1554,88 @@ func (*FindingsV1) NewCreateNoteOptions(accountID string, providerID string, sho
 	}
 }
 
-// SetAccountID : Allow user to set AccountID
-func (options *CreateNoteOptions) SetAccountID(accountID string) *CreateNoteOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
-}
-
 // SetProviderID : Allow user to set ProviderID
-func (options *CreateNoteOptions) SetProviderID(providerID string) *CreateNoteOptions {
-	options.ProviderID = core.StringPtr(providerID)
-	return options
+func (_options *CreateNoteOptions) SetProviderID(providerID string) *CreateNoteOptions {
+	_options.ProviderID = core.StringPtr(providerID)
+	return _options
 }
 
 // SetShortDescription : Allow user to set ShortDescription
-func (options *CreateNoteOptions) SetShortDescription(shortDescription string) *CreateNoteOptions {
-	options.ShortDescription = core.StringPtr(shortDescription)
-	return options
+func (_options *CreateNoteOptions) SetShortDescription(shortDescription string) *CreateNoteOptions {
+	_options.ShortDescription = core.StringPtr(shortDescription)
+	return _options
 }
 
 // SetLongDescription : Allow user to set LongDescription
-func (options *CreateNoteOptions) SetLongDescription(longDescription string) *CreateNoteOptions {
-	options.LongDescription = core.StringPtr(longDescription)
-	return options
+func (_options *CreateNoteOptions) SetLongDescription(longDescription string) *CreateNoteOptions {
+	_options.LongDescription = core.StringPtr(longDescription)
+	return _options
 }
 
 // SetKind : Allow user to set Kind
-func (options *CreateNoteOptions) SetKind(kind string) *CreateNoteOptions {
-	options.Kind = core.StringPtr(kind)
-	return options
+func (_options *CreateNoteOptions) SetKind(kind string) *CreateNoteOptions {
+	_options.Kind = core.StringPtr(kind)
+	return _options
 }
 
 // SetID : Allow user to set ID
-func (options *CreateNoteOptions) SetID(id string) *CreateNoteOptions {
-	options.ID = core.StringPtr(id)
-	return options
+func (_options *CreateNoteOptions) SetID(id string) *CreateNoteOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
 }
 
 // SetReportedBy : Allow user to set ReportedBy
-func (options *CreateNoteOptions) SetReportedBy(reportedBy *Reporter) *CreateNoteOptions {
-	options.ReportedBy = reportedBy
-	return options
+func (_options *CreateNoteOptions) SetReportedBy(reportedBy *Reporter) *CreateNoteOptions {
+	_options.ReportedBy = reportedBy
+	return _options
 }
 
 // SetRelatedURL : Allow user to set RelatedURL
-func (options *CreateNoteOptions) SetRelatedURL(relatedURL []APINoteRelatedURL) *CreateNoteOptions {
-	options.RelatedURL = relatedURL
-	return options
+func (_options *CreateNoteOptions) SetRelatedURL(relatedURL []APINoteRelatedURL) *CreateNoteOptions {
+	_options.RelatedURL = relatedURL
+	return _options
 }
 
 // SetExpirationTime : Allow user to set ExpirationTime
-func (options *CreateNoteOptions) SetExpirationTime(expirationTime *strfmt.DateTime) *CreateNoteOptions {
-	options.ExpirationTime = expirationTime
-	return options
+func (_options *CreateNoteOptions) SetExpirationTime(expirationTime *strfmt.DateTime) *CreateNoteOptions {
+	_options.ExpirationTime = expirationTime
+	return _options
 }
 
 // SetShared : Allow user to set Shared
-func (options *CreateNoteOptions) SetShared(shared bool) *CreateNoteOptions {
-	options.Shared = core.BoolPtr(shared)
-	return options
+func (_options *CreateNoteOptions) SetShared(shared bool) *CreateNoteOptions {
+	_options.Shared = core.BoolPtr(shared)
+	return _options
 }
 
 // SetFinding : Allow user to set Finding
-func (options *CreateNoteOptions) SetFinding(finding *FindingType) *CreateNoteOptions {
-	options.Finding = finding
-	return options
+func (_options *CreateNoteOptions) SetFinding(finding *FindingType) *CreateNoteOptions {
+	_options.Finding = finding
+	return _options
 }
 
 // SetKpi : Allow user to set Kpi
-func (options *CreateNoteOptions) SetKpi(kpi *KpiType) *CreateNoteOptions {
-	options.Kpi = kpi
-	return options
+func (_options *CreateNoteOptions) SetKpi(kpi *KpiType) *CreateNoteOptions {
+	_options.Kpi = kpi
+	return _options
 }
 
 // SetCard : Allow user to set Card
-func (options *CreateNoteOptions) SetCard(card *Card) *CreateNoteOptions {
-	options.Card = card
-	return options
+func (_options *CreateNoteOptions) SetCard(card *Card) *CreateNoteOptions {
+	_options.Card = card
+	return _options
 }
 
 // SetSection : Allow user to set Section
-func (options *CreateNoteOptions) SetSection(section *Section) *CreateNoteOptions {
-	options.Section = section
-	return options
+func (_options *CreateNoteOptions) SetSection(section *Section) *CreateNoteOptions {
+	_options.Section = section
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *CreateNoteOptions) SetTransactionID(transactionID string) *CreateNoteOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *CreateNoteOptions) SetTransactionID(transactionID string) *CreateNoteOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1648,9 +1646,6 @@ func (options *CreateNoteOptions) SetHeaders(param map[string]string) *CreateNot
 
 // CreateOccurrenceOptions : The CreateOccurrence options.
 type CreateOccurrenceOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// Part of `parent`. This contains the provider_id for example: providers/{provider_id}.
 	ProviderID *string `validate:"required,ne="`
 
@@ -1713,9 +1708,8 @@ const (
 )
 
 // NewCreateOccurrenceOptions : Instantiate CreateOccurrenceOptions
-func (*FindingsV1) NewCreateOccurrenceOptions(accountID string, providerID string, noteName string, kind string, id string) *CreateOccurrenceOptions {
+func (*FindingsV1) NewCreateOccurrenceOptions(providerID string, noteName string, kind string, id string) *CreateOccurrenceOptions {
 	return &CreateOccurrenceOptions{
-		AccountID:  core.StringPtr(accountID),
 		ProviderID: core.StringPtr(providerID),
 		NoteName:   core.StringPtr(noteName),
 		Kind:       core.StringPtr(kind),
@@ -1723,82 +1717,76 @@ func (*FindingsV1) NewCreateOccurrenceOptions(accountID string, providerID strin
 	}
 }
 
-// SetAccountID : Allow user to set AccountID
-func (options *CreateOccurrenceOptions) SetAccountID(accountID string) *CreateOccurrenceOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
-}
-
 // SetProviderID : Allow user to set ProviderID
-func (options *CreateOccurrenceOptions) SetProviderID(providerID string) *CreateOccurrenceOptions {
-	options.ProviderID = core.StringPtr(providerID)
-	return options
+func (_options *CreateOccurrenceOptions) SetProviderID(providerID string) *CreateOccurrenceOptions {
+	_options.ProviderID = core.StringPtr(providerID)
+	return _options
 }
 
 // SetNoteName : Allow user to set NoteName
-func (options *CreateOccurrenceOptions) SetNoteName(noteName string) *CreateOccurrenceOptions {
-	options.NoteName = core.StringPtr(noteName)
-	return options
+func (_options *CreateOccurrenceOptions) SetNoteName(noteName string) *CreateOccurrenceOptions {
+	_options.NoteName = core.StringPtr(noteName)
+	return _options
 }
 
 // SetKind : Allow user to set Kind
-func (options *CreateOccurrenceOptions) SetKind(kind string) *CreateOccurrenceOptions {
-	options.Kind = core.StringPtr(kind)
-	return options
+func (_options *CreateOccurrenceOptions) SetKind(kind string) *CreateOccurrenceOptions {
+	_options.Kind = core.StringPtr(kind)
+	return _options
 }
 
 // SetID : Allow user to set ID
-func (options *CreateOccurrenceOptions) SetID(id string) *CreateOccurrenceOptions {
-	options.ID = core.StringPtr(id)
-	return options
+func (_options *CreateOccurrenceOptions) SetID(id string) *CreateOccurrenceOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
 }
 
 // SetResourceURL : Allow user to set ResourceURL
-func (options *CreateOccurrenceOptions) SetResourceURL(resourceURL string) *CreateOccurrenceOptions {
-	options.ResourceURL = core.StringPtr(resourceURL)
-	return options
+func (_options *CreateOccurrenceOptions) SetResourceURL(resourceURL string) *CreateOccurrenceOptions {
+	_options.ResourceURL = core.StringPtr(resourceURL)
+	return _options
 }
 
 // SetRemediation : Allow user to set Remediation
-func (options *CreateOccurrenceOptions) SetRemediation(remediation string) *CreateOccurrenceOptions {
-	options.Remediation = core.StringPtr(remediation)
-	return options
+func (_options *CreateOccurrenceOptions) SetRemediation(remediation string) *CreateOccurrenceOptions {
+	_options.Remediation = core.StringPtr(remediation)
+	return _options
 }
 
 // SetContext : Allow user to set Context
-func (options *CreateOccurrenceOptions) SetContext(context *Context) *CreateOccurrenceOptions {
-	options.Context = context
-	return options
+func (_options *CreateOccurrenceOptions) SetContext(context *Context) *CreateOccurrenceOptions {
+	_options.Context = context
+	return _options
 }
 
 // SetFinding : Allow user to set Finding
-func (options *CreateOccurrenceOptions) SetFinding(finding *Finding) *CreateOccurrenceOptions {
-	options.Finding = finding
-	return options
+func (_options *CreateOccurrenceOptions) SetFinding(finding *Finding) *CreateOccurrenceOptions {
+	_options.Finding = finding
+	return _options
 }
 
 // SetKpi : Allow user to set Kpi
-func (options *CreateOccurrenceOptions) SetKpi(kpi *Kpi) *CreateOccurrenceOptions {
-	options.Kpi = kpi
-	return options
+func (_options *CreateOccurrenceOptions) SetKpi(kpi *Kpi) *CreateOccurrenceOptions {
+	_options.Kpi = kpi
+	return _options
 }
 
 // SetReferenceData : Allow user to set ReferenceData
-func (options *CreateOccurrenceOptions) SetReferenceData(referenceData interface{}) *CreateOccurrenceOptions {
-	options.ReferenceData = referenceData
-	return options
+func (_options *CreateOccurrenceOptions) SetReferenceData(referenceData interface{}) *CreateOccurrenceOptions {
+	_options.ReferenceData = referenceData
+	return _options
 }
 
 // SetReplaceIfExists : Allow user to set ReplaceIfExists
-func (options *CreateOccurrenceOptions) SetReplaceIfExists(replaceIfExists bool) *CreateOccurrenceOptions {
-	options.ReplaceIfExists = core.BoolPtr(replaceIfExists)
-	return options
+func (_options *CreateOccurrenceOptions) SetReplaceIfExists(replaceIfExists bool) *CreateOccurrenceOptions {
+	_options.ReplaceIfExists = core.BoolPtr(replaceIfExists)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *CreateOccurrenceOptions) SetTransactionID(transactionID string) *CreateOccurrenceOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *CreateOccurrenceOptions) SetTransactionID(transactionID string) *CreateOccurrenceOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1847,9 +1835,6 @@ func UnmarshalDataTransferred(m map[string]json.RawMessage, result interface{}) 
 
 // DeleteNoteOptions : The DeleteNote options.
 type DeleteNoteOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// First part of note `name`: providers/{provider_id}/notes/{note_id}.
 	ProviderID *string `validate:"required,ne="`
 
@@ -1864,36 +1849,29 @@ type DeleteNoteOptions struct {
 }
 
 // NewDeleteNoteOptions : Instantiate DeleteNoteOptions
-func (*FindingsV1) NewDeleteNoteOptions(accountID string, providerID string, noteID string) *DeleteNoteOptions {
+func (*FindingsV1) NewDeleteNoteOptions(providerID string, noteID string) *DeleteNoteOptions {
 	return &DeleteNoteOptions{
-		AccountID:  core.StringPtr(accountID),
 		ProviderID: core.StringPtr(providerID),
 		NoteID:     core.StringPtr(noteID),
 	}
 }
 
-// SetAccountID : Allow user to set AccountID
-func (options *DeleteNoteOptions) SetAccountID(accountID string) *DeleteNoteOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
-}
-
 // SetProviderID : Allow user to set ProviderID
-func (options *DeleteNoteOptions) SetProviderID(providerID string) *DeleteNoteOptions {
-	options.ProviderID = core.StringPtr(providerID)
-	return options
+func (_options *DeleteNoteOptions) SetProviderID(providerID string) *DeleteNoteOptions {
+	_options.ProviderID = core.StringPtr(providerID)
+	return _options
 }
 
 // SetNoteID : Allow user to set NoteID
-func (options *DeleteNoteOptions) SetNoteID(noteID string) *DeleteNoteOptions {
-	options.NoteID = core.StringPtr(noteID)
-	return options
+func (_options *DeleteNoteOptions) SetNoteID(noteID string) *DeleteNoteOptions {
+	_options.NoteID = core.StringPtr(noteID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *DeleteNoteOptions) SetTransactionID(transactionID string) *DeleteNoteOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *DeleteNoteOptions) SetTransactionID(transactionID string) *DeleteNoteOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1904,9 +1882,6 @@ func (options *DeleteNoteOptions) SetHeaders(param map[string]string) *DeleteNot
 
 // DeleteOccurrenceOptions : The DeleteOccurrence options.
 type DeleteOccurrenceOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// First part of occurrence `name`: providers/{provider_id}/notes/{occurrence_id}.
 	ProviderID *string `validate:"required,ne="`
 
@@ -1921,36 +1896,29 @@ type DeleteOccurrenceOptions struct {
 }
 
 // NewDeleteOccurrenceOptions : Instantiate DeleteOccurrenceOptions
-func (*FindingsV1) NewDeleteOccurrenceOptions(accountID string, providerID string, occurrenceID string) *DeleteOccurrenceOptions {
+func (*FindingsV1) NewDeleteOccurrenceOptions(providerID string, occurrenceID string) *DeleteOccurrenceOptions {
 	return &DeleteOccurrenceOptions{
-		AccountID:    core.StringPtr(accountID),
 		ProviderID:   core.StringPtr(providerID),
 		OccurrenceID: core.StringPtr(occurrenceID),
 	}
 }
 
-// SetAccountID : Allow user to set AccountID
-func (options *DeleteOccurrenceOptions) SetAccountID(accountID string) *DeleteOccurrenceOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
-}
-
 // SetProviderID : Allow user to set ProviderID
-func (options *DeleteOccurrenceOptions) SetProviderID(providerID string) *DeleteOccurrenceOptions {
-	options.ProviderID = core.StringPtr(providerID)
-	return options
+func (_options *DeleteOccurrenceOptions) SetProviderID(providerID string) *DeleteOccurrenceOptions {
+	_options.ProviderID = core.StringPtr(providerID)
+	return _options
 }
 
 // SetOccurrenceID : Allow user to set OccurrenceID
-func (options *DeleteOccurrenceOptions) SetOccurrenceID(occurrenceID string) *DeleteOccurrenceOptions {
-	options.OccurrenceID = core.StringPtr(occurrenceID)
-	return options
+func (_options *DeleteOccurrenceOptions) SetOccurrenceID(occurrenceID string) *DeleteOccurrenceOptions {
+	_options.OccurrenceID = core.StringPtr(occurrenceID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *DeleteOccurrenceOptions) SetTransactionID(transactionID string) *DeleteOccurrenceOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *DeleteOccurrenceOptions) SetTransactionID(transactionID string) *DeleteOccurrenceOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -2062,11 +2030,11 @@ const (
 )
 
 // NewFindingType : Instantiate FindingType (Generic Model Constructor)
-func (*FindingsV1) NewFindingType(severity string) (model *FindingType, err error) {
-	model = &FindingType{
+func (*FindingsV1) NewFindingType(severity string) (_model *FindingType, err error) {
+	_model = &FindingType{
 		Severity: core.StringPtr(severity),
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -2087,9 +2055,6 @@ func UnmarshalFindingType(m map[string]json.RawMessage, result interface{}) (err
 
 // GetNoteOptions : The GetNote options.
 type GetNoteOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// First part of note `name`: providers/{provider_id}/notes/{note_id}.
 	ProviderID *string `validate:"required,ne="`
 
@@ -2104,36 +2069,29 @@ type GetNoteOptions struct {
 }
 
 // NewGetNoteOptions : Instantiate GetNoteOptions
-func (*FindingsV1) NewGetNoteOptions(accountID string, providerID string, noteID string) *GetNoteOptions {
+func (*FindingsV1) NewGetNoteOptions(providerID string, noteID string) *GetNoteOptions {
 	return &GetNoteOptions{
-		AccountID:  core.StringPtr(accountID),
 		ProviderID: core.StringPtr(providerID),
 		NoteID:     core.StringPtr(noteID),
 	}
 }
 
-// SetAccountID : Allow user to set AccountID
-func (options *GetNoteOptions) SetAccountID(accountID string) *GetNoteOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
-}
-
 // SetProviderID : Allow user to set ProviderID
-func (options *GetNoteOptions) SetProviderID(providerID string) *GetNoteOptions {
-	options.ProviderID = core.StringPtr(providerID)
-	return options
+func (_options *GetNoteOptions) SetProviderID(providerID string) *GetNoteOptions {
+	_options.ProviderID = core.StringPtr(providerID)
+	return _options
 }
 
 // SetNoteID : Allow user to set NoteID
-func (options *GetNoteOptions) SetNoteID(noteID string) *GetNoteOptions {
-	options.NoteID = core.StringPtr(noteID)
-	return options
+func (_options *GetNoteOptions) SetNoteID(noteID string) *GetNoteOptions {
+	_options.NoteID = core.StringPtr(noteID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *GetNoteOptions) SetTransactionID(transactionID string) *GetNoteOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *GetNoteOptions) SetTransactionID(transactionID string) *GetNoteOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -2144,9 +2102,6 @@ func (options *GetNoteOptions) SetHeaders(param map[string]string) *GetNoteOptio
 
 // GetOccurrenceNoteOptions : The GetOccurrenceNote options.
 type GetOccurrenceNoteOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// First part of occurrence `name`: providers/{provider_id}/occurrences/{occurrence_id}.
 	ProviderID *string `validate:"required,ne="`
 
@@ -2161,36 +2116,29 @@ type GetOccurrenceNoteOptions struct {
 }
 
 // NewGetOccurrenceNoteOptions : Instantiate GetOccurrenceNoteOptions
-func (*FindingsV1) NewGetOccurrenceNoteOptions(accountID string, providerID string, occurrenceID string) *GetOccurrenceNoteOptions {
+func (*FindingsV1) NewGetOccurrenceNoteOptions(providerID string, occurrenceID string) *GetOccurrenceNoteOptions {
 	return &GetOccurrenceNoteOptions{
-		AccountID:    core.StringPtr(accountID),
 		ProviderID:   core.StringPtr(providerID),
 		OccurrenceID: core.StringPtr(occurrenceID),
 	}
 }
 
-// SetAccountID : Allow user to set AccountID
-func (options *GetOccurrenceNoteOptions) SetAccountID(accountID string) *GetOccurrenceNoteOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
-}
-
 // SetProviderID : Allow user to set ProviderID
-func (options *GetOccurrenceNoteOptions) SetProviderID(providerID string) *GetOccurrenceNoteOptions {
-	options.ProviderID = core.StringPtr(providerID)
-	return options
+func (_options *GetOccurrenceNoteOptions) SetProviderID(providerID string) *GetOccurrenceNoteOptions {
+	_options.ProviderID = core.StringPtr(providerID)
+	return _options
 }
 
 // SetOccurrenceID : Allow user to set OccurrenceID
-func (options *GetOccurrenceNoteOptions) SetOccurrenceID(occurrenceID string) *GetOccurrenceNoteOptions {
-	options.OccurrenceID = core.StringPtr(occurrenceID)
-	return options
+func (_options *GetOccurrenceNoteOptions) SetOccurrenceID(occurrenceID string) *GetOccurrenceNoteOptions {
+	_options.OccurrenceID = core.StringPtr(occurrenceID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *GetOccurrenceNoteOptions) SetTransactionID(transactionID string) *GetOccurrenceNoteOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *GetOccurrenceNoteOptions) SetTransactionID(transactionID string) *GetOccurrenceNoteOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -2201,9 +2149,6 @@ func (options *GetOccurrenceNoteOptions) SetHeaders(param map[string]string) *Ge
 
 // GetOccurrenceOptions : The GetOccurrence options.
 type GetOccurrenceOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// First part of occurrence `name`: providers/{provider_id}/occurrences/{occurrence_id}.
 	ProviderID *string `validate:"required,ne="`
 
@@ -2218,36 +2163,29 @@ type GetOccurrenceOptions struct {
 }
 
 // NewGetOccurrenceOptions : Instantiate GetOccurrenceOptions
-func (*FindingsV1) NewGetOccurrenceOptions(accountID string, providerID string, occurrenceID string) *GetOccurrenceOptions {
+func (*FindingsV1) NewGetOccurrenceOptions(providerID string, occurrenceID string) *GetOccurrenceOptions {
 	return &GetOccurrenceOptions{
-		AccountID:    core.StringPtr(accountID),
 		ProviderID:   core.StringPtr(providerID),
 		OccurrenceID: core.StringPtr(occurrenceID),
 	}
 }
 
-// SetAccountID : Allow user to set AccountID
-func (options *GetOccurrenceOptions) SetAccountID(accountID string) *GetOccurrenceOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
-}
-
 // SetProviderID : Allow user to set ProviderID
-func (options *GetOccurrenceOptions) SetProviderID(providerID string) *GetOccurrenceOptions {
-	options.ProviderID = core.StringPtr(providerID)
-	return options
+func (_options *GetOccurrenceOptions) SetProviderID(providerID string) *GetOccurrenceOptions {
+	_options.ProviderID = core.StringPtr(providerID)
+	return _options
 }
 
 // SetOccurrenceID : Allow user to set OccurrenceID
-func (options *GetOccurrenceOptions) SetOccurrenceID(occurrenceID string) *GetOccurrenceOptions {
-	options.OccurrenceID = core.StringPtr(occurrenceID)
-	return options
+func (_options *GetOccurrenceOptions) SetOccurrenceID(occurrenceID string) *GetOccurrenceOptions {
+	_options.OccurrenceID = core.StringPtr(occurrenceID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *GetOccurrenceOptions) SetTransactionID(transactionID string) *GetOccurrenceOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *GetOccurrenceOptions) SetTransactionID(transactionID string) *GetOccurrenceOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -2266,11 +2204,11 @@ type Kpi struct {
 }
 
 // NewKpi : Instantiate Kpi (Generic Model Constructor)
-func (*FindingsV1) NewKpi(value float64) (model *Kpi, err error) {
-	model = &Kpi{
+func (*FindingsV1) NewKpi(value float64) (_model *Kpi, err error) {
+	_model = &Kpi{
 		Value: core.Float64Ptr(value),
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -2306,11 +2244,11 @@ const (
 )
 
 // NewKpiType : Instantiate KpiType (Generic Model Constructor)
-func (*FindingsV1) NewKpiType(aggregationType string) (model *KpiType, err error) {
-	model = &KpiType{
+func (*FindingsV1) NewKpiType(aggregationType string) (_model *KpiType, err error) {
+	_model = &KpiType{
 		AggregationType: core.StringPtr(aggregationType),
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -2327,9 +2265,6 @@ func UnmarshalKpiType(m map[string]json.RawMessage, result interface{}) (err err
 
 // ListNoteOccurrencesOptions : The ListNoteOccurrences options.
 type ListNoteOccurrencesOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// First part of note `name`: providers/{provider_id}/notes/{note_id}.
 	ProviderID *string `validate:"required,ne="`
 
@@ -2350,48 +2285,41 @@ type ListNoteOccurrencesOptions struct {
 }
 
 // NewListNoteOccurrencesOptions : Instantiate ListNoteOccurrencesOptions
-func (*FindingsV1) NewListNoteOccurrencesOptions(accountID string, providerID string, noteID string) *ListNoteOccurrencesOptions {
+func (*FindingsV1) NewListNoteOccurrencesOptions(providerID string, noteID string) *ListNoteOccurrencesOptions {
 	return &ListNoteOccurrencesOptions{
-		AccountID:  core.StringPtr(accountID),
 		ProviderID: core.StringPtr(providerID),
 		NoteID:     core.StringPtr(noteID),
 	}
 }
 
-// SetAccountID : Allow user to set AccountID
-func (options *ListNoteOccurrencesOptions) SetAccountID(accountID string) *ListNoteOccurrencesOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
-}
-
 // SetProviderID : Allow user to set ProviderID
-func (options *ListNoteOccurrencesOptions) SetProviderID(providerID string) *ListNoteOccurrencesOptions {
-	options.ProviderID = core.StringPtr(providerID)
-	return options
+func (_options *ListNoteOccurrencesOptions) SetProviderID(providerID string) *ListNoteOccurrencesOptions {
+	_options.ProviderID = core.StringPtr(providerID)
+	return _options
 }
 
 // SetNoteID : Allow user to set NoteID
-func (options *ListNoteOccurrencesOptions) SetNoteID(noteID string) *ListNoteOccurrencesOptions {
-	options.NoteID = core.StringPtr(noteID)
-	return options
+func (_options *ListNoteOccurrencesOptions) SetNoteID(noteID string) *ListNoteOccurrencesOptions {
+	_options.NoteID = core.StringPtr(noteID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *ListNoteOccurrencesOptions) SetTransactionID(transactionID string) *ListNoteOccurrencesOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *ListNoteOccurrencesOptions) SetTransactionID(transactionID string) *ListNoteOccurrencesOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetPageSize : Allow user to set PageSize
-func (options *ListNoteOccurrencesOptions) SetPageSize(pageSize int64) *ListNoteOccurrencesOptions {
-	options.PageSize = core.Int64Ptr(pageSize)
-	return options
+func (_options *ListNoteOccurrencesOptions) SetPageSize(pageSize int64) *ListNoteOccurrencesOptions {
+	_options.PageSize = core.Int64Ptr(pageSize)
+	return _options
 }
 
 // SetPageToken : Allow user to set PageToken
-func (options *ListNoteOccurrencesOptions) SetPageToken(pageToken string) *ListNoteOccurrencesOptions {
-	options.PageToken = core.StringPtr(pageToken)
-	return options
+func (_options *ListNoteOccurrencesOptions) SetPageToken(pageToken string) *ListNoteOccurrencesOptions {
+	_options.PageToken = core.StringPtr(pageToken)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -2402,9 +2330,6 @@ func (options *ListNoteOccurrencesOptions) SetHeaders(param map[string]string) *
 
 // ListNotesOptions : The ListNotes options.
 type ListNotesOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// Part of `parent`. This field contains the provider_id for example: providers/{provider_id}.
 	ProviderID *string `validate:"required,ne="`
 
@@ -2422,41 +2347,34 @@ type ListNotesOptions struct {
 }
 
 // NewListNotesOptions : Instantiate ListNotesOptions
-func (*FindingsV1) NewListNotesOptions(accountID string, providerID string) *ListNotesOptions {
+func (*FindingsV1) NewListNotesOptions(providerID string) *ListNotesOptions {
 	return &ListNotesOptions{
-		AccountID:  core.StringPtr(accountID),
 		ProviderID: core.StringPtr(providerID),
 	}
 }
 
-// SetAccountID : Allow user to set AccountID
-func (options *ListNotesOptions) SetAccountID(accountID string) *ListNotesOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
-}
-
 // SetProviderID : Allow user to set ProviderID
-func (options *ListNotesOptions) SetProviderID(providerID string) *ListNotesOptions {
-	options.ProviderID = core.StringPtr(providerID)
-	return options
+func (_options *ListNotesOptions) SetProviderID(providerID string) *ListNotesOptions {
+	_options.ProviderID = core.StringPtr(providerID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *ListNotesOptions) SetTransactionID(transactionID string) *ListNotesOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *ListNotesOptions) SetTransactionID(transactionID string) *ListNotesOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetPageSize : Allow user to set PageSize
-func (options *ListNotesOptions) SetPageSize(pageSize int64) *ListNotesOptions {
-	options.PageSize = core.Int64Ptr(pageSize)
-	return options
+func (_options *ListNotesOptions) SetPageSize(pageSize int64) *ListNotesOptions {
+	_options.PageSize = core.Int64Ptr(pageSize)
+	return _options
 }
 
 // SetPageToken : Allow user to set PageToken
-func (options *ListNotesOptions) SetPageToken(pageToken string) *ListNotesOptions {
-	options.PageToken = core.StringPtr(pageToken)
-	return options
+func (_options *ListNotesOptions) SetPageToken(pageToken string) *ListNotesOptions {
+	_options.PageToken = core.StringPtr(pageToken)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -2467,9 +2385,6 @@ func (options *ListNotesOptions) SetHeaders(param map[string]string) *ListNotesO
 
 // ListOccurrencesOptions : The ListOccurrences options.
 type ListOccurrencesOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// Part of `parent`. This contains the provider_id for example: providers/{provider_id}.
 	ProviderID *string `validate:"required,ne="`
 
@@ -2487,41 +2402,34 @@ type ListOccurrencesOptions struct {
 }
 
 // NewListOccurrencesOptions : Instantiate ListOccurrencesOptions
-func (*FindingsV1) NewListOccurrencesOptions(accountID string, providerID string) *ListOccurrencesOptions {
+func (*FindingsV1) NewListOccurrencesOptions(providerID string) *ListOccurrencesOptions {
 	return &ListOccurrencesOptions{
-		AccountID:  core.StringPtr(accountID),
 		ProviderID: core.StringPtr(providerID),
 	}
 }
 
-// SetAccountID : Allow user to set AccountID
-func (options *ListOccurrencesOptions) SetAccountID(accountID string) *ListOccurrencesOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
-}
-
 // SetProviderID : Allow user to set ProviderID
-func (options *ListOccurrencesOptions) SetProviderID(providerID string) *ListOccurrencesOptions {
-	options.ProviderID = core.StringPtr(providerID)
-	return options
+func (_options *ListOccurrencesOptions) SetProviderID(providerID string) *ListOccurrencesOptions {
+	_options.ProviderID = core.StringPtr(providerID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *ListOccurrencesOptions) SetTransactionID(transactionID string) *ListOccurrencesOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *ListOccurrencesOptions) SetTransactionID(transactionID string) *ListOccurrencesOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetPageSize : Allow user to set PageSize
-func (options *ListOccurrencesOptions) SetPageSize(pageSize int64) *ListOccurrencesOptions {
-	options.PageSize = core.Int64Ptr(pageSize)
-	return options
+func (_options *ListOccurrencesOptions) SetPageSize(pageSize int64) *ListOccurrencesOptions {
+	_options.PageSize = core.Int64Ptr(pageSize)
+	return _options
 }
 
 // SetPageToken : Allow user to set PageToken
-func (options *ListOccurrencesOptions) SetPageToken(pageToken string) *ListOccurrencesOptions {
-	options.PageToken = core.StringPtr(pageToken)
-	return options
+func (_options *ListOccurrencesOptions) SetPageToken(pageToken string) *ListOccurrencesOptions {
+	_options.PageToken = core.StringPtr(pageToken)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -2532,9 +2440,6 @@ func (options *ListOccurrencesOptions) SetHeaders(param map[string]string) *List
 
 // ListProvidersOptions : The ListProviders options.
 type ListProvidersOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// The transaction id for the request in uuid v4 format.
 	TransactionID *string
 
@@ -2555,46 +2460,38 @@ type ListProvidersOptions struct {
 }
 
 // NewListProvidersOptions : Instantiate ListProvidersOptions
-func (*FindingsV1) NewListProvidersOptions(accountID string) *ListProvidersOptions {
-	return &ListProvidersOptions{
-		AccountID: core.StringPtr(accountID),
-	}
-}
-
-// SetAccountID : Allow user to set AccountID
-func (options *ListProvidersOptions) SetAccountID(accountID string) *ListProvidersOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (*FindingsV1) NewListProvidersOptions() *ListProvidersOptions {
+	return &ListProvidersOptions{}
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *ListProvidersOptions) SetTransactionID(transactionID string) *ListProvidersOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *ListProvidersOptions) SetTransactionID(transactionID string) *ListProvidersOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetLimit : Allow user to set Limit
-func (options *ListProvidersOptions) SetLimit(limit int64) *ListProvidersOptions {
-	options.Limit = core.Int64Ptr(limit)
-	return options
+func (_options *ListProvidersOptions) SetLimit(limit int64) *ListProvidersOptions {
+	_options.Limit = core.Int64Ptr(limit)
+	return _options
 }
 
 // SetSkip : Allow user to set Skip
-func (options *ListProvidersOptions) SetSkip(skip int64) *ListProvidersOptions {
-	options.Skip = core.Int64Ptr(skip)
-	return options
+func (_options *ListProvidersOptions) SetSkip(skip int64) *ListProvidersOptions {
+	_options.Skip = core.Int64Ptr(skip)
+	return _options
 }
 
 // SetStartProviderID : Allow user to set StartProviderID
-func (options *ListProvidersOptions) SetStartProviderID(startProviderID string) *ListProvidersOptions {
-	options.StartProviderID = core.StringPtr(startProviderID)
-	return options
+func (_options *ListProvidersOptions) SetStartProviderID(startProviderID string) *ListProvidersOptions {
+	_options.StartProviderID = core.StringPtr(startProviderID)
+	return _options
 }
 
 // SetEndProviderID : Allow user to set EndProviderID
-func (options *ListProvidersOptions) SetEndProviderID(endProviderID string) *ListProvidersOptions {
-	options.EndProviderID = core.StringPtr(endProviderID)
-	return options
+func (_options *ListProvidersOptions) SetEndProviderID(endProviderID string) *ListProvidersOptions {
+	_options.EndProviderID = core.StringPtr(endProviderID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -2643,9 +2540,6 @@ func UnmarshalNetworkConnection(m map[string]json.RawMessage, result interface{}
 
 // PostGraphOptions : The PostGraph options.
 type PostGraphOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// Body for query findings.
 	Body io.ReadCloser
 
@@ -2660,34 +2554,26 @@ type PostGraphOptions struct {
 }
 
 // NewPostGraphOptions : Instantiate PostGraphOptions
-func (*FindingsV1) NewPostGraphOptions(accountID string) *PostGraphOptions {
-	return &PostGraphOptions{
-		AccountID: core.StringPtr(accountID),
-	}
-}
-
-// SetAccountID : Allow user to set AccountID
-func (options *PostGraphOptions) SetAccountID(accountID string) *PostGraphOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (*FindingsV1) NewPostGraphOptions() *PostGraphOptions {
+	return &PostGraphOptions{}
 }
 
 // SetBody : Allow user to set Body
-func (options *PostGraphOptions) SetBody(body io.ReadCloser) *PostGraphOptions {
-	options.Body = body
-	return options
+func (_options *PostGraphOptions) SetBody(body io.ReadCloser) *PostGraphOptions {
+	_options.Body = body
+	return _options
 }
 
 // SetContentType : Allow user to set ContentType
-func (options *PostGraphOptions) SetContentType(contentType string) *PostGraphOptions {
-	options.ContentType = core.StringPtr(contentType)
-	return options
+func (_options *PostGraphOptions) SetContentType(contentType string) *PostGraphOptions {
+	_options.ContentType = core.StringPtr(contentType)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *PostGraphOptions) SetTransactionID(transactionID string) *PostGraphOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *PostGraphOptions) SetTransactionID(transactionID string) *PostGraphOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -2733,12 +2619,12 @@ type Reporter struct {
 }
 
 // NewReporter : Instantiate Reporter (Generic Model Constructor)
-func (*FindingsV1) NewReporter(id string, title string) (model *Reporter, err error) {
-	model = &Reporter{
+func (*FindingsV1) NewReporter(id string, title string) (_model *Reporter, err error) {
+	_model = &Reporter{
 		ID:    core.StringPtr(id),
 		Title: core.StringPtr(title),
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -2771,12 +2657,12 @@ type Section struct {
 }
 
 // NewSection : Instantiate Section (Generic Model Constructor)
-func (*FindingsV1) NewSection(title string, image string) (model *Section, err error) {
-	model = &Section{
+func (*FindingsV1) NewSection(title string, image string) (_model *Section, err error) {
+	_model = &Section{
 		Title: core.StringPtr(title),
 		Image: core.StringPtr(image),
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -2805,11 +2691,11 @@ type SocketAddress struct {
 }
 
 // NewSocketAddress : Instantiate SocketAddress (Generic Model Constructor)
-func (*FindingsV1) NewSocketAddress(address string) (model *SocketAddress, err error) {
-	model = &SocketAddress{
+func (*FindingsV1) NewSocketAddress(address string) (_model *SocketAddress, err error) {
+	_model = &SocketAddress{
 		Address: core.StringPtr(address),
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -2830,9 +2716,6 @@ func UnmarshalSocketAddress(m map[string]json.RawMessage, result interface{}) (e
 
 // UpdateNoteOptions : The UpdateNote options.
 type UpdateNoteOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// First part of note `name`: providers/{provider_id}/notes/{note_id}.
 	ProviderID *string `validate:"required,ne="`
 
@@ -2903,9 +2786,8 @@ const (
 )
 
 // NewUpdateNoteOptions : Instantiate UpdateNoteOptions
-func (*FindingsV1) NewUpdateNoteOptions(accountID string, providerID string, noteID string, shortDescription string, longDescription string, kind string, id string, reportedBy *Reporter) *UpdateNoteOptions {
+func (*FindingsV1) NewUpdateNoteOptions(providerID string, noteID string, shortDescription string, longDescription string, kind string, id string, reportedBy *Reporter) *UpdateNoteOptions {
 	return &UpdateNoteOptions{
-		AccountID:        core.StringPtr(accountID),
 		ProviderID:       core.StringPtr(providerID),
 		NoteID:           core.StringPtr(noteID),
 		ShortDescription: core.StringPtr(shortDescription),
@@ -2916,100 +2798,94 @@ func (*FindingsV1) NewUpdateNoteOptions(accountID string, providerID string, not
 	}
 }
 
-// SetAccountID : Allow user to set AccountID
-func (options *UpdateNoteOptions) SetAccountID(accountID string) *UpdateNoteOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
-}
-
 // SetProviderID : Allow user to set ProviderID
-func (options *UpdateNoteOptions) SetProviderID(providerID string) *UpdateNoteOptions {
-	options.ProviderID = core.StringPtr(providerID)
-	return options
+func (_options *UpdateNoteOptions) SetProviderID(providerID string) *UpdateNoteOptions {
+	_options.ProviderID = core.StringPtr(providerID)
+	return _options
 }
 
 // SetNoteID : Allow user to set NoteID
-func (options *UpdateNoteOptions) SetNoteID(noteID string) *UpdateNoteOptions {
-	options.NoteID = core.StringPtr(noteID)
-	return options
+func (_options *UpdateNoteOptions) SetNoteID(noteID string) *UpdateNoteOptions {
+	_options.NoteID = core.StringPtr(noteID)
+	return _options
 }
 
 // SetShortDescription : Allow user to set ShortDescription
-func (options *UpdateNoteOptions) SetShortDescription(shortDescription string) *UpdateNoteOptions {
-	options.ShortDescription = core.StringPtr(shortDescription)
-	return options
+func (_options *UpdateNoteOptions) SetShortDescription(shortDescription string) *UpdateNoteOptions {
+	_options.ShortDescription = core.StringPtr(shortDescription)
+	return _options
 }
 
 // SetLongDescription : Allow user to set LongDescription
-func (options *UpdateNoteOptions) SetLongDescription(longDescription string) *UpdateNoteOptions {
-	options.LongDescription = core.StringPtr(longDescription)
-	return options
+func (_options *UpdateNoteOptions) SetLongDescription(longDescription string) *UpdateNoteOptions {
+	_options.LongDescription = core.StringPtr(longDescription)
+	return _options
 }
 
 // SetKind : Allow user to set Kind
-func (options *UpdateNoteOptions) SetKind(kind string) *UpdateNoteOptions {
-	options.Kind = core.StringPtr(kind)
-	return options
+func (_options *UpdateNoteOptions) SetKind(kind string) *UpdateNoteOptions {
+	_options.Kind = core.StringPtr(kind)
+	return _options
 }
 
 // SetID : Allow user to set ID
-func (options *UpdateNoteOptions) SetID(id string) *UpdateNoteOptions {
-	options.ID = core.StringPtr(id)
-	return options
+func (_options *UpdateNoteOptions) SetID(id string) *UpdateNoteOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
 }
 
 // SetReportedBy : Allow user to set ReportedBy
-func (options *UpdateNoteOptions) SetReportedBy(reportedBy *Reporter) *UpdateNoteOptions {
-	options.ReportedBy = reportedBy
-	return options
+func (_options *UpdateNoteOptions) SetReportedBy(reportedBy *Reporter) *UpdateNoteOptions {
+	_options.ReportedBy = reportedBy
+	return _options
 }
 
 // SetRelatedURL : Allow user to set RelatedURL
-func (options *UpdateNoteOptions) SetRelatedURL(relatedURL []APINoteRelatedURL) *UpdateNoteOptions {
-	options.RelatedURL = relatedURL
-	return options
+func (_options *UpdateNoteOptions) SetRelatedURL(relatedURL []APINoteRelatedURL) *UpdateNoteOptions {
+	_options.RelatedURL = relatedURL
+	return _options
 }
 
 // SetExpirationTime : Allow user to set ExpirationTime
-func (options *UpdateNoteOptions) SetExpirationTime(expirationTime *strfmt.DateTime) *UpdateNoteOptions {
-	options.ExpirationTime = expirationTime
-	return options
+func (_options *UpdateNoteOptions) SetExpirationTime(expirationTime *strfmt.DateTime) *UpdateNoteOptions {
+	_options.ExpirationTime = expirationTime
+	return _options
 }
 
 // SetShared : Allow user to set Shared
-func (options *UpdateNoteOptions) SetShared(shared bool) *UpdateNoteOptions {
-	options.Shared = core.BoolPtr(shared)
-	return options
+func (_options *UpdateNoteOptions) SetShared(shared bool) *UpdateNoteOptions {
+	_options.Shared = core.BoolPtr(shared)
+	return _options
 }
 
 // SetFinding : Allow user to set Finding
-func (options *UpdateNoteOptions) SetFinding(finding *FindingType) *UpdateNoteOptions {
-	options.Finding = finding
-	return options
+func (_options *UpdateNoteOptions) SetFinding(finding *FindingType) *UpdateNoteOptions {
+	_options.Finding = finding
+	return _options
 }
 
 // SetKpi : Allow user to set Kpi
-func (options *UpdateNoteOptions) SetKpi(kpi *KpiType) *UpdateNoteOptions {
-	options.Kpi = kpi
-	return options
+func (_options *UpdateNoteOptions) SetKpi(kpi *KpiType) *UpdateNoteOptions {
+	_options.Kpi = kpi
+	return _options
 }
 
 // SetCard : Allow user to set Card
-func (options *UpdateNoteOptions) SetCard(card *Card) *UpdateNoteOptions {
-	options.Card = card
-	return options
+func (_options *UpdateNoteOptions) SetCard(card *Card) *UpdateNoteOptions {
+	_options.Card = card
+	return _options
 }
 
 // SetSection : Allow user to set Section
-func (options *UpdateNoteOptions) SetSection(section *Section) *UpdateNoteOptions {
-	options.Section = section
-	return options
+func (_options *UpdateNoteOptions) SetSection(section *Section) *UpdateNoteOptions {
+	_options.Section = section
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *UpdateNoteOptions) SetTransactionID(transactionID string) *UpdateNoteOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *UpdateNoteOptions) SetTransactionID(transactionID string) *UpdateNoteOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -3020,9 +2896,6 @@ func (options *UpdateNoteOptions) SetHeaders(param map[string]string) *UpdateNot
 
 // UpdateOccurrenceOptions : The UpdateOccurrence options.
 type UpdateOccurrenceOptions struct {
-	// Account ID.
-	AccountID *string `validate:"required,ne="`
-
 	// First part of occurrence `name`: providers/{provider_id}/occurrences/{occurrence_id}.
 	ProviderID *string `validate:"required,ne="`
 
@@ -3085,9 +2958,8 @@ const (
 )
 
 // NewUpdateOccurrenceOptions : Instantiate UpdateOccurrenceOptions
-func (*FindingsV1) NewUpdateOccurrenceOptions(accountID string, providerID string, occurrenceID string, noteName string, kind string, id string) *UpdateOccurrenceOptions {
+func (*FindingsV1) NewUpdateOccurrenceOptions(providerID string, occurrenceID string, noteName string, kind string, id string) *UpdateOccurrenceOptions {
 	return &UpdateOccurrenceOptions{
-		AccountID:    core.StringPtr(accountID),
 		ProviderID:   core.StringPtr(providerID),
 		OccurrenceID: core.StringPtr(occurrenceID),
 		NoteName:     core.StringPtr(noteName),
@@ -3096,82 +2968,76 @@ func (*FindingsV1) NewUpdateOccurrenceOptions(accountID string, providerID strin
 	}
 }
 
-// SetAccountID : Allow user to set AccountID
-func (options *UpdateOccurrenceOptions) SetAccountID(accountID string) *UpdateOccurrenceOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
-}
-
 // SetProviderID : Allow user to set ProviderID
-func (options *UpdateOccurrenceOptions) SetProviderID(providerID string) *UpdateOccurrenceOptions {
-	options.ProviderID = core.StringPtr(providerID)
-	return options
+func (_options *UpdateOccurrenceOptions) SetProviderID(providerID string) *UpdateOccurrenceOptions {
+	_options.ProviderID = core.StringPtr(providerID)
+	return _options
 }
 
 // SetOccurrenceID : Allow user to set OccurrenceID
-func (options *UpdateOccurrenceOptions) SetOccurrenceID(occurrenceID string) *UpdateOccurrenceOptions {
-	options.OccurrenceID = core.StringPtr(occurrenceID)
-	return options
+func (_options *UpdateOccurrenceOptions) SetOccurrenceID(occurrenceID string) *UpdateOccurrenceOptions {
+	_options.OccurrenceID = core.StringPtr(occurrenceID)
+	return _options
 }
 
 // SetNoteName : Allow user to set NoteName
-func (options *UpdateOccurrenceOptions) SetNoteName(noteName string) *UpdateOccurrenceOptions {
-	options.NoteName = core.StringPtr(noteName)
-	return options
+func (_options *UpdateOccurrenceOptions) SetNoteName(noteName string) *UpdateOccurrenceOptions {
+	_options.NoteName = core.StringPtr(noteName)
+	return _options
 }
 
 // SetKind : Allow user to set Kind
-func (options *UpdateOccurrenceOptions) SetKind(kind string) *UpdateOccurrenceOptions {
-	options.Kind = core.StringPtr(kind)
-	return options
+func (_options *UpdateOccurrenceOptions) SetKind(kind string) *UpdateOccurrenceOptions {
+	_options.Kind = core.StringPtr(kind)
+	return _options
 }
 
 // SetID : Allow user to set ID
-func (options *UpdateOccurrenceOptions) SetID(id string) *UpdateOccurrenceOptions {
-	options.ID = core.StringPtr(id)
-	return options
+func (_options *UpdateOccurrenceOptions) SetID(id string) *UpdateOccurrenceOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
 }
 
 // SetResourceURL : Allow user to set ResourceURL
-func (options *UpdateOccurrenceOptions) SetResourceURL(resourceURL string) *UpdateOccurrenceOptions {
-	options.ResourceURL = core.StringPtr(resourceURL)
-	return options
+func (_options *UpdateOccurrenceOptions) SetResourceURL(resourceURL string) *UpdateOccurrenceOptions {
+	_options.ResourceURL = core.StringPtr(resourceURL)
+	return _options
 }
 
 // SetRemediation : Allow user to set Remediation
-func (options *UpdateOccurrenceOptions) SetRemediation(remediation string) *UpdateOccurrenceOptions {
-	options.Remediation = core.StringPtr(remediation)
-	return options
+func (_options *UpdateOccurrenceOptions) SetRemediation(remediation string) *UpdateOccurrenceOptions {
+	_options.Remediation = core.StringPtr(remediation)
+	return _options
 }
 
 // SetContext : Allow user to set Context
-func (options *UpdateOccurrenceOptions) SetContext(context *Context) *UpdateOccurrenceOptions {
-	options.Context = context
-	return options
+func (_options *UpdateOccurrenceOptions) SetContext(context *Context) *UpdateOccurrenceOptions {
+	_options.Context = context
+	return _options
 }
 
 // SetFinding : Allow user to set Finding
-func (options *UpdateOccurrenceOptions) SetFinding(finding *Finding) *UpdateOccurrenceOptions {
-	options.Finding = finding
-	return options
+func (_options *UpdateOccurrenceOptions) SetFinding(finding *Finding) *UpdateOccurrenceOptions {
+	_options.Finding = finding
+	return _options
 }
 
 // SetKpi : Allow user to set Kpi
-func (options *UpdateOccurrenceOptions) SetKpi(kpi *Kpi) *UpdateOccurrenceOptions {
-	options.Kpi = kpi
-	return options
+func (_options *UpdateOccurrenceOptions) SetKpi(kpi *Kpi) *UpdateOccurrenceOptions {
+	_options.Kpi = kpi
+	return _options
 }
 
 // SetReferenceData : Allow user to set ReferenceData
-func (options *UpdateOccurrenceOptions) SetReferenceData(referenceData interface{}) *UpdateOccurrenceOptions {
-	options.ReferenceData = referenceData
-	return options
+func (_options *UpdateOccurrenceOptions) SetReferenceData(referenceData interface{}) *UpdateOccurrenceOptions {
+	_options.ReferenceData = referenceData
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *UpdateOccurrenceOptions) SetTransactionID(transactionID string) *UpdateOccurrenceOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *UpdateOccurrenceOptions) SetTransactionID(transactionID string) *UpdateOccurrenceOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -3315,12 +3181,26 @@ func UnmarshalAPIListOccurrencesResponse(m map[string]json.RawMessage, result in
 type APIListProvidersResponse struct {
 	// The providers requested.
 	Providers []APIProvider `json:"providers,omitempty"`
+
+	// The number of elements returned in the current instance. Default is 200.
+	Limit *int64 `json:"limit,omitempty"`
+
+	// The offset is the index of the item from which you want to start returning data from. Default is 0.
+	Skip *int64 `json:"skip,omitempty"`
 }
 
 // UnmarshalAPIListProvidersResponse unmarshals an instance of APIListProvidersResponse from the specified map of raw messages.
 func UnmarshalAPIListProvidersResponse(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(APIListProvidersResponse)
 	err = core.UnmarshalModel(m, "providers", &obj.Providers, UnmarshalAPIProvider)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "limit", &obj.Limit)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "skip", &obj.Skip)
 	if err != nil {
 		return
 	}
@@ -3394,15 +3274,15 @@ const (
 )
 
 // NewAPINote : Instantiate APINote (Generic Model Constructor)
-func (*FindingsV1) NewAPINote(shortDescription string, longDescription string, kind string, id string, reportedBy *Reporter) (model *APINote, err error) {
-	model = &APINote{
+func (*FindingsV1) NewAPINote(shortDescription string, longDescription string, kind string, id string, reportedBy *Reporter) (_model *APINote, err error) {
+	_model = &APINote{
 		ShortDescription: core.StringPtr(shortDescription),
 		LongDescription:  core.StringPtr(longDescription),
 		Kind:             core.StringPtr(kind),
 		ID:               core.StringPtr(id),
 		ReportedBy:       reportedBy,
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -3479,12 +3359,12 @@ type APINoteRelatedURL struct {
 }
 
 // NewAPINoteRelatedURL : Instantiate APINoteRelatedURL (Generic Model Constructor)
-func (*FindingsV1) NewAPINoteRelatedURL(label string, url string) (model *APINoteRelatedURL, err error) {
-	model = &APINoteRelatedURL{
+func (*FindingsV1) NewAPINoteRelatedURL(label string, url string) (_model *APINoteRelatedURL, err error) {
+	_model = &APINoteRelatedURL{
 		Label: core.StringPtr(label),
 		URL:   core.StringPtr(url),
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -3561,13 +3441,13 @@ const (
 )
 
 // NewAPIOccurrence : Instantiate APIOccurrence (Generic Model Constructor)
-func (*FindingsV1) NewAPIOccurrence(noteName string, kind string, id string) (model *APIOccurrence, err error) {
-	model = &APIOccurrence{
+func (*FindingsV1) NewAPIOccurrence(noteName string, kind string, id string) (_model *APIOccurrence, err error) {
+	_model = &APIOccurrence{
 		NoteName: core.StringPtr(noteName),
 		Kind:     core.StringPtr(kind),
 		ID:       core.StringPtr(id),
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -3677,13 +3557,13 @@ const (
 )
 
 // NewCardElementBreakdownCardElement : Instantiate CardElementBreakdownCardElement (Generic Model Constructor)
-func (*FindingsV1) NewCardElementBreakdownCardElement(text string, kind string, valueTypes []ValueTypeIntf) (model *CardElementBreakdownCardElement, err error) {
-	model = &CardElementBreakdownCardElement{
+func (*FindingsV1) NewCardElementBreakdownCardElement(text string, kind string, valueTypes []ValueTypeIntf) (_model *CardElementBreakdownCardElement, err error) {
+	_model = &CardElementBreakdownCardElement{
 		Text:       core.StringPtr(text),
 		Kind:       core.StringPtr(kind),
 		ValueTypes: valueTypes,
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -3744,13 +3624,13 @@ const (
 )
 
 // NewCardElementNumericCardElement : Instantiate CardElementNumericCardElement (Generic Model Constructor)
-func (*FindingsV1) NewCardElementNumericCardElement(text string, kind string, valueType *NumericCardElementValueType) (model *CardElementNumericCardElement, err error) {
-	model = &CardElementNumericCardElement{
+func (*FindingsV1) NewCardElementNumericCardElement(text string, kind string, valueType *NumericCardElementValueType) (_model *CardElementNumericCardElement, err error) {
+	_model = &CardElementNumericCardElement{
 		Text:      core.StringPtr(text),
 		Kind:      core.StringPtr(kind),
 		ValueType: valueType,
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -3815,13 +3695,13 @@ const (
 )
 
 // NewCardElementTimeSeriesCardElement : Instantiate CardElementTimeSeriesCardElement (Generic Model Constructor)
-func (*FindingsV1) NewCardElementTimeSeriesCardElement(text string, kind string, valueTypes []ValueTypeIntf) (model *CardElementTimeSeriesCardElement, err error) {
-	model = &CardElementTimeSeriesCardElement{
+func (*FindingsV1) NewCardElementTimeSeriesCardElement(text string, kind string, valueTypes []ValueTypeIntf) (_model *CardElementTimeSeriesCardElement, err error) {
+	_model = &CardElementTimeSeriesCardElement{
 		Text:       core.StringPtr(text),
 		Kind:       core.StringPtr(kind),
 		ValueTypes: valueTypes,
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -3927,13 +3807,13 @@ const (
 )
 
 // NewValueTypeFindingCountValueType : Instantiate ValueTypeFindingCountValueType (Generic Model Constructor)
-func (*FindingsV1) NewValueTypeFindingCountValueType(kind string, findingNoteNames []string, text string) (model *ValueTypeFindingCountValueType, err error) {
-	model = &ValueTypeFindingCountValueType{
+func (*FindingsV1) NewValueTypeFindingCountValueType(kind string, findingNoteNames []string, text string) (_model *ValueTypeFindingCountValueType, err error) {
+	_model = &ValueTypeFindingCountValueType{
 		Kind:             core.StringPtr(kind),
 		FindingNoteNames: findingNoteNames,
 		Text:             core.StringPtr(text),
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -3982,13 +3862,13 @@ const (
 )
 
 // NewValueTypeKpiValueType : Instantiate ValueTypeKpiValueType (Generic Model Constructor)
-func (*FindingsV1) NewValueTypeKpiValueType(kind string, kpiNoteName string, text string) (model *ValueTypeKpiValueType, err error) {
-	model = &ValueTypeKpiValueType{
+func (*FindingsV1) NewValueTypeKpiValueType(kind string, kpiNoteName string, text string) (_model *ValueTypeKpiValueType, err error) {
+	_model = &ValueTypeKpiValueType{
 		Kind:        core.StringPtr(kind),
 		KpiNoteName: core.StringPtr(kpiNoteName),
 		Text:        core.StringPtr(text),
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 

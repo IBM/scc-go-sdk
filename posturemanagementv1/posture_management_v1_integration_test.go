@@ -20,6 +20,7 @@ package posturemanagementv1_test
 
 import (
 	"fmt"
+	"github.com/google/uuid"
 	"os"
 
 	"github.com/IBM/go-sdk-core/v5/core"
@@ -41,7 +42,12 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 	const externalConfigFile = "../posture_management_v1.env"
 
 	var (
+		credentialString         string
 		err                      error
+		accountId                string
+		apiKey                   string
+		authUrl                  string
+		authenticator            core.IamAuthenticator
 		postureManagementService *posturemanagementv1.PostureManagementV1
 		serviceURL               string
 		config                   map[string]string
@@ -63,9 +69,35 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 			if err != nil {
 				Skip("Error loading service properties, skipping tests: " + err.Error())
 			}
+
+			accountId = config["POSTURE_ACCOUNT_ID"]
+			if accountId == "" {
+				Skip("Unable to load posture account configuration property, skipping tests")
+			}
+
+			credentialString = config["CREDENTIAL"]
+			if accountId == "" {
+				Skip("Unable to load posture credential configuration property, skipping tests")
+			}
+
 			serviceURL = config["URL"]
 			if serviceURL == "" {
 				Skip("Unable to load service URL configuration property, skipping tests")
+			}
+
+			authUrl = config["IAM_APIKEY_URL"]
+			if authUrl == "" {
+				Skip("Unable to load auth service URL configuration property, skipping tests")
+			}
+
+			apiKey = config["IAM"]
+			if apiKey == "" {
+				Skip("Unable to load IAM configuration property, skipping tests")
+			}
+
+			authenticator = core.IamAuthenticator{
+				ApiKey: apiKey,
+				URL:    authUrl,
 			}
 
 			fmt.Printf("Service URL: %s\n", serviceURL)
@@ -80,7 +112,8 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 		It("Successfully construct the service client instance", func() {
 
 			postureManagementServiceOptions := &posturemanagementv1.PostureManagementV1Options{
-				AccountID: core.StringPtr("testString"),
+				URL:           serviceURL,
+				Authenticator: &authenticator,
 			}
 
 			postureManagementService, err = posturemanagementv1.NewPostureManagementV1UsingExternalConfig(postureManagementServiceOptions)
@@ -98,10 +131,8 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 		It(`ListLatestScans(listLatestScansOptions *ListLatestScansOptions)`, func() {
 
 			listLatestScansOptions := &posturemanagementv1.ListLatestScansOptions{
-				TransactionID: core.StringPtr("testString"),
-				Name:          core.StringPtr("testString"),
-				Offset:        core.Int64Ptr(int64(38)),
-				Limit:         core.Int64Ptr(int64(100)),
+				AccountID:     core.StringPtr(accountId),
+				TransactionID: core.StringPtr(uuid.NewString()),
 			}
 
 			scansList, response, err := postureManagementService.ListLatestScans(listLatestScansOptions)
@@ -120,10 +151,11 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 		It(`CreateValidation(createValidationOptions *CreateValidationOptions)`, func() {
 
 			createValidationOptions := &posturemanagementv1.CreateValidationOptions{
-				ScopeID:        core.StringPtr("1"),
-				ProfileID:      core.StringPtr("6"),
-				GroupProfileID: core.StringPtr("13"),
-				TransactionID:  core.StringPtr("testString"),
+				AccountID:      core.StringPtr(accountId),
+				ScopeID:        core.StringPtr("28569"),
+				ProfileID:      core.StringPtr("48"),
+				GroupProfileID: core.StringPtr("0"),
+				TransactionID:  core.StringPtr(uuid.NewString()),
 			}
 
 			result, response, err := postureManagementService.CreateValidation(createValidationOptions)
@@ -142,10 +174,10 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 		It(`ScansSummary(scansSummaryOptions *ScansSummaryOptions)`, func() {
 
 			scansSummaryOptions := &posturemanagementv1.ScansSummaryOptions{
-				ScanID:        core.StringPtr("testString"),
-				ProfileID:     core.StringPtr("testString"),
-				TransactionID: core.StringPtr("testString"),
-				Name:          core.StringPtr("testString"),
+				AccountID:     core.StringPtr(accountId),
+				ScanID:        core.StringPtr("32694"),
+				ProfileID:     core.StringPtr("48"),
+				TransactionID: core.StringPtr(uuid.NewString()),
 			}
 
 			summary, response, err := postureManagementService.ScansSummary(scansSummaryOptions)
@@ -164,12 +196,10 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 		It(`ScanSummaries(scanSummariesOptions *ScanSummariesOptions)`, func() {
 
 			scanSummariesOptions := &posturemanagementv1.ScanSummariesOptions{
-				ScopeID:        core.StringPtr("testString"),
-				TransactionID:  core.StringPtr("testString"),
-				ProfileID:      core.StringPtr("testString"),
-				GroupProfileID: core.StringPtr("testString"),
-				Offset:         core.Int64Ptr(int64(38)),
-				Limit:          core.Int64Ptr(int64(100)),
+				ScopeID:       core.StringPtr("28569"),
+				AccountID:     core.StringPtr(accountId),
+				ProfileID:     core.StringPtr("48"),
+				TransactionID: core.StringPtr(uuid.NewString()),
 			}
 
 			summariesList, response, err := postureManagementService.ScanSummaries(scanSummariesOptions)
@@ -188,10 +218,8 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 		It(`ListProfiles(listProfilesOptions *ListProfilesOptions)`, func() {
 
 			listProfilesOptions := &posturemanagementv1.ListProfilesOptions{
-				TransactionID: core.StringPtr("testString"),
-				Name:          core.StringPtr("testString"),
-				Offset:        core.Int64Ptr(int64(38)),
-				Limit:         core.Int64Ptr(int64(100)),
+				AccountID:     core.StringPtr(accountId),
+				TransactionID: core.StringPtr(uuid.NewString()),
 			}
 
 			profilesList, response, err := postureManagementService.ListProfiles(listProfilesOptions)
@@ -210,12 +238,13 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 		It(`CreateScope(createScopeOptions *CreateScopeOptions)`, func() {
 
 			createScopeOptions := &posturemanagementv1.CreateScopeOptions{
-				ScopeName:        core.StringPtr("IBM-Scope-new-048-test"),
-				ScopeDescription: core.StringPtr("IBM Scope Example"),
-				CollectorIds:     []string{"20"},
-				CredentialID:     core.StringPtr("5"),
+				AccountID:        core.StringPtr(accountId),
+				ScopeName:        core.StringPtr("SDK-IT-" + uuid.NewString()),
+				ScopeDescription: core.StringPtr("SDK-IT IBM Scope Example"),
+				CollectorIds:     []string{"2082"},
+				CredentialID:     core.StringPtr("5801"),
 				EnvironmentType:  core.StringPtr("ibm"),
-				TransactionID:    core.StringPtr("testString"),
+				TransactionID:    core.StringPtr(uuid.NewString()),
 			}
 
 			scope, response, err := postureManagementService.CreateScope(createScopeOptions)
@@ -234,8 +263,8 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 		It(`ListScopes(listScopesOptions *ListScopesOptions)`, func() {
 
 			listScopesOptions := &posturemanagementv1.ListScopesOptions{
-				TransactionID: core.StringPtr("testString"),
-				Name:          core.StringPtr("testString"),
+				AccountID:     core.StringPtr(accountId),
+				TransactionID: core.StringPtr(uuid.NewString()),
 			}
 
 			scopesList, response, err := postureManagementService.ListScopes(listScopesOptions)
@@ -254,12 +283,13 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 		It(`CreateCollector(createCollectorOptions *CreateCollectorOptions)`, func() {
 
 			createCollectorOptions := &posturemanagementv1.CreateCollectorOptions{
-				CollectorName:        core.StringPtr("IBM-collector-sample"),
-				CollectorDescription: core.StringPtr("sample collector"),
+				AccountID:            core.StringPtr(accountId),
+				CollectorName:        core.StringPtr("IBMSDK-" + uuid.NewString()),
+				CollectorDescription: core.StringPtr("sample collector from SDK IT"),
 				IsPublic:             core.BoolPtr(true),
-				ManagedBy:            core.StringPtr("ibm"),
+				ManagedBy:            core.StringPtr("customer"),
 				PassPhrase:           core.StringPtr("secret"),
-				TransactionID:        core.StringPtr("testString"),
+				TransactionID:        core.StringPtr(uuid.NewString()),
 			}
 
 			collector, response, err := postureManagementService.CreateCollector(createCollectorOptions)
@@ -278,9 +308,10 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 		It(`CreateCredential(createCredentialOptions *CreateCredentialOptions)`, func() {
 
 			createCredentialOptions := &posturemanagementv1.CreateCredentialOptions{
-				CredentialDataFile: CreateMockReader("This is a mock file."),
-				PemFile:            CreateMockReader("This is a mock file."),
-				TransactionID:      core.StringPtr("testString"),
+				AccountID:          core.StringPtr(accountId),
+				CredentialDataFile: CreateMockReader(credential),
+				PemFile:            CreateMockReader(pem),
+				TransactionID:      core.StringPtr(uuid.NewString()),
 			}
 
 			credential, response, err := postureManagementService.CreateCredential(createCredentialOptions)

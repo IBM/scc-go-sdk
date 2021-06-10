@@ -1,3 +1,11 @@
+## [0.0.7](https://github.com/IBM/scc-go-sdk/compare/v0.0.6...v0.0.7) (2021-06-10)
+
+
+### Bug Fixes
+
+* **SDK:** AccountID should be used as global param ([c62dba0](https://github.com/IBM/scc-go-sdk/commit/c62dba0cd6808a9015f15dda568e2ddfd2aff6db))
+* **SDK:** Findings and Notifications service now use AccountID as global param ([95a41b2](https://github.com/IBM/scc-go-sdk/commit/95a41b2a031642bd3eee888a707b672627b50c23))
+
 ## [0.0.6](https://github.com/IBM/scc-go-sdk/compare/v0.0.5...v0.0.6) (2021-06-03)
 
 

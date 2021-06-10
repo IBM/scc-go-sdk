@@ -67,14 +67,13 @@ var _ = Describe(`FindingsV1`, func() {
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"FINDINGS_URL": "https://findingsv1/api",
+				"FINDINGS_URL":       "https://findingsv1/api",
 				"FINDINGS_AUTH_TYPE": "noauth",
 			}
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
-				})
+				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{})
 				Expect(findingsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
@@ -103,8 +102,7 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
-				})
+				findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{})
 				err := findingsService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
 				Expect(findingsService).ToNot(BeNil())
@@ -122,13 +120,12 @@ var _ = Describe(`FindingsV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"FINDINGS_URL": "https://findingsv1/api",
+				"FINDINGS_URL":       "https://findingsv1/api",
 				"FINDINGS_AUTH_TYPE": "someOtherAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{
-			})
+			findingsService, serviceErr := findingsv1.NewFindingsV1UsingExternalConfig(&findingsv1.FindingsV1Options{})
 
 			It(`Instantiate service client with error`, func() {
 				Expect(findingsService).To(BeNil())
@@ -139,7 +136,7 @@ var _ = Describe(`FindingsV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"FINDINGS_AUTH_TYPE":   "NOAuth",
+				"FINDINGS_AUTH_TYPE": "NOAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)

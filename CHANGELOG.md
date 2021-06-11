@@ -1,3 +1,10 @@
+## [0.0.8](https://github.com/IBM/scc-go-sdk/compare/v0.0.7...v0.0.8) (2021-06-11)
+
+
+### Bug Fixes
+
+* **listProviders:** Addressed api definition review comments ([576429d](https://github.com/IBM/scc-go-sdk/commit/576429d142a6508e6146a83166b851cfa68cc86a))
+
 ## [0.0.7](https://github.com/IBM/scc-go-sdk/compare/v0.0.6...v0.0.7) (2021-06-10)
 
 

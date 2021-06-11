@@ -15,7 +15,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.32.0-4c6a3129-20210514-210323
+ * IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
  */
 
 // Package configurationgovernancev1 : Operations and models for the ConfigurationGovernanceV1 service
@@ -905,21 +905,21 @@ func (*ConfigurationGovernanceV1) NewCreateRuleAttachmentsOptions(ruleID string,
 }
 
 // SetRuleID : Allow user to set RuleID
-func (options *CreateRuleAttachmentsOptions) SetRuleID(ruleID string) *CreateRuleAttachmentsOptions {
-	options.RuleID = core.StringPtr(ruleID)
-	return options
+func (_options *CreateRuleAttachmentsOptions) SetRuleID(ruleID string) *CreateRuleAttachmentsOptions {
+	_options.RuleID = core.StringPtr(ruleID)
+	return _options
 }
 
 // SetAttachments : Allow user to set Attachments
-func (options *CreateRuleAttachmentsOptions) SetAttachments(attachments []RuleAttachmentRequest) *CreateRuleAttachmentsOptions {
-	options.Attachments = attachments
-	return options
+func (_options *CreateRuleAttachmentsOptions) SetAttachments(attachments []RuleAttachmentRequest) *CreateRuleAttachmentsOptions {
+	_options.Attachments = attachments
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *CreateRuleAttachmentsOptions) SetTransactionID(transactionID string) *CreateRuleAttachmentsOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *CreateRuleAttachmentsOptions) SetTransactionID(transactionID string) *CreateRuleAttachmentsOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -959,11 +959,11 @@ type CreateRuleRequest struct {
 }
 
 // NewCreateRuleRequest : Instantiate CreateRuleRequest (Generic Model Constructor)
-func (*ConfigurationGovernanceV1) NewCreateRuleRequest(rule *RuleRequest) (model *CreateRuleRequest, err error) {
-	model = &CreateRuleRequest{
+func (*ConfigurationGovernanceV1) NewCreateRuleRequest(rule *RuleRequest) (_model *CreateRuleRequest, err error) {
+	_model = &CreateRuleRequest{
 		Rule: rule,
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -1064,15 +1064,15 @@ func (*ConfigurationGovernanceV1) NewCreateRulesOptions(rules []CreateRuleReques
 }
 
 // SetRules : Allow user to set Rules
-func (options *CreateRulesOptions) SetRules(rules []CreateRuleRequest) *CreateRulesOptions {
-	options.Rules = rules
-	return options
+func (_options *CreateRulesOptions) SetRules(rules []CreateRuleRequest) *CreateRulesOptions {
+	_options.Rules = rules
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *CreateRulesOptions) SetTransactionID(transactionID string) *CreateRulesOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *CreateRulesOptions) SetTransactionID(transactionID string) *CreateRulesOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1127,21 +1127,21 @@ func (*ConfigurationGovernanceV1) NewDeleteRuleAttachmentOptions(ruleID string, 
 }
 
 // SetRuleID : Allow user to set RuleID
-func (options *DeleteRuleAttachmentOptions) SetRuleID(ruleID string) *DeleteRuleAttachmentOptions {
-	options.RuleID = core.StringPtr(ruleID)
-	return options
+func (_options *DeleteRuleAttachmentOptions) SetRuleID(ruleID string) *DeleteRuleAttachmentOptions {
+	_options.RuleID = core.StringPtr(ruleID)
+	return _options
 }
 
 // SetAttachmentID : Allow user to set AttachmentID
-func (options *DeleteRuleAttachmentOptions) SetAttachmentID(attachmentID string) *DeleteRuleAttachmentOptions {
-	options.AttachmentID = core.StringPtr(attachmentID)
-	return options
+func (_options *DeleteRuleAttachmentOptions) SetAttachmentID(attachmentID string) *DeleteRuleAttachmentOptions {
+	_options.AttachmentID = core.StringPtr(attachmentID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *DeleteRuleAttachmentOptions) SetTransactionID(transactionID string) *DeleteRuleAttachmentOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *DeleteRuleAttachmentOptions) SetTransactionID(transactionID string) *DeleteRuleAttachmentOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1175,15 +1175,15 @@ func (*ConfigurationGovernanceV1) NewDeleteRuleOptions(ruleID string) *DeleteRul
 }
 
 // SetRuleID : Allow user to set RuleID
-func (options *DeleteRuleOptions) SetRuleID(ruleID string) *DeleteRuleOptions {
-	options.RuleID = core.StringPtr(ruleID)
-	return options
+func (_options *DeleteRuleOptions) SetRuleID(ruleID string) *DeleteRuleOptions {
+	_options.RuleID = core.StringPtr(ruleID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *DeleteRuleOptions) SetTransactionID(transactionID string) *DeleteRuleOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *DeleteRuleOptions) SetTransactionID(transactionID string) *DeleteRuleOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1208,11 +1208,11 @@ const (
 )
 
 // NewEnforcementAction : Instantiate EnforcementAction (Generic Model Constructor)
-func (*ConfigurationGovernanceV1) NewEnforcementAction(action string) (model *EnforcementAction, err error) {
-	model = &EnforcementAction{
+func (*ConfigurationGovernanceV1) NewEnforcementAction(action string) (_model *EnforcementAction, err error) {
+	_model = &EnforcementAction{
 		Action: core.StringPtr(action),
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -1256,21 +1256,21 @@ func (*ConfigurationGovernanceV1) NewGetRuleAttachmentOptions(ruleID string, att
 }
 
 // SetRuleID : Allow user to set RuleID
-func (options *GetRuleAttachmentOptions) SetRuleID(ruleID string) *GetRuleAttachmentOptions {
-	options.RuleID = core.StringPtr(ruleID)
-	return options
+func (_options *GetRuleAttachmentOptions) SetRuleID(ruleID string) *GetRuleAttachmentOptions {
+	_options.RuleID = core.StringPtr(ruleID)
+	return _options
 }
 
 // SetAttachmentID : Allow user to set AttachmentID
-func (options *GetRuleAttachmentOptions) SetAttachmentID(attachmentID string) *GetRuleAttachmentOptions {
-	options.AttachmentID = core.StringPtr(attachmentID)
-	return options
+func (_options *GetRuleAttachmentOptions) SetAttachmentID(attachmentID string) *GetRuleAttachmentOptions {
+	_options.AttachmentID = core.StringPtr(attachmentID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *GetRuleAttachmentOptions) SetTransactionID(transactionID string) *GetRuleAttachmentOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *GetRuleAttachmentOptions) SetTransactionID(transactionID string) *GetRuleAttachmentOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1304,15 +1304,15 @@ func (*ConfigurationGovernanceV1) NewGetRuleOptions(ruleID string) *GetRuleOptio
 }
 
 // SetRuleID : Allow user to set RuleID
-func (options *GetRuleOptions) SetRuleID(ruleID string) *GetRuleOptions {
-	options.RuleID = core.StringPtr(ruleID)
-	return options
+func (_options *GetRuleOptions) SetRuleID(ruleID string) *GetRuleOptions {
+	_options.RuleID = core.StringPtr(ruleID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *GetRuleOptions) SetTransactionID(transactionID string) *GetRuleOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *GetRuleOptions) SetTransactionID(transactionID string) *GetRuleOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1377,27 +1377,27 @@ func (*ConfigurationGovernanceV1) NewListRuleAttachmentsOptions(ruleID string) *
 }
 
 // SetRuleID : Allow user to set RuleID
-func (options *ListRuleAttachmentsOptions) SetRuleID(ruleID string) *ListRuleAttachmentsOptions {
-	options.RuleID = core.StringPtr(ruleID)
-	return options
+func (_options *ListRuleAttachmentsOptions) SetRuleID(ruleID string) *ListRuleAttachmentsOptions {
+	_options.RuleID = core.StringPtr(ruleID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *ListRuleAttachmentsOptions) SetTransactionID(transactionID string) *ListRuleAttachmentsOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *ListRuleAttachmentsOptions) SetTransactionID(transactionID string) *ListRuleAttachmentsOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetLimit : Allow user to set Limit
-func (options *ListRuleAttachmentsOptions) SetLimit(limit int64) *ListRuleAttachmentsOptions {
-	options.Limit = core.Int64Ptr(limit)
-	return options
+func (_options *ListRuleAttachmentsOptions) SetLimit(limit int64) *ListRuleAttachmentsOptions {
+	_options.Limit = core.Int64Ptr(limit)
+	return _options
 }
 
 // SetOffset : Allow user to set Offset
-func (options *ListRuleAttachmentsOptions) SetOffset(offset int64) *ListRuleAttachmentsOptions {
-	options.Offset = core.Int64Ptr(offset)
-	return options
+func (_options *ListRuleAttachmentsOptions) SetOffset(offset int64) *ListRuleAttachmentsOptions {
+	_options.Offset = core.Int64Ptr(offset)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1454,45 +1454,45 @@ func (*ConfigurationGovernanceV1) NewListRulesOptions(accountID string) *ListRul
 }
 
 // SetAccountID : Allow user to set AccountID
-func (options *ListRulesOptions) SetAccountID(accountID string) *ListRulesOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (_options *ListRulesOptions) SetAccountID(accountID string) *ListRulesOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *ListRulesOptions) SetTransactionID(transactionID string) *ListRulesOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *ListRulesOptions) SetTransactionID(transactionID string) *ListRulesOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetAttached : Allow user to set Attached
-func (options *ListRulesOptions) SetAttached(attached bool) *ListRulesOptions {
-	options.Attached = core.BoolPtr(attached)
-	return options
+func (_options *ListRulesOptions) SetAttached(attached bool) *ListRulesOptions {
+	_options.Attached = core.BoolPtr(attached)
+	return _options
 }
 
 // SetLabels : Allow user to set Labels
-func (options *ListRulesOptions) SetLabels(labels string) *ListRulesOptions {
-	options.Labels = core.StringPtr(labels)
-	return options
+func (_options *ListRulesOptions) SetLabels(labels string) *ListRulesOptions {
+	_options.Labels = core.StringPtr(labels)
+	return _options
 }
 
 // SetScopes : Allow user to set Scopes
-func (options *ListRulesOptions) SetScopes(scopes string) *ListRulesOptions {
-	options.Scopes = core.StringPtr(scopes)
-	return options
+func (_options *ListRulesOptions) SetScopes(scopes string) *ListRulesOptions {
+	_options.Scopes = core.StringPtr(scopes)
+	return _options
 }
 
 // SetLimit : Allow user to set Limit
-func (options *ListRulesOptions) SetLimit(limit int64) *ListRulesOptions {
-	options.Limit = core.Int64Ptr(limit)
-	return options
+func (_options *ListRulesOptions) SetLimit(limit int64) *ListRulesOptions {
+	_options.Limit = core.Int64Ptr(limit)
+	return _options
 }
 
 // SetOffset : Allow user to set Offset
-func (options *ListRulesOptions) SetOffset(offset int64) *ListRulesOptions {
-	options.Offset = core.Int64Ptr(offset)
-	return options
+func (_options *ListRulesOptions) SetOffset(offset int64) *ListRulesOptions {
+	_options.Offset = core.Int64Ptr(offset)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -1726,12 +1726,12 @@ type RuleAttachmentRequest struct {
 }
 
 // NewRuleAttachmentRequest : Instantiate RuleAttachmentRequest (Generic Model Constructor)
-func (*ConfigurationGovernanceV1) NewRuleAttachmentRequest(accountID string, includedScope *RuleScope) (model *RuleAttachmentRequest, err error) {
-	model = &RuleAttachmentRequest{
+func (*ConfigurationGovernanceV1) NewRuleAttachmentRequest(accountID string, includedScope *RuleScope) (_model *RuleAttachmentRequest, err error) {
+	_model = &RuleAttachmentRequest{
 		AccountID:     core.StringPtr(accountID),
 		IncludedScope: includedScope,
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -1933,15 +1933,15 @@ const (
 )
 
 // NewRuleRequest : Instantiate RuleRequest (Generic Model Constructor)
-func (*ConfigurationGovernanceV1) NewRuleRequest(name string, description string, target *TargetResource, requiredConfig RuleRequiredConfigIntf, enforcementActions []EnforcementAction) (model *RuleRequest, err error) {
-	model = &RuleRequest{
+func (*ConfigurationGovernanceV1) NewRuleRequest(name string, description string, target *TargetResource, requiredConfig RuleRequiredConfigIntf, enforcementActions []EnforcementAction) (_model *RuleRequest, err error) {
+	_model = &RuleRequest{
 		Name:               core.StringPtr(name),
 		Description:        core.StringPtr(description),
 		Target:             target,
 		RequiredConfig:     requiredConfig,
 		EnforcementActions: enforcementActions,
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -2121,12 +2121,12 @@ const (
 )
 
 // NewRuleScope : Instantiate RuleScope (Generic Model Constructor)
-func (*ConfigurationGovernanceV1) NewRuleScope(scopeID string, scopeType string) (model *RuleScope, err error) {
-	model = &RuleScope{
+func (*ConfigurationGovernanceV1) NewRuleScope(scopeID string, scopeType string) (_model *RuleScope, err error) {
+	_model = &RuleScope{
 		ScopeID:   core.StringPtr(scopeID),
 		ScopeType: core.StringPtr(scopeType),
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -2197,12 +2197,12 @@ const (
 )
 
 // NewRuleSingleProperty : Instantiate RuleSingleProperty (Generic Model Constructor)
-func (*ConfigurationGovernanceV1) NewRuleSingleProperty(property string, operator string) (model *RuleSingleProperty, err error) {
-	model = &RuleSingleProperty{
+func (*ConfigurationGovernanceV1) NewRuleSingleProperty(property string, operator string) (_model *RuleSingleProperty, err error) {
+	_model = &RuleSingleProperty{
 		Property: core.StringPtr(property),
 		Operator: core.StringPtr(operator),
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -2243,12 +2243,12 @@ type TargetResource struct {
 }
 
 // NewTargetResource : Instantiate TargetResource (Generic Model Constructor)
-func (*ConfigurationGovernanceV1) NewTargetResource(serviceName string, resourceKind string) (model *TargetResource, err error) {
-	model = &TargetResource{
+func (*ConfigurationGovernanceV1) NewTargetResource(serviceName string, resourceKind string) (_model *TargetResource, err error) {
+	_model = &TargetResource{
 		ServiceName:  core.StringPtr(serviceName),
 		ResourceKind: core.StringPtr(resourceKind),
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -2315,13 +2315,13 @@ const (
 )
 
 // NewTargetResourceAdditionalTargetAttributesItem : Instantiate TargetResourceAdditionalTargetAttributesItem (Generic Model Constructor)
-func (*ConfigurationGovernanceV1) NewTargetResourceAdditionalTargetAttributesItem(name string, value string, operator string) (model *TargetResourceAdditionalTargetAttributesItem, err error) {
-	model = &TargetResourceAdditionalTargetAttributesItem{
+func (*ConfigurationGovernanceV1) NewTargetResourceAdditionalTargetAttributesItem(name string, value string, operator string) (_model *TargetResourceAdditionalTargetAttributesItem, err error) {
+	_model = &TargetResourceAdditionalTargetAttributesItem{
 		Name:     core.StringPtr(name),
 		Value:    core.StringPtr(value),
 		Operator: core.StringPtr(operator),
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -2477,45 +2477,45 @@ func (*ConfigurationGovernanceV1) NewUpdateRuleAttachmentOptions(ruleID string, 
 }
 
 // SetRuleID : Allow user to set RuleID
-func (options *UpdateRuleAttachmentOptions) SetRuleID(ruleID string) *UpdateRuleAttachmentOptions {
-	options.RuleID = core.StringPtr(ruleID)
-	return options
+func (_options *UpdateRuleAttachmentOptions) SetRuleID(ruleID string) *UpdateRuleAttachmentOptions {
+	_options.RuleID = core.StringPtr(ruleID)
+	return _options
 }
 
 // SetAttachmentID : Allow user to set AttachmentID
-func (options *UpdateRuleAttachmentOptions) SetAttachmentID(attachmentID string) *UpdateRuleAttachmentOptions {
-	options.AttachmentID = core.StringPtr(attachmentID)
-	return options
+func (_options *UpdateRuleAttachmentOptions) SetAttachmentID(attachmentID string) *UpdateRuleAttachmentOptions {
+	_options.AttachmentID = core.StringPtr(attachmentID)
+	return _options
 }
 
 // SetIfMatch : Allow user to set IfMatch
-func (options *UpdateRuleAttachmentOptions) SetIfMatch(ifMatch string) *UpdateRuleAttachmentOptions {
-	options.IfMatch = core.StringPtr(ifMatch)
-	return options
+func (_options *UpdateRuleAttachmentOptions) SetIfMatch(ifMatch string) *UpdateRuleAttachmentOptions {
+	_options.IfMatch = core.StringPtr(ifMatch)
+	return _options
 }
 
 // SetAccountID : Allow user to set AccountID
-func (options *UpdateRuleAttachmentOptions) SetAccountID(accountID string) *UpdateRuleAttachmentOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (_options *UpdateRuleAttachmentOptions) SetAccountID(accountID string) *UpdateRuleAttachmentOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
 }
 
 // SetIncludedScope : Allow user to set IncludedScope
-func (options *UpdateRuleAttachmentOptions) SetIncludedScope(includedScope *RuleScope) *UpdateRuleAttachmentOptions {
-	options.IncludedScope = includedScope
-	return options
+func (_options *UpdateRuleAttachmentOptions) SetIncludedScope(includedScope *RuleScope) *UpdateRuleAttachmentOptions {
+	_options.IncludedScope = includedScope
+	return _options
 }
 
 // SetExcludedScopes : Allow user to set ExcludedScopes
-func (options *UpdateRuleAttachmentOptions) SetExcludedScopes(excludedScopes []RuleScope) *UpdateRuleAttachmentOptions {
-	options.ExcludedScopes = excludedScopes
-	return options
+func (_options *UpdateRuleAttachmentOptions) SetExcludedScopes(excludedScopes []RuleScope) *UpdateRuleAttachmentOptions {
+	_options.ExcludedScopes = excludedScopes
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *UpdateRuleAttachmentOptions) SetTransactionID(transactionID string) *UpdateRuleAttachmentOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *UpdateRuleAttachmentOptions) SetTransactionID(transactionID string) *UpdateRuleAttachmentOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -2593,69 +2593,69 @@ func (*ConfigurationGovernanceV1) NewUpdateRuleOptions(ruleID string, ifMatch st
 }
 
 // SetRuleID : Allow user to set RuleID
-func (options *UpdateRuleOptions) SetRuleID(ruleID string) *UpdateRuleOptions {
-	options.RuleID = core.StringPtr(ruleID)
-	return options
+func (_options *UpdateRuleOptions) SetRuleID(ruleID string) *UpdateRuleOptions {
+	_options.RuleID = core.StringPtr(ruleID)
+	return _options
 }
 
 // SetIfMatch : Allow user to set IfMatch
-func (options *UpdateRuleOptions) SetIfMatch(ifMatch string) *UpdateRuleOptions {
-	options.IfMatch = core.StringPtr(ifMatch)
-	return options
+func (_options *UpdateRuleOptions) SetIfMatch(ifMatch string) *UpdateRuleOptions {
+	_options.IfMatch = core.StringPtr(ifMatch)
+	return _options
 }
 
 // SetName : Allow user to set Name
-func (options *UpdateRuleOptions) SetName(name string) *UpdateRuleOptions {
-	options.Name = core.StringPtr(name)
-	return options
+func (_options *UpdateRuleOptions) SetName(name string) *UpdateRuleOptions {
+	_options.Name = core.StringPtr(name)
+	return _options
 }
 
 // SetDescription : Allow user to set Description
-func (options *UpdateRuleOptions) SetDescription(description string) *UpdateRuleOptions {
-	options.Description = core.StringPtr(description)
-	return options
+func (_options *UpdateRuleOptions) SetDescription(description string) *UpdateRuleOptions {
+	_options.Description = core.StringPtr(description)
+	return _options
 }
 
 // SetTarget : Allow user to set Target
-func (options *UpdateRuleOptions) SetTarget(target *TargetResource) *UpdateRuleOptions {
-	options.Target = target
-	return options
+func (_options *UpdateRuleOptions) SetTarget(target *TargetResource) *UpdateRuleOptions {
+	_options.Target = target
+	return _options
 }
 
 // SetRequiredConfig : Allow user to set RequiredConfig
-func (options *UpdateRuleOptions) SetRequiredConfig(requiredConfig RuleRequiredConfigIntf) *UpdateRuleOptions {
-	options.RequiredConfig = requiredConfig
-	return options
+func (_options *UpdateRuleOptions) SetRequiredConfig(requiredConfig RuleRequiredConfigIntf) *UpdateRuleOptions {
+	_options.RequiredConfig = requiredConfig
+	return _options
 }
 
 // SetEnforcementActions : Allow user to set EnforcementActions
-func (options *UpdateRuleOptions) SetEnforcementActions(enforcementActions []EnforcementAction) *UpdateRuleOptions {
-	options.EnforcementActions = enforcementActions
-	return options
+func (_options *UpdateRuleOptions) SetEnforcementActions(enforcementActions []EnforcementAction) *UpdateRuleOptions {
+	_options.EnforcementActions = enforcementActions
+	return _options
 }
 
 // SetAccountID : Allow user to set AccountID
-func (options *UpdateRuleOptions) SetAccountID(accountID string) *UpdateRuleOptions {
-	options.AccountID = core.StringPtr(accountID)
-	return options
+func (_options *UpdateRuleOptions) SetAccountID(accountID string) *UpdateRuleOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
 }
 
 // SetRuleType : Allow user to set RuleType
-func (options *UpdateRuleOptions) SetRuleType(ruleType string) *UpdateRuleOptions {
-	options.RuleType = core.StringPtr(ruleType)
-	return options
+func (_options *UpdateRuleOptions) SetRuleType(ruleType string) *UpdateRuleOptions {
+	_options.RuleType = core.StringPtr(ruleType)
+	return _options
 }
 
 // SetLabels : Allow user to set Labels
-func (options *UpdateRuleOptions) SetLabels(labels []string) *UpdateRuleOptions {
-	options.Labels = labels
-	return options
+func (_options *UpdateRuleOptions) SetLabels(labels []string) *UpdateRuleOptions {
+	_options.Labels = labels
+	return _options
 }
 
 // SetTransactionID : Allow user to set TransactionID
-func (options *UpdateRuleOptions) SetTransactionID(transactionID string) *UpdateRuleOptions {
-	options.TransactionID = core.StringPtr(transactionID)
-	return options
+func (_options *UpdateRuleOptions) SetTransactionID(transactionID string) *UpdateRuleOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
 }
 
 // SetHeaders : Allow user to set Headers
@@ -2673,11 +2673,11 @@ type RuleConditionAndLvl2 struct {
 }
 
 // NewRuleConditionAndLvl2 : Instantiate RuleConditionAndLvl2 (Generic Model Constructor)
-func (*ConfigurationGovernanceV1) NewRuleConditionAndLvl2(and []RuleSingleProperty) (model *RuleConditionAndLvl2, err error) {
-	model = &RuleConditionAndLvl2{
+func (*ConfigurationGovernanceV1) NewRuleConditionAndLvl2(and []RuleSingleProperty) (_model *RuleConditionAndLvl2, err error) {
+	_model = &RuleConditionAndLvl2{
 		And: and,
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -2709,11 +2709,11 @@ type RuleConditionOrLvl2 struct {
 }
 
 // NewRuleConditionOrLvl2 : Instantiate RuleConditionOrLvl2 (Generic Model Constructor)
-func (*ConfigurationGovernanceV1) NewRuleConditionOrLvl2(or []RuleSingleProperty) (model *RuleConditionOrLvl2, err error) {
-	model = &RuleConditionOrLvl2{
+func (*ConfigurationGovernanceV1) NewRuleConditionOrLvl2(or []RuleSingleProperty) (_model *RuleConditionOrLvl2, err error) {
+	_model = &RuleConditionOrLvl2{
 		Or: or,
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -2785,12 +2785,12 @@ const (
 )
 
 // NewRuleConditionSingleProperty : Instantiate RuleConditionSingleProperty (Generic Model Constructor)
-func (*ConfigurationGovernanceV1) NewRuleConditionSingleProperty(property string, operator string) (model *RuleConditionSingleProperty, err error) {
-	model = &RuleConditionSingleProperty{
+func (*ConfigurationGovernanceV1) NewRuleConditionSingleProperty(property string, operator string) (_model *RuleConditionSingleProperty, err error) {
+	_model = &RuleConditionSingleProperty{
 		Property: core.StringPtr(property),
 		Operator: core.StringPtr(operator),
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -2918,12 +2918,12 @@ const (
 )
 
 // NewRuleRequiredConfigSingleProperty : Instantiate RuleRequiredConfigSingleProperty (Generic Model Constructor)
-func (*ConfigurationGovernanceV1) NewRuleRequiredConfigSingleProperty(property string, operator string) (model *RuleRequiredConfigSingleProperty, err error) {
-	model = &RuleRequiredConfigSingleProperty{
+func (*ConfigurationGovernanceV1) NewRuleRequiredConfigSingleProperty(property string, operator string) (_model *RuleRequiredConfigSingleProperty, err error) {
+	_model = &RuleRequiredConfigSingleProperty{
 		Property: core.StringPtr(property),
 		Operator: core.StringPtr(operator),
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -2963,11 +2963,11 @@ type RuleRequiredConfigMultiplePropertiesConditionAnd struct {
 }
 
 // NewRuleRequiredConfigMultiplePropertiesConditionAnd : Instantiate RuleRequiredConfigMultiplePropertiesConditionAnd (Generic Model Constructor)
-func (*ConfigurationGovernanceV1) NewRuleRequiredConfigMultiplePropertiesConditionAnd(and []RuleConditionIntf) (model *RuleRequiredConfigMultiplePropertiesConditionAnd, err error) {
-	model = &RuleRequiredConfigMultiplePropertiesConditionAnd{
+func (*ConfigurationGovernanceV1) NewRuleRequiredConfigMultiplePropertiesConditionAnd(and []RuleConditionIntf) (_model *RuleRequiredConfigMultiplePropertiesConditionAnd, err error) {
+	_model = &RuleRequiredConfigMultiplePropertiesConditionAnd{
 		And: and,
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
@@ -3003,11 +3003,11 @@ type RuleRequiredConfigMultiplePropertiesConditionOr struct {
 }
 
 // NewRuleRequiredConfigMultiplePropertiesConditionOr : Instantiate RuleRequiredConfigMultiplePropertiesConditionOr (Generic Model Constructor)
-func (*ConfigurationGovernanceV1) NewRuleRequiredConfigMultiplePropertiesConditionOr(or []RuleConditionIntf) (model *RuleRequiredConfigMultiplePropertiesConditionOr, err error) {
-	model = &RuleRequiredConfigMultiplePropertiesConditionOr{
+func (*ConfigurationGovernanceV1) NewRuleRequiredConfigMultiplePropertiesConditionOr(or []RuleConditionIntf) (_model *RuleRequiredConfigMultiplePropertiesConditionOr, err error) {
+	_model = &RuleRequiredConfigMultiplePropertiesConditionOr{
 		Or: or,
 	}
-	err = core.ValidateStruct(model, "required parameters")
+	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 

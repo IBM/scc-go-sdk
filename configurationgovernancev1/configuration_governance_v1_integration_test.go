@@ -36,6 +36,9 @@ import (
  * The integration test will automatically skip tests if the required config file is not available.
  */
 
+var accountID = os.Getenv("ACCOUNT_ID")
+var ruleLabel = os.Getenv("RULE_LABEL")
+
 var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 
 	const externalConfigFile = "../configuration_governance_v1.env"
@@ -51,6 +54,8 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 	var (
 		ruleAttachmentIDLink string
 		ruleIDLink           string
+		ruleEtag             string
+		ruleAttachmentEtag   string
 	)
 
 	var shouldSkipTest = func() {
@@ -58,6 +63,11 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 	}
 
 	Describe(`External configuration`, func() {
+
+		if ruleLabel == "" {
+			ruleLabel = "sdk-it"
+		}
+
 		It("Successfully load the configuration", func() {
 			_, err = os.Stat(externalConfigFile)
 			if err != nil {
@@ -101,23 +111,16 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 		})
 		It(`CreateRules(createRulesOptions *CreateRulesOptions)`, func() {
 
-			targetResourceAdditionalTargetAttributesItemModel := &configurationgovernancev1.TargetResourceAdditionalTargetAttributesItem{
-				Name:     core.StringPtr("resource_id"),
-				Value:    core.StringPtr("81f3db5e-f9db-4c46-9de3-a4a76e66adbf"),
-				Operator: core.StringPtr("string_equals"),
-			}
-
 			targetResourceModel := &configurationgovernancev1.TargetResource{
-				ServiceName:                core.StringPtr("iam-groups"),
-				ResourceKind:               core.StringPtr("service"),
-				AdditionalTargetAttributes: []configurationgovernancev1.TargetResourceAdditionalTargetAttributesItem{*targetResourceAdditionalTargetAttributesItemModel},
+				ServiceName:  core.StringPtr("cloud-object-storage"),
+				ResourceKind: core.StringPtr("bucket"),
 			}
 
 			ruleConditionModel := &configurationgovernancev1.RuleConditionSingleProperty{
 				Description: core.StringPtr("testString"),
-				Property:    core.StringPtr("public_access_enabled"),
-				Operator:    core.StringPtr("is_false"),
-				Value:       core.StringPtr("testString"),
+				Property:    core.StringPtr("location"),
+				Operator:    core.StringPtr("string_equals"),
+				Value:       core.StringPtr("us-south"),
 			}
 
 			ruleRequiredConfigModel := &configurationgovernancev1.RuleRequiredConfigMultiplePropertiesConditionAnd{
@@ -130,14 +133,14 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 			}
 
 			ruleRequestModel := &configurationgovernancev1.RuleRequest{
-				AccountID:          core.StringPtr("531fc3e28bfc43c5a2cea07786d93f5c"),
+				AccountID:          core.StringPtr(accountID),
 				Name:               core.StringPtr("Disable public access"),
 				Description:        core.StringPtr("Ensure that public access to account resources is disabled."),
 				RuleType:           core.StringPtr("user_defined"),
 				Target:             targetResourceModel,
 				RequiredConfig:     ruleRequiredConfigModel,
 				EnforcementActions: []configurationgovernancev1.EnforcementAction{*enforcementActionModel},
-				Labels:             []string{"Access", "IAM"},
+				Labels:             []string{"sdk-it"},
 			}
 
 			createRuleRequestModel := &configurationgovernancev1.CreateRuleRequest{
@@ -168,15 +171,21 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 		It(`CreateRuleAttachments(createRuleAttachmentsOptions *CreateRuleAttachmentsOptions)`, func() {
 
 			ruleScopeModel := &configurationgovernancev1.RuleScope{
-				Note:      core.StringPtr("My enterprise"),
-				ScopeID:   core.StringPtr("282cf433ac91493ba860480d92519990"),
-				ScopeType: core.StringPtr("enterprise"),
+				Note:      core.StringPtr("My account"),
+				ScopeID:   core.StringPtr(accountID),
+				ScopeType: core.StringPtr("account"),
+			}
+
+			excludedScopeModel := &configurationgovernancev1.RuleScope{
+				Note:      core.StringPtr("My account resource group"),
+				ScopeID:   core.StringPtr("4d4daac5f6fd4eb8b9483b97edcb0535"),
+				ScopeType: core.StringPtr("account.resource_group"),
 			}
 
 			ruleAttachmentRequestModel := &configurationgovernancev1.RuleAttachmentRequest{
-				AccountID:      core.StringPtr("531fc3e28bfc43c5a2cea07786d93f5c"),
+				AccountID:      core.StringPtr(accountID),
 				IncludedScope:  ruleScopeModel,
-				ExcludedScopes: []configurationgovernancev1.RuleScope{*ruleScopeModel},
+				ExcludedScopes: []configurationgovernancev1.RuleScope{*excludedScopeModel},
 			}
 
 			createRuleAttachmentsOptions := &configurationgovernancev1.CreateRuleAttachmentsOptions{
@@ -203,7 +212,7 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 		It(`ListRules(listRulesOptions *ListRulesOptions)`, func() {
 
 			listRulesOptions := &configurationgovernancev1.ListRulesOptions{
-				AccountID:     core.StringPtr("531fc3e28bfc43c5a2cea07786d93f5c"),
+				AccountID:     core.StringPtr(accountID),
 				TransactionID: core.StringPtr("testString"),
 				Attached:      core.BoolPtr(true),
 				Labels:        core.StringPtr("SOC2,ITCS300"),
@@ -238,6 +247,8 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(rule).ToNot(BeNil())
 
+			ruleEtag = response.Headers.Get("Etag")
+
 		})
 	})
 
@@ -247,40 +258,38 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 		})
 		It(`UpdateRule(updateRuleOptions *UpdateRuleOptions)`, func() {
 
-			targetResourceAdditionalTargetAttributesItemModel := &configurationgovernancev1.TargetResourceAdditionalTargetAttributesItem{
-				Name:     core.StringPtr("testString"),
-				Value:    core.StringPtr("testString"),
-				Operator: core.StringPtr("string_equals"),
-			}
-
 			targetResourceModel := &configurationgovernancev1.TargetResource{
-				ServiceName:                core.StringPtr("iam-groups"),
-				ResourceKind:               core.StringPtr("service"),
-				AdditionalTargetAttributes: []configurationgovernancev1.TargetResourceAdditionalTargetAttributesItem{*targetResourceAdditionalTargetAttributesItemModel},
+				ServiceName:  core.StringPtr("cloud-object-storage"),
+				ResourceKind: core.StringPtr("bucket"),
 			}
 
-			ruleRequiredConfigModel := &configurationgovernancev1.RuleRequiredConfigSingleProperty{
+			ruleConditionModel := &configurationgovernancev1.RuleConditionSingleProperty{
 				Description: core.StringPtr("testString"),
-				Property:    core.StringPtr("public_access_enabled"),
-				Operator:    core.StringPtr("is_false"),
-				Value:       core.StringPtr("testString"),
+				Property:    core.StringPtr("location"),
+				Operator:    core.StringPtr("string_equals"),
+				Value:       core.StringPtr("eu-gb"),
+			}
+
+			ruleRequiredConfigModel := &configurationgovernancev1.RuleRequiredConfigMultiplePropertiesConditionAnd{
+				Description: core.StringPtr("Public access check"),
+				And:         []configurationgovernancev1.RuleConditionIntf{ruleConditionModel},
 			}
 
 			enforcementActionModel := &configurationgovernancev1.EnforcementAction{
-				Action: core.StringPtr("audit_log"),
+				Action: core.StringPtr("disallow"),
 			}
 
 			updateRuleOptions := &configurationgovernancev1.UpdateRuleOptions{
 				RuleID:             &ruleIDLink,
-				IfMatch:            core.StringPtr("testString"),
+				IfMatch:            core.StringPtr(ruleEtag),
 				Name:               core.StringPtr("Disable public access"),
 				Description:        core.StringPtr("Ensure that public access to account resources is disabled."),
 				Target:             targetResourceModel,
 				RequiredConfig:     ruleRequiredConfigModel,
 				EnforcementActions: []configurationgovernancev1.EnforcementAction{*enforcementActionModel},
-				AccountID:          core.StringPtr("531fc3e28bfc43c5a2cea07786d93f5c"),
+				AccountID:          core.StringPtr(accountID),
 				RuleType:           core.StringPtr("user_defined"),
-				Labels:             []string{"SOC2", "ITCS300"},
+				Labels:             []string{"sdk-it"},
 				TransactionID:      core.StringPtr("testString"),
 			}
 
@@ -333,6 +342,8 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(ruleAttachment).ToNot(BeNil())
 
+			ruleAttachmentEtag = response.Headers.Get("Etag")
+
 		})
 	})
 
@@ -343,18 +354,24 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 		It(`UpdateRuleAttachment(updateRuleAttachmentOptions *UpdateRuleAttachmentOptions)`, func() {
 
 			ruleScopeModel := &configurationgovernancev1.RuleScope{
-				Note:      core.StringPtr("My enterprise"),
-				ScopeID:   core.StringPtr("282cf433ac91493ba860480d92519990"),
-				ScopeType: core.StringPtr("enterprise"),
+				Note:      core.StringPtr("My account"),
+				ScopeID:   core.StringPtr(accountID),
+				ScopeType: core.StringPtr("account"),
+			}
+
+			excludedScopeModel := &configurationgovernancev1.RuleScope{
+				Note:      core.StringPtr("My account resource group"),
+				ScopeID:   core.StringPtr("4d4daac5f6fd4eb8b9483b97edcb0535"),
+				ScopeType: core.StringPtr("account.resource_group"),
 			}
 
 			updateRuleAttachmentOptions := &configurationgovernancev1.UpdateRuleAttachmentOptions{
 				RuleID:         &ruleIDLink,
 				AttachmentID:   &ruleAttachmentIDLink,
-				IfMatch:        core.StringPtr("testString"),
-				AccountID:      core.StringPtr("531fc3e28bfc43c5a2cea07786d93f5c"),
+				IfMatch:        core.StringPtr(ruleAttachmentEtag),
+				AccountID:      core.StringPtr(accountID),
 				IncludedScope:  ruleScopeModel,
-				ExcludedScopes: []configurationgovernancev1.RuleScope{*ruleScopeModel},
+				ExcludedScopes: []configurationgovernancev1.RuleScope{*excludedScopeModel},
 				TransactionID:  core.StringPtr("testString"),
 			}
 
@@ -410,3 +427,49 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 //
 // Utility functions are declared in the unit test file
 //
+var _ = AfterSuite(func() {
+	const externalConfigFile = "../configuration_governance_v1.env"
+	_, err := os.Stat(externalConfigFile)
+	if err != nil {
+		Skip("External configuration file not found, skipping tests: " + err.Error())
+	}
+	os.Setenv("IBM_CREDENTIALS_FILE", externalConfigFile)
+	config, err := core.GetServiceProperties(configurationgovernancev1.DefaultServiceName)
+	if err != nil {
+		Skip("Error loading service properties, skipping tests: " + err.Error())
+	}
+	serviceURL := config["URL"]
+	if serviceURL == "" {
+		Skip("Unable to load service URL configuration property, skipping tests")
+	}
+
+	fmt.Printf("cleaning up account: %s with rules labelled: %s\n", accountID, ruleLabel)
+
+	configurationGovernanceServiceOptions := &configurationgovernancev1.ConfigurationGovernanceV1Options{}
+
+	configurationGovernanceService, err := configurationgovernancev1.NewConfigurationGovernanceV1UsingExternalConfig(configurationGovernanceServiceOptions)
+
+	listRulesOptions := &configurationgovernancev1.ListRulesOptions{
+		AccountID: core.StringPtr(accountID),
+	}
+
+	rules, _, err := configurationGovernanceService.ListRules(listRulesOptions)
+	if err != nil {
+		Skip("Error occurred while listing rules for cleanup: " + err.Error())
+	}
+
+	for _, rule := range rules.Rules {
+		if rule.Labels[0] == ruleLabel {
+			deleteRuleOptions := &configurationgovernancev1.DeleteRuleOptions{
+				RuleID: rule.RuleID,
+			}
+
+			_, err := configurationGovernanceService.DeleteRule(deleteRuleOptions)
+			if err != nil {
+				Skip("Error occurred while deleting rule for cleanup: " + err.Error())
+			}
+		}
+	}
+
+	fmt.Printf("cleanup was successful\n")
+})

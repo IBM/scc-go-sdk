@@ -38,6 +38,7 @@ import (
 
 var accountID = os.Getenv("ACCOUNT_ID")
 var ruleLabel = os.Getenv("RULE_LABEL")
+var resourceGroupID = os.Getenv("RESOURCE_GROUP_ID")
 
 var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 
@@ -140,7 +141,7 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 				Target:             targetResourceModel,
 				RequiredConfig:     ruleRequiredConfigModel,
 				EnforcementActions: []configurationgovernancev1.EnforcementAction{*enforcementActionModel},
-				Labels:             []string{"sdk-it"},
+				Labels:             []string{ruleLabel},
 			}
 
 			createRuleRequestModel := &configurationgovernancev1.CreateRuleRequest{
@@ -178,7 +179,7 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 
 			excludedScopeModel := &configurationgovernancev1.RuleScope{
 				Note:      core.StringPtr("My account resource group"),
-				ScopeID:   core.StringPtr("4d4daac5f6fd4eb8b9483b97edcb0535"),
+				ScopeID:   core.StringPtr(resourceGroupID),
 				ScopeType: core.StringPtr("account.resource_group"),
 			}
 
@@ -215,7 +216,7 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 				AccountID:     core.StringPtr(accountID),
 				TransactionID: core.StringPtr("testString"),
 				Attached:      core.BoolPtr(true),
-				Labels:        core.StringPtr("SOC2,ITCS300"),
+				Labels:        []string{ruleLabel},
 				Scopes:        core.StringPtr("scope_id"),
 				Limit:         core.Int64Ptr(int64(1000)),
 				Offset:        core.Int64Ptr(int64(38)),
@@ -289,7 +290,7 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 				EnforcementActions: []configurationgovernancev1.EnforcementAction{*enforcementActionModel},
 				AccountID:          core.StringPtr(accountID),
 				RuleType:           core.StringPtr("user_defined"),
-				Labels:             []string{"sdk-it"},
+				Labels:             []string{ruleLabel},
 				TransactionID:      core.StringPtr("testString"),
 			}
 
@@ -361,7 +362,7 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 
 			excludedScopeModel := &configurationgovernancev1.RuleScope{
 				Note:      core.StringPtr("My account resource group"),
-				ScopeID:   core.StringPtr("4d4daac5f6fd4eb8b9483b97edcb0535"),
+				ScopeID:   core.StringPtr(resourceGroupID),
 				ScopeType: core.StringPtr("account.resource_group"),
 			}
 

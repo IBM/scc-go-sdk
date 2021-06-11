@@ -2968,8 +2968,8 @@ var _ = Describe(`ConfigurationGovernanceV1`, func() {
 			})
 			It(`Invoke NewEnforcementAction successfully`, func() {
 				action := "audit_log"
-				model, err := configurationGovernanceService.NewEnforcementAction(action)
-				Expect(model).ToNot(BeNil())
+				_model, err := configurationGovernanceService.NewEnforcementAction(action)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewGetRuleAttachmentOptions successfully`, func() {
@@ -3055,30 +3055,30 @@ var _ = Describe(`ConfigurationGovernanceV1`, func() {
 			It(`Invoke NewRuleScope successfully`, func() {
 				scopeID := "testString"
 				scopeType := "enterprise"
-				model, err := configurationGovernanceService.NewRuleScope(scopeID, scopeType)
-				Expect(model).ToNot(BeNil())
+				_model, err := configurationGovernanceService.NewRuleScope(scopeID, scopeType)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewRuleSingleProperty successfully`, func() {
 				property := "public_access_enabled"
 				operator := "is_true"
-				model, err := configurationGovernanceService.NewRuleSingleProperty(property, operator)
-				Expect(model).ToNot(BeNil())
+				_model, err := configurationGovernanceService.NewRuleSingleProperty(property, operator)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewTargetResource successfully`, func() {
 				serviceName := "cloud-object-storage"
 				resourceKind := "bucket"
-				model, err := configurationGovernanceService.NewTargetResource(serviceName, resourceKind)
-				Expect(model).ToNot(BeNil())
+				_model, err := configurationGovernanceService.NewTargetResource(serviceName, resourceKind)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewTargetResourceAdditionalTargetAttributesItem successfully`, func() {
 				name := "testString"
 				value := "testString"
 				operator := "string_equals"
-				model, err := configurationGovernanceService.NewTargetResourceAdditionalTargetAttributesItem(name, value, operator)
-				Expect(model).ToNot(BeNil())
+				_model, err := configurationGovernanceService.NewTargetResourceAdditionalTargetAttributesItem(name, value, operator)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewUpdateRuleAttachmentOptions successfully`, func() {
@@ -3193,40 +3193,40 @@ var _ = Describe(`ConfigurationGovernanceV1`, func() {
 			})
 			It(`Invoke NewRuleConditionAndLvl2 successfully`, func() {
 				and := []configurationgovernancev1.RuleSingleProperty{}
-				model, err := configurationGovernanceService.NewRuleConditionAndLvl2(and)
-				Expect(model).ToNot(BeNil())
+				_model, err := configurationGovernanceService.NewRuleConditionAndLvl2(and)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewRuleConditionOrLvl2 successfully`, func() {
 				or := []configurationgovernancev1.RuleSingleProperty{}
-				model, err := configurationGovernanceService.NewRuleConditionOrLvl2(or)
-				Expect(model).ToNot(BeNil())
+				_model, err := configurationGovernanceService.NewRuleConditionOrLvl2(or)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewRuleConditionSingleProperty successfully`, func() {
 				property := "public_access_enabled"
 				operator := "is_true"
-				model, err := configurationGovernanceService.NewRuleConditionSingleProperty(property, operator)
-				Expect(model).ToNot(BeNil())
+				_model, err := configurationGovernanceService.NewRuleConditionSingleProperty(property, operator)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewRuleRequiredConfigSingleProperty successfully`, func() {
 				property := "public_access_enabled"
 				operator := "is_true"
-				model, err := configurationGovernanceService.NewRuleRequiredConfigSingleProperty(property, operator)
-				Expect(model).ToNot(BeNil())
+				_model, err := configurationGovernanceService.NewRuleRequiredConfigSingleProperty(property, operator)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewRuleRequiredConfigMultiplePropertiesConditionAnd successfully`, func() {
 				and := []configurationgovernancev1.RuleConditionIntf{}
-				model, err := configurationGovernanceService.NewRuleRequiredConfigMultiplePropertiesConditionAnd(and)
-				Expect(model).ToNot(BeNil())
+				_model, err := configurationGovernanceService.NewRuleRequiredConfigMultiplePropertiesConditionAnd(and)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewRuleRequiredConfigMultiplePropertiesConditionOr successfully`, func() {
 				or := []configurationgovernancev1.RuleConditionIntf{}
-				model, err := configurationGovernanceService.NewRuleRequiredConfigMultiplePropertiesConditionOr(or)
-				Expect(model).ToNot(BeNil())
+				_model, err := configurationGovernanceService.NewRuleRequiredConfigMultiplePropertiesConditionOr(or)
+				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 		})

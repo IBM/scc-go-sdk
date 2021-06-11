@@ -4306,7 +4306,7 @@ var _ = Describe(`FindingsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"providers": [{"name": "Name", "id": "ID"}], "limit": 5, "skip": 4}`)
+					fmt.Fprintf(res, "%s", `{"providers": [{"name": "Name", "id": "ID"}], "limit": 5, "skip": 4, "total_count": 10}`)
 				}))
 			})
 			It(`Invoke ListProviders successfully with retries`, func() {
@@ -4371,7 +4371,7 @@ var _ = Describe(`FindingsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"providers": [{"name": "Name", "id": "ID"}], "limit": 5, "skip": 4}`)
+					fmt.Fprintf(res, "%s", `{"providers": [{"name": "Name", "id": "ID"}], "limit": 5, "skip": 4, "total_count": 10}`)
 				}))
 			})
 			It(`Invoke ListProviders successfully`, func() {

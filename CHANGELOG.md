@@ -1,3 +1,13 @@
+## [0.0.9](https://github.com/IBM/scc-go-sdk/compare/v0.0.8...v0.0.9) (2021-06-11)
+
+
+### Bug Fixes
+
+* **IT:** compilation error fixed ([7b70010](https://github.com/IBM/scc-go-sdk/commit/7b70010a1818dca77d3188a3aac49ac5105d3eb3))
+* **IT:** resourceGroupID as env var and rule label similar for cleanup ([f29b5a0](https://github.com/IBM/scc-go-sdk/commit/f29b5a0b03c1c2d03189db715f92c97828a81245))
+* **ITs:** activated config-gov ITs ([a938445](https://github.com/IBM/scc-go-sdk/commit/a9384454d37c8133f03fc60d259b590fa3103732))
+* **SDK:** fixed config_gov and notifications ITs ([b6c33de](https://github.com/IBM/scc-go-sdk/commit/b6c33de84947b0a0d1421f5f41ac0450227cb136))
+
 ## [0.0.8](https://github.com/IBM/scc-go-sdk/compare/v0.0.7...v0.0.8) (2021-06-11)
 
 

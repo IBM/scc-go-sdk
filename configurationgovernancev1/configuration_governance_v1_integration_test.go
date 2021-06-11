@@ -216,7 +216,7 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 				AccountID:     core.StringPtr(accountID),
 				TransactionID: core.StringPtr("testString"),
 				Attached:      core.BoolPtr(true),
-				Labels:        []string{ruleLabel},
+				Labels:        core.StringPtr(ruleLabel),
 				Scopes:        core.StringPtr("scope_id"),
 				Limit:         core.Int64Ptr(int64(1000)),
 				Offset:        core.Int64Ptr(int64(38)),

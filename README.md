@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/IBM/scc-go-sdk.svg?branch=main)](https://travis-ci.com/github/IBM/scc-go-sdk)
+[![CI/CD Pipeline](https://github.com/IBM/scc-go-sdk/actions/workflows/main.yaml/badge.svg)](https://github.com/IBM/scc-go-sdk/actions/workflows/main.yaml)
 [![Release](https://img.shields.io/github/v/release/IBM/scc-go-sdk)](https://img.shields.io/github/v/release/IBM/scc-go-sdk)
 [![Go Reference](https://pkg.go.dev/badge/github.com/IBM/scc-go-sdk.svg)](https://pkg.go.dev/github.com/IBM/scc-go-sdk)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/IBM/scc-go-sdk)

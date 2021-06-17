@@ -1,3 +1,10 @@
+## [0.0.11](https://github.com/IBM/scc-go-sdk/compare/v0.0.10...v0.0.11) (2021-06-17)
+
+
+### Bug Fixes
+
+* **GoDoc:** godoc deployed in gh-pages ([392348c](https://github.com/IBM/scc-go-sdk/commit/392348cff9da8384d11b317f05f74304f4cd6e0e))
+
 ## [0.0.10](https://github.com/IBM/scc-go-sdk/compare/v0.0.9...v0.0.10) (2021-06-17)
 
 

@@ -1,3 +1,10 @@
+## [0.0.10](https://github.com/IBM/scc-go-sdk/compare/v0.0.9...v0.0.10) (2021-06-17)
+
+
+### Bug Fixes
+
+* **GitHubActions:** migrated from TravisCI ([8f2b4d0](https://github.com/IBM/scc-go-sdk/commit/8f2b4d003cc25be2fa322d1ab621f18ef2157d95))
+
 ## [0.0.9](https://github.com/IBM/scc-go-sdk/compare/v0.0.8...v0.0.9) (2021-06-11)
 
 

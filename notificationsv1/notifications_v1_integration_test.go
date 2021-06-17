@@ -40,13 +40,9 @@ import (
 var accountID = os.Getenv("ACCOUNT_ID")
 var testString = "testString"
 var channelID = ""
-var identifier = os.Getenv("TRAVIS_JOB_ID")
+var identifier = fmt.Sprintf("go-%d", time.Now().Unix())
 
 var _ = Describe(`NotificationsV1 Integration Tests`, func() {
-
-	if identifier == "" {
-		identifier = fmt.Sprintf("%d", time.Now().Unix())
-	}
 
 	const externalConfigFile = "../notifications_v1.env"
 

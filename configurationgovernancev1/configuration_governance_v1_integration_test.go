@@ -21,6 +21,7 @@ package configurationgovernancev1_test
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/IBM/scc-go-sdk/configurationgovernancev1"
@@ -39,6 +40,7 @@ import (
 var accountID = os.Getenv("ACCOUNT_ID")
 var ruleLabel = os.Getenv("RULE_LABEL")
 var resourceGroupID = os.Getenv("RESOURCE_GROUP_ID")
+var identifier = fmt.Sprintf("go-%d", time.Now().Unix())
 
 var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 
@@ -141,7 +143,7 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 				Target:             targetResourceModel,
 				RequiredConfig:     ruleRequiredConfigModel,
 				EnforcementActions: []configurationgovernancev1.EnforcementAction{*enforcementActionModel},
-				Labels:             []string{ruleLabel},
+				Labels:             []string{fmt.Sprintf("%s-%s", ruleLabel, identifier)},
 			}
 
 			createRuleRequestModel := &configurationgovernancev1.CreateRuleRequest{
@@ -216,7 +218,7 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 				AccountID:     core.StringPtr(accountID),
 				TransactionID: core.StringPtr("testString"),
 				Attached:      core.BoolPtr(true),
-				Labels:        core.StringPtr(ruleLabel),
+				Labels:        core.StringPtr(fmt.Sprintf("%s-%s", ruleLabel, identifier)),
 				Scopes:        core.StringPtr("scope_id"),
 				Limit:         core.Int64Ptr(int64(1000)),
 				Offset:        core.Int64Ptr(int64(38)),
@@ -290,7 +292,7 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 				EnforcementActions: []configurationgovernancev1.EnforcementAction{*enforcementActionModel},
 				AccountID:          core.StringPtr(accountID),
 				RuleType:           core.StringPtr("user_defined"),
-				Labels:             []string{ruleLabel},
+				Labels:             []string{fmt.Sprintf("%s-%s", ruleLabel, identifier)},
 				TransactionID:      core.StringPtr("testString"),
 			}
 
@@ -460,7 +462,7 @@ var _ = AfterSuite(func() {
 	}
 
 	for _, rule := range rules.Rules {
-		if rule.Labels[0] == ruleLabel {
+		if rule.Labels[0] == fmt.Sprintf("%s-%s", ruleLabel, identifier) {
 			deleteRuleOptions := &configurationgovernancev1.DeleteRuleOptions{
 				RuleID: rule.RuleID,
 			}

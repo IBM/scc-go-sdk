@@ -1,3 +1,11 @@
+## [0.0.12](https://github.com/IBM/scc-go-sdk/compare/v0.0.11...v0.0.12) (2021-06-18)
+
+
+### Bug Fixes
+
+* **commonUser:** common user terminology ([a1c1e03](https://github.com/IBM/scc-go-sdk/commit/a1c1e0371bb49c80319e58adc59054080044920e))
+* **GitHubAction:** release to be done by scccomm ([02c21c5](https://github.com/IBM/scc-go-sdk/commit/02c21c56bd565cfcc62e8c12694a2bf74488a169))
+
 ## [0.0.11](https://github.com/IBM/scc-go-sdk/compare/v0.0.10...v0.0.11) (2021-06-17)
 
 

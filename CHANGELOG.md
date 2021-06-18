@@ -1,3 +1,10 @@
+## [0.0.13](https://github.com/IBM/scc-go-sdk/compare/v0.0.12...v0.0.13) (2021-06-18)
+
+
+### Bug Fixes
+
+* **GithubAction:** workflow altered ([1b41393](https://github.com/IBM/scc-go-sdk/commit/1b41393f5ffe57b6c1010b066e698fa086abb1d0))
+
 ## [0.0.12](https://github.com/IBM/scc-go-sdk/compare/v0.0.11...v0.0.12) (2021-06-18)
 
 

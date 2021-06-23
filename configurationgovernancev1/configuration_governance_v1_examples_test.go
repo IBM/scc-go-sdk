@@ -46,14 +46,16 @@ const externalConfigFile = "../configuration_governance_v1.env"
 
 var (
 	configurationGovernanceService *configurationgovernancev1.ConfigurationGovernanceV1
-	config                         map[string]string
-	configLoaded                   bool = false
+	config       map[string]string
+	configLoaded bool = false
 )
 
 // Globlal variables to hold link values
 var (
 	ruleAttachmentIDLink string
-	ruleIDLink           string
+	ruleIDLink string
+	templateAttachmentIDLink string
+	templateIDLink string
 )
 
 func shouldSkipTest() {
@@ -113,18 +115,19 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 			// begin-create_rules
 
 			targetResourceModel := &configurationgovernancev1.TargetResource{
-				ServiceName:  core.StringPtr("iam-groups"),
-				ResourceKind: core.StringPtr("service"),
+				ServiceName: core.StringPtr("cloud-object-storage"),
+				ResourceKind: core.StringPtr("bucket"),
 			}
 
 			ruleConditionModel := &configurationgovernancev1.RuleConditionSingleProperty{
-				Property: core.StringPtr("public_access_enabled"),
-				Operator: core.StringPtr("is_false"),
+				Property: core.StringPtr("location"),
+				Operator: core.StringPtr("string_equals"),
+				Value: core.StringPtr("us-south"),
 			}
 
 			ruleRequiredConfigModel := &configurationgovernancev1.RuleRequiredConfigMultiplePropertiesConditionAnd{
-				Description: core.StringPtr("Public access check"),
-				And:         []configurationgovernancev1.RuleConditionIntf{ruleConditionModel},
+				Description: core.StringPtr("Cloud Object Storage bucket"),
+				And: []configurationgovernancev1.RuleConditionIntf{ruleConditionModel},
 			}
 
 			enforcementActionModel := &configurationgovernancev1.EnforcementAction{
@@ -132,18 +135,18 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 			}
 
 			ruleRequestModel := &configurationgovernancev1.RuleRequest{
-				AccountID:          core.StringPtr("531fc3e28bfc43c5a2cea07786d93f5c"),
-				Name:               core.StringPtr("Disable public access"),
-				Description:        core.StringPtr("Ensure that public access to account resources is disabled."),
-				Target:             targetResourceModel,
-				RequiredConfig:     ruleRequiredConfigModel,
+				AccountID: core.StringPtr("531fc3e28bfc43c5a2cea07786d93f5c"),
+				Name: core.StringPtr("Disable public access in Dallas"),
+				Description: core.StringPtr("Ensure that public access to buckets in us-south is disabled."),
+				Target: targetResourceModel,
+				RequiredConfig: ruleRequiredConfigModel,
 				EnforcementActions: []configurationgovernancev1.EnforcementAction{*enforcementActionModel},
-				Labels:             []string{"Access", "IAM"},
+				Labels: []string{"SOC2", "ITCS300"},
 			}
 
 			createRuleRequestModel := &configurationgovernancev1.CreateRuleRequest{
 				RequestID: core.StringPtr("3cebc877-58e7-44a5-a292-32114fa73558"),
-				Rule:      ruleRequestModel,
+				Rule: ruleRequestModel,
 			}
 
 			createRulesOptions := configurationGovernanceService.NewCreateRulesOptions(
@@ -171,14 +174,14 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 			// begin-create_rule_attachments
 
 			ruleScopeModel := &configurationgovernancev1.RuleScope{
-				Note:      core.StringPtr("My enterprise"),
-				ScopeID:   core.StringPtr("282cf433ac91493ba860480d92519990"),
+				Note: core.StringPtr("My enterprise"),
+				ScopeID: core.StringPtr("282cf433ac91493ba860480d92519990"),
 				ScopeType: core.StringPtr("enterprise"),
 			}
 
 			ruleAttachmentRequestModel := &configurationgovernancev1.RuleAttachmentRequest{
-				AccountID:      core.StringPtr("531fc3e28bfc43c5a2cea07786d93f5c"),
-				IncludedScope:  ruleScopeModel,
+				AccountID: core.StringPtr("531fc3e28bfc43c5a2cea07786d93f5c"),
+				IncludedScope: ruleScopeModel,
 				ExcludedScopes: []configurationgovernancev1.RuleScope{*ruleScopeModel},
 			}
 
@@ -201,6 +204,87 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 			Expect(createRuleAttachmentsResponse).ToNot(BeNil())
 
 			ruleAttachmentIDLink = *createRuleAttachmentsResponse.Attachments[0].AttachmentID
+
+		})
+		It(`CreateTemplates request example`, func() {
+			fmt.Println("\nCreateTemplates() result:")
+			// begin-create_templates
+
+			simpleTargetResourceModel := &configurationgovernancev1.SimpleTargetResource{
+				ServiceName: core.StringPtr("cloud-object-storage"),
+				ResourceKind: core.StringPtr("bucket"),
+			}
+
+			templateCustomizedDefaultPropertyModel := &configurationgovernancev1.TemplateCustomizedDefaultProperty{
+				Property: core.StringPtr("testString"),
+				Value: core.StringPtr("testString"),
+			}
+
+			templateModel := &configurationgovernancev1.Template{
+				AccountID: core.StringPtr("testString"),
+				Name: core.StringPtr("testString"),
+				Description: core.StringPtr("testString"),
+				Target: simpleTargetResourceModel,
+				CustomizedDefaults: []configurationgovernancev1.TemplateCustomizedDefaultProperty{*templateCustomizedDefaultPropertyModel},
+			}
+
+			createTemplateRequestModel := &configurationgovernancev1.CreateTemplateRequest{
+				Template: templateModel,
+			}
+
+			createTemplatesOptions := configurationGovernanceService.NewCreateTemplatesOptions(
+				[]configurationgovernancev1.CreateTemplateRequest{*createTemplateRequestModel},
+			)
+
+			createTemplatesResponse, response, err := configurationGovernanceService.CreateTemplates(createTemplatesOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(createTemplatesResponse, "", "  ")
+			fmt.Println(string(b))
+
+			// end-create_templates
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(createTemplatesResponse).ToNot(BeNil())
+
+			templateIDLink = *createTemplatesResponse.Templates[0].Template.TemplateID
+
+		})
+		It(`CreateTemplateAttachments request example`, func() {
+			fmt.Println("\nCreateTemplateAttachments() result:")
+			// begin-create_template_attachments
+
+			templateScopeModel := &configurationgovernancev1.TemplateScope{
+				ScopeID: core.StringPtr("testString"),
+				ScopeType: core.StringPtr("enterprise"),
+			}
+
+			templateAttachmentRequestModel := &configurationgovernancev1.TemplateAttachmentRequest{
+				AccountID: core.StringPtr("testString"),
+				IncludedScope: templateScopeModel,
+			}
+
+			createTemplateAttachmentsOptions := configurationGovernanceService.NewCreateTemplateAttachmentsOptions(
+				templateIDLink,
+				[]configurationgovernancev1.TemplateAttachmentRequest{*templateAttachmentRequestModel},
+			)
+
+			createTemplateAttachmentsResponse, response, err := configurationGovernanceService.CreateTemplateAttachments(createTemplateAttachmentsOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(createTemplateAttachmentsResponse, "", "  ")
+			fmt.Println(string(b))
+
+			// end-create_template_attachments
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(createTemplateAttachmentsResponse).ToNot(BeNil())
+
+			templateAttachmentIDLink = *createTemplateAttachmentsResponse.Attachments[0].AttachmentID
 
 		})
 		It(`ListRules request example`, func() {
@@ -255,31 +339,37 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 			// begin-update_rule
 
 			targetResourceAdditionalTargetAttributesItemModel := &configurationgovernancev1.TargetResourceAdditionalTargetAttributesItem{
-				Name:     core.StringPtr("testString"),
-				Value:    core.StringPtr("testString"),
+				Name: core.StringPtr("testString"),
+				Value: core.StringPtr("testString"),
 				Operator: core.StringPtr("string_equals"),
 			}
 
 			targetResourceModel := &configurationgovernancev1.TargetResource{
-				ServiceName:                core.StringPtr("iam-groups"),
-				ResourceKind:               core.StringPtr("service"),
+				ServiceName: core.StringPtr("cloud-object-storage"),
+				ResourceKind: core.StringPtr("bucket"),
 				AdditionalTargetAttributes: []configurationgovernancev1.TargetResourceAdditionalTargetAttributesItem{*targetResourceAdditionalTargetAttributesItemModel},
 			}
 
-			ruleRequiredConfigModel := &configurationgovernancev1.RuleRequiredConfigSingleProperty{
-				Property: core.StringPtr("public_access_enabled"),
-				Operator: core.StringPtr("is_false"),
+			ruleConditionModel := &configurationgovernancev1.RuleConditionSingleProperty{
+				Property: core.StringPtr("location"),
+				Operator: core.StringPtr("string_equals"),
+				Value: core.StringPtr("us-south"),
+			}
+
+			ruleRequiredConfigModel := &configurationgovernancev1.RuleRequiredConfigMultiplePropertiesConditionAnd{
+				Description: core.StringPtr("Cloud Object Storage bucket"),
+				And: []configurationgovernancev1.RuleConditionIntf{ruleConditionModel},
 			}
 
 			enforcementActionModel := &configurationgovernancev1.EnforcementAction{
-				Action: core.StringPtr("audit_log"),
+				Action: core.StringPtr("disallow"),
 			}
 
 			updateRuleOptions := configurationGovernanceService.NewUpdateRuleOptions(
 				ruleIDLink,
 				"testString",
 				"Disable public access",
-				"Ensure that public access to account resources is disabled.",
+				"Disable public access in Dallas",
 				targetResourceModel,
 				ruleRequiredConfigModel,
 				[]configurationgovernancev1.EnforcementAction{*enforcementActionModel},
@@ -352,8 +442,8 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 			// begin-update_rule_attachment
 
 			ruleScopeModel := &configurationgovernancev1.RuleScope{
-				Note:      core.StringPtr("My enterprise"),
-				ScopeID:   core.StringPtr("282cf433ac91493ba860480d92519990"),
+				Note: core.StringPtr("My enterprise"),
+				ScopeID: core.StringPtr("282cf433ac91493ba860480d92519990"),
 				ScopeType: core.StringPtr("enterprise"),
 			}
 
@@ -378,6 +468,203 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(templateAttachment).ToNot(BeNil())
+
+		})
+		It(`ListTemplates request example`, func() {
+			fmt.Println("\nListTemplates() result:")
+			// begin-list_templates
+
+			listTemplatesOptions := configurationGovernanceService.NewListTemplatesOptions(
+				"531fc3e28bfc43c5a2cea07786d93f5c",
+			)
+
+			templateList, response, err := configurationGovernanceService.ListTemplates(listTemplatesOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(templateList, "", "  ")
+			fmt.Println(string(b))
+
+			// end-list_templates
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(templateList).ToNot(BeNil())
+
+		})
+		It(`GetTemplate request example`, func() {
+			fmt.Println("\nGetTemplate() result:")
+			// begin-get_template
+
+			getTemplateOptions := configurationGovernanceService.NewGetTemplateOptions(
+				templateIDLink,
+			)
+
+			templateResponse, response, err := configurationGovernanceService.GetTemplate(getTemplateOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(templateResponse, "", "  ")
+			fmt.Println(string(b))
+
+			// end-get_template
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(templateResponse).ToNot(BeNil())
+
+		})
+		It(`UpdateTemplate request example`, func() {
+			fmt.Println("\nUpdateTemplate() result:")
+			// begin-update_template
+
+			simpleTargetResourceModel := &configurationgovernancev1.SimpleTargetResource{
+				ServiceName: core.StringPtr("cloud-object-storage"),
+				ResourceKind: core.StringPtr("bucket"),
+			}
+
+			templateCustomizedDefaultPropertyModel := &configurationgovernancev1.TemplateCustomizedDefaultProperty{
+				Property: core.StringPtr("testString"),
+				Value: core.StringPtr("testString"),
+			}
+
+			updateTemplateOptions := configurationGovernanceService.NewUpdateTemplateOptions(
+				templateIDLink,
+				"testString",
+				"testString",
+				"testString",
+				"testString",
+				simpleTargetResourceModel,
+				[]configurationgovernancev1.TemplateCustomizedDefaultProperty{*templateCustomizedDefaultPropertyModel},
+			)
+
+			templateResponse, response, err := configurationGovernanceService.UpdateTemplate(updateTemplateOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(templateResponse, "", "  ")
+			fmt.Println(string(b))
+
+			// end-update_template
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(templateResponse).ToNot(BeNil())
+
+		})
+		It(`ListTemplateAttachments request example`, func() {
+			fmt.Println("\nListTemplateAttachments() result:")
+			// begin-list_template_attachments
+
+			listTemplateAttachmentsOptions := configurationGovernanceService.NewListTemplateAttachmentsOptions(
+				templateIDLink,
+			)
+
+			templateAttachmentList, response, err := configurationGovernanceService.ListTemplateAttachments(listTemplateAttachmentsOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(templateAttachmentList, "", "  ")
+			fmt.Println(string(b))
+
+			// end-list_template_attachments
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(templateAttachmentList).ToNot(BeNil())
+
+		})
+		It(`GetTemplateAttachment request example`, func() {
+			fmt.Println("\nGetTemplateAttachment() result:")
+			// begin-get_template_attachment
+
+			getTemplateAttachmentOptions := configurationGovernanceService.NewGetTemplateAttachmentOptions(
+				templateIDLink,
+				templateAttachmentIDLink,
+			)
+
+			templateAttachment, response, err := configurationGovernanceService.GetTemplateAttachment(getTemplateAttachmentOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(templateAttachment, "", "  ")
+			fmt.Println(string(b))
+
+			// end-get_template_attachment
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(templateAttachment).ToNot(BeNil())
+
+		})
+		It(`UpdateTemplateAttachment request example`, func() {
+			fmt.Println("\nUpdateTemplateAttachment() result:")
+			// begin-update_template_attachment
+
+			templateScopeModel := &configurationgovernancev1.TemplateScope{
+				ScopeID: core.StringPtr("testString"),
+				ScopeType: core.StringPtr("enterprise"),
+			}
+
+			updateTemplateAttachmentOptions := configurationGovernanceService.NewUpdateTemplateAttachmentOptions(
+				templateIDLink,
+				templateAttachmentIDLink,
+				"testString",
+				"testString",
+				templateScopeModel,
+			)
+
+			templateAttachment, response, err := configurationGovernanceService.UpdateTemplateAttachment(updateTemplateAttachmentOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(templateAttachment, "", "  ")
+			fmt.Println(string(b))
+
+			// end-update_template_attachment
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(templateAttachment).ToNot(BeNil())
+
+		})
+		It(`DeleteTemplateAttachment request example`, func() {
+			// begin-delete_template_attachment
+
+			deleteTemplateAttachmentOptions := configurationGovernanceService.NewDeleteTemplateAttachmentOptions(
+				templateIDLink,
+				templateAttachmentIDLink,
+			)
+
+			response, err := configurationGovernanceService.DeleteTemplateAttachment(deleteTemplateAttachmentOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			// end-delete_template_attachment
+			fmt.Printf("\nDeleteTemplateAttachment() response status code: %d\n", response.StatusCode)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(204))
+
+		})
+		It(`DeleteTemplate request example`, func() {
+			// begin-delete_template
+
+			deleteTemplateOptions := configurationGovernanceService.NewDeleteTemplateOptions(
+				templateIDLink,
+			)
+
+			response, err := configurationGovernanceService.DeleteTemplate(deleteTemplateOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			// end-delete_template
+			fmt.Printf("\nDeleteTemplate() response status code: %d\n", response.StatusCode)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(204))
 
 		})
 		It(`DeleteRuleAttachment request example`, func() {

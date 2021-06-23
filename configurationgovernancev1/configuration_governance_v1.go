@@ -15,7 +15,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
+ * IBM OpenAPI SDK Code Generator Version: 3.34.0-e2a502a2-20210616-185634
  */
 
 // Package configurationgovernancev1 : Operations and models for the ConfigurationGovernanceV1 service
@@ -42,7 +42,7 @@ type ConfigurationGovernanceV1 struct {
 }
 
 // DefaultServiceURL is the default URL to make service requests to.
-const DefaultServiceURL = "https://us.compliance.cloud.ibm.com"
+const DefaultServiceURL = "https://compliance.cloud.ibm.com"
 
 // DefaultServiceName is the default key used to find external configuration information.
 const DefaultServiceName = "configuration_governance"
@@ -111,16 +111,7 @@ func NewConfigurationGovernanceV1(options *ConfigurationGovernanceV1Options) (se
 
 // GetServiceURLForRegion returns the service URL to be used for the specified region
 func GetServiceURLForRegion(region string) (string, error) {
-	var endpoints = map[string]string{
-		"us-south": "https://us.compliance.cloud.ibm.com",
-		"us-east":  "https://us.compliance.cloud.ibm.com",
-		"eu-de":    "https://eu.compliance.cloud.ibm.com",
-	}
-
-	if url, ok := endpoints[region]; ok {
-		return url, nil
-	}
-	return "", fmt.Errorf("service URL for region '%s' not found", region)
+	return "", fmt.Errorf("service does not support regional URLs")
 }
 
 // Clone makes a copy of "configurationGovernance" suitable for processing requests.
@@ -696,7 +687,7 @@ func (configurationGovernance *ConfigurationGovernanceV1) GetRuleAttachmentWithC
 	}
 
 	pathParamsMap := map[string]string{
-		"rule_id":       *getRuleAttachmentOptions.RuleID,
+		"rule_id": *getRuleAttachmentOptions.RuleID,
 		"attachment_id": *getRuleAttachmentOptions.AttachmentID,
 	}
 
@@ -760,7 +751,7 @@ func (configurationGovernance *ConfigurationGovernanceV1) UpdateRuleAttachmentWi
 	}
 
 	pathParamsMap := map[string]string{
-		"rule_id":       *updateRuleAttachmentOptions.RuleID,
+		"rule_id": *updateRuleAttachmentOptions.RuleID,
 		"attachment_id": *updateRuleAttachmentOptions.AttachmentID,
 	}
 
@@ -843,7 +834,7 @@ func (configurationGovernance *ConfigurationGovernanceV1) DeleteRuleAttachmentWi
 	}
 
 	pathParamsMap := map[string]string{
-		"rule_id":       *deleteRuleAttachmentOptions.RuleID,
+		"rule_id": *deleteRuleAttachmentOptions.RuleID,
 		"attachment_id": *deleteRuleAttachmentOptions.AttachmentID,
 	}
 
@@ -877,6 +868,743 @@ func (configurationGovernance *ConfigurationGovernanceV1) DeleteRuleAttachmentWi
 	return
 }
 
+// CreateTemplates : Create templates
+// Creates one or more templates that you can use to define your preferred property values for IBM Cloud resources.
+//
+// A successful `POST /config/templates` request defines a template based on the target and customized defaults that you
+// specify. The response returns the ID value for your template, along with other metadata.
+//
+// To learn more about templates, check out the
+// [docs](/docs/security-compliance?topic=security-compliance-what-is-template).
+func (configurationGovernance *ConfigurationGovernanceV1) CreateTemplates(createTemplatesOptions *CreateTemplatesOptions) (result *CreateTemplatesResponse, response *core.DetailedResponse, err error) {
+	return configurationGovernance.CreateTemplatesWithContext(context.Background(), createTemplatesOptions)
+}
+
+// CreateTemplatesWithContext is an alternate form of the CreateTemplates method which supports a Context parameter
+func (configurationGovernance *ConfigurationGovernanceV1) CreateTemplatesWithContext(ctx context.Context, createTemplatesOptions *CreateTemplatesOptions) (result *CreateTemplatesResponse, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(createTemplatesOptions, "createTemplatesOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(createTemplatesOptions, "createTemplatesOptions")
+	if err != nil {
+		return
+	}
+
+	builder := core.NewRequestBuilder(core.POST)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = configurationGovernance.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(configurationGovernance.Service.Options.URL, `/config/v1/templates`, nil)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range createTemplatesOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("configuration_governance", "V1", "CreateTemplates")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+	builder.AddHeader("Content-Type", "application/json")
+	if createTemplatesOptions.TransactionID != nil {
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*createTemplatesOptions.TransactionID))
+	}
+
+	body := make(map[string]interface{})
+	if createTemplatesOptions.Templates != nil {
+		body["templates"] = createTemplatesOptions.Templates
+	}
+	_, err = builder.SetBodyContentJSON(body)
+	if err != nil {
+		return
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = configurationGovernance.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalCreateTemplatesResponse)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// ListTemplates : List templates
+// Retrieves a list of the templates that are available in your account.
+func (configurationGovernance *ConfigurationGovernanceV1) ListTemplates(listTemplatesOptions *ListTemplatesOptions) (result *TemplateList, response *core.DetailedResponse, err error) {
+	return configurationGovernance.ListTemplatesWithContext(context.Background(), listTemplatesOptions)
+}
+
+// ListTemplatesWithContext is an alternate form of the ListTemplates method which supports a Context parameter
+func (configurationGovernance *ConfigurationGovernanceV1) ListTemplatesWithContext(ctx context.Context, listTemplatesOptions *ListTemplatesOptions) (result *TemplateList, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(listTemplatesOptions, "listTemplatesOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(listTemplatesOptions, "listTemplatesOptions")
+	if err != nil {
+		return
+	}
+
+	builder := core.NewRequestBuilder(core.GET)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = configurationGovernance.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(configurationGovernance.Service.Options.URL, `/config/v1/templates`, nil)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range listTemplatesOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("configuration_governance", "V1", "ListTemplates")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+	if listTemplatesOptions.TransactionID != nil {
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*listTemplatesOptions.TransactionID))
+	}
+
+	builder.AddQuery("account_id", fmt.Sprint(*listTemplatesOptions.AccountID))
+	if listTemplatesOptions.Attached != nil {
+		builder.AddQuery("attached", fmt.Sprint(*listTemplatesOptions.Attached))
+	}
+	if listTemplatesOptions.Scopes != nil {
+		builder.AddQuery("scopes", fmt.Sprint(*listTemplatesOptions.Scopes))
+	}
+	if listTemplatesOptions.Limit != nil {
+		builder.AddQuery("limit", fmt.Sprint(*listTemplatesOptions.Limit))
+	}
+	if listTemplatesOptions.Offset != nil {
+		builder.AddQuery("offset", fmt.Sprint(*listTemplatesOptions.Offset))
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = configurationGovernance.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalTemplateList)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// GetTemplate : Get a template
+// Retrieves an existing template and its details.
+func (configurationGovernance *ConfigurationGovernanceV1) GetTemplate(getTemplateOptions *GetTemplateOptions) (result *TemplateResponse, response *core.DetailedResponse, err error) {
+	return configurationGovernance.GetTemplateWithContext(context.Background(), getTemplateOptions)
+}
+
+// GetTemplateWithContext is an alternate form of the GetTemplate method which supports a Context parameter
+func (configurationGovernance *ConfigurationGovernanceV1) GetTemplateWithContext(ctx context.Context, getTemplateOptions *GetTemplateOptions) (result *TemplateResponse, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(getTemplateOptions, "getTemplateOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(getTemplateOptions, "getTemplateOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"template_id": *getTemplateOptions.TemplateID,
+	}
+
+	builder := core.NewRequestBuilder(core.GET)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = configurationGovernance.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(configurationGovernance.Service.Options.URL, `/config/v1/templates/{template_id}`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range getTemplateOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("configuration_governance", "V1", "GetTemplate")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+	if getTemplateOptions.TransactionID != nil {
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*getTemplateOptions.TransactionID))
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = configurationGovernance.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalTemplateResponse)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// UpdateTemplate : Update a template
+// Updates an existing template based on the properties that you specify.
+func (configurationGovernance *ConfigurationGovernanceV1) UpdateTemplate(updateTemplateOptions *UpdateTemplateOptions) (result *TemplateResponse, response *core.DetailedResponse, err error) {
+	return configurationGovernance.UpdateTemplateWithContext(context.Background(), updateTemplateOptions)
+}
+
+// UpdateTemplateWithContext is an alternate form of the UpdateTemplate method which supports a Context parameter
+func (configurationGovernance *ConfigurationGovernanceV1) UpdateTemplateWithContext(ctx context.Context, updateTemplateOptions *UpdateTemplateOptions) (result *TemplateResponse, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(updateTemplateOptions, "updateTemplateOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(updateTemplateOptions, "updateTemplateOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"template_id": *updateTemplateOptions.TemplateID,
+	}
+
+	builder := core.NewRequestBuilder(core.PUT)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = configurationGovernance.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(configurationGovernance.Service.Options.URL, `/config/v1/templates/{template_id}`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range updateTemplateOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("configuration_governance", "V1", "UpdateTemplate")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+	builder.AddHeader("Content-Type", "application/json")
+	if updateTemplateOptions.IfMatch != nil {
+		builder.AddHeader("If-Match", fmt.Sprint(*updateTemplateOptions.IfMatch))
+	}
+	if updateTemplateOptions.TransactionID != nil {
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*updateTemplateOptions.TransactionID))
+	}
+
+	body := make(map[string]interface{})
+	if updateTemplateOptions.AccountID != nil {
+		body["account_id"] = updateTemplateOptions.AccountID
+	}
+	if updateTemplateOptions.Name != nil {
+		body["name"] = updateTemplateOptions.Name
+	}
+	if updateTemplateOptions.Description != nil {
+		body["description"] = updateTemplateOptions.Description
+	}
+	if updateTemplateOptions.Target != nil {
+		body["target"] = updateTemplateOptions.Target
+	}
+	if updateTemplateOptions.CustomizedDefaults != nil {
+		body["customized_defaults"] = updateTemplateOptions.CustomizedDefaults
+	}
+	_, err = builder.SetBodyContentJSON(body)
+	if err != nil {
+		return
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = configurationGovernance.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalTemplateResponse)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// DeleteTemplate : Delete a template
+// Deletes an existing template.
+func (configurationGovernance *ConfigurationGovernanceV1) DeleteTemplate(deleteTemplateOptions *DeleteTemplateOptions) (response *core.DetailedResponse, err error) {
+	return configurationGovernance.DeleteTemplateWithContext(context.Background(), deleteTemplateOptions)
+}
+
+// DeleteTemplateWithContext is an alternate form of the DeleteTemplate method which supports a Context parameter
+func (configurationGovernance *ConfigurationGovernanceV1) DeleteTemplateWithContext(ctx context.Context, deleteTemplateOptions *DeleteTemplateOptions) (response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(deleteTemplateOptions, "deleteTemplateOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(deleteTemplateOptions, "deleteTemplateOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"template_id": *deleteTemplateOptions.TemplateID,
+	}
+
+	builder := core.NewRequestBuilder(core.DELETE)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = configurationGovernance.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(configurationGovernance.Service.Options.URL, `/config/v1/templates/{template_id}`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range deleteTemplateOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("configuration_governance", "V1", "DeleteTemplate")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	if deleteTemplateOptions.TransactionID != nil {
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*deleteTemplateOptions.TransactionID))
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	response, err = configurationGovernance.Service.Request(request, nil)
+
+	return
+}
+
+// CreateTemplateAttachments : Create attachments
+// Creates one or more scope attachments for an existing template.
+//
+// You can attach an existing template to a scope, such as a specific IBM Cloud account, to start using the template for
+// setting default values. A successful
+// `POST /config/v1/templates/{template_id}/attachments` returns the ID value for the attachment, along with other
+// metadata.
+func (configurationGovernance *ConfigurationGovernanceV1) CreateTemplateAttachments(createTemplateAttachmentsOptions *CreateTemplateAttachmentsOptions) (result *CreateTemplateAttachmentsResponse, response *core.DetailedResponse, err error) {
+	return configurationGovernance.CreateTemplateAttachmentsWithContext(context.Background(), createTemplateAttachmentsOptions)
+}
+
+// CreateTemplateAttachmentsWithContext is an alternate form of the CreateTemplateAttachments method which supports a Context parameter
+func (configurationGovernance *ConfigurationGovernanceV1) CreateTemplateAttachmentsWithContext(ctx context.Context, createTemplateAttachmentsOptions *CreateTemplateAttachmentsOptions) (result *CreateTemplateAttachmentsResponse, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(createTemplateAttachmentsOptions, "createTemplateAttachmentsOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(createTemplateAttachmentsOptions, "createTemplateAttachmentsOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"template_id": *createTemplateAttachmentsOptions.TemplateID,
+	}
+
+	builder := core.NewRequestBuilder(core.POST)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = configurationGovernance.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(configurationGovernance.Service.Options.URL, `/config/v1/templates/{template_id}/attachments`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range createTemplateAttachmentsOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("configuration_governance", "V1", "CreateTemplateAttachments")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+	builder.AddHeader("Content-Type", "application/json")
+	if createTemplateAttachmentsOptions.TransactionID != nil {
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*createTemplateAttachmentsOptions.TransactionID))
+	}
+
+	body := make(map[string]interface{})
+	if createTemplateAttachmentsOptions.Attachments != nil {
+		body["attachments"] = createTemplateAttachmentsOptions.Attachments
+	}
+	_, err = builder.SetBodyContentJSON(body)
+	if err != nil {
+		return
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = configurationGovernance.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalCreateTemplateAttachmentsResponse)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// ListTemplateAttachments : List attachments
+// Retrieves a list of scope attachments that are associated with the specified template.
+func (configurationGovernance *ConfigurationGovernanceV1) ListTemplateAttachments(listTemplateAttachmentsOptions *ListTemplateAttachmentsOptions) (result *TemplateAttachmentList, response *core.DetailedResponse, err error) {
+	return configurationGovernance.ListTemplateAttachmentsWithContext(context.Background(), listTemplateAttachmentsOptions)
+}
+
+// ListTemplateAttachmentsWithContext is an alternate form of the ListTemplateAttachments method which supports a Context parameter
+func (configurationGovernance *ConfigurationGovernanceV1) ListTemplateAttachmentsWithContext(ctx context.Context, listTemplateAttachmentsOptions *ListTemplateAttachmentsOptions) (result *TemplateAttachmentList, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(listTemplateAttachmentsOptions, "listTemplateAttachmentsOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(listTemplateAttachmentsOptions, "listTemplateAttachmentsOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"template_id": *listTemplateAttachmentsOptions.TemplateID,
+	}
+
+	builder := core.NewRequestBuilder(core.GET)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = configurationGovernance.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(configurationGovernance.Service.Options.URL, `/config/v1/templates/{template_id}/attachments`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range listTemplateAttachmentsOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("configuration_governance", "V1", "ListTemplateAttachments")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+	if listTemplateAttachmentsOptions.TransactionID != nil {
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*listTemplateAttachmentsOptions.TransactionID))
+	}
+
+	if listTemplateAttachmentsOptions.Limit != nil {
+		builder.AddQuery("limit", fmt.Sprint(*listTemplateAttachmentsOptions.Limit))
+	}
+	if listTemplateAttachmentsOptions.Offset != nil {
+		builder.AddQuery("offset", fmt.Sprint(*listTemplateAttachmentsOptions.Offset))
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = configurationGovernance.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalTemplateAttachmentList)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// GetTemplateAttachment : Get an attachment
+// Retrieves an existing scope attachment for a template.
+func (configurationGovernance *ConfigurationGovernanceV1) GetTemplateAttachment(getTemplateAttachmentOptions *GetTemplateAttachmentOptions) (result *TemplateAttachment, response *core.DetailedResponse, err error) {
+	return configurationGovernance.GetTemplateAttachmentWithContext(context.Background(), getTemplateAttachmentOptions)
+}
+
+// GetTemplateAttachmentWithContext is an alternate form of the GetTemplateAttachment method which supports a Context parameter
+func (configurationGovernance *ConfigurationGovernanceV1) GetTemplateAttachmentWithContext(ctx context.Context, getTemplateAttachmentOptions *GetTemplateAttachmentOptions) (result *TemplateAttachment, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(getTemplateAttachmentOptions, "getTemplateAttachmentOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(getTemplateAttachmentOptions, "getTemplateAttachmentOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"template_id": *getTemplateAttachmentOptions.TemplateID,
+		"attachment_id": *getTemplateAttachmentOptions.AttachmentID,
+	}
+
+	builder := core.NewRequestBuilder(core.GET)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = configurationGovernance.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(configurationGovernance.Service.Options.URL, `/config/v1/templates/{template_id}/attachments/{attachment_id}`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range getTemplateAttachmentOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("configuration_governance", "V1", "GetTemplateAttachment")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+	if getTemplateAttachmentOptions.TransactionID != nil {
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*getTemplateAttachmentOptions.TransactionID))
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = configurationGovernance.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalTemplateAttachment)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// UpdateTemplateAttachment : Update an attachment
+// Updates an existing scope attachment based on the properties that you specify.
+func (configurationGovernance *ConfigurationGovernanceV1) UpdateTemplateAttachment(updateTemplateAttachmentOptions *UpdateTemplateAttachmentOptions) (result *TemplateAttachment, response *core.DetailedResponse, err error) {
+	return configurationGovernance.UpdateTemplateAttachmentWithContext(context.Background(), updateTemplateAttachmentOptions)
+}
+
+// UpdateTemplateAttachmentWithContext is an alternate form of the UpdateTemplateAttachment method which supports a Context parameter
+func (configurationGovernance *ConfigurationGovernanceV1) UpdateTemplateAttachmentWithContext(ctx context.Context, updateTemplateAttachmentOptions *UpdateTemplateAttachmentOptions) (result *TemplateAttachment, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(updateTemplateAttachmentOptions, "updateTemplateAttachmentOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(updateTemplateAttachmentOptions, "updateTemplateAttachmentOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"template_id": *updateTemplateAttachmentOptions.TemplateID,
+		"attachment_id": *updateTemplateAttachmentOptions.AttachmentID,
+	}
+
+	builder := core.NewRequestBuilder(core.PUT)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = configurationGovernance.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(configurationGovernance.Service.Options.URL, `/config/v1/templates/{template_id}/attachments/{attachment_id}`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range updateTemplateAttachmentOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("configuration_governance", "V1", "UpdateTemplateAttachment")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+	builder.AddHeader("Content-Type", "application/json")
+	if updateTemplateAttachmentOptions.IfMatch != nil {
+		builder.AddHeader("If-Match", fmt.Sprint(*updateTemplateAttachmentOptions.IfMatch))
+	}
+	if updateTemplateAttachmentOptions.TransactionID != nil {
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*updateTemplateAttachmentOptions.TransactionID))
+	}
+
+	body := make(map[string]interface{})
+	if updateTemplateAttachmentOptions.AccountID != nil {
+		body["account_id"] = updateTemplateAttachmentOptions.AccountID
+	}
+	if updateTemplateAttachmentOptions.IncludedScope != nil {
+		body["included_scope"] = updateTemplateAttachmentOptions.IncludedScope
+	}
+	if updateTemplateAttachmentOptions.ExcludedScopes != nil {
+		body["excluded_scopes"] = updateTemplateAttachmentOptions.ExcludedScopes
+	}
+	_, err = builder.SetBodyContentJSON(body)
+	if err != nil {
+		return
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = configurationGovernance.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalTemplateAttachment)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// DeleteTemplateAttachment : Delete an attachment
+// Deletes an existing scope attachment.
+func (configurationGovernance *ConfigurationGovernanceV1) DeleteTemplateAttachment(deleteTemplateAttachmentOptions *DeleteTemplateAttachmentOptions) (response *core.DetailedResponse, err error) {
+	return configurationGovernance.DeleteTemplateAttachmentWithContext(context.Background(), deleteTemplateAttachmentOptions)
+}
+
+// DeleteTemplateAttachmentWithContext is an alternate form of the DeleteTemplateAttachment method which supports a Context parameter
+func (configurationGovernance *ConfigurationGovernanceV1) DeleteTemplateAttachmentWithContext(ctx context.Context, deleteTemplateAttachmentOptions *DeleteTemplateAttachmentOptions) (response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(deleteTemplateAttachmentOptions, "deleteTemplateAttachmentOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(deleteTemplateAttachmentOptions, "deleteTemplateAttachmentOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"template_id": *deleteTemplateAttachmentOptions.TemplateID,
+		"attachment_id": *deleteTemplateAttachmentOptions.AttachmentID,
+	}
+
+	builder := core.NewRequestBuilder(core.DELETE)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = configurationGovernance.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(configurationGovernance.Service.Options.URL, `/config/v1/templates/{template_id}/attachments/{attachment_id}`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range deleteTemplateAttachmentOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("configuration_governance", "V1", "DeleteTemplateAttachment")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	if deleteTemplateAttachmentOptions.TransactionID != nil {
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*deleteTemplateAttachmentOptions.TransactionID))
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	response, err = configurationGovernance.Service.Request(request, nil)
+
+	return
+}
+
+// BaseTargetAttribute : The attributes that are associated with a rule or template target.
+type BaseTargetAttribute struct {
+	// The name of the additional attribute that you want to use to further qualify the target.
+	//
+	// Options differ depending on the service or resource that you are targeting with a rule or template. For more
+	// information, refer to the service documentation.
+	Name *string `json:"name" validate:"required"`
+
+	// The value that you want to apply to `name` field.
+	//
+	// Options differ depending on the rule or template that you configure. For more information, refer to the service
+	// documentation.
+	Value *string `json:"value" validate:"required"`
+}
+
+// NewBaseTargetAttribute : Instantiate BaseTargetAttribute (Generic Model Constructor)
+func (*ConfigurationGovernanceV1) NewBaseTargetAttribute(name string, value string) (_model *BaseTargetAttribute, err error) {
+	_model = &BaseTargetAttribute{
+		Name: core.StringPtr(name),
+		Value: core.StringPtr(value),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+// UnmarshalBaseTargetAttribute unmarshals an instance of BaseTargetAttribute from the specified map of raw messages.
+func UnmarshalBaseTargetAttribute(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(BaseTargetAttribute)
+	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "value", &obj.Value)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // CreateRuleAttachmentsOptions : The CreateRuleAttachments options.
 type CreateRuleAttachmentsOptions struct {
 	// The UUID that uniquely identifies the rule.
@@ -899,7 +1627,7 @@ type CreateRuleAttachmentsOptions struct {
 // NewCreateRuleAttachmentsOptions : Instantiate CreateRuleAttachmentsOptions
 func (*ConfigurationGovernanceV1) NewCreateRuleAttachmentsOptions(ruleID string, attachments []RuleAttachmentRequest) *CreateRuleAttachmentsOptions {
 	return &CreateRuleAttachmentsOptions{
-		RuleID:      core.StringPtr(ruleID),
+		RuleID: core.StringPtr(ruleID),
 		Attachments: attachments,
 	}
 }
@@ -1098,6 +1826,229 @@ func UnmarshalCreateRulesResponse(m map[string]json.RawMessage, result interface
 	return
 }
 
+// CreateTemplateAttachmentsOptions : The CreateTemplateAttachments options.
+type CreateTemplateAttachmentsOptions struct {
+	// The UUID that uniquely identifies the template.
+	TemplateID *string `validate:"required,ne="`
+
+	Attachments []TemplateAttachmentRequest `validate:"required"`
+
+	// The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
+	// sends a transaction ID as a response header of the request. In the case of an error, the transaction ID is set in
+	// the `trace` field of the response body.
+	//
+	// **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
+	// with each request.
+	TransactionID *string
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewCreateTemplateAttachmentsOptions : Instantiate CreateTemplateAttachmentsOptions
+func (*ConfigurationGovernanceV1) NewCreateTemplateAttachmentsOptions(templateID string, attachments []TemplateAttachmentRequest) *CreateTemplateAttachmentsOptions {
+	return &CreateTemplateAttachmentsOptions{
+		TemplateID: core.StringPtr(templateID),
+		Attachments: attachments,
+	}
+}
+
+// SetTemplateID : Allow user to set TemplateID
+func (_options *CreateTemplateAttachmentsOptions) SetTemplateID(templateID string) *CreateTemplateAttachmentsOptions {
+	_options.TemplateID = core.StringPtr(templateID)
+	return _options
+}
+
+// SetAttachments : Allow user to set Attachments
+func (_options *CreateTemplateAttachmentsOptions) SetAttachments(attachments []TemplateAttachmentRequest) *CreateTemplateAttachmentsOptions {
+	_options.Attachments = attachments
+	return _options
+}
+
+// SetTransactionID : Allow user to set TransactionID
+func (_options *CreateTemplateAttachmentsOptions) SetTransactionID(transactionID string) *CreateTemplateAttachmentsOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *CreateTemplateAttachmentsOptions) SetHeaders(param map[string]string) *CreateTemplateAttachmentsOptions {
+	options.Headers = param
+	return options
+}
+
+// CreateTemplateAttachmentsResponse : CreateTemplateAttachmentsResponse struct
+type CreateTemplateAttachmentsResponse struct {
+	Attachments []TemplateAttachment `json:"attachments" validate:"required"`
+}
+
+// UnmarshalCreateTemplateAttachmentsResponse unmarshals an instance of CreateTemplateAttachmentsResponse from the specified map of raw messages.
+func UnmarshalCreateTemplateAttachmentsResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(CreateTemplateAttachmentsResponse)
+	err = core.UnmarshalModel(m, "attachments", &obj.Attachments, UnmarshalTemplateAttachment)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// CreateTemplateRequest : A template to be created.
+type CreateTemplateRequest struct {
+	// A field that you can use in bulk operations to store a custom identifier for an individual request. If you omit this
+	// field, the service generates and sends a `request_id` string for each new template. The generated string corresponds
+	// with the numerical order of the templates request array. For example, `"request_id": "1"`,
+	// `"request_id": "2"`.
+	//
+	// **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `request_id` with
+	// each request.
+	RequestID *string `json:"request_id,omitempty"`
+
+	// Properties that you can associate with a template.
+	Template *Template `json:"template" validate:"required"`
+}
+
+// NewCreateTemplateRequest : Instantiate CreateTemplateRequest (Generic Model Constructor)
+func (*ConfigurationGovernanceV1) NewCreateTemplateRequest(template *Template) (_model *CreateTemplateRequest, err error) {
+	_model = &CreateTemplateRequest{
+		Template: template,
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+// UnmarshalCreateTemplateRequest unmarshals an instance of CreateTemplateRequest from the specified map of raw messages.
+func UnmarshalCreateTemplateRequest(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(CreateTemplateRequest)
+	err = core.UnmarshalPrimitive(m, "request_id", &obj.RequestID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "template", &obj.Template, UnmarshalTemplate)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// CreateTemplateResponse : Response information for a template request.
+//
+// If the 'status_code' property indicates success, the 'request_id' and
+// 'template' properties is returned in the response. If the 'status_code' property indicates an error, the
+// 'request_id', 'errors', and 'trace' fields are returned.
+type CreateTemplateResponse struct {
+	// The identifier that is used to correlate an individual request.
+	//
+	// To assist with debugging, you can use this ID to identify and inspect only one request that was made as part of a
+	// bulk operation.
+	RequestID *string `json:"request_id,omitempty"`
+
+	// The HTTP response status code.
+	StatusCode *int64 `json:"status_code,omitempty"`
+
+	// Information about a newly-created template.
+	//
+	// This field is present for successful requests.
+	Template *Template `json:"template,omitempty"`
+
+	// The error contents of the multi-status response.
+	//
+	// This field is present for unsuccessful requests.
+	Errors []TemplateResponseError `json:"errors,omitempty"`
+
+	// The UUID that uniquely identifies the request.
+	//
+	// This field is present for unsuccessful requests.
+	Trace *string `json:"trace,omitempty"`
+}
+
+// UnmarshalCreateTemplateResponse unmarshals an instance of CreateTemplateResponse from the specified map of raw messages.
+func UnmarshalCreateTemplateResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(CreateTemplateResponse)
+	err = core.UnmarshalPrimitive(m, "request_id", &obj.RequestID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "status_code", &obj.StatusCode)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "template", &obj.Template, UnmarshalTemplate)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "errors", &obj.Errors, UnmarshalTemplateResponseError)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "trace", &obj.Trace)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// CreateTemplatesOptions : The CreateTemplates options.
+type CreateTemplatesOptions struct {
+	// A list of templates to be created.
+	Templates []CreateTemplateRequest `validate:"required"`
+
+	// The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
+	// sends a transaction ID as a response header of the request. In the case of an error, the transaction ID is set in
+	// the `trace` field of the response body.
+	//
+	// **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
+	// with each request.
+	TransactionID *string
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewCreateTemplatesOptions : Instantiate CreateTemplatesOptions
+func (*ConfigurationGovernanceV1) NewCreateTemplatesOptions(templates []CreateTemplateRequest) *CreateTemplatesOptions {
+	return &CreateTemplatesOptions{
+		Templates: templates,
+	}
+}
+
+// SetTemplates : Allow user to set Templates
+func (_options *CreateTemplatesOptions) SetTemplates(templates []CreateTemplateRequest) *CreateTemplatesOptions {
+	_options.Templates = templates
+	return _options
+}
+
+// SetTransactionID : Allow user to set TransactionID
+func (_options *CreateTemplatesOptions) SetTransactionID(transactionID string) *CreateTemplatesOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *CreateTemplatesOptions) SetHeaders(param map[string]string) *CreateTemplatesOptions {
+	options.Headers = param
+	return options
+}
+
+// CreateTemplatesResponse : The response associated with a request to create one or more templates.
+type CreateTemplatesResponse struct {
+	// An array of template responses.
+	Templates []CreateTemplateResponse `json:"templates" validate:"required"`
+}
+
+// UnmarshalCreateTemplatesResponse unmarshals an instance of CreateTemplatesResponse from the specified map of raw messages.
+func UnmarshalCreateTemplatesResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(CreateTemplatesResponse)
+	err = core.UnmarshalModel(m, "templates", &obj.Templates, UnmarshalCreateTemplateResponse)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // DeleteRuleAttachmentOptions : The DeleteRuleAttachment options.
 type DeleteRuleAttachmentOptions struct {
 	// The UUID that uniquely identifies the rule.
@@ -1121,7 +2072,7 @@ type DeleteRuleAttachmentOptions struct {
 // NewDeleteRuleAttachmentOptions : Instantiate DeleteRuleAttachmentOptions
 func (*ConfigurationGovernanceV1) NewDeleteRuleAttachmentOptions(ruleID string, attachmentID string) *DeleteRuleAttachmentOptions {
 	return &DeleteRuleAttachmentOptions{
-		RuleID:       core.StringPtr(ruleID),
+		RuleID: core.StringPtr(ruleID),
 		AttachmentID: core.StringPtr(attachmentID),
 	}
 }
@@ -1192,18 +2143,109 @@ func (options *DeleteRuleOptions) SetHeaders(param map[string]string) *DeleteRul
 	return options
 }
 
+// DeleteTemplateAttachmentOptions : The DeleteTemplateAttachment options.
+type DeleteTemplateAttachmentOptions struct {
+	// The UUID that uniquely identifies the template.
+	TemplateID *string `validate:"required,ne="`
+
+	// The UUID that uniquely identifies the attachment.
+	AttachmentID *string `validate:"required,ne="`
+
+	// The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
+	// sends a transaction ID as a response header of the request. In the case of an error, the transaction ID is set in
+	// the `trace` field of the response body.
+	//
+	// **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
+	// with each request.
+	TransactionID *string
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewDeleteTemplateAttachmentOptions : Instantiate DeleteTemplateAttachmentOptions
+func (*ConfigurationGovernanceV1) NewDeleteTemplateAttachmentOptions(templateID string, attachmentID string) *DeleteTemplateAttachmentOptions {
+	return &DeleteTemplateAttachmentOptions{
+		TemplateID: core.StringPtr(templateID),
+		AttachmentID: core.StringPtr(attachmentID),
+	}
+}
+
+// SetTemplateID : Allow user to set TemplateID
+func (_options *DeleteTemplateAttachmentOptions) SetTemplateID(templateID string) *DeleteTemplateAttachmentOptions {
+	_options.TemplateID = core.StringPtr(templateID)
+	return _options
+}
+
+// SetAttachmentID : Allow user to set AttachmentID
+func (_options *DeleteTemplateAttachmentOptions) SetAttachmentID(attachmentID string) *DeleteTemplateAttachmentOptions {
+	_options.AttachmentID = core.StringPtr(attachmentID)
+	return _options
+}
+
+// SetTransactionID : Allow user to set TransactionID
+func (_options *DeleteTemplateAttachmentOptions) SetTransactionID(transactionID string) *DeleteTemplateAttachmentOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *DeleteTemplateAttachmentOptions) SetHeaders(param map[string]string) *DeleteTemplateAttachmentOptions {
+	options.Headers = param
+	return options
+}
+
+// DeleteTemplateOptions : The DeleteTemplate options.
+type DeleteTemplateOptions struct {
+	// The UUID that uniquely identifies the template.
+	TemplateID *string `validate:"required,ne="`
+
+	// The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
+	// sends a transaction ID as a response header of the request. In the case of an error, the transaction ID is set in
+	// the `trace` field of the response body.
+	//
+	// **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
+	// with each request.
+	TransactionID *string
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewDeleteTemplateOptions : Instantiate DeleteTemplateOptions
+func (*ConfigurationGovernanceV1) NewDeleteTemplateOptions(templateID string) *DeleteTemplateOptions {
+	return &DeleteTemplateOptions{
+		TemplateID: core.StringPtr(templateID),
+	}
+}
+
+// SetTemplateID : Allow user to set TemplateID
+func (_options *DeleteTemplateOptions) SetTemplateID(templateID string) *DeleteTemplateOptions {
+	_options.TemplateID = core.StringPtr(templateID)
+	return _options
+}
+
+// SetTransactionID : Allow user to set TransactionID
+func (_options *DeleteTemplateOptions) SetTransactionID(transactionID string) *DeleteTemplateOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *DeleteTemplateOptions) SetHeaders(param map[string]string) *DeleteTemplateOptions {
+	options.Headers = param
+	return options
+}
+
 // EnforcementAction : EnforcementAction struct
 type EnforcementAction struct {
-	// To block a request from completing, use `disallow`. To log the request to Activity Tracker with LogDNA, use
-	// `audit_log`.
+	// To block a request from completing, use `disallow`.
 	Action *string `json:"action" validate:"required"`
 }
 
 // Constants associated with the EnforcementAction.Action property.
-// To block a request from completing, use `disallow`. To log the request to Activity Tracker with LogDNA, use
-// `audit_log`.
+// To block a request from completing, use `disallow`.
 const (
-	EnforcementActionActionAuditLogConst = "audit_log"
 	EnforcementActionActionDisallowConst = "disallow"
 )
 
@@ -1250,7 +2292,7 @@ type GetRuleAttachmentOptions struct {
 // NewGetRuleAttachmentOptions : Instantiate GetRuleAttachmentOptions
 func (*ConfigurationGovernanceV1) NewGetRuleAttachmentOptions(ruleID string, attachmentID string) *GetRuleAttachmentOptions {
 	return &GetRuleAttachmentOptions{
-		RuleID:       core.StringPtr(ruleID),
+		RuleID: core.StringPtr(ruleID),
 		AttachmentID: core.StringPtr(attachmentID),
 	}
 }
@@ -1317,6 +2359,100 @@ func (_options *GetRuleOptions) SetTransactionID(transactionID string) *GetRuleO
 
 // SetHeaders : Allow user to set Headers
 func (options *GetRuleOptions) SetHeaders(param map[string]string) *GetRuleOptions {
+	options.Headers = param
+	return options
+}
+
+// GetTemplateAttachmentOptions : The GetTemplateAttachment options.
+type GetTemplateAttachmentOptions struct {
+	// The UUID that uniquely identifies the template.
+	TemplateID *string `validate:"required,ne="`
+
+	// The UUID that uniquely identifies the attachment.
+	AttachmentID *string `validate:"required,ne="`
+
+	// The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
+	// sends a transaction ID as a response header of the request. In the case of an error, the transaction ID is set in
+	// the `trace` field of the response body.
+	//
+	// **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
+	// with each request.
+	TransactionID *string
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewGetTemplateAttachmentOptions : Instantiate GetTemplateAttachmentOptions
+func (*ConfigurationGovernanceV1) NewGetTemplateAttachmentOptions(templateID string, attachmentID string) *GetTemplateAttachmentOptions {
+	return &GetTemplateAttachmentOptions{
+		TemplateID: core.StringPtr(templateID),
+		AttachmentID: core.StringPtr(attachmentID),
+	}
+}
+
+// SetTemplateID : Allow user to set TemplateID
+func (_options *GetTemplateAttachmentOptions) SetTemplateID(templateID string) *GetTemplateAttachmentOptions {
+	_options.TemplateID = core.StringPtr(templateID)
+	return _options
+}
+
+// SetAttachmentID : Allow user to set AttachmentID
+func (_options *GetTemplateAttachmentOptions) SetAttachmentID(attachmentID string) *GetTemplateAttachmentOptions {
+	_options.AttachmentID = core.StringPtr(attachmentID)
+	return _options
+}
+
+// SetTransactionID : Allow user to set TransactionID
+func (_options *GetTemplateAttachmentOptions) SetTransactionID(transactionID string) *GetTemplateAttachmentOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *GetTemplateAttachmentOptions) SetHeaders(param map[string]string) *GetTemplateAttachmentOptions {
+	options.Headers = param
+	return options
+}
+
+// GetTemplateOptions : The GetTemplate options.
+type GetTemplateOptions struct {
+	// The UUID that uniquely identifies the template.
+	TemplateID *string `validate:"required,ne="`
+
+	// The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
+	// sends a transaction ID as a response header of the request. In the case of an error, the transaction ID is set in
+	// the `trace` field of the response body.
+	//
+	// **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
+	// with each request.
+	TransactionID *string
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewGetTemplateOptions : Instantiate GetTemplateOptions
+func (*ConfigurationGovernanceV1) NewGetTemplateOptions(templateID string) *GetTemplateOptions {
+	return &GetTemplateOptions{
+		TemplateID: core.StringPtr(templateID),
+	}
+}
+
+// SetTemplateID : Allow user to set TemplateID
+func (_options *GetTemplateOptions) SetTemplateID(templateID string) *GetTemplateOptions {
+	_options.TemplateID = core.StringPtr(templateID)
+	return _options
+}
+
+// SetTransactionID : Allow user to set TransactionID
+func (_options *GetTemplateOptions) SetTransactionID(transactionID string) *GetTemplateOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *GetTemplateOptions) SetHeaders(param map[string]string) *GetTemplateOptions {
 	options.Headers = param
 	return options
 }
@@ -1497,6 +2633,160 @@ func (_options *ListRulesOptions) SetOffset(offset int64) *ListRulesOptions {
 
 // SetHeaders : Allow user to set Headers
 func (options *ListRulesOptions) SetHeaders(param map[string]string) *ListRulesOptions {
+	options.Headers = param
+	return options
+}
+
+// ListTemplateAttachmentsOptions : The ListTemplateAttachments options.
+type ListTemplateAttachmentsOptions struct {
+	// The UUID that uniquely identifies the template.
+	TemplateID *string `validate:"required,ne="`
+
+	// The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
+	// sends a transaction ID as a response header of the request. In the case of an error, the transaction ID is set in
+	// the `trace` field of the response body.
+	//
+	// **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
+	// with each request.
+	TransactionID *string
+
+	// The number of resources to retrieve. By default, list operations return the first 100 items. To retrieve a different
+	// set of items, use `limit` with `offset` to page through your available resources.
+	//
+	// **Usage:** If you have 20 rules, and you want to retrieve only the first 5 rules, use
+	// `../rules?account_id={account_id}&limit=5`.
+	Limit *int64
+
+	// The number of resources to skip. By specifying `offset`, you retrieve a subset of resources that starts with the
+	// `offset` value. Use `offset` with `limit` to page through your available resources.
+	//
+	// **Usage:** If you have 100 rules, and you want to retrieve rules 26 through 50, use
+	// `../rules?account_id={account_id}&offset=25&limit=5`.
+	Offset *int64
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewListTemplateAttachmentsOptions : Instantiate ListTemplateAttachmentsOptions
+func (*ConfigurationGovernanceV1) NewListTemplateAttachmentsOptions(templateID string) *ListTemplateAttachmentsOptions {
+	return &ListTemplateAttachmentsOptions{
+		TemplateID: core.StringPtr(templateID),
+	}
+}
+
+// SetTemplateID : Allow user to set TemplateID
+func (_options *ListTemplateAttachmentsOptions) SetTemplateID(templateID string) *ListTemplateAttachmentsOptions {
+	_options.TemplateID = core.StringPtr(templateID)
+	return _options
+}
+
+// SetTransactionID : Allow user to set TransactionID
+func (_options *ListTemplateAttachmentsOptions) SetTransactionID(transactionID string) *ListTemplateAttachmentsOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
+}
+
+// SetLimit : Allow user to set Limit
+func (_options *ListTemplateAttachmentsOptions) SetLimit(limit int64) *ListTemplateAttachmentsOptions {
+	_options.Limit = core.Int64Ptr(limit)
+	return _options
+}
+
+// SetOffset : Allow user to set Offset
+func (_options *ListTemplateAttachmentsOptions) SetOffset(offset int64) *ListTemplateAttachmentsOptions {
+	_options.Offset = core.Int64Ptr(offset)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *ListTemplateAttachmentsOptions) SetHeaders(param map[string]string) *ListTemplateAttachmentsOptions {
+	options.Headers = param
+	return options
+}
+
+// ListTemplatesOptions : The ListTemplates options.
+type ListTemplatesOptions struct {
+	// Your IBM Cloud account ID.
+	AccountID *string `validate:"required"`
+
+	// The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
+	// sends a transaction ID as a response header of the request. In the case of an error, the transaction ID is set in
+	// the `trace` field of the response body.
+	//
+	// **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
+	// with each request.
+	TransactionID *string
+
+	// Retrieves a list of templates that have scope attachments.
+	Attached *bool
+
+	// Retrieves a list of templates that match the scope ID that you specify.
+	Scopes *string
+
+	// The number of resources to retrieve. By default, list operations return the first 100 items. To retrieve a different
+	// set of items, use `limit` with `offset` to page through your available resources.
+	//
+	// **Usage:** If you have 20 rules, and you want to retrieve only the first 5 rules, use
+	// `../rules?account_id={account_id}&limit=5`.
+	Limit *int64
+
+	// The number of resources to skip. By specifying `offset`, you retrieve a subset of resources that starts with the
+	// `offset` value. Use `offset` with `limit` to page through your available resources.
+	//
+	// **Usage:** If you have 100 rules, and you want to retrieve rules 26 through 50, use
+	// `../rules?account_id={account_id}&offset=25&limit=5`.
+	Offset *int64
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewListTemplatesOptions : Instantiate ListTemplatesOptions
+func (*ConfigurationGovernanceV1) NewListTemplatesOptions(accountID string) *ListTemplatesOptions {
+	return &ListTemplatesOptions{
+		AccountID: core.StringPtr(accountID),
+	}
+}
+
+// SetAccountID : Allow user to set AccountID
+func (_options *ListTemplatesOptions) SetAccountID(accountID string) *ListTemplatesOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
+}
+
+// SetTransactionID : Allow user to set TransactionID
+func (_options *ListTemplatesOptions) SetTransactionID(transactionID string) *ListTemplatesOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
+}
+
+// SetAttached : Allow user to set Attached
+func (_options *ListTemplatesOptions) SetAttached(attached bool) *ListTemplatesOptions {
+	_options.Attached = core.BoolPtr(attached)
+	return _options
+}
+
+// SetScopes : Allow user to set Scopes
+func (_options *ListTemplatesOptions) SetScopes(scopes string) *ListTemplatesOptions {
+	_options.Scopes = core.StringPtr(scopes)
+	return _options
+}
+
+// SetLimit : Allow user to set Limit
+func (_options *ListTemplatesOptions) SetLimit(limit int64) *ListTemplatesOptions {
+	_options.Limit = core.Int64Ptr(limit)
+	return _options
+}
+
+// SetOffset : Allow user to set Offset
+func (_options *ListTemplatesOptions) SetOffset(offset int64) *ListTemplatesOptions {
+	_options.Offset = core.Int64Ptr(offset)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *ListTemplatesOptions) SetHeaders(param map[string]string) *ListTemplatesOptions {
 	options.Headers = param
 	return options
 }
@@ -1728,7 +3018,7 @@ type RuleAttachmentRequest struct {
 // NewRuleAttachmentRequest : Instantiate RuleAttachmentRequest (Generic Model Constructor)
 func (*ConfigurationGovernanceV1) NewRuleAttachmentRequest(accountID string, includedScope *RuleScope) (_model *RuleAttachmentRequest, err error) {
 	_model = &RuleAttachmentRequest{
-		AccountID:     core.StringPtr(accountID),
+		AccountID: core.StringPtr(accountID),
 		IncludedScope: includedScope,
 	}
 	err = core.ValidateStruct(_model, "required parameters")
@@ -1788,24 +3078,23 @@ type RuleCondition struct {
 //
 // To learn more, see the [docs](/docs/security-compliance?topic=security-compliance-what-is-rule#rule-operators).
 const (
-	RuleConditionOperatorIpsInRangeConst           = "ips_in_range"
-	RuleConditionOperatorIsEmptyConst              = "is_empty"
-	RuleConditionOperatorIsFalseConst              = "is_false"
-	RuleConditionOperatorIsNotEmptyConst           = "is_not_empty"
-	RuleConditionOperatorIsTrueConst               = "is_true"
-	RuleConditionOperatorNumEqualsConst            = "num_equals"
-	RuleConditionOperatorNumGreaterThanConst       = "num_greater_than"
+	RuleConditionOperatorIpsInRangeConst = "ips_in_range"
+	RuleConditionOperatorIsEmptyConst = "is_empty"
+	RuleConditionOperatorIsFalseConst = "is_false"
+	RuleConditionOperatorIsNotEmptyConst = "is_not_empty"
+	RuleConditionOperatorIsTrueConst = "is_true"
+	RuleConditionOperatorNumEqualsConst = "num_equals"
+	RuleConditionOperatorNumGreaterThanConst = "num_greater_than"
 	RuleConditionOperatorNumGreaterThanEqualsConst = "num_greater_than_equals"
-	RuleConditionOperatorNumLessThanConst          = "num_less_than"
-	RuleConditionOperatorNumLessThanEqualsConst    = "num_less_than_equals"
-	RuleConditionOperatorNumNotEqualsConst         = "num_not_equals"
-	RuleConditionOperatorStringEqualsConst         = "string_equals"
-	RuleConditionOperatorStringMatchConst          = "string_match"
-	RuleConditionOperatorStringNotEqualsConst      = "string_not_equals"
-	RuleConditionOperatorStringNotMatchConst       = "string_not_match"
-	RuleConditionOperatorStringsInListConst        = "strings_in_list"
+	RuleConditionOperatorNumLessThanConst = "num_less_than"
+	RuleConditionOperatorNumLessThanEqualsConst = "num_less_than_equals"
+	RuleConditionOperatorNumNotEqualsConst = "num_not_equals"
+	RuleConditionOperatorStringEqualsConst = "string_equals"
+	RuleConditionOperatorStringMatchConst = "string_match"
+	RuleConditionOperatorStringNotEqualsConst = "string_not_equals"
+	RuleConditionOperatorStringNotMatchConst = "string_not_match"
+	RuleConditionOperatorStringsInListConst = "strings_in_list"
 )
-
 func (*RuleCondition) isaRuleCondition() bool {
 	return true
 }
@@ -1935,10 +3224,10 @@ const (
 // NewRuleRequest : Instantiate RuleRequest (Generic Model Constructor)
 func (*ConfigurationGovernanceV1) NewRuleRequest(name string, description string, target *TargetResource, requiredConfig RuleRequiredConfigIntf, enforcementActions []EnforcementAction) (_model *RuleRequest, err error) {
 	_model = &RuleRequest{
-		Name:               core.StringPtr(name),
-		Description:        core.StringPtr(description),
-		Target:             target,
-		RequiredConfig:     requiredConfig,
+		Name: core.StringPtr(name),
+		Description: core.StringPtr(description),
+		Target: target,
+		RequiredConfig: requiredConfig,
 		EnforcementActions: enforcementActions,
 	}
 	err = core.ValidateStruct(_model, "required parameters")
@@ -2017,24 +3306,23 @@ type RuleRequiredConfig struct {
 //
 // To learn more, see the [docs](/docs/security-compliance?topic=security-compliance-what-is-rule#rule-operators).
 const (
-	RuleRequiredConfigOperatorIpsInRangeConst           = "ips_in_range"
-	RuleRequiredConfigOperatorIsEmptyConst              = "is_empty"
-	RuleRequiredConfigOperatorIsFalseConst              = "is_false"
-	RuleRequiredConfigOperatorIsNotEmptyConst           = "is_not_empty"
-	RuleRequiredConfigOperatorIsTrueConst               = "is_true"
-	RuleRequiredConfigOperatorNumEqualsConst            = "num_equals"
-	RuleRequiredConfigOperatorNumGreaterThanConst       = "num_greater_than"
+	RuleRequiredConfigOperatorIpsInRangeConst = "ips_in_range"
+	RuleRequiredConfigOperatorIsEmptyConst = "is_empty"
+	RuleRequiredConfigOperatorIsFalseConst = "is_false"
+	RuleRequiredConfigOperatorIsNotEmptyConst = "is_not_empty"
+	RuleRequiredConfigOperatorIsTrueConst = "is_true"
+	RuleRequiredConfigOperatorNumEqualsConst = "num_equals"
+	RuleRequiredConfigOperatorNumGreaterThanConst = "num_greater_than"
 	RuleRequiredConfigOperatorNumGreaterThanEqualsConst = "num_greater_than_equals"
-	RuleRequiredConfigOperatorNumLessThanConst          = "num_less_than"
-	RuleRequiredConfigOperatorNumLessThanEqualsConst    = "num_less_than_equals"
-	RuleRequiredConfigOperatorNumNotEqualsConst         = "num_not_equals"
-	RuleRequiredConfigOperatorStringEqualsConst         = "string_equals"
-	RuleRequiredConfigOperatorStringMatchConst          = "string_match"
-	RuleRequiredConfigOperatorStringNotEqualsConst      = "string_not_equals"
-	RuleRequiredConfigOperatorStringNotMatchConst       = "string_not_match"
-	RuleRequiredConfigOperatorStringsInListConst        = "strings_in_list"
+	RuleRequiredConfigOperatorNumLessThanConst = "num_less_than"
+	RuleRequiredConfigOperatorNumLessThanEqualsConst = "num_less_than_equals"
+	RuleRequiredConfigOperatorNumNotEqualsConst = "num_not_equals"
+	RuleRequiredConfigOperatorStringEqualsConst = "string_equals"
+	RuleRequiredConfigOperatorStringMatchConst = "string_match"
+	RuleRequiredConfigOperatorStringNotEqualsConst = "string_not_equals"
+	RuleRequiredConfigOperatorStringNotMatchConst = "string_not_match"
+	RuleRequiredConfigOperatorStringsInListConst = "strings_in_list"
 )
-
 func (*RuleRequiredConfig) isaRuleRequiredConfig() bool {
 	return true
 }
@@ -2113,17 +3401,17 @@ type RuleScope struct {
 // Constants associated with the RuleScope.ScopeType property.
 // The type of scope that you want to evaluate.
 const (
-	RuleScopeScopeTypeAccountConst                = "account"
-	RuleScopeScopeTypeAccountResourceGroupConst   = "account.resource_group"
-	RuleScopeScopeTypeEnterpriseConst             = "enterprise"
-	RuleScopeScopeTypeEnterpriseAccountConst      = "enterprise.account"
+	RuleScopeScopeTypeAccountConst = "account"
+	RuleScopeScopeTypeAccountResourceGroupConst = "account.resource_group"
+	RuleScopeScopeTypeEnterpriseConst = "enterprise"
+	RuleScopeScopeTypeEnterpriseAccountConst = "enterprise.account"
 	RuleScopeScopeTypeEnterpriseAccountGroupConst = "enterprise.account_group"
 )
 
 // NewRuleScope : Instantiate RuleScope (Generic Model Constructor)
 func (*ConfigurationGovernanceV1) NewRuleScope(scopeID string, scopeType string) (_model *RuleScope, err error) {
 	_model = &RuleScope{
-		ScopeID:   core.StringPtr(scopeID),
+		ScopeID: core.StringPtr(scopeID),
 		ScopeType: core.StringPtr(scopeType),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
@@ -2178,22 +3466,22 @@ type RuleSingleProperty struct {
 //
 // To learn more, see the [docs](/docs/security-compliance?topic=security-compliance-what-is-rule#rule-operators).
 const (
-	RuleSinglePropertyOperatorIpsInRangeConst           = "ips_in_range"
-	RuleSinglePropertyOperatorIsEmptyConst              = "is_empty"
-	RuleSinglePropertyOperatorIsFalseConst              = "is_false"
-	RuleSinglePropertyOperatorIsNotEmptyConst           = "is_not_empty"
-	RuleSinglePropertyOperatorIsTrueConst               = "is_true"
-	RuleSinglePropertyOperatorNumEqualsConst            = "num_equals"
-	RuleSinglePropertyOperatorNumGreaterThanConst       = "num_greater_than"
+	RuleSinglePropertyOperatorIpsInRangeConst = "ips_in_range"
+	RuleSinglePropertyOperatorIsEmptyConst = "is_empty"
+	RuleSinglePropertyOperatorIsFalseConst = "is_false"
+	RuleSinglePropertyOperatorIsNotEmptyConst = "is_not_empty"
+	RuleSinglePropertyOperatorIsTrueConst = "is_true"
+	RuleSinglePropertyOperatorNumEqualsConst = "num_equals"
+	RuleSinglePropertyOperatorNumGreaterThanConst = "num_greater_than"
 	RuleSinglePropertyOperatorNumGreaterThanEqualsConst = "num_greater_than_equals"
-	RuleSinglePropertyOperatorNumLessThanConst          = "num_less_than"
-	RuleSinglePropertyOperatorNumLessThanEqualsConst    = "num_less_than_equals"
-	RuleSinglePropertyOperatorNumNotEqualsConst         = "num_not_equals"
-	RuleSinglePropertyOperatorStringEqualsConst         = "string_equals"
-	RuleSinglePropertyOperatorStringMatchConst          = "string_match"
-	RuleSinglePropertyOperatorStringNotEqualsConst      = "string_not_equals"
-	RuleSinglePropertyOperatorStringNotMatchConst       = "string_not_match"
-	RuleSinglePropertyOperatorStringsInListConst        = "strings_in_list"
+	RuleSinglePropertyOperatorNumLessThanConst = "num_less_than"
+	RuleSinglePropertyOperatorNumLessThanEqualsConst = "num_less_than_equals"
+	RuleSinglePropertyOperatorNumNotEqualsConst = "num_not_equals"
+	RuleSinglePropertyOperatorStringEqualsConst = "string_equals"
+	RuleSinglePropertyOperatorStringMatchConst = "string_match"
+	RuleSinglePropertyOperatorStringNotEqualsConst = "string_not_equals"
+	RuleSinglePropertyOperatorStringNotMatchConst = "string_not_match"
+	RuleSinglePropertyOperatorStringsInListConst = "strings_in_list"
 )
 
 // NewRuleSingleProperty : Instantiate RuleSingleProperty (Generic Model Constructor)
@@ -2229,6 +3517,48 @@ func UnmarshalRuleSingleProperty(m map[string]json.RawMessage, result interface{
 	return
 }
 
+// SimpleTargetResource : The properties that describe the resource that you want to target with the rule or template.
+type SimpleTargetResource struct {
+	// The programmatic name of the IBM Cloud service that you want to target with the rule or template.
+	ServiceName *string `json:"service_name" validate:"required"`
+
+	// The type of resource that you want to target.
+	ResourceKind *string `json:"resource_kind" validate:"required"`
+
+	// An extra qualifier for the resource kind. When you include additional attributes, only the resources that match the
+	// definition are included in the rule or template.
+	AdditionalTargetAttributes []BaseTargetAttribute `json:"additional_target_attributes,omitempty"`
+}
+
+// NewSimpleTargetResource : Instantiate SimpleTargetResource (Generic Model Constructor)
+func (*ConfigurationGovernanceV1) NewSimpleTargetResource(serviceName string, resourceKind string) (_model *SimpleTargetResource, err error) {
+	_model = &SimpleTargetResource{
+		ServiceName: core.StringPtr(serviceName),
+		ResourceKind: core.StringPtr(resourceKind),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+// UnmarshalSimpleTargetResource unmarshals an instance of SimpleTargetResource from the specified map of raw messages.
+func UnmarshalSimpleTargetResource(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SimpleTargetResource)
+	err = core.UnmarshalPrimitive(m, "service_name", &obj.ServiceName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "resource_kind", &obj.ResourceKind)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "additional_target_attributes", &obj.AdditionalTargetAttributes, UnmarshalBaseTargetAttribute)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // TargetResource : The properties that describe the resource that you want to target with the rule or template.
 type TargetResource struct {
 	// The programmatic name of the IBM Cloud service that you want to target with the rule or template.
@@ -2245,7 +3575,7 @@ type TargetResource struct {
 // NewTargetResource : Instantiate TargetResource (Generic Model Constructor)
 func (*ConfigurationGovernanceV1) NewTargetResource(serviceName string, resourceKind string) (_model *TargetResource, err error) {
 	_model = &TargetResource{
-		ServiceName:  core.StringPtr(serviceName),
+		ServiceName: core.StringPtr(serviceName),
 		ResourceKind: core.StringPtr(resourceKind),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
@@ -2296,29 +3626,29 @@ type TargetResourceAdditionalTargetAttributesItem struct {
 //
 // There are three types of operators: string, numeric, and boolean.
 const (
-	TargetResourceAdditionalTargetAttributesItemOperatorIpsInRangeConst           = "ips_in_range"
-	TargetResourceAdditionalTargetAttributesItemOperatorIsEmptyConst              = "is_empty"
-	TargetResourceAdditionalTargetAttributesItemOperatorIsFalseConst              = "is_false"
-	TargetResourceAdditionalTargetAttributesItemOperatorIsNotEmptyConst           = "is_not_empty"
-	TargetResourceAdditionalTargetAttributesItemOperatorIsTrueConst               = "is_true"
-	TargetResourceAdditionalTargetAttributesItemOperatorNumEqualsConst            = "num_equals"
-	TargetResourceAdditionalTargetAttributesItemOperatorNumGreaterThanConst       = "num_greater_than"
+	TargetResourceAdditionalTargetAttributesItemOperatorIpsInRangeConst = "ips_in_range"
+	TargetResourceAdditionalTargetAttributesItemOperatorIsEmptyConst = "is_empty"
+	TargetResourceAdditionalTargetAttributesItemOperatorIsFalseConst = "is_false"
+	TargetResourceAdditionalTargetAttributesItemOperatorIsNotEmptyConst = "is_not_empty"
+	TargetResourceAdditionalTargetAttributesItemOperatorIsTrueConst = "is_true"
+	TargetResourceAdditionalTargetAttributesItemOperatorNumEqualsConst = "num_equals"
+	TargetResourceAdditionalTargetAttributesItemOperatorNumGreaterThanConst = "num_greater_than"
 	TargetResourceAdditionalTargetAttributesItemOperatorNumGreaterThanEqualsConst = "num_greater_than_equals"
-	TargetResourceAdditionalTargetAttributesItemOperatorNumLessThanConst          = "num_less_than"
-	TargetResourceAdditionalTargetAttributesItemOperatorNumLessThanEqualsConst    = "num_less_than_equals"
-	TargetResourceAdditionalTargetAttributesItemOperatorNumNotEqualsConst         = "num_not_equals"
-	TargetResourceAdditionalTargetAttributesItemOperatorStringEqualsConst         = "string_equals"
-	TargetResourceAdditionalTargetAttributesItemOperatorStringMatchConst          = "string_match"
-	TargetResourceAdditionalTargetAttributesItemOperatorStringNotEqualsConst      = "string_not_equals"
-	TargetResourceAdditionalTargetAttributesItemOperatorStringNotMatchConst       = "string_not_match"
-	TargetResourceAdditionalTargetAttributesItemOperatorStringsInListConst        = "strings_in_list"
+	TargetResourceAdditionalTargetAttributesItemOperatorNumLessThanConst = "num_less_than"
+	TargetResourceAdditionalTargetAttributesItemOperatorNumLessThanEqualsConst = "num_less_than_equals"
+	TargetResourceAdditionalTargetAttributesItemOperatorNumNotEqualsConst = "num_not_equals"
+	TargetResourceAdditionalTargetAttributesItemOperatorStringEqualsConst = "string_equals"
+	TargetResourceAdditionalTargetAttributesItemOperatorStringMatchConst = "string_match"
+	TargetResourceAdditionalTargetAttributesItemOperatorStringNotEqualsConst = "string_not_equals"
+	TargetResourceAdditionalTargetAttributesItemOperatorStringNotMatchConst = "string_not_match"
+	TargetResourceAdditionalTargetAttributesItemOperatorStringsInListConst = "strings_in_list"
 )
 
 // NewTargetResourceAdditionalTargetAttributesItem : Instantiate TargetResourceAdditionalTargetAttributesItem (Generic Model Constructor)
 func (*ConfigurationGovernanceV1) NewTargetResourceAdditionalTargetAttributesItem(name string, value string, operator string) (_model *TargetResourceAdditionalTargetAttributesItem, err error) {
 	_model = &TargetResourceAdditionalTargetAttributesItem{
-		Name:     core.StringPtr(name),
-		Value:    core.StringPtr(value),
+		Name: core.StringPtr(name),
+		Value: core.StringPtr(value),
 		Operator: core.StringPtr(operator),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
@@ -2337,6 +3667,72 @@ func UnmarshalTargetResourceAdditionalTargetAttributesItem(m map[string]json.Raw
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "operator", &obj.Operator)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// Template : Properties that you can associate with a template.
+type Template struct {
+	// Your IBM Cloud account ID.
+	AccountID *string `json:"account_id" validate:"required"`
+
+	// A human-readablse alias to assign to your template.
+	Name *string `json:"name" validate:"required"`
+
+	// An extended description of your template.
+	Description *string `json:"description" validate:"required"`
+
+	// The UUID that uniquely identifies the template.
+	TemplateID *string `json:"template_id,omitempty"`
+
+	// The properties that describe the resource that you want to target
+	// with the rule or template.
+	Target *SimpleTargetResource `json:"target" validate:"required"`
+
+	// A list of default property values to apply to your template.
+	CustomizedDefaults []TemplateCustomizedDefaultProperty `json:"customized_defaults" validate:"required"`
+}
+
+// NewTemplate : Instantiate Template (Generic Model Constructor)
+func (*ConfigurationGovernanceV1) NewTemplate(accountID string, name string, description string, target *SimpleTargetResource, customizedDefaults []TemplateCustomizedDefaultProperty) (_model *Template, err error) {
+	_model = &Template{
+		AccountID: core.StringPtr(accountID),
+		Name: core.StringPtr(name),
+		Description: core.StringPtr(description),
+		Target: target,
+		CustomizedDefaults: customizedDefaults,
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+// UnmarshalTemplate unmarshals an instance of Template from the specified map of raw messages.
+func UnmarshalTemplate(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(Template)
+	err = core.UnmarshalPrimitive(m, "account_id", &obj.AccountID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "template_id", &obj.TemplateID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "target", &obj.Target, UnmarshalSimpleTargetResource)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "customized_defaults", &obj.CustomizedDefaults, UnmarshalTemplateCustomizedDefaultProperty)
 	if err != nil {
 		return
 	}
@@ -2388,6 +3784,295 @@ func UnmarshalTemplateAttachment(m map[string]json.RawMessage, result interface{
 	return
 }
 
+// TemplateAttachmentList : A list of attachments.
+type TemplateAttachmentList struct {
+	// The requested offset for the returned items.
+	Offset *int64 `json:"offset" validate:"required"`
+
+	// The requested limit for the returned items.
+	Limit *int64 `json:"limit" validate:"required"`
+
+	// The total number of available items.
+	TotalCount *int64 `json:"total_count" validate:"required"`
+
+	// The first page of available items.
+	First *Link `json:"first" validate:"required"`
+
+	// The last page of available items.
+	Last *Link `json:"last" validate:"required"`
+
+	Attachments []TemplateAttachment `json:"attachments" validate:"required"`
+}
+
+// UnmarshalTemplateAttachmentList unmarshals an instance of TemplateAttachmentList from the specified map of raw messages.
+func UnmarshalTemplateAttachmentList(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(TemplateAttachmentList)
+	err = core.UnmarshalPrimitive(m, "offset", &obj.Offset)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "limit", &obj.Limit)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "first", &obj.First, UnmarshalLink)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "last", &obj.Last, UnmarshalLink)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "attachments", &obj.Attachments, UnmarshalTemplateAttachment)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// TemplateAttachmentRequest : The scopes to attach to a template.
+type TemplateAttachmentRequest struct {
+	// Your IBM Cloud account ID.
+	AccountID *string `json:"account_id" validate:"required"`
+
+	// The extent at which the template can be attached across your accounts.
+	IncludedScope *TemplateScope `json:"included_scope" validate:"required"`
+
+	ExcludedScopes []TemplateScope `json:"excluded_scopes,omitempty"`
+}
+
+// NewTemplateAttachmentRequest : Instantiate TemplateAttachmentRequest (Generic Model Constructor)
+func (*ConfigurationGovernanceV1) NewTemplateAttachmentRequest(accountID string, includedScope *TemplateScope) (_model *TemplateAttachmentRequest, err error) {
+	_model = &TemplateAttachmentRequest{
+		AccountID: core.StringPtr(accountID),
+		IncludedScope: includedScope,
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+// UnmarshalTemplateAttachmentRequest unmarshals an instance of TemplateAttachmentRequest from the specified map of raw messages.
+func UnmarshalTemplateAttachmentRequest(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(TemplateAttachmentRequest)
+	err = core.UnmarshalPrimitive(m, "account_id", &obj.AccountID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "included_scope", &obj.IncludedScope, UnmarshalTemplateScope)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "excluded_scopes", &obj.ExcludedScopes, UnmarshalTemplateScope)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// TemplateCustomizedDefaultProperty : The default property values to customize.
+type TemplateCustomizedDefaultProperty struct {
+	// The name of the resource property that you want to configure.
+	//
+	// Property options differ depending on the service or resource that you are targeting with a template. To view a list
+	// of properties that are compatible with templates, refer to the service documentation.
+	Property *string `json:"property" validate:"required"`
+
+	// The custom value that you want to apply as the default for the resource property in the `name` field.
+	//
+	// This value is used to to override the default value that is provided by IBM when a resource is created. Value
+	// options differ depending on the resource that you are configuring. To learn more about your options, refer to the
+	// service documentation.
+	Value *string `json:"value" validate:"required"`
+}
+
+// NewTemplateCustomizedDefaultProperty : Instantiate TemplateCustomizedDefaultProperty (Generic Model Constructor)
+func (*ConfigurationGovernanceV1) NewTemplateCustomizedDefaultProperty(property string, value string) (_model *TemplateCustomizedDefaultProperty, err error) {
+	_model = &TemplateCustomizedDefaultProperty{
+		Property: core.StringPtr(property),
+		Value: core.StringPtr(value),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+// UnmarshalTemplateCustomizedDefaultProperty unmarshals an instance of TemplateCustomizedDefaultProperty from the specified map of raw messages.
+func UnmarshalTemplateCustomizedDefaultProperty(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(TemplateCustomizedDefaultProperty)
+	err = core.UnmarshalPrimitive(m, "property", &obj.Property)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "value", &obj.Value)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// TemplateList : A list of templates.
+type TemplateList struct {
+	// The requested offset for the returned items.
+	Offset *int64 `json:"offset" validate:"required"`
+
+	// The requested limit for the returned items.
+	Limit *int64 `json:"limit" validate:"required"`
+
+	// The total number of available items.
+	TotalCount *int64 `json:"total_count" validate:"required"`
+
+	// The first page of available items.
+	First *Link `json:"first" validate:"required"`
+
+	// The last page of available items.
+	Last *Link `json:"last" validate:"required"`
+
+	// An array of templates.
+	Templates []Template `json:"templates" validate:"required"`
+}
+
+// UnmarshalTemplateList unmarshals an instance of TemplateList from the specified map of raw messages.
+func UnmarshalTemplateList(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(TemplateList)
+	err = core.UnmarshalPrimitive(m, "offset", &obj.Offset)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "limit", &obj.Limit)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "first", &obj.First, UnmarshalLink)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "last", &obj.Last, UnmarshalLink)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "templates", &obj.Templates, UnmarshalTemplate)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// TemplateResponse : Properties associated with a template, including both user-defined and server-populated properties.
+type TemplateResponse struct {
+	// Your IBM Cloud account ID.
+	AccountID *string `json:"account_id" validate:"required"`
+
+	// A human-readablse alias to assign to your template.
+	Name *string `json:"name" validate:"required"`
+
+	// An extended description of your template.
+	Description *string `json:"description" validate:"required"`
+
+	// The UUID that uniquely identifies the template.
+	TemplateID *string `json:"template_id,omitempty"`
+
+	// The properties that describe the resource that you want to target
+	// with the rule or template.
+	Target *SimpleTargetResource `json:"target" validate:"required"`
+
+	// A list of default property values to apply to your template.
+	CustomizedDefaults []TemplateCustomizedDefaultProperty `json:"customized_defaults" validate:"required"`
+
+	// The date the resource was created.
+	CreationDate *strfmt.DateTime `json:"creation_date" validate:"required"`
+
+	// The unique identifier for the user or application that created the resource.
+	CreatedBy *string `json:"created_by,omitempty"`
+
+	// The date the resource was last modified.
+	ModificationDate *strfmt.DateTime `json:"modification_date" validate:"required"`
+
+	// The unique identifier for the user or application that last modified the resource.
+	ModifiedBy *string `json:"modified_by,omitempty"`
+}
+
+// UnmarshalTemplateResponse unmarshals an instance of TemplateResponse from the specified map of raw messages.
+func UnmarshalTemplateResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(TemplateResponse)
+	err = core.UnmarshalPrimitive(m, "account_id", &obj.AccountID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "template_id", &obj.TemplateID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "target", &obj.Target, UnmarshalSimpleTargetResource)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "customized_defaults", &obj.CustomizedDefaults, UnmarshalTemplateCustomizedDefaultProperty)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "creation_date", &obj.CreationDate)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "created_by", &obj.CreatedBy)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "modification_date", &obj.ModificationDate)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "modified_by", &obj.ModifiedBy)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// TemplateResponseError : TemplateResponseError struct
+type TemplateResponseError struct {
+	// Specifies the problem that caused the error.
+	Code *string `json:"code" validate:"required"`
+
+	// Describes the problem.
+	Message *string `json:"message" validate:"required"`
+}
+
+// UnmarshalTemplateResponseError unmarshals an instance of TemplateResponseError from the specified map of raw messages.
+func UnmarshalTemplateResponseError(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(TemplateResponseError)
+	err = core.UnmarshalPrimitive(m, "code", &obj.Code)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "message", &obj.Message)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // TemplateScope : The extent at which the template can be attached across your accounts.
 type TemplateScope struct {
 	// A short description or alias to assign to the scope.
@@ -2404,12 +4089,22 @@ type TemplateScope struct {
 // Constants associated with the TemplateScope.ScopeType property.
 // The type of scope.
 const (
-	TemplateScopeScopeTypeAccountConst                = "account"
-	TemplateScopeScopeTypeAccountResourceGroupConst   = "account.resource_group"
-	TemplateScopeScopeTypeEnterpriseConst             = "enterprise"
-	TemplateScopeScopeTypeEnterpriseAccountConst      = "enterprise.account"
+	TemplateScopeScopeTypeAccountConst = "account"
+	TemplateScopeScopeTypeAccountResourceGroupConst = "account.resource_group"
+	TemplateScopeScopeTypeEnterpriseConst = "enterprise"
+	TemplateScopeScopeTypeEnterpriseAccountConst = "enterprise.account"
 	TemplateScopeScopeTypeEnterpriseAccountGroupConst = "enterprise.account_group"
 )
+
+// NewTemplateScope : Instantiate TemplateScope (Generic Model Constructor)
+func (*ConfigurationGovernanceV1) NewTemplateScope(scopeID string, scopeType string) (_model *TemplateScope, err error) {
+	_model = &TemplateScope{
+		ScopeID: core.StringPtr(scopeID),
+		ScopeType: core.StringPtr(scopeType),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
 
 // UnmarshalTemplateScope unmarshals an instance of TemplateScope from the specified map of raw messages.
 func UnmarshalTemplateScope(m map[string]json.RawMessage, result interface{}) (err error) {
@@ -2468,10 +4163,10 @@ type UpdateRuleAttachmentOptions struct {
 // NewUpdateRuleAttachmentOptions : Instantiate UpdateRuleAttachmentOptions
 func (*ConfigurationGovernanceV1) NewUpdateRuleAttachmentOptions(ruleID string, attachmentID string, ifMatch string, accountID string, includedScope *RuleScope) *UpdateRuleAttachmentOptions {
 	return &UpdateRuleAttachmentOptions{
-		RuleID:        core.StringPtr(ruleID),
-		AttachmentID:  core.StringPtr(attachmentID),
-		IfMatch:       core.StringPtr(ifMatch),
-		AccountID:     core.StringPtr(accountID),
+		RuleID: core.StringPtr(ruleID),
+		AttachmentID: core.StringPtr(attachmentID),
+		IfMatch: core.StringPtr(ifMatch),
+		AccountID: core.StringPtr(accountID),
 		IncludedScope: includedScope,
 	}
 }
@@ -2582,12 +4277,12 @@ const (
 // NewUpdateRuleOptions : Instantiate UpdateRuleOptions
 func (*ConfigurationGovernanceV1) NewUpdateRuleOptions(ruleID string, ifMatch string, name string, description string, target *TargetResource, requiredConfig RuleRequiredConfigIntf, enforcementActions []EnforcementAction) *UpdateRuleOptions {
 	return &UpdateRuleOptions{
-		RuleID:             core.StringPtr(ruleID),
-		IfMatch:            core.StringPtr(ifMatch),
-		Name:               core.StringPtr(name),
-		Description:        core.StringPtr(description),
-		Target:             target,
-		RequiredConfig:     requiredConfig,
+		RuleID: core.StringPtr(ruleID),
+		IfMatch: core.StringPtr(ifMatch),
+		Name: core.StringPtr(name),
+		Description: core.StringPtr(description),
+		Target: target,
+		RequiredConfig: requiredConfig,
 		EnforcementActions: enforcementActions,
 	}
 }
@@ -2660,6 +4355,205 @@ func (_options *UpdateRuleOptions) SetTransactionID(transactionID string) *Updat
 
 // SetHeaders : Allow user to set Headers
 func (options *UpdateRuleOptions) SetHeaders(param map[string]string) *UpdateRuleOptions {
+	options.Headers = param
+	return options
+}
+
+// UpdateTemplateAttachmentOptions : The UpdateTemplateAttachment options.
+type UpdateTemplateAttachmentOptions struct {
+	// The UUID that uniquely identifies the template.
+	TemplateID *string `validate:"required,ne="`
+
+	// The UUID that uniquely identifies the attachment.
+	AttachmentID *string `validate:"required,ne="`
+
+	// Compares a supplied `Etag` value with the version that is stored for the requested resource. If the values match,
+	// the server allows the request method to continue.
+	//
+	// To find the `Etag` value, run a GET request on the resource that you want to modify, and check the response headers.
+	IfMatch *string `validate:"required"`
+
+	// Your IBM Cloud account ID.
+	AccountID *string `validate:"required"`
+
+	// The extent at which the template can be attached across your accounts.
+	IncludedScope *TemplateScope `validate:"required"`
+
+	ExcludedScopes []TemplateScope
+
+	// The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
+	// sends a transaction ID as a response header of the request. In the case of an error, the transaction ID is set in
+	// the `trace` field of the response body.
+	//
+	// **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
+	// with each request.
+	TransactionID *string
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewUpdateTemplateAttachmentOptions : Instantiate UpdateTemplateAttachmentOptions
+func (*ConfigurationGovernanceV1) NewUpdateTemplateAttachmentOptions(templateID string, attachmentID string, ifMatch string, accountID string, includedScope *TemplateScope) *UpdateTemplateAttachmentOptions {
+	return &UpdateTemplateAttachmentOptions{
+		TemplateID: core.StringPtr(templateID),
+		AttachmentID: core.StringPtr(attachmentID),
+		IfMatch: core.StringPtr(ifMatch),
+		AccountID: core.StringPtr(accountID),
+		IncludedScope: includedScope,
+	}
+}
+
+// SetTemplateID : Allow user to set TemplateID
+func (_options *UpdateTemplateAttachmentOptions) SetTemplateID(templateID string) *UpdateTemplateAttachmentOptions {
+	_options.TemplateID = core.StringPtr(templateID)
+	return _options
+}
+
+// SetAttachmentID : Allow user to set AttachmentID
+func (_options *UpdateTemplateAttachmentOptions) SetAttachmentID(attachmentID string) *UpdateTemplateAttachmentOptions {
+	_options.AttachmentID = core.StringPtr(attachmentID)
+	return _options
+}
+
+// SetIfMatch : Allow user to set IfMatch
+func (_options *UpdateTemplateAttachmentOptions) SetIfMatch(ifMatch string) *UpdateTemplateAttachmentOptions {
+	_options.IfMatch = core.StringPtr(ifMatch)
+	return _options
+}
+
+// SetAccountID : Allow user to set AccountID
+func (_options *UpdateTemplateAttachmentOptions) SetAccountID(accountID string) *UpdateTemplateAttachmentOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
+}
+
+// SetIncludedScope : Allow user to set IncludedScope
+func (_options *UpdateTemplateAttachmentOptions) SetIncludedScope(includedScope *TemplateScope) *UpdateTemplateAttachmentOptions {
+	_options.IncludedScope = includedScope
+	return _options
+}
+
+// SetExcludedScopes : Allow user to set ExcludedScopes
+func (_options *UpdateTemplateAttachmentOptions) SetExcludedScopes(excludedScopes []TemplateScope) *UpdateTemplateAttachmentOptions {
+	_options.ExcludedScopes = excludedScopes
+	return _options
+}
+
+// SetTransactionID : Allow user to set TransactionID
+func (_options *UpdateTemplateAttachmentOptions) SetTransactionID(transactionID string) *UpdateTemplateAttachmentOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *UpdateTemplateAttachmentOptions) SetHeaders(param map[string]string) *UpdateTemplateAttachmentOptions {
+	options.Headers = param
+	return options
+}
+
+// UpdateTemplateOptions : The UpdateTemplate options.
+type UpdateTemplateOptions struct {
+	// The UUID that uniquely identifies the template.
+	TemplateID *string `validate:"required,ne="`
+
+	// Compares a supplied `Etag` value with the version that is stored for the requested resource. If the values match,
+	// the server allows the request method to continue.
+	//
+	// To find the `Etag` value, run a GET request on the resource that you want to modify, and check the response headers.
+	IfMatch *string `validate:"required"`
+
+	// Your IBM Cloud account ID.
+	AccountID *string `validate:"required"`
+
+	// A human-readablse alias to assign to your template.
+	Name *string `validate:"required"`
+
+	// An extended description of your template.
+	Description *string `validate:"required"`
+
+	// The properties that describe the resource that you want to target
+	// with the rule or template.
+	Target *SimpleTargetResource `validate:"required"`
+
+	// A list of default property values to apply to your template.
+	CustomizedDefaults []TemplateCustomizedDefaultProperty `validate:"required"`
+
+	// The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
+	// sends a transaction ID as a response header of the request. In the case of an error, the transaction ID is set in
+	// the `trace` field of the response body.
+	//
+	// **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
+	// with each request.
+	TransactionID *string
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewUpdateTemplateOptions : Instantiate UpdateTemplateOptions
+func (*ConfigurationGovernanceV1) NewUpdateTemplateOptions(templateID string, ifMatch string, accountID string, name string, description string, target *SimpleTargetResource, customizedDefaults []TemplateCustomizedDefaultProperty) *UpdateTemplateOptions {
+	return &UpdateTemplateOptions{
+		TemplateID: core.StringPtr(templateID),
+		IfMatch: core.StringPtr(ifMatch),
+		AccountID: core.StringPtr(accountID),
+		Name: core.StringPtr(name),
+		Description: core.StringPtr(description),
+		Target: target,
+		CustomizedDefaults: customizedDefaults,
+	}
+}
+
+// SetTemplateID : Allow user to set TemplateID
+func (_options *UpdateTemplateOptions) SetTemplateID(templateID string) *UpdateTemplateOptions {
+	_options.TemplateID = core.StringPtr(templateID)
+	return _options
+}
+
+// SetIfMatch : Allow user to set IfMatch
+func (_options *UpdateTemplateOptions) SetIfMatch(ifMatch string) *UpdateTemplateOptions {
+	_options.IfMatch = core.StringPtr(ifMatch)
+	return _options
+}
+
+// SetAccountID : Allow user to set AccountID
+func (_options *UpdateTemplateOptions) SetAccountID(accountID string) *UpdateTemplateOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
+}
+
+// SetName : Allow user to set Name
+func (_options *UpdateTemplateOptions) SetName(name string) *UpdateTemplateOptions {
+	_options.Name = core.StringPtr(name)
+	return _options
+}
+
+// SetDescription : Allow user to set Description
+func (_options *UpdateTemplateOptions) SetDescription(description string) *UpdateTemplateOptions {
+	_options.Description = core.StringPtr(description)
+	return _options
+}
+
+// SetTarget : Allow user to set Target
+func (_options *UpdateTemplateOptions) SetTarget(target *SimpleTargetResource) *UpdateTemplateOptions {
+	_options.Target = target
+	return _options
+}
+
+// SetCustomizedDefaults : Allow user to set CustomizedDefaults
+func (_options *UpdateTemplateOptions) SetCustomizedDefaults(customizedDefaults []TemplateCustomizedDefaultProperty) *UpdateTemplateOptions {
+	_options.CustomizedDefaults = customizedDefaults
+	return _options
+}
+
+// SetTransactionID : Allow user to set TransactionID
+func (_options *UpdateTemplateOptions) SetTransactionID(transactionID string) *UpdateTemplateOptions {
+	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *UpdateTemplateOptions) SetHeaders(param map[string]string) *UpdateTemplateOptions {
 	options.Headers = param
 	return options
 }
@@ -2766,22 +4660,22 @@ type RuleConditionSingleProperty struct {
 //
 // To learn more, see the [docs](/docs/security-compliance?topic=security-compliance-what-is-rule#rule-operators).
 const (
-	RuleConditionSinglePropertyOperatorIpsInRangeConst           = "ips_in_range"
-	RuleConditionSinglePropertyOperatorIsEmptyConst              = "is_empty"
-	RuleConditionSinglePropertyOperatorIsFalseConst              = "is_false"
-	RuleConditionSinglePropertyOperatorIsNotEmptyConst           = "is_not_empty"
-	RuleConditionSinglePropertyOperatorIsTrueConst               = "is_true"
-	RuleConditionSinglePropertyOperatorNumEqualsConst            = "num_equals"
-	RuleConditionSinglePropertyOperatorNumGreaterThanConst       = "num_greater_than"
+	RuleConditionSinglePropertyOperatorIpsInRangeConst = "ips_in_range"
+	RuleConditionSinglePropertyOperatorIsEmptyConst = "is_empty"
+	RuleConditionSinglePropertyOperatorIsFalseConst = "is_false"
+	RuleConditionSinglePropertyOperatorIsNotEmptyConst = "is_not_empty"
+	RuleConditionSinglePropertyOperatorIsTrueConst = "is_true"
+	RuleConditionSinglePropertyOperatorNumEqualsConst = "num_equals"
+	RuleConditionSinglePropertyOperatorNumGreaterThanConst = "num_greater_than"
 	RuleConditionSinglePropertyOperatorNumGreaterThanEqualsConst = "num_greater_than_equals"
-	RuleConditionSinglePropertyOperatorNumLessThanConst          = "num_less_than"
-	RuleConditionSinglePropertyOperatorNumLessThanEqualsConst    = "num_less_than_equals"
-	RuleConditionSinglePropertyOperatorNumNotEqualsConst         = "num_not_equals"
-	RuleConditionSinglePropertyOperatorStringEqualsConst         = "string_equals"
-	RuleConditionSinglePropertyOperatorStringMatchConst          = "string_match"
-	RuleConditionSinglePropertyOperatorStringNotEqualsConst      = "string_not_equals"
-	RuleConditionSinglePropertyOperatorStringNotMatchConst       = "string_not_match"
-	RuleConditionSinglePropertyOperatorStringsInListConst        = "strings_in_list"
+	RuleConditionSinglePropertyOperatorNumLessThanConst = "num_less_than"
+	RuleConditionSinglePropertyOperatorNumLessThanEqualsConst = "num_less_than_equals"
+	RuleConditionSinglePropertyOperatorNumNotEqualsConst = "num_not_equals"
+	RuleConditionSinglePropertyOperatorStringEqualsConst = "string_equals"
+	RuleConditionSinglePropertyOperatorStringMatchConst = "string_match"
+	RuleConditionSinglePropertyOperatorStringNotEqualsConst = "string_not_equals"
+	RuleConditionSinglePropertyOperatorStringNotMatchConst = "string_not_match"
+	RuleConditionSinglePropertyOperatorStringsInListConst = "strings_in_list"
 )
 
 // NewRuleConditionSingleProperty : Instantiate RuleConditionSingleProperty (Generic Model Constructor)
@@ -2836,7 +4730,6 @@ type RuleRequiredConfigMultipleProperties struct {
 
 	And []RuleConditionIntf `json:"and,omitempty"`
 }
-
 func (*RuleRequiredConfigMultipleProperties) isaRuleRequiredConfigMultipleProperties() bool {
 	return true
 }
@@ -2899,22 +4792,22 @@ type RuleRequiredConfigSingleProperty struct {
 //
 // To learn more, see the [docs](/docs/security-compliance?topic=security-compliance-what-is-rule#rule-operators).
 const (
-	RuleRequiredConfigSinglePropertyOperatorIpsInRangeConst           = "ips_in_range"
-	RuleRequiredConfigSinglePropertyOperatorIsEmptyConst              = "is_empty"
-	RuleRequiredConfigSinglePropertyOperatorIsFalseConst              = "is_false"
-	RuleRequiredConfigSinglePropertyOperatorIsNotEmptyConst           = "is_not_empty"
-	RuleRequiredConfigSinglePropertyOperatorIsTrueConst               = "is_true"
-	RuleRequiredConfigSinglePropertyOperatorNumEqualsConst            = "num_equals"
-	RuleRequiredConfigSinglePropertyOperatorNumGreaterThanConst       = "num_greater_than"
+	RuleRequiredConfigSinglePropertyOperatorIpsInRangeConst = "ips_in_range"
+	RuleRequiredConfigSinglePropertyOperatorIsEmptyConst = "is_empty"
+	RuleRequiredConfigSinglePropertyOperatorIsFalseConst = "is_false"
+	RuleRequiredConfigSinglePropertyOperatorIsNotEmptyConst = "is_not_empty"
+	RuleRequiredConfigSinglePropertyOperatorIsTrueConst = "is_true"
+	RuleRequiredConfigSinglePropertyOperatorNumEqualsConst = "num_equals"
+	RuleRequiredConfigSinglePropertyOperatorNumGreaterThanConst = "num_greater_than"
 	RuleRequiredConfigSinglePropertyOperatorNumGreaterThanEqualsConst = "num_greater_than_equals"
-	RuleRequiredConfigSinglePropertyOperatorNumLessThanConst          = "num_less_than"
-	RuleRequiredConfigSinglePropertyOperatorNumLessThanEqualsConst    = "num_less_than_equals"
-	RuleRequiredConfigSinglePropertyOperatorNumNotEqualsConst         = "num_not_equals"
-	RuleRequiredConfigSinglePropertyOperatorStringEqualsConst         = "string_equals"
-	RuleRequiredConfigSinglePropertyOperatorStringMatchConst          = "string_match"
-	RuleRequiredConfigSinglePropertyOperatorStringNotEqualsConst      = "string_not_equals"
-	RuleRequiredConfigSinglePropertyOperatorStringNotMatchConst       = "string_not_match"
-	RuleRequiredConfigSinglePropertyOperatorStringsInListConst        = "strings_in_list"
+	RuleRequiredConfigSinglePropertyOperatorNumLessThanConst = "num_less_than"
+	RuleRequiredConfigSinglePropertyOperatorNumLessThanEqualsConst = "num_less_than_equals"
+	RuleRequiredConfigSinglePropertyOperatorNumNotEqualsConst = "num_not_equals"
+	RuleRequiredConfigSinglePropertyOperatorStringEqualsConst = "string_equals"
+	RuleRequiredConfigSinglePropertyOperatorStringMatchConst = "string_match"
+	RuleRequiredConfigSinglePropertyOperatorStringNotEqualsConst = "string_not_equals"
+	RuleRequiredConfigSinglePropertyOperatorStringNotMatchConst = "string_not_match"
+	RuleRequiredConfigSinglePropertyOperatorStringsInListConst = "strings_in_list"
 )
 
 // NewRuleRequiredConfigSingleProperty : Instantiate RuleRequiredConfigSingleProperty (Generic Model Constructor)

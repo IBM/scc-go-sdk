@@ -462,7 +462,7 @@ var _ = AfterSuite(func() {
 	}
 
 	for _, rule := range rules.Rules {
-		if rule.Labels[0] == fmt.Sprintf("%s-%s", ruleLabel, identifier) {
+		if len(rule.Labels) > 0 && rule.Labels[0] == fmt.Sprintf("%s-%s", ruleLabel, identifier) {
 			deleteRuleOptions := &configurationgovernancev1.DeleteRuleOptions{
 				RuleID: rule.RuleID,
 			}

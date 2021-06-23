@@ -53,12 +53,16 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 		config                         map[string]string
 	)
 
-	// Globlal variables to hold link values
+	// Global variables to hold link values
 	var (
-		ruleAttachmentIDLink string
-		ruleIDLink           string
-		ruleEtag             string
-		ruleAttachmentEtag   string
+		ruleAttachmentIDLink     string
+		ruleIDLink               string
+		ruleEtag                 string
+		ruleAttachmentEtag       string
+		templateAttachmentIDLink string
+		templateAttachmentEtag   string
+		templateIDLink           string
+		templateEtag             string
 	)
 
 	var shouldSkipTest = func() {
@@ -114,9 +118,16 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 		})
 		It(`CreateRules(createRulesOptions *CreateRulesOptions)`, func() {
 
+			targetResourceAdditionalTargetAttributesItemModel := &configurationgovernancev1.TargetResourceAdditionalTargetAttributesItem{
+				Name:     core.StringPtr("resource_id"),
+				Value:    core.StringPtr("81f3db5e-f9db-4c46-9de3-a4a76e66adbf"),
+				Operator: core.StringPtr("string_equals"),
+			}
+
 			targetResourceModel := &configurationgovernancev1.TargetResource{
-				ServiceName:  core.StringPtr("cloud-object-storage"),
-				ResourceKind: core.StringPtr("bucket"),
+				ServiceName:                core.StringPtr("cloud-object-storage"),
+				ResourceKind:               core.StringPtr("bucket"),
+				AdditionalTargetAttributes: []configurationgovernancev1.TargetResourceAdditionalTargetAttributesItem{*targetResourceAdditionalTargetAttributesItemModel},
 			}
 
 			ruleConditionModel := &configurationgovernancev1.RuleConditionSingleProperty{
@@ -127,7 +138,7 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 			}
 
 			ruleRequiredConfigModel := &configurationgovernancev1.RuleRequiredConfigMultiplePropertiesConditionAnd{
-				Description: core.StringPtr("Public access check"),
+				Description: core.StringPtr("Cloud Object Storage bucket"),
 				And:         []configurationgovernancev1.RuleConditionIntf{ruleConditionModel},
 			}
 
@@ -137,13 +148,13 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 
 			ruleRequestModel := &configurationgovernancev1.RuleRequest{
 				AccountID:          core.StringPtr(accountID),
-				Name:               core.StringPtr("Disable public access"),
-				Description:        core.StringPtr("Ensure that public access to account resources is disabled."),
+				Name:               core.StringPtr("Disable public access in Dallas"),
+				Description:        core.StringPtr("Ensure that public access to buckets in us-south is disabled."),
 				RuleType:           core.StringPtr("user_defined"),
 				Target:             targetResourceModel,
 				RequiredConfig:     ruleRequiredConfigModel,
 				EnforcementActions: []configurationgovernancev1.EnforcementAction{*enforcementActionModel},
-				Labels:             []string{fmt.Sprintf("%s-%s", ruleLabel, identifier)},
+				Labels:             []string{ruleLabel},
 			}
 
 			createRuleRequestModel := &configurationgovernancev1.CreateRuleRequest{
@@ -208,6 +219,97 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 		})
 	})
 
+	Describe(`CreateTemplates - Create templates`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`CreateTemplates(createTemplatesOptions *CreateTemplatesOptions)`, func() {
+
+			baseTargetAttributeModel := &configurationgovernancev1.BaseTargetAttribute{
+				Name:  core.StringPtr("location"),
+				Value: core.StringPtr("us-south"),
+			}
+
+			simpleTargetResourceModel := &configurationgovernancev1.SimpleTargetResource{
+				ServiceName:                core.StringPtr("cloud-object-storage"),
+				ResourceKind:               core.StringPtr("bucket"),
+				AdditionalTargetAttributes: []configurationgovernancev1.BaseTargetAttribute{*baseTargetAttributeModel},
+			}
+
+			templateCustomizedDefaultPropertyModel := &configurationgovernancev1.TemplateCustomizedDefaultProperty{
+				Property: core.StringPtr("location"),
+				Value:    core.StringPtr("level"),
+			}
+
+			templateModel := &configurationgovernancev1.Template{
+				AccountID:          core.StringPtr(accountID),
+				Name:               core.StringPtr("testString"),
+				Description:        core.StringPtr("testString"),
+				Target:             simpleTargetResourceModel,
+				CustomizedDefaults: []configurationgovernancev1.TemplateCustomizedDefaultProperty{*templateCustomizedDefaultPropertyModel},
+			}
+
+			createTemplateRequestModel := &configurationgovernancev1.CreateTemplateRequest{
+				RequestID: core.StringPtr("testString"),
+				Template:  templateModel,
+			}
+
+			createTemplatesOptions := &configurationgovernancev1.CreateTemplatesOptions{
+				Templates:     []configurationgovernancev1.CreateTemplateRequest{*createTemplateRequestModel},
+				TransactionID: core.StringPtr("testString"),
+			}
+
+			createTemplatesResponse, response, err := configurationGovernanceService.CreateTemplates(createTemplatesOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(createTemplatesResponse).ToNot(BeNil())
+
+			templateIDLink = *createTemplatesResponse.Templates[0].Template.TemplateID
+		})
+	})
+
+	Describe(`CreateTemplateAttachments - Create attachments`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`CreateTemplateAttachments(createTemplateAttachmentsOptions *CreateTemplateAttachmentsOptions)`, func() {
+
+			templateScopeModel := &configurationgovernancev1.TemplateScope{
+				Note:      core.StringPtr("My account"),
+				ScopeID:   core.StringPtr(accountID),
+				ScopeType: core.StringPtr("account"),
+			}
+
+			excludedScopeModel := &configurationgovernancev1.TemplateScope{
+				Note:      core.StringPtr("My account resource group"),
+				ScopeID:   core.StringPtr(resourceGroupID),
+				ScopeType: core.StringPtr("account.resource_group"),
+			}
+
+			templateAttachmentRequestModel := &configurationgovernancev1.TemplateAttachmentRequest{
+				AccountID:      core.StringPtr(accountID),
+				IncludedScope:  templateScopeModel,
+				ExcludedScopes: []configurationgovernancev1.TemplateScope{*excludedScopeModel},
+			}
+
+			createTemplateAttachmentsOptions := &configurationgovernancev1.CreateTemplateAttachmentsOptions{
+				TemplateID:    &templateIDLink,
+				Attachments:   []configurationgovernancev1.TemplateAttachmentRequest{*templateAttachmentRequestModel},
+				TransactionID: core.StringPtr("testString"),
+			}
+
+			createTemplateAttachmentsResponse, response, err := configurationGovernanceService.CreateTemplateAttachments(createTemplateAttachmentsOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(createTemplateAttachmentsResponse).ToNot(BeNil())
+
+			templateAttachmentIDLink = *createTemplateAttachmentsResponse.Attachments[0].AttachmentID
+
+		})
+	})
+
 	Describe(`ListRules - List rules`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
@@ -218,7 +320,7 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 				AccountID:     core.StringPtr(accountID),
 				TransactionID: core.StringPtr("testString"),
 				Attached:      core.BoolPtr(true),
-				Labels:        core.StringPtr(fmt.Sprintf("%s-%s", ruleLabel, identifier)),
+				Labels:        core.StringPtr(ruleLabel),
 				Scopes:        core.StringPtr("scope_id"),
 				Limit:         core.Int64Ptr(int64(1000)),
 				Offset:        core.Int64Ptr(int64(38)),
@@ -251,7 +353,6 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 			Expect(rule).ToNot(BeNil())
 
 			ruleEtag = response.Headers.Get("Etag")
-
 		})
 	})
 
@@ -261,20 +362,27 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 		})
 		It(`UpdateRule(updateRuleOptions *UpdateRuleOptions)`, func() {
 
+			targetResourceAdditionalTargetAttributesItemModel := &configurationgovernancev1.TargetResourceAdditionalTargetAttributesItem{
+				Name:     core.StringPtr("resource_id"),
+				Value:    core.StringPtr("testString"),
+				Operator: core.StringPtr("string_equals"),
+			}
+
 			targetResourceModel := &configurationgovernancev1.TargetResource{
-				ServiceName:  core.StringPtr("cloud-object-storage"),
-				ResourceKind: core.StringPtr("bucket"),
+				ServiceName:                core.StringPtr("cloud-object-storage"),
+				ResourceKind:               core.StringPtr("bucket"),
+				AdditionalTargetAttributes: []configurationgovernancev1.TargetResourceAdditionalTargetAttributesItem{*targetResourceAdditionalTargetAttributesItemModel},
 			}
 
 			ruleConditionModel := &configurationgovernancev1.RuleConditionSingleProperty{
 				Description: core.StringPtr("testString"),
 				Property:    core.StringPtr("location"),
 				Operator:    core.StringPtr("string_equals"),
-				Value:       core.StringPtr("eu-gb"),
+				Value:       core.StringPtr("us-south"),
 			}
 
 			ruleRequiredConfigModel := &configurationgovernancev1.RuleRequiredConfigMultiplePropertiesConditionAnd{
-				Description: core.StringPtr("Public access check"),
+				Description: core.StringPtr("Cloud Object Storage bucket"),
 				And:         []configurationgovernancev1.RuleConditionIntf{ruleConditionModel},
 			}
 
@@ -286,13 +394,13 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 				RuleID:             &ruleIDLink,
 				IfMatch:            core.StringPtr(ruleEtag),
 				Name:               core.StringPtr("Disable public access"),
-				Description:        core.StringPtr("Ensure that public access to account resources is disabled."),
+				Description:        core.StringPtr("Disable public access in Dallas"),
 				Target:             targetResourceModel,
 				RequiredConfig:     ruleRequiredConfigModel,
 				EnforcementActions: []configurationgovernancev1.EnforcementAction{*enforcementActionModel},
 				AccountID:          core.StringPtr(accountID),
 				RuleType:           core.StringPtr("user_defined"),
-				Labels:             []string{fmt.Sprintf("%s-%s", ruleLabel, identifier)},
+				Labels:             []string{ruleLabel},
 				TransactionID:      core.StringPtr("testString"),
 			}
 
@@ -346,7 +454,6 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 			Expect(ruleAttachment).ToNot(BeNil())
 
 			ruleAttachmentEtag = response.Headers.Get("Etag")
-
 		})
 	})
 
@@ -383,7 +490,6 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(templateAttachment).ToNot(BeNil())
-
 		})
 	})
 
@@ -419,6 +525,202 @@ var _ = Describe(`ConfigurationGovernanceV1 Integration Tests`, func() {
 			}
 
 			response, err := configurationGovernanceService.DeleteRule(deleteRuleOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(204))
+
+		})
+	})
+
+	Describe(`GetTemplate - Get a template`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`GetTemplate(getTemplateOptions *GetTemplateOptions)`, func() {
+
+			getTemplateOptions := &configurationgovernancev1.GetTemplateOptions{
+				TemplateID:    &templateIDLink,
+				TransactionID: core.StringPtr("testString"),
+			}
+
+			templateResponse, response, err := configurationGovernanceService.GetTemplate(getTemplateOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(templateResponse).ToNot(BeNil())
+
+			templateEtag = response.Headers.Get("Etag")
+		})
+	})
+
+	Describe(`ListTemplates - List templates`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`ListTemplates(listTemplatesOptions *ListTemplatesOptions)`, func() {
+
+			listTemplatesOptions := &configurationgovernancev1.ListTemplatesOptions{
+				AccountID:     core.StringPtr(accountID),
+				TransactionID: core.StringPtr("testString"),
+			}
+
+			templateList, response, err := configurationGovernanceService.ListTemplates(listTemplatesOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(templateList).ToNot(BeNil())
+
+		})
+	})
+
+	Describe(`UpdateTemplate - Update a template`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`UpdateTemplate(updateTemplateOptions *UpdateTemplateOptions)`, func() {
+
+			baseTargetAttributeModel := &configurationgovernancev1.BaseTargetAttribute{
+				Name:  core.StringPtr("location"),
+				Value: core.StringPtr("us-south"),
+			}
+
+			simpleTargetResourceModel := &configurationgovernancev1.SimpleTargetResource{
+				ServiceName:                core.StringPtr("cloud-object-storage"),
+				ResourceKind:               core.StringPtr("bucket"),
+				AdditionalTargetAttributes: []configurationgovernancev1.BaseTargetAttribute{*baseTargetAttributeModel},
+			}
+
+			templateCustomizedDefaultPropertyModel := &configurationgovernancev1.TemplateCustomizedDefaultProperty{
+				Property: core.StringPtr("location"),
+				Value:    core.StringPtr("testString"),
+			}
+
+			updateTemplateOptions := &configurationgovernancev1.UpdateTemplateOptions{
+				TemplateID:         &templateIDLink,
+				IfMatch:            core.StringPtr(templateEtag),
+				AccountID:          core.StringPtr(accountID),
+				Name:               core.StringPtr("testString"),
+				Description:        core.StringPtr("testString"),
+				Target:             simpleTargetResourceModel,
+				CustomizedDefaults: []configurationgovernancev1.TemplateCustomizedDefaultProperty{*templateCustomizedDefaultPropertyModel},
+				TransactionID:      core.StringPtr("testString"),
+			}
+
+			templateResponse, response, err := configurationGovernanceService.UpdateTemplate(updateTemplateOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(templateResponse).ToNot(BeNil())
+
+		})
+	})
+
+	Describe(`ListTemplateAttachments - List attachments`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`ListTemplateAttachments(listTemplateAttachmentsOptions *ListTemplateAttachmentsOptions)`, func() {
+
+			listTemplateAttachmentsOptions := &configurationgovernancev1.ListTemplateAttachmentsOptions{
+				TemplateID:    &templateIDLink,
+				TransactionID: core.StringPtr("testString"),
+				Limit:         core.Int64Ptr(int64(1000)),
+				Offset:        core.Int64Ptr(int64(38)),
+			}
+
+			templateAttachmentList, response, err := configurationGovernanceService.ListTemplateAttachments(listTemplateAttachmentsOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(templateAttachmentList).ToNot(BeNil())
+
+		})
+	})
+
+	Describe(`GetTemplateAttachment - Get an attachment`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`GetTemplateAttachment(getTemplateAttachmentOptions *GetTemplateAttachmentOptions)`, func() {
+
+			getTemplateAttachmentOptions := &configurationgovernancev1.GetTemplateAttachmentOptions{
+				TemplateID:    &templateIDLink,
+				AttachmentID:  &templateAttachmentIDLink,
+				TransactionID: core.StringPtr("testString"),
+			}
+
+			templateAttachment, response, err := configurationGovernanceService.GetTemplateAttachment(getTemplateAttachmentOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(templateAttachment).ToNot(BeNil())
+
+			templateAttachmentEtag = response.Headers.Get("Etag")
+		})
+	})
+
+	Describe(`UpdateTemplateAttachment - Update an attachment`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`UpdateTemplateAttachment(updateTemplateAttachmentOptions *UpdateTemplateAttachmentOptions)`, func() {
+
+			templateScopeModel := &configurationgovernancev1.TemplateScope{
+				Note:      core.StringPtr("My account resource group new"),
+				ScopeID:   core.StringPtr(resourceGroupID),
+				ScopeType: core.StringPtr("account.resource_group"),
+			}
+
+			updateTemplateAttachmentOptions := &configurationgovernancev1.UpdateTemplateAttachmentOptions{
+				TemplateID:    &templateIDLink,
+				AttachmentID:  &templateAttachmentIDLink,
+				AccountID:     core.StringPtr(accountID),
+				IncludedScope: templateScopeModel,
+				IfMatch:       core.StringPtr(templateAttachmentEtag),
+				TransactionID: core.StringPtr("testString"),
+			}
+
+			templateAttachment, response, err := configurationGovernanceService.UpdateTemplateAttachment(updateTemplateAttachmentOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(templateAttachment).ToNot(BeNil())
+
+		})
+	})
+
+	Describe(`DeleteTemplateAttachment - Delete an attachment`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`DeleteTemplateAttachment(deleteTemplateAttachmentOptions *DeleteTemplateAttachmentOptions)`, func() {
+
+			deleteTemplateAttachmentOptions := &configurationgovernancev1.DeleteTemplateAttachmentOptions{
+				TemplateID:    &templateIDLink,
+				AttachmentID:  &templateAttachmentIDLink,
+				TransactionID: core.StringPtr("testString"),
+			}
+
+			response, err := configurationGovernanceService.DeleteTemplateAttachment(deleteTemplateAttachmentOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(204))
+
+		})
+	})
+
+	Describe(`DeleteTemplate - Delete a template`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`DeleteTemplate(deleteTemplateOptions *DeleteTemplateOptions)`, func() {
+
+			deleteTemplateOptions := &configurationgovernancev1.DeleteTemplateOptions{
+				TemplateID:    &templateIDLink,
+				TransactionID: core.StringPtr("testString"),
+			}
+
+			response, err := configurationGovernanceService.DeleteTemplate(deleteTemplateOptions)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(204))
@@ -462,7 +764,7 @@ var _ = AfterSuite(func() {
 	}
 
 	for _, rule := range rules.Rules {
-		if rule.Labels[0] == fmt.Sprintf("%s-%s", ruleLabel, identifier) {
+		if len(rule.Labels) > 0 && rule.Labels[0] == fmt.Sprintf("%s-%s", ruleLabel, identifier) {
 			deleteRuleOptions := &configurationgovernancev1.DeleteRuleOptions{
 				RuleID: rule.RuleID,
 			}

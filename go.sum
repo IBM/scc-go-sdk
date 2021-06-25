@@ -3,8 +3,13 @@ github.com/IBM/go-sdk-core/v5 v5.4.0 h1:iP6xpatSLqQ29WSZkI7x2tcNHuFds2lZhW/G+bJa
 github.com/IBM/go-sdk-core/v5 v5.4.0/go.mod h1:+MNa5Jbqb9FO7KEevo982Pb/YXr4adkyEffJlPs2TGc=
 github.com/IBM/go-sdk-core/v5 v5.4.1 h1:Q8cSK9NiXvWlUh2vy3EeTlXCAG/zCQEB+BK1jtv2ee4=
 github.com/IBM/go-sdk-core/v5 v5.4.1/go.mod h1:+MNa5Jbqb9FO7KEevo982Pb/YXr4adkyEffJlPs2TGc=
+github.com/IBM/go-sdk-core/v5 v5.4.2/go.mod h1:Sn+z+qTDREQvCr+UFa22TqqfXNxx3o723y8GsfLV8e0=
 github.com/IBM/go-sdk-core/v5 v5.4.4 h1:YgojmZYE/kaE8LxcgiRy7gm803n1z1BYeXll/gg5zuU=
 github.com/IBM/go-sdk-core/v5 v5.4.4/go.mod h1:Sn+z+qTDREQvCr+UFa22TqqfXNxx3o723y8GsfLV8e0=
+github.com/IBM/platform-services-go-sdk v0.18.18 h1:xMxM6SJH5ke04e49Mbdjmpy1po5KmvP1VE8VCzF2GAY=
+github.com/IBM/platform-services-go-sdk v0.18.18/go.mod h1:awc7TZUeGMlToSeMSaWEz34Knf0lQnuGWumcI4pcuoM=
+github.com/IBM/scc-go-sdk v0.0.6 h1:LWokDWE7Zc477NF0xQeDi/EoTziHvK4804izUisG/e8=
+github.com/IBM/scc-go-sdk v0.0.6/go.mod h1:Oa4vMCHYbRjYbTGSIsWLddR9KhGZlpguY179GkeQlaM=
 github.com/asaskevich/govalidator v0.0.0-20200907205600-7a23bdc65eef h1:46PFijGLmAjMPwCCCo7Jf0W6f9slllCkkv7vyc1yOSg=
 github.com/asaskevich/govalidator v0.0.0-20200907205600-7a23bdc65eef/go.mod h1:WaHUgvxTVq04UNunO+XhnAqY/wQc+bxr74GqbsZ/Jqw=
 github.com/aws/aws-sdk-go v1.34.28/go.mod h1:H7NKnBqNVzoTJpGfLrQkkD+ytBA93eiDYi/+8rV9s48=
@@ -79,8 +84,6 @@ github.com/hashicorp/go-hclog v0.9.2/go.mod h1:5CU+agLiy3J7N7QjHK5d05KxGsuXiQLrj
 github.com/hashicorp/go-retryablehttp v0.6.6 h1:HJunrbHTDDbBb/ay4kxa1n+dLmttUlnP3V9oNE4hmsM=
 github.com/hashicorp/go-retryablehttp v0.6.6/go.mod h1:vAew36LZh98gCBJNLH42IQ1ER/9wtLZZ8meHqQvEYWY=
 github.com/hpcloud/tail v1.0.0/go.mod h1:ab1qPbhIpdTxEkNHXyeSf5vhxWSCs/tWer42PpOxQnU=
-github.com/IBM/scc-go-sdk v0.0.6 h1:LWokDWE7Zc477NF0xQeDi/EoTziHvK4804izUisG/e8=
-github.com/IBM/scc-go-sdk v0.0.6/go.mod h1:Oa4vMCHYbRjYbTGSIsWLddR9KhGZlpguY179GkeQlaM=
 github.com/inconshreveable/mousetrap v1.0.0/go.mod h1:PxqpIevigyE2G7u3NXJIT2ANytuPF1OarO4DADm73n8=
 github.com/jmespath/go-jmespath v0.4.0/go.mod h1:T8mJZnbsbmF+m6zOOFylbeCJqk5+pHWvzYPziyZiYoo=
 github.com/jmespath/go-jmespath/internal/testify v1.5.1/go.mod h1:L3OGu8Wl2/fWfCI6z80xFu9LTZmf1ZRjMHUOPmWr69U=

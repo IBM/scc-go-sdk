@@ -46,16 +46,16 @@ const externalConfigFile = "../configuration_governance_v1.env"
 
 var (
 	configurationGovernanceService *configurationgovernancev1.ConfigurationGovernanceV1
-	config       map[string]string
-	configLoaded bool = false
+	config                         map[string]string
+	configLoaded                   bool = false
 )
 
-// Globlal variables to hold link values
+// Global variables to hold link values
 var (
-	ruleAttachmentIDLink string
-	ruleIDLink string
+	ruleAttachmentIDLink     string
+	ruleIDLink               string
 	templateAttachmentIDLink string
-	templateIDLink string
+	templateIDLink           string
 )
 
 func shouldSkipTest() {
@@ -115,19 +115,19 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 			// begin-create_rules
 
 			targetResourceModel := &configurationgovernancev1.TargetResource{
-				ServiceName: core.StringPtr("cloud-object-storage"),
+				ServiceName:  core.StringPtr("cloud-object-storage"),
 				ResourceKind: core.StringPtr("bucket"),
 			}
 
 			ruleConditionModel := &configurationgovernancev1.RuleConditionSingleProperty{
 				Property: core.StringPtr("location"),
 				Operator: core.StringPtr("string_equals"),
-				Value: core.StringPtr("us-south"),
+				Value:    core.StringPtr("us-south"),
 			}
 
 			ruleRequiredConfigModel := &configurationgovernancev1.RuleRequiredConfigMultiplePropertiesConditionAnd{
 				Description: core.StringPtr("Cloud Object Storage bucket"),
-				And: []configurationgovernancev1.RuleConditionIntf{ruleConditionModel},
+				And:         []configurationgovernancev1.RuleConditionIntf{ruleConditionModel},
 			}
 
 			enforcementActionModel := &configurationgovernancev1.EnforcementAction{
@@ -135,18 +135,18 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 			}
 
 			ruleRequestModel := &configurationgovernancev1.RuleRequest{
-				AccountID: core.StringPtr("531fc3e28bfc43c5a2cea07786d93f5c"),
-				Name: core.StringPtr("Disable public access in Dallas"),
-				Description: core.StringPtr("Ensure that public access to buckets in us-south is disabled."),
-				Target: targetResourceModel,
-				RequiredConfig: ruleRequiredConfigModel,
+				AccountID:          core.StringPtr("531fc3e28bfc43c5a2cea07786d93f5c"),
+				Name:               core.StringPtr("Disable public access in Dallas"),
+				Description:        core.StringPtr("Ensure that public access to buckets in us-south is disabled."),
+				Target:             targetResourceModel,
+				RequiredConfig:     ruleRequiredConfigModel,
 				EnforcementActions: []configurationgovernancev1.EnforcementAction{*enforcementActionModel},
-				Labels: []string{"SOC2", "ITCS300"},
+				Labels:             []string{"SOC2", "ITCS300"},
 			}
 
 			createRuleRequestModel := &configurationgovernancev1.CreateRuleRequest{
 				RequestID: core.StringPtr("3cebc877-58e7-44a5-a292-32114fa73558"),
-				Rule: ruleRequestModel,
+				Rule:      ruleRequestModel,
 			}
 
 			createRulesOptions := configurationGovernanceService.NewCreateRulesOptions(
@@ -174,14 +174,14 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 			// begin-create_rule_attachments
 
 			ruleScopeModel := &configurationgovernancev1.RuleScope{
-				Note: core.StringPtr("My enterprise"),
-				ScopeID: core.StringPtr("282cf433ac91493ba860480d92519990"),
+				Note:      core.StringPtr("My enterprise"),
+				ScopeID:   core.StringPtr("282cf433ac91493ba860480d92519990"),
 				ScopeType: core.StringPtr("enterprise"),
 			}
 
 			ruleAttachmentRequestModel := &configurationgovernancev1.RuleAttachmentRequest{
-				AccountID: core.StringPtr("531fc3e28bfc43c5a2cea07786d93f5c"),
-				IncludedScope: ruleScopeModel,
+				AccountID:      core.StringPtr("531fc3e28bfc43c5a2cea07786d93f5c"),
+				IncludedScope:  ruleScopeModel,
 				ExcludedScopes: []configurationgovernancev1.RuleScope{*ruleScopeModel},
 			}
 
@@ -211,20 +211,20 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 			// begin-create_templates
 
 			simpleTargetResourceModel := &configurationgovernancev1.SimpleTargetResource{
-				ServiceName: core.StringPtr("cloud-object-storage"),
+				ServiceName:  core.StringPtr("cloud-object-storage"),
 				ResourceKind: core.StringPtr("bucket"),
 			}
 
 			templateCustomizedDefaultPropertyModel := &configurationgovernancev1.TemplateCustomizedDefaultProperty{
 				Property: core.StringPtr("testString"),
-				Value: core.StringPtr("testString"),
+				Value:    core.StringPtr("testString"),
 			}
 
 			templateModel := &configurationgovernancev1.Template{
-				AccountID: core.StringPtr("testString"),
-				Name: core.StringPtr("testString"),
-				Description: core.StringPtr("testString"),
-				Target: simpleTargetResourceModel,
+				AccountID:          core.StringPtr("testString"),
+				Name:               core.StringPtr("testString"),
+				Description:        core.StringPtr("testString"),
+				Target:             simpleTargetResourceModel,
 				CustomizedDefaults: []configurationgovernancev1.TemplateCustomizedDefaultProperty{*templateCustomizedDefaultPropertyModel},
 			}
 
@@ -257,12 +257,12 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 			// begin-create_template_attachments
 
 			templateScopeModel := &configurationgovernancev1.TemplateScope{
-				ScopeID: core.StringPtr("testString"),
+				ScopeID:   core.StringPtr("testString"),
 				ScopeType: core.StringPtr("enterprise"),
 			}
 
 			templateAttachmentRequestModel := &configurationgovernancev1.TemplateAttachmentRequest{
-				AccountID: core.StringPtr("testString"),
+				AccountID:     core.StringPtr("testString"),
 				IncludedScope: templateScopeModel,
 			}
 
@@ -339,26 +339,26 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 			// begin-update_rule
 
 			targetResourceAdditionalTargetAttributesItemModel := &configurationgovernancev1.TargetResourceAdditionalTargetAttributesItem{
-				Name: core.StringPtr("testString"),
-				Value: core.StringPtr("testString"),
+				Name:     core.StringPtr("testString"),
+				Value:    core.StringPtr("testString"),
 				Operator: core.StringPtr("string_equals"),
 			}
 
 			targetResourceModel := &configurationgovernancev1.TargetResource{
-				ServiceName: core.StringPtr("cloud-object-storage"),
-				ResourceKind: core.StringPtr("bucket"),
+				ServiceName:                core.StringPtr("cloud-object-storage"),
+				ResourceKind:               core.StringPtr("bucket"),
 				AdditionalTargetAttributes: []configurationgovernancev1.TargetResourceAdditionalTargetAttributesItem{*targetResourceAdditionalTargetAttributesItemModel},
 			}
 
 			ruleConditionModel := &configurationgovernancev1.RuleConditionSingleProperty{
 				Property: core.StringPtr("location"),
 				Operator: core.StringPtr("string_equals"),
-				Value: core.StringPtr("us-south"),
+				Value:    core.StringPtr("us-south"),
 			}
 
 			ruleRequiredConfigModel := &configurationgovernancev1.RuleRequiredConfigMultiplePropertiesConditionAnd{
 				Description: core.StringPtr("Cloud Object Storage bucket"),
-				And: []configurationgovernancev1.RuleConditionIntf{ruleConditionModel},
+				And:         []configurationgovernancev1.RuleConditionIntf{ruleConditionModel},
 			}
 
 			enforcementActionModel := &configurationgovernancev1.EnforcementAction{
@@ -442,8 +442,8 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 			// begin-update_rule_attachment
 
 			ruleScopeModel := &configurationgovernancev1.RuleScope{
-				Note: core.StringPtr("My enterprise"),
-				ScopeID: core.StringPtr("282cf433ac91493ba860480d92519990"),
+				Note:      core.StringPtr("My enterprise"),
+				ScopeID:   core.StringPtr("282cf433ac91493ba860480d92519990"),
 				ScopeType: core.StringPtr("enterprise"),
 			}
 
@@ -519,13 +519,13 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 			// begin-update_template
 
 			simpleTargetResourceModel := &configurationgovernancev1.SimpleTargetResource{
-				ServiceName: core.StringPtr("cloud-object-storage"),
+				ServiceName:  core.StringPtr("cloud-object-storage"),
 				ResourceKind: core.StringPtr("bucket"),
 			}
 
 			templateCustomizedDefaultPropertyModel := &configurationgovernancev1.TemplateCustomizedDefaultProperty{
 				Property: core.StringPtr("testString"),
-				Value: core.StringPtr("testString"),
+				Value:    core.StringPtr("testString"),
 			}
 
 			updateTemplateOptions := configurationGovernanceService.NewUpdateTemplateOptions(
@@ -602,7 +602,7 @@ var _ = Describe(`ConfigurationGovernanceV1 Examples Tests`, func() {
 			// begin-update_template_attachment
 
 			templateScopeModel := &configurationgovernancev1.TemplateScope{
-				ScopeID: core.StringPtr("testString"),
+				ScopeID:   core.StringPtr("testString"),
 				ScopeType: core.StringPtr("enterprise"),
 			}
 

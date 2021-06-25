@@ -155,6 +155,18 @@ var _ = Describe(`ConfigurationGovernanceV1`, func() {
 		It(`GetServiceURLForRegion(region string)`, func() {
 			var url string
 			var err error
+			url, err = configurationgovernancev1.GetServiceURLForRegion("us-south")
+			Expect(url).To(Equal("https://us.compliance.cloud.ibm.com"))
+			Expect(err).To(BeNil())
+
+			url, err = configurationgovernancev1.GetServiceURLForRegion("us-east")
+			Expect(url).To(Equal("https://us.compliance.cloud.ibm.com"))
+			Expect(err).To(BeNil())
+
+			url, err = configurationgovernancev1.GetServiceURLForRegion("eu-de")
+			Expect(url).To(Equal("https://eu.compliance.cloud.ibm.com"))
+			Expect(err).To(BeNil())
+
 			url, err = configurationgovernancev1.GetServiceURLForRegion("INVALID_REGION")
 			Expect(url).To(BeEmpty())
 			Expect(err).ToNot(BeNil())
@@ -288,7 +300,7 @@ var _ = Describe(`ConfigurationGovernanceV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"rules": [{"request_id": "3cebc877-58e7-44a5-a292-32114fa73558", "status_code": 201, "rule": {"account_id": "AccountID", "name": "Name", "description": "Description", "rule_type": "user_defined", "target": {"service_name": "cloud-object-storage", "resource_kind": "bucket", "additional_target_attributes": [{"name": "Name", "value": "Value", "operator": "string_equals"}]}, "required_config": {"description": "Description", "property": "public_access_enabled", "operator": "is_true", "value": "Value"}, "enforcement_actions": [{"action": "disallow"}], "labels": ["Label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19.000Z", "created_by": "CreatedBy", "modification_date": "2020-01-10T05:23:19.000Z", "modified_by": "ModifiedBy", "number_of_attachments": 3}, "errors": [{"code": "bad_request", "message": "The rule is missing an account ID"}], "trace": "861263b4-cee3-4514-8d8c-05d17308e6eb"}]}`)
+					fmt.Fprintf(res, "%s", `{"rules": [{"request_id": "3cebc877-58e7-44a5-a292-32114fa73558", "status_code": 201, "rule": {"account_id": "AccountID", "name": "Name", "description": "Description", "rule_type": "user_defined", "target": {"service_name": "cloud-object-storage", "resource_kind": "bucket", "additional_target_attributes": [{"name": "Name", "value": "Value", "operator": "string_equals"}]}, "required_config": {"description": "Description", "property": "public_access_enabled", "operator": "is_true", "value": "Value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["Label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19.000Z", "created_by": "CreatedBy", "modification_date": "2020-01-10T05:23:19.000Z", "modified_by": "ModifiedBy", "number_of_attachments": 3}, "errors": [{"code": "bad_request", "message": "The rule is missing an account ID"}], "trace": "861263b4-cee3-4514-8d8c-05d17308e6eb"}]}`)
 				}))
 			})
 			It(`Invoke CreateRules successfully with retries`, func() {
@@ -405,7 +417,7 @@ var _ = Describe(`ConfigurationGovernanceV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"rules": [{"request_id": "3cebc877-58e7-44a5-a292-32114fa73558", "status_code": 201, "rule": {"account_id": "AccountID", "name": "Name", "description": "Description", "rule_type": "user_defined", "target": {"service_name": "cloud-object-storage", "resource_kind": "bucket", "additional_target_attributes": [{"name": "Name", "value": "Value", "operator": "string_equals"}]}, "required_config": {"description": "Description", "property": "public_access_enabled", "operator": "is_true", "value": "Value"}, "enforcement_actions": [{"action": "disallow"}], "labels": ["Label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19.000Z", "created_by": "CreatedBy", "modification_date": "2020-01-10T05:23:19.000Z", "modified_by": "ModifiedBy", "number_of_attachments": 3}, "errors": [{"code": "bad_request", "message": "The rule is missing an account ID"}], "trace": "861263b4-cee3-4514-8d8c-05d17308e6eb"}]}`)
+					fmt.Fprintf(res, "%s", `{"rules": [{"request_id": "3cebc877-58e7-44a5-a292-32114fa73558", "status_code": 201, "rule": {"account_id": "AccountID", "name": "Name", "description": "Description", "rule_type": "user_defined", "target": {"service_name": "cloud-object-storage", "resource_kind": "bucket", "additional_target_attributes": [{"name": "Name", "value": "Value", "operator": "string_equals"}]}, "required_config": {"description": "Description", "property": "public_access_enabled", "operator": "is_true", "value": "Value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["Label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19.000Z", "created_by": "CreatedBy", "modification_date": "2020-01-10T05:23:19.000Z", "modified_by": "ModifiedBy", "number_of_attachments": 3}, "errors": [{"code": "bad_request", "message": "The rule is missing an account ID"}], "trace": "861263b4-cee3-4514-8d8c-05d17308e6eb"}]}`)
 				}))
 			})
 			It(`Invoke CreateRules successfully`, func() {
@@ -720,7 +732,7 @@ var _ = Describe(`ConfigurationGovernanceV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 6, "limit": 1000, "total_count": 10, "first": {"href": "Href"}, "last": {"href": "Href"}, "rules": [{"account_id": "AccountID", "name": "Name", "description": "Description", "rule_type": "user_defined", "target": {"service_name": "cloud-object-storage", "resource_kind": "bucket", "additional_target_attributes": [{"name": "Name", "value": "Value", "operator": "string_equals"}]}, "required_config": {"description": "Description", "property": "public_access_enabled", "operator": "is_true", "value": "Value"}, "enforcement_actions": [{"action": "disallow"}], "labels": ["Label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19.000Z", "created_by": "CreatedBy", "modification_date": "2020-01-10T05:23:19.000Z", "modified_by": "ModifiedBy", "number_of_attachments": 3}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 6, "limit": 1000, "total_count": 10, "first": {"href": "Href"}, "last": {"href": "Href"}, "rules": [{"account_id": "AccountID", "name": "Name", "description": "Description", "rule_type": "user_defined", "target": {"service_name": "cloud-object-storage", "resource_kind": "bucket", "additional_target_attributes": [{"name": "Name", "value": "Value", "operator": "string_equals"}]}, "required_config": {"description": "Description", "property": "public_access_enabled", "operator": "is_true", "value": "Value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["Label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19.000Z", "created_by": "CreatedBy", "modification_date": "2020-01-10T05:23:19.000Z", "modified_by": "ModifiedBy", "number_of_attachments": 3}]}`)
 				}))
 			})
 			It(`Invoke ListRules successfully with retries`, func() {
@@ -788,7 +800,7 @@ var _ = Describe(`ConfigurationGovernanceV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 6, "limit": 1000, "total_count": 10, "first": {"href": "Href"}, "last": {"href": "Href"}, "rules": [{"account_id": "AccountID", "name": "Name", "description": "Description", "rule_type": "user_defined", "target": {"service_name": "cloud-object-storage", "resource_kind": "bucket", "additional_target_attributes": [{"name": "Name", "value": "Value", "operator": "string_equals"}]}, "required_config": {"description": "Description", "property": "public_access_enabled", "operator": "is_true", "value": "Value"}, "enforcement_actions": [{"action": "disallow"}], "labels": ["Label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19.000Z", "created_by": "CreatedBy", "modification_date": "2020-01-10T05:23:19.000Z", "modified_by": "ModifiedBy", "number_of_attachments": 3}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 6, "limit": 1000, "total_count": 10, "first": {"href": "Href"}, "last": {"href": "Href"}, "rules": [{"account_id": "AccountID", "name": "Name", "description": "Description", "rule_type": "user_defined", "target": {"service_name": "cloud-object-storage", "resource_kind": "bucket", "additional_target_attributes": [{"name": "Name", "value": "Value", "operator": "string_equals"}]}, "required_config": {"description": "Description", "property": "public_access_enabled", "operator": "is_true", "value": "Value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["Label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19.000Z", "created_by": "CreatedBy", "modification_date": "2020-01-10T05:23:19.000Z", "modified_by": "ModifiedBy", "number_of_attachments": 3}]}`)
 				}))
 			})
 			It(`Invoke ListRules successfully`, func() {
@@ -969,7 +981,7 @@ var _ = Describe(`ConfigurationGovernanceV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"account_id": "AccountID", "name": "Name", "description": "Description", "rule_type": "user_defined", "target": {"service_name": "cloud-object-storage", "resource_kind": "bucket", "additional_target_attributes": [{"name": "Name", "value": "Value", "operator": "string_equals"}]}, "required_config": {"description": "Description", "property": "public_access_enabled", "operator": "is_true", "value": "Value"}, "enforcement_actions": [{"action": "disallow"}], "labels": ["Label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19.000Z", "created_by": "CreatedBy", "modification_date": "2020-01-10T05:23:19.000Z", "modified_by": "ModifiedBy", "number_of_attachments": 3}`)
+					fmt.Fprintf(res, "%s", `{"account_id": "AccountID", "name": "Name", "description": "Description", "rule_type": "user_defined", "target": {"service_name": "cloud-object-storage", "resource_kind": "bucket", "additional_target_attributes": [{"name": "Name", "value": "Value", "operator": "string_equals"}]}, "required_config": {"description": "Description", "property": "public_access_enabled", "operator": "is_true", "value": "Value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["Label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19.000Z", "created_by": "CreatedBy", "modification_date": "2020-01-10T05:23:19.000Z", "modified_by": "ModifiedBy", "number_of_attachments": 3}`)
 				}))
 			})
 			It(`Invoke GetRule successfully with retries`, func() {
@@ -1026,7 +1038,7 @@ var _ = Describe(`ConfigurationGovernanceV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"account_id": "AccountID", "name": "Name", "description": "Description", "rule_type": "user_defined", "target": {"service_name": "cloud-object-storage", "resource_kind": "bucket", "additional_target_attributes": [{"name": "Name", "value": "Value", "operator": "string_equals"}]}, "required_config": {"description": "Description", "property": "public_access_enabled", "operator": "is_true", "value": "Value"}, "enforcement_actions": [{"action": "disallow"}], "labels": ["Label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19.000Z", "created_by": "CreatedBy", "modification_date": "2020-01-10T05:23:19.000Z", "modified_by": "ModifiedBy", "number_of_attachments": 3}`)
+					fmt.Fprintf(res, "%s", `{"account_id": "AccountID", "name": "Name", "description": "Description", "rule_type": "user_defined", "target": {"service_name": "cloud-object-storage", "resource_kind": "bucket", "additional_target_attributes": [{"name": "Name", "value": "Value", "operator": "string_equals"}]}, "required_config": {"description": "Description", "property": "public_access_enabled", "operator": "is_true", "value": "Value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["Label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19.000Z", "created_by": "CreatedBy", "modification_date": "2020-01-10T05:23:19.000Z", "modified_by": "ModifiedBy", "number_of_attachments": 3}`)
 				}))
 			})
 			It(`Invoke GetRule successfully`, func() {
@@ -1249,7 +1261,7 @@ var _ = Describe(`ConfigurationGovernanceV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"account_id": "AccountID", "name": "Name", "description": "Description", "rule_type": "user_defined", "target": {"service_name": "cloud-object-storage", "resource_kind": "bucket", "additional_target_attributes": [{"name": "Name", "value": "Value", "operator": "string_equals"}]}, "required_config": {"description": "Description", "property": "public_access_enabled", "operator": "is_true", "value": "Value"}, "enforcement_actions": [{"action": "disallow"}], "labels": ["Label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19.000Z", "created_by": "CreatedBy", "modification_date": "2020-01-10T05:23:19.000Z", "modified_by": "ModifiedBy", "number_of_attachments": 3}`)
+					fmt.Fprintf(res, "%s", `{"account_id": "AccountID", "name": "Name", "description": "Description", "rule_type": "user_defined", "target": {"service_name": "cloud-object-storage", "resource_kind": "bucket", "additional_target_attributes": [{"name": "Name", "value": "Value", "operator": "string_equals"}]}, "required_config": {"description": "Description", "property": "public_access_enabled", "operator": "is_true", "value": "Value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["Label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19.000Z", "created_by": "CreatedBy", "modification_date": "2020-01-10T05:23:19.000Z", "modified_by": "ModifiedBy", "number_of_attachments": 3}`)
 				}))
 			})
 			It(`Invoke UpdateRule successfully with retries`, func() {
@@ -1361,7 +1373,7 @@ var _ = Describe(`ConfigurationGovernanceV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"account_id": "AccountID", "name": "Name", "description": "Description", "rule_type": "user_defined", "target": {"service_name": "cloud-object-storage", "resource_kind": "bucket", "additional_target_attributes": [{"name": "Name", "value": "Value", "operator": "string_equals"}]}, "required_config": {"description": "Description", "property": "public_access_enabled", "operator": "is_true", "value": "Value"}, "enforcement_actions": [{"action": "disallow"}], "labels": ["Label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19.000Z", "created_by": "CreatedBy", "modification_date": "2020-01-10T05:23:19.000Z", "modified_by": "ModifiedBy", "number_of_attachments": 3}`)
+					fmt.Fprintf(res, "%s", `{"account_id": "AccountID", "name": "Name", "description": "Description", "rule_type": "user_defined", "target": {"service_name": "cloud-object-storage", "resource_kind": "bucket", "additional_target_attributes": [{"name": "Name", "value": "Value", "operator": "string_equals"}]}, "required_config": {"description": "Description", "property": "public_access_enabled", "operator": "is_true", "value": "Value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["Label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19.000Z", "created_by": "CreatedBy", "modification_date": "2020-01-10T05:23:19.000Z", "modified_by": "ModifiedBy", "number_of_attachments": 3}`)
 				}))
 			})
 			It(`Invoke UpdateRule successfully`, func() {

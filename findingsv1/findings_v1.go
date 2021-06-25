@@ -233,7 +233,7 @@ func (findings *FindingsV1) PostGraphWithContext(ctx context.Context, postGraphO
 		builder.AddHeader("Content-Type", fmt.Sprint(*postGraphOptions.ContentType))
 	}
 	if postGraphOptions.TransactionID != nil {
-		builder.AddHeader("transaction_id", fmt.Sprint(*postGraphOptions.TransactionID))
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*postGraphOptions.TransactionID))
 	}
 
 	_, err = builder.SetBodyContent(core.StringNilMapper(postGraphOptions.ContentType), nil, nil, postGraphOptions.Body)
@@ -286,7 +286,7 @@ func (findings *FindingsV1) ListProvidersWithContext(ctx context.Context, listPr
 	}
 	builder.AddHeader("Accept", "application/json")
 	if listProvidersOptions.TransactionID != nil {
-		builder.AddHeader("transaction_id", fmt.Sprint(*listProvidersOptions.TransactionID))
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*listProvidersOptions.TransactionID))
 	}
 
 	if listProvidersOptions.Limit != nil {
@@ -368,7 +368,7 @@ func (findings *FindingsV1) CreateNoteWithContext(ctx context.Context, createNot
 	builder.AddHeader("Accept", "application/json")
 	builder.AddHeader("Content-Type", "application/json")
 	if createNoteOptions.TransactionID != nil {
-		builder.AddHeader("transaction_id", fmt.Sprint(*createNoteOptions.TransactionID))
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*createNoteOptions.TransactionID))
 	}
 
 	body := make(map[string]interface{})
@@ -474,7 +474,7 @@ func (findings *FindingsV1) ListNotesWithContext(ctx context.Context, listNotesO
 	}
 	builder.AddHeader("Accept", "application/json")
 	if listNotesOptions.TransactionID != nil {
-		builder.AddHeader("transaction_id", fmt.Sprint(*listNotesOptions.TransactionID))
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*listNotesOptions.TransactionID))
 	}
 
 	if listNotesOptions.PageSize != nil {
@@ -546,7 +546,7 @@ func (findings *FindingsV1) GetNoteWithContext(ctx context.Context, getNoteOptio
 	}
 	builder.AddHeader("Accept", "application/json")
 	if getNoteOptions.TransactionID != nil {
-		builder.AddHeader("transaction_id", fmt.Sprint(*getNoteOptions.TransactionID))
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*getNoteOptions.TransactionID))
 	}
 
 	request, err := builder.Build()
@@ -612,7 +612,7 @@ func (findings *FindingsV1) UpdateNoteWithContext(ctx context.Context, updateNot
 	builder.AddHeader("Accept", "application/json")
 	builder.AddHeader("Content-Type", "application/json")
 	if updateNoteOptions.TransactionID != nil {
-		builder.AddHeader("transaction_id", fmt.Sprint(*updateNoteOptions.TransactionID))
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*updateNoteOptions.TransactionID))
 	}
 
 	body := make(map[string]interface{})
@@ -719,7 +719,7 @@ func (findings *FindingsV1) DeleteNoteWithContext(ctx context.Context, deleteNot
 	}
 	builder.AddHeader("Accept", "application/json")
 	if deleteNoteOptions.TransactionID != nil {
-		builder.AddHeader("transaction_id", fmt.Sprint(*deleteNoteOptions.TransactionID))
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*deleteNoteOptions.TransactionID))
 	}
 
 	request, err := builder.Build()
@@ -773,7 +773,7 @@ func (findings *FindingsV1) GetOccurrenceNoteWithContext(ctx context.Context, ge
 	}
 	builder.AddHeader("Accept", "application/json")
 	if getOccurrenceNoteOptions.TransactionID != nil {
-		builder.AddHeader("transaction_id", fmt.Sprint(*getOccurrenceNoteOptions.TransactionID))
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*getOccurrenceNoteOptions.TransactionID))
 	}
 
 	request, err := builder.Build()
@@ -841,7 +841,7 @@ func (findings *FindingsV1) CreateOccurrenceWithContext(ctx context.Context, cre
 	builder.AddHeader("Accept", "application/json")
 	builder.AddHeader("Content-Type", "application/json")
 	if createOccurrenceOptions.TransactionID != nil {
-		builder.AddHeader("transaction_id", fmt.Sprint(*createOccurrenceOptions.TransactionID))
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*createOccurrenceOptions.TransactionID))
 	}
 	if createOccurrenceOptions.ReplaceIfExists != nil {
 		builder.AddHeader("Replace-If-Exists", fmt.Sprint(*createOccurrenceOptions.ReplaceIfExists))
@@ -941,7 +941,7 @@ func (findings *FindingsV1) ListOccurrencesWithContext(ctx context.Context, list
 	}
 	builder.AddHeader("Accept", "application/json")
 	if listOccurrencesOptions.TransactionID != nil {
-		builder.AddHeader("transaction_id", fmt.Sprint(*listOccurrencesOptions.TransactionID))
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*listOccurrencesOptions.TransactionID))
 	}
 
 	if listOccurrencesOptions.PageSize != nil {
@@ -1013,7 +1013,7 @@ func (findings *FindingsV1) ListNoteOccurrencesWithContext(ctx context.Context, 
 	}
 	builder.AddHeader("Accept", "application/json")
 	if listNoteOccurrencesOptions.TransactionID != nil {
-		builder.AddHeader("transaction_id", fmt.Sprint(*listNoteOccurrencesOptions.TransactionID))
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*listNoteOccurrencesOptions.TransactionID))
 	}
 
 	if listNoteOccurrencesOptions.PageSize != nil {
@@ -1085,7 +1085,7 @@ func (findings *FindingsV1) GetOccurrenceWithContext(ctx context.Context, getOcc
 	}
 	builder.AddHeader("Accept", "application/json")
 	if getOccurrenceOptions.TransactionID != nil {
-		builder.AddHeader("transaction_id", fmt.Sprint(*getOccurrenceOptions.TransactionID))
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*getOccurrenceOptions.TransactionID))
 	}
 
 	request, err := builder.Build()
@@ -1151,7 +1151,7 @@ func (findings *FindingsV1) UpdateOccurrenceWithContext(ctx context.Context, upd
 	builder.AddHeader("Accept", "application/json")
 	builder.AddHeader("Content-Type", "application/json")
 	if updateOccurrenceOptions.TransactionID != nil {
-		builder.AddHeader("transaction_id", fmt.Sprint(*updateOccurrenceOptions.TransactionID))
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*updateOccurrenceOptions.TransactionID))
 	}
 
 	body := make(map[string]interface{})
@@ -1249,7 +1249,7 @@ func (findings *FindingsV1) DeleteOccurrenceWithContext(ctx context.Context, del
 	}
 	builder.AddHeader("Accept", "application/json")
 	if deleteOccurrenceOptions.TransactionID != nil {
-		builder.AddHeader("transaction_id", fmt.Sprint(*deleteOccurrenceOptions.TransactionID))
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*deleteOccurrenceOptions.TransactionID))
 	}
 
 	request, err := builder.Build()

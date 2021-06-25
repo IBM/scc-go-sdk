@@ -225,8 +225,8 @@ var _ = Describe(`FindingsV1`, func() {
 
 					Expect(req.Header["Content-Type"]).ToNot(BeNil())
 					Expect(req.Header["Content-Type"][0]).To(Equal(fmt.Sprintf("%v", "application/json")))
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					res.WriteHeader(200)
 				}))
 			})
@@ -295,8 +295,8 @@ var _ = Describe(`FindingsV1`, func() {
 					// Verify the contents of the request
 					Expect(req.URL.EscapedPath()).To(Equal(listProvidersPath))
 					Expect(req.Method).To(Equal("GET"))
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["limit"]).To(Equal([]string{fmt.Sprint(int64(2))}))
 					Expect(req.URL.Query()["skip"]).To(Equal([]string{fmt.Sprint(int64(38))}))
 					Expect(req.URL.Query()["start_provider_id"]).To(Equal([]string{"testString"}))
@@ -353,8 +353,8 @@ var _ = Describe(`FindingsV1`, func() {
 					Expect(req.URL.EscapedPath()).To(Equal(listProvidersPath))
 					Expect(req.Method).To(Equal("GET"))
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["limit"]).To(Equal([]string{fmt.Sprint(int64(2))}))
 					Expect(req.URL.Query()["skip"]).To(Equal([]string{fmt.Sprint(int64(38))}))
 					Expect(req.URL.Query()["start_provider_id"]).To(Equal([]string{"testString"}))
@@ -421,8 +421,8 @@ var _ = Describe(`FindingsV1`, func() {
 					Expect(req.URL.EscapedPath()).To(Equal(listProvidersPath))
 					Expect(req.Method).To(Equal("GET"))
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["limit"]).To(Equal([]string{fmt.Sprint(int64(2))}))
 					Expect(req.URL.Query()["skip"]).To(Equal([]string{fmt.Sprint(int64(38))}))
 					Expect(req.URL.Query()["start_provider_id"]).To(Equal([]string{"testString"}))
@@ -545,8 +545,8 @@ var _ = Describe(`FindingsV1`, func() {
 					// Verify the contents of the request
 					Expect(req.URL.EscapedPath()).To(Equal(createNotePath))
 					Expect(req.Method).To(Equal("POST"))
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
 					fmt.Fprintf(res, `} this is not valid json {`)
@@ -680,8 +680,8 @@ var _ = Describe(`FindingsV1`, func() {
 					}
 					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					// Sleep a short time to support a timeout test
 					time.Sleep(100 * time.Millisecond)
 
@@ -825,8 +825,8 @@ var _ = Describe(`FindingsV1`, func() {
 					}
 					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
@@ -1147,8 +1147,8 @@ var _ = Describe(`FindingsV1`, func() {
 					// Verify the contents of the request
 					Expect(req.URL.EscapedPath()).To(Equal(listNotesPath))
 					Expect(req.Method).To(Equal("GET"))
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["page_size"]).To(Equal([]string{fmt.Sprint(int64(2))}))
 					Expect(req.URL.Query()["page_token"]).To(Equal([]string{"testString"}))
 					res.Header().Set("Content-type", "application/json")
@@ -1202,8 +1202,8 @@ var _ = Describe(`FindingsV1`, func() {
 					Expect(req.URL.EscapedPath()).To(Equal(listNotesPath))
 					Expect(req.Method).To(Equal("GET"))
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["page_size"]).To(Equal([]string{fmt.Sprint(int64(2))}))
 					Expect(req.URL.Query()["page_token"]).To(Equal([]string{"testString"}))
 					// Sleep a short time to support a timeout test
@@ -1267,8 +1267,8 @@ var _ = Describe(`FindingsV1`, func() {
 					Expect(req.URL.EscapedPath()).To(Equal(listNotesPath))
 					Expect(req.Method).To(Equal("GET"))
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["page_size"]).To(Equal([]string{fmt.Sprint(int64(2))}))
 					Expect(req.URL.Query()["page_token"]).To(Equal([]string{"testString"}))
 					// Set mock response
@@ -1393,8 +1393,8 @@ var _ = Describe(`FindingsV1`, func() {
 					// Verify the contents of the request
 					Expect(req.URL.EscapedPath()).To(Equal(getNotePath))
 					Expect(req.Method).To(Equal("GET"))
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
 					fmt.Fprintf(res, `} this is not valid json {`)
@@ -1445,8 +1445,8 @@ var _ = Describe(`FindingsV1`, func() {
 					Expect(req.URL.EscapedPath()).To(Equal(getNotePath))
 					Expect(req.Method).To(Equal("GET"))
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					// Sleep a short time to support a timeout test
 					time.Sleep(100 * time.Millisecond)
 
@@ -1507,8 +1507,8 @@ var _ = Describe(`FindingsV1`, func() {
 					Expect(req.URL.EscapedPath()).To(Equal(getNotePath))
 					Expect(req.Method).To(Equal("GET"))
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
@@ -1628,8 +1628,8 @@ var _ = Describe(`FindingsV1`, func() {
 					// Verify the contents of the request
 					Expect(req.URL.EscapedPath()).To(Equal(updateNotePath))
 					Expect(req.Method).To(Equal("PUT"))
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
 					fmt.Fprintf(res, `} this is not valid json {`)
@@ -1764,8 +1764,8 @@ var _ = Describe(`FindingsV1`, func() {
 					}
 					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					// Sleep a short time to support a timeout test
 					time.Sleep(100 * time.Millisecond)
 
@@ -1910,8 +1910,8 @@ var _ = Describe(`FindingsV1`, func() {
 					}
 					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
@@ -2236,8 +2236,8 @@ var _ = Describe(`FindingsV1`, func() {
 					Expect(req.URL.EscapedPath()).To(Equal(deleteNotePath))
 					Expect(req.Method).To(Equal("DELETE"))
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					res.WriteHeader(200)
 				}))
 			})
@@ -2312,8 +2312,8 @@ var _ = Describe(`FindingsV1`, func() {
 					// Verify the contents of the request
 					Expect(req.URL.EscapedPath()).To(Equal(getOccurrenceNotePath))
 					Expect(req.Method).To(Equal("GET"))
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
 					fmt.Fprintf(res, `} this is not valid json {`)
@@ -2364,8 +2364,8 @@ var _ = Describe(`FindingsV1`, func() {
 					Expect(req.URL.EscapedPath()).To(Equal(getOccurrenceNotePath))
 					Expect(req.Method).To(Equal("GET"))
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					// Sleep a short time to support a timeout test
 					time.Sleep(100 * time.Millisecond)
 
@@ -2426,8 +2426,8 @@ var _ = Describe(`FindingsV1`, func() {
 					Expect(req.URL.EscapedPath()).To(Equal(getOccurrenceNotePath))
 					Expect(req.Method).To(Equal("GET"))
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
@@ -2547,8 +2547,8 @@ var _ = Describe(`FindingsV1`, func() {
 					// Verify the contents of the request
 					Expect(req.URL.EscapedPath()).To(Equal(createOccurrencePath))
 					Expect(req.Method).To(Equal("POST"))
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.Header["Replace-If-Exists"]).ToNot(BeNil())
 					Expect(req.Header["Replace-If-Exists"][0]).To(Equal(fmt.Sprintf("%v", true)))
 					res.Header().Set("Content-type", "application/json")
@@ -2676,8 +2676,8 @@ var _ = Describe(`FindingsV1`, func() {
 					}
 					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.Header["Replace-If-Exists"]).ToNot(BeNil())
 					Expect(req.Header["Replace-If-Exists"][0]).To(Equal(fmt.Sprintf("%v", true)))
 					// Sleep a short time to support a timeout test
@@ -2815,8 +2815,8 @@ var _ = Describe(`FindingsV1`, func() {
 					}
 					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.Header["Replace-If-Exists"]).ToNot(BeNil())
 					Expect(req.Header["Replace-If-Exists"][0]).To(Equal(fmt.Sprintf("%v", true)))
 					// Set mock response
@@ -3115,8 +3115,8 @@ var _ = Describe(`FindingsV1`, func() {
 					// Verify the contents of the request
 					Expect(req.URL.EscapedPath()).To(Equal(listOccurrencesPath))
 					Expect(req.Method).To(Equal("GET"))
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["page_size"]).To(Equal([]string{fmt.Sprint(int64(2))}))
 					Expect(req.URL.Query()["page_token"]).To(Equal([]string{"testString"}))
 					res.Header().Set("Content-type", "application/json")
@@ -3170,8 +3170,8 @@ var _ = Describe(`FindingsV1`, func() {
 					Expect(req.URL.EscapedPath()).To(Equal(listOccurrencesPath))
 					Expect(req.Method).To(Equal("GET"))
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["page_size"]).To(Equal([]string{fmt.Sprint(int64(2))}))
 					Expect(req.URL.Query()["page_token"]).To(Equal([]string{"testString"}))
 					// Sleep a short time to support a timeout test
@@ -3235,8 +3235,8 @@ var _ = Describe(`FindingsV1`, func() {
 					Expect(req.URL.EscapedPath()).To(Equal(listOccurrencesPath))
 					Expect(req.Method).To(Equal("GET"))
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["page_size"]).To(Equal([]string{fmt.Sprint(int64(2))}))
 					Expect(req.URL.Query()["page_token"]).To(Equal([]string{"testString"}))
 					// Set mock response
@@ -3361,8 +3361,8 @@ var _ = Describe(`FindingsV1`, func() {
 					// Verify the contents of the request
 					Expect(req.URL.EscapedPath()).To(Equal(listNoteOccurrencesPath))
 					Expect(req.Method).To(Equal("GET"))
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["page_size"]).To(Equal([]string{fmt.Sprint(int64(2))}))
 					Expect(req.URL.Query()["page_token"]).To(Equal([]string{"testString"}))
 					res.Header().Set("Content-type", "application/json")
@@ -3417,8 +3417,8 @@ var _ = Describe(`FindingsV1`, func() {
 					Expect(req.URL.EscapedPath()).To(Equal(listNoteOccurrencesPath))
 					Expect(req.Method).To(Equal("GET"))
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["page_size"]).To(Equal([]string{fmt.Sprint(int64(2))}))
 					Expect(req.URL.Query()["page_token"]).To(Equal([]string{"testString"}))
 					// Sleep a short time to support a timeout test
@@ -3483,8 +3483,8 @@ var _ = Describe(`FindingsV1`, func() {
 					Expect(req.URL.EscapedPath()).To(Equal(listNoteOccurrencesPath))
 					Expect(req.Method).To(Equal("GET"))
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["page_size"]).To(Equal([]string{fmt.Sprint(int64(2))}))
 					Expect(req.URL.Query()["page_token"]).To(Equal([]string{"testString"}))
 					// Set mock response
@@ -3612,8 +3612,8 @@ var _ = Describe(`FindingsV1`, func() {
 					// Verify the contents of the request
 					Expect(req.URL.EscapedPath()).To(Equal(getOccurrencePath))
 					Expect(req.Method).To(Equal("GET"))
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
 					fmt.Fprintf(res, `} this is not valid json {`)
@@ -3664,8 +3664,8 @@ var _ = Describe(`FindingsV1`, func() {
 					Expect(req.URL.EscapedPath()).To(Equal(getOccurrencePath))
 					Expect(req.Method).To(Equal("GET"))
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					// Sleep a short time to support a timeout test
 					time.Sleep(100 * time.Millisecond)
 
@@ -3726,8 +3726,8 @@ var _ = Describe(`FindingsV1`, func() {
 					Expect(req.URL.EscapedPath()).To(Equal(getOccurrencePath))
 					Expect(req.Method).To(Equal("GET"))
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
@@ -3847,8 +3847,8 @@ var _ = Describe(`FindingsV1`, func() {
 					// Verify the contents of the request
 					Expect(req.URL.EscapedPath()).To(Equal(updateOccurrencePath))
 					Expect(req.Method).To(Equal("PUT"))
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
 					fmt.Fprintf(res, `} this is not valid json {`)
@@ -3974,8 +3974,8 @@ var _ = Describe(`FindingsV1`, func() {
 					}
 					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					// Sleep a short time to support a timeout test
 					time.Sleep(100 * time.Millisecond)
 
@@ -4111,8 +4111,8 @@ var _ = Describe(`FindingsV1`, func() {
 					}
 					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
@@ -4410,8 +4410,8 @@ var _ = Describe(`FindingsV1`, func() {
 					Expect(req.URL.EscapedPath()).To(Equal(deleteOccurrencePath))
 					Expect(req.Method).To(Equal("DELETE"))
 
-					Expect(req.Header["Transaction_id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction_id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					res.WriteHeader(200)
 				}))
 			})

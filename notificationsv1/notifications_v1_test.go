@@ -37,27 +37,23 @@ import (
 var _ = Describe(`NotificationsV1`, func() {
 	var testServer *httptest.Server
 	Describe(`Service constructor tests`, func() {
-		accountID := "testString"
 		It(`Instantiate service client`, func() {
 			notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 				Authenticator: &core.NoAuthAuthenticator{},
-				AccountID:     core.StringPtr(accountID),
 			})
 			Expect(notificationsService).ToNot(BeNil())
 			Expect(serviceErr).To(BeNil())
 		})
 		It(`Instantiate service client with error: Invalid URL`, func() {
 			notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
-				URL:       "{BAD_URL_STRING",
-				AccountID: core.StringPtr(accountID),
+				URL: "{BAD_URL_STRING",
 			})
 			Expect(notificationsService).To(BeNil())
 			Expect(serviceErr).ToNot(BeNil())
 		})
 		It(`Instantiate service client with error: Invalid Auth`, func() {
 			notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
-				URL:       "https://notificationsv1/api",
-				AccountID: core.StringPtr(accountID),
+				URL: "https://notificationsv1/api",
 				Authenticator: &core.BasicAuthenticator{
 					Username: "",
 					Password: "",
@@ -66,14 +62,8 @@ var _ = Describe(`NotificationsV1`, func() {
 			Expect(notificationsService).To(BeNil())
 			Expect(serviceErr).ToNot(BeNil())
 		})
-		It(`Instantiate service client with error: Validation Error`, func() {
-			notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{})
-			Expect(notificationsService).To(BeNil())
-			Expect(serviceErr).ToNot(BeNil())
-		})
 	})
 	Describe(`Service constructor tests using external config`, func() {
-		accountID := "testString"
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
@@ -83,9 +73,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{
-					AccountID: core.StringPtr(accountID),
-				})
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{})
 				Expect(notificationsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
@@ -99,8 +87,7 @@ var _ = Describe(`NotificationsV1`, func() {
 			It(`Create service client using external config and set url from constructor successfully`, func() {
 				SetTestEnvironment(testEnvironment)
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{
-					URL:       "https://testService/api",
-					AccountID: core.StringPtr(accountID),
+					URL: "https://testService/api",
 				})
 				Expect(notificationsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
@@ -115,9 +102,7 @@ var _ = Describe(`NotificationsV1`, func() {
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{
-					AccountID: core.StringPtr(accountID),
-				})
+				notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{})
 				err := notificationsService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -140,9 +125,7 @@ var _ = Describe(`NotificationsV1`, func() {
 			}
 
 			SetTestEnvironment(testEnvironment)
-			notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{
-				AccountID: core.StringPtr(accountID),
-			})
+			notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{})
 
 			It(`Instantiate service client with error`, func() {
 				Expect(notificationsService).To(BeNil())
@@ -158,8 +141,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 			SetTestEnvironment(testEnvironment)
 			notificationsService, serviceErr := notificationsv1.NewNotificationsV1UsingExternalConfig(&notificationsv1.NotificationsV1Options{
-				URL:       "{BAD_URL_STRING",
-				AccountID: core.StringPtr(accountID),
+				URL: "{BAD_URL_STRING",
 			})
 
 			It(`Instantiate service client with error`, func() {
@@ -196,7 +178,6 @@ var _ = Describe(`NotificationsV1`, func() {
 		})
 	})
 	Describe(`ListAllChannels(listAllChannelsOptions *ListAllChannelsOptions) - Operation response error`, func() {
-		accountID := "testString"
 		listAllChannelsPath := "/v1/testString/notifications/channels"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
@@ -219,13 +200,13 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the ListAllChannelsOptions model
 				listAllChannelsOptionsModel := new(notificationsv1.ListAllChannelsOptions)
+				listAllChannelsOptionsModel.AccountID = core.StringPtr("testString")
 				listAllChannelsOptionsModel.TransactionID = core.StringPtr("testString")
 				listAllChannelsOptionsModel.Limit = core.Int64Ptr(int64(38))
 				listAllChannelsOptionsModel.Skip = core.Int64Ptr(int64(38))
@@ -249,7 +230,6 @@ var _ = Describe(`NotificationsV1`, func() {
 		})
 	})
 	Describe(`ListAllChannels(listAllChannelsOptions *ListAllChannelsOptions)`, func() {
-		accountID := "testString"
 		listAllChannelsPath := "/v1/testString/notifications/channels"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
@@ -277,7 +257,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -285,6 +264,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the ListAllChannelsOptions model
 				listAllChannelsOptionsModel := new(notificationsv1.ListAllChannelsOptions)
+				listAllChannelsOptionsModel.AccountID = core.StringPtr("testString")
 				listAllChannelsOptionsModel.TransactionID = core.StringPtr("testString")
 				listAllChannelsOptionsModel.Limit = core.Int64Ptr(int64(38))
 				listAllChannelsOptionsModel.Skip = core.Int64Ptr(int64(38))
@@ -338,7 +318,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -351,6 +330,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the ListAllChannelsOptions model
 				listAllChannelsOptionsModel := new(notificationsv1.ListAllChannelsOptions)
+				listAllChannelsOptionsModel.AccountID = core.StringPtr("testString")
 				listAllChannelsOptionsModel.TransactionID = core.StringPtr("testString")
 				listAllChannelsOptionsModel.Limit = core.Int64Ptr(int64(38))
 				listAllChannelsOptionsModel.Skip = core.Int64Ptr(int64(38))
@@ -363,17 +343,17 @@ var _ = Describe(`NotificationsV1`, func() {
 				Expect(result).ToNot(BeNil())
 
 			})
-			It(`Invoke ListAllChannels with error: Operation request error`, func() {
+			It(`Invoke ListAllChannels with error: Operation validation and request error`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the ListAllChannelsOptions model
 				listAllChannelsOptionsModel := new(notificationsv1.ListAllChannelsOptions)
+				listAllChannelsOptionsModel.AccountID = core.StringPtr("testString")
 				listAllChannelsOptionsModel.TransactionID = core.StringPtr("testString")
 				listAllChannelsOptionsModel.Limit = core.Int64Ptr(int64(38))
 				listAllChannelsOptionsModel.Skip = core.Int64Ptr(int64(38))
@@ -384,6 +364,13 @@ var _ = Describe(`NotificationsV1`, func() {
 				result, response, operationErr := notificationsService.ListAllChannels(listAllChannelsOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the ListAllChannelsOptions model with no property values
+				listAllChannelsOptionsModelNew := new(notificationsv1.ListAllChannelsOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = notificationsService.ListAllChannels(listAllChannelsOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 			})
@@ -404,13 +391,13 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the ListAllChannelsOptions model
 				listAllChannelsOptionsModel := new(notificationsv1.ListAllChannelsOptions)
+				listAllChannelsOptionsModel.AccountID = core.StringPtr("testString")
 				listAllChannelsOptionsModel.TransactionID = core.StringPtr("testString")
 				listAllChannelsOptionsModel.Limit = core.Int64Ptr(int64(38))
 				listAllChannelsOptionsModel.Skip = core.Int64Ptr(int64(38))
@@ -430,7 +417,6 @@ var _ = Describe(`NotificationsV1`, func() {
 		})
 	})
 	Describe(`CreateNotificationChannel(createNotificationChannelOptions *CreateNotificationChannelOptions) - Operation response error`, func() {
-		accountID := "testString"
 		createNotificationChannelPath := "/v1/testString/notifications/channels"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
@@ -451,7 +437,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -463,6 +448,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the CreateNotificationChannelOptions model
 				createNotificationChannelOptionsModel := new(notificationsv1.CreateNotificationChannelOptions)
+				createNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Name = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Type = core.StringPtr("Webhook")
 				createNotificationChannelOptionsModel.Endpoint = core.StringPtr("testString")
@@ -491,7 +477,6 @@ var _ = Describe(`NotificationsV1`, func() {
 		})
 	})
 	Describe(`CreateNotificationChannel(createNotificationChannelOptions *CreateNotificationChannelOptions)`, func() {
-		accountID := "testString"
 		createNotificationChannelPath := "/v1/testString/notifications/channels"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
@@ -533,7 +518,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -546,6 +530,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the CreateNotificationChannelOptions model
 				createNotificationChannelOptionsModel := new(notificationsv1.CreateNotificationChannelOptions)
+				createNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Name = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Type = core.StringPtr("Webhook")
 				createNotificationChannelOptionsModel.Endpoint = core.StringPtr("testString")
@@ -618,7 +603,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -636,6 +620,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the CreateNotificationChannelOptions model
 				createNotificationChannelOptionsModel := new(notificationsv1.CreateNotificationChannelOptions)
+				createNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Name = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Type = core.StringPtr("Webhook")
 				createNotificationChannelOptionsModel.Endpoint = core.StringPtr("testString")
@@ -657,7 +642,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -669,6 +653,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the CreateNotificationChannelOptions model
 				createNotificationChannelOptionsModel := new(notificationsv1.CreateNotificationChannelOptions)
+				createNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Name = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Type = core.StringPtr("Webhook")
 				createNotificationChannelOptionsModel.Endpoint = core.StringPtr("testString")
@@ -711,7 +696,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -723,6 +707,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the CreateNotificationChannelOptions model
 				createNotificationChannelOptionsModel := new(notificationsv1.CreateNotificationChannelOptions)
+				createNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Name = core.StringPtr("testString")
 				createNotificationChannelOptionsModel.Type = core.StringPtr("Webhook")
 				createNotificationChannelOptionsModel.Endpoint = core.StringPtr("testString")
@@ -747,7 +732,6 @@ var _ = Describe(`NotificationsV1`, func() {
 		})
 	})
 	Describe(`DeleteNotificationChannels(deleteNotificationChannelsOptions *DeleteNotificationChannelsOptions) - Operation response error`, func() {
-		accountID := "testString"
 		deleteNotificationChannelsPath := "/v1/testString/notifications/channels"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
@@ -768,13 +752,13 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteNotificationChannelsOptions model
 				deleteNotificationChannelsOptionsModel := new(notificationsv1.DeleteNotificationChannelsOptions)
+				deleteNotificationChannelsOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNotificationChannelsOptionsModel.Body = []string{"testString"}
 				deleteNotificationChannelsOptionsModel.TransactionID = core.StringPtr("testString")
 				deleteNotificationChannelsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -797,7 +781,6 @@ var _ = Describe(`NotificationsV1`, func() {
 		})
 	})
 	Describe(`DeleteNotificationChannels(deleteNotificationChannelsOptions *DeleteNotificationChannelsOptions)`, func() {
-		accountID := "testString"
 		deleteNotificationChannelsPath := "/v1/testString/notifications/channels"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
@@ -839,7 +822,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -847,6 +829,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the DeleteNotificationChannelsOptions model
 				deleteNotificationChannelsOptionsModel := new(notificationsv1.DeleteNotificationChannelsOptions)
+				deleteNotificationChannelsOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNotificationChannelsOptionsModel.Body = []string{"testString"}
 				deleteNotificationChannelsOptionsModel.TransactionID = core.StringPtr("testString")
 				deleteNotificationChannelsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -913,7 +896,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -926,6 +908,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the DeleteNotificationChannelsOptions model
 				deleteNotificationChannelsOptionsModel := new(notificationsv1.DeleteNotificationChannelsOptions)
+				deleteNotificationChannelsOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNotificationChannelsOptionsModel.Body = []string{"testString"}
 				deleteNotificationChannelsOptionsModel.TransactionID = core.StringPtr("testString")
 				deleteNotificationChannelsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -941,13 +924,13 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteNotificationChannelsOptions model
 				deleteNotificationChannelsOptionsModel := new(notificationsv1.DeleteNotificationChannelsOptions)
+				deleteNotificationChannelsOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNotificationChannelsOptionsModel.Body = []string{"testString"}
 				deleteNotificationChannelsOptionsModel.TransactionID = core.StringPtr("testString")
 				deleteNotificationChannelsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -984,13 +967,13 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteNotificationChannelsOptions model
 				deleteNotificationChannelsOptionsModel := new(notificationsv1.DeleteNotificationChannelsOptions)
+				deleteNotificationChannelsOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNotificationChannelsOptionsModel.Body = []string{"testString"}
 				deleteNotificationChannelsOptionsModel.TransactionID = core.StringPtr("testString")
 				deleteNotificationChannelsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1009,7 +992,6 @@ var _ = Describe(`NotificationsV1`, func() {
 		})
 	})
 	Describe(`DeleteNotificationChannel(deleteNotificationChannelOptions *DeleteNotificationChannelOptions) - Operation response error`, func() {
-		accountID := "testString"
 		deleteNotificationChannelPath := "/v1/testString/notifications/channels/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
@@ -1030,13 +1012,13 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteNotificationChannelOptions model
 				deleteNotificationChannelOptionsModel := new(notificationsv1.DeleteNotificationChannelOptions)
+				deleteNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1059,7 +1041,6 @@ var _ = Describe(`NotificationsV1`, func() {
 		})
 	})
 	Describe(`DeleteNotificationChannel(deleteNotificationChannelOptions *DeleteNotificationChannelOptions)`, func() {
-		accountID := "testString"
 		deleteNotificationChannelPath := "/v1/testString/notifications/channels/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
@@ -1085,7 +1066,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -1093,6 +1073,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the DeleteNotificationChannelOptions model
 				deleteNotificationChannelOptionsModel := new(notificationsv1.DeleteNotificationChannelOptions)
+				deleteNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1143,7 +1124,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -1156,6 +1136,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the DeleteNotificationChannelOptions model
 				deleteNotificationChannelOptionsModel := new(notificationsv1.DeleteNotificationChannelOptions)
+				deleteNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1171,13 +1152,13 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteNotificationChannelOptions model
 				deleteNotificationChannelOptionsModel := new(notificationsv1.DeleteNotificationChannelOptions)
+				deleteNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1214,13 +1195,13 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteNotificationChannelOptions model
 				deleteNotificationChannelOptionsModel := new(notificationsv1.DeleteNotificationChannelOptions)
+				deleteNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				deleteNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1239,7 +1220,6 @@ var _ = Describe(`NotificationsV1`, func() {
 		})
 	})
 	Describe(`GetNotificationChannel(getNotificationChannelOptions *GetNotificationChannelOptions) - Operation response error`, func() {
-		accountID := "testString"
 		getNotificationChannelPath := "/v1/testString/notifications/channels/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
@@ -1260,13 +1240,13 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the GetNotificationChannelOptions model
 				getNotificationChannelOptionsModel := new(notificationsv1.GetNotificationChannelOptions)
+				getNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1289,7 +1269,6 @@ var _ = Describe(`NotificationsV1`, func() {
 		})
 	})
 	Describe(`GetNotificationChannel(getNotificationChannelOptions *GetNotificationChannelOptions)`, func() {
-		accountID := "testString"
 		getNotificationChannelPath := "/v1/testString/notifications/channels/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
@@ -1315,7 +1294,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -1323,6 +1301,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the GetNotificationChannelOptions model
 				getNotificationChannelOptionsModel := new(notificationsv1.GetNotificationChannelOptions)
+				getNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1373,7 +1352,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -1386,6 +1364,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the GetNotificationChannelOptions model
 				getNotificationChannelOptionsModel := new(notificationsv1.GetNotificationChannelOptions)
+				getNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1401,13 +1380,13 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the GetNotificationChannelOptions model
 				getNotificationChannelOptionsModel := new(notificationsv1.GetNotificationChannelOptions)
+				getNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1444,13 +1423,13 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the GetNotificationChannelOptions model
 				getNotificationChannelOptionsModel := new(notificationsv1.GetNotificationChannelOptions)
+				getNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				getNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1469,7 +1448,6 @@ var _ = Describe(`NotificationsV1`, func() {
 		})
 	})
 	Describe(`UpdateNotificationChannel(updateNotificationChannelOptions *UpdateNotificationChannelOptions) - Operation response error`, func() {
-		accountID := "testString"
 		updateNotificationChannelPath := "/v1/testString/notifications/channels/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
@@ -1490,7 +1468,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -1502,6 +1479,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the UpdateNotificationChannelOptions model
 				updateNotificationChannelOptionsModel := new(notificationsv1.UpdateNotificationChannelOptions)
+				updateNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Name = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Type = core.StringPtr("Webhook")
@@ -1531,7 +1509,6 @@ var _ = Describe(`NotificationsV1`, func() {
 		})
 	})
 	Describe(`UpdateNotificationChannel(updateNotificationChannelOptions *UpdateNotificationChannelOptions)`, func() {
-		accountID := "testString"
 		updateNotificationChannelPath := "/v1/testString/notifications/channels/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
@@ -1573,7 +1550,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -1586,6 +1562,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the UpdateNotificationChannelOptions model
 				updateNotificationChannelOptionsModel := new(notificationsv1.UpdateNotificationChannelOptions)
+				updateNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Name = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Type = core.StringPtr("Webhook")
@@ -1659,7 +1636,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -1677,6 +1653,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the UpdateNotificationChannelOptions model
 				updateNotificationChannelOptionsModel := new(notificationsv1.UpdateNotificationChannelOptions)
+				updateNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Name = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Type = core.StringPtr("Webhook")
@@ -1699,7 +1676,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -1711,6 +1687,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the UpdateNotificationChannelOptions model
 				updateNotificationChannelOptionsModel := new(notificationsv1.UpdateNotificationChannelOptions)
+				updateNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Name = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Type = core.StringPtr("Webhook")
@@ -1754,7 +1731,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -1766,6 +1742,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the UpdateNotificationChannelOptions model
 				updateNotificationChannelOptionsModel := new(notificationsv1.UpdateNotificationChannelOptions)
+				updateNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Name = core.StringPtr("testString")
 				updateNotificationChannelOptionsModel.Type = core.StringPtr("Webhook")
@@ -1791,7 +1768,6 @@ var _ = Describe(`NotificationsV1`, func() {
 		})
 	})
 	Describe(`TestNotificationChannel(testNotificationChannelOptions *TestNotificationChannelOptions) - Operation response error`, func() {
-		accountID := "testString"
 		testNotificationChannelPath := "/v1/testString/notifications/channels/testString/test"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
@@ -1812,13 +1788,13 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the TestNotificationChannelOptions model
 				testNotificationChannelOptionsModel := new(notificationsv1.TestNotificationChannelOptions)
+				testNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1841,7 +1817,6 @@ var _ = Describe(`NotificationsV1`, func() {
 		})
 	})
 	Describe(`TestNotificationChannel(testNotificationChannelOptions *TestNotificationChannelOptions)`, func() {
-		accountID := "testString"
 		testNotificationChannelPath := "/v1/testString/notifications/channels/testString/test"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
@@ -1867,7 +1842,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -1875,6 +1849,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the TestNotificationChannelOptions model
 				testNotificationChannelOptionsModel := new(notificationsv1.TestNotificationChannelOptions)
+				testNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1925,7 +1900,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -1938,6 +1912,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the TestNotificationChannelOptions model
 				testNotificationChannelOptionsModel := new(notificationsv1.TestNotificationChannelOptions)
+				testNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1953,13 +1928,13 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the TestNotificationChannelOptions model
 				testNotificationChannelOptionsModel := new(notificationsv1.TestNotificationChannelOptions)
+				testNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1996,13 +1971,13 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the TestNotificationChannelOptions model
 				testNotificationChannelOptionsModel := new(notificationsv1.TestNotificationChannelOptions)
+				testNotificationChannelOptionsModel.AccountID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.ChannelID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.TransactionID = core.StringPtr("testString")
 				testNotificationChannelOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -2021,7 +1996,6 @@ var _ = Describe(`NotificationsV1`, func() {
 		})
 	})
 	Describe(`GetPublicKey(getPublicKeyOptions *GetPublicKeyOptions) - Operation response error`, func() {
-		accountID := "testString"
 		getPublicKeyPath := "/v1/testString/notifications/public_key"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
@@ -2042,13 +2016,13 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the GetPublicKeyOptions model
 				getPublicKeyOptionsModel := new(notificationsv1.GetPublicKeyOptions)
+				getPublicKeyOptionsModel.AccountID = core.StringPtr("testString")
 				getPublicKeyOptionsModel.TransactionID = core.StringPtr("testString")
 				getPublicKeyOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
@@ -2070,7 +2044,6 @@ var _ = Describe(`NotificationsV1`, func() {
 		})
 	})
 	Describe(`GetPublicKey(getPublicKeyOptions *GetPublicKeyOptions)`, func() {
-		accountID := "testString"
 		getPublicKeyPath := "/v1/testString/notifications/public_key"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
@@ -2096,7 +2069,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -2104,6 +2076,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the GetPublicKeyOptions model
 				getPublicKeyOptionsModel := new(notificationsv1.GetPublicKeyOptions)
+				getPublicKeyOptionsModel.AccountID = core.StringPtr("testString")
 				getPublicKeyOptionsModel.TransactionID = core.StringPtr("testString")
 				getPublicKeyOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -2153,7 +2126,6 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
@@ -2166,6 +2138,7 @@ var _ = Describe(`NotificationsV1`, func() {
 
 				// Construct an instance of the GetPublicKeyOptions model
 				getPublicKeyOptionsModel := new(notificationsv1.GetPublicKeyOptions)
+				getPublicKeyOptionsModel.AccountID = core.StringPtr("testString")
 				getPublicKeyOptionsModel.TransactionID = core.StringPtr("testString")
 				getPublicKeyOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -2176,17 +2149,17 @@ var _ = Describe(`NotificationsV1`, func() {
 				Expect(result).ToNot(BeNil())
 
 			})
-			It(`Invoke GetPublicKey with error: Operation request error`, func() {
+			It(`Invoke GetPublicKey with error: Operation validation and request error`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the GetPublicKeyOptions model
 				getPublicKeyOptionsModel := new(notificationsv1.GetPublicKeyOptions)
+				getPublicKeyOptionsModel.AccountID = core.StringPtr("testString")
 				getPublicKeyOptionsModel.TransactionID = core.StringPtr("testString")
 				getPublicKeyOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
@@ -2195,6 +2168,13 @@ var _ = Describe(`NotificationsV1`, func() {
 				result, response, operationErr := notificationsService.GetPublicKey(getPublicKeyOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the GetPublicKeyOptions model with no property values
+				getPublicKeyOptionsModelNew := new(notificationsv1.GetPublicKeyOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = notificationsService.GetPublicKey(getPublicKeyOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 			})
@@ -2215,13 +2195,13 @@ var _ = Describe(`NotificationsV1`, func() {
 				notificationsService, serviceErr := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
 				})
 				Expect(serviceErr).To(BeNil())
 				Expect(notificationsService).ToNot(BeNil())
 
 				// Construct an instance of the GetPublicKeyOptions model
 				getPublicKeyOptionsModel := new(notificationsv1.GetPublicKeyOptions)
+				getPublicKeyOptionsModel.AccountID = core.StringPtr("testString")
 				getPublicKeyOptionsModel.TransactionID = core.StringPtr("testString")
 				getPublicKeyOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -2240,11 +2220,9 @@ var _ = Describe(`NotificationsV1`, func() {
 	})
 	Describe(`Model constructor tests`, func() {
 		Context(`Using a service client instance`, func() {
-			accountID := "testString"
 			notificationsService, _ := notificationsv1.NewNotificationsV1(&notificationsv1.NotificationsV1Options{
 				URL:           "http://notificationsv1modelgenerator.com",
 				Authenticator: &core.NoAuthAuthenticator{},
-				AccountID:     core.StringPtr(accountID),
 			})
 			It(`Invoke NewCreateNotificationChannelOptions successfully`, func() {
 				// Construct an instance of the NotificationChannelAlertSourceItem model
@@ -2256,10 +2234,12 @@ var _ = Describe(`NotificationsV1`, func() {
 				Expect(notificationChannelAlertSourceItemModel.FindingTypes).To(Equal([]string{"testString"}))
 
 				// Construct an instance of the CreateNotificationChannelOptions model
+				accountID := "testString"
 				createNotificationChannelOptionsName := "testString"
 				createNotificationChannelOptionsType := "Webhook"
 				createNotificationChannelOptionsEndpoint := "testString"
-				createNotificationChannelOptionsModel := notificationsService.NewCreateNotificationChannelOptions(createNotificationChannelOptionsName, createNotificationChannelOptionsType, createNotificationChannelOptionsEndpoint)
+				createNotificationChannelOptionsModel := notificationsService.NewCreateNotificationChannelOptions(accountID, createNotificationChannelOptionsName, createNotificationChannelOptionsType, createNotificationChannelOptionsEndpoint)
+				createNotificationChannelOptionsModel.SetAccountID("testString")
 				createNotificationChannelOptionsModel.SetName("testString")
 				createNotificationChannelOptionsModel.SetType("Webhook")
 				createNotificationChannelOptionsModel.SetEndpoint("testString")
@@ -2270,6 +2250,7 @@ var _ = Describe(`NotificationsV1`, func() {
 				createNotificationChannelOptionsModel.SetTransactionID("testString")
 				createNotificationChannelOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(createNotificationChannelOptionsModel).ToNot(BeNil())
+				Expect(createNotificationChannelOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(createNotificationChannelOptionsModel.Name).To(Equal(core.StringPtr("testString")))
 				Expect(createNotificationChannelOptionsModel.Type).To(Equal(core.StringPtr("Webhook")))
 				Expect(createNotificationChannelOptionsModel.Endpoint).To(Equal(core.StringPtr("testString")))
@@ -2282,57 +2263,72 @@ var _ = Describe(`NotificationsV1`, func() {
 			})
 			It(`Invoke NewDeleteNotificationChannelOptions successfully`, func() {
 				// Construct an instance of the DeleteNotificationChannelOptions model
+				accountID := "testString"
 				channelID := "testString"
-				deleteNotificationChannelOptionsModel := notificationsService.NewDeleteNotificationChannelOptions(channelID)
+				deleteNotificationChannelOptionsModel := notificationsService.NewDeleteNotificationChannelOptions(accountID, channelID)
+				deleteNotificationChannelOptionsModel.SetAccountID("testString")
 				deleteNotificationChannelOptionsModel.SetChannelID("testString")
 				deleteNotificationChannelOptionsModel.SetTransactionID("testString")
 				deleteNotificationChannelOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(deleteNotificationChannelOptionsModel).ToNot(BeNil())
+				Expect(deleteNotificationChannelOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(deleteNotificationChannelOptionsModel.ChannelID).To(Equal(core.StringPtr("testString")))
 				Expect(deleteNotificationChannelOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(deleteNotificationChannelOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewDeleteNotificationChannelsOptions successfully`, func() {
 				// Construct an instance of the DeleteNotificationChannelsOptions model
+				accountID := "testString"
 				body := []string{"testString"}
-				deleteNotificationChannelsOptionsModel := notificationsService.NewDeleteNotificationChannelsOptions(body)
+				deleteNotificationChannelsOptionsModel := notificationsService.NewDeleteNotificationChannelsOptions(accountID, body)
+				deleteNotificationChannelsOptionsModel.SetAccountID("testString")
 				deleteNotificationChannelsOptionsModel.SetBody([]string{"testString"})
 				deleteNotificationChannelsOptionsModel.SetTransactionID("testString")
 				deleteNotificationChannelsOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(deleteNotificationChannelsOptionsModel).ToNot(BeNil())
+				Expect(deleteNotificationChannelsOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(deleteNotificationChannelsOptionsModel.Body).To(Equal([]string{"testString"}))
 				Expect(deleteNotificationChannelsOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(deleteNotificationChannelsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewGetNotificationChannelOptions successfully`, func() {
 				// Construct an instance of the GetNotificationChannelOptions model
+				accountID := "testString"
 				channelID := "testString"
-				getNotificationChannelOptionsModel := notificationsService.NewGetNotificationChannelOptions(channelID)
+				getNotificationChannelOptionsModel := notificationsService.NewGetNotificationChannelOptions(accountID, channelID)
+				getNotificationChannelOptionsModel.SetAccountID("testString")
 				getNotificationChannelOptionsModel.SetChannelID("testString")
 				getNotificationChannelOptionsModel.SetTransactionID("testString")
 				getNotificationChannelOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(getNotificationChannelOptionsModel).ToNot(BeNil())
+				Expect(getNotificationChannelOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(getNotificationChannelOptionsModel.ChannelID).To(Equal(core.StringPtr("testString")))
 				Expect(getNotificationChannelOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(getNotificationChannelOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewGetPublicKeyOptions successfully`, func() {
 				// Construct an instance of the GetPublicKeyOptions model
-				getPublicKeyOptionsModel := notificationsService.NewGetPublicKeyOptions()
+				accountID := "testString"
+				getPublicKeyOptionsModel := notificationsService.NewGetPublicKeyOptions(accountID)
+				getPublicKeyOptionsModel.SetAccountID("testString")
 				getPublicKeyOptionsModel.SetTransactionID("testString")
 				getPublicKeyOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(getPublicKeyOptionsModel).ToNot(BeNil())
+				Expect(getPublicKeyOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(getPublicKeyOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(getPublicKeyOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewListAllChannelsOptions successfully`, func() {
 				// Construct an instance of the ListAllChannelsOptions model
-				listAllChannelsOptionsModel := notificationsService.NewListAllChannelsOptions()
+				accountID := "testString"
+				listAllChannelsOptionsModel := notificationsService.NewListAllChannelsOptions(accountID)
+				listAllChannelsOptionsModel.SetAccountID("testString")
 				listAllChannelsOptionsModel.SetTransactionID("testString")
 				listAllChannelsOptionsModel.SetLimit(int64(38))
 				listAllChannelsOptionsModel.SetSkip(int64(38))
 				listAllChannelsOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(listAllChannelsOptionsModel).ToNot(BeNil())
+				Expect(listAllChannelsOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(listAllChannelsOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(listAllChannelsOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(38))))
 				Expect(listAllChannelsOptionsModel.Skip).To(Equal(core.Int64Ptr(int64(38))))
@@ -2346,12 +2342,15 @@ var _ = Describe(`NotificationsV1`, func() {
 			})
 			It(`Invoke NewTestNotificationChannelOptions successfully`, func() {
 				// Construct an instance of the TestNotificationChannelOptions model
+				accountID := "testString"
 				channelID := "testString"
-				testNotificationChannelOptionsModel := notificationsService.NewTestNotificationChannelOptions(channelID)
+				testNotificationChannelOptionsModel := notificationsService.NewTestNotificationChannelOptions(accountID, channelID)
+				testNotificationChannelOptionsModel.SetAccountID("testString")
 				testNotificationChannelOptionsModel.SetChannelID("testString")
 				testNotificationChannelOptionsModel.SetTransactionID("testString")
 				testNotificationChannelOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(testNotificationChannelOptionsModel).ToNot(BeNil())
+				Expect(testNotificationChannelOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(testNotificationChannelOptionsModel.ChannelID).To(Equal(core.StringPtr("testString")))
 				Expect(testNotificationChannelOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(testNotificationChannelOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
@@ -2366,11 +2365,13 @@ var _ = Describe(`NotificationsV1`, func() {
 				Expect(notificationChannelAlertSourceItemModel.FindingTypes).To(Equal([]string{"testString"}))
 
 				// Construct an instance of the UpdateNotificationChannelOptions model
+				accountID := "testString"
 				channelID := "testString"
 				updateNotificationChannelOptionsName := "testString"
 				updateNotificationChannelOptionsType := "Webhook"
 				updateNotificationChannelOptionsEndpoint := "testString"
-				updateNotificationChannelOptionsModel := notificationsService.NewUpdateNotificationChannelOptions(channelID, updateNotificationChannelOptionsName, updateNotificationChannelOptionsType, updateNotificationChannelOptionsEndpoint)
+				updateNotificationChannelOptionsModel := notificationsService.NewUpdateNotificationChannelOptions(accountID, channelID, updateNotificationChannelOptionsName, updateNotificationChannelOptionsType, updateNotificationChannelOptionsEndpoint)
+				updateNotificationChannelOptionsModel.SetAccountID("testString")
 				updateNotificationChannelOptionsModel.SetChannelID("testString")
 				updateNotificationChannelOptionsModel.SetName("testString")
 				updateNotificationChannelOptionsModel.SetType("Webhook")
@@ -2382,6 +2383,7 @@ var _ = Describe(`NotificationsV1`, func() {
 				updateNotificationChannelOptionsModel.SetTransactionID("testString")
 				updateNotificationChannelOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(updateNotificationChannelOptionsModel).ToNot(BeNil())
+				Expect(updateNotificationChannelOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(updateNotificationChannelOptionsModel.ChannelID).To(Equal(core.StringPtr("testString")))
 				Expect(updateNotificationChannelOptionsModel.Name).To(Equal(core.StringPtr("testString")))
 				Expect(updateNotificationChannelOptionsModel.Type).To(Equal(core.StringPtr("Webhook")))

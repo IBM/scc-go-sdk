@@ -41,13 +41,9 @@ import (
 var accountID = os.Getenv("ACCOUNT_ID")
 var providerID = os.Getenv("PROVIDER_ID")
 var testString = "testString"
-var identifier = os.Getenv("TRAVIS_JOB_ID")
+var identifier = fmt.Sprintf("go-%d", time.Now().Unix())
 
 var _ = Describe(`FindingsV1 Integration Tests`, func() {
-
-	if identifier == "" {
-		identifier = fmt.Sprintf("%d", time.Now().Unix())
-	}
 
 	if providerID == "" {
 		providerID = "sdk-it"
@@ -943,7 +939,7 @@ var _ = AfterSuite(func() {
 
 	for _, note := range apiListNotesResponse.Notes {
 		parts := strings.Split(*note.ID, "-")
-		if parts[len(parts)-1] == identifier {
+		if fmt.Sprintf("%s-%s", parts[len(parts)-2], parts[len(parts)-1]) == identifier {
 			deleteNoteOptions := &findingsv1.DeleteNoteOptions{
 				ProviderID: &providerID,
 				NoteID:     note.ID,
@@ -967,7 +963,7 @@ var _ = AfterSuite(func() {
 
 	for _, occurrence := range apiListOccurrencesResponse.Occurrences {
 		parts := strings.Split(*occurrence.ID, "-")
-		if parts[len(parts)-1] == identifier {
+		if fmt.Sprintf("%s-%s", parts[len(parts)-2], parts[len(parts)-1]) == identifier {
 			deleteOccurrenceOptions := &findingsv1.DeleteOccurrenceOptions{
 				ProviderID:   &providerID,
 				OccurrenceID: occurrence.ID,

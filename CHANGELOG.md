@@ -1,3 +1,71 @@
+## [0.0.15](https://github.com/IBM/scc-go-sdk/compare/v0.0.14...v0.0.15) (2021-06-25)
+
+
+### Bug Fixes
+
+* **SDK:** TransactionID header name fixed ([7e71e21](https://github.com/IBM/scc-go-sdk/commit/7e71e219ad5f7ad83256a5902088f1c70a292f47))
+
+## [0.0.14](https://github.com/IBM/scc-go-sdk/compare/v0.0.13...v0.0.14) (2021-06-25)
+
+
+### Bug Fixes
+
+* **SDK:** regeneration after content-review ([b2711d0](https://github.com/IBM/scc-go-sdk/commit/b2711d0b11987c6c8d60783df46b50cd85c691ce))
+
+## [0.0.13](https://github.com/IBM/scc-go-sdk/compare/v0.0.12...v0.0.13) (2021-06-18)
+
+
+### Bug Fixes
+
+* **GithubAction:** workflow altered ([1b41393](https://github.com/IBM/scc-go-sdk/commit/1b41393f5ffe57b6c1010b066e698fa086abb1d0))
+
+## [0.0.12](https://github.com/IBM/scc-go-sdk/compare/v0.0.11...v0.0.12) (2021-06-18)
+
+
+### Bug Fixes
+
+* **commonUser:** common user terminology ([a1c1e03](https://github.com/IBM/scc-go-sdk/commit/a1c1e0371bb49c80319e58adc59054080044920e))
+* **GitHubAction:** release to be done by scccomm ([02c21c5](https://github.com/IBM/scc-go-sdk/commit/02c21c56bd565cfcc62e8c12694a2bf74488a169))
+
+## [0.0.11](https://github.com/IBM/scc-go-sdk/compare/v0.0.10...v0.0.11) (2021-06-17)
+
+
+### Bug Fixes
+
+* **GoDoc:** godoc deployed in gh-pages ([392348c](https://github.com/IBM/scc-go-sdk/commit/392348cff9da8384d11b317f05f74304f4cd6e0e))
+
+## [0.0.10](https://github.com/IBM/scc-go-sdk/compare/v0.0.9...v0.0.10) (2021-06-17)
+
+
+### Bug Fixes
+
+* **GitHubActions:** migrated from TravisCI ([8f2b4d0](https://github.com/IBM/scc-go-sdk/commit/8f2b4d003cc25be2fa322d1ab621f18ef2157d95))
+
+## [0.0.9](https://github.com/IBM/scc-go-sdk/compare/v0.0.8...v0.0.9) (2021-06-11)
+
+
+### Bug Fixes
+
+* **IT:** compilation error fixed ([7b70010](https://github.com/IBM/scc-go-sdk/commit/7b70010a1818dca77d3188a3aac49ac5105d3eb3))
+* **IT:** resourceGroupID as env var and rule label similar for cleanup ([f29b5a0](https://github.com/IBM/scc-go-sdk/commit/f29b5a0b03c1c2d03189db715f92c97828a81245))
+* **ITs:** activated config-gov ITs ([a938445](https://github.com/IBM/scc-go-sdk/commit/a9384454d37c8133f03fc60d259b590fa3103732))
+* **SDK:** fixed config_gov and notifications ITs ([b6c33de](https://github.com/IBM/scc-go-sdk/commit/b6c33de84947b0a0d1421f5f41ac0450227cb136))
+
+## [0.0.8](https://github.com/IBM/scc-go-sdk/compare/v0.0.7...v0.0.8) (2021-06-11)
+
+
+### Bug Fixes
+
+* **listProviders:** Addressed api definition review comments ([576429d](https://github.com/IBM/scc-go-sdk/commit/576429d142a6508e6146a83166b851cfa68cc86a))
+
+## [0.0.7](https://github.com/IBM/scc-go-sdk/compare/v0.0.6...v0.0.7) (2021-06-10)
+
+
+### Bug Fixes
+
+* **SDK:** AccountID should be used as global param ([c62dba0](https://github.com/IBM/scc-go-sdk/commit/c62dba0cd6808a9015f15dda568e2ddfd2aff6db))
+* **SDK:** Findings and Notifications service now use AccountID as global param ([95a41b2](https://github.com/IBM/scc-go-sdk/commit/95a41b2a031642bd3eee888a707b672627b50c23))
+
 ## [0.0.6](https://github.com/IBM/scc-go-sdk/compare/v0.0.5...v0.0.6) (2021-06-03)
 
 

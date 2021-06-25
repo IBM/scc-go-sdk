@@ -40,13 +40,9 @@ import (
 var accountID = os.Getenv("ACCOUNT_ID")
 var testString = "testString"
 var channelID = ""
-var identifier = os.Getenv("TRAVIS_JOB_ID")
+var identifier = fmt.Sprintf("go-%d", time.Now().Unix())
 
 var _ = Describe(`NotificationsV1 Integration Tests`, func() {
-
-	if identifier == "" {
-		identifier = fmt.Sprintf("%d", time.Now().Unix())
-	}
 
 	const externalConfigFile = "../notifications_v1.env"
 
@@ -90,9 +86,7 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 		})
 		It("Successfully construct the service client instance", func() {
 
-			notificationsServiceOptions := &notificationsv1.NotificationsV1Options{
-				AccountID: core.StringPtr(accountID),
-			}
+			notificationsServiceOptions := &notificationsv1.NotificationsV1Options{}
 
 			notificationsService, err = notificationsv1.NewNotificationsV1UsingExternalConfig(notificationsServiceOptions)
 
@@ -108,7 +102,9 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 		})
 		It(`ListAllChannels(listAllChannelsOptions *ListAllChannelsOptions)`, func() {
 
-			listAllChannelsOptions := &notificationsv1.ListAllChannelsOptions{}
+			listAllChannelsOptions := &notificationsv1.ListAllChannelsOptions{
+				AccountID: &accountID,
+			}
 
 			channelsList, response, err := notificationsService.ListAllChannels(listAllChannelsOptions)
 
@@ -131,6 +127,7 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 			}
 
 			createNotificationChannelOptions := &notificationsv1.CreateNotificationChannelOptions{
+				AccountID:   &accountID,
 				Name:        core.StringPtr(fmt.Sprintf("%s-%s", testString, identifier)),
 				Type:        core.StringPtr("Webhook"),
 				Endpoint:    core.StringPtr("https://webhook.site/136fe1e2-3c3f-4bff-925f-391fbb202546"),
@@ -158,6 +155,7 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 		It(`GetNotificationChannel(getNotificationChannelOptions *GetNotificationChannelOptions)`, func() {
 
 			getNotificationChannelOptions := &notificationsv1.GetNotificationChannelOptions{
+				AccountID: &accountID,
 				ChannelID: &channelID,
 			}
 
@@ -182,6 +180,7 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 			}
 
 			updateNotificationChannelOptions := &notificationsv1.UpdateNotificationChannelOptions{
+				AccountID:   &accountID,
 				ChannelID:   &channelID,
 				Name:        core.StringPtr(fmt.Sprintf("%s-%s", testString, identifier)),
 				Type:        core.StringPtr("Webhook"),
@@ -208,6 +207,7 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 		It(`TestNotificationChannel(testNotificationChannelOptions *TestNotificationChannelOptions)`, func() {
 
 			testNotificationChannelOptions := &notificationsv1.TestNotificationChannelOptions{
+				AccountID: &accountID,
 				ChannelID: &channelID,
 			}
 
@@ -226,7 +226,9 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 		})
 		It(`GetPublicKey(getPublicKeyOptions *GetPublicKeyOptions)`, func() {
 
-			getPublicKeyOptions := &notificationsv1.GetPublicKeyOptions{}
+			getPublicKeyOptions := &notificationsv1.GetPublicKeyOptions{
+				AccountID: &accountID,
+			}
 
 			publicKeyGet, response, err := notificationsService.GetPublicKey(getPublicKeyOptions)
 
@@ -244,6 +246,7 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 		It(`DeleteNotificationChannel(deleteNotificationChannelOptions *DeleteNotificationChannelOptions)`, func() {
 
 			deleteNotificationChannelOptions := &notificationsv1.DeleteNotificationChannelOptions{
+				AccountID: &accountID,
 				ChannelID: &channelID,
 			}
 
@@ -263,6 +266,7 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 		It(`DeleteNotificationChannels(deleteNotificationChannelsOptions *DeleteNotificationChannelsOptions)`, func() {
 
 			createNotificationChannelOptions := &notificationsv1.CreateNotificationChannelOptions{
+				AccountID:   &accountID,
 				Name:        core.StringPtr(fmt.Sprintf("%s-%s", testString, identifier)),
 				Type:        core.StringPtr("Webhook"),
 				Endpoint:    core.StringPtr("https://webhook.site/136fe1e2-3c3f-4bff-925f-391fbb202546"),
@@ -276,7 +280,8 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 			channelID = *channelInfo.ChannelID
 
 			deleteNotificationChannelsOptions := &notificationsv1.DeleteNotificationChannelsOptions{
-				Body: []string{channelID},
+				AccountID: &accountID,
+				Body:      []string{channelID},
 			}
 
 			channelsDelete, response, err := notificationsService.DeleteNotificationChannels(deleteNotificationChannelsOptions)
@@ -312,13 +317,13 @@ var _ = AfterSuite(func() {
 
 	fmt.Printf("cleaning up account: %s\n", accountID)
 
-	notificationsServiceOptions := &notificationsv1.NotificationsV1Options{
-		AccountID: core.StringPtr(accountID),
-	}
+	notificationsServiceOptions := &notificationsv1.NotificationsV1Options{}
 
 	notificationsService, err := notificationsv1.NewNotificationsV1UsingExternalConfig(notificationsServiceOptions)
 
-	listAllChannelsOptions := &notificationsv1.ListAllChannelsOptions{}
+	listAllChannelsOptions := &notificationsv1.ListAllChannelsOptions{
+		AccountID: &accountID,
+	}
 
 	channels, _, err := notificationsService.ListAllChannels(listAllChannelsOptions)
 	if err != nil {
@@ -328,6 +333,7 @@ var _ = AfterSuite(func() {
 	for _, channel := range channels.Channels {
 		if *channel.ChannelID == channelID {
 			deleteNotificationChannelOptions := &notificationsv1.DeleteNotificationChannelOptions{
+				AccountID: &accountID,
 				ChannelID: channel.ChannelID,
 			}
 

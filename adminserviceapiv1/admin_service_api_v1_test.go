@@ -1,5 +1,3 @@
-//+build test
-
 /**
  * (C) Copyright IBM Corp. 2021.
  *

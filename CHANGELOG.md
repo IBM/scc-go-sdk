@@ -1,3 +1,10 @@
+## [0.0.15](https://github.com/IBM/scc-go-sdk/compare/v0.0.14...v0.0.15) (2021-06-25)
+
+
+### Bug Fixes
+
+* **SDK:** TransactionID header name fixed ([7e71e21](https://github.com/IBM/scc-go-sdk/commit/7e71e219ad5f7ad83256a5902088f1c70a292f47))
+
 ## [0.0.14](https://github.com/IBM/scc-go-sdk/compare/v0.0.13...v0.0.14) (2021-06-25)
 
 

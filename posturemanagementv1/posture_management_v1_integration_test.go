@@ -253,7 +253,7 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 			scope, response, err := postureManagementService.CreateScope(createScopeOptions)
 
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(201))
+			Expect(response.StatusCode).To(Equal(202))
 			Expect(scope).ToNot(BeNil())
 
 		})

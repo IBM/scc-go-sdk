@@ -1,3 +1,10 @@
+## [0.0.14](https://github.com/IBM/scc-go-sdk/compare/v0.0.13...v0.0.14) (2021-06-25)
+
+
+### Bug Fixes
+
+* **SDK:** regeneration after content-review ([b2711d0](https://github.com/IBM/scc-go-sdk/commit/b2711d0b11987c6c8d60783df46b50cd85c691ce))
+
 ## [0.0.13](https://github.com/IBM/scc-go-sdk/compare/v0.0.12...v0.0.13) (2021-06-18)
 
 

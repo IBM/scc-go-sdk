@@ -128,7 +128,7 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 			accountSettings, response, err := adminServiceApiService.PatchAccountSettings(patchAccountSettingsOptions)
 
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
+			Expect(response.StatusCode).To(Or(Equal(200), Equal(204), Equal(201)))
 			Expect(accountSettings).ToNot(BeNil())
 
 		})

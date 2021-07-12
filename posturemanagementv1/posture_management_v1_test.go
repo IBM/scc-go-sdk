@@ -179,6 +179,22 @@ var _ = Describe(`PostureManagementV1`, func() {
 			fmt.Fprintf(GinkgoWriter, "Expected error: %s\n", err.Error())
 		})
 	})
+	Describe(`Parameterized URL tests`, func() {
+		It(`Format parameterized URL with all default values`, func() {
+			constructedURL, err := posturemanagementv1.ConstructServiceURL(nil)
+			Expect(constructedURL).To(Equal("https://us.compliance.cloud.ibm.com"))
+			Expect(constructedURL).ToNot(BeNil())
+			Expect(err).To(BeNil())
+		})
+		It(`Return an error if a provided variable name is invalid`, func() {
+			var providedUrlVariables = map[string]string{
+				"invalid_variable_name": "value",
+			}
+			constructedURL, err := posturemanagementv1.ConstructServiceURL(providedUrlVariables)
+			Expect(constructedURL).To(Equal(""))
+			Expect(err).ToNot(BeNil())
+		})
+	})
 	Describe(`ListLatestScans(listLatestScansOptions *ListLatestScansOptions) - Operation response error`, func() {
 		accountID := "testString"
 		listLatestScansPath := "/posture/v1/scans/validations/latest_scans"
@@ -193,7 +209,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["account_id"]).To(Equal([]string{"testString"}))
-					Expect(req.URL.Query()["name"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["offset"]).To(Equal([]string{fmt.Sprint(int64(38))}))
 					Expect(req.URL.Query()["limit"]).To(Equal([]string{fmt.Sprint(int64(100))}))
 					res.Header().Set("Content-type", "application/json")
@@ -213,7 +228,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the ListLatestScansOptions model
 				listLatestScansOptionsModel := new(posturemanagementv1.ListLatestScansOptions)
 				listLatestScansOptionsModel.TransactionID = core.StringPtr("testString")
-				listLatestScansOptionsModel.Name = core.StringPtr("testString")
 				listLatestScansOptionsModel.Offset = core.Int64Ptr(int64(38))
 				listLatestScansOptionsModel.Limit = core.Int64Ptr(int64(100))
 				listLatestScansOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -250,7 +264,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["account_id"]).To(Equal([]string{"testString"}))
-					Expect(req.URL.Query()["name"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["offset"]).To(Equal([]string{fmt.Sprint(int64(38))}))
 					Expect(req.URL.Query()["limit"]).To(Equal([]string{fmt.Sprint(int64(100))}))
 					// Sleep a short time to support a timeout test
@@ -259,7 +272,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/latest_scans?account_id=abcd1234&offset=10&limit=25"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/latest_scans?account_id=abcd1234&offset=30&limit=25"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/latest_scans?account_id=abcd1234&offset=10&limit=25"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/latest_scans?account_id=abcd1234&offset=10&limit=25"}, "latest_scans": [{"scan_id": "262", "scan_name": "IBM_Schema_Full - IBMCloudBestPractice", "scope_id": "21", "scope_name": "IBM_Schema_Full", "profile_id": "48", "profile_name": "IBM Cloud Best Practices Controls 1.0", "profile_type": "standard", "group_profile_id": "1", "group_profile_name": "CIS Windows Server Benchmarks", "report_run_by": "controller", "started_time": "2020-09-23T12:45:24.000Z", "end_time": "2020-09-23T12:45:24.000Z", "result": {"goals_pass_count": 118, "goals_u2p_count": 16, "goals_na_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_na_count": 6, "controls_u2p_count": 16, "controls_total_count": 293}}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/latest_scans?account_id=abcd1234&offset=10&limit=25"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/latest_scans?account_id=abcd1234&offset=30&limit=25"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/latest_scans?account_id=abcd1234&offset=10&limit=25"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/latest_scans?account_id=abcd1234&offset=10&limit=25"}, "latest_scans": [{"scan_id": "262", "scan_name": "IBM_Schema_Full - IBMCloudBestPractice", "scope_id": "21", "scope_name": "IBM_Schema_Full", "profile_id": "48", "profile_name": "IBM Cloud Best Practices Controls 1.0", "profile_type": "standard", "group_profile_id": "1", "group_profile_name": "CIS Windows Server Benchmarks", "report_run_by": "controller", "start_time": "2020-09-23T12:45:24.000Z", "end_time": "2020-09-23T12:45:24.000Z", "result": {"goals_pass_count": 118, "goals_unable_to_perform_count": 16, "goals_not_applicable_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_not_applicable_count": 6, "controls_unable_to_perform_count": 16, "controls_total_count": 293}}]}`)
 				}))
 			})
 			It(`Invoke ListLatestScans successfully with retries`, func() {
@@ -275,7 +288,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the ListLatestScansOptions model
 				listLatestScansOptionsModel := new(posturemanagementv1.ListLatestScansOptions)
 				listLatestScansOptionsModel.TransactionID = core.StringPtr("testString")
-				listLatestScansOptionsModel.Name = core.StringPtr("testString")
 				listLatestScansOptionsModel.Offset = core.Int64Ptr(int64(38))
 				listLatestScansOptionsModel.Limit = core.Int64Ptr(int64(100))
 				listLatestScansOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -317,13 +329,12 @@ var _ = Describe(`PostureManagementV1`, func() {
 					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["account_id"]).To(Equal([]string{"testString"}))
-					Expect(req.URL.Query()["name"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["offset"]).To(Equal([]string{fmt.Sprint(int64(38))}))
 					Expect(req.URL.Query()["limit"]).To(Equal([]string{fmt.Sprint(int64(100))}))
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/latest_scans?account_id=abcd1234&offset=10&limit=25"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/latest_scans?account_id=abcd1234&offset=30&limit=25"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/latest_scans?account_id=abcd1234&offset=10&limit=25"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/latest_scans?account_id=abcd1234&offset=10&limit=25"}, "latest_scans": [{"scan_id": "262", "scan_name": "IBM_Schema_Full - IBMCloudBestPractice", "scope_id": "21", "scope_name": "IBM_Schema_Full", "profile_id": "48", "profile_name": "IBM Cloud Best Practices Controls 1.0", "profile_type": "standard", "group_profile_id": "1", "group_profile_name": "CIS Windows Server Benchmarks", "report_run_by": "controller", "started_time": "2020-09-23T12:45:24.000Z", "end_time": "2020-09-23T12:45:24.000Z", "result": {"goals_pass_count": 118, "goals_u2p_count": 16, "goals_na_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_na_count": 6, "controls_u2p_count": 16, "controls_total_count": 293}}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/latest_scans?account_id=abcd1234&offset=10&limit=25"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/latest_scans?account_id=abcd1234&offset=30&limit=25"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/latest_scans?account_id=abcd1234&offset=10&limit=25"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/latest_scans?account_id=abcd1234&offset=10&limit=25"}, "latest_scans": [{"scan_id": "262", "scan_name": "IBM_Schema_Full - IBMCloudBestPractice", "scope_id": "21", "scope_name": "IBM_Schema_Full", "profile_id": "48", "profile_name": "IBM Cloud Best Practices Controls 1.0", "profile_type": "standard", "group_profile_id": "1", "group_profile_name": "CIS Windows Server Benchmarks", "report_run_by": "controller", "start_time": "2020-09-23T12:45:24.000Z", "end_time": "2020-09-23T12:45:24.000Z", "result": {"goals_pass_count": 118, "goals_unable_to_perform_count": 16, "goals_not_applicable_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_not_applicable_count": 6, "controls_unable_to_perform_count": 16, "controls_total_count": 293}}]}`)
 				}))
 			})
 			It(`Invoke ListLatestScans successfully`, func() {
@@ -344,7 +355,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the ListLatestScansOptions model
 				listLatestScansOptionsModel := new(posturemanagementv1.ListLatestScansOptions)
 				listLatestScansOptionsModel.TransactionID = core.StringPtr("testString")
-				listLatestScansOptionsModel.Name = core.StringPtr("testString")
 				listLatestScansOptionsModel.Offset = core.Int64Ptr(int64(38))
 				listLatestScansOptionsModel.Limit = core.Int64Ptr(int64(100))
 				listLatestScansOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -368,7 +378,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the ListLatestScansOptions model
 				listLatestScansOptionsModel := new(posturemanagementv1.ListLatestScansOptions)
 				listLatestScansOptionsModel.TransactionID = core.StringPtr("testString")
-				listLatestScansOptionsModel.Name = core.StringPtr("testString")
 				listLatestScansOptionsModel.Offset = core.Int64Ptr(int64(38))
 				listLatestScansOptionsModel.Limit = core.Int64Ptr(int64(100))
 				listLatestScansOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -406,7 +415,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the ListLatestScansOptions model
 				listLatestScansOptionsModel := new(posturemanagementv1.ListLatestScansOptions)
 				listLatestScansOptionsModel.TransactionID = core.StringPtr("testString")
-				listLatestScansOptionsModel.Name = core.StringPtr("testString")
 				listLatestScansOptionsModel.Offset = core.Int64Ptr(int64(38))
 				listLatestScansOptionsModel.Limit = core.Int64Ptr(int64(100))
 				listLatestScansOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -421,6 +429,45 @@ var _ = Describe(`PostureManagementV1`, func() {
 			})
 			AfterEach(func() {
 				testServer.Close()
+			})
+		})
+		Context(`Test pagination helper method on response`, func() {
+			It(`Invoke GetNextOffset successfully`, func() {
+				responseObject := new(posturemanagementv1.ScansList)
+				nextObject := new(posturemanagementv1.ScansListNext)
+				nextObject.Href = core.StringPtr("ibm.com?offset=135")
+				responseObject.Next = nextObject
+
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
+			})
+			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
+				responseObject := new(posturemanagementv1.ScansList)
+
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset without any query params in the "Next" URL`, func() {
+				responseObject := new(posturemanagementv1.ScansList)
+				nextObject := new(posturemanagementv1.ScansListNext)
+				nextObject.Href = core.StringPtr("ibm.com")
+				responseObject.Next = nextObject
+
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset with a non-integer query param in the "Next" URL`, func() {
+				responseObject := new(posturemanagementv1.ScansList)
+				nextObject := new(posturemanagementv1.ScansListNext)
+				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
+				responseObject.Next = nextObject
+
+				value, err := responseObject.GetNextOffset()
+				Expect(err).NotTo(BeNil())
+				Expect(value).To(BeNil())
 			})
 		})
 	})
@@ -624,7 +671,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 				Expect(result).ToNot(BeNil())
 
 			})
-			It(`Invoke CreateValidation with error: Operation request error`, func() {
+			It(`Invoke CreateValidation with error: Operation validation and request error`, func() {
 				postureManagementService, serviceErr := posturemanagementv1.NewPostureManagementV1(&posturemanagementv1.PostureManagementV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
@@ -646,6 +693,13 @@ var _ = Describe(`PostureManagementV1`, func() {
 				result, response, operationErr := postureManagementService.CreateValidation(createValidationOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the CreateValidationOptions model with no property values
+				createValidationOptionsModelNew := new(posturemanagementv1.CreateValidationOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = postureManagementService.CreateValidation(createValidationOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 			})
@@ -707,7 +761,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["account_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["profile_id"]).To(Equal([]string{"testString"}))
-					Expect(req.URL.Query()["name"]).To(Equal([]string{"testString"}))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
 					fmt.Fprintf(res, `} this is not valid json {`)
@@ -727,7 +780,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 				scansSummaryOptionsModel.ScanID = core.StringPtr("testString")
 				scansSummaryOptionsModel.ProfileID = core.StringPtr("testString")
 				scansSummaryOptionsModel.TransactionID = core.StringPtr("testString")
-				scansSummaryOptionsModel.Name = core.StringPtr("testString")
 				scansSummaryOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
 				result, response, operationErr := postureManagementService.ScansSummary(scansSummaryOptionsModel)
@@ -763,14 +815,13 @@ var _ = Describe(`PostureManagementV1`, func() {
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["account_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["profile_id"]).To(Equal([]string{"testString"}))
-					Expect(req.URL.Query()["name"]).To(Equal([]string{"testString"}))
 					// Sleep a short time to support a timeout test
 					time.Sleep(100 * time.Millisecond)
 
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"scan_id": "4", "discovery_id": "8", "profile_id": "50", "profile_name": "CIS IBM Foundations Benchmark 1.0.0", "scope_id": "2", "controls": [{"control_id": "7907", "status": "UNABLE_TO_PERFORM", "external_control_id": "50", "control_desciption": "CIS IBM Foundations Benchmark 1.0.0", "goals": [{"goal_description": "Check whether API keys unused for 180 days are detected and optionally disabled", "goal_id": "3000039", "status": "PASS", "severity": "Medium", "completed_time": "2021-04-16T05:32:44.000Z", "error": "N/A", "resource_result": [{"resource_name": "PasswordPolicy", "resourc_type": "Identity and Access Management", "resource_status": "PASS", "display_expected_value": "IBMid password policy should be required at least one lowercase letter", "actual_value": "ActualValue", "results_info": "IBMid password policy minimum password length is set to 8", "na_reason": "('isBootVolume': 'True')"}], "goal_applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}}], "resource_statistics": {"resource_pass_count": 4, "resource_fail_count": 4, "resource_u2p_count": 4, "resource_na_count": 4}}]}`)
+					fmt.Fprintf(res, "%s", `{"scan_id": "4", "discover_id": "8", "profile_id": "50", "profile_name": "CIS IBM Foundations Benchmark 1.0.0", "scope_id": "2", "controls": [{"control_id": "7907", "status": "pass", "external_control_id": "50", "control_desciption": "CIS IBM Foundations Benchmark 1.0.0", "goals": [{"goal_description": "Check whether API keys unused for 180 days are detected and optionally disabled", "goal_id": "3000039", "status": "pass", "severity": "Medium", "completed_time": "2021-04-16T05:32:44.000Z", "error": "N/A", "resource_result": [{"resource_name": "PasswordPolicy", "resource_types": "Identity and Access Management", "resource_status": "pass", "display_expected_value": "IBMid password policy should be required at least one lowercase letter", "actual_value": "{\"2fa": \"Enabled"}", "results_info": "IBMid password policy minimum password length is set to 8", "not_applicable_reason": "{\"isBootVolume\": \"True\"}"}], "goal_applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}}], "resource_statistics": {"resource_pass_count": 4, "resource_fail_count": 4, "resource_unable_to_perform_count": 4, "resource_not_applicable_count": 4}}]}`)
 				}))
 			})
 			It(`Invoke ScansSummary successfully with retries`, func() {
@@ -788,7 +839,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 				scansSummaryOptionsModel.ScanID = core.StringPtr("testString")
 				scansSummaryOptionsModel.ProfileID = core.StringPtr("testString")
 				scansSummaryOptionsModel.TransactionID = core.StringPtr("testString")
-				scansSummaryOptionsModel.Name = core.StringPtr("testString")
 				scansSummaryOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with a Context to test a timeout error
@@ -829,11 +879,10 @@ var _ = Describe(`PostureManagementV1`, func() {
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["account_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["profile_id"]).To(Equal([]string{"testString"}))
-					Expect(req.URL.Query()["name"]).To(Equal([]string{"testString"}))
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"scan_id": "4", "discovery_id": "8", "profile_id": "50", "profile_name": "CIS IBM Foundations Benchmark 1.0.0", "scope_id": "2", "controls": [{"control_id": "7907", "status": "UNABLE_TO_PERFORM", "external_control_id": "50", "control_desciption": "CIS IBM Foundations Benchmark 1.0.0", "goals": [{"goal_description": "Check whether API keys unused for 180 days are detected and optionally disabled", "goal_id": "3000039", "status": "PASS", "severity": "Medium", "completed_time": "2021-04-16T05:32:44.000Z", "error": "N/A", "resource_result": [{"resource_name": "PasswordPolicy", "resourc_type": "Identity and Access Management", "resource_status": "PASS", "display_expected_value": "IBMid password policy should be required at least one lowercase letter", "actual_value": "ActualValue", "results_info": "IBMid password policy minimum password length is set to 8", "na_reason": "('isBootVolume': 'True')"}], "goal_applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}}], "resource_statistics": {"resource_pass_count": 4, "resource_fail_count": 4, "resource_u2p_count": 4, "resource_na_count": 4}}]}`)
+					fmt.Fprintf(res, "%s", `{"scan_id": "4", "discover_id": "8", "profile_id": "50", "profile_name": "CIS IBM Foundations Benchmark 1.0.0", "scope_id": "2", "controls": [{"control_id": "7907", "status": "pass", "external_control_id": "50", "control_desciption": "CIS IBM Foundations Benchmark 1.0.0", "goals": [{"goal_description": "Check whether API keys unused for 180 days are detected and optionally disabled", "goal_id": "3000039", "status": "pass", "severity": "Medium", "completed_time": "2021-04-16T05:32:44.000Z", "error": "N/A", "resource_result": [{"resource_name": "PasswordPolicy", "resource_types": "Identity and Access Management", "resource_status": "pass", "display_expected_value": "IBMid password policy should be required at least one lowercase letter", "actual_value": "{\"2fa": \"Enabled"}", "results_info": "IBMid password policy minimum password length is set to 8", "not_applicable_reason": "{\"isBootVolume\": \"True\"}"}], "goal_applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}}], "resource_statistics": {"resource_pass_count": 4, "resource_fail_count": 4, "resource_unable_to_perform_count": 4, "resource_not_applicable_count": 4}}]}`)
 				}))
 			})
 			It(`Invoke ScansSummary successfully`, func() {
@@ -856,8 +905,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 				scansSummaryOptionsModel.ScanID = core.StringPtr("testString")
 				scansSummaryOptionsModel.ProfileID = core.StringPtr("testString")
 				scansSummaryOptionsModel.TransactionID = core.StringPtr("testString")
-				scansSummaryOptionsModel.Name = core.StringPtr("testString")
-				// scansSummaryOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				scansSummaryOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
 				result, response, operationErr = postureManagementService.ScansSummary(scansSummaryOptionsModel)
@@ -880,7 +928,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 				scansSummaryOptionsModel.ScanID = core.StringPtr("testString")
 				scansSummaryOptionsModel.ProfileID = core.StringPtr("testString")
 				scansSummaryOptionsModel.TransactionID = core.StringPtr("testString")
-				scansSummaryOptionsModel.Name = core.StringPtr("testString")
 				scansSummaryOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
 				err := postureManagementService.SetServiceURL("")
@@ -925,7 +972,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 				scansSummaryOptionsModel.ScanID = core.StringPtr("testString")
 				scansSummaryOptionsModel.ProfileID = core.StringPtr("testString")
 				scansSummaryOptionsModel.TransactionID = core.StringPtr("testString")
-				scansSummaryOptionsModel.Name = core.StringPtr("testString")
 				scansSummaryOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation
@@ -954,10 +1000,9 @@ var _ = Describe(`PostureManagementV1`, func() {
 					Expect(req.Method).To(Equal("GET"))
 					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.URL.Query()["scope_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["account_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["profile_id"]).To(Equal([]string{"testString"}))
-					Expect(req.URL.Query()["group_profile_id"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["scope_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["offset"]).To(Equal([]string{fmt.Sprint(int64(38))}))
 					Expect(req.URL.Query()["limit"]).To(Equal([]string{fmt.Sprint(int64(100))}))
 					res.Header().Set("Content-type", "application/json")
@@ -976,10 +1021,9 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Construct an instance of the ScanSummariesOptions model
 				scanSummariesOptionsModel := new(posturemanagementv1.ScanSummariesOptions)
+				scanSummariesOptionsModel.ProfileID = core.StringPtr("testString")
 				scanSummariesOptionsModel.ScopeID = core.StringPtr("testString")
 				scanSummariesOptionsModel.TransactionID = core.StringPtr("testString")
-				scanSummariesOptionsModel.ProfileID = core.StringPtr("testString")
-				scanSummariesOptionsModel.GroupProfileID = core.StringPtr("testString")
 				scanSummariesOptionsModel.Offset = core.Int64Ptr(int64(38))
 				scanSummariesOptionsModel.Limit = core.Int64Ptr(int64(100))
 				scanSummariesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1015,10 +1059,9 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.URL.Query()["scope_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["account_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["profile_id"]).To(Equal([]string{"testString"}))
-					Expect(req.URL.Query()["group_profile_id"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["scope_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["offset"]).To(Equal([]string{fmt.Sprint(int64(38))}))
 					Expect(req.URL.Query()["limit"]).To(Equal([]string{fmt.Sprint(int64(100))}))
 					// Sleep a short time to support a timeout test
@@ -1027,7 +1070,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/summaries?account_id=abcd1234&scope_id=4&group_profile_id=1&offset=10&limit=25"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/summaries?account_id=abcd1234&scope_id=4&group_profile_id=1&offset=30&limit=25"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/summaries?account_id=abcd1234&scope_id=4&group_profile_id=1&offset=10&limit=25"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/summaries?account_id=abcd1234&scope_id=4&group_profile_id=1?account_id=abcd1234&offset=10&limit=25"}, "summaries": [{"scan_id": "262", "scan_name": "IBM_Schema_Full - IBMCloudBestPractice", "scope_id": "21", "scope_name": "IBM_Schema_Full", "report_run_by": "controller", "started_time": "2020-09-23T12:45:24.000Z", "end_time": "2020-09-23T12:45:24.000Z", "status": "validation_completed", "profile": {"profile_id": "48", "profile_name": "IBM Cloud Best Practices Controls 1.0", "profile_type": "standard", "validation_result": {"goals_pass_count": 118, "goals_u2p_count": 16, "goals_na_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_na_count": 6, "controls_u2p_count": 16, "controls_total_count": 293}}, "group_profiles": {"group_profile_id": "1", "group_profile_name": "CIS Windows Server Benchmarks", "profile_type": "standard", "validation_result": {"goals_pass_count": 118, "goals_u2p_count": 16, "goals_na_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_na_count": 6, "controls_u2p_count": 16, "controls_total_count": 293}, "profiles": [{"profile_id": "48", "profile_name": "IBM Cloud Best Practices Controls 1.0", "profile_type": "standard", "validation_result": {"controls_pass_count": 117, "controls_fail_count": 154, "controls_na_count": 6, "controls_u2p_count": 16, "controls_total_count": 293}}]}}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/summaries?account_id=abcd1234&scope_id=4&group_profile_id=1&offset=10&limit=25"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/summaries?account_id=abcd1234&scope_id=4&group_profile_id=1&offset=30&limit=25"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/summaries?account_id=abcd1234&scope_id=4&group_profile_id=1&offset=10&limit=25"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/summaries?account_id=abcd1234&scope_id=4&group_profile_id=1?account_id=abcd1234&offset=10&limit=25"}, "summaries": [{"scan_id": "262", "scan_name": "IBM_Schema_Full - IBMCloudBestPractice", "scope_id": "21", "scope_name": "IBM_Schema_Full", "report_run_by": "controller", "start_time": "2020-09-23T12:45:24.000Z", "end_time": "2020-09-23T12:45:24.000Z", "status": "validation_completed", "profile": {"profile_id": "48", "profile_name": "IBM Cloud Best Practices Controls 1.0", "profile_type": "standard", "validation_result": {"goals_pass_count": 118, "goals_unable_to_perform_count": 16, "goals_not_applicable_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_not_applicable_count": 6, "controls_unable_to_perform_count": 16, "controls_total_count": 293}}, "group_profiles": {"group_profile_id": "1", "group_profile_name": "CIS Windows Server Benchmarks", "profile_type": "standard", "validation_result": {"goals_pass_count": 118, "goals_unable_to_perform_count": 16, "goals_not_applicable_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_not_applicable_count": 6, "controls_unable_to_perform_count": 16, "controls_total_count": 293}, "profiles": [{"profile_id": "48", "profile_name": "IBM Cloud Best Practices Controls 1.0", "profile_type": "standard", "validation_result": {"controls_pass_count": 117, "controls_fail_count": 154, "controls_not_applicable_count": 6, "controls_unable_to_perform_count": 16, "controls_total_count": 293}}]}}]}`)
 				}))
 			})
 			It(`Invoke ScanSummaries successfully with retries`, func() {
@@ -1042,10 +1085,9 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Construct an instance of the ScanSummariesOptions model
 				scanSummariesOptionsModel := new(posturemanagementv1.ScanSummariesOptions)
+				scanSummariesOptionsModel.ProfileID = core.StringPtr("testString")
 				scanSummariesOptionsModel.ScopeID = core.StringPtr("testString")
 				scanSummariesOptionsModel.TransactionID = core.StringPtr("testString")
-				scanSummariesOptionsModel.ProfileID = core.StringPtr("testString")
-				scanSummariesOptionsModel.GroupProfileID = core.StringPtr("testString")
 				scanSummariesOptionsModel.Offset = core.Int64Ptr(int64(38))
 				scanSummariesOptionsModel.Limit = core.Int64Ptr(int64(100))
 				scanSummariesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1086,16 +1128,15 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.URL.Query()["scope_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["account_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["profile_id"]).To(Equal([]string{"testString"}))
-					Expect(req.URL.Query()["group_profile_id"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["scope_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["offset"]).To(Equal([]string{fmt.Sprint(int64(38))}))
 					Expect(req.URL.Query()["limit"]).To(Equal([]string{fmt.Sprint(int64(100))}))
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/summaries?account_id=abcd1234&scope_id=4&group_profile_id=1&offset=10&limit=25"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/summaries?account_id=abcd1234&scope_id=4&group_profile_id=1&offset=30&limit=25"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/summaries?account_id=abcd1234&scope_id=4&group_profile_id=1&offset=10&limit=25"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/summaries?account_id=abcd1234&scope_id=4&group_profile_id=1?account_id=abcd1234&offset=10&limit=25"}, "summaries": [{"scan_id": "262", "scan_name": "IBM_Schema_Full - IBMCloudBestPractice", "scope_id": "21", "scope_name": "IBM_Schema_Full", "report_run_by": "controller", "started_time": "2020-09-23T12:45:24.000Z", "end_time": "2020-09-23T12:45:24.000Z", "status": "validation_completed", "profile": {"profile_id": "48", "profile_name": "IBM Cloud Best Practices Controls 1.0", "profile_type": "standard", "validation_result": {"goals_pass_count": 118, "goals_u2p_count": 16, "goals_na_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_na_count": 6, "controls_u2p_count": 16, "controls_total_count": 293}}, "group_profiles": {"group_profile_id": "1", "group_profile_name": "CIS Windows Server Benchmarks", "profile_type": "standard", "validation_result": {"goals_pass_count": 118, "goals_u2p_count": 16, "goals_na_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_na_count": 6, "controls_u2p_count": 16, "controls_total_count": 293}, "profiles": [{"profile_id": "48", "profile_name": "IBM Cloud Best Practices Controls 1.0", "profile_type": "standard", "validation_result": {"controls_pass_count": 117, "controls_fail_count": 154, "controls_na_count": 6, "controls_u2p_count": 16, "controls_total_count": 293}}]}}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/summaries?account_id=abcd1234&scope_id=4&group_profile_id=1&offset=10&limit=25"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/summaries?account_id=abcd1234&scope_id=4&group_profile_id=1&offset=30&limit=25"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/summaries?account_id=abcd1234&scope_id=4&group_profile_id=1&offset=10&limit=25"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v1/scans/validations/summaries?account_id=abcd1234&scope_id=4&group_profile_id=1?account_id=abcd1234&offset=10&limit=25"}, "summaries": [{"scan_id": "262", "scan_name": "IBM_Schema_Full - IBMCloudBestPractice", "scope_id": "21", "scope_name": "IBM_Schema_Full", "report_run_by": "controller", "start_time": "2020-09-23T12:45:24.000Z", "end_time": "2020-09-23T12:45:24.000Z", "status": "validation_completed", "profile": {"profile_id": "48", "profile_name": "IBM Cloud Best Practices Controls 1.0", "profile_type": "standard", "validation_result": {"goals_pass_count": 118, "goals_unable_to_perform_count": 16, "goals_not_applicable_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_not_applicable_count": 6, "controls_unable_to_perform_count": 16, "controls_total_count": 293}}, "group_profiles": {"group_profile_id": "1", "group_profile_name": "CIS Windows Server Benchmarks", "profile_type": "standard", "validation_result": {"goals_pass_count": 118, "goals_unable_to_perform_count": 16, "goals_not_applicable_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_not_applicable_count": 6, "controls_unable_to_perform_count": 16, "controls_total_count": 293}, "profiles": [{"profile_id": "48", "profile_name": "IBM Cloud Best Practices Controls 1.0", "profile_type": "standard", "validation_result": {"controls_pass_count": 117, "controls_fail_count": 154, "controls_not_applicable_count": 6, "controls_unable_to_perform_count": 16, "controls_total_count": 293}}]}}]}`)
 				}))
 			})
 			It(`Invoke ScanSummaries successfully`, func() {
@@ -1115,10 +1156,9 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Construct an instance of the ScanSummariesOptions model
 				scanSummariesOptionsModel := new(posturemanagementv1.ScanSummariesOptions)
+				scanSummariesOptionsModel.ProfileID = core.StringPtr("testString")
 				scanSummariesOptionsModel.ScopeID = core.StringPtr("testString")
 				scanSummariesOptionsModel.TransactionID = core.StringPtr("testString")
-				scanSummariesOptionsModel.ProfileID = core.StringPtr("testString")
-				scanSummariesOptionsModel.GroupProfileID = core.StringPtr("testString")
 				scanSummariesOptionsModel.Offset = core.Int64Ptr(int64(38))
 				scanSummariesOptionsModel.Limit = core.Int64Ptr(int64(100))
 				scanSummariesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1141,10 +1181,9 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Construct an instance of the ScanSummariesOptions model
 				scanSummariesOptionsModel := new(posturemanagementv1.ScanSummariesOptions)
+				scanSummariesOptionsModel.ProfileID = core.StringPtr("testString")
 				scanSummariesOptionsModel.ScopeID = core.StringPtr("testString")
 				scanSummariesOptionsModel.TransactionID = core.StringPtr("testString")
-				scanSummariesOptionsModel.ProfileID = core.StringPtr("testString")
-				scanSummariesOptionsModel.GroupProfileID = core.StringPtr("testString")
 				scanSummariesOptionsModel.Offset = core.Int64Ptr(int64(38))
 				scanSummariesOptionsModel.Limit = core.Int64Ptr(int64(100))
 				scanSummariesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1188,10 +1227,9 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Construct an instance of the ScanSummariesOptions model
 				scanSummariesOptionsModel := new(posturemanagementv1.ScanSummariesOptions)
+				scanSummariesOptionsModel.ProfileID = core.StringPtr("testString")
 				scanSummariesOptionsModel.ScopeID = core.StringPtr("testString")
 				scanSummariesOptionsModel.TransactionID = core.StringPtr("testString")
-				scanSummariesOptionsModel.ProfileID = core.StringPtr("testString")
-				scanSummariesOptionsModel.GroupProfileID = core.StringPtr("testString")
 				scanSummariesOptionsModel.Offset = core.Int64Ptr(int64(38))
 				scanSummariesOptionsModel.Limit = core.Int64Ptr(int64(100))
 				scanSummariesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1206,6 +1244,45 @@ var _ = Describe(`PostureManagementV1`, func() {
 			})
 			AfterEach(func() {
 				testServer.Close()
+			})
+		})
+		Context(`Test pagination helper method on response`, func() {
+			It(`Invoke GetNextOffset successfully`, func() {
+				responseObject := new(posturemanagementv1.SummariesList)
+				nextObject := new(posturemanagementv1.SummariesListNext)
+				nextObject.Href = core.StringPtr("ibm.com?offset=135")
+				responseObject.Next = nextObject
+
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
+			})
+			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
+				responseObject := new(posturemanagementv1.SummariesList)
+
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset without any query params in the "Next" URL`, func() {
+				responseObject := new(posturemanagementv1.SummariesList)
+				nextObject := new(posturemanagementv1.SummariesListNext)
+				nextObject.Href = core.StringPtr("ibm.com")
+				responseObject.Next = nextObject
+
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset with a non-integer query param in the "Next" URL`, func() {
+				responseObject := new(posturemanagementv1.SummariesList)
+				nextObject := new(posturemanagementv1.SummariesListNext)
+				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
+				responseObject.Next = nextObject
+
+				value, err := responseObject.GetNextOffset()
+				Expect(err).NotTo(BeNil())
+				Expect(value).To(BeNil())
 			})
 		})
 	})
@@ -1223,7 +1300,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["account_id"]).To(Equal([]string{"testString"}))
-					Expect(req.URL.Query()["name"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["offset"]).To(Equal([]string{fmt.Sprint(int64(38))}))
 					Expect(req.URL.Query()["limit"]).To(Equal([]string{fmt.Sprint(int64(100))}))
 					res.Header().Set("Content-type", "application/json")
@@ -1243,7 +1319,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the ListProfilesOptions model
 				listProfilesOptionsModel := new(posturemanagementv1.ListProfilesOptions)
 				listProfilesOptionsModel.TransactionID = core.StringPtr("testString")
-				listProfilesOptionsModel.Name = core.StringPtr("testString")
 				listProfilesOptionsModel.Offset = core.Int64Ptr(int64(38))
 				listProfilesOptionsModel.Limit = core.Int64Ptr(int64(100))
 				listProfilesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1280,7 +1355,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["account_id"]).To(Equal([]string{"testString"}))
-					Expect(req.URL.Query()["name"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["offset"]).To(Equal([]string{fmt.Sprint(int64(38))}))
 					Expect(req.URL.Query()["limit"]).To(Equal([]string{fmt.Sprint(int64(100))}))
 					// Sleep a short time to support a timeout test
@@ -1289,7 +1363,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v1/profiles?account_id=abcd1234&offset=10&limit=25"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v1/profiles?account_id=abcd1234&offset=30&limit=25"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v1/profiles?account_id=abcd1234&offset=10&limit=25"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v1/profiles?account_id=abcd1234&offset=10&limit=25"}, "profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "description": "CIS IBM Foundations Benchmark 1.0.0", "version": 1, "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "reason_for_delete": "ReasonForDelete", "applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}, "profile_id": "3045", "base_profile": "CIS IBM Foundations Benchmark 1.0.0", "profile_type": "predefined", "created_time": "2021-02-26T04:07:25.000Z", "modified_time": "2021-02-26T04:07:25.000Z", "enabled": true}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v1/profiles?account_id=abcd1234&offset=10&limit=25"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v1/profiles?account_id=abcd1234&offset=30&limit=25"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v1/profiles?account_id=abcd1234&offset=10&limit=25"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v1/profiles?account_id=abcd1234&offset=10&limit=25"}, "profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "description": "This profile contains controls for the CIS IBM Foundations Benchmark 1.0.0.", "version": 1, "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "reason_for_delete": "ReasonForDelete", "applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}, "profile_id": "3045", "base_profile": "CIS IBM Foundations Benchmark 1.0.0", "profile_type": "predefined", "created_time": "2021-02-26T04:07:25.000Z", "modified_time": "2021-02-26T04:07:25.000Z", "enabled": true}]}`)
 				}))
 			})
 			It(`Invoke ListProfiles successfully with retries`, func() {
@@ -1305,7 +1379,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the ListProfilesOptions model
 				listProfilesOptionsModel := new(posturemanagementv1.ListProfilesOptions)
 				listProfilesOptionsModel.TransactionID = core.StringPtr("testString")
-				listProfilesOptionsModel.Name = core.StringPtr("testString")
 				listProfilesOptionsModel.Offset = core.Int64Ptr(int64(38))
 				listProfilesOptionsModel.Limit = core.Int64Ptr(int64(100))
 				listProfilesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1347,13 +1420,12 @@ var _ = Describe(`PostureManagementV1`, func() {
 					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["account_id"]).To(Equal([]string{"testString"}))
-					Expect(req.URL.Query()["name"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["offset"]).To(Equal([]string{fmt.Sprint(int64(38))}))
 					Expect(req.URL.Query()["limit"]).To(Equal([]string{fmt.Sprint(int64(100))}))
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v1/profiles?account_id=abcd1234&offset=10&limit=25"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v1/profiles?account_id=abcd1234&offset=30&limit=25"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v1/profiles?account_id=abcd1234&offset=10&limit=25"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v1/profiles?account_id=abcd1234&offset=10&limit=25"}, "profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "description": "CIS IBM Foundations Benchmark 1.0.0", "version": 1, "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "reason_for_delete": "ReasonForDelete", "applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}, "profile_id": "3045", "base_profile": "CIS IBM Foundations Benchmark 1.0.0", "profile_type": "predefined", "created_time": "2021-02-26T04:07:25.000Z", "modified_time": "2021-02-26T04:07:25.000Z", "enabled": true}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v1/profiles?account_id=abcd1234&offset=10&limit=25"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v1/profiles?account_id=abcd1234&offset=30&limit=25"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v1/profiles?account_id=abcd1234&offset=10&limit=25"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v1/profiles?account_id=abcd1234&offset=10&limit=25"}, "profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "description": "This profile contains controls for the CIS IBM Foundations Benchmark 1.0.0.", "version": 1, "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "reason_for_delete": "ReasonForDelete", "applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}, "profile_id": "3045", "base_profile": "CIS IBM Foundations Benchmark 1.0.0", "profile_type": "predefined", "created_time": "2021-02-26T04:07:25.000Z", "modified_time": "2021-02-26T04:07:25.000Z", "enabled": true}]}`)
 				}))
 			})
 			It(`Invoke ListProfiles successfully`, func() {
@@ -1374,7 +1446,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the ListProfilesOptions model
 				listProfilesOptionsModel := new(posturemanagementv1.ListProfilesOptions)
 				listProfilesOptionsModel.TransactionID = core.StringPtr("testString")
-				listProfilesOptionsModel.Name = core.StringPtr("testString")
 				listProfilesOptionsModel.Offset = core.Int64Ptr(int64(38))
 				listProfilesOptionsModel.Limit = core.Int64Ptr(int64(100))
 				listProfilesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1398,7 +1469,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the ListProfilesOptions model
 				listProfilesOptionsModel := new(posturemanagementv1.ListProfilesOptions)
 				listProfilesOptionsModel.TransactionID = core.StringPtr("testString")
-				listProfilesOptionsModel.Name = core.StringPtr("testString")
 				listProfilesOptionsModel.Offset = core.Int64Ptr(int64(38))
 				listProfilesOptionsModel.Limit = core.Int64Ptr(int64(100))
 				listProfilesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1436,7 +1506,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the ListProfilesOptions model
 				listProfilesOptionsModel := new(posturemanagementv1.ListProfilesOptions)
 				listProfilesOptionsModel.TransactionID = core.StringPtr("testString")
-				listProfilesOptionsModel.Name = core.StringPtr("testString")
 				listProfilesOptionsModel.Offset = core.Int64Ptr(int64(38))
 				listProfilesOptionsModel.Limit = core.Int64Ptr(int64(100))
 				listProfilesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1451,6 +1520,45 @@ var _ = Describe(`PostureManagementV1`, func() {
 			})
 			AfterEach(func() {
 				testServer.Close()
+			})
+		})
+		Context(`Test pagination helper method on response`, func() {
+			It(`Invoke GetNextOffset successfully`, func() {
+				responseObject := new(posturemanagementv1.ProfilesList)
+				nextObject := new(posturemanagementv1.ProfilesListNext)
+				nextObject.Href = core.StringPtr("ibm.com?offset=135")
+				responseObject.Next = nextObject
+
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
+			})
+			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
+				responseObject := new(posturemanagementv1.ProfilesList)
+
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset without any query params in the "Next" URL`, func() {
+				responseObject := new(posturemanagementv1.ProfilesList)
+				nextObject := new(posturemanagementv1.ProfilesListNext)
+				nextObject.Href = core.StringPtr("ibm.com")
+				responseObject.Next = nextObject
+
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset with a non-integer query param in the "Next" URL`, func() {
+				responseObject := new(posturemanagementv1.ProfilesList)
+				nextObject := new(posturemanagementv1.ProfilesListNext)
+				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
+				responseObject.Next = nextObject
+
+				value, err := responseObject.GetNextOffset()
+				Expect(err).NotTo(BeNil())
+				Expect(value).To(BeNil())
 			})
 		})
 	})
@@ -1484,8 +1592,8 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Construct an instance of the CreateScopeOptions model
 				createScopeOptionsModel := new(posturemanagementv1.CreateScopeOptions)
-				createScopeOptionsModel.ScopeName = core.StringPtr("IBM-Scope-new-048-test")
-				createScopeOptionsModel.ScopeDescription = core.StringPtr("IBM Scope Example")
+				createScopeOptionsModel.ScopeName = core.StringPtr("IBMSchema-new-048-test")
+				createScopeOptionsModel.ScopeDescription = core.StringPtr("IBMSchema")
 				createScopeOptionsModel.CollectorIds = []string{"20"}
 				createScopeOptionsModel.CredentialID = core.StringPtr("5")
 				createScopeOptionsModel.EnvironmentType = core.StringPtr("ibm")
@@ -1546,7 +1654,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"scope_id": "My_Example_Scope", "scope_name": "My_Example_Scope", "scope_description": "This scope targets all of the resources that are available in our IBM Cloud staging environment.", "collector_ids": ["CollectorIds"], "credential_id": "IBM Cloud Tn03", "environment_type": "ibm", "created_time": "2021-02-26T04:07:25.000Z", "modified_time": "2021-02-26T04:07:25.000Z"}`)
+					fmt.Fprintf(res, "%s", `{"scope_id": "5", "scope_name": "My_Example_Scope", "scope_description": "This scope targets all of the resources that are available in our IBM Cloud staging environment.", "collector_ids": ["CollectorIds"], "credential_id": "IBM Cloud Tn03", "environment_type": "ibm", "created_time": "2021-02-26T04:07:25.000Z", "modified_time": "2021-02-26T04:07:25.000Z"}`)
 				}))
 			})
 			It(`Invoke CreateScope successfully with retries`, func() {
@@ -1561,8 +1669,8 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Construct an instance of the CreateScopeOptions model
 				createScopeOptionsModel := new(posturemanagementv1.CreateScopeOptions)
-				createScopeOptionsModel.ScopeName = core.StringPtr("IBM-Scope-new-048-test")
-				createScopeOptionsModel.ScopeDescription = core.StringPtr("IBM Scope Example")
+				createScopeOptionsModel.ScopeName = core.StringPtr("IBMSchema-new-048-test")
+				createScopeOptionsModel.ScopeDescription = core.StringPtr("IBMSchema")
 				createScopeOptionsModel.CollectorIds = []string{"20"}
 				createScopeOptionsModel.CredentialID = core.StringPtr("5")
 				createScopeOptionsModel.EnvironmentType = core.StringPtr("ibm")
@@ -1625,7 +1733,7 @@ var _ = Describe(`PostureManagementV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"scope_id": "My_Example_Scope", "scope_name": "My_Example_Scope", "scope_description": "This scope targets all of the resources that are available in our IBM Cloud staging environment.", "collector_ids": ["CollectorIds"], "credential_id": "IBM Cloud Tn03", "environment_type": "ibm", "created_time": "2021-02-26T04:07:25.000Z", "modified_time": "2021-02-26T04:07:25.000Z"}`)
+					fmt.Fprintf(res, "%s", `{"scope_id": "5", "scope_name": "My_Example_Scope", "scope_description": "This scope targets all of the resources that are available in our IBM Cloud staging environment.", "collector_ids": ["CollectorIds"], "credential_id": "IBM Cloud Tn03", "environment_type": "ibm", "created_time": "2021-02-26T04:07:25.000Z", "modified_time": "2021-02-26T04:07:25.000Z"}`)
 				}))
 			})
 			It(`Invoke CreateScope successfully`, func() {
@@ -1645,8 +1753,8 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Construct an instance of the CreateScopeOptions model
 				createScopeOptionsModel := new(posturemanagementv1.CreateScopeOptions)
-				createScopeOptionsModel.ScopeName = core.StringPtr("IBM-Scope-new-048-test")
-				createScopeOptionsModel.ScopeDescription = core.StringPtr("IBM Scope Example")
+				createScopeOptionsModel.ScopeName = core.StringPtr("IBMSchema-new-048-test")
+				createScopeOptionsModel.ScopeDescription = core.StringPtr("IBMSchema")
 				createScopeOptionsModel.CollectorIds = []string{"20"}
 				createScopeOptionsModel.CredentialID = core.StringPtr("5")
 				createScopeOptionsModel.EnvironmentType = core.StringPtr("ibm")
@@ -1671,8 +1779,8 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Construct an instance of the CreateScopeOptions model
 				createScopeOptionsModel := new(posturemanagementv1.CreateScopeOptions)
-				createScopeOptionsModel.ScopeName = core.StringPtr("IBM-Scope-new-048-test")
-				createScopeOptionsModel.ScopeDescription = core.StringPtr("IBM Scope Example")
+				createScopeOptionsModel.ScopeName = core.StringPtr("IBMSchema-new-048-test")
+				createScopeOptionsModel.ScopeDescription = core.StringPtr("IBMSchema")
 				createScopeOptionsModel.CollectorIds = []string{"20"}
 				createScopeOptionsModel.CredentialID = core.StringPtr("5")
 				createScopeOptionsModel.EnvironmentType = core.StringPtr("ibm")
@@ -1711,8 +1819,8 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Construct an instance of the CreateScopeOptions model
 				createScopeOptionsModel := new(posturemanagementv1.CreateScopeOptions)
-				createScopeOptionsModel.ScopeName = core.StringPtr("IBM-Scope-new-048-test")
-				createScopeOptionsModel.ScopeDescription = core.StringPtr("IBM Scope Example")
+				createScopeOptionsModel.ScopeName = core.StringPtr("IBMSchema-new-048-test")
+				createScopeOptionsModel.ScopeDescription = core.StringPtr("IBMSchema")
 				createScopeOptionsModel.CollectorIds = []string{"20"}
 				createScopeOptionsModel.CredentialID = core.StringPtr("5")
 				createScopeOptionsModel.EnvironmentType = core.StringPtr("ibm")
@@ -1746,7 +1854,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["account_id"]).To(Equal([]string{"testString"}))
-					Expect(req.URL.Query()["name"]).To(Equal([]string{"testString"}))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
 					fmt.Fprintf(res, `} this is not valid json {`)
@@ -1764,7 +1871,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the ListScopesOptions model
 				listScopesOptionsModel := new(posturemanagementv1.ListScopesOptions)
 				listScopesOptionsModel.TransactionID = core.StringPtr("testString")
-				listScopesOptionsModel.Name = core.StringPtr("testString")
 				listScopesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
 				result, response, operationErr := postureManagementService.ListScopes(listScopesOptionsModel)
@@ -1799,7 +1905,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["account_id"]).To(Equal([]string{"testString"}))
-					Expect(req.URL.Query()["name"]).To(Equal([]string{"testString"}))
 					// Sleep a short time to support a timeout test
 					time.Sleep(100 * time.Millisecond)
 
@@ -1822,7 +1927,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the ListScopesOptions model
 				listScopesOptionsModel := new(posturemanagementv1.ListScopesOptions)
 				listScopesOptionsModel.TransactionID = core.StringPtr("testString")
-				listScopesOptionsModel.Name = core.StringPtr("testString")
 				listScopesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with a Context to test a timeout error
@@ -1862,7 +1966,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					Expect(req.URL.Query()["account_id"]).To(Equal([]string{"testString"}))
-					Expect(req.URL.Query()["name"]).To(Equal([]string{"testString"}))
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
@@ -1887,7 +1990,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the ListScopesOptions model
 				listScopesOptionsModel := new(posturemanagementv1.ListScopesOptions)
 				listScopesOptionsModel.TransactionID = core.StringPtr("testString")
-				listScopesOptionsModel.Name = core.StringPtr("testString")
 				listScopesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
@@ -1909,7 +2011,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the ListScopesOptions model
 				listScopesOptionsModel := new(posturemanagementv1.ListScopesOptions)
 				listScopesOptionsModel.TransactionID = core.StringPtr("testString")
-				listScopesOptionsModel.Name = core.StringPtr("testString")
 				listScopesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
 				err := postureManagementService.SetServiceURL("")
@@ -1945,7 +2046,6 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the ListScopesOptions model
 				listScopesOptionsModel := new(posturemanagementv1.ListScopesOptions)
 				listScopesOptionsModel.TransactionID = core.StringPtr("testString")
-				listScopesOptionsModel.Name = core.StringPtr("testString")
 				listScopesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation
@@ -2521,16 +2621,16 @@ var _ = Describe(`PostureManagementV1`, func() {
 			It(`Invoke NewCreateScopeOptions successfully`, func() {
 				// Construct an instance of the CreateScopeOptions model
 				createScopeOptionsModel := postureManagementService.NewCreateScopeOptions()
-				createScopeOptionsModel.SetScopeName("IBM-Scope-new-048-test")
-				createScopeOptionsModel.SetScopeDescription("IBM Scope Example")
+				createScopeOptionsModel.SetScopeName("IBMSchema-new-048-test")
+				createScopeOptionsModel.SetScopeDescription("IBMSchema")
 				createScopeOptionsModel.SetCollectorIds([]string{"20"})
 				createScopeOptionsModel.SetCredentialID("5")
 				createScopeOptionsModel.SetEnvironmentType("ibm")
 				createScopeOptionsModel.SetTransactionID("testString")
 				createScopeOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(createScopeOptionsModel).ToNot(BeNil())
-				Expect(createScopeOptionsModel.ScopeName).To(Equal(core.StringPtr("IBM-Scope-new-048-test")))
-				Expect(createScopeOptionsModel.ScopeDescription).To(Equal(core.StringPtr("IBM Scope Example")))
+				Expect(createScopeOptionsModel.ScopeName).To(Equal(core.StringPtr("IBMSchema-new-048-test")))
+				Expect(createScopeOptionsModel.ScopeDescription).To(Equal(core.StringPtr("IBMSchema")))
 				Expect(createScopeOptionsModel.CollectorIds).To(Equal([]string{"20"}))
 				Expect(createScopeOptionsModel.CredentialID).To(Equal(core.StringPtr("5")))
 				Expect(createScopeOptionsModel.EnvironmentType).To(Equal(core.StringPtr("ibm")))
@@ -2539,7 +2639,9 @@ var _ = Describe(`PostureManagementV1`, func() {
 			})
 			It(`Invoke NewCreateValidationOptions successfully`, func() {
 				// Construct an instance of the CreateValidationOptions model
-				createValidationOptionsModel := postureManagementService.NewCreateValidationOptions()
+				createValidationOptionsScopeID := "1"
+				createValidationOptionsProfileID := "6"
+				createValidationOptionsModel := postureManagementService.NewCreateValidationOptions(createValidationOptionsScopeID, createValidationOptionsProfileID)
 				createValidationOptionsModel.SetScopeID("1")
 				createValidationOptionsModel.SetProfileID("6")
 				createValidationOptionsModel.SetGroupProfileID("13")
@@ -2556,13 +2658,11 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the ListLatestScansOptions model
 				listLatestScansOptionsModel := postureManagementService.NewListLatestScansOptions()
 				listLatestScansOptionsModel.SetTransactionID("testString")
-				listLatestScansOptionsModel.SetName("testString")
 				listLatestScansOptionsModel.SetOffset(int64(38))
 				listLatestScansOptionsModel.SetLimit(int64(100))
 				listLatestScansOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(listLatestScansOptionsModel).ToNot(BeNil())
 				Expect(listLatestScansOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
-				Expect(listLatestScansOptionsModel.Name).To(Equal(core.StringPtr("testString")))
 				Expect(listLatestScansOptionsModel.Offset).To(Equal(core.Int64Ptr(int64(38))))
 				Expect(listLatestScansOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(100))))
 				Expect(listLatestScansOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
@@ -2571,13 +2671,11 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the ListProfilesOptions model
 				listProfilesOptionsModel := postureManagementService.NewListProfilesOptions()
 				listProfilesOptionsModel.SetTransactionID("testString")
-				listProfilesOptionsModel.SetName("testString")
 				listProfilesOptionsModel.SetOffset(int64(38))
 				listProfilesOptionsModel.SetLimit(int64(100))
 				listProfilesOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(listProfilesOptionsModel).ToNot(BeNil())
 				Expect(listProfilesOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
-				Expect(listProfilesOptionsModel.Name).To(Equal(core.StringPtr("testString")))
 				Expect(listProfilesOptionsModel.Offset).To(Equal(core.Int64Ptr(int64(38))))
 				Expect(listProfilesOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(100))))
 				Expect(listProfilesOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
@@ -2586,29 +2684,26 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Construct an instance of the ListScopesOptions model
 				listScopesOptionsModel := postureManagementService.NewListScopesOptions()
 				listScopesOptionsModel.SetTransactionID("testString")
-				listScopesOptionsModel.SetName("testString")
 				listScopesOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(listScopesOptionsModel).ToNot(BeNil())
 				Expect(listScopesOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
-				Expect(listScopesOptionsModel.Name).To(Equal(core.StringPtr("testString")))
 				Expect(listScopesOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewScanSummariesOptions successfully`, func() {
 				// Construct an instance of the ScanSummariesOptions model
+				profileID := "testString"
 				scopeID := "testString"
-				scanSummariesOptionsModel := postureManagementService.NewScanSummariesOptions(scopeID)
+				scanSummariesOptionsModel := postureManagementService.NewScanSummariesOptions(profileID, scopeID)
+				scanSummariesOptionsModel.SetProfileID("testString")
 				scanSummariesOptionsModel.SetScopeID("testString")
 				scanSummariesOptionsModel.SetTransactionID("testString")
-				scanSummariesOptionsModel.SetProfileID("testString")
-				scanSummariesOptionsModel.SetGroupProfileID("testString")
 				scanSummariesOptionsModel.SetOffset(int64(38))
 				scanSummariesOptionsModel.SetLimit(int64(100))
 				scanSummariesOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(scanSummariesOptionsModel).ToNot(BeNil())
+				Expect(scanSummariesOptionsModel.ProfileID).To(Equal(core.StringPtr("testString")))
 				Expect(scanSummariesOptionsModel.ScopeID).To(Equal(core.StringPtr("testString")))
 				Expect(scanSummariesOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
-				Expect(scanSummariesOptionsModel.ProfileID).To(Equal(core.StringPtr("testString")))
-				Expect(scanSummariesOptionsModel.GroupProfileID).To(Equal(core.StringPtr("testString")))
 				Expect(scanSummariesOptionsModel.Offset).To(Equal(core.Int64Ptr(int64(38))))
 				Expect(scanSummariesOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(100))))
 				Expect(scanSummariesOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
@@ -2616,17 +2711,16 @@ var _ = Describe(`PostureManagementV1`, func() {
 			It(`Invoke NewScansSummaryOptions successfully`, func() {
 				// Construct an instance of the ScansSummaryOptions model
 				scanID := "testString"
-				scansSummaryOptionsModel := postureManagementService.NewScansSummaryOptions(scanID)
+				profileID := "testString"
+				scansSummaryOptionsModel := postureManagementService.NewScansSummaryOptions(scanID, profileID)
 				scansSummaryOptionsModel.SetScanID("testString")
 				scansSummaryOptionsModel.SetProfileID("testString")
 				scansSummaryOptionsModel.SetTransactionID("testString")
-				scansSummaryOptionsModel.SetName("testString")
 				scansSummaryOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(scansSummaryOptionsModel).ToNot(BeNil())
 				Expect(scansSummaryOptionsModel.ScanID).To(Equal(core.StringPtr("testString")))
 				Expect(scansSummaryOptionsModel.ProfileID).To(Equal(core.StringPtr("testString")))
 				Expect(scansSummaryOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
-				Expect(scansSummaryOptionsModel.Name).To(Equal(core.StringPtr("testString")))
 				Expect(scansSummaryOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 		})

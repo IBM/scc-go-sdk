@@ -25,8 +25,6 @@ import (
 
 	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/IBM/scc-go-sdk/posturemanagementv1"
-	. "github.com/onsi/ginkgo"
-	. "github.com/onsi/gomega"
 )
 
 //
@@ -128,7 +126,10 @@ var _ = Describe(`PostureManagementV1 Examples Tests`, func() {
 			fmt.Println("\nCreateValidation() result:")
 			// begin-create_validation
 
-			createValidationOptions := postureManagementService.NewCreateValidationOptions()
+			createValidationOptions := postureManagementService.NewCreateValidationOptions(
+				"1",
+				"6",
+			)
 
 			result, response, err := postureManagementService.CreateValidation(createValidationOptions)
 			if err != nil {
@@ -149,6 +150,7 @@ var _ = Describe(`PostureManagementV1 Examples Tests`, func() {
 			// begin-scans_summary
 
 			scansSummaryOptions := postureManagementService.NewScansSummaryOptions(
+				"testString",
 				"testString",
 			)
 
@@ -171,6 +173,7 @@ var _ = Describe(`PostureManagementV1 Examples Tests`, func() {
 			// begin-scan_summaries
 
 			scanSummariesOptions := postureManagementService.NewScanSummariesOptions(
+				"testString",
 				"testString",
 			)
 
@@ -213,8 +216,8 @@ var _ = Describe(`PostureManagementV1 Examples Tests`, func() {
 			// begin-create_scope
 
 			createScopeOptions := postureManagementService.NewCreateScopeOptions()
-			createScopeOptions.SetScopeName("IBM-Scope-new-048-test")
-			createScopeOptions.SetScopeDescription("IBM Scope Example")
+			createScopeOptions.SetScopeName("IBMSchema-new-048-test")
+			createScopeOptions.SetScopeDescription("IBMSchema")
 			createScopeOptions.SetCollectorIds([]string{"20"})
 			createScopeOptions.SetCredentialID("5")
 			createScopeOptions.SetEnvironmentType("ibm")

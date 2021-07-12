@@ -15,7 +15,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
+ * IBM OpenAPI SDK Code Generator Version: 3.35.1-e449803c-20210628-211617
  */
 
 // Package posturemanagementv1 : Operations and models for the PostureManagementV1 service
@@ -28,6 +28,7 @@ import (
 	"io"
 	"net/http"
 	"reflect"
+	"strconv"
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
@@ -52,6 +53,12 @@ const DefaultServiceURL = "https://us.compliance.cloud.ibm.com"
 
 // DefaultServiceName is the default key used to find external configuration information.
 const DefaultServiceName = "posture_management"
+
+const ParameterizedServiceURL = "https://{environment}.cloud.ibm.com"
+
+var defaultUrlVariables = map[string]string{
+	"environment": "us.compliance",
+}
 
 // PostureManagementV1Options : Service options
 type PostureManagementV1Options struct {
@@ -139,6 +146,11 @@ func (postureManagement *PostureManagementV1) Clone() *PostureManagementV1 {
 	return &clone
 }
 
+// ConstructServiceURL constructs a service URL from the parameterized URL.
+func ConstructServiceURL(providedUrlVariables map[string]string) (string, error) {
+	return core.ConstructServiceURL(ParameterizedServiceURL, defaultUrlVariables, providedUrlVariables)
+}
+
 // SetServiceURL sets the service URL
 func (postureManagement *PostureManagementV1) SetServiceURL(url string) error {
 	return postureManagement.Service.SetServiceURL(url)
@@ -176,8 +188,7 @@ func (postureManagement *PostureManagementV1) DisableRetries() {
 }
 
 // ListLatestScans : List latest scans
-// List all of the latest scans that are available in your account. Lastest scans for every scope and profile
-// combinations is populated.
+// List the last scan results that are available in your account for each profile and scope combination.
 func (postureManagement *PostureManagementV1) ListLatestScans(listLatestScansOptions *ListLatestScansOptions) (result *ScansList, response *core.DetailedResponse, err error) {
 	return postureManagement.ListLatestScansWithContext(context.Background(), listLatestScansOptions)
 }
@@ -211,9 +222,6 @@ func (postureManagement *PostureManagementV1) ListLatestScansWithContext(ctx con
 	}
 
 	builder.AddQuery("account_id", fmt.Sprint(*postureManagement.AccountID))
-	if listLatestScansOptions.Name != nil {
-		builder.AddQuery("name", fmt.Sprint(*listLatestScansOptions.Name))
-	}
 	if listLatestScansOptions.Offset != nil {
 		builder.AddQuery("offset", fmt.Sprint(*listLatestScansOptions.Offset))
 	}
@@ -322,7 +330,7 @@ func (postureManagement *PostureManagementV1) CreateValidationWithContext(ctx co
 	return
 }
 
-// ScansSummary : Retrieve the summary of a specific scan
+// ScansSummary : View a specified scan
 // Retrieve the results summary of a validation scan by specifying a scan and profile ID combination. To obtain your
 // profile ID and scan ID for your most recent scan, make a GET request to the
 // "/posture/v1/scans/validations/latest_scans" endpoint.
@@ -367,12 +375,7 @@ func (postureManagement *PostureManagementV1) ScansSummaryWithContext(ctx contex
 	}
 
 	builder.AddQuery("account_id", fmt.Sprint(*postureManagement.AccountID))
-	if scansSummaryOptions.ProfileID != nil {
-		builder.AddQuery("profile_id", fmt.Sprint(*scansSummaryOptions.ProfileID))
-	}
-	if scansSummaryOptions.Name != nil {
-		builder.AddQuery("name", fmt.Sprint(*scansSummaryOptions.Name))
-	}
+	builder.AddQuery("profile_id", fmt.Sprint(*scansSummaryOptions.ProfileID))
 
 	request, err := builder.Build()
 	if err != nil {
@@ -395,8 +398,8 @@ func (postureManagement *PostureManagementV1) ScansSummaryWithContext(ctx contex
 	return
 }
 
-// ScanSummaries : List the validation summaries for a scan
-// List all of the historical and current validation summaries for a specific scan.
+// ScanSummaries : View scan summaries
+// List all of the previous and current validation summaries for a specific scan.
 func (postureManagement *PostureManagementV1) ScanSummaries(scanSummariesOptions *ScanSummariesOptions) (result *SummariesList, response *core.DetailedResponse, err error) {
 	return postureManagement.ScanSummariesWithContext(context.Background(), scanSummariesOptions)
 }
@@ -433,14 +436,9 @@ func (postureManagement *PostureManagementV1) ScanSummariesWithContext(ctx conte
 		builder.AddHeader("Transaction-Id", fmt.Sprint(*scanSummariesOptions.TransactionID))
 	}
 
-	builder.AddQuery("scope_id", fmt.Sprint(*scanSummariesOptions.ScopeID))
 	builder.AddQuery("account_id", fmt.Sprint(*postureManagement.AccountID))
-	if scanSummariesOptions.ProfileID != nil {
-		builder.AddQuery("profile_id", fmt.Sprint(*scanSummariesOptions.ProfileID))
-	}
-	if scanSummariesOptions.GroupProfileID != nil {
-		builder.AddQuery("group_profile_id", fmt.Sprint(*scanSummariesOptions.GroupProfileID))
-	}
+	builder.AddQuery("profile_id", fmt.Sprint(*scanSummariesOptions.ProfileID))
+	builder.AddQuery("scope_id", fmt.Sprint(*scanSummariesOptions.ScopeID))
 	if scanSummariesOptions.Offset != nil {
 		builder.AddQuery("offset", fmt.Sprint(*scanSummariesOptions.Offset))
 	}
@@ -504,9 +502,6 @@ func (postureManagement *PostureManagementV1) ListProfilesWithContext(ctx contex
 	}
 
 	builder.AddQuery("account_id", fmt.Sprint(*postureManagement.AccountID))
-	if listProfilesOptions.Name != nil {
-		builder.AddQuery("name", fmt.Sprint(*listProfilesOptions.Name))
-	}
 	if listProfilesOptions.Offset != nil {
 		builder.AddQuery("offset", fmt.Sprint(*listProfilesOptions.Offset))
 	}
@@ -536,7 +531,7 @@ func (postureManagement *PostureManagementV1) ListProfilesWithContext(ctx contex
 }
 
 // CreateScope : Create a scope
-// Creating a scope lets you determine your security and compliance score across a specific area of your business.
+// A scope is the selection of resources that you want to validate the configuration of.
 func (postureManagement *PostureManagementV1) CreateScope(createScopeOptions *CreateScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
 	return postureManagement.CreateScopeWithContext(context.Background(), createScopeOptions)
 }
@@ -653,9 +648,6 @@ func (postureManagement *PostureManagementV1) ListScopesWithContext(ctx context.
 	}
 
 	builder.AddQuery("account_id", fmt.Sprint(*postureManagement.AccountID))
-	if listScopesOptions.Name != nil {
-		builder.AddQuery("name", fmt.Sprint(*listScopesOptions.Name))
-	}
 
 	request, err := builder.Build()
 	if err != nil {
@@ -679,7 +671,8 @@ func (postureManagement *PostureManagementV1) ListScopesWithContext(ctx context.
 }
 
 // CreateCollector : Create a collector
-// Create a collector to fetch the configuration of your cloud environment and perform a validation afterwards.
+// Create a collector to fetch the configuration information of your resources and then validate it by using a specified
+// profile.
 func (postureManagement *PostureManagementV1) CreateCollector(createCollectorOptions *CreateCollectorOptions) (result *Collector, response *core.DetailedResponse, err error) {
 	return postureManagement.CreateCollectorWithContext(context.Background(), createCollectorOptions)
 }
@@ -762,8 +755,8 @@ func (postureManagement *PostureManagementV1) CreateCollectorWithContext(ctx con
 }
 
 // CreateCredential : Create a credential
-// Create a credential that can be used by a collector to gather information about your resource configurations, assess
-// them, and initiate any remediation where possible.
+// Add an existing credential that can be used by a collector to access your resources in order to gather information
+// about your configurations, validate them, and initiate any remediation where possible.
 func (postureManagement *PostureManagementV1) CreateCredential(createCredentialOptions *CreateCredentialOptions) (result *Credential, response *core.DetailedResponse, err error) {
 	return postureManagement.CreateCredentialWithContext(context.Background(), createCredentialOptions)
 }
@@ -948,8 +941,8 @@ func UnmarshalCollector(m map[string]json.RawMessage, result interface{}) (err e
 	return
 }
 
-// Controls : A scans summary controls.
-type Controls struct {
+// Control : A scans summary controls.
+type Control struct {
 	// The scan summary control ID.
 	ControlID *string `json:"control_id,omitempty"`
 
@@ -963,15 +956,22 @@ type Controls struct {
 	ControlDesciption *string `json:"control_desciption,omitempty"`
 
 	// The list of goals on the control.
-	Goals []Goals `json:"goals,omitempty"`
+	Goals []Goal `json:"goals,omitempty"`
 
 	// A scans summary controls.
 	ResourceStatistics *ResourceStatistics `json:"resource_statistics,omitempty"`
 }
 
-// UnmarshalControls unmarshals an instance of Controls from the specified map of raw messages.
-func UnmarshalControls(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(Controls)
+// Constants associated with the Control.Status property.
+// The control status.
+const (
+	ControlStatusPassConst            = "pass"
+	ControlStatusUnableToPerformConst = "unable_to_perform"
+)
+
+// UnmarshalControl unmarshals an instance of Control from the specified map of raw messages.
+func UnmarshalControl(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(Control)
 	err = core.UnmarshalPrimitive(m, "control_id", &obj.ControlID)
 	if err != nil {
 		return
@@ -988,7 +988,7 @@ func UnmarshalControls(m map[string]json.RawMessage, result interface{}) (err er
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(m, "goals", &obj.Goals, UnmarshalGoals)
+	err = core.UnmarshalModel(m, "goals", &obj.Goals, UnmarshalGoal)
 	if err != nil {
 		return
 	}
@@ -1228,10 +1228,10 @@ func (options *CreateScopeOptions) SetHeaders(param map[string]string) *CreateSc
 // CreateValidationOptions : The CreateValidation options.
 type CreateValidationOptions struct {
 	// The unique ID of the scope.
-	ScopeID *string
+	ScopeID *string `validate:"required"`
 
 	// The unique ID of the profile.
-	ProfileID *string
+	ProfileID *string `validate:"required"`
 
 	// The ID of the profile group.
 	GroupProfileID *string
@@ -1245,8 +1245,11 @@ type CreateValidationOptions struct {
 }
 
 // NewCreateValidationOptions : Instantiate CreateValidationOptions
-func (*PostureManagementV1) NewCreateValidationOptions() *CreateValidationOptions {
-	return &CreateValidationOptions{}
+func (*PostureManagementV1) NewCreateValidationOptions(scopeID string, profileID string) *CreateValidationOptions {
+	return &CreateValidationOptions{
+		ScopeID:   core.StringPtr(scopeID),
+		ProfileID: core.StringPtr(profileID),
+	}
 }
 
 // SetScopeID : Allow user to set ScopeID
@@ -1303,6 +1306,79 @@ func UnmarshalCredential(m map[string]json.RawMessage, result interface{}) (err 
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "created_time", &obj.CreatedTime)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// Goal : The goals on goals list.
+type Goal struct {
+	// The description of the goal.
+	GoalDescription *string `json:"goal_description,omitempty"`
+
+	// The goal ID.
+	GoalID *string `json:"goal_id,omitempty"`
+
+	// The goal status.
+	Status *string `json:"status,omitempty"`
+
+	// The severity of the goal.
+	Severity *string `json:"severity,omitempty"`
+
+	// The report completed time.
+	CompletedTime *strfmt.DateTime `json:"completed_time,omitempty"`
+
+	// The error on goal validation.
+	Error *string `json:"error,omitempty"`
+
+	// The list of resource results.
+	ResourceResult []ResourceResult `json:"resource_result,omitempty"`
+
+	// The criteria that defines how a profile applies.
+	GoalApplicabilityCriteria *GoalApplicabilityCriteria `json:"goal_applicability_criteria,omitempty"`
+}
+
+// Constants associated with the Goal.Status property.
+// The goal status.
+const (
+	GoalStatusFailConst = "fail"
+	GoalStatusPassConst = "pass"
+)
+
+// UnmarshalGoal unmarshals an instance of Goal from the specified map of raw messages.
+func UnmarshalGoal(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(Goal)
+	err = core.UnmarshalPrimitive(m, "goal_description", &obj.GoalDescription)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "goal_id", &obj.GoalID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "severity", &obj.Severity)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "completed_time", &obj.CompletedTime)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "error", &obj.Error)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "resource_result", &obj.ResourceResult, UnmarshalResourceResult)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "goal_applicability_criteria", &obj.GoalApplicabilityCriteria, UnmarshalGoalApplicabilityCriteria)
 	if err != nil {
 		return
 	}
@@ -1411,72 +1487,6 @@ func UnmarshalGoalApplicabilityCriteria(m map[string]json.RawMessage, result int
 	return
 }
 
-// Goals : The goals on goals list.
-type Goals struct {
-	// The description of the goal.
-	GoalDescription *string `json:"goal_description,omitempty"`
-
-	// The goal ID.
-	GoalID *string `json:"goal_id,omitempty"`
-
-	// The goal status.
-	Status *string `json:"status,omitempty"`
-
-	// The severity of the goal.
-	Severity *string `json:"severity,omitempty"`
-
-	// The report completed time.
-	CompletedTime *strfmt.DateTime `json:"completed_time,omitempty"`
-
-	// The error on goal validation.
-	Error *string `json:"error,omitempty"`
-
-	// The list of resource results.
-	ResourceResult []ResourceResult `json:"resource_result,omitempty"`
-
-	// The criteria that defines how a profile applies.
-	GoalApplicabilityCriteria *GoalApplicabilityCriteria `json:"goal_applicability_criteria,omitempty"`
-}
-
-// UnmarshalGoals unmarshals an instance of Goals from the specified map of raw messages.
-func UnmarshalGoals(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(Goals)
-	err = core.UnmarshalPrimitive(m, "goal_description", &obj.GoalDescription)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "goal_id", &obj.GoalID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "severity", &obj.Severity)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "completed_time", &obj.CompletedTime)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "error", &obj.Error)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalModel(m, "resource_result", &obj.ResourceResult, UnmarshalResourceResult)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalModel(m, "goal_applicability_criteria", &obj.GoalApplicabilityCriteria, UnmarshalGoalApplicabilityCriteria)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
 // GroupProfileResult : The result of a group profile.
 type GroupProfileResult struct {
 	// The group ID of profile.
@@ -1541,13 +1551,10 @@ type ListLatestScansOptions struct {
 	// sends a transaction ID as a response header of the request.
 	TransactionID *string
 
-	// The name of the scan.
-	Name *string
-
 	// The offset of the profiles.
 	Offset *int64
 
-	// The number of profiles that are included per page?.
+	// The number of profiles that are included per page.
 	Limit *int64
 
 	// Allows users to set headers on API requests
@@ -1562,12 +1569,6 @@ func (*PostureManagementV1) NewListLatestScansOptions() *ListLatestScansOptions 
 // SetTransactionID : Allow user to set TransactionID
 func (_options *ListLatestScansOptions) SetTransactionID(transactionID string) *ListLatestScansOptions {
 	_options.TransactionID = core.StringPtr(transactionID)
-	return _options
-}
-
-// SetName : Allow user to set Name
-func (_options *ListLatestScansOptions) SetName(name string) *ListLatestScansOptions {
-	_options.Name = core.StringPtr(name)
 	return _options
 }
 
@@ -1595,13 +1596,10 @@ type ListProfilesOptions struct {
 	// sends a transaction ID as a response header of the request.
 	TransactionID *string
 
-	// The name of the profile to be filtered.
-	Name *string
-
 	// The offset of the profiles.
 	Offset *int64
 
-	// The number of profiles that are included per page?.
+	// The number of profiles that are included per page.
 	Limit *int64
 
 	// Allows users to set headers on API requests
@@ -1616,12 +1614,6 @@ func (*PostureManagementV1) NewListProfilesOptions() *ListProfilesOptions {
 // SetTransactionID : Allow user to set TransactionID
 func (_options *ListProfilesOptions) SetTransactionID(transactionID string) *ListProfilesOptions {
 	_options.TransactionID = core.StringPtr(transactionID)
-	return _options
-}
-
-// SetName : Allow user to set Name
-func (_options *ListProfilesOptions) SetName(name string) *ListProfilesOptions {
-	_options.Name = core.StringPtr(name)
 	return _options
 }
 
@@ -1649,9 +1641,6 @@ type ListScopesOptions struct {
 	// sends a transaction ID as a response header of the request.
 	TransactionID *string
 
-	// The name of the scope.
-	Name *string
-
 	// Allows users to set headers on API requests
 	Headers map[string]string
 }
@@ -1664,12 +1653,6 @@ func (*PostureManagementV1) NewListScopesOptions() *ListScopesOptions {
 // SetTransactionID : Allow user to set TransactionID
 func (_options *ListScopesOptions) SetTransactionID(transactionID string) *ListScopesOptions {
 	_options.TransactionID = core.StringPtr(transactionID)
-	return _options
-}
-
-// SetName : Allow user to set Name
-func (_options *ListScopesOptions) SetName(name string) *ListScopesOptions {
-	_options.Name = core.StringPtr(name)
 	return _options
 }
 
@@ -1905,6 +1888,23 @@ func UnmarshalProfilesList(m map[string]json.RawMessage, result interface{}) (er
 	return
 }
 
+// Retrieve the value to be passed to a request to access the next page of results
+func (resp *ProfilesList) GetNextOffset() (*int64, error) {
+	if core.IsNil(resp.Next) {
+		return nil, nil
+	}
+	offset, err := core.GetQueryParam(resp.Next.Href, "offset")
+	if err != nil || offset == nil {
+		return nil, err
+	}
+	var offsetValue int64
+	offsetValue, err = strconv.ParseInt(*offset, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	return core.Int64Ptr(offsetValue), nil
+}
+
 // ProfilesListFirst : The URL of the first page of profiles.
 type ProfilesListFirst struct {
 	// The URL of the first page of profiles.
@@ -2030,7 +2030,7 @@ type ResourceResult struct {
 	ResourceName *string `json:"resource_name,omitempty"`
 
 	// The resource type.
-	ResourcType *string `json:"resourc_type,omitempty"`
+	ResourceTypes *string `json:"resource_types,omitempty"`
 
 	// The resource control result status.
 	ResourceStatus *string `json:"resource_status,omitempty"`
@@ -2045,8 +2045,15 @@ type ResourceResult struct {
 	ResultsInfo *string `json:"results_info,omitempty"`
 
 	// The reason for goal not applicable for a resource.
-	NaReason *string `json:"na_reason,omitempty"`
+	NotApplicableReason *string `json:"not_applicable_reason,omitempty"`
 }
+
+// Constants associated with the ResourceResult.ResourceStatus property.
+// The resource control result status.
+const (
+	ResourceResultResourceStatusPassConst            = "pass"
+	ResourceResultResourceStatusUnableToPerformConst = "unable_to_perform"
+)
 
 // UnmarshalResourceResult unmarshals an instance of ResourceResult from the specified map of raw messages.
 func UnmarshalResourceResult(m map[string]json.RawMessage, result interface{}) (err error) {
@@ -2055,7 +2062,7 @@ func UnmarshalResourceResult(m map[string]json.RawMessage, result interface{}) (
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "resourc_type", &obj.ResourcType)
+	err = core.UnmarshalPrimitive(m, "resource_types", &obj.ResourceTypes)
 	if err != nil {
 		return
 	}
@@ -2075,7 +2082,7 @@ func UnmarshalResourceResult(m map[string]json.RawMessage, result interface{}) (
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "na_reason", &obj.NaReason)
+	err = core.UnmarshalPrimitive(m, "not_applicable_reason", &obj.NotApplicableReason)
 	if err != nil {
 		return
 	}
@@ -2091,11 +2098,11 @@ type ResourceStatistics struct {
 	// The resource count of fail controls.
 	ResourceFailCount *int64 `json:"resource_fail_count,omitempty"`
 
-	// The resource count of unable to perform(u2p) controls.
-	ResourceU2pCount *int64 `json:"resource_u2p_count,omitempty"`
+	// The number of resources that were unable to be scanned against a control.
+	ResourceUnableToPerformCount *int64 `json:"resource_unable_to_perform_count,omitempty"`
 
 	// The resource count of not applicable(na) controls.
-	ResourceNaCount *int64 `json:"resource_na_count,omitempty"`
+	ResourceNotApplicableCount *int64 `json:"resource_not_applicable_count,omitempty"`
 }
 
 // UnmarshalResourceStatistics unmarshals an instance of ResourceStatistics from the specified map of raw messages.
@@ -2109,11 +2116,11 @@ func UnmarshalResourceStatistics(m map[string]json.RawMessage, result interface{
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "resource_u2p_count", &obj.ResourceU2pCount)
+	err = core.UnmarshalPrimitive(m, "resource_unable_to_perform_count", &obj.ResourceUnableToPerformCount)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "resource_na_count", &obj.ResourceNaCount)
+	err = core.UnmarshalPrimitive(m, "resource_not_applicable_count", &obj.ResourceNotApplicableCount)
 	if err != nil {
 		return
 	}
@@ -2153,13 +2160,13 @@ type Results struct {
 	// The number of controls that failed the scan.
 	ControlsFailCount *int64 `json:"controls_fail_count,omitempty"`
 
-	// The number of _Not applicable_ (na) controls. A control is evaluated as 'Not applicable' when its associated
-	// resource can't be found.
-	ControlsNaCount *int64 `json:"controls_na_count,omitempty"`
+	// The number of controls that are not relevant to the current scan. A scan is listed as 'Not applicable' when
+	// information about its associated resource can't be found.
+	ControlsNotApplicableCount *int64 `json:"controls_not_applicable_count,omitempty"`
 
-	// The number of _Unable to perform_ (u2p) controls. A control is evaluated as 'Unable to perform' when information
+	// The number of controls that could not be validated. A control is listed as 'Unable to perform' when information
 	// about its associated resource can't be collected.
-	ControlsU2pCount *int64 `json:"controls_u2p_count,omitempty"`
+	ControlsUnableToPerformCount *int64 `json:"controls_unable_to_perform_count,omitempty"`
 
 	// The total number of controls that were included in the scan.
 	ControlsTotalCount *int64 `json:"controls_total_count,omitempty"`
@@ -2176,11 +2183,11 @@ func UnmarshalResults(m map[string]json.RawMessage, result interface{}) (err err
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "controls_na_count", &obj.ControlsNaCount)
+	err = core.UnmarshalPrimitive(m, "controls_not_applicable_count", &obj.ControlsNotApplicableCount)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "controls_u2p_count", &obj.ControlsU2pCount)
+	err = core.UnmarshalPrimitive(m, "controls_unable_to_perform_count", &obj.ControlsUnableToPerformCount)
 	if err != nil {
 		return
 	}
@@ -2280,7 +2287,8 @@ type ScanItem struct {
 	// The ID of the scan.
 	ScanID *string `json:"scan_id,omitempty"`
 
-	// The name of the scan.
+	// A system generated name that is the combination of 12 characters in the scope name and 12 characters of a profile
+	// name.
 	ScanName *string `json:"scan_name,omitempty"`
 
 	// The ID of the scan.
@@ -2309,7 +2317,7 @@ type ScanItem struct {
 	ReportRunBy *string `json:"report_run_by,omitempty"`
 
 	// The date and time the scan was run.
-	StartedTime *strfmt.DateTime `json:"started_time,omitempty"`
+	StartTime *strfmt.DateTime `json:"start_time,omitempty"`
 
 	// The date and time the scan completed.
 	EndTime *strfmt.DateTime `json:"end_time,omitempty"`
@@ -2373,7 +2381,7 @@ func UnmarshalScanItem(m map[string]json.RawMessage, result interface{}) (err er
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "started_time", &obj.StartedTime)
+	err = core.UnmarshalPrimitive(m, "start_time", &obj.StartTime)
 	if err != nil {
 		return
 	}
@@ -2394,13 +2402,13 @@ type ScanResult struct {
 	// The number of goals that passed the scan.
 	GoalsPassCount *int64 `json:"goals_pass_count,omitempty"`
 
-	// The number of _Unable to perform_ (u2p) goals. A goal is evaluated as 'Unable to perform' when information about its
-	// associated resource can't be collected.
-	GoalsU2pCount *int64 `json:"goals_u2p_count,omitempty"`
+	// The number of goals that could not be validated. A control is listed as 'Unable to perform' when information about
+	// its associated resource can't be collected.
+	GoalsUnableToPerformCount *int64 `json:"goals_unable_to_perform_count,omitempty"`
 
-	// The number of _Not applicable_ (na) goals. A goal is evaluated as 'Not applicable' when its associated resource
-	// can't be found.
-	GoalsNaCount *int64 `json:"goals_na_count,omitempty"`
+	// The number of goals that are not relevant to the current scan. A scan is listed as 'Not applicable' when information
+	// about its associated resource can't be found.
+	GoalsNotApplicableCount *int64 `json:"goals_not_applicable_count,omitempty"`
 
 	// The number of goals that failed the scan.
 	GoalsFailCount *int64 `json:"goals_fail_count,omitempty"`
@@ -2414,13 +2422,13 @@ type ScanResult struct {
 	// The number of controls that failed the scan.
 	ControlsFailCount *int64 `json:"controls_fail_count,omitempty"`
 
-	// The number of _Not applicable_ (na) controls. A control is evaluated as 'Not applicable' when its associated
-	// resource can't be found.
-	ControlsNaCount *int64 `json:"controls_na_count,omitempty"`
+	// The number of controls that are not relevant to the current scan. A scan is listed as 'Not applicable' when
+	// information about its associated resource can't be found.
+	ControlsNotApplicableCount *int64 `json:"controls_not_applicable_count,omitempty"`
 
-	// The number of _Unable to perform_ (u2p) controls. A control is evaluated as 'Unable to perform' when information
+	// The number of controls that could not be validated. A control is listed as 'Unable to perform' when information
 	// about its associated resource can't be collected.
-	ControlsU2pCount *int64 `json:"controls_u2p_count,omitempty"`
+	ControlsUnableToPerformCount *int64 `json:"controls_unable_to_perform_count,omitempty"`
 
 	// The total number of controls that were included in the scan.
 	ControlsTotalCount *int64 `json:"controls_total_count,omitempty"`
@@ -2433,11 +2441,11 @@ func UnmarshalScanResult(m map[string]json.RawMessage, result interface{}) (err 
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "goals_u2p_count", &obj.GoalsU2pCount)
+	err = core.UnmarshalPrimitive(m, "goals_unable_to_perform_count", &obj.GoalsUnableToPerformCount)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "goals_na_count", &obj.GoalsNaCount)
+	err = core.UnmarshalPrimitive(m, "goals_not_applicable_count", &obj.GoalsNotApplicableCount)
 	if err != nil {
 		return
 	}
@@ -2457,11 +2465,11 @@ func UnmarshalScanResult(m map[string]json.RawMessage, result interface{}) (err 
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "controls_na_count", &obj.ControlsNaCount)
+	err = core.UnmarshalPrimitive(m, "controls_not_applicable_count", &obj.ControlsNotApplicableCount)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "controls_u2p_count", &obj.ControlsU2pCount)
+	err = core.UnmarshalPrimitive(m, "controls_unable_to_perform_count", &obj.ControlsUnableToPerformCount)
 	if err != nil {
 		return
 	}
@@ -2475,6 +2483,10 @@ func UnmarshalScanResult(m map[string]json.RawMessage, result interface{}) (err 
 
 // ScanSummariesOptions : The ScanSummaries options.
 type ScanSummariesOptions struct {
+	// The profile ID. This can be obtained from the Security and Compliance Center UI by clicking on the profile name. The
+	// URL contains the ID.
+	ProfileID *string `validate:"required"`
+
 	// The scope ID. This can be obtained from the Security and Compliance Center UI by clicking on the scope name. The URL
 	// contains the ID.
 	ScopeID *string `validate:"required"`
@@ -2483,18 +2495,10 @@ type ScanSummariesOptions struct {
 	// sends a transaction ID as a response header of the request.
 	TransactionID *string
 
-	// The profile ID. This can be obtained from the Security and Compliance Center UI by clicking on the profile name. The
-	// URL contains the ID.
-	ProfileID *string
-
-	// The group profile ID. This can be obtained from the Security and Compliance Center UI by clicking on the group
-	// profile name. The URL contains the ID.
-	GroupProfileID *string
-
 	// The offset of the profiles.
 	Offset *int64
 
-	// The number of profiles that are included per page?.
+	// The number of profiles that are included per page.
 	Limit *int64
 
 	// Allows users to set headers on API requests
@@ -2502,10 +2506,17 @@ type ScanSummariesOptions struct {
 }
 
 // NewScanSummariesOptions : Instantiate ScanSummariesOptions
-func (*PostureManagementV1) NewScanSummariesOptions(scopeID string) *ScanSummariesOptions {
+func (*PostureManagementV1) NewScanSummariesOptions(profileID string, scopeID string) *ScanSummariesOptions {
 	return &ScanSummariesOptions{
-		ScopeID: core.StringPtr(scopeID),
+		ProfileID: core.StringPtr(profileID),
+		ScopeID:   core.StringPtr(scopeID),
 	}
+}
+
+// SetProfileID : Allow user to set ProfileID
+func (_options *ScanSummariesOptions) SetProfileID(profileID string) *ScanSummariesOptions {
+	_options.ProfileID = core.StringPtr(profileID)
+	return _options
 }
 
 // SetScopeID : Allow user to set ScopeID
@@ -2517,18 +2528,6 @@ func (_options *ScanSummariesOptions) SetScopeID(scopeID string) *ScanSummariesO
 // SetTransactionID : Allow user to set TransactionID
 func (_options *ScanSummariesOptions) SetTransactionID(transactionID string) *ScanSummariesOptions {
 	_options.TransactionID = core.StringPtr(transactionID)
-	return _options
-}
-
-// SetProfileID : Allow user to set ProfileID
-func (_options *ScanSummariesOptions) SetProfileID(profileID string) *ScanSummariesOptions {
-	_options.ProfileID = core.StringPtr(profileID)
-	return _options
-}
-
-// SetGroupProfileID : Allow user to set GroupProfileID
-func (_options *ScanSummariesOptions) SetGroupProfileID(groupProfileID string) *ScanSummariesOptions {
-	_options.GroupProfileID = core.StringPtr(groupProfileID)
 	return _options
 }
 
@@ -2616,6 +2615,23 @@ func UnmarshalScansList(m map[string]json.RawMessage, result interface{}) (err e
 	return
 }
 
+// Retrieve the value to be passed to a request to access the next page of results
+func (resp *ScansList) GetNextOffset() (*int64, error) {
+	if core.IsNil(resp.Next) {
+		return nil, nil
+	}
+	offset, err := core.GetQueryParam(resp.Next.Href, "offset")
+	if err != nil || offset == nil {
+		return nil, err
+	}
+	var offsetValue int64
+	offsetValue, err = strconv.ParseInt(*offset, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	return core.Int64Ptr(offsetValue), nil
+}
+
 // ScansListFirst : The URL of the first page of scans.
 type ScansListFirst struct {
 	// The URL of the first page of scans.
@@ -2691,23 +2707,21 @@ type ScansSummaryOptions struct {
 
 	// The profile ID. This can be obtained from the Security and Compliance Center UI by clicking on the profile name. The
 	// URL contains the ID.
-	ProfileID *string
+	ProfileID *string `validate:"required"`
 
 	// The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
 	// sends a transaction ID as a response header of the request.
 	TransactionID *string
-
-	// The name of the scan summary.
-	Name *string
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
 }
 
 // NewScansSummaryOptions : Instantiate ScansSummaryOptions
-func (*PostureManagementV1) NewScansSummaryOptions(scanID string) *ScansSummaryOptions {
+func (*PostureManagementV1) NewScansSummaryOptions(scanID string, profileID string) *ScansSummaryOptions {
 	return &ScansSummaryOptions{
-		ScanID: core.StringPtr(scanID),
+		ScanID:    core.StringPtr(scanID),
+		ProfileID: core.StringPtr(profileID),
 	}
 }
 
@@ -2726,12 +2740,6 @@ func (_options *ScansSummaryOptions) SetProfileID(profileID string) *ScansSummar
 // SetTransactionID : Allow user to set TransactionID
 func (_options *ScansSummaryOptions) SetTransactionID(transactionID string) *ScansSummaryOptions {
 	_options.TransactionID = core.StringPtr(transactionID)
-	return _options
-}
-
-// SetName : Allow user to set Name
-func (_options *ScansSummaryOptions) SetName(name string) *ScansSummaryOptions {
-	_options.Name = core.StringPtr(name)
 	return _options
 }
 
@@ -3038,6 +3046,23 @@ func UnmarshalSummariesList(m map[string]json.RawMessage, result interface{}) (e
 	return
 }
 
+// Retrieve the value to be passed to a request to access the next page of results
+func (resp *SummariesList) GetNextOffset() (*int64, error) {
+	if core.IsNil(resp.Next) {
+		return nil, nil
+	}
+	offset, err := core.GetQueryParam(resp.Next.Href, "offset")
+	if err != nil || offset == nil {
+		return nil, err
+	}
+	var offsetValue int64
+	offsetValue, err = strconv.ParseInt(*offset, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	return core.Int64Ptr(offsetValue), nil
+}
+
 // SummariesListFirst : he URL of the first scan summary.
 type SummariesListFirst struct {
 	// The URL of the first scan summary.
@@ -3112,7 +3137,7 @@ type Summary struct {
 	ScanID *string `json:"scan_id,omitempty"`
 
 	// The scan discovery ID.
-	DiscoveryID *string `json:"discovery_id,omitempty"`
+	DiscoverID *string `json:"discover_id,omitempty"`
 
 	// The scan profile ID.
 	ProfileID *string `json:"profile_id,omitempty"`
@@ -3124,7 +3149,7 @@ type Summary struct {
 	ScopeID *string `json:"scope_id,omitempty"`
 
 	// The list of controls on the scan summary.
-	Controls []Controls `json:"controls,omitempty"`
+	Controls []Control `json:"controls,omitempty"`
 }
 
 // UnmarshalSummary unmarshals an instance of Summary from the specified map of raw messages.
@@ -3134,7 +3159,7 @@ func UnmarshalSummary(m map[string]json.RawMessage, result interface{}) (err err
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "discovery_id", &obj.DiscoveryID)
+	err = core.UnmarshalPrimitive(m, "discover_id", &obj.DiscoverID)
 	if err != nil {
 		return
 	}
@@ -3150,7 +3175,7 @@ func UnmarshalSummary(m map[string]json.RawMessage, result interface{}) (err err
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(m, "controls", &obj.Controls, UnmarshalControls)
+	err = core.UnmarshalModel(m, "controls", &obj.Controls, UnmarshalControl)
 	if err != nil {
 		return
 	}
@@ -3163,7 +3188,8 @@ type SummaryItem struct {
 	// The ID of the scan.
 	ScanID *string `json:"scan_id,omitempty"`
 
-	// The name of the scan.
+	// A system generated name that is the combination of 12 characters in the scope name and 12 characters of a profile
+	// name.
 	ScanName *string `json:"scan_name,omitempty"`
 
 	// The ID of the scan.
@@ -3176,7 +3202,7 @@ type SummaryItem struct {
 	ReportRunBy *string `json:"report_run_by,omitempty"`
 
 	// The date and time the scan was run.
-	StartedTime *strfmt.DateTime `json:"started_time,omitempty"`
+	StartTime *strfmt.DateTime `json:"start_time,omitempty"`
 
 	// The date and time the scan completed.
 	EndTime *strfmt.DateTime `json:"end_time,omitempty"`
@@ -3259,7 +3285,7 @@ func UnmarshalSummaryItem(m map[string]json.RawMessage, result interface{}) (err
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "started_time", &obj.StartedTime)
+	err = core.UnmarshalPrimitive(m, "start_time", &obj.StartTime)
 	if err != nil {
 		return
 	}

@@ -851,9 +851,9 @@ var _ = Describe(`PostureManagementV1`, func() {
 				// Disable retries and test again
 				postureManagementService.DisableRetries()
 				result, response, operationErr := postureManagementService.ScansSummary(scansSummaryOptionsModel)
-				Expect(operationErr).To(BeNil())
+				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
-				Expect(result).ToNot(BeNil())
+				Expect(result).To(BeNil())
 
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
@@ -909,9 +909,9 @@ var _ = Describe(`PostureManagementV1`, func() {
 
 				// Invoke operation with valid options model (positive test)
 				result, response, operationErr = postureManagementService.ScansSummary(scansSummaryOptionsModel)
-				Expect(operationErr).To(BeNil())
+				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
-				Expect(result).ToNot(BeNil())
+				Expect(result).To(BeNil())
 
 			})
 			It(`Invoke ScansSummary with error: Operation validation and request error`, func() {

@@ -103,10 +103,10 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 				URL:    authUrl,
 			}
 
-			collectorId = "2129"
-			credentialId = "5842"
-			scopeId = "28775"
-			scanId = "32964"
+			collectorId = "2632"
+			credentialId = "6307"
+			scopeId = "34001"
+			scanId = "39950"
 
 			fmt.Printf("Service URL: %s\n", serviceURL)
 			shouldSkipTest = func() {}

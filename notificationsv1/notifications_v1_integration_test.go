@@ -130,7 +130,7 @@ var _ = Describe(`NotificationsV1 Integration Tests`, func() {
 				AccountID:   &accountID,
 				Name:        core.StringPtr(fmt.Sprintf("%s-%s", testString, identifier)),
 				Type:        core.StringPtr("Webhook"),
-				Endpoint:    core.StringPtr("https://us-south.functions.appdomain.cloud/api/v1/web/e6b54af6-ab44-4149-a8e4-e906dcc58136/default/sdk-integration.json"),
+				Endpoint:    core.StringPtr("https://us-south.functions.appdomain.cloud/api/v1/web/e6b54af6-ab44-4149-a8e4-e906dcc58136/default/sdk-integration"),
 				Description: &testString,
 				Severity:    []string{"low"},
 				Enabled:     core.BoolPtr(true),

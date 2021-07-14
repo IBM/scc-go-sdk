@@ -24,9 +24,9 @@ import (
 	"os"
 
 	"github.com/IBM/go-sdk-core/v5/core"
+	"github.com/IBM/scc-go-sdk/adminserviceapiv1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/IBM/scc-go-sdk/adminserviceapiv1"
 )
 
 //
@@ -46,8 +46,8 @@ const externalConfigFile = "../admin_service_api_v1.env"
 
 var (
 	adminServiceApiService *adminserviceapiv1.AdminServiceApiV1
-	config       map[string]string
-	configLoaded bool = false
+	config                 map[string]string
+	configLoaded           bool = false
 )
 
 func shouldSkipTest() {

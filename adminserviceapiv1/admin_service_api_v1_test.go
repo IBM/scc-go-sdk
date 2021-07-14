@@ -28,10 +28,10 @@ import (
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
+	"github.com/IBM/scc-go-sdk/adminserviceapiv1"
 	"github.com/go-openapi/strfmt"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/IBM/scc-go-sdk/adminserviceapiv1"
 )
 
 var _ = Describe(`AdminServiceApiV1`, func() {
@@ -73,8 +73,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				adminServiceApiService, serviceErr := adminserviceapiv1.NewAdminServiceApiV1UsingExternalConfig(&adminserviceapiv1.AdminServiceApiV1Options{
-				})
+				adminServiceApiService, serviceErr := adminserviceapiv1.NewAdminServiceApiV1UsingExternalConfig(&adminserviceapiv1.AdminServiceApiV1Options{})
 				Expect(adminServiceApiService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
@@ -103,8 +102,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				adminServiceApiService, serviceErr := adminserviceapiv1.NewAdminServiceApiV1UsingExternalConfig(&adminserviceapiv1.AdminServiceApiV1Options{
-				})
+				adminServiceApiService, serviceErr := adminserviceapiv1.NewAdminServiceApiV1UsingExternalConfig(&adminserviceapiv1.AdminServiceApiV1Options{})
 				err := adminServiceApiService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
 				Expect(adminServiceApiService).ToNot(BeNil())
@@ -127,8 +125,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 			}
 
 			SetTestEnvironment(testEnvironment)
-			adminServiceApiService, serviceErr := adminserviceapiv1.NewAdminServiceApiV1UsingExternalConfig(&adminserviceapiv1.AdminServiceApiV1Options{
-			})
+			adminServiceApiService, serviceErr := adminserviceapiv1.NewAdminServiceApiV1UsingExternalConfig(&adminserviceapiv1.AdminServiceApiV1Options{})
 
 			It(`Instantiate service client with error`, func() {
 				Expect(adminServiceApiService).To(BeNil())

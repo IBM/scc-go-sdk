@@ -23,9 +23,9 @@ import (
 	"os"
 
 	"github.com/IBM/go-sdk-core/v5/core"
+	"github.com/IBM/scc-go-sdk/adminserviceapiv1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/IBM/scc-go-sdk/adminserviceapiv1"
 )
 
 /**
@@ -140,8 +140,7 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 		})
 		It(`ListLocations(listLocationsOptions *ListLocationsOptions)`, func() {
 
-			listLocationsOptions := &adminserviceapiv1.ListLocationsOptions{
-			}
+			listLocationsOptions := &adminserviceapiv1.ListLocationsOptions{}
 
 			locations, response, err := adminServiceApiService.ListLocations(listLocationsOptions)
 

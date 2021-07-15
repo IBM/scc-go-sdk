@@ -50,6 +50,7 @@ jobs:
           NOTIFICATIONS_ENV: ${{ secrets.NOTIFICATIONS_ENV }}
           CONFIGURATION_GOVERNANCE_ENV: ${{ secrets.CONFIGURATION_GOVERNANCE_ENV }}
           POSTURE_MANAGEMENT_ENV: ${{ secrets.POSTURE_MANAGEMENT_ENV }}
+          ADMIN_SERVICE_API_ENV: ${{ secrets.ADMIN_SERVICE_API_ENV }}
           RESOURCE_GROUP_ID: ${{ secrets.RESOURCE_GROUP_ID }}
         run: build/testScript.sh
 

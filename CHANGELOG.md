@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/IBM/scc-go-sdk/compare/v1.0.0...v1.1.0) (2021-07-15)
+
+
+### Features
+
+* **Template API:** Add support for Templates in Configuration API ([f10499b](https://github.com/IBM/scc-go-sdk/commit/f10499ba9b9be44f03b6f270c08535d53133ed9a))
+
 # [1.0.0](https://github.com/IBM/scc-go-sdk/compare/v0.0.15...v1.0.0) (2021-06-30)
 
 

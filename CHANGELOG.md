@@ -1,3 +1,27 @@
+# [1.0.0](https://github.com/IBM/scc-go-sdk/compare/v0.0.15...v1.0.0) (2021-06-30)
+
+
+* Merge pull request #34 from IBM/major ([8908856](https://github.com/IBM/scc-go-sdk/commit/89088562a65c8b51a2cafeba732ece9f021c3cb6)), closes [#34](https://github.com/IBM/scc-go-sdk/issues/34)
+
+
+### BREAKING CHANGES
+
+* Major release for GA
+
+## [0.0.15](https://github.com/IBM/scc-go-sdk/compare/v0.0.14...v0.0.15) (2021-06-25)
+
+
+### Bug Fixes
+
+* **SDK:** TransactionID header name fixed ([7e71e21](https://github.com/IBM/scc-go-sdk/commit/7e71e219ad5f7ad83256a5902088f1c70a292f47))
+
+## [0.0.14](https://github.com/IBM/scc-go-sdk/compare/v0.0.13...v0.0.14) (2021-06-25)
+
+
+### Bug Fixes
+
+* **SDK:** regeneration after content-review ([b2711d0](https://github.com/IBM/scc-go-sdk/commit/b2711d0b11987c6c8d60783df46b50cd85c691ce))
+
 ## [0.0.13](https://github.com/IBM/scc-go-sdk/compare/v0.0.12...v0.0.13) (2021-06-18)
 
 

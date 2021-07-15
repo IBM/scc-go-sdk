@@ -284,6 +284,256 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 		})
 	})
+	Describe(`ListProviders(listProvidersOptions *ListProvidersOptions) - Operation response error`, func() {
+		accountID := "testString"
+		listProvidersPath := "/v1/testString/providers"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listProvidersPath))
+					Expect(req.Method).To(Equal("GET"))
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.URL.Query()["limit"]).To(Equal([]string{fmt.Sprint(int64(2))}))
+					Expect(req.URL.Query()["skip"]).To(Equal([]string{fmt.Sprint(int64(38))}))
+					Expect(req.URL.Query()["start_provider_id"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["end_provider_id"]).To(Equal([]string{"testString"}))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke ListProviders with error: Operation response processing error`, func() {
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(findingsService).ToNot(BeNil())
+
+				// Construct an instance of the ListProvidersOptions model
+				listProvidersOptionsModel := new(findingsv1.ListProvidersOptions)
+				listProvidersOptionsModel.TransactionID = core.StringPtr("testString")
+				listProvidersOptionsModel.Limit = core.Int64Ptr(int64(2))
+				listProvidersOptionsModel.Skip = core.Int64Ptr(int64(38))
+				listProvidersOptionsModel.StartProviderID = core.StringPtr("testString")
+				listProvidersOptionsModel.EndProviderID = core.StringPtr("testString")
+				listProvidersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := findingsService.ListProviders(listProvidersOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				findingsService.EnableRetries(0, 0)
+				result, response, operationErr = findingsService.ListProviders(listProvidersOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`ListProviders(listProvidersOptions *ListProvidersOptions)`, func() {
+		accountID := "testString"
+		listProvidersPath := "/v1/testString/providers"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listProvidersPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.URL.Query()["limit"]).To(Equal([]string{fmt.Sprint(int64(2))}))
+					Expect(req.URL.Query()["skip"]).To(Equal([]string{fmt.Sprint(int64(38))}))
+					Expect(req.URL.Query()["start_provider_id"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["end_provider_id"]).To(Equal([]string{"testString"}))
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"providers": [{"name": "Name", "id": "ID"}], "limit": 5, "skip": 4, "total_count": 10}`)
+				}))
+			})
+			It(`Invoke ListProviders successfully with retries`, func() {
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(findingsService).ToNot(BeNil())
+				findingsService.EnableRetries(0, 0)
+
+				// Construct an instance of the ListProvidersOptions model
+				listProvidersOptionsModel := new(findingsv1.ListProvidersOptions)
+				listProvidersOptionsModel.TransactionID = core.StringPtr("testString")
+				listProvidersOptionsModel.Limit = core.Int64Ptr(int64(2))
+				listProvidersOptionsModel.Skip = core.Int64Ptr(int64(38))
+				listProvidersOptionsModel.StartProviderID = core.StringPtr("testString")
+				listProvidersOptionsModel.EndProviderID = core.StringPtr("testString")
+				listProvidersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := findingsService.ListProvidersWithContext(ctx, listProvidersOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				findingsService.DisableRetries()
+				result, response, operationErr := findingsService.ListProviders(listProvidersOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = findingsService.ListProvidersWithContext(ctx, listProvidersOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listProvidersPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
+					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.URL.Query()["limit"]).To(Equal([]string{fmt.Sprint(int64(2))}))
+					Expect(req.URL.Query()["skip"]).To(Equal([]string{fmt.Sprint(int64(38))}))
+					Expect(req.URL.Query()["start_provider_id"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["end_provider_id"]).To(Equal([]string{"testString"}))
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"providers": [{"name": "Name", "id": "ID"}], "limit": 5, "skip": 4, "total_count": 10}`)
+				}))
+			})
+			It(`Invoke ListProviders successfully`, func() {
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(findingsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := findingsService.ListProviders(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the ListProvidersOptions model
+				listProvidersOptionsModel := new(findingsv1.ListProvidersOptions)
+				listProvidersOptionsModel.TransactionID = core.StringPtr("testString")
+				listProvidersOptionsModel.Limit = core.Int64Ptr(int64(2))
+				listProvidersOptionsModel.Skip = core.Int64Ptr(int64(38))
+				listProvidersOptionsModel.StartProviderID = core.StringPtr("testString")
+				listProvidersOptionsModel.EndProviderID = core.StringPtr("testString")
+				listProvidersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = findingsService.ListProviders(listProvidersOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke ListProviders with error: Operation request error`, func() {
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(findingsService).ToNot(BeNil())
+
+				// Construct an instance of the ListProvidersOptions model
+				listProvidersOptionsModel := new(findingsv1.ListProvidersOptions)
+				listProvidersOptionsModel.TransactionID = core.StringPtr("testString")
+				listProvidersOptionsModel.Limit = core.Int64Ptr(int64(2))
+				listProvidersOptionsModel.Skip = core.Int64Ptr(int64(38))
+				listProvidersOptionsModel.StartProviderID = core.StringPtr("testString")
+				listProvidersOptionsModel.EndProviderID = core.StringPtr("testString")
+				listProvidersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := findingsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := findingsService.ListProviders(listProvidersOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke ListProviders successfully`, func() {
+				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(findingsService).ToNot(BeNil())
+
+				// Construct an instance of the ListProvidersOptions model
+				listProvidersOptionsModel := new(findingsv1.ListProvidersOptions)
+				listProvidersOptionsModel.TransactionID = core.StringPtr("testString")
+				listProvidersOptionsModel.Limit = core.Int64Ptr(int64(2))
+				listProvidersOptionsModel.Skip = core.Int64Ptr(int64(38))
+				listProvidersOptionsModel.StartProviderID = core.StringPtr("testString")
+				listProvidersOptionsModel.EndProviderID = core.StringPtr("testString")
+				listProvidersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := findingsService.ListProviders(listProvidersOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
 	Describe(`CreateNote(createNoteOptions *CreateNoteOptions) - Operation response error`, func() {
 		accountID := "testString"
 		createNotePath := "/v1/testString/providers/testString/notes"
@@ -2297,10 +2547,10 @@ var _ = Describe(`FindingsV1`, func() {
 					// Verify the contents of the request
 					Expect(req.URL.EscapedPath()).To(Equal(createOccurrencePath))
 					Expect(req.Method).To(Equal("POST"))
-					Expect(req.Header["Replace-If-Exists"]).ToNot(BeNil())
-					Expect(req.Header["Replace-If-Exists"][0]).To(Equal(fmt.Sprintf("%v", true)))
 					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Replace-If-Exists"]).ToNot(BeNil())
+					Expect(req.Header["Replace-If-Exists"][0]).To(Equal(fmt.Sprintf("%v", true)))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
 					fmt.Fprintf(res, `} this is not valid json {`)
@@ -2377,8 +2627,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createOccurrenceOptionsModel.Finding = findingModel
 				createOccurrenceOptionsModel.Kpi = kpiModel
 				createOccurrenceOptionsModel.ReferenceData = map[string]interface{}{"anyKey": "anyValue"}
-				createOccurrenceOptionsModel.ReplaceIfExists = core.BoolPtr(true)
 				createOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
+				createOccurrenceOptionsModel.ReplaceIfExists = core.BoolPtr(true)
 				createOccurrenceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
 				result, response, operationErr := findingsService.CreateOccurrence(createOccurrenceOptionsModel)
@@ -2426,10 +2676,10 @@ var _ = Describe(`FindingsV1`, func() {
 					}
 					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
-					Expect(req.Header["Replace-If-Exists"]).ToNot(BeNil())
-					Expect(req.Header["Replace-If-Exists"][0]).To(Equal(fmt.Sprintf("%v", true)))
 					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Replace-If-Exists"]).ToNot(BeNil())
+					Expect(req.Header["Replace-If-Exists"][0]).To(Equal(fmt.Sprintf("%v", true)))
 					// Sleep a short time to support a timeout test
 					time.Sleep(100 * time.Millisecond)
 
@@ -2511,8 +2761,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createOccurrenceOptionsModel.Finding = findingModel
 				createOccurrenceOptionsModel.Kpi = kpiModel
 				createOccurrenceOptionsModel.ReferenceData = map[string]interface{}{"anyKey": "anyValue"}
-				createOccurrenceOptionsModel.ReplaceIfExists = core.BoolPtr(true)
 				createOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
+				createOccurrenceOptionsModel.ReplaceIfExists = core.BoolPtr(true)
 				createOccurrenceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with a Context to test a timeout error
@@ -2565,10 +2815,10 @@ var _ = Describe(`FindingsV1`, func() {
 					}
 					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
-					Expect(req.Header["Replace-If-Exists"]).ToNot(BeNil())
-					Expect(req.Header["Replace-If-Exists"][0]).To(Equal(fmt.Sprintf("%v", true)))
 					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Replace-If-Exists"]).ToNot(BeNil())
+					Expect(req.Header["Replace-If-Exists"][0]).To(Equal(fmt.Sprintf("%v", true)))
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
@@ -2652,8 +2902,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createOccurrenceOptionsModel.Finding = findingModel
 				createOccurrenceOptionsModel.Kpi = kpiModel
 				createOccurrenceOptionsModel.ReferenceData = map[string]interface{}{"anyKey": "anyValue"}
-				createOccurrenceOptionsModel.ReplaceIfExists = core.BoolPtr(true)
 				createOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
+				createOccurrenceOptionsModel.ReplaceIfExists = core.BoolPtr(true)
 				createOccurrenceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
@@ -2734,8 +2984,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createOccurrenceOptionsModel.Finding = findingModel
 				createOccurrenceOptionsModel.Kpi = kpiModel
 				createOccurrenceOptionsModel.ReferenceData = map[string]interface{}{"anyKey": "anyValue"}
-				createOccurrenceOptionsModel.ReplaceIfExists = core.BoolPtr(true)
 				createOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
+				createOccurrenceOptionsModel.ReplaceIfExists = core.BoolPtr(true)
 				createOccurrenceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
 				err := findingsService.SetServiceURL("")
@@ -2837,8 +3087,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createOccurrenceOptionsModel.Finding = findingModel
 				createOccurrenceOptionsModel.Kpi = kpiModel
 				createOccurrenceOptionsModel.ReferenceData = map[string]interface{}{"anyKey": "anyValue"}
-				createOccurrenceOptionsModel.ReplaceIfExists = core.BoolPtr(true)
 				createOccurrenceOptionsModel.TransactionID = core.StringPtr("testString")
+				createOccurrenceOptionsModel.ReplaceIfExists = core.BoolPtr(true)
 				createOccurrenceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation
@@ -4225,256 +4475,6 @@ var _ = Describe(`FindingsV1`, func() {
 			})
 		})
 	})
-	Describe(`ListProviders(listProvidersOptions *ListProvidersOptions) - Operation response error`, func() {
-		accountID := "testString"
-		listProvidersPath := "/v1/testString/providers"
-		Context(`Using mock server endpoint with invalid JSON response`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(listProvidersPath))
-					Expect(req.Method).To(Equal("GET"))
-					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.URL.Query()["limit"]).To(Equal([]string{fmt.Sprint(int64(2))}))
-					Expect(req.URL.Query()["skip"]).To(Equal([]string{fmt.Sprint(int64(38))}))
-					Expect(req.URL.Query()["start_provider_id"]).To(Equal([]string{"testString"}))
-					Expect(req.URL.Query()["end_provider_id"]).To(Equal([]string{"testString"}))
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(200)
-					fmt.Fprintf(res, `} this is not valid json {`)
-				}))
-			})
-			It(`Invoke ListProviders with error: Operation response processing error`, func() {
-				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(findingsService).ToNot(BeNil())
-
-				// Construct an instance of the ListProvidersOptions model
-				listProvidersOptionsModel := new(findingsv1.ListProvidersOptions)
-				listProvidersOptionsModel.TransactionID = core.StringPtr("testString")
-				listProvidersOptionsModel.Limit = core.Int64Ptr(int64(2))
-				listProvidersOptionsModel.Skip = core.Int64Ptr(int64(38))
-				listProvidersOptionsModel.StartProviderID = core.StringPtr("testString")
-				listProvidersOptionsModel.EndProviderID = core.StringPtr("testString")
-				listProvidersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := findingsService.ListProviders(listProvidersOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
-
-				// Enable retries and test again
-				findingsService.EnableRetries(0, 0)
-				result, response, operationErr = findingsService.ListProviders(listProvidersOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-	})
-	Describe(`ListProviders(listProvidersOptions *ListProvidersOptions)`, func() {
-		accountID := "testString"
-		listProvidersPath := "/v1/testString/providers"
-		Context(`Using mock server endpoint with timeout`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(listProvidersPath))
-					Expect(req.Method).To(Equal("GET"))
-
-					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.URL.Query()["limit"]).To(Equal([]string{fmt.Sprint(int64(2))}))
-					Expect(req.URL.Query()["skip"]).To(Equal([]string{fmt.Sprint(int64(38))}))
-					Expect(req.URL.Query()["start_provider_id"]).To(Equal([]string{"testString"}))
-					Expect(req.URL.Query()["end_provider_id"]).To(Equal([]string{"testString"}))
-					// Sleep a short time to support a timeout test
-					time.Sleep(100 * time.Millisecond)
-
-					// Set mock response
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"providers": [{"name": "Name", "id": "ID"}], "limit": 5, "skip": 4, "total_count": 10}`)
-				}))
-			})
-			It(`Invoke ListProviders successfully with retries`, func() {
-				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(findingsService).ToNot(BeNil())
-				findingsService.EnableRetries(0, 0)
-
-				// Construct an instance of the ListProvidersOptions model
-				listProvidersOptionsModel := new(findingsv1.ListProvidersOptions)
-				listProvidersOptionsModel.TransactionID = core.StringPtr("testString")
-				listProvidersOptionsModel.Limit = core.Int64Ptr(int64(2))
-				listProvidersOptionsModel.Skip = core.Int64Ptr(int64(38))
-				listProvidersOptionsModel.StartProviderID = core.StringPtr("testString")
-				listProvidersOptionsModel.EndProviderID = core.StringPtr("testString")
-				listProvidersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation with a Context to test a timeout error
-				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
-				defer cancelFunc()
-				_, _, operationErr := findingsService.ListProvidersWithContext(ctx, listProvidersOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
-
-				// Disable retries and test again
-				findingsService.DisableRetries()
-				result, response, operationErr := findingsService.ListProviders(listProvidersOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).ToNot(BeNil())
-
-				// Re-test the timeout error with retries disabled
-				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
-				defer cancelFunc2()
-				_, _, operationErr = findingsService.ListProvidersWithContext(ctx, listProvidersOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-		Context(`Using mock server endpoint`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(listProvidersPath))
-					Expect(req.Method).To(Equal("GET"))
-
-					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
-					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.URL.Query()["limit"]).To(Equal([]string{fmt.Sprint(int64(2))}))
-					Expect(req.URL.Query()["skip"]).To(Equal([]string{fmt.Sprint(int64(38))}))
-					Expect(req.URL.Query()["start_provider_id"]).To(Equal([]string{"testString"}))
-					Expect(req.URL.Query()["end_provider_id"]).To(Equal([]string{"testString"}))
-					// Set mock response
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"providers": [{"name": "Name", "id": "ID"}], "limit": 5, "skip": 4, "total_count": 10}`)
-				}))
-			})
-			It(`Invoke ListProviders successfully`, func() {
-				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(findingsService).ToNot(BeNil())
-
-				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := findingsService.ListProviders(nil)
-				Expect(operationErr).NotTo(BeNil())
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-
-				// Construct an instance of the ListProvidersOptions model
-				listProvidersOptionsModel := new(findingsv1.ListProvidersOptions)
-				listProvidersOptionsModel.TransactionID = core.StringPtr("testString")
-				listProvidersOptionsModel.Limit = core.Int64Ptr(int64(2))
-				listProvidersOptionsModel.Skip = core.Int64Ptr(int64(38))
-				listProvidersOptionsModel.StartProviderID = core.StringPtr("testString")
-				listProvidersOptionsModel.EndProviderID = core.StringPtr("testString")
-				listProvidersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = findingsService.ListProviders(listProvidersOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).ToNot(BeNil())
-
-			})
-			It(`Invoke ListProviders with error: Operation request error`, func() {
-				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(findingsService).ToNot(BeNil())
-
-				// Construct an instance of the ListProvidersOptions model
-				listProvidersOptionsModel := new(findingsv1.ListProvidersOptions)
-				listProvidersOptionsModel.TransactionID = core.StringPtr("testString")
-				listProvidersOptionsModel.Limit = core.Int64Ptr(int64(2))
-				listProvidersOptionsModel.Skip = core.Int64Ptr(int64(38))
-				listProvidersOptionsModel.StartProviderID = core.StringPtr("testString")
-				listProvidersOptionsModel.EndProviderID = core.StringPtr("testString")
-				listProvidersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-				// Invoke operation with empty URL (negative test)
-				err := findingsService.SetServiceURL("")
-				Expect(err).To(BeNil())
-				result, response, operationErr := findingsService.ListProviders(listProvidersOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-		Context(`Using mock server endpoint with missing response body`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Set success status code with no respoonse body
-					res.WriteHeader(200)
-				}))
-			})
-			It(`Invoke ListProviders successfully`, func() {
-				findingsService, serviceErr := findingsv1.NewFindingsV1(&findingsv1.FindingsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(findingsService).ToNot(BeNil())
-
-				// Construct an instance of the ListProvidersOptions model
-				listProvidersOptionsModel := new(findingsv1.ListProvidersOptions)
-				listProvidersOptionsModel.TransactionID = core.StringPtr("testString")
-				listProvidersOptionsModel.Limit = core.Int64Ptr(int64(2))
-				listProvidersOptionsModel.Skip = core.Int64Ptr(int64(38))
-				listProvidersOptionsModel.StartProviderID = core.StringPtr("testString")
-				listProvidersOptionsModel.EndProviderID = core.StringPtr("testString")
-				listProvidersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation
-				result, response, operationErr := findingsService.ListProviders(listProvidersOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-
-				// Verify a nil result
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-	})
 	Describe(`Model constructor tests`, func() {
 		Context(`Using a service client instance`, func() {
 			accountID := "testString"
@@ -4731,8 +4731,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createOccurrenceOptionsModel.SetFinding(findingModel)
 				createOccurrenceOptionsModel.SetKpi(kpiModel)
 				createOccurrenceOptionsModel.SetReferenceData(map[string]interface{}{"anyKey": "anyValue"})
-				createOccurrenceOptionsModel.SetReplaceIfExists(true)
 				createOccurrenceOptionsModel.SetTransactionID("testString")
+				createOccurrenceOptionsModel.SetReplaceIfExists(true)
 				createOccurrenceOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(createOccurrenceOptionsModel).ToNot(BeNil())
 				Expect(createOccurrenceOptionsModel.ProviderID).To(Equal(core.StringPtr("testString")))
@@ -4745,8 +4745,8 @@ var _ = Describe(`FindingsV1`, func() {
 				Expect(createOccurrenceOptionsModel.Finding).To(Equal(findingModel))
 				Expect(createOccurrenceOptionsModel.Kpi).To(Equal(kpiModel))
 				Expect(createOccurrenceOptionsModel.ReferenceData).To(Equal(map[string]interface{}{"anyKey": "anyValue"}))
-				Expect(createOccurrenceOptionsModel.ReplaceIfExists).To(Equal(core.BoolPtr(true)))
 				Expect(createOccurrenceOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
+				Expect(createOccurrenceOptionsModel.ReplaceIfExists).To(Equal(core.BoolPtr(true)))
 				Expect(createOccurrenceOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewDeleteNoteOptions successfully`, func() {

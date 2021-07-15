@@ -15,7 +15,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
+ * IBM OpenAPI SDK Code Generator Version: 3.34.1-ad041667-20210617-195430
  */
 
 // Package findingsv1 : Operations and models for the FindingsV1 service
@@ -35,7 +35,10 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// FindingsV1 : API specification for the Findings service.
+// FindingsV1 : The Findings API is used to find and display occurrences of security issues in your IBM Cloud account by
+// using the artifact metadata specification. Findings are summarized in cards in the Security and Compliance Center
+// that allow you to see the security status of your account at a glance and start an investigation into any potential
+// issues.
 //
 // Version: 1.0.0
 type FindingsV1 struct {
@@ -183,8 +186,9 @@ func (findings *FindingsV1) DisableRetries() {
 	findings.Service.DisableRetries()
 }
 
-// PostGraph : query findings
-// query findings.
+// PostGraph : Query findings
+// Query findings by using the GraphQL query language. For more information about using GraphQL, see the [GraphQL
+// documentation](https://graphql.org/learn/).
 func (findings *FindingsV1) PostGraph(postGraphOptions *PostGraphOptions) (response *core.DetailedResponse, err error) {
 	return findings.PostGraphWithContext(context.Background(), postGraphOptions)
 }
@@ -247,7 +251,84 @@ func (findings *FindingsV1) PostGraphWithContext(ctx context.Context, postGraphO
 	return
 }
 
-// CreateNote : Creates a new `Note`
+// ListProviders : List providers
+// List all of the providers for a specified account.
+func (findings *FindingsV1) ListProviders(listProvidersOptions *ListProvidersOptions) (result *APIListProvidersResponse, response *core.DetailedResponse, err error) {
+	return findings.ListProvidersWithContext(context.Background(), listProvidersOptions)
+}
+
+// ListProvidersWithContext is an alternate form of the ListProviders method which supports a Context parameter
+func (findings *FindingsV1) ListProvidersWithContext(ctx context.Context, listProvidersOptions *ListProvidersOptions) (result *APIListProvidersResponse, response *core.DetailedResponse, err error) {
+	err = core.ValidateStruct(listProvidersOptions, "listProvidersOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"account_id": *findings.AccountID,
+	}
+
+	builder := core.NewRequestBuilder(core.GET)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = findings.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(findings.Service.Options.URL, `/v1/{account_id}/providers`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range listProvidersOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("findings", "V1", "ListProviders")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+	if listProvidersOptions.TransactionID != nil {
+		builder.AddHeader("Transaction-Id", fmt.Sprint(*listProvidersOptions.TransactionID))
+	}
+
+	if listProvidersOptions.Limit != nil {
+		builder.AddQuery("limit", fmt.Sprint(*listProvidersOptions.Limit))
+	}
+	if listProvidersOptions.Skip != nil {
+		builder.AddQuery("skip", fmt.Sprint(*listProvidersOptions.Skip))
+	}
+	if listProvidersOptions.StartProviderID != nil {
+		builder.AddQuery("start_provider_id", fmt.Sprint(*listProvidersOptions.StartProviderID))
+	}
+	if listProvidersOptions.EndProviderID != nil {
+		builder.AddQuery("end_provider_id", fmt.Sprint(*listProvidersOptions.EndProviderID))
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = findings.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalAPIListProvidersResponse)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// CreateNote : Create a note
+// Register a new finding type with the Security and Compliance Center.
+//
+// A successful request creates a note with a high-level description of a particular type of finding. To learn more
+// about creating notes to register findings, see [Custom
+// findings](/docs/security-advisor?topic=security-advisor-setup_custom).
 func (findings *FindingsV1) CreateNote(createNoteOptions *CreateNoteOptions) (result *APINote, response *core.DetailedResponse, err error) {
 	return findings.CreateNoteWithContext(context.Background(), createNoteOptions)
 }
@@ -353,7 +434,8 @@ func (findings *FindingsV1) CreateNoteWithContext(ctx context.Context, createNot
 	return
 }
 
-// ListNotes : Lists all `Notes` for a given provider
+// ListNotes : List notes
+// List all of the available notes for a specific provider.
 func (findings *FindingsV1) ListNotes(listNotesOptions *ListNotesOptions) (result *APIListNotesResponse, response *core.DetailedResponse, err error) {
 	return findings.ListNotesWithContext(context.Background(), listNotesOptions)
 }
@@ -423,7 +505,8 @@ func (findings *FindingsV1) ListNotesWithContext(ctx context.Context, listNotesO
 	return
 }
 
-// GetNote : Returns the requested `Note`
+// GetNote : Get a note by provider
+// Get the details of the note that is associated with a specified note ID and provider ID.
 func (findings *FindingsV1) GetNote(getNoteOptions *GetNoteOptions) (result *APINote, response *core.DetailedResponse, err error) {
 	return findings.GetNoteWithContext(context.Background(), getNoteOptions)
 }
@@ -487,7 +570,8 @@ func (findings *FindingsV1) GetNoteWithContext(ctx context.Context, getNoteOptio
 	return
 }
 
-// UpdateNote : Updates an existing `Note`
+// UpdateNote : Update a note
+// Update a note that already exists in your account.
 func (findings *FindingsV1) UpdateNote(updateNoteOptions *UpdateNoteOptions) (result *APINote, response *core.DetailedResponse, err error) {
 	return findings.UpdateNoteWithContext(context.Background(), updateNoteOptions)
 }
@@ -594,7 +678,8 @@ func (findings *FindingsV1) UpdateNoteWithContext(ctx context.Context, updateNot
 	return
 }
 
-// DeleteNote : Deletes the given `Note` from the system
+// DeleteNote : Delete a note
+// Delete a note with the ID and provider ID that you specify.
 func (findings *FindingsV1) DeleteNote(deleteNoteOptions *DeleteNoteOptions) (response *core.DetailedResponse, err error) {
 	return findings.DeleteNoteWithContext(context.Background(), deleteNoteOptions)
 }
@@ -647,7 +732,8 @@ func (findings *FindingsV1) DeleteNoteWithContext(ctx context.Context, deleteNot
 	return
 }
 
-// GetOccurrenceNote : Gets the `Note` attached to the given `Occurrence`
+// GetOccurrenceNote : Get a note by occurrence
+// Get a note that is associated with the occurrence ID that you specify.
 func (findings *FindingsV1) GetOccurrenceNote(getOccurrenceNoteOptions *GetOccurrenceNoteOptions) (result *APINote, response *core.DetailedResponse, err error) {
 	return findings.GetOccurrenceNoteWithContext(context.Background(), getOccurrenceNoteOptions)
 }
@@ -711,7 +797,11 @@ func (findings *FindingsV1) GetOccurrenceNoteWithContext(ctx context.Context, ge
 	return
 }
 
-// CreateOccurrence : Creates a new `Occurrence`. Use this method to create `Occurrences` for a resource
+// CreateOccurrence : Create an occurrence
+// Create an occurrence to denote the existence of a particular type of finding.
+//
+// An occurrence describes provider-specific details of a note and contains vulnerability details, remediation steps,
+// and other general information.
 func (findings *FindingsV1) CreateOccurrence(createOccurrenceOptions *CreateOccurrenceOptions) (result *APIOccurrence, response *core.DetailedResponse, err error) {
 	return findings.CreateOccurrenceWithContext(context.Background(), createOccurrenceOptions)
 }
@@ -750,11 +840,11 @@ func (findings *FindingsV1) CreateOccurrenceWithContext(ctx context.Context, cre
 	}
 	builder.AddHeader("Accept", "application/json")
 	builder.AddHeader("Content-Type", "application/json")
-	if createOccurrenceOptions.ReplaceIfExists != nil {
-		builder.AddHeader("Replace-If-Exists", fmt.Sprint(*createOccurrenceOptions.ReplaceIfExists))
-	}
 	if createOccurrenceOptions.TransactionID != nil {
 		builder.AddHeader("Transaction-Id", fmt.Sprint(*createOccurrenceOptions.TransactionID))
+	}
+	if createOccurrenceOptions.ReplaceIfExists != nil {
+		builder.AddHeader("Replace-If-Exists", fmt.Sprint(*createOccurrenceOptions.ReplaceIfExists))
 	}
 
 	body := make(map[string]interface{})
@@ -811,7 +901,8 @@ func (findings *FindingsV1) CreateOccurrenceWithContext(ctx context.Context, cre
 	return
 }
 
-// ListOccurrences : Lists active `Occurrences` for a given provider matching the filters
+// ListOccurrences : List occurrences
+// List all of the occurrences that are associated with the provider ID that you specify.
 func (findings *FindingsV1) ListOccurrences(listOccurrencesOptions *ListOccurrencesOptions) (result *APIListOccurrencesResponse, response *core.DetailedResponse, err error) {
 	return findings.ListOccurrencesWithContext(context.Background(), listOccurrencesOptions)
 }
@@ -881,7 +972,8 @@ func (findings *FindingsV1) ListOccurrencesWithContext(ctx context.Context, list
 	return
 }
 
-// ListNoteOccurrences : Lists `Occurrences` referencing the specified `Note`. Use this method to get all occurrences referencing your `Note` across all your customer providers
+// ListNoteOccurrences : List occurrences by note
+// Get a list of occurrences that are associated with a specific note.
 func (findings *FindingsV1) ListNoteOccurrences(listNoteOccurrencesOptions *ListNoteOccurrencesOptions) (result *APIListNoteOccurrencesResponse, response *core.DetailedResponse, err error) {
 	return findings.ListNoteOccurrencesWithContext(context.Background(), listNoteOccurrencesOptions)
 }
@@ -952,7 +1044,8 @@ func (findings *FindingsV1) ListNoteOccurrencesWithContext(ctx context.Context, 
 	return
 }
 
-// GetOccurrence : Returns the requested `Occurrence`
+// GetOccurrence : Get a specific occurrence
+// Get the details of a specific occurrence by specifying the ID and provider ID.
 func (findings *FindingsV1) GetOccurrence(getOccurrenceOptions *GetOccurrenceOptions) (result *APIListOccurrencesResponse, response *core.DetailedResponse, err error) {
 	return findings.GetOccurrenceWithContext(context.Background(), getOccurrenceOptions)
 }
@@ -1016,7 +1109,8 @@ func (findings *FindingsV1) GetOccurrenceWithContext(ctx context.Context, getOcc
 	return
 }
 
-// UpdateOccurrence : Updates an existing `Occurrence`
+// UpdateOccurrence : Update an occurrence
+// Update an occurrence that already exists in your account.
 func (findings *FindingsV1) UpdateOccurrence(updateOccurrenceOptions *UpdateOccurrenceOptions) (result *APIOccurrence, response *core.DetailedResponse, err error) {
 	return findings.UpdateOccurrenceWithContext(context.Background(), updateOccurrenceOptions)
 }
@@ -1114,7 +1208,8 @@ func (findings *FindingsV1) UpdateOccurrenceWithContext(ctx context.Context, upd
 	return
 }
 
-// DeleteOccurrence : Deletes the given `Occurrence` from the system
+// DeleteOccurrence : Delete an occurrence
+// Delete an occurrence by specifying the occurrence ID and provider ID.
 func (findings *FindingsV1) DeleteOccurrence(deleteOccurrenceOptions *DeleteOccurrenceOptions) (response *core.DetailedResponse, err error) {
 	return findings.DeleteOccurrenceWithContext(context.Background(), deleteOccurrenceOptions)
 }
@@ -1163,77 +1258,6 @@ func (findings *FindingsV1) DeleteOccurrenceWithContext(ctx context.Context, del
 	}
 
 	response, err = findings.Service.Request(request, nil)
-
-	return
-}
-
-// ListProviders : Lists all `Providers` for a given account id
-func (findings *FindingsV1) ListProviders(listProvidersOptions *ListProvidersOptions) (result *APIListProvidersResponse, response *core.DetailedResponse, err error) {
-	return findings.ListProvidersWithContext(context.Background(), listProvidersOptions)
-}
-
-// ListProvidersWithContext is an alternate form of the ListProviders method which supports a Context parameter
-func (findings *FindingsV1) ListProvidersWithContext(ctx context.Context, listProvidersOptions *ListProvidersOptions) (result *APIListProvidersResponse, response *core.DetailedResponse, err error) {
-	err = core.ValidateStruct(listProvidersOptions, "listProvidersOptions")
-	if err != nil {
-		return
-	}
-
-	pathParamsMap := map[string]string{
-		"account_id": *findings.AccountID,
-	}
-
-	builder := core.NewRequestBuilder(core.GET)
-	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = findings.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(findings.Service.Options.URL, `/v1/{account_id}/providers`, pathParamsMap)
-	if err != nil {
-		return
-	}
-
-	for headerName, headerValue := range listProvidersOptions.Headers {
-		builder.AddHeader(headerName, headerValue)
-	}
-
-	sdkHeaders := common.GetSdkHeaders("findings", "V1", "ListProviders")
-	for headerName, headerValue := range sdkHeaders {
-		builder.AddHeader(headerName, headerValue)
-	}
-	builder.AddHeader("Accept", "application/json")
-	if listProvidersOptions.TransactionID != nil {
-		builder.AddHeader("Transaction-Id", fmt.Sprint(*listProvidersOptions.TransactionID))
-	}
-
-	if listProvidersOptions.Limit != nil {
-		builder.AddQuery("limit", fmt.Sprint(*listProvidersOptions.Limit))
-	}
-	if listProvidersOptions.Skip != nil {
-		builder.AddQuery("skip", fmt.Sprint(*listProvidersOptions.Skip))
-	}
-	if listProvidersOptions.StartProviderID != nil {
-		builder.AddQuery("start_provider_id", fmt.Sprint(*listProvidersOptions.StartProviderID))
-	}
-	if listProvidersOptions.EndProviderID != nil {
-		builder.AddQuery("end_provider_id", fmt.Sprint(*listProvidersOptions.EndProviderID))
-	}
-
-	request, err := builder.Build()
-	if err != nil {
-		return
-	}
-
-	var rawResponse map[string]json.RawMessage
-	response, err = findings.Service.Request(request, &rawResponse)
-	if err != nil {
-		return
-	}
-	if rawResponse != nil {
-		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalAPIListProvidersResponse)
-		if err != nil {
-			return
-		}
-		response.Result = result
-	}
 
 	return
 }
@@ -1476,16 +1500,16 @@ func UnmarshalContext(m map[string]json.RawMessage, result interface{}) (err err
 
 // CreateNoteOptions : The CreateNote options.
 type CreateNoteOptions struct {
-	// Part of `parent`. This field contains the provider_id for example: providers/{provider_id}.
+	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
 	ProviderID *string `validate:"required,ne="`
 
-	// A one sentence description of this `Note`.
+	// A one sentence description of your note.
 	ShortDescription *string `validate:"required"`
 
-	// A detailed description of this `Note`.
+	// A more detailed description of your note.
 	LongDescription *string `validate:"required"`
 
-	// This must be 1&#58;1 with members of our oneofs, it can be used for filtering Note and Occurrence on their kind.
+	// The type of note. Use this field to filter notes and occurences by kind.
 	//  - FINDING&#58; The note and occurrence represent a finding.
 	//  - KPI&#58; The note and occurrence represent a KPI value.
 	//  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -1493,19 +1517,18 @@ type CreateNoteOptions struct {
 	//  - SECTION&#58; The note represents a section in a dashboard.
 	Kind *string `validate:"required"`
 
-	// The id of the note.
+	// The ID of the note.
 	ID *string `validate:"required"`
 
 	// The entity reporting a note.
 	ReportedBy *Reporter `validate:"required"`
 
-	// URLs associated with this note.
 	RelatedURL []APINoteRelatedURL
 
 	// Time of expiration for this note, null if note does not expire.
 	ExpirationTime *strfmt.DateTime
 
-	// True if this `Note` can be shared by multiple accounts.
+	// True if this note can be shared by multiple accounts.
 	Shared *bool
 
 	// FindingType provides details about a finding note.
@@ -1520,7 +1543,7 @@ type CreateNoteOptions struct {
 	// Card provides details about a card kind of note.
 	Section *Section
 
-	// The transaction id for the request in uuid v4 format.
+	// The transaction ID for the request in UUID v4 format.
 	TransactionID *string
 
 	// Allows users to set headers on API requests
@@ -1528,7 +1551,7 @@ type CreateNoteOptions struct {
 }
 
 // Constants associated with the CreateNoteOptions.Kind property.
-// This must be 1&#58;1 with members of our oneofs, it can be used for filtering Note and Occurrence on their kind.
+// The type of note. Use this field to filter notes and occurences by kind.
 //  - FINDING&#58; The note and occurrence represent a finding.
 //  - KPI&#58; The note and occurrence represent a KPI value.
 //  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -1646,14 +1669,14 @@ func (options *CreateNoteOptions) SetHeaders(param map[string]string) *CreateNot
 
 // CreateOccurrenceOptions : The CreateOccurrence options.
 type CreateOccurrenceOptions struct {
-	// Part of `parent`. This contains the provider_id for example: providers/{provider_id}.
+	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
 	ProviderID *string `validate:"required,ne="`
 
 	// An analysis note associated with this image, in the form "{account_id}/providers/{provider_id}/notes/{note_id}" This
 	// field can be used as a filter in list requests.
 	NoteName *string `validate:"required"`
 
-	// This must be 1&#58;1 with members of our oneofs, it can be used for filtering Note and Occurrence on their kind.
+	// The type of note. Use this field to filter notes and occurences by kind.
 	//  - FINDING&#58; The note and occurrence represent a finding.
 	//  - KPI&#58; The note and occurrence represent a KPI value.
 	//  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -1682,18 +1705,18 @@ type CreateOccurrenceOptions struct {
 	// Additional data for the finding, like AT event etc.
 	ReferenceData interface{}
 
-	// It allows replacing an existing occurrence when set to true.
-	ReplaceIfExists *bool
-
-	// The transaction id for the request in uuid v4 format.
+	// The transaction ID for the request in UUID v4 format.
 	TransactionID *string
+
+	// When set to true, an existing occurrence is replaced rather than duplicated.
+	ReplaceIfExists *bool
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
 }
 
 // Constants associated with the CreateOccurrenceOptions.Kind property.
-// This must be 1&#58;1 with members of our oneofs, it can be used for filtering Note and Occurrence on their kind.
+// The type of note. Use this field to filter notes and occurences by kind.
 //  - FINDING&#58; The note and occurrence represent a finding.
 //  - KPI&#58; The note and occurrence represent a KPI value.
 //  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -1777,15 +1800,15 @@ func (_options *CreateOccurrenceOptions) SetReferenceData(referenceData interfac
 	return _options
 }
 
-// SetReplaceIfExists : Allow user to set ReplaceIfExists
-func (_options *CreateOccurrenceOptions) SetReplaceIfExists(replaceIfExists bool) *CreateOccurrenceOptions {
-	_options.ReplaceIfExists = core.BoolPtr(replaceIfExists)
-	return _options
-}
-
 // SetTransactionID : Allow user to set TransactionID
 func (_options *CreateOccurrenceOptions) SetTransactionID(transactionID string) *CreateOccurrenceOptions {
 	_options.TransactionID = core.StringPtr(transactionID)
+	return _options
+}
+
+// SetReplaceIfExists : Allow user to set ReplaceIfExists
+func (_options *CreateOccurrenceOptions) SetReplaceIfExists(replaceIfExists bool) *CreateOccurrenceOptions {
+	_options.ReplaceIfExists = core.BoolPtr(replaceIfExists)
 	return _options
 }
 
@@ -1835,13 +1858,13 @@ func UnmarshalDataTransferred(m map[string]json.RawMessage, result interface{}) 
 
 // DeleteNoteOptions : The DeleteNote options.
 type DeleteNoteOptions struct {
-	// First part of note `name`: providers/{provider_id}/notes/{note_id}.
+	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
 	ProviderID *string `validate:"required,ne="`
 
 	// Second part of note `name`: providers/{provider_id}/notes/{note_id}.
 	NoteID *string `validate:"required,ne="`
 
-	// The transaction id for the request in uuid v4 format.
+	// The transaction ID for the request in UUID v4 format.
 	TransactionID *string
 
 	// Allows users to set headers on API requests
@@ -1882,13 +1905,13 @@ func (options *DeleteNoteOptions) SetHeaders(param map[string]string) *DeleteNot
 
 // DeleteOccurrenceOptions : The DeleteOccurrence options.
 type DeleteOccurrenceOptions struct {
-	// First part of occurrence `name`: providers/{provider_id}/notes/{occurrence_id}.
+	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
 	ProviderID *string `validate:"required,ne="`
 
-	// Second part of occurrence `name`: providers/{provider_id}/notes/{occurrence_id}.
+	// Second part of occurrence `name`: providers/{provider_id}/occurrences/{occurrence_id}.
 	OccurrenceID *string `validate:"required,ne="`
 
-	// The transaction id for the request in uuid v4 format.
+	// The transaction ID for the request in UUID v4 format.
 	TransactionID *string
 
 	// Allows users to set headers on API requests
@@ -2055,13 +2078,13 @@ func UnmarshalFindingType(m map[string]json.RawMessage, result interface{}) (err
 
 // GetNoteOptions : The GetNote options.
 type GetNoteOptions struct {
-	// First part of note `name`: providers/{provider_id}/notes/{note_id}.
+	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
 	ProviderID *string `validate:"required,ne="`
 
 	// Second part of note `name`: providers/{provider_id}/notes/{note_id}.
 	NoteID *string `validate:"required,ne="`
 
-	// The transaction id for the request in uuid v4 format.
+	// The transaction ID for the request in UUID v4 format.
 	TransactionID *string
 
 	// Allows users to set headers on API requests
@@ -2102,13 +2125,13 @@ func (options *GetNoteOptions) SetHeaders(param map[string]string) *GetNoteOptio
 
 // GetOccurrenceNoteOptions : The GetOccurrenceNote options.
 type GetOccurrenceNoteOptions struct {
-	// First part of occurrence `name`: providers/{provider_id}/occurrences/{occurrence_id}.
+	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
 	ProviderID *string `validate:"required,ne="`
 
 	// Second part of occurrence `name`: providers/{provider_id}/occurrences/{occurrence_id}.
 	OccurrenceID *string `validate:"required,ne="`
 
-	// The transaction id for the request in uuid v4 format.
+	// The transaction ID for the request in UUID v4 format.
 	TransactionID *string
 
 	// Allows users to set headers on API requests
@@ -2149,13 +2172,13 @@ func (options *GetOccurrenceNoteOptions) SetHeaders(param map[string]string) *Ge
 
 // GetOccurrenceOptions : The GetOccurrence options.
 type GetOccurrenceOptions struct {
-	// First part of occurrence `name`: providers/{provider_id}/occurrences/{occurrence_id}.
+	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
 	ProviderID *string `validate:"required,ne="`
 
 	// Second part of occurrence `name`: providers/{provider_id}/occurrences/{occurrence_id}.
 	OccurrenceID *string `validate:"required,ne="`
 
-	// The transaction id for the request in uuid v4 format.
+	// The transaction ID for the request in UUID v4 format.
 	TransactionID *string
 
 	// Allows users to set headers on API requests
@@ -2265,13 +2288,13 @@ func UnmarshalKpiType(m map[string]json.RawMessage, result interface{}) (err err
 
 // ListNoteOccurrencesOptions : The ListNoteOccurrences options.
 type ListNoteOccurrencesOptions struct {
-	// First part of note `name`: providers/{provider_id}/notes/{note_id}.
+	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
 	ProviderID *string `validate:"required,ne="`
 
 	// Second part of note `name`: providers/{provider_id}/notes/{note_id}.
 	NoteID *string `validate:"required,ne="`
 
-	// The transaction id for the request in uuid v4 format.
+	// The transaction ID for the request in UUID v4 format.
 	TransactionID *string
 
 	// Number of notes to return in the list.
@@ -2330,10 +2353,10 @@ func (options *ListNoteOccurrencesOptions) SetHeaders(param map[string]string) *
 
 // ListNotesOptions : The ListNotes options.
 type ListNotesOptions struct {
-	// Part of `parent`. This field contains the provider_id for example: providers/{provider_id}.
+	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
 	ProviderID *string `validate:"required,ne="`
 
-	// The transaction id for the request in uuid v4 format.
+	// The transaction ID for the request in UUID v4 format.
 	TransactionID *string
 
 	// Number of notes to return in the list.
@@ -2385,13 +2408,13 @@ func (options *ListNotesOptions) SetHeaders(param map[string]string) *ListNotesO
 
 // ListOccurrencesOptions : The ListOccurrences options.
 type ListOccurrencesOptions struct {
-	// Part of `parent`. This contains the provider_id for example: providers/{provider_id}.
+	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
 	ProviderID *string `validate:"required,ne="`
 
-	// The transaction id for the request in uuid v4 format.
+	// The transaction ID for the request in UUID v4 format.
 	TransactionID *string
 
-	// Number of occurrences to return in the list.
+	// Number of notes to return in the list.
 	PageSize *int64
 
 	// Token to provide to skip to a particular spot in the list.
@@ -2440,19 +2463,19 @@ func (options *ListOccurrencesOptions) SetHeaders(param map[string]string) *List
 
 // ListProvidersOptions : The ListProviders options.
 type ListProvidersOptions struct {
-	// The transaction id for the request in uuid v4 format.
+	// The transaction ID for the request in UUID v4 format.
 	TransactionID *string
 
-	// Limit the number of the returned documents to the specified number.
+	// The number of documents that you want to return.
 	Limit *int64
 
 	// The offset is the index of the item from which you want to start returning data from. Default is 0.
 	Skip *int64
 
-	// The first provider_id to include in the result (sorted in ascending order). Ignored if not provided.
+	// The first provider ID included in the result, sorted in ascending order. If not provided, this parameter is ignored.
 	StartProviderID *string
 
-	// The last provider_id to include in the result (sorted in ascending order). Ignored if not provided.
+	// The last provider ID included in the result, sorted in ascending order. If not provided, this parameter is ignored.
 	EndProviderID *string
 
 	// Allows users to set headers on API requests
@@ -2546,7 +2569,7 @@ type PostGraphOptions struct {
 	// The type of the input.
 	ContentType *string
 
-	// The transaction id for the request in uuid v4 format.
+	// The transaction ID for the request in UUID v4 format.
 	TransactionID *string
 
 	// Allows users to set headers on API requests
@@ -2716,19 +2739,19 @@ func UnmarshalSocketAddress(m map[string]json.RawMessage, result interface{}) (e
 
 // UpdateNoteOptions : The UpdateNote options.
 type UpdateNoteOptions struct {
-	// First part of note `name`: providers/{provider_id}/notes/{note_id}.
+	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
 	ProviderID *string `validate:"required,ne="`
 
 	// Second part of note `name`: providers/{provider_id}/notes/{note_id}.
 	NoteID *string `validate:"required,ne="`
 
-	// A one sentence description of this `Note`.
+	// A one sentence description of your note.
 	ShortDescription *string `validate:"required"`
 
-	// A detailed description of this `Note`.
+	// A more detailed description of your note.
 	LongDescription *string `validate:"required"`
 
-	// This must be 1&#58;1 with members of our oneofs, it can be used for filtering Note and Occurrence on their kind.
+	// The type of note. Use this field to filter notes and occurences by kind.
 	//  - FINDING&#58; The note and occurrence represent a finding.
 	//  - KPI&#58; The note and occurrence represent a KPI value.
 	//  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -2736,19 +2759,18 @@ type UpdateNoteOptions struct {
 	//  - SECTION&#58; The note represents a section in a dashboard.
 	Kind *string `validate:"required"`
 
-	// The id of the note.
+	// The ID of the note.
 	ID *string `validate:"required"`
 
 	// The entity reporting a note.
 	ReportedBy *Reporter `validate:"required"`
 
-	// URLs associated with this note.
 	RelatedURL []APINoteRelatedURL
 
 	// Time of expiration for this note, null if note does not expire.
 	ExpirationTime *strfmt.DateTime
 
-	// True if this `Note` can be shared by multiple accounts.
+	// True if this note can be shared by multiple accounts.
 	Shared *bool
 
 	// FindingType provides details about a finding note.
@@ -2763,7 +2785,7 @@ type UpdateNoteOptions struct {
 	// Card provides details about a card kind of note.
 	Section *Section
 
-	// The transaction id for the request in uuid v4 format.
+	// The transaction ID for the request in UUID v4 format.
 	TransactionID *string
 
 	// Allows users to set headers on API requests
@@ -2771,7 +2793,7 @@ type UpdateNoteOptions struct {
 }
 
 // Constants associated with the UpdateNoteOptions.Kind property.
-// This must be 1&#58;1 with members of our oneofs, it can be used for filtering Note and Occurrence on their kind.
+// The type of note. Use this field to filter notes and occurences by kind.
 //  - FINDING&#58; The note and occurrence represent a finding.
 //  - KPI&#58; The note and occurrence represent a KPI value.
 //  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -2896,7 +2918,7 @@ func (options *UpdateNoteOptions) SetHeaders(param map[string]string) *UpdateNot
 
 // UpdateOccurrenceOptions : The UpdateOccurrence options.
 type UpdateOccurrenceOptions struct {
-	// First part of occurrence `name`: providers/{provider_id}/occurrences/{occurrence_id}.
+	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
 	ProviderID *string `validate:"required,ne="`
 
 	// Second part of occurrence `name`: providers/{provider_id}/occurrences/{occurrence_id}.
@@ -2906,7 +2928,7 @@ type UpdateOccurrenceOptions struct {
 	// field can be used as a filter in list requests.
 	NoteName *string `validate:"required"`
 
-	// This must be 1&#58;1 with members of our oneofs, it can be used for filtering Note and Occurrence on their kind.
+	// The type of note. Use this field to filter notes and occurences by kind.
 	//  - FINDING&#58; The note and occurrence represent a finding.
 	//  - KPI&#58; The note and occurrence represent a KPI value.
 	//  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -2935,7 +2957,7 @@ type UpdateOccurrenceOptions struct {
 	// Additional data for the finding, like AT event etc.
 	ReferenceData interface{}
 
-	// The transaction id for the request in uuid v4 format.
+	// The transaction ID for the request in UUID v4 format.
 	TransactionID *string
 
 	// Allows users to set headers on API requests
@@ -2943,7 +2965,7 @@ type UpdateOccurrenceOptions struct {
 }
 
 // Constants associated with the UpdateOccurrenceOptions.Kind property.
-// This must be 1&#58;1 with members of our oneofs, it can be used for filtering Note and Occurrence on their kind.
+// The type of note. Use this field to filter notes and occurences by kind.
 //  - FINDING&#58; The note and occurrence represent a finding.
 //  - KPI&#58; The note and occurrence represent a KPI value.
 //  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -3177,15 +3199,15 @@ func UnmarshalAPIListOccurrencesResponse(m map[string]json.RawMessage, result in
 	return
 }
 
-// APIListProvidersResponse : Response including listed providers.
+// APIListProvidersResponse : A list of providers is returned.
 type APIListProvidersResponse struct {
 	// The providers requested.
 	Providers []APIProvider `json:"providers,omitempty"`
 
-	// The number of elements returned in the current instance. Default is 200.
+	// The number of elements returned in the current instance. The default is 200.
 	Limit *int64 `json:"limit,omitempty"`
 
-	// The offset is the index of the item from which you want to start returning data from. Default is 0.
+	// The offset is the index of the item from which you want to start returning data from. The default is 0.
 	Skip *int64 `json:"skip,omitempty"`
 
 	// The total number of providers available.
@@ -3215,15 +3237,15 @@ func UnmarshalAPIListProvidersResponse(m map[string]json.RawMessage, result inte
 	return
 }
 
-// APINote : Provides a detailed description of a `Note`.
+// APINote : Provides a detailed description of a note.
 type APINote struct {
-	// A one sentence description of this `Note`.
+	// A one sentence description of your note.
 	ShortDescription *string `json:"short_description" validate:"required"`
 
-	// A detailed description of this `Note`.
+	// A more detailed description of your note.
 	LongDescription *string `json:"long_description" validate:"required"`
 
-	// This must be 1&#58;1 with members of our oneofs, it can be used for filtering Note and Occurrence on their kind.
+	// The type of note. Use this field to filter notes and occurences by kind.
 	//  - FINDING&#58; The note and occurrence represent a finding.
 	//  - KPI&#58; The note and occurrence represent a KPI value.
 	//  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -3231,7 +3253,6 @@ type APINote struct {
 	//  - SECTION&#58; The note represents a section in a dashboard.
 	Kind *string `json:"kind" validate:"required"`
 
-	// URLs associated with this note.
 	RelatedURL []APINoteRelatedURL `json:"related_url,omitempty"`
 
 	// Time of expiration for this note, null if note does not expire.
@@ -3243,10 +3264,10 @@ type APINote struct {
 	// Output only. The time this note was last updated. This field can be used as a filter in list requests.
 	UpdateTime *strfmt.DateTime `json:"update_time,omitempty"`
 
-	// The id of the note.
+	// The ID of the note.
 	ID *string `json:"id" validate:"required"`
 
-	// True if this `Note` can be shared by multiple accounts.
+	// True if this note can be shared by multiple accounts.
 	Shared *bool `json:"shared,omitempty"`
 
 	// The entity reporting a note.
@@ -3266,7 +3287,7 @@ type APINote struct {
 }
 
 // Constants associated with the APINote.Kind property.
-// This must be 1&#58;1 with members of our oneofs, it can be used for filtering Note and Occurrence on their kind.
+// The type of note. Use this field to filter notes and occurences by kind.
 //  - FINDING&#58; The note and occurrence represent a finding.
 //  - KPI&#58; The note and occurrence represent a KPI value.
 //  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -3361,7 +3382,7 @@ type APINoteRelatedURL struct {
 	// Label to describe usage of the URL.
 	Label *string `json:"label" validate:"required"`
 
-	// Specific URL to associate with the note.
+	// The URL that you want to associate with the note.
 	URL *string `json:"url" validate:"required"`
 }
 
@@ -3400,7 +3421,7 @@ type APIOccurrence struct {
 	// field can be used as a filter in list requests.
 	NoteName *string `json:"note_name" validate:"required"`
 
-	// This must be 1&#58;1 with members of our oneofs, it can be used for filtering Note and Occurrence on their kind.
+	// The type of note. Use this field to filter notes and occurences by kind.
 	//  - FINDING&#58; The note and occurrence represent a finding.
 	//  - KPI&#58; The note and occurrence represent a KPI value.
 	//  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -3433,7 +3454,7 @@ type APIOccurrence struct {
 }
 
 // Constants associated with the APIOccurrence.Kind property.
-// This must be 1&#58;1 with members of our oneofs, it can be used for filtering Note and Occurrence on their kind.
+// The type of note. Use this field to filter notes and occurences by kind.
 //  - FINDING&#58; The note and occurrence represent a finding.
 //  - KPI&#58; The note and occurrence represent a KPI value.
 //  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -3509,12 +3530,12 @@ func UnmarshalAPIOccurrence(m map[string]json.RawMessage, result interface{}) (e
 	return
 }
 
-// APIProvider : Provides a detailed description of a `Provider`.
+// APIProvider : Provides a detailed description of a provider.
 type APIProvider struct {
-	// The name of the provider in the form "{account_id}/providers/{provider_id}".
+	// The name of the provider in the form '{account_id}/providers/{provider_id}'.
 	Name *string `json:"name" validate:"required"`
 
-	// The id of the provider.
+	// The ID of the provider.
 	ID *string `json:"id" validate:"required"`
 }
 

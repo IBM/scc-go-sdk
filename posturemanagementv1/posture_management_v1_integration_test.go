@@ -235,7 +235,7 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 		})
 	})
 
-	XDescribe(`CreateScope - Create a scope`, func() {
+	Describe(`CreateScope - Create a scope`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})

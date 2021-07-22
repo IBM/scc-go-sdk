@@ -25,7 +25,7 @@ Go client library to interact with various
 
 <!-- toc -->
 
-- [IBM Cloud Security & Compliance Center Go SDK Version v1.2.0](#ibm-cloud-security--compliance-center-go-sdk-version-v110)
+- [IBM Cloud Security & Compliance Center Go SDK Version v1.2.0](#ibm-cloud-security--compliance-center-go-sdk-version-v120)
   - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
   - [Prerequisites](#prerequisites)
@@ -51,7 +51,8 @@ The IBM Cloud Security & Compliance Center Go SDK allows developers to programma
 | [Notifications](https://cloud.ibm.com/apidocs/security-advisor/notifications)        | notificationsv1           |
 | [Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config) | configurationgovernancev1 |
 | [Admin Service](https://cloud.ibm.com/apidocs/security-compliance/admin)             | adminserviceapiv1         |
-| [Posture Management](https://cloud.ibm.com/apidocs/security-compliance/admin)        | posturemanagementv1       |
+| [Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture)      | posturemanagementv1       |
+
 
 
 ## Prerequisites

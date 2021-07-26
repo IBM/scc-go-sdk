@@ -47,8 +47,8 @@ The IBM Cloud Security & Compliance Center Go SDK allows developers to programma
 
 | Service Name                                                                         | Package name              |
 | ------------------------------------------------------------------------------------ | ------------------------- |
-| [Findings](https://cloud.ibm.com/apidocs/security-advisor/findings)                  | findingsv1                |
-| [Notifications](https://cloud.ibm.com/apidocs/security-advisor/notifications)        | notificationsv1           |
+| [Findings](https://cloud.ibm.com/apidocs/findings)                                   | findingsv1                |
+| [Notifications](https://cloud.ibm.com/apidocs/security-compliance/si-notifications)  | notificationsv1           |
 | [Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config) | configurationgovernancev1 |
 | [Admin Service](https://cloud.ibm.com/apidocs/security-compliance/admin)             | adminserviceapiv1         |
 | [Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture)      | posturemanagementv1       |

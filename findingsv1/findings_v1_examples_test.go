@@ -122,6 +122,26 @@ var _ = Describe(`FindingsV1 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 
 		})
+		It(`ListProviders request example`, func() {
+			fmt.Println("\nListProviders() result:")
+			// begin-listProviders
+
+			listProvidersOptions := findingsService.NewListProvidersOptions()
+
+			apiListProvidersResponse, response, err := findingsService.ListProviders(listProvidersOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(apiListProvidersResponse, "", "  ")
+			fmt.Println(string(b))
+
+			// end-listProviders
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(apiListProvidersResponse).ToNot(BeNil())
+
+		})
 		It(`CreateNote request example`, func() {
 			fmt.Println("\nCreateNote() result:")
 			// begin-createNote
@@ -372,26 +392,6 @@ var _ = Describe(`FindingsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(apiOccurrence).ToNot(BeNil())
-
-		})
-		It(`ListProviders request example`, func() {
-			fmt.Println("\nListProviders() result:")
-			// begin-listProviders
-
-			listProvidersOptions := findingsService.NewListProvidersOptions()
-
-			apiListProvidersResponse, response, err := findingsService.ListProviders(listProvidersOptions)
-			if err != nil {
-				panic(err)
-			}
-			b, _ := json.MarshalIndent(apiListProvidersResponse, "", "  ")
-			fmt.Println(string(b))
-
-			// end-listProviders
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(apiListProvidersResponse).ToNot(BeNil())
 
 		})
 		It(`DeleteOccurrence request example`, func() {

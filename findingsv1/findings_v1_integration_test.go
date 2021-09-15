@@ -157,9 +157,9 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 				ID:               core.StringPtr(fmt.Sprintf("finding-note-%s", identifier)),
 				ReportedBy:       reporterModel,
 				RelatedURL:       []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel},
-				ExpirationTime:   CreateMockDateTime("2019-01-01T12:00:00.000Z"),
-				Shared:           core.BoolPtr(true),
-				Finding:          findingTypeModel,
+
+				Shared:  core.BoolPtr(true),
+				Finding: findingTypeModel,
 			}
 
 			apiNote, response, err := findingsService.CreateNote(createNoteOptions)
@@ -194,9 +194,9 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 				Kind:             core.StringPtr("KPI"),
 				ID:               core.StringPtr(fmt.Sprintf("kpi-note-%s", identifier)),
 				ReportedBy:       reporterModel,
-				ExpirationTime:   CreateMockDateTime("2019-01-01T12:00:00.000Z"),
-				Shared:           core.BoolPtr(true),
-				Kpi:              kpiTypeModel,
+
+				Shared: core.BoolPtr(true),
+				Kpi:    kpiTypeModel,
 			}
 
 			apiNote, response, err := findingsService.CreateNote(createNoteOptions)
@@ -253,9 +253,9 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 				Kind:             core.StringPtr("CARD"),
 				ID:               core.StringPtr(fmt.Sprintf("card-note-%s", identifier)),
 				ReportedBy:       reporterModel,
-				ExpirationTime:   CreateMockDateTime("2019-01-01T12:00:00.000Z"),
-				Shared:           core.BoolPtr(true),
-				Card:             cardModel,
+
+				Shared: core.BoolPtr(true),
+				Card:   cardModel,
 			}
 
 			apiNote, response, err := findingsService.CreateNote(createNoteOptions)
@@ -291,7 +291,6 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 				Kind:             core.StringPtr("SECTION"),
 				ID:               core.StringPtr(fmt.Sprintf("section-note-%s", identifier)),
 				ReportedBy:       reporterModel,
-				ExpirationTime:   CreateMockDateTime("2019-01-01T12:00:00.000Z"),
 				Shared:           core.BoolPtr(true),
 				Section:          sectionModel,
 			}
@@ -380,9 +379,9 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 				ID:               core.StringPtr(fmt.Sprintf("finding-note-%s", identifier)),
 				ReportedBy:       reporterModel,
 				RelatedURL:       []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel},
-				ExpirationTime:   CreateMockDateTime("2019-01-01T12:00:00.000Z"),
-				Shared:           core.BoolPtr(true),
-				Finding:          findingTypeModel,
+
+				Shared:  core.BoolPtr(true),
+				Finding: findingTypeModel,
 			}
 
 			apiNote, response, err := findingsService.UpdateNote(updateNoteOptions)
@@ -418,9 +417,9 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 				Kind:             core.StringPtr("KPI"),
 				ID:               core.StringPtr(fmt.Sprintf("kpi-note-%s", identifier)),
 				ReportedBy:       reporterModel,
-				ExpirationTime:   CreateMockDateTime("2019-01-01T12:00:00.000Z"),
-				Shared:           core.BoolPtr(true),
-				Kpi:              kpiTypeModel,
+
+				Shared: core.BoolPtr(true),
+				Kpi:    kpiTypeModel,
 			}
 
 			apiNote, response, err := findingsService.UpdateNote(updateNoteOptions)
@@ -477,8 +476,8 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 				Kind:             core.StringPtr("CARD"),
 				ID:               core.StringPtr(fmt.Sprintf("card-note-%s", identifier)),
 				ReportedBy:       reporterModel,
-				ExpirationTime:   CreateMockDateTime("2019-01-01T12:00:00.000Z"),
-				Card:             cardModel,
+
+				Card: cardModel,
 			}
 
 			apiNote, response, err := findingsService.UpdateNote(updateNoteOptions)
@@ -515,9 +514,9 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 				Kind:             core.StringPtr("SECTION"),
 				ID:               core.StringPtr(fmt.Sprintf("section-note-%s", identifier)),
 				ReportedBy:       reporterModel,
-				ExpirationTime:   CreateMockDateTime("2019-01-01T12:00:00.000Z"),
-				Shared:           core.BoolPtr(true),
-				Section:          sectionModel,
+
+				Shared:  core.BoolPtr(true),
+				Section: sectionModel,
 			}
 
 			apiNote, response, err := findingsService.UpdateNote(updateNoteOptions)

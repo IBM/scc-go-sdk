@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/IBM/scc-go-sdk/compare/v1.2.0...v1.2.1) (2021-09-15)
+
+
+### Bug Fixes
+
+* **'FindingsAPI':** Latest generation using openapi-sdkgen ([227116b](https://github.com/IBM/scc-go-sdk/commit/227116be8bc4f21ec43b331d14afccad9e824852))
+
 # [1.2.0](https://github.com/IBM/scc-go-sdk/compare/v1.1.0...v1.2.0) (2021-07-22)
 
 

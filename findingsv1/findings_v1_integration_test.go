@@ -20,6 +20,7 @@ package findingsv1_test
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strings"
 	"time"
@@ -100,10 +101,13 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(findingsService).ToNot(BeNil())
 			Expect(findingsService.Service.Options.URL).To(Equal(serviceURL))
+
+			core.SetLogger(core.NewLogger(core.LevelDebug, log.New(GinkgoWriter, "", log.LstdFlags), log.New(GinkgoWriter, "", log.LstdFlags)))
+			findingsService.EnableRetries(4, 30*time.Second)
 		})
 	})
 
-	Describe(`PostGraph - query findings`, func() {
+	Describe(`PostGraph - Query findings`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
@@ -185,6 +189,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 
 			kpiTypeModel := &findingsv1.KpiType{
 				AggregationType: core.StringPtr("SUM"),
+				Severity:        core.StringPtr("HIGH"),
 			}
 
 			createNoteOptions := &findingsv1.CreateNoteOptions{
@@ -304,7 +309,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`ListNotes - Lists all 'Notes' for a given provider`, func() {
+	Describe(`ListNotes - List notes`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
@@ -323,7 +328,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`GetNote - Returns the requested 'Note'`, func() {
+	Describe(`GetNote - Get a note by provider`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
@@ -407,6 +412,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 
 			kpiTypeModel := &findingsv1.KpiType{
 				AggregationType: core.StringPtr("SUM"),
+				Severity:        core.StringPtr("LOW"),
 			}
 
 			updateNoteOptions := &findingsv1.UpdateNoteOptions{
@@ -645,7 +651,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`GetOccurrenceNote - Gets the 'Note' attached to the given 'Occurrence'`, func() {
+	Describe(`GetOccurrenceNote - Get a note by occurrence`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
@@ -665,7 +671,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`ListOccurrences - Lists active 'Occurrences' for a given provider matching the filters`, func() {
+	Describe(`ListOccurrences - List occurrences`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
@@ -684,7 +690,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`ListNoteOccurrences - Lists 'Occurrences' referencing the specified 'Note'. Use this method to get all occurrences referencing your 'Note' across all your customer providers`, func() {
+	Describe(`ListNoteOccurrences - List occurrences by note`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
@@ -704,7 +710,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`GetOccurrence - Returns the requested 'Occurrence'`, func() {
+	Describe(`GetOccurrence - Get a specific occurrence`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
@@ -724,7 +730,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`UpdateOccurrence - Updates an existing 'Occurrence' (FINDING)`, func() {
+	Describe(`UpdateOccurrence - Update an occurrence`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
@@ -858,7 +864,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`DeleteOccurrence - Deletes the given 'Occurrence' from the system`, func() {
+	Describe(`DeleteOccurrence - Delete an occurrence`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
@@ -877,7 +883,7 @@ var _ = Describe(`FindingsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`DeleteNote - Deletes the given 'Note' from the system`, func() {
+	Describe(`DeleteNote - Delete a note`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})

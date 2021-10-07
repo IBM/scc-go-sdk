@@ -584,6 +584,7 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the KpiType model
 				kpiTypeModel := new(findingsv1.KpiType)
+				kpiTypeModel.Severity = core.StringPtr("MEDIUM")
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
@@ -626,8 +627,6 @@ var _ = Describe(`FindingsV1`, func() {
 				createNoteOptionsModel.ID = core.StringPtr("testString")
 				createNoteOptionsModel.ReportedBy = reporterModel
 				createNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
-				createNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				createNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createNoteOptionsModel.Shared = core.BoolPtr(true)
 				createNoteOptionsModel.Finding = findingTypeModel
 				createNoteOptionsModel.Kpi = kpiTypeModel
@@ -689,7 +688,7 @@ var _ = Describe(`FindingsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"short_description": "ShortDescription", "long_description": "LongDescription", "kind": "FINDING", "related_url": [{"label": "Label", "url": "URL"}], "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "shared": true, "reported_by": {"id": "ID", "title": "Title", "url": "URL"}, "finding": {"severity": "LOW", "next_steps": [{"title": "Title", "url": "URL"}]}, "kpi": {"aggregation_type": "SUM"}, "card": {"section": "Section", "title": "Title", "subtitle": "Subtitle", "order": 1, "finding_note_names": ["FindingNoteNames"], "requires_configuration": false, "badge_text": "BadgeText", "badge_image": "BadgeImage", "elements": [{"text": "Text", "default_interval": "d", "kind": "TIME_SERIES", "default_time_range": "4d", "value_types": [{"kind": "FINDING_COUNT", "finding_note_names": ["FindingNoteNames"], "text": "label"}]}]}, "section": {"title": "Title", "image": "Image"}}`)
+					fmt.Fprintf(res, "%s", `{"short_description": "ShortDescription", "long_description": "LongDescription", "kind": "FINDING", "related_url": [{"label": "Label", "url": "URL"}], "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "shared": true, "reported_by": {"id": "ID", "title": "Title", "url": "URL"}, "finding": {"severity": "LOW", "next_steps": [{"title": "Title", "url": "URL"}]}, "kpi": {"Severity": "MEDIUM", "aggregation_type": "SUM"}, "card": {"section": "Section", "title": "Title", "subtitle": "Subtitle", "order": 1, "finding_note_names": ["FindingNoteNames"], "requires_configuration": false, "badge_text": "BadgeText", "badge_image": "BadgeImage", "elements": [{"text": "Text", "default_interval": "d", "kind": "TIME_SERIES", "default_time_range": "4d", "value_types": [{"kind": "FINDING_COUNT", "finding_note_names": ["FindingNoteNames"], "text": "label"}]}]}, "section": {"title": "Title", "image": "Image"}}`)
 				}))
 			})
 			It(`Invoke CreateNote successfully with retries`, func() {
@@ -725,6 +724,7 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the KpiType model
 				kpiTypeModel := new(findingsv1.KpiType)
+				kpiTypeModel.Severity = core.StringPtr("MEDIUM")
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
@@ -767,8 +767,6 @@ var _ = Describe(`FindingsV1`, func() {
 				createNoteOptionsModel.ID = core.StringPtr("testString")
 				createNoteOptionsModel.ReportedBy = reporterModel
 				createNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
-				createNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				createNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createNoteOptionsModel.Shared = core.BoolPtr(true)
 				createNoteOptionsModel.Finding = findingTypeModel
 				createNoteOptionsModel.Kpi = kpiTypeModel
@@ -832,7 +830,7 @@ var _ = Describe(`FindingsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"short_description": "ShortDescription", "long_description": "LongDescription", "kind": "FINDING", "related_url": [{"label": "Label", "url": "URL"}], "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "shared": true, "reported_by": {"id": "ID", "title": "Title", "url": "URL"}, "finding": {"severity": "LOW", "next_steps": [{"title": "Title", "url": "URL"}]}, "kpi": {"aggregation_type": "SUM"}, "card": {"section": "Section", "title": "Title", "subtitle": "Subtitle", "order": 1, "finding_note_names": ["FindingNoteNames"], "requires_configuration": false, "badge_text": "BadgeText", "badge_image": "BadgeImage", "elements": [{"text": "Text", "default_interval": "d", "kind": "TIME_SERIES", "default_time_range": "4d", "value_types": [{"kind": "FINDING_COUNT", "finding_note_names": ["FindingNoteNames"], "text": "label"}]}]}, "section": {"title": "Title", "image": "Image"}}`)
+					fmt.Fprintf(res, "%s", `{"short_description": "ShortDescription", "long_description": "LongDescription", "kind": "FINDING", "related_url": [{"label": "Label", "url": "URL"}], "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "shared": true, "reported_by": {"id": "ID", "title": "Title", "url": "URL"}, "finding": {"severity": "LOW", "next_steps": [{"title": "Title", "url": "URL"}]}, "kpi": {"Severity": "MEDIUM", "aggregation_type": "SUM"}, "card": {"section": "Section", "title": "Title", "subtitle": "Subtitle", "order": 1, "finding_note_names": ["FindingNoteNames"], "requires_configuration": false, "badge_text": "BadgeText", "badge_image": "BadgeImage", "elements": [{"text": "Text", "default_interval": "d", "kind": "TIME_SERIES", "default_time_range": "4d", "value_types": [{"kind": "FINDING_COUNT", "finding_note_names": ["FindingNoteNames"], "text": "label"}]}]}, "section": {"title": "Title", "image": "Image"}}`)
 				}))
 			})
 			It(`Invoke CreateNote successfully`, func() {
@@ -873,6 +871,7 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the KpiType model
 				kpiTypeModel := new(findingsv1.KpiType)
+				kpiTypeModel.Severity = core.StringPtr("MEDIUM")
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
@@ -915,8 +914,6 @@ var _ = Describe(`FindingsV1`, func() {
 				createNoteOptionsModel.ID = core.StringPtr("testString")
 				createNoteOptionsModel.ReportedBy = reporterModel
 				createNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
-				createNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				createNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createNoteOptionsModel.Shared = core.BoolPtr(true)
 				createNoteOptionsModel.Finding = findingTypeModel
 				createNoteOptionsModel.Kpi = kpiTypeModel
@@ -964,6 +961,7 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the KpiType model
 				kpiTypeModel := new(findingsv1.KpiType)
+				kpiTypeModel.Severity = core.StringPtr("MEDIUM")
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
@@ -1006,8 +1004,6 @@ var _ = Describe(`FindingsV1`, func() {
 				createNoteOptionsModel.ID = core.StringPtr("testString")
 				createNoteOptionsModel.ReportedBy = reporterModel
 				createNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
-				createNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				createNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createNoteOptionsModel.Shared = core.BoolPtr(true)
 				createNoteOptionsModel.Finding = findingTypeModel
 				createNoteOptionsModel.Kpi = kpiTypeModel
@@ -1076,6 +1072,7 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the KpiType model
 				kpiTypeModel := new(findingsv1.KpiType)
+				kpiTypeModel.Severity = core.StringPtr("MEDIUM")
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
@@ -1118,8 +1115,6 @@ var _ = Describe(`FindingsV1`, func() {
 				createNoteOptionsModel.ID = core.StringPtr("testString")
 				createNoteOptionsModel.ReportedBy = reporterModel
 				createNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
-				createNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				createNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createNoteOptionsModel.Shared = core.BoolPtr(true)
 				createNoteOptionsModel.Finding = findingTypeModel
 				createNoteOptionsModel.Kpi = kpiTypeModel
@@ -1217,7 +1212,7 @@ var _ = Describe(`FindingsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"notes": [{"short_description": "ShortDescription", "long_description": "LongDescription", "kind": "FINDING", "related_url": [{"label": "Label", "url": "URL"}], "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "shared": true, "reported_by": {"id": "ID", "title": "Title", "url": "URL"}, "finding": {"severity": "LOW", "next_steps": [{"title": "Title", "url": "URL"}]}, "kpi": {"aggregation_type": "SUM"}, "card": {"section": "Section", "title": "Title", "subtitle": "Subtitle", "order": 1, "finding_note_names": ["FindingNoteNames"], "requires_configuration": false, "badge_text": "BadgeText", "badge_image": "BadgeImage", "elements": [{"text": "Text", "default_interval": "d", "kind": "TIME_SERIES", "default_time_range": "4d", "value_types": [{"kind": "FINDING_COUNT", "finding_note_names": ["FindingNoteNames"], "text": "label"}]}]}, "section": {"title": "Title", "image": "Image"}}], "next_page_token": "NextPageToken"}`)
+					fmt.Fprintf(res, "%s", `{"notes": [{"short_description": "ShortDescription", "long_description": "LongDescription", "kind": "FINDING", "related_url": [{"label": "Label", "url": "URL"}], "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "shared": true, "reported_by": {"id": "ID", "title": "Title", "url": "URL"}, "finding": {"severity": "LOW", "next_steps": [{"title": "Title", "url": "URL"}]}, "kpi": {"Severity": "MEDIUM", "aggregation_type": "SUM"}, "card": {"section": "Section", "title": "Title", "subtitle": "Subtitle", "order": 1, "finding_note_names": ["FindingNoteNames"], "requires_configuration": false, "badge_text": "BadgeText", "badge_image": "BadgeImage", "elements": [{"text": "Text", "default_interval": "d", "kind": "TIME_SERIES", "default_time_range": "4d", "value_types": [{"kind": "FINDING_COUNT", "finding_note_names": ["FindingNoteNames"], "text": "label"}]}]}, "section": {"title": "Title", "image": "Image"}}], "next_page_token": "NextPageToken"}`)
 				}))
 			})
 			It(`Invoke ListNotes successfully with retries`, func() {
@@ -1279,7 +1274,7 @@ var _ = Describe(`FindingsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"notes": [{"short_description": "ShortDescription", "long_description": "LongDescription", "kind": "FINDING", "related_url": [{"label": "Label", "url": "URL"}], "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "shared": true, "reported_by": {"id": "ID", "title": "Title", "url": "URL"}, "finding": {"severity": "LOW", "next_steps": [{"title": "Title", "url": "URL"}]}, "kpi": {"aggregation_type": "SUM"}, "card": {"section": "Section", "title": "Title", "subtitle": "Subtitle", "order": 1, "finding_note_names": ["FindingNoteNames"], "requires_configuration": false, "badge_text": "BadgeText", "badge_image": "BadgeImage", "elements": [{"text": "Text", "default_interval": "d", "kind": "TIME_SERIES", "default_time_range": "4d", "value_types": [{"kind": "FINDING_COUNT", "finding_note_names": ["FindingNoteNames"], "text": "label"}]}]}, "section": {"title": "Title", "image": "Image"}}], "next_page_token": "NextPageToken"}`)
+					fmt.Fprintf(res, "%s", `{"notes": [{"short_description": "ShortDescription", "long_description": "LongDescription", "kind": "FINDING", "related_url": [{"label": "Label", "url": "URL"}], "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "shared": true, "reported_by": {"id": "ID", "title": "Title", "url": "URL"}, "finding": {"severity": "LOW", "next_steps": [{"title": "Title", "url": "URL"}]}, "kpi": {"Severity": "MEDIUM", "aggregation_type": "SUM"}, "card": {"section": "Section", "title": "Title", "subtitle": "Subtitle", "order": 1, "finding_note_names": ["FindingNoteNames"], "requires_configuration": false, "badge_text": "BadgeText", "badge_image": "BadgeImage", "elements": [{"text": "Text", "default_interval": "d", "kind": "TIME_SERIES", "default_time_range": "4d", "value_types": [{"kind": "FINDING_COUNT", "finding_note_names": ["FindingNoteNames"], "text": "label"}]}]}, "section": {"title": "Title", "image": "Image"}}], "next_page_token": "NextPageToken"}`)
 				}))
 			})
 			It(`Invoke ListNotes successfully`, func() {
@@ -1458,7 +1453,7 @@ var _ = Describe(`FindingsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"short_description": "ShortDescription", "long_description": "LongDescription", "kind": "FINDING", "related_url": [{"label": "Label", "url": "URL"}], "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "shared": true, "reported_by": {"id": "ID", "title": "Title", "url": "URL"}, "finding": {"severity": "LOW", "next_steps": [{"title": "Title", "url": "URL"}]}, "kpi": {"aggregation_type": "SUM"}, "card": {"section": "Section", "title": "Title", "subtitle": "Subtitle", "order": 1, "finding_note_names": ["FindingNoteNames"], "requires_configuration": false, "badge_text": "BadgeText", "badge_image": "BadgeImage", "elements": [{"text": "Text", "default_interval": "d", "kind": "TIME_SERIES", "default_time_range": "4d", "value_types": [{"kind": "FINDING_COUNT", "finding_note_names": ["FindingNoteNames"], "text": "label"}]}]}, "section": {"title": "Title", "image": "Image"}}`)
+					fmt.Fprintf(res, "%s", `{"short_description": "ShortDescription", "long_description": "LongDescription", "kind": "FINDING", "related_url": [{"label": "Label", "url": "URL"}], "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "shared": true, "reported_by": {"id": "ID", "title": "Title", "url": "URL"}, "finding": {"severity": "LOW", "next_steps": [{"title": "Title", "url": "URL"}]}, "kpi": {"Severity": "MEDIUM", "aggregation_type": "SUM"}, "card": {"section": "Section", "title": "Title", "subtitle": "Subtitle", "order": 1, "finding_note_names": ["FindingNoteNames"], "requires_configuration": false, "badge_text": "BadgeText", "badge_image": "BadgeImage", "elements": [{"text": "Text", "default_interval": "d", "kind": "TIME_SERIES", "default_time_range": "4d", "value_types": [{"kind": "FINDING_COUNT", "finding_note_names": ["FindingNoteNames"], "text": "label"}]}]}, "section": {"title": "Title", "image": "Image"}}`)
 				}))
 			})
 			It(`Invoke GetNote successfully with retries`, func() {
@@ -1517,7 +1512,7 @@ var _ = Describe(`FindingsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"short_description": "ShortDescription", "long_description": "LongDescription", "kind": "FINDING", "related_url": [{"label": "Label", "url": "URL"}], "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "shared": true, "reported_by": {"id": "ID", "title": "Title", "url": "URL"}, "finding": {"severity": "LOW", "next_steps": [{"title": "Title", "url": "URL"}]}, "kpi": {"aggregation_type": "SUM"}, "card": {"section": "Section", "title": "Title", "subtitle": "Subtitle", "order": 1, "finding_note_names": ["FindingNoteNames"], "requires_configuration": false, "badge_text": "BadgeText", "badge_image": "BadgeImage", "elements": [{"text": "Text", "default_interval": "d", "kind": "TIME_SERIES", "default_time_range": "4d", "value_types": [{"kind": "FINDING_COUNT", "finding_note_names": ["FindingNoteNames"], "text": "label"}]}]}, "section": {"title": "Title", "image": "Image"}}`)
+					fmt.Fprintf(res, "%s", `{"short_description": "ShortDescription", "long_description": "LongDescription", "kind": "FINDING", "related_url": [{"label": "Label", "url": "URL"}], "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "shared": true, "reported_by": {"id": "ID", "title": "Title", "url": "URL"}, "finding": {"severity": "LOW", "next_steps": [{"title": "Title", "url": "URL"}]}, "kpi": {"Severity": "MEDIUM", "aggregation_type": "SUM"}, "card": {"section": "Section", "title": "Title", "subtitle": "Subtitle", "order": 1, "finding_note_names": ["FindingNoteNames"], "requires_configuration": false, "badge_text": "BadgeText", "badge_image": "BadgeImage", "elements": [{"text": "Text", "default_interval": "d", "kind": "TIME_SERIES", "default_time_range": "4d", "value_types": [{"kind": "FINDING_COUNT", "finding_note_names": ["FindingNoteNames"], "text": "label"}]}]}, "section": {"title": "Title", "image": "Image"}}`)
 				}))
 			})
 			It(`Invoke GetNote successfully`, func() {
@@ -1672,6 +1667,7 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the KpiType model
 				kpiTypeModel := new(findingsv1.KpiType)
+				kpiTypeModel.Severity = core.StringPtr("MEDIUM")
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
@@ -1715,8 +1711,6 @@ var _ = Describe(`FindingsV1`, func() {
 				updateNoteOptionsModel.ID = core.StringPtr("testString")
 				updateNoteOptionsModel.ReportedBy = reporterModel
 				updateNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
-				updateNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				updateNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateNoteOptionsModel.Shared = core.BoolPtr(true)
 				updateNoteOptionsModel.Finding = findingTypeModel
 				updateNoteOptionsModel.Kpi = kpiTypeModel
@@ -1778,7 +1772,7 @@ var _ = Describe(`FindingsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"short_description": "ShortDescription", "long_description": "LongDescription", "kind": "FINDING", "related_url": [{"label": "Label", "url": "URL"}], "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "shared": true, "reported_by": {"id": "ID", "title": "Title", "url": "URL"}, "finding": {"severity": "LOW", "next_steps": [{"title": "Title", "url": "URL"}]}, "kpi": {"aggregation_type": "SUM"}, "card": {"section": "Section", "title": "Title", "subtitle": "Subtitle", "order": 1, "finding_note_names": ["FindingNoteNames"], "requires_configuration": false, "badge_text": "BadgeText", "badge_image": "BadgeImage", "elements": [{"text": "Text", "default_interval": "d", "kind": "TIME_SERIES", "default_time_range": "4d", "value_types": [{"kind": "FINDING_COUNT", "finding_note_names": ["FindingNoteNames"], "text": "label"}]}]}, "section": {"title": "Title", "image": "Image"}}`)
+					fmt.Fprintf(res, "%s", `{"short_description": "ShortDescription", "long_description": "LongDescription", "kind": "FINDING", "related_url": [{"label": "Label", "url": "URL"}], "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "shared": true, "reported_by": {"id": "ID", "title": "Title", "url": "URL"}, "finding": {"severity": "LOW", "next_steps": [{"title": "Title", "url": "URL"}]}, "kpi": {"Severity": "MEDIUM", "aggregation_type": "SUM"}, "card": {"section": "Section", "title": "Title", "subtitle": "Subtitle", "order": 1, "finding_note_names": ["FindingNoteNames"], "requires_configuration": false, "badge_text": "BadgeText", "badge_image": "BadgeImage", "elements": [{"text": "Text", "default_interval": "d", "kind": "TIME_SERIES", "default_time_range": "4d", "value_types": [{"kind": "FINDING_COUNT", "finding_note_names": ["FindingNoteNames"], "text": "label"}]}]}, "section": {"title": "Title", "image": "Image"}}`)
 				}))
 			})
 			It(`Invoke UpdateNote successfully with retries`, func() {
@@ -1814,6 +1808,7 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the KpiType model
 				kpiTypeModel := new(findingsv1.KpiType)
+				kpiTypeModel.Severity = core.StringPtr("MEDIUM")
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
@@ -1857,8 +1852,6 @@ var _ = Describe(`FindingsV1`, func() {
 				updateNoteOptionsModel.ID = core.StringPtr("testString")
 				updateNoteOptionsModel.ReportedBy = reporterModel
 				updateNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
-				updateNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				updateNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateNoteOptionsModel.Shared = core.BoolPtr(true)
 				updateNoteOptionsModel.Finding = findingTypeModel
 				updateNoteOptionsModel.Kpi = kpiTypeModel
@@ -1922,7 +1915,7 @@ var _ = Describe(`FindingsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"short_description": "ShortDescription", "long_description": "LongDescription", "kind": "FINDING", "related_url": [{"label": "Label", "url": "URL"}], "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "shared": true, "reported_by": {"id": "ID", "title": "Title", "url": "URL"}, "finding": {"severity": "LOW", "next_steps": [{"title": "Title", "url": "URL"}]}, "kpi": {"aggregation_type": "SUM"}, "card": {"section": "Section", "title": "Title", "subtitle": "Subtitle", "order": 1, "finding_note_names": ["FindingNoteNames"], "requires_configuration": false, "badge_text": "BadgeText", "badge_image": "BadgeImage", "elements": [{"text": "Text", "default_interval": "d", "kind": "TIME_SERIES", "default_time_range": "4d", "value_types": [{"kind": "FINDING_COUNT", "finding_note_names": ["FindingNoteNames"], "text": "label"}]}]}, "section": {"title": "Title", "image": "Image"}}`)
+					fmt.Fprintf(res, "%s", `{"short_description": "ShortDescription", "long_description": "LongDescription", "kind": "FINDING", "related_url": [{"label": "Label", "url": "URL"}], "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "shared": true, "reported_by": {"id": "ID", "title": "Title", "url": "URL"}, "finding": {"severity": "LOW", "next_steps": [{"title": "Title", "url": "URL"}]}, "kpi": {"Severity": "MEDIUM", "aggregation_type": "SUM"}, "card": {"section": "Section", "title": "Title", "subtitle": "Subtitle", "order": 1, "finding_note_names": ["FindingNoteNames"], "requires_configuration": false, "badge_text": "BadgeText", "badge_image": "BadgeImage", "elements": [{"text": "Text", "default_interval": "d", "kind": "TIME_SERIES", "default_time_range": "4d", "value_types": [{"kind": "FINDING_COUNT", "finding_note_names": ["FindingNoteNames"], "text": "label"}]}]}, "section": {"title": "Title", "image": "Image"}}`)
 				}))
 			})
 			It(`Invoke UpdateNote successfully`, func() {
@@ -1963,6 +1956,7 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the KpiType model
 				kpiTypeModel := new(findingsv1.KpiType)
+				kpiTypeModel.Severity = core.StringPtr("MEDIUM")
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
@@ -2006,8 +2000,6 @@ var _ = Describe(`FindingsV1`, func() {
 				updateNoteOptionsModel.ID = core.StringPtr("testString")
 				updateNoteOptionsModel.ReportedBy = reporterModel
 				updateNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
-				updateNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				updateNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateNoteOptionsModel.Shared = core.BoolPtr(true)
 				updateNoteOptionsModel.Finding = findingTypeModel
 				updateNoteOptionsModel.Kpi = kpiTypeModel
@@ -2055,6 +2047,7 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the KpiType model
 				kpiTypeModel := new(findingsv1.KpiType)
+				kpiTypeModel.Severity = core.StringPtr("MEDIUM")
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
@@ -2098,8 +2091,6 @@ var _ = Describe(`FindingsV1`, func() {
 				updateNoteOptionsModel.ID = core.StringPtr("testString")
 				updateNoteOptionsModel.ReportedBy = reporterModel
 				updateNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
-				updateNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				updateNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateNoteOptionsModel.Shared = core.BoolPtr(true)
 				updateNoteOptionsModel.Finding = findingTypeModel
 				updateNoteOptionsModel.Kpi = kpiTypeModel
@@ -2168,6 +2159,7 @@ var _ = Describe(`FindingsV1`, func() {
 
 				// Construct an instance of the KpiType model
 				kpiTypeModel := new(findingsv1.KpiType)
+				kpiTypeModel.Severity = core.StringPtr("MEDIUM")
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
@@ -2211,8 +2203,6 @@ var _ = Describe(`FindingsV1`, func() {
 				updateNoteOptionsModel.ID = core.StringPtr("testString")
 				updateNoteOptionsModel.ReportedBy = reporterModel
 				updateNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
-				updateNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				updateNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateNoteOptionsModel.Shared = core.BoolPtr(true)
 				updateNoteOptionsModel.Finding = findingTypeModel
 				updateNoteOptionsModel.Kpi = kpiTypeModel
@@ -2382,7 +2372,7 @@ var _ = Describe(`FindingsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"short_description": "ShortDescription", "long_description": "LongDescription", "kind": "FINDING", "related_url": [{"label": "Label", "url": "URL"}], "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "shared": true, "reported_by": {"id": "ID", "title": "Title", "url": "URL"}, "finding": {"severity": "LOW", "next_steps": [{"title": "Title", "url": "URL"}]}, "kpi": {"aggregation_type": "SUM"}, "card": {"section": "Section", "title": "Title", "subtitle": "Subtitle", "order": 1, "finding_note_names": ["FindingNoteNames"], "requires_configuration": false, "badge_text": "BadgeText", "badge_image": "BadgeImage", "elements": [{"text": "Text", "default_interval": "d", "kind": "TIME_SERIES", "default_time_range": "4d", "value_types": [{"kind": "FINDING_COUNT", "finding_note_names": ["FindingNoteNames"], "text": "label"}]}]}, "section": {"title": "Title", "image": "Image"}}`)
+					fmt.Fprintf(res, "%s", `{"short_description": "ShortDescription", "long_description": "LongDescription", "kind": "FINDING", "related_url": [{"label": "Label", "url": "URL"}], "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "shared": true, "reported_by": {"id": "ID", "title": "Title", "url": "URL"}, "finding": {"severity": "LOW", "next_steps": [{"title": "Title", "url": "URL"}]}, "kpi": {"Severity": "MEDIUM", "aggregation_type": "SUM"}, "card": {"section": "Section", "title": "Title", "subtitle": "Subtitle", "order": 1, "finding_note_names": ["FindingNoteNames"], "requires_configuration": false, "badge_text": "BadgeText", "badge_image": "BadgeImage", "elements": [{"text": "Text", "default_interval": "d", "kind": "TIME_SERIES", "default_time_range": "4d", "value_types": [{"kind": "FINDING_COUNT", "finding_note_names": ["FindingNoteNames"], "text": "label"}]}]}, "section": {"title": "Title", "image": "Image"}}`)
 				}))
 			})
 			It(`Invoke GetOccurrenceNote successfully with retries`, func() {
@@ -2441,7 +2431,7 @@ var _ = Describe(`FindingsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"short_description": "ShortDescription", "long_description": "LongDescription", "kind": "FINDING", "related_url": [{"label": "Label", "url": "URL"}], "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "shared": true, "reported_by": {"id": "ID", "title": "Title", "url": "URL"}, "finding": {"severity": "LOW", "next_steps": [{"title": "Title", "url": "URL"}]}, "kpi": {"aggregation_type": "SUM"}, "card": {"section": "Section", "title": "Title", "subtitle": "Subtitle", "order": 1, "finding_note_names": ["FindingNoteNames"], "requires_configuration": false, "badge_text": "BadgeText", "badge_image": "BadgeImage", "elements": [{"text": "Text", "default_interval": "d", "kind": "TIME_SERIES", "default_time_range": "4d", "value_types": [{"kind": "FINDING_COUNT", "finding_note_names": ["FindingNoteNames"], "text": "label"}]}]}, "section": {"title": "Title", "image": "Image"}}`)
+					fmt.Fprintf(res, "%s", `{"short_description": "ShortDescription", "long_description": "LongDescription", "kind": "FINDING", "related_url": [{"label": "Label", "url": "URL"}], "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "shared": true, "reported_by": {"id": "ID", "title": "Title", "url": "URL"}, "finding": {"severity": "LOW", "next_steps": [{"title": "Title", "url": "URL"}]}, "kpi": {"Severity": "MEDIUM", "aggregation_type": "SUM"}, "card": {"section": "Section", "title": "Title", "subtitle": "Subtitle", "order": 1, "finding_note_names": ["FindingNoteNames"], "requires_configuration": false, "badge_text": "BadgeText", "badge_image": "BadgeImage", "elements": [{"text": "Text", "default_interval": "d", "kind": "TIME_SERIES", "default_time_range": "4d", "value_types": [{"kind": "FINDING_COUNT", "finding_note_names": ["FindingNoteNames"], "text": "label"}]}]}, "section": {"title": "Title", "image": "Image"}}`)
 				}))
 			})
 			It(`Invoke GetOccurrenceNote successfully`, func() {
@@ -4541,7 +4531,9 @@ var _ = Describe(`FindingsV1`, func() {
 				// Construct an instance of the KpiType model
 				kpiTypeModel := new(findingsv1.KpiType)
 				Expect(kpiTypeModel).ToNot(BeNil())
+				kpiTypeModel.Severity = core.StringPtr("MEDIUM")
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
+				Expect(kpiTypeModel.Severity).To(Equal(core.StringPtr("MEDIUM")))
 				Expect(kpiTypeModel.AggregationType).To(Equal(core.StringPtr("SUM")))
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
@@ -4613,8 +4605,6 @@ var _ = Describe(`FindingsV1`, func() {
 				createNoteOptionsModel.SetID("testString")
 				createNoteOptionsModel.SetReportedBy(reporterModel)
 				createNoteOptionsModel.SetRelatedURL([]findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel})
-				createNoteOptionsModel.SetCreateTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
-				createNoteOptionsModel.SetUpdateTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
 				createNoteOptionsModel.SetShared(true)
 				createNoteOptionsModel.SetFinding(findingTypeModel)
 				createNoteOptionsModel.SetKpi(kpiTypeModel)
@@ -4630,8 +4620,6 @@ var _ = Describe(`FindingsV1`, func() {
 				Expect(createNoteOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(createNoteOptionsModel.ReportedBy).To(Equal(reporterModel))
 				Expect(createNoteOptionsModel.RelatedURL).To(Equal([]findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}))
-				Expect(createNoteOptionsModel.CreateTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
-				Expect(createNoteOptionsModel.UpdateTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
 				Expect(createNoteOptionsModel.Shared).To(Equal(core.BoolPtr(true)))
 				Expect(createNoteOptionsModel.Finding).To(Equal(findingTypeModel))
 				Expect(createNoteOptionsModel.Kpi).To(Equal(kpiTypeModel))
@@ -4993,7 +4981,9 @@ var _ = Describe(`FindingsV1`, func() {
 				// Construct an instance of the KpiType model
 				kpiTypeModel := new(findingsv1.KpiType)
 				Expect(kpiTypeModel).ToNot(BeNil())
+				kpiTypeModel.Severity = core.StringPtr("MEDIUM")
 				kpiTypeModel.AggregationType = core.StringPtr("SUM")
+				Expect(kpiTypeModel.Severity).To(Equal(core.StringPtr("MEDIUM")))
 				Expect(kpiTypeModel.AggregationType).To(Equal(core.StringPtr("SUM")))
 
 				// Construct an instance of the ValueTypeFindingCountValueType model
@@ -5067,8 +5057,6 @@ var _ = Describe(`FindingsV1`, func() {
 				updateNoteOptionsModel.SetID("testString")
 				updateNoteOptionsModel.SetReportedBy(reporterModel)
 				updateNoteOptionsModel.SetRelatedURL([]findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel})
-				updateNoteOptionsModel.SetCreateTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
-				updateNoteOptionsModel.SetUpdateTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
 				updateNoteOptionsModel.SetShared(true)
 				updateNoteOptionsModel.SetFinding(findingTypeModel)
 				updateNoteOptionsModel.SetKpi(kpiTypeModel)
@@ -5085,8 +5073,6 @@ var _ = Describe(`FindingsV1`, func() {
 				Expect(updateNoteOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(updateNoteOptionsModel.ReportedBy).To(Equal(reporterModel))
 				Expect(updateNoteOptionsModel.RelatedURL).To(Equal([]findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}))
-				Expect(updateNoteOptionsModel.CreateTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
-				Expect(updateNoteOptionsModel.UpdateTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
 				Expect(updateNoteOptionsModel.Shared).To(Equal(core.BoolPtr(true)))
 				Expect(updateNoteOptionsModel.Finding).To(Equal(findingTypeModel))
 				Expect(updateNoteOptionsModel.Kpi).To(Equal(kpiTypeModel))

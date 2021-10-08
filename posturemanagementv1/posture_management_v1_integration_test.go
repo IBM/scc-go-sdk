@@ -45,6 +45,7 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 		collectorId              string
 		credentialId             string
 		scanId                   string
+		profileId                string
 		credentialString         string
 		err                      error
 		accountId                string
@@ -103,10 +104,11 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 				URL:    authUrl,
 			}
 
-			collectorId = "2632"
-			credentialId = "6307"
-			scopeId = "34001"
-			scanId = "39950"
+			credentialId = config["CREDENTIAL_ID"]
+			collectorId = config["COLLECTOR_ID"]			
+			scopeId = config["SCOPE_ID"]
+			profileId=config["PROFILE_ID"]
+			scanId = config["SCAN_ID"]
 
 			fmt.Printf("Service URL: %s\n", serviceURL)
 			shouldSkipTest = func() {}
@@ -160,7 +162,7 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 
 			createValidationOptions := &posturemanagementv1.CreateValidationOptions{
 				ScopeID:        core.StringPtr(scopeId),
-				ProfileID:      core.StringPtr("48"),
+				ProfileID:      core.StringPtr(profileId),
 				GroupProfileID: core.StringPtr("0"),
 				TransactionID:  core.StringPtr(uuid.NewString()),
 			}
@@ -182,7 +184,7 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 
 			scansSummaryOptions := &posturemanagementv1.ScansSummaryOptions{
 				ScanID:        core.StringPtr(scanId),
-				ProfileID:     core.StringPtr("48"),
+				ProfileID:     core.StringPtr(profileId),
 				TransactionID: core.StringPtr(uuid.NewString()),
 			}
 
@@ -203,7 +205,7 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 
 			scanSummariesOptions := &posturemanagementv1.ScanSummariesOptions{
 				ScopeID:       core.StringPtr(scopeId),
-				ProfileID:     core.StringPtr("48"),
+				ProfileID:     core.StringPtr(profileId),
 				TransactionID: core.StringPtr(uuid.NewString()),
 			}
 

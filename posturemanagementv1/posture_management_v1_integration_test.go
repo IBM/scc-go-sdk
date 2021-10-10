@@ -1,3 +1,4 @@
+//go:build integration
 // +build integration
 
 /**
@@ -105,9 +106,9 @@ var _ = Describe(`PostureManagementV1 Integration Tests`, func() {
 			}
 
 			credentialId = config["CREDENTIAL_ID"]
-			collectorId = config["COLLECTOR_ID"]			
+			collectorId = config["COLLECTOR_ID"]
 			scopeId = config["SCOPE_ID"]
-			profileId=config["PROFILE_ID"]
+			profileId = config["PROFILE_ID"]
 			scanId = config["SCAN_ID"]
 
 			fmt.Printf("Service URL: %s\n", serviceURL)

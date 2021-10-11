@@ -7,7 +7,7 @@
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 
-# IBM Cloud Security & Compliance Center Go SDK Version v1.1.0
+# IBM Cloud Security & Compliance Center Go SDK Version v1.2.0
 
 Go client library to interact with various
 [IBM Cloud Security & Compliance Center APIs](https://cloud.ibm.com/docs?tab=api-docs&category=platform_services%2Csecurity).
@@ -25,17 +25,19 @@ Go client library to interact with various
 
 <!-- toc -->
 
-- [Overview](#overview)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-  * [Go modules](#go-modules)
-  * [`go get` command](#go-get-command)
-- [Using the SDK](#using-the-sdk)
-- [Questions](#questions)
-- [Issues](#issues)
-- [Open source @ IBM](#open-source--ibm)
-- [Contributing](#contributing)
-- [License](#license)
+- [IBM Cloud Security & Compliance Center Go SDK Version v1.2.0](#ibm-cloud-security--compliance-center-go-sdk-version-v120)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+    - [Go modules](#go-modules)
+    - [`go get` command](#go-get-command)
+  - [Using the SDK](#using-the-sdk)
+  - [Questions](#questions)
+  - [Issues](#issues)
+  - [Open source @ IBM](#open-source--ibm)
+  - [Contributing](#contributing)
+  - [License](#license)
 
 <!-- tocstop -->
 
@@ -45,9 +47,13 @@ The IBM Cloud Security & Compliance Center Go SDK allows developers to programma
 
 | Service Name                                                                         | Package name              |
 | ------------------------------------------------------------------------------------ | ------------------------- |
-| [Findings](https://cloud.ibm.com/apidocs/security-advisor/findings)                  | findingsv1                |
-| [Notifications](https://cloud.ibm.com/apidocs/security-advisor/notifications)        | notificationsv1           |
+| [Findings](https://cloud.ibm.com/apidocs/security-compliance/findings)                                   | findingsv1                |
+| [Notifications](https://cloud.ibm.com/apidocs/security-compliance/si-notifications)  | notificationsv1           |
 | [Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config) | configurationgovernancev1 |
+| [Admin Service](https://cloud.ibm.com/apidocs/security-compliance/admin)             | adminserviceapiv1         |
+| [Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture)      | posturemanagementv1       |
+
+
 
 ## Prerequisites
 
@@ -59,7 +65,7 @@ The IBM Cloud Security & Compliance Center Go SDK allows developers to programma
 * Go version 1.12 or above.
 
 ## Installation
-The current version of this SDK: v1.1.0
+The current version of this SDK: v1.2.0
 
 ### Go modules  
 If your application uses Go modules for dependency management (recommended), just add an import for each service 

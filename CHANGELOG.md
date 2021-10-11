@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/IBM/scc-go-sdk/compare/v1.1.0...v1.2.0) (2021-07-22)
+
+
+### Features
+
+* **SDK:** add support for posture management ([94c79d5](https://github.com/IBM/scc-go-sdk/commit/94c79d53b83882a692f444d7f8dedeb784640133))
+
 # [1.1.0](https://github.com/IBM/scc-go-sdk/compare/v1.0.0...v1.1.0) (2021-07-15)
 
 

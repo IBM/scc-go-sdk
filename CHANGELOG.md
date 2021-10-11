@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/IBM/scc-go-sdk/compare/v1.2.2...v1.3.0) (2021-10-11)
+
+
+### Features
+
+* **kpi severity:** Add severity for kpi ([451b4e7](https://github.com/IBM/scc-go-sdk/commit/451b4e74adaa0752aa9f987bc225df31f0084821))
+
 ## [1.2.2](https://github.com/IBM/scc-go-sdk/compare/v1.2.1...v1.2.2) (2021-10-11)
 
 

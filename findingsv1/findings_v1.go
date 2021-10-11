@@ -15,7 +15,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.38.1-1037b405-20210908-184149
+ * IBM OpenAPI SDK Code Generator Version: 3.40.0-910cf8c2-20211006-154754
  */
 
 // Package findingsv1 : Operations and models for the FindingsV1 service
@@ -390,12 +390,6 @@ func (findings *FindingsV1) CreateNoteWithContext(ctx context.Context, createNot
 	if createNoteOptions.RelatedURL != nil {
 		body["related_url"] = createNoteOptions.RelatedURL
 	}
-	if createNoteOptions.CreateTime != nil {
-		body["create_time"] = createNoteOptions.CreateTime
-	}
-	if createNoteOptions.UpdateTime != nil {
-		body["update_time"] = createNoteOptions.UpdateTime
-	}
 	if createNoteOptions.Shared != nil {
 		body["shared"] = createNoteOptions.Shared
 	}
@@ -636,12 +630,6 @@ func (findings *FindingsV1) UpdateNoteWithContext(ctx context.Context, updateNot
 	}
 	if updateNoteOptions.RelatedURL != nil {
 		body["related_url"] = updateNoteOptions.RelatedURL
-	}
-	if updateNoteOptions.CreateTime != nil {
-		body["create_time"] = updateNoteOptions.CreateTime
-	}
-	if updateNoteOptions.UpdateTime != nil {
-		body["update_time"] = updateNoteOptions.UpdateTime
 	}
 	if updateNoteOptions.Shared != nil {
 		body["shared"] = updateNoteOptions.Shared
@@ -1507,7 +1495,7 @@ func UnmarshalContext(m map[string]json.RawMessage, result interface{}) (err err
 // CreateNoteOptions : The CreateNote options.
 type CreateNoteOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `json:"-" validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// A one sentence description of your note.
 	ShortDescription *string `json:"short_description" validate:"required"`
@@ -1531,12 +1519,6 @@ type CreateNoteOptions struct {
 
 	RelatedURL []APINoteRelatedURL `json:"related_url,omitempty"`
 
-	// Output only. The time this note was created. This field can be used as a filter in list requests.
-	CreateTime *strfmt.DateTime `json:"create_time,omitempty"`
-
-	// Output only. The time this note was last updated. This field can be used as a filter in list requests.
-	UpdateTime *strfmt.DateTime `json:"update_time,omitempty"`
-
 	// True if this note can be shared by multiple accounts.
 	Shared *bool `json:"shared,omitempty"`
 
@@ -1553,7 +1535,7 @@ type CreateNoteOptions struct {
 	Section *Section `json:"section,omitempty"`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string `json:"-"`
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -1628,18 +1610,6 @@ func (_options *CreateNoteOptions) SetRelatedURL(relatedURL []APINoteRelatedURL)
 	return _options
 }
 
-// SetCreateTime : Allow user to set CreateTime
-func (_options *CreateNoteOptions) SetCreateTime(createTime *strfmt.DateTime) *CreateNoteOptions {
-	_options.CreateTime = createTime
-	return _options
-}
-
-// SetUpdateTime : Allow user to set UpdateTime
-func (_options *CreateNoteOptions) SetUpdateTime(updateTime *strfmt.DateTime) *CreateNoteOptions {
-	_options.UpdateTime = updateTime
-	return _options
-}
-
 // SetShared : Allow user to set Shared
 func (_options *CreateNoteOptions) SetShared(shared bool) *CreateNoteOptions {
 	_options.Shared = core.BoolPtr(shared)
@@ -1685,7 +1655,7 @@ func (options *CreateNoteOptions) SetHeaders(param map[string]string) *CreateNot
 // CreateOccurrenceOptions : The CreateOccurrence options.
 type CreateOccurrenceOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `json:"-" validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// An analysis note associated with this image, in the form "{account_id}/providers/{provider_id}/notes/{note_id}" This
 	// field can be used as a filter in list requests.
@@ -1721,10 +1691,10 @@ type CreateOccurrenceOptions struct {
 	ReferenceData interface{} `json:"reference_data,omitempty"`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string `json:"-"`
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// When set to true, an existing occurrence is replaced rather than duplicated.
-	ReplaceIfExists *bool `json:"-"`
+	ReplaceIfExists *bool `json:"Replace-If-Exists,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -1874,13 +1844,13 @@ func UnmarshalDataTransferred(m map[string]json.RawMessage, result interface{}) 
 // DeleteNoteOptions : The DeleteNote options.
 type DeleteNoteOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `json:"-" validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// Second part of note `name`: providers/{provider_id}/notes/{note_id}.
-	NoteID *string `json:"-" validate:"required,ne="`
+	NoteID *string `json:"note_id" validate:"required,ne="`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string `json:"-"`
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -1921,13 +1891,13 @@ func (options *DeleteNoteOptions) SetHeaders(param map[string]string) *DeleteNot
 // DeleteOccurrenceOptions : The DeleteOccurrence options.
 type DeleteOccurrenceOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `json:"-" validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// Second part of occurrence `name`: providers/{provider_id}/occurrences/{occurrence_id}.
-	OccurrenceID *string `json:"-" validate:"required,ne="`
+	OccurrenceID *string `json:"occurrence_id" validate:"required,ne="`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string `json:"-"`
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2094,13 +2064,13 @@ func UnmarshalFindingType(m map[string]json.RawMessage, result interface{}) (err
 // GetNoteOptions : The GetNote options.
 type GetNoteOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `json:"-" validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// Second part of note `name`: providers/{provider_id}/notes/{note_id}.
-	NoteID *string `json:"-" validate:"required,ne="`
+	NoteID *string `json:"note_id" validate:"required,ne="`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string `json:"-"`
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2141,13 +2111,13 @@ func (options *GetNoteOptions) SetHeaders(param map[string]string) *GetNoteOptio
 // GetOccurrenceNoteOptions : The GetOccurrenceNote options.
 type GetOccurrenceNoteOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `json:"-" validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// Second part of occurrence `name`: providers/{provider_id}/occurrences/{occurrence_id}.
-	OccurrenceID *string `json:"-" validate:"required,ne="`
+	OccurrenceID *string `json:"occurrence_id" validate:"required,ne="`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string `json:"-"`
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2188,13 +2158,13 @@ func (options *GetOccurrenceNoteOptions) SetHeaders(param map[string]string) *Ge
 // GetOccurrenceOptions : The GetOccurrence options.
 type GetOccurrenceOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `json:"-" validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// Second part of occurrence `name`: providers/{provider_id}/occurrences/{occurrence_id}.
-	OccurrenceID *string `json:"-" validate:"required,ne="`
+	OccurrenceID *string `json:"occurrence_id" validate:"required,ne="`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string `json:"-"`
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2267,11 +2237,21 @@ func UnmarshalKpi(m map[string]json.RawMessage, result interface{}) (err error) 
 
 // KpiType : KpiType provides details about a KPI note.
 type KpiType struct {
+	Severity *string `json:"Severity,omitempty"`
+
 	// The aggregation type of the KPI values. - SUM&#58; A single-value metrics aggregation type that sums up numeric
 	// values
 	//   that are extracted from KPI occurrences.
 	AggregationType *string `json:"aggregation_type" validate:"required"`
 }
+
+// Constants associated with the KpiType.Severity property.
+const (
+	KpiTypeSeverityCriticalConst = "CRITICAL"
+	KpiTypeSeverityHighConst     = "HIGH"
+	KpiTypeSeverityLowConst      = "LOW"
+	KpiTypeSeverityMediumConst   = "MEDIUM"
+)
 
 // Constants associated with the KpiType.AggregationType property.
 // The aggregation type of the KPI values. - SUM&#58; A single-value metrics aggregation type that sums up numeric
@@ -2293,6 +2273,10 @@ func (*FindingsV1) NewKpiType(aggregationType string) (_model *KpiType, err erro
 // UnmarshalKpiType unmarshals an instance of KpiType from the specified map of raw messages.
 func UnmarshalKpiType(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(KpiType)
+	err = core.UnmarshalPrimitive(m, "Severity", &obj.Severity)
+	if err != nil {
+		return
+	}
 	err = core.UnmarshalPrimitive(m, "aggregation_type", &obj.AggregationType)
 	if err != nil {
 		return
@@ -2304,19 +2288,19 @@ func UnmarshalKpiType(m map[string]json.RawMessage, result interface{}) (err err
 // ListNoteOccurrencesOptions : The ListNoteOccurrences options.
 type ListNoteOccurrencesOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `json:"-" validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// Second part of note `name`: providers/{provider_id}/notes/{note_id}.
-	NoteID *string `json:"-" validate:"required,ne="`
+	NoteID *string `json:"note_id" validate:"required,ne="`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string `json:"-"`
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Number of notes to return in the list.
-	PageSize *int64 `json:"-"`
+	PageSize *int64 `json:"page_size,omitempty"`
 
 	// Token to provide to skip to a particular spot in the list.
-	PageToken *string `json:"-"`
+	PageToken *string `json:"page_token,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2369,16 +2353,16 @@ func (options *ListNoteOccurrencesOptions) SetHeaders(param map[string]string) *
 // ListNotesOptions : The ListNotes options.
 type ListNotesOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `json:"-" validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string `json:"-"`
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Number of notes to return in the list.
-	PageSize *int64 `json:"-"`
+	PageSize *int64 `json:"page_size,omitempty"`
 
 	// Token to provide to skip to a particular spot in the list.
-	PageToken *string `json:"-"`
+	PageToken *string `json:"page_token,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2424,16 +2408,16 @@ func (options *ListNotesOptions) SetHeaders(param map[string]string) *ListNotesO
 // ListOccurrencesOptions : The ListOccurrences options.
 type ListOccurrencesOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `json:"-" validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string `json:"-"`
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Number of notes to return in the list.
-	PageSize *int64 `json:"-"`
+	PageSize *int64 `json:"page_size,omitempty"`
 
 	// Token to provide to skip to a particular spot in the list.
-	PageToken *string `json:"-"`
+	PageToken *string `json:"page_token,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2479,19 +2463,19 @@ func (options *ListOccurrencesOptions) SetHeaders(param map[string]string) *List
 // ListProvidersOptions : The ListProviders options.
 type ListProvidersOptions struct {
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string `json:"-"`
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// The number of documents that you want to return.
-	Limit *int64 `json:"-"`
+	Limit *int64 `json:"limit,omitempty"`
 
 	// The offset is the index of the item from which you want to start returning data from. Default is 0.
-	Skip *int64 `json:"-"`
+	Skip *int64 `json:"skip,omitempty"`
 
 	// The first provider ID included in the result, sorted in ascending order. If not provided, this parameter is ignored.
-	StartProviderID *string `json:"-"`
+	StartProviderID *string `json:"start_provider_id,omitempty"`
 
 	// The last provider ID included in the result, sorted in ascending order. If not provided, this parameter is ignored.
-	EndProviderID *string `json:"-"`
+	EndProviderID *string `json:"end_provider_id,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2582,10 +2566,10 @@ type PostGraphOptions struct {
 	Body io.ReadCloser `json:"body,omitempty"`
 
 	// The type of the input.
-	ContentType *string `json:"-"`
+	ContentType *string `json:"Content-Type,omitempty"`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string `json:"-"`
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2755,10 +2739,10 @@ func UnmarshalSocketAddress(m map[string]json.RawMessage, result interface{}) (e
 // UpdateNoteOptions : The UpdateNote options.
 type UpdateNoteOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `json:"-" validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// Second part of note `name`: providers/{provider_id}/notes/{note_id}.
-	NoteID *string `json:"-" validate:"required,ne="`
+	NoteID *string `json:"note_id" validate:"required,ne="`
 
 	// A one sentence description of your note.
 	ShortDescription *string `json:"short_description" validate:"required"`
@@ -2782,12 +2766,6 @@ type UpdateNoteOptions struct {
 
 	RelatedURL []APINoteRelatedURL `json:"related_url,omitempty"`
 
-	// Output only. The time this note was created. This field can be used as a filter in list requests.
-	CreateTime *strfmt.DateTime `json:"create_time,omitempty"`
-
-	// Output only. The time this note was last updated. This field can be used as a filter in list requests.
-	UpdateTime *strfmt.DateTime `json:"update_time,omitempty"`
-
 	// True if this note can be shared by multiple accounts.
 	Shared *bool `json:"shared,omitempty"`
 
@@ -2804,7 +2782,7 @@ type UpdateNoteOptions struct {
 	Section *Section `json:"section,omitempty"`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string `json:"-"`
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2886,18 +2864,6 @@ func (_options *UpdateNoteOptions) SetRelatedURL(relatedURL []APINoteRelatedURL)
 	return _options
 }
 
-// SetCreateTime : Allow user to set CreateTime
-func (_options *UpdateNoteOptions) SetCreateTime(createTime *strfmt.DateTime) *UpdateNoteOptions {
-	_options.CreateTime = createTime
-	return _options
-}
-
-// SetUpdateTime : Allow user to set UpdateTime
-func (_options *UpdateNoteOptions) SetUpdateTime(updateTime *strfmt.DateTime) *UpdateNoteOptions {
-	_options.UpdateTime = updateTime
-	return _options
-}
-
 // SetShared : Allow user to set Shared
 func (_options *UpdateNoteOptions) SetShared(shared bool) *UpdateNoteOptions {
 	_options.Shared = core.BoolPtr(shared)
@@ -2943,10 +2909,10 @@ func (options *UpdateNoteOptions) SetHeaders(param map[string]string) *UpdateNot
 // UpdateOccurrenceOptions : The UpdateOccurrence options.
 type UpdateOccurrenceOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `json:"-" validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// Second part of occurrence `name`: providers/{provider_id}/occurrences/{occurrence_id}.
-	OccurrenceID *string `json:"-" validate:"required,ne="`
+	OccurrenceID *string `json:"occurrence_id" validate:"required,ne="`
 
 	// An analysis note associated with this image, in the form "{account_id}/providers/{provider_id}/notes/{note_id}" This
 	// field can be used as a filter in list requests.
@@ -2982,7 +2948,7 @@ type UpdateOccurrenceOptions struct {
 	ReferenceData interface{} `json:"reference_data,omitempty"`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string `json:"-"`
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string

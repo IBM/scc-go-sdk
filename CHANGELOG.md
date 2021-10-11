@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/IBM/scc-go-sdk/compare/v1.2.1...v1.2.2) (2021-10-11)
+
+
+### Bug Fixes
+
+* **POSTURE:** fixed integration tests failing because of incorrect scopeID ([21fbc36](https://github.com/IBM/scc-go-sdk/commit/21fbc36c88c36efba2d03e1ea9b980ba064f0f20))
+
 ## [1.2.1](https://github.com/IBM/scc-go-sdk/compare/v1.2.0...v1.2.1) (2021-09-15)
 
 

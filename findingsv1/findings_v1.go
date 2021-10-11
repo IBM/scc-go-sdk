@@ -390,6 +390,12 @@ func (findings *FindingsV1) CreateNoteWithContext(ctx context.Context, createNot
 	if createNoteOptions.RelatedURL != nil {
 		body["related_url"] = createNoteOptions.RelatedURL
 	}
+	if createNoteOptions.CreateTime != nil {
+		body["create_time"] = createNoteOptions.CreateTime
+	}
+	if createNoteOptions.UpdateTime != nil {
+		body["update_time"] = createNoteOptions.UpdateTime
+	}
 	if createNoteOptions.Shared != nil {
 		body["shared"] = createNoteOptions.Shared
 	}
@@ -630,6 +636,12 @@ func (findings *FindingsV1) UpdateNoteWithContext(ctx context.Context, updateNot
 	}
 	if updateNoteOptions.RelatedURL != nil {
 		body["related_url"] = updateNoteOptions.RelatedURL
+	}
+	if updateNoteOptions.CreateTime != nil {
+		body["create_time"] = updateNoteOptions.CreateTime
+	}
+	if updateNoteOptions.UpdateTime != nil {
+		body["update_time"] = updateNoteOptions.UpdateTime
 	}
 	if updateNoteOptions.Shared != nil {
 		body["shared"] = updateNoteOptions.Shared
@@ -1519,6 +1531,12 @@ type CreateNoteOptions struct {
 
 	RelatedURL []APINoteRelatedURL `json:"related_url,omitempty"`
 
+	// Output only. The time this note was created. This field can be used as a filter in list requests.
+	CreateTime *strfmt.DateTime `json:"create_time,omitempty"`
+
+	// Output only. The time this note was last updated. This field can be used as a filter in list requests.
+	UpdateTime *strfmt.DateTime `json:"update_time,omitempty"`
+
 	// True if this note can be shared by multiple accounts.
 	Shared *bool `json:"shared,omitempty"`
 
@@ -1607,6 +1625,18 @@ func (_options *CreateNoteOptions) SetReportedBy(reportedBy *Reporter) *CreateNo
 // SetRelatedURL : Allow user to set RelatedURL
 func (_options *CreateNoteOptions) SetRelatedURL(relatedURL []APINoteRelatedURL) *CreateNoteOptions {
 	_options.RelatedURL = relatedURL
+	return _options
+}
+
+// SetCreateTime : Allow user to set CreateTime
+func (_options *CreateNoteOptions) SetCreateTime(createTime *strfmt.DateTime) *CreateNoteOptions {
+	_options.CreateTime = createTime
+	return _options
+}
+
+// SetUpdateTime : Allow user to set UpdateTime
+func (_options *CreateNoteOptions) SetUpdateTime(updateTime *strfmt.DateTime) *CreateNoteOptions {
+	_options.UpdateTime = updateTime
 	return _options
 }
 
@@ -2766,6 +2796,12 @@ type UpdateNoteOptions struct {
 
 	RelatedURL []APINoteRelatedURL `json:"related_url,omitempty"`
 
+	// Output only. The time this note was created. This field can be used as a filter in list requests.
+	CreateTime *strfmt.DateTime `json:"create_time,omitempty"`
+
+	// Output only. The time this note was last updated. This field can be used as a filter in list requests.
+	UpdateTime *strfmt.DateTime `json:"update_time,omitempty"`
+
 	// True if this note can be shared by multiple accounts.
 	Shared *bool `json:"shared,omitempty"`
 
@@ -2861,6 +2897,18 @@ func (_options *UpdateNoteOptions) SetReportedBy(reportedBy *Reporter) *UpdateNo
 // SetRelatedURL : Allow user to set RelatedURL
 func (_options *UpdateNoteOptions) SetRelatedURL(relatedURL []APINoteRelatedURL) *UpdateNoteOptions {
 	_options.RelatedURL = relatedURL
+	return _options
+}
+
+// SetCreateTime : Allow user to set CreateTime
+func (_options *UpdateNoteOptions) SetCreateTime(createTime *strfmt.DateTime) *UpdateNoteOptions {
+	_options.CreateTime = createTime
+	return _options
+}
+
+// SetUpdateTime : Allow user to set UpdateTime
+func (_options *UpdateNoteOptions) SetUpdateTime(updateTime *strfmt.DateTime) *UpdateNoteOptions {
+	_options.UpdateTime = updateTime
 	return _options
 }
 

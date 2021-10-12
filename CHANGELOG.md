@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/IBM/scc-go-sdk/compare/v1.3.0...v1.3.1) (2021-10-12)
+
+
+### Bug Fixes
+
+* **Findings:** createTime and updateTime in noteOptions ([6a94779](https://github.com/IBM/scc-go-sdk/commit/6a9477934acd3279dfd9af1917b9fb83eb907ac3))
+
 # [1.3.0](https://github.com/IBM/scc-go-sdk/compare/v1.2.2...v1.3.0) (2021-10-11)
 
 

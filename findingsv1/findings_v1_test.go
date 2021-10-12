@@ -627,6 +627,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createNoteOptionsModel.ID = core.StringPtr("testString")
 				createNoteOptionsModel.ReportedBy = reporterModel
 				createNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
+				createNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createNoteOptionsModel.Shared = core.BoolPtr(true)
 				createNoteOptionsModel.Finding = findingTypeModel
 				createNoteOptionsModel.Kpi = kpiTypeModel
@@ -767,6 +769,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createNoteOptionsModel.ID = core.StringPtr("testString")
 				createNoteOptionsModel.ReportedBy = reporterModel
 				createNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
+				createNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createNoteOptionsModel.Shared = core.BoolPtr(true)
 				createNoteOptionsModel.Finding = findingTypeModel
 				createNoteOptionsModel.Kpi = kpiTypeModel
@@ -914,6 +918,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createNoteOptionsModel.ID = core.StringPtr("testString")
 				createNoteOptionsModel.ReportedBy = reporterModel
 				createNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
+				createNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createNoteOptionsModel.Shared = core.BoolPtr(true)
 				createNoteOptionsModel.Finding = findingTypeModel
 				createNoteOptionsModel.Kpi = kpiTypeModel
@@ -1004,6 +1010,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createNoteOptionsModel.ID = core.StringPtr("testString")
 				createNoteOptionsModel.ReportedBy = reporterModel
 				createNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
+				createNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createNoteOptionsModel.Shared = core.BoolPtr(true)
 				createNoteOptionsModel.Finding = findingTypeModel
 				createNoteOptionsModel.Kpi = kpiTypeModel
@@ -1115,6 +1123,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createNoteOptionsModel.ID = core.StringPtr("testString")
 				createNoteOptionsModel.ReportedBy = reporterModel
 				createNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
+				createNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createNoteOptionsModel.Shared = core.BoolPtr(true)
 				createNoteOptionsModel.Finding = findingTypeModel
 				createNoteOptionsModel.Kpi = kpiTypeModel
@@ -1711,6 +1721,8 @@ var _ = Describe(`FindingsV1`, func() {
 				updateNoteOptionsModel.ID = core.StringPtr("testString")
 				updateNoteOptionsModel.ReportedBy = reporterModel
 				updateNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
+				updateNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateNoteOptionsModel.Shared = core.BoolPtr(true)
 				updateNoteOptionsModel.Finding = findingTypeModel
 				updateNoteOptionsModel.Kpi = kpiTypeModel
@@ -1852,6 +1864,8 @@ var _ = Describe(`FindingsV1`, func() {
 				updateNoteOptionsModel.ID = core.StringPtr("testString")
 				updateNoteOptionsModel.ReportedBy = reporterModel
 				updateNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
+				updateNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateNoteOptionsModel.Shared = core.BoolPtr(true)
 				updateNoteOptionsModel.Finding = findingTypeModel
 				updateNoteOptionsModel.Kpi = kpiTypeModel
@@ -2000,6 +2014,8 @@ var _ = Describe(`FindingsV1`, func() {
 				updateNoteOptionsModel.ID = core.StringPtr("testString")
 				updateNoteOptionsModel.ReportedBy = reporterModel
 				updateNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
+				updateNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateNoteOptionsModel.Shared = core.BoolPtr(true)
 				updateNoteOptionsModel.Finding = findingTypeModel
 				updateNoteOptionsModel.Kpi = kpiTypeModel
@@ -2091,6 +2107,8 @@ var _ = Describe(`FindingsV1`, func() {
 				updateNoteOptionsModel.ID = core.StringPtr("testString")
 				updateNoteOptionsModel.ReportedBy = reporterModel
 				updateNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
+				updateNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateNoteOptionsModel.Shared = core.BoolPtr(true)
 				updateNoteOptionsModel.Finding = findingTypeModel
 				updateNoteOptionsModel.Kpi = kpiTypeModel
@@ -2203,6 +2221,8 @@ var _ = Describe(`FindingsV1`, func() {
 				updateNoteOptionsModel.ID = core.StringPtr("testString")
 				updateNoteOptionsModel.ReportedBy = reporterModel
 				updateNoteOptionsModel.RelatedURL = []findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}
+				updateNoteOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateNoteOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateNoteOptionsModel.Shared = core.BoolPtr(true)
 				updateNoteOptionsModel.Finding = findingTypeModel
 				updateNoteOptionsModel.Kpi = kpiTypeModel
@@ -3672,7 +3692,7 @@ var _ = Describe(`FindingsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"occurrences": [{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCRN", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCRN", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}], "next_page_token": "NextPageToken"}`)
+					fmt.Fprintf(res, "%s", `{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCRN", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCRN", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}`)
 				}))
 			})
 			It(`Invoke GetOccurrence successfully with retries`, func() {
@@ -3731,7 +3751,7 @@ var _ = Describe(`FindingsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"occurrences": [{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCRN", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCRN", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}], "next_page_token": "NextPageToken"}`)
+					fmt.Fprintf(res, "%s", `{"resource_url": "ResourceURL", "note_name": "NoteName", "kind": "FINDING", "remediation": "Remediation", "create_time": "2019-01-01T12:00:00.000Z", "update_time": "2019-01-01T12:00:00.000Z", "id": "ID", "context": {"region": "Region", "resource_crn": "ResourceCRN", "resource_id": "ResourceID", "resource_name": "ResourceName", "resource_type": "ResourceType", "service_crn": "ServiceCRN", "service_name": "ServiceName", "environment_name": "EnvironmentName", "component_name": "ComponentName", "toolchain_id": "ToolchainID"}, "finding": {"severity": "LOW", "certainty": "LOW", "next_steps": [{"title": "Title", "url": "URL"}], "network_connection": {"direction": "Direction", "protocol": "Protocol", "client": {"address": "Address", "port": 4}, "server": {"address": "Address", "port": 4}}, "data_transferred": {"client_bytes": 11, "server_bytes": 11, "client_packets": 13, "server_packets": 13}}, "kpi": {"value": 5, "total": 5}, "reference_data": {"anyKey": "anyValue"}}`)
 				}))
 			})
 			It(`Invoke GetOccurrence successfully`, func() {
@@ -4605,6 +4625,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createNoteOptionsModel.SetID("testString")
 				createNoteOptionsModel.SetReportedBy(reporterModel)
 				createNoteOptionsModel.SetRelatedURL([]findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel})
+				createNoteOptionsModel.SetCreateTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
+				createNoteOptionsModel.SetUpdateTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
 				createNoteOptionsModel.SetShared(true)
 				createNoteOptionsModel.SetFinding(findingTypeModel)
 				createNoteOptionsModel.SetKpi(kpiTypeModel)
@@ -4620,6 +4642,8 @@ var _ = Describe(`FindingsV1`, func() {
 				Expect(createNoteOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(createNoteOptionsModel.ReportedBy).To(Equal(reporterModel))
 				Expect(createNoteOptionsModel.RelatedURL).To(Equal([]findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}))
+				Expect(createNoteOptionsModel.CreateTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
+				Expect(createNoteOptionsModel.UpdateTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
 				Expect(createNoteOptionsModel.Shared).To(Equal(core.BoolPtr(true)))
 				Expect(createNoteOptionsModel.Finding).To(Equal(findingTypeModel))
 				Expect(createNoteOptionsModel.Kpi).To(Equal(kpiTypeModel))
@@ -5057,6 +5081,8 @@ var _ = Describe(`FindingsV1`, func() {
 				updateNoteOptionsModel.SetID("testString")
 				updateNoteOptionsModel.SetReportedBy(reporterModel)
 				updateNoteOptionsModel.SetRelatedURL([]findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel})
+				updateNoteOptionsModel.SetCreateTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
+				updateNoteOptionsModel.SetUpdateTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
 				updateNoteOptionsModel.SetShared(true)
 				updateNoteOptionsModel.SetFinding(findingTypeModel)
 				updateNoteOptionsModel.SetKpi(kpiTypeModel)
@@ -5073,6 +5099,8 @@ var _ = Describe(`FindingsV1`, func() {
 				Expect(updateNoteOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(updateNoteOptionsModel.ReportedBy).To(Equal(reporterModel))
 				Expect(updateNoteOptionsModel.RelatedURL).To(Equal([]findingsv1.APINoteRelatedURL{*apiNoteRelatedURLModel}))
+				Expect(updateNoteOptionsModel.CreateTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
+				Expect(updateNoteOptionsModel.UpdateTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
 				Expect(updateNoteOptionsModel.Shared).To(Equal(core.BoolPtr(true)))
 				Expect(updateNoteOptionsModel.Finding).To(Equal(findingTypeModel))
 				Expect(updateNoteOptionsModel.Kpi).To(Equal(kpiTypeModel))

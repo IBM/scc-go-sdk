@@ -236,7 +236,7 @@ func (findings *FindingsV1) PostGraphWithContext(ctx context.Context, postGraphO
 		builder.AddHeader("Transaction-Id", fmt.Sprint(*postGraphOptions.TransactionID))
 	}
 
-	_, err = builder.SetBodyContent(core.StringNilMapper(postGraphOptions.ContentType), postGraphOptions.Body, nil, postGraphOptions.Body)
+	_, err = builder.SetBodyContent(core.StringNilMapper(postGraphOptions.ContentType), nil, nil, postGraphOptions.Body)
 	if err != nil {
 		return
 	}
@@ -869,6 +869,12 @@ func (findings *FindingsV1) CreateOccurrenceWithContext(ctx context.Context, cre
 	if createOccurrenceOptions.Remediation != nil {
 		body["remediation"] = createOccurrenceOptions.Remediation
 	}
+	if createOccurrenceOptions.CreateTime != nil {
+		body["create_time"] = createOccurrenceOptions.CreateTime
+	}
+	if createOccurrenceOptions.UpdateTime != nil {
+		body["update_time"] = createOccurrenceOptions.UpdateTime
+	}
 	if createOccurrenceOptions.Context != nil {
 		body["context"] = createOccurrenceOptions.Context
 	}
@@ -1175,6 +1181,12 @@ func (findings *FindingsV1) UpdateOccurrenceWithContext(ctx context.Context, upd
 	}
 	if updateOccurrenceOptions.Remediation != nil {
 		body["remediation"] = updateOccurrenceOptions.Remediation
+	}
+	if updateOccurrenceOptions.CreateTime != nil {
+		body["create_time"] = updateOccurrenceOptions.CreateTime
+	}
+	if updateOccurrenceOptions.UpdateTime != nil {
+		body["update_time"] = updateOccurrenceOptions.UpdateTime
 	}
 	if updateOccurrenceOptions.Context != nil {
 		body["context"] = updateOccurrenceOptions.Context
@@ -1709,6 +1721,12 @@ type CreateOccurrenceOptions struct {
 	// A description of actions that can be taken to remedy the `Note`.
 	Remediation *string `json:"remediation,omitempty"`
 
+	// Output only. The time this `Occurrence` was created.
+	CreateTime *strfmt.DateTime `json:"create_time,omitempty"`
+
+	// Output only. The time this `Occurrence` was last updated.
+	UpdateTime *strfmt.DateTime `json:"update_time,omitempty"`
+
 	Context *Context `json:"context,omitempty"`
 
 	// Finding provides details about a finding occurrence.
@@ -1788,6 +1806,18 @@ func (_options *CreateOccurrenceOptions) SetResourceURL(resourceURL string) *Cre
 // SetRemediation : Allow user to set Remediation
 func (_options *CreateOccurrenceOptions) SetRemediation(remediation string) *CreateOccurrenceOptions {
 	_options.Remediation = core.StringPtr(remediation)
+	return _options
+}
+
+// SetCreateTime : Allow user to set CreateTime
+func (_options *CreateOccurrenceOptions) SetCreateTime(createTime *strfmt.DateTime) *CreateOccurrenceOptions {
+	_options.CreateTime = createTime
+	return _options
+}
+
+// SetUpdateTime : Allow user to set UpdateTime
+func (_options *CreateOccurrenceOptions) SetUpdateTime(updateTime *strfmt.DateTime) *CreateOccurrenceOptions {
+	_options.UpdateTime = updateTime
 	return _options
 }
 
@@ -2984,6 +3014,12 @@ type UpdateOccurrenceOptions struct {
 	// A description of actions that can be taken to remedy the `Note`.
 	Remediation *string `json:"remediation,omitempty"`
 
+	// Output only. The time this `Occurrence` was created.
+	CreateTime *strfmt.DateTime `json:"create_time,omitempty"`
+
+	// Output only. The time this `Occurrence` was last updated.
+	UpdateTime *strfmt.DateTime `json:"update_time,omitempty"`
+
 	Context *Context `json:"context,omitempty"`
 
 	// Finding provides details about a finding occurrence.
@@ -3067,6 +3103,18 @@ func (_options *UpdateOccurrenceOptions) SetResourceURL(resourceURL string) *Upd
 // SetRemediation : Allow user to set Remediation
 func (_options *UpdateOccurrenceOptions) SetRemediation(remediation string) *UpdateOccurrenceOptions {
 	_options.Remediation = core.StringPtr(remediation)
+	return _options
+}
+
+// SetCreateTime : Allow user to set CreateTime
+func (_options *UpdateOccurrenceOptions) SetCreateTime(createTime *strfmt.DateTime) *UpdateOccurrenceOptions {
+	_options.CreateTime = createTime
+	return _options
+}
+
+// SetUpdateTime : Allow user to set UpdateTime
+func (_options *UpdateOccurrenceOptions) SetUpdateTime(updateTime *strfmt.DateTime) *UpdateOccurrenceOptions {
+	_options.UpdateTime = updateTime
 	return _options
 }
 

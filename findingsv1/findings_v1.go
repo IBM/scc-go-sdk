@@ -1052,12 +1052,12 @@ func (findings *FindingsV1) ListNoteOccurrencesWithContext(ctx context.Context, 
 
 // GetOccurrence : Get a specific occurrence
 // Get the details of a specific occurrence by specifying the ID and provider ID.
-func (findings *FindingsV1) GetOccurrence(getOccurrenceOptions *GetOccurrenceOptions) (result *APIListOccurrencesResponse, response *core.DetailedResponse, err error) {
+func (findings *FindingsV1) GetOccurrence(getOccurrenceOptions *GetOccurrenceOptions) (result *APIOccurrence, response *core.DetailedResponse, err error) {
 	return findings.GetOccurrenceWithContext(context.Background(), getOccurrenceOptions)
 }
 
 // GetOccurrenceWithContext is an alternate form of the GetOccurrence method which supports a Context parameter
-func (findings *FindingsV1) GetOccurrenceWithContext(ctx context.Context, getOccurrenceOptions *GetOccurrenceOptions) (result *APIListOccurrencesResponse, response *core.DetailedResponse, err error) {
+func (findings *FindingsV1) GetOccurrenceWithContext(ctx context.Context, getOccurrenceOptions *GetOccurrenceOptions) (result *APIOccurrence, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getOccurrenceOptions, "getOccurrenceOptions cannot be nil")
 	if err != nil {
 		return
@@ -1105,7 +1105,7 @@ func (findings *FindingsV1) GetOccurrenceWithContext(ctx context.Context, getOcc
 		return
 	}
 	if rawResponse != nil {
-		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalAPIListOccurrencesResponse)
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalAPIOccurrence)
 		if err != nil {
 			return
 		}

@@ -2643,6 +2643,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createOccurrenceOptionsModel.ID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.ResourceURL = core.StringPtr("testString")
 				createOccurrenceOptionsModel.Remediation = core.StringPtr("testString")
+				createOccurrenceOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createOccurrenceOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createOccurrenceOptionsModel.Context = contextModel
 				createOccurrenceOptionsModel.Finding = findingModel
 				createOccurrenceOptionsModel.Kpi = kpiModel
@@ -2777,6 +2779,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createOccurrenceOptionsModel.ID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.ResourceURL = core.StringPtr("testString")
 				createOccurrenceOptionsModel.Remediation = core.StringPtr("testString")
+				createOccurrenceOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createOccurrenceOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createOccurrenceOptionsModel.Context = contextModel
 				createOccurrenceOptionsModel.Finding = findingModel
 				createOccurrenceOptionsModel.Kpi = kpiModel
@@ -2918,6 +2922,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createOccurrenceOptionsModel.ID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.ResourceURL = core.StringPtr("testString")
 				createOccurrenceOptionsModel.Remediation = core.StringPtr("testString")
+				createOccurrenceOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createOccurrenceOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createOccurrenceOptionsModel.Context = contextModel
 				createOccurrenceOptionsModel.Finding = findingModel
 				createOccurrenceOptionsModel.Kpi = kpiModel
@@ -3000,6 +3006,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createOccurrenceOptionsModel.ID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.ResourceURL = core.StringPtr("testString")
 				createOccurrenceOptionsModel.Remediation = core.StringPtr("testString")
+				createOccurrenceOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createOccurrenceOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createOccurrenceOptionsModel.Context = contextModel
 				createOccurrenceOptionsModel.Finding = findingModel
 				createOccurrenceOptionsModel.Kpi = kpiModel
@@ -3103,6 +3111,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createOccurrenceOptionsModel.ID = core.StringPtr("testString")
 				createOccurrenceOptionsModel.ResourceURL = core.StringPtr("testString")
 				createOccurrenceOptionsModel.Remediation = core.StringPtr("testString")
+				createOccurrenceOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				createOccurrenceOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				createOccurrenceOptionsModel.Context = contextModel
 				createOccurrenceOptionsModel.Finding = findingModel
 				createOccurrenceOptionsModel.Kpi = kpiModel
@@ -3942,6 +3952,8 @@ var _ = Describe(`FindingsV1`, func() {
 				updateOccurrenceOptionsModel.ID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.ResourceURL = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.Remediation = core.StringPtr("testString")
+				updateOccurrenceOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateOccurrenceOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateOccurrenceOptionsModel.Context = contextModel
 				updateOccurrenceOptionsModel.Finding = findingModel
 				updateOccurrenceOptionsModel.Kpi = kpiModel
@@ -4074,6 +4086,8 @@ var _ = Describe(`FindingsV1`, func() {
 				updateOccurrenceOptionsModel.ID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.ResourceURL = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.Remediation = core.StringPtr("testString")
+				updateOccurrenceOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateOccurrenceOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateOccurrenceOptionsModel.Context = contextModel
 				updateOccurrenceOptionsModel.Finding = findingModel
 				updateOccurrenceOptionsModel.Kpi = kpiModel
@@ -4213,6 +4227,8 @@ var _ = Describe(`FindingsV1`, func() {
 				updateOccurrenceOptionsModel.ID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.ResourceURL = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.Remediation = core.StringPtr("testString")
+				updateOccurrenceOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateOccurrenceOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateOccurrenceOptionsModel.Context = contextModel
 				updateOccurrenceOptionsModel.Finding = findingModel
 				updateOccurrenceOptionsModel.Kpi = kpiModel
@@ -4295,6 +4311,8 @@ var _ = Describe(`FindingsV1`, func() {
 				updateOccurrenceOptionsModel.ID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.ResourceURL = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.Remediation = core.StringPtr("testString")
+				updateOccurrenceOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateOccurrenceOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateOccurrenceOptionsModel.Context = contextModel
 				updateOccurrenceOptionsModel.Finding = findingModel
 				updateOccurrenceOptionsModel.Kpi = kpiModel
@@ -4398,6 +4416,8 @@ var _ = Describe(`FindingsV1`, func() {
 				updateOccurrenceOptionsModel.ID = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.ResourceURL = core.StringPtr("testString")
 				updateOccurrenceOptionsModel.Remediation = core.StringPtr("testString")
+				updateOccurrenceOptionsModel.CreateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				updateOccurrenceOptionsModel.UpdateTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				updateOccurrenceOptionsModel.Context = contextModel
 				updateOccurrenceOptionsModel.Finding = findingModel
 				updateOccurrenceOptionsModel.Kpi = kpiModel
@@ -4751,6 +4771,8 @@ var _ = Describe(`FindingsV1`, func() {
 				createOccurrenceOptionsModel.SetID("testString")
 				createOccurrenceOptionsModel.SetResourceURL("testString")
 				createOccurrenceOptionsModel.SetRemediation("testString")
+				createOccurrenceOptionsModel.SetCreateTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
+				createOccurrenceOptionsModel.SetUpdateTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
 				createOccurrenceOptionsModel.SetContext(contextModel)
 				createOccurrenceOptionsModel.SetFinding(findingModel)
 				createOccurrenceOptionsModel.SetKpi(kpiModel)
@@ -4765,6 +4787,8 @@ var _ = Describe(`FindingsV1`, func() {
 				Expect(createOccurrenceOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(createOccurrenceOptionsModel.ResourceURL).To(Equal(core.StringPtr("testString")))
 				Expect(createOccurrenceOptionsModel.Remediation).To(Equal(core.StringPtr("testString")))
+				Expect(createOccurrenceOptionsModel.CreateTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
+				Expect(createOccurrenceOptionsModel.UpdateTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
 				Expect(createOccurrenceOptionsModel.Context).To(Equal(contextModel))
 				Expect(createOccurrenceOptionsModel.Finding).To(Equal(findingModel))
 				Expect(createOccurrenceOptionsModel.Kpi).To(Equal(kpiModel))
@@ -5210,6 +5234,8 @@ var _ = Describe(`FindingsV1`, func() {
 				updateOccurrenceOptionsModel.SetID("testString")
 				updateOccurrenceOptionsModel.SetResourceURL("testString")
 				updateOccurrenceOptionsModel.SetRemediation("testString")
+				updateOccurrenceOptionsModel.SetCreateTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
+				updateOccurrenceOptionsModel.SetUpdateTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
 				updateOccurrenceOptionsModel.SetContext(contextModel)
 				updateOccurrenceOptionsModel.SetFinding(findingModel)
 				updateOccurrenceOptionsModel.SetKpi(kpiModel)
@@ -5224,6 +5250,8 @@ var _ = Describe(`FindingsV1`, func() {
 				Expect(updateOccurrenceOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(updateOccurrenceOptionsModel.ResourceURL).To(Equal(core.StringPtr("testString")))
 				Expect(updateOccurrenceOptionsModel.Remediation).To(Equal(core.StringPtr("testString")))
+				Expect(updateOccurrenceOptionsModel.CreateTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
+				Expect(updateOccurrenceOptionsModel.UpdateTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
 				Expect(updateOccurrenceOptionsModel.Context).To(Equal(contextModel))
 				Expect(updateOccurrenceOptionsModel.Finding).To(Equal(findingModel))
 				Expect(updateOccurrenceOptionsModel.Kpi).To(Equal(kpiModel))

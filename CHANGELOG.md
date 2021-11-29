@@ -1,3 +1,10 @@
+## [1.3.4](https://github.com/IBM/scc-go-sdk/compare/v1.3.3...v1.3.4) (2021-11-29)
+
+
+### Bug Fixes
+
+* **'PostureManagement':** 'releasing v2 APIs' ([5f144a0](https://github.com/IBM/scc-go-sdk/commit/5f144a07a24ff4ef3882084e04bcf423e61bda34))
+
 ## [1.3.3](https://github.com/IBM/scc-go-sdk/compare/v1.3.2...v1.3.3) (2021-10-13)
 
 

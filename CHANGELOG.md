@@ -1,3 +1,53 @@
+## [1.3.4](https://github.com/IBM/scc-go-sdk/compare/v1.3.3...v1.3.4) (2021-11-29)
+
+
+### Bug Fixes
+
+* **'PostureManagement':** 'releasing v2 APIs' ([5f144a0](https://github.com/IBM/scc-go-sdk/commit/5f144a07a24ff4ef3882084e04bcf423e61bda34))
+
+## [1.3.3](https://github.com/IBM/scc-go-sdk/compare/v1.3.2...v1.3.3) (2021-10-13)
+
+
+### Bug Fixes
+
+* **FindingsAPI:** accept createTime and updateTime as optional arg in occurrenceOptions ([51b5eb2](https://github.com/IBM/scc-go-sdk/commit/51b5eb261b19c437cddd565600603209d54d01ba))
+* **FindingsAPI:** getOccurrence should not return list of occurrences ([0c3afc7](https://github.com/IBM/scc-go-sdk/commit/0c3afc73462791906708e84d21720d35566ed154))
+
+## [1.3.2](https://github.com/IBM/scc-go-sdk/compare/v1.3.1...v1.3.2) (2021-10-13)
+
+
+### Bug Fixes
+
+* **FindingsAPI:** getOccurrence should not return list of occurrences ([#50](https://github.com/IBM/scc-go-sdk/issues/50)) ([9124ef1](https://github.com/IBM/scc-go-sdk/commit/9124ef1bf5141e2ca5c100fcb8592a45e95dfa58))
+
+## [1.3.1](https://github.com/IBM/scc-go-sdk/compare/v1.3.0...v1.3.1) (2021-10-12)
+
+
+### Bug Fixes
+
+* **Findings:** createTime and updateTime in noteOptions ([6a94779](https://github.com/IBM/scc-go-sdk/commit/6a9477934acd3279dfd9af1917b9fb83eb907ac3))
+
+# [1.3.0](https://github.com/IBM/scc-go-sdk/compare/v1.2.2...v1.3.0) (2021-10-11)
+
+
+### Features
+
+* **kpi severity:** Add severity for kpi ([451b4e7](https://github.com/IBM/scc-go-sdk/commit/451b4e74adaa0752aa9f987bc225df31f0084821))
+
+## [1.2.2](https://github.com/IBM/scc-go-sdk/compare/v1.2.1...v1.2.2) (2021-10-11)
+
+
+### Bug Fixes
+
+* **POSTURE:** fixed integration tests failing because of incorrect scopeID ([21fbc36](https://github.com/IBM/scc-go-sdk/commit/21fbc36c88c36efba2d03e1ea9b980ba064f0f20))
+
+## [1.2.1](https://github.com/IBM/scc-go-sdk/compare/v1.2.0...v1.2.1) (2021-09-15)
+
+
+### Bug Fixes
+
+* **'FindingsAPI':** Latest generation using openapi-sdkgen ([227116b](https://github.com/IBM/scc-go-sdk/commit/227116be8bc4f21ec43b331d14afccad9e824852))
+
 # [1.2.0](https://github.com/IBM/scc-go-sdk/compare/v1.1.0...v1.2.0) (2021-07-22)
 
 

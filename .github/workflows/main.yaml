@@ -36,11 +36,13 @@ jobs:
       - name: running unit tests
         run: make test-cov
 
-      - name: pushing code coverage report to codecov
+      - name: publishing code coverage report to codeclimate
         env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         run: |
-          curl -s https://codecov.io/bash > $HOME/codecov-bash.sh && chmod +x $HOME/codecov-bash.sh
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+          ./cc-test-reporter before-build
           build/publishCodeCoverage.sh
 
       - name: running integration tests
@@ -66,7 +68,7 @@ jobs:
       - name: setup nodejs
         uses: actions/setup-node@v2
         with:
-          node-version: '12'
+          node-version: '16'
 
       - name: release using semantic-release
         env:

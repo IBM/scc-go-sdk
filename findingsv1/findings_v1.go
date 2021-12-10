@@ -15,7 +15,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.34.1-ad041667-20210617-195430
+ * IBM OpenAPI SDK Code Generator Version: 3.40.0-910cf8c2-20211006-154754
  */
 
 // Package findingsv1 : Operations and models for the FindingsV1 service
@@ -40,7 +40,7 @@ import (
 // that allow you to see the security status of your account at a glance and start an investigation into any potential
 // issues.
 //
-// Version: 1.0.0
+// API Version: 1.0.0
 type FindingsV1 struct {
 	Service *core.BaseService
 
@@ -390,8 +390,11 @@ func (findings *FindingsV1) CreateNoteWithContext(ctx context.Context, createNot
 	if createNoteOptions.RelatedURL != nil {
 		body["related_url"] = createNoteOptions.RelatedURL
 	}
-	if createNoteOptions.ExpirationTime != nil {
-		body["expiration_time"] = createNoteOptions.ExpirationTime
+	if createNoteOptions.CreateTime != nil {
+		body["create_time"] = createNoteOptions.CreateTime
+	}
+	if createNoteOptions.UpdateTime != nil {
+		body["update_time"] = createNoteOptions.UpdateTime
 	}
 	if createNoteOptions.Shared != nil {
 		body["shared"] = createNoteOptions.Shared
@@ -634,8 +637,11 @@ func (findings *FindingsV1) UpdateNoteWithContext(ctx context.Context, updateNot
 	if updateNoteOptions.RelatedURL != nil {
 		body["related_url"] = updateNoteOptions.RelatedURL
 	}
-	if updateNoteOptions.ExpirationTime != nil {
-		body["expiration_time"] = updateNoteOptions.ExpirationTime
+	if updateNoteOptions.CreateTime != nil {
+		body["create_time"] = updateNoteOptions.CreateTime
+	}
+	if updateNoteOptions.UpdateTime != nil {
+		body["update_time"] = updateNoteOptions.UpdateTime
 	}
 	if updateNoteOptions.Shared != nil {
 		body["shared"] = updateNoteOptions.Shared
@@ -863,6 +869,12 @@ func (findings *FindingsV1) CreateOccurrenceWithContext(ctx context.Context, cre
 	if createOccurrenceOptions.Remediation != nil {
 		body["remediation"] = createOccurrenceOptions.Remediation
 	}
+	if createOccurrenceOptions.CreateTime != nil {
+		body["create_time"] = createOccurrenceOptions.CreateTime
+	}
+	if createOccurrenceOptions.UpdateTime != nil {
+		body["update_time"] = createOccurrenceOptions.UpdateTime
+	}
 	if createOccurrenceOptions.Context != nil {
 		body["context"] = createOccurrenceOptions.Context
 	}
@@ -1046,12 +1058,12 @@ func (findings *FindingsV1) ListNoteOccurrencesWithContext(ctx context.Context, 
 
 // GetOccurrence : Get a specific occurrence
 // Get the details of a specific occurrence by specifying the ID and provider ID.
-func (findings *FindingsV1) GetOccurrence(getOccurrenceOptions *GetOccurrenceOptions) (result *APIListOccurrencesResponse, response *core.DetailedResponse, err error) {
+func (findings *FindingsV1) GetOccurrence(getOccurrenceOptions *GetOccurrenceOptions) (result *APIOccurrence, response *core.DetailedResponse, err error) {
 	return findings.GetOccurrenceWithContext(context.Background(), getOccurrenceOptions)
 }
 
 // GetOccurrenceWithContext is an alternate form of the GetOccurrence method which supports a Context parameter
-func (findings *FindingsV1) GetOccurrenceWithContext(ctx context.Context, getOccurrenceOptions *GetOccurrenceOptions) (result *APIListOccurrencesResponse, response *core.DetailedResponse, err error) {
+func (findings *FindingsV1) GetOccurrenceWithContext(ctx context.Context, getOccurrenceOptions *GetOccurrenceOptions) (result *APIOccurrence, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getOccurrenceOptions, "getOccurrenceOptions cannot be nil")
 	if err != nil {
 		return
@@ -1099,7 +1111,7 @@ func (findings *FindingsV1) GetOccurrenceWithContext(ctx context.Context, getOcc
 		return
 	}
 	if rawResponse != nil {
-		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalAPIListOccurrencesResponse)
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalAPIOccurrence)
 		if err != nil {
 			return
 		}
@@ -1169,6 +1181,12 @@ func (findings *FindingsV1) UpdateOccurrenceWithContext(ctx context.Context, upd
 	}
 	if updateOccurrenceOptions.Remediation != nil {
 		body["remediation"] = updateOccurrenceOptions.Remediation
+	}
+	if updateOccurrenceOptions.CreateTime != nil {
+		body["create_time"] = updateOccurrenceOptions.CreateTime
+	}
+	if updateOccurrenceOptions.UpdateTime != nil {
+		body["update_time"] = updateOccurrenceOptions.UpdateTime
 	}
 	if updateOccurrenceOptions.Context != nil {
 		body["context"] = updateOccurrenceOptions.Context
@@ -1501,13 +1519,13 @@ func UnmarshalContext(m map[string]json.RawMessage, result interface{}) (err err
 // CreateNoteOptions : The CreateNote options.
 type CreateNoteOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// A one sentence description of your note.
-	ShortDescription *string `validate:"required"`
+	ShortDescription *string `json:"short_description" validate:"required"`
 
 	// A more detailed description of your note.
-	LongDescription *string `validate:"required"`
+	LongDescription *string `json:"long_description" validate:"required"`
 
 	// The type of note. Use this field to filter notes and occurences by kind.
 	//  - FINDING&#58; The note and occurrence represent a finding.
@@ -1515,36 +1533,39 @@ type CreateNoteOptions struct {
 	//  - CARD&#58; The note represents a card showing findings and related metric values.
 	//  - CARD_CONFIGURED&#58; The note represents a card configured for a user account.
 	//  - SECTION&#58; The note represents a section in a dashboard.
-	Kind *string `validate:"required"`
+	Kind *string `json:"kind" validate:"required"`
 
 	// The ID of the note.
-	ID *string `validate:"required"`
+	ID *string `json:"id" validate:"required"`
 
 	// The entity reporting a note.
-	ReportedBy *Reporter `validate:"required"`
+	ReportedBy *Reporter `json:"reported_by" validate:"required"`
 
-	RelatedURL []APINoteRelatedURL
+	RelatedURL []APINoteRelatedURL `json:"related_url,omitempty"`
 
-	// Time of expiration for this note, null if note does not expire.
-	ExpirationTime *strfmt.DateTime
+	// Output only. The time this note was created. This field can be used as a filter in list requests.
+	CreateTime *strfmt.DateTime `json:"create_time,omitempty"`
+
+	// Output only. The time this note was last updated. This field can be used as a filter in list requests.
+	UpdateTime *strfmt.DateTime `json:"update_time,omitempty"`
 
 	// True if this note can be shared by multiple accounts.
-	Shared *bool
+	Shared *bool `json:"shared,omitempty"`
 
 	// FindingType provides details about a finding note.
-	Finding *FindingType
+	Finding *FindingType `json:"finding,omitempty"`
 
 	// KpiType provides details about a KPI note.
-	Kpi *KpiType
+	Kpi *KpiType `json:"kpi,omitempty"`
 
 	// Card provides details about a card kind of note.
-	Card *Card
+	Card *Card `json:"card,omitempty"`
 
 	// Card provides details about a card kind of note.
-	Section *Section
+	Section *Section `json:"section,omitempty"`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -1619,9 +1640,15 @@ func (_options *CreateNoteOptions) SetRelatedURL(relatedURL []APINoteRelatedURL)
 	return _options
 }
 
-// SetExpirationTime : Allow user to set ExpirationTime
-func (_options *CreateNoteOptions) SetExpirationTime(expirationTime *strfmt.DateTime) *CreateNoteOptions {
-	_options.ExpirationTime = expirationTime
+// SetCreateTime : Allow user to set CreateTime
+func (_options *CreateNoteOptions) SetCreateTime(createTime *strfmt.DateTime) *CreateNoteOptions {
+	_options.CreateTime = createTime
+	return _options
+}
+
+// SetUpdateTime : Allow user to set UpdateTime
+func (_options *CreateNoteOptions) SetUpdateTime(updateTime *strfmt.DateTime) *CreateNoteOptions {
+	_options.UpdateTime = updateTime
 	return _options
 }
 
@@ -1670,11 +1697,11 @@ func (options *CreateNoteOptions) SetHeaders(param map[string]string) *CreateNot
 // CreateOccurrenceOptions : The CreateOccurrence options.
 type CreateOccurrenceOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// An analysis note associated with this image, in the form "{account_id}/providers/{provider_id}/notes/{note_id}" This
 	// field can be used as a filter in list requests.
-	NoteName *string `validate:"required"`
+	NoteName *string `json:"note_name" validate:"required"`
 
 	// The type of note. Use this field to filter notes and occurences by kind.
 	//  - FINDING&#58; The note and occurrence represent a finding.
@@ -1682,34 +1709,40 @@ type CreateOccurrenceOptions struct {
 	//  - CARD&#58; The note represents a card showing findings and related metric values.
 	//  - CARD_CONFIGURED&#58; The note represents a card configured for a user account.
 	//  - SECTION&#58; The note represents a section in a dashboard.
-	Kind *string `validate:"required"`
+	Kind *string `json:"kind" validate:"required"`
 
 	// The id of the occurrence.
-	ID *string `validate:"required"`
+	ID *string `json:"id" validate:"required"`
 
 	// The unique URL of the resource, image or the container, for which the `Occurrence` applies. For example,
 	// https://gcr.io/provider/image@sha256:foo. This field can be used as a filter in list requests.
-	ResourceURL *string
+	ResourceURL *string `json:"resource_url,omitempty"`
 
 	// A description of actions that can be taken to remedy the `Note`.
-	Remediation *string
+	Remediation *string `json:"remediation,omitempty"`
 
-	Context *Context
+	// Output only. The time this `Occurrence` was created.
+	CreateTime *strfmt.DateTime `json:"create_time,omitempty"`
+
+	// Output only. The time this `Occurrence` was last updated.
+	UpdateTime *strfmt.DateTime `json:"update_time,omitempty"`
+
+	Context *Context `json:"context,omitempty"`
 
 	// Finding provides details about a finding occurrence.
-	Finding *Finding
+	Finding *Finding `json:"finding,omitempty"`
 
 	// Kpi provides details about a KPI occurrence.
-	Kpi *Kpi
+	Kpi *Kpi `json:"kpi,omitempty"`
 
 	// Additional data for the finding, like AT event etc.
-	ReferenceData interface{}
+	ReferenceData interface{} `json:"reference_data,omitempty"`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// When set to true, an existing occurrence is replaced rather than duplicated.
-	ReplaceIfExists *bool
+	ReplaceIfExists *bool `json:"Replace-If-Exists,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -1773,6 +1806,18 @@ func (_options *CreateOccurrenceOptions) SetResourceURL(resourceURL string) *Cre
 // SetRemediation : Allow user to set Remediation
 func (_options *CreateOccurrenceOptions) SetRemediation(remediation string) *CreateOccurrenceOptions {
 	_options.Remediation = core.StringPtr(remediation)
+	return _options
+}
+
+// SetCreateTime : Allow user to set CreateTime
+func (_options *CreateOccurrenceOptions) SetCreateTime(createTime *strfmt.DateTime) *CreateOccurrenceOptions {
+	_options.CreateTime = createTime
+	return _options
+}
+
+// SetUpdateTime : Allow user to set UpdateTime
+func (_options *CreateOccurrenceOptions) SetUpdateTime(updateTime *strfmt.DateTime) *CreateOccurrenceOptions {
+	_options.UpdateTime = updateTime
 	return _options
 }
 
@@ -1859,13 +1904,13 @@ func UnmarshalDataTransferred(m map[string]json.RawMessage, result interface{}) 
 // DeleteNoteOptions : The DeleteNote options.
 type DeleteNoteOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// Second part of note `name`: providers/{provider_id}/notes/{note_id}.
-	NoteID *string `validate:"required,ne="`
+	NoteID *string `json:"note_id" validate:"required,ne="`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -1906,13 +1951,13 @@ func (options *DeleteNoteOptions) SetHeaders(param map[string]string) *DeleteNot
 // DeleteOccurrenceOptions : The DeleteOccurrence options.
 type DeleteOccurrenceOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// Second part of occurrence `name`: providers/{provider_id}/occurrences/{occurrence_id}.
-	OccurrenceID *string `validate:"required,ne="`
+	OccurrenceID *string `json:"occurrence_id" validate:"required,ne="`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2079,13 +2124,13 @@ func UnmarshalFindingType(m map[string]json.RawMessage, result interface{}) (err
 // GetNoteOptions : The GetNote options.
 type GetNoteOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// Second part of note `name`: providers/{provider_id}/notes/{note_id}.
-	NoteID *string `validate:"required,ne="`
+	NoteID *string `json:"note_id" validate:"required,ne="`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2126,13 +2171,13 @@ func (options *GetNoteOptions) SetHeaders(param map[string]string) *GetNoteOptio
 // GetOccurrenceNoteOptions : The GetOccurrenceNote options.
 type GetOccurrenceNoteOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// Second part of occurrence `name`: providers/{provider_id}/occurrences/{occurrence_id}.
-	OccurrenceID *string `validate:"required,ne="`
+	OccurrenceID *string `json:"occurrence_id" validate:"required,ne="`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2173,13 +2218,13 @@ func (options *GetOccurrenceNoteOptions) SetHeaders(param map[string]string) *Ge
 // GetOccurrenceOptions : The GetOccurrence options.
 type GetOccurrenceOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// Second part of occurrence `name`: providers/{provider_id}/occurrences/{occurrence_id}.
-	OccurrenceID *string `validate:"required,ne="`
+	OccurrenceID *string `json:"occurrence_id" validate:"required,ne="`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2252,11 +2297,21 @@ func UnmarshalKpi(m map[string]json.RawMessage, result interface{}) (err error) 
 
 // KpiType : KpiType provides details about a KPI note.
 type KpiType struct {
+	Severity *string `json:"Severity,omitempty"`
+
 	// The aggregation type of the KPI values. - SUM&#58; A single-value metrics aggregation type that sums up numeric
 	// values
 	//   that are extracted from KPI occurrences.
 	AggregationType *string `json:"aggregation_type" validate:"required"`
 }
+
+// Constants associated with the KpiType.Severity property.
+const (
+	KpiTypeSeverityCriticalConst = "CRITICAL"
+	KpiTypeSeverityHighConst     = "HIGH"
+	KpiTypeSeverityLowConst      = "LOW"
+	KpiTypeSeverityMediumConst   = "MEDIUM"
+)
 
 // Constants associated with the KpiType.AggregationType property.
 // The aggregation type of the KPI values. - SUM&#58; A single-value metrics aggregation type that sums up numeric
@@ -2278,6 +2333,10 @@ func (*FindingsV1) NewKpiType(aggregationType string) (_model *KpiType, err erro
 // UnmarshalKpiType unmarshals an instance of KpiType from the specified map of raw messages.
 func UnmarshalKpiType(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(KpiType)
+	err = core.UnmarshalPrimitive(m, "Severity", &obj.Severity)
+	if err != nil {
+		return
+	}
 	err = core.UnmarshalPrimitive(m, "aggregation_type", &obj.AggregationType)
 	if err != nil {
 		return
@@ -2289,19 +2348,19 @@ func UnmarshalKpiType(m map[string]json.RawMessage, result interface{}) (err err
 // ListNoteOccurrencesOptions : The ListNoteOccurrences options.
 type ListNoteOccurrencesOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// Second part of note `name`: providers/{provider_id}/notes/{note_id}.
-	NoteID *string `validate:"required,ne="`
+	NoteID *string `json:"note_id" validate:"required,ne="`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Number of notes to return in the list.
-	PageSize *int64
+	PageSize *int64 `json:"page_size,omitempty"`
 
 	// Token to provide to skip to a particular spot in the list.
-	PageToken *string
+	PageToken *string `json:"page_token,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2354,16 +2413,16 @@ func (options *ListNoteOccurrencesOptions) SetHeaders(param map[string]string) *
 // ListNotesOptions : The ListNotes options.
 type ListNotesOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Number of notes to return in the list.
-	PageSize *int64
+	PageSize *int64 `json:"page_size,omitempty"`
 
 	// Token to provide to skip to a particular spot in the list.
-	PageToken *string
+	PageToken *string `json:"page_token,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2409,16 +2468,16 @@ func (options *ListNotesOptions) SetHeaders(param map[string]string) *ListNotesO
 // ListOccurrencesOptions : The ListOccurrences options.
 type ListOccurrencesOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Number of notes to return in the list.
-	PageSize *int64
+	PageSize *int64 `json:"page_size,omitempty"`
 
 	// Token to provide to skip to a particular spot in the list.
-	PageToken *string
+	PageToken *string `json:"page_token,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2464,19 +2523,19 @@ func (options *ListOccurrencesOptions) SetHeaders(param map[string]string) *List
 // ListProvidersOptions : The ListProviders options.
 type ListProvidersOptions struct {
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// The number of documents that you want to return.
-	Limit *int64
+	Limit *int64 `json:"limit,omitempty"`
 
 	// The offset is the index of the item from which you want to start returning data from. Default is 0.
-	Skip *int64
+	Skip *int64 `json:"skip,omitempty"`
 
 	// The first provider ID included in the result, sorted in ascending order. If not provided, this parameter is ignored.
-	StartProviderID *string
+	StartProviderID *string `json:"start_provider_id,omitempty"`
 
 	// The last provider ID included in the result, sorted in ascending order. If not provided, this parameter is ignored.
-	EndProviderID *string
+	EndProviderID *string `json:"end_provider_id,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2564,13 +2623,13 @@ func UnmarshalNetworkConnection(m map[string]json.RawMessage, result interface{}
 // PostGraphOptions : The PostGraph options.
 type PostGraphOptions struct {
 	// Body for query findings.
-	Body io.ReadCloser
+	Body io.ReadCloser `json:"body,omitempty"`
 
 	// The type of the input.
-	ContentType *string
+	ContentType *string `json:"Content-Type,omitempty"`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2740,16 +2799,16 @@ func UnmarshalSocketAddress(m map[string]json.RawMessage, result interface{}) (e
 // UpdateNoteOptions : The UpdateNote options.
 type UpdateNoteOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// Second part of note `name`: providers/{provider_id}/notes/{note_id}.
-	NoteID *string `validate:"required,ne="`
+	NoteID *string `json:"note_id" validate:"required,ne="`
 
 	// A one sentence description of your note.
-	ShortDescription *string `validate:"required"`
+	ShortDescription *string `json:"short_description" validate:"required"`
 
 	// A more detailed description of your note.
-	LongDescription *string `validate:"required"`
+	LongDescription *string `json:"long_description" validate:"required"`
 
 	// The type of note. Use this field to filter notes and occurences by kind.
 	//  - FINDING&#58; The note and occurrence represent a finding.
@@ -2757,36 +2816,39 @@ type UpdateNoteOptions struct {
 	//  - CARD&#58; The note represents a card showing findings and related metric values.
 	//  - CARD_CONFIGURED&#58; The note represents a card configured for a user account.
 	//  - SECTION&#58; The note represents a section in a dashboard.
-	Kind *string `validate:"required"`
+	Kind *string `json:"kind" validate:"required"`
 
 	// The ID of the note.
-	ID *string `validate:"required"`
+	ID *string `json:"id" validate:"required"`
 
 	// The entity reporting a note.
-	ReportedBy *Reporter `validate:"required"`
+	ReportedBy *Reporter `json:"reported_by" validate:"required"`
 
-	RelatedURL []APINoteRelatedURL
+	RelatedURL []APINoteRelatedURL `json:"related_url,omitempty"`
 
-	// Time of expiration for this note, null if note does not expire.
-	ExpirationTime *strfmt.DateTime
+	// Output only. The time this note was created. This field can be used as a filter in list requests.
+	CreateTime *strfmt.DateTime `json:"create_time,omitempty"`
+
+	// Output only. The time this note was last updated. This field can be used as a filter in list requests.
+	UpdateTime *strfmt.DateTime `json:"update_time,omitempty"`
 
 	// True if this note can be shared by multiple accounts.
-	Shared *bool
+	Shared *bool `json:"shared,omitempty"`
 
 	// FindingType provides details about a finding note.
-	Finding *FindingType
+	Finding *FindingType `json:"finding,omitempty"`
 
 	// KpiType provides details about a KPI note.
-	Kpi *KpiType
+	Kpi *KpiType `json:"kpi,omitempty"`
 
 	// Card provides details about a card kind of note.
-	Card *Card
+	Card *Card `json:"card,omitempty"`
 
 	// Card provides details about a card kind of note.
-	Section *Section
+	Section *Section `json:"section,omitempty"`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2868,9 +2930,15 @@ func (_options *UpdateNoteOptions) SetRelatedURL(relatedURL []APINoteRelatedURL)
 	return _options
 }
 
-// SetExpirationTime : Allow user to set ExpirationTime
-func (_options *UpdateNoteOptions) SetExpirationTime(expirationTime *strfmt.DateTime) *UpdateNoteOptions {
-	_options.ExpirationTime = expirationTime
+// SetCreateTime : Allow user to set CreateTime
+func (_options *UpdateNoteOptions) SetCreateTime(createTime *strfmt.DateTime) *UpdateNoteOptions {
+	_options.CreateTime = createTime
+	return _options
+}
+
+// SetUpdateTime : Allow user to set UpdateTime
+func (_options *UpdateNoteOptions) SetUpdateTime(updateTime *strfmt.DateTime) *UpdateNoteOptions {
+	_options.UpdateTime = updateTime
 	return _options
 }
 
@@ -2919,14 +2987,14 @@ func (options *UpdateNoteOptions) SetHeaders(param map[string]string) *UpdateNot
 // UpdateOccurrenceOptions : The UpdateOccurrence options.
 type UpdateOccurrenceOptions struct {
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-	ProviderID *string `validate:"required,ne="`
+	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
 	// Second part of occurrence `name`: providers/{provider_id}/occurrences/{occurrence_id}.
-	OccurrenceID *string `validate:"required,ne="`
+	OccurrenceID *string `json:"occurrence_id" validate:"required,ne="`
 
 	// An analysis note associated with this image, in the form "{account_id}/providers/{provider_id}/notes/{note_id}" This
 	// field can be used as a filter in list requests.
-	NoteName *string `validate:"required"`
+	NoteName *string `json:"note_name" validate:"required"`
 
 	// The type of note. Use this field to filter notes and occurences by kind.
 	//  - FINDING&#58; The note and occurrence represent a finding.
@@ -2934,31 +3002,37 @@ type UpdateOccurrenceOptions struct {
 	//  - CARD&#58; The note represents a card showing findings and related metric values.
 	//  - CARD_CONFIGURED&#58; The note represents a card configured for a user account.
 	//  - SECTION&#58; The note represents a section in a dashboard.
-	Kind *string `validate:"required"`
+	Kind *string `json:"kind" validate:"required"`
 
 	// The id of the occurrence.
-	ID *string `validate:"required"`
+	ID *string `json:"id" validate:"required"`
 
 	// The unique URL of the resource, image or the container, for which the `Occurrence` applies. For example,
 	// https://gcr.io/provider/image@sha256:foo. This field can be used as a filter in list requests.
-	ResourceURL *string
+	ResourceURL *string `json:"resource_url,omitempty"`
 
 	// A description of actions that can be taken to remedy the `Note`.
-	Remediation *string
+	Remediation *string `json:"remediation,omitempty"`
 
-	Context *Context
+	// Output only. The time this `Occurrence` was created.
+	CreateTime *strfmt.DateTime `json:"create_time,omitempty"`
+
+	// Output only. The time this `Occurrence` was last updated.
+	UpdateTime *strfmt.DateTime `json:"update_time,omitempty"`
+
+	Context *Context `json:"context,omitempty"`
 
 	// Finding provides details about a finding occurrence.
-	Finding *Finding
+	Finding *Finding `json:"finding,omitempty"`
 
 	// Kpi provides details about a KPI occurrence.
-	Kpi *Kpi
+	Kpi *Kpi `json:"kpi,omitempty"`
 
 	// Additional data for the finding, like AT event etc.
-	ReferenceData interface{}
+	ReferenceData interface{} `json:"reference_data,omitempty"`
 
 	// The transaction ID for the request in UUID v4 format.
-	TransactionID *string
+	TransactionID *string `json:"Transaction-Id,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -3029,6 +3103,18 @@ func (_options *UpdateOccurrenceOptions) SetResourceURL(resourceURL string) *Upd
 // SetRemediation : Allow user to set Remediation
 func (_options *UpdateOccurrenceOptions) SetRemediation(remediation string) *UpdateOccurrenceOptions {
 	_options.Remediation = core.StringPtr(remediation)
+	return _options
+}
+
+// SetCreateTime : Allow user to set CreateTime
+func (_options *UpdateOccurrenceOptions) SetCreateTime(createTime *strfmt.DateTime) *UpdateOccurrenceOptions {
+	_options.CreateTime = createTime
+	return _options
+}
+
+// SetUpdateTime : Allow user to set UpdateTime
+func (_options *UpdateOccurrenceOptions) SetUpdateTime(updateTime *strfmt.DateTime) *UpdateOccurrenceOptions {
+	_options.UpdateTime = updateTime
 	return _options
 }
 
@@ -3255,9 +3341,6 @@ type APINote struct {
 
 	RelatedURL []APINoteRelatedURL `json:"related_url,omitempty"`
 
-	// Time of expiration for this note, null if note does not expire.
-	ExpirationTime *strfmt.DateTime `json:"expiration_time,omitempty"`
-
 	// Output only. The time this note was created. This field can be used as a filter in list requests.
 	CreateTime *strfmt.DateTime `json:"create_time,omitempty"`
 
@@ -3330,10 +3413,6 @@ func UnmarshalAPINote(m map[string]json.RawMessage, result interface{}) (err err
 		return
 	}
 	err = core.UnmarshalModel(m, "related_url", &obj.RelatedURL, UnmarshalAPINoteRelatedURL)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "expiration_time", &obj.ExpirationTime)
 	if err != nil {
 		return
 	}

@@ -1,6 +1,6 @@
 # Makefile to build the project
 
-COVERAGE = -coverprofile=coverage.txt -covermode=atomic
+COVERAGE = -coverprofile=c.out -covermode=atomic
 SHELL := /usr/bin/env bash
 
 all: test lint fmtcheck tidy

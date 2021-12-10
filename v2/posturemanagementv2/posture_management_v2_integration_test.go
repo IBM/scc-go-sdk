@@ -26,7 +26,7 @@ import (
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/IBM/scc-go-sdk/posturemanagementv2"
+	"github.com/IBM/scc-go-sdk/v2/posturemanagementv2"
 	"github.com/google/uuid"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -176,37 +176,24 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 
 			listCredentialsOptions := &posturemanagementv2.ListCredentialsOptions{
 				AccountID:     core.StringPtr(accountID),
-				Offset:        core.Int64Ptr(int64(38)),
-				Limit:         core.Int64Ptr(int64(100)),
+				Offset:        core.Int64Ptr(int64(2)),
+				Limit:         core.Int64Ptr(int64(3)),
 				TransactionID: core.StringPtr(transactionID),
 			}
 
 			listCredentialsOptions.Offset = nil
 			listCredentialsOptions.Limit = core.Int64Ptr(1)
 
-			for {
-				credentialList, response, err := postureManagementService.ListCredentials(listCredentialsOptions)
+			credentialList, response, err := postureManagementService.ListCredentials(listCredentialsOptions)
 
-				Expect(err).To(BeNil())
-				Expect(response.StatusCode).To(Equal(200))
-				Expect(credentialList).ToNot(BeNil())
-				result.Credentials = append(result.Credentials, credentialList.Credentials...)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(credentialList).ToNot(BeNil())
+			result.Credentials = append(result.Credentials, credentialList.Credentials...)
 
-				listCredentialsOptions.Offset, err = credentialList.GetNextOffset()
-				Expect(err).To(BeNil())
+			listCredentialsOptions.Offset, err = credentialList.GetNextOffset()
+			Expect(err).To(BeNil())
 
-				if listCredentialsOptions.Offset == nil {
-					break
-				}
-
-				//
-				// The following status codes aren't covered by tests.
-				// Please provide integration tests for these too.
-				//
-				// 401
-				// 500
-				//
-			}
 		})
 	})
 
@@ -442,41 +429,30 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 			listProfilesOptions := &posturemanagementv2.ListProfilesOptions{
 				AccountID:     core.StringPtr(accountID),
 				TransactionID: core.StringPtr(transactionID),
-				Offset:        core.Int64Ptr(int64(38)),
-				Limit:         core.Int64Ptr(int64(100)),
+				Offset:        core.Int64Ptr(int64(2)),
+				Limit:         core.Int64Ptr(int64(3)),
 			}
 
 			listProfilesOptions.Offset = nil
 			listProfilesOptions.Limit = core.Int64Ptr(1)
 
-			for {
-				profileList, response, err := postureManagementService.ListProfiles(listProfilesOptions)
+			profileList, response, err := postureManagementService.ListProfiles(listProfilesOptions)
 
-				Expect(err).To(BeNil())
-				Expect(response.StatusCode).To(Equal(200))
-				Expect(profileList).ToNot(BeNil())
-				result.Profiles = append(result.Profiles, profileList.Profiles...)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(profileList).ToNot(BeNil())
+			result.Profiles = append(result.Profiles, profileList.Profiles...)
 
-				listProfilesOptions.Offset, err = profileList.GetNextOffset()
-				Expect(err).To(BeNil())
+			listProfilesOptions.Offset, err = profileList.GetNextOffset()
+			Expect(err).To(BeNil())
 
-				if listProfilesOptions.Offset == nil {
-					break
+			respprofiles := result.Profiles
+			for i := 0; i < len(respprofiles); i++ {
+				if *(respprofiles[i].Name) == "ImportProfileTest" {
+					profileID = *(respprofiles[i].ID)
 				}
-				respprofiles := result.Profiles
-				for i := 0; i < len(respprofiles); i++ {
-					if *(respprofiles[i].Name) == "ImportProfileTest" {
-						profileID = *(respprofiles[i].ID)
-					}
-				}
-				//
-				// The following status codes aren't covered by tests.
-				// Please provide integration tests for these too.
-				//
-				// 401
-				// 500
-				//
 			}
+
 		})
 	})
 
@@ -554,36 +530,23 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 				ProfileID:     core.StringPtr(profileID),
 				AccountID:     core.StringPtr(accountID),
 				TransactionID: core.StringPtr(transactionID),
-				Offset:        core.Int64Ptr(int64(38)),
-				Limit:         core.Int64Ptr(int64(100)),
+				Offset:        core.Int64Ptr(int64(2)),
+				Limit:         core.Int64Ptr(int64(3)),
 			}
 
 			getProfileControlsOptions.Offset = nil
 			getProfileControlsOptions.Limit = core.Int64Ptr(1)
 
-			for {
-				controlList, response, err := postureManagementService.GetProfileControls(getProfileControlsOptions)
+			controlList, response, err := postureManagementService.GetProfileControls(getProfileControlsOptions)
 
-				Expect(err).To(BeNil())
-				Expect(response.StatusCode).To(Equal(200))
-				Expect(controlList).ToNot(BeNil())
-				result.Controls = append(result.Controls, controlList.Controls...)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(controlList).ToNot(BeNil())
+			result.Controls = append(result.Controls, controlList.Controls...)
 
-				getProfileControlsOptions.Offset, err = controlList.GetNextOffset()
-				Expect(err).To(BeNil())
+			getProfileControlsOptions.Offset, err = controlList.GetNextOffset()
+			Expect(err).To(BeNil())
 
-				if getProfileControlsOptions.Offset == nil {
-					break
-				}
-
-				//
-				// The following status codes aren't covered by tests.
-				// Please provide integration tests for these too.
-				//
-				// 401
-				// 500
-				//
-			}
 		})
 	})
 
@@ -598,36 +561,23 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 				GroupID:       core.StringPtr(groupProfileID),
 				AccountID:     core.StringPtr(accountID),
 				TransactionID: core.StringPtr(transactionID),
-				Offset:        core.Int64Ptr(int64(38)),
-				Limit:         core.Int64Ptr(int64(100)),
+				Offset:        core.Int64Ptr(int64(2)),
+				Limit:         core.Int64Ptr(int64(3)),
 			}
 
 			getGroupProfileControlsOptions.Offset = nil
 			getGroupProfileControlsOptions.Limit = core.Int64Ptr(1)
 
-			for {
-				controlList, response, err := postureManagementService.GetGroupProfileControls(getGroupProfileControlsOptions)
+			controlList, response, err := postureManagementService.GetGroupProfileControls(getGroupProfileControlsOptions)
 
-				Expect(err).To(BeNil())
-				Expect(response.StatusCode).To(Equal(200))
-				Expect(controlList).ToNot(BeNil())
-				result.Controls = append(result.Controls, controlList.Controls...)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(controlList).ToNot(BeNil())
+			result.Controls = append(result.Controls, controlList.Controls...)
 
-				getGroupProfileControlsOptions.Offset, err = controlList.GetNextOffset()
-				Expect(err).To(BeNil())
+			getGroupProfileControlsOptions.Offset, err = controlList.GetNextOffset()
+			Expect(err).To(BeNil())
 
-				if getGroupProfileControlsOptions.Offset == nil {
-					break
-				}
-
-				//
-				// The following status codes aren't covered by tests.
-				// Please provide integration tests for these too.
-				//
-				// 401
-				// 500
-				//
-			}
 		})
 	})
 
@@ -934,36 +884,23 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 			listLatestScansOptions := &posturemanagementv2.ListLatestScansOptions{
 				AccountID:     core.StringPtr(accountID),
 				TransactionID: core.StringPtr(transactionID),
-				Offset:        core.Int64Ptr(int64(38)),
-				Limit:         core.Int64Ptr(int64(100)),
+				Offset:        core.Int64Ptr(int64(2)),
+				Limit:         core.Int64Ptr(int64(3)),
 			}
 
 			listLatestScansOptions.Offset = nil
 			listLatestScansOptions.Limit = core.Int64Ptr(1)
 
-			for {
-				scanList, response, err := postureManagementService.ListLatestScans(listLatestScansOptions)
+			scanList, response, err := postureManagementService.ListLatestScans(listLatestScansOptions)
 
-				Expect(err).To(BeNil())
-				Expect(response.StatusCode).To(Equal(200))
-				Expect(scanList).ToNot(BeNil())
-				result.LatestScans = append(result.LatestScans, scanList.LatestScans...)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(scanList).ToNot(BeNil())
+			result.LatestScans = append(result.LatestScans, scanList.LatestScans...)
 
-				listLatestScansOptions.Offset, err = scanList.GetNextOffset()
-				Expect(err).To(BeNil())
+			listLatestScansOptions.Offset, err = scanList.GetNextOffset()
+			Expect(err).To(BeNil())
 
-				if listLatestScansOptions.Offset == nil {
-					break
-				}
-
-				//
-				// The following status codes aren't covered by tests.
-				// Please provide integration tests for these too.
-				//
-				// 401
-				// 500
-				//
-			}
 		})
 	})
 
@@ -1037,36 +974,23 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 				ReportSettingID: core.StringPtr(reportSettingID),
 				AccountID:       core.StringPtr(accountID),
 				TransactionID:   core.StringPtr(transactionID),
-				Offset:          core.Int64Ptr(int64(38)),
-				Limit:           core.Int64Ptr(int64(100)),
+				Offset:          core.Int64Ptr(int64(2)),
+				Limit:           core.Int64Ptr(int64(3)),
 			}
 
 			scanSummariesOptions.Offset = nil
 			scanSummariesOptions.Limit = core.Int64Ptr(1)
 
-			for {
-				summaryList, response, err := postureManagementService.ScanSummaries(scanSummariesOptions)
+			summaryList, response, err := postureManagementService.ScanSummaries(scanSummariesOptions)
 
-				Expect(err).To(BeNil())
-				Expect(response.StatusCode).To(Equal(200))
-				Expect(summaryList).ToNot(BeNil())
-				result.Summaries = append(result.Summaries, summaryList.Summaries...)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(summaryList).ToNot(BeNil())
+			result.Summaries = append(result.Summaries, summaryList.Summaries...)
 
-				scanSummariesOptions.Offset, err = summaryList.GetNextOffset()
-				Expect(err).To(BeNil())
+			scanSummariesOptions.Offset, err = summaryList.GetNextOffset()
+			Expect(err).To(BeNil())
 
-				if scanSummariesOptions.Offset == nil {
-					break
-				}
-
-				//
-				// The following status codes aren't covered by tests.
-				// Please provide integration tests for these too.
-				//
-				// 401
-				// 500
-				//
-			}
 		})
 	})
 

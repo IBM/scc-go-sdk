@@ -15,7 +15,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.40.0-910cf8c2-20211006-154754
+ * IBM OpenAPI SDK Code Generator Version: 3.43.2-e01bd7ca-20211209-144508
  */
 
 // Package findingsv1 : Operations and models for the FindingsV1 service
@@ -31,7 +31,7 @@ import (
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	common "github.com/IBM/scc-go-sdk/common"
+	common "github.com/IBM/scc-go-sdk/v2/common"
 	"github.com/go-openapi/strfmt"
 )
 
@@ -863,6 +863,12 @@ func (findings *FindingsV1) CreateOccurrenceWithContext(ctx context.Context, cre
 	if createOccurrenceOptions.ID != nil {
 		body["id"] = createOccurrenceOptions.ID
 	}
+	if createOccurrenceOptions.ShortDescription != nil {
+		body["short_description"] = createOccurrenceOptions.ShortDescription
+	}
+	if createOccurrenceOptions.LongDescription != nil {
+		body["long_description"] = createOccurrenceOptions.LongDescription
+	}
 	if createOccurrenceOptions.ResourceURL != nil {
 		body["resource_url"] = createOccurrenceOptions.ResourceURL
 	}
@@ -1175,6 +1181,12 @@ func (findings *FindingsV1) UpdateOccurrenceWithContext(ctx context.Context, upd
 	}
 	if updateOccurrenceOptions.ID != nil {
 		body["id"] = updateOccurrenceOptions.ID
+	}
+	if updateOccurrenceOptions.ShortDescription != nil {
+		body["short_description"] = updateOccurrenceOptions.ShortDescription
+	}
+	if updateOccurrenceOptions.LongDescription != nil {
+		body["long_description"] = updateOccurrenceOptions.LongDescription
 	}
 	if updateOccurrenceOptions.ResourceURL != nil {
 		body["resource_url"] = updateOccurrenceOptions.ResourceURL
@@ -1527,7 +1539,7 @@ type CreateNoteOptions struct {
 	// A more detailed description of your note.
 	LongDescription *string `json:"long_description" validate:"required"`
 
-	// The type of note. Use this field to filter notes and occurences by kind.
+	// The type of note. Use this field to filter notes and occurrences by kind.
 	//  - FINDING&#58; The note and occurrence represent a finding.
 	//  - KPI&#58; The note and occurrence represent a KPI value.
 	//  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -1572,7 +1584,7 @@ type CreateNoteOptions struct {
 }
 
 // Constants associated with the CreateNoteOptions.Kind property.
-// The type of note. Use this field to filter notes and occurences by kind.
+// The type of note. Use this field to filter notes and occurrences by kind.
 //  - FINDING&#58; The note and occurrence represent a finding.
 //  - KPI&#58; The note and occurrence represent a KPI value.
 //  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -1703,7 +1715,7 @@ type CreateOccurrenceOptions struct {
 	// field can be used as a filter in list requests.
 	NoteName *string `json:"note_name" validate:"required"`
 
-	// The type of note. Use this field to filter notes and occurences by kind.
+	// The type of note. Use this field to filter notes and occurrences by kind.
 	//  - FINDING&#58; The note and occurrence represent a finding.
 	//  - KPI&#58; The note and occurrence represent a KPI value.
 	//  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -1713,6 +1725,12 @@ type CreateOccurrenceOptions struct {
 
 	// The id of the occurrence.
 	ID *string `json:"id" validate:"required"`
+
+	// A one sentence description of your occurrence.
+	ShortDescription *string `json:"short_description,omitempty"`
+
+	// A more detailed description of your occurrence.
+	LongDescription *string `json:"long_description,omitempty"`
 
 	// The unique URL of the resource, image or the container, for which the `Occurrence` applies. For example,
 	// https://gcr.io/provider/image@sha256:foo. This field can be used as a filter in list requests.
@@ -1749,7 +1767,7 @@ type CreateOccurrenceOptions struct {
 }
 
 // Constants associated with the CreateOccurrenceOptions.Kind property.
-// The type of note. Use this field to filter notes and occurences by kind.
+// The type of note. Use this field to filter notes and occurrences by kind.
 //  - FINDING&#58; The note and occurrence represent a finding.
 //  - KPI&#58; The note and occurrence represent a KPI value.
 //  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -1794,6 +1812,18 @@ func (_options *CreateOccurrenceOptions) SetKind(kind string) *CreateOccurrenceO
 // SetID : Allow user to set ID
 func (_options *CreateOccurrenceOptions) SetID(id string) *CreateOccurrenceOptions {
 	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetShortDescription : Allow user to set ShortDescription
+func (_options *CreateOccurrenceOptions) SetShortDescription(shortDescription string) *CreateOccurrenceOptions {
+	_options.ShortDescription = core.StringPtr(shortDescription)
+	return _options
+}
+
+// SetLongDescription : Allow user to set LongDescription
+func (_options *CreateOccurrenceOptions) SetLongDescription(longDescription string) *CreateOccurrenceOptions {
+	_options.LongDescription = core.StringPtr(longDescription)
 	return _options
 }
 
@@ -2810,7 +2840,7 @@ type UpdateNoteOptions struct {
 	// A more detailed description of your note.
 	LongDescription *string `json:"long_description" validate:"required"`
 
-	// The type of note. Use this field to filter notes and occurences by kind.
+	// The type of note. Use this field to filter notes and occurrences by kind.
 	//  - FINDING&#58; The note and occurrence represent a finding.
 	//  - KPI&#58; The note and occurrence represent a KPI value.
 	//  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -2855,7 +2885,7 @@ type UpdateNoteOptions struct {
 }
 
 // Constants associated with the UpdateNoteOptions.Kind property.
-// The type of note. Use this field to filter notes and occurences by kind.
+// The type of note. Use this field to filter notes and occurrences by kind.
 //  - FINDING&#58; The note and occurrence represent a finding.
 //  - KPI&#58; The note and occurrence represent a KPI value.
 //  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -2996,7 +3026,7 @@ type UpdateOccurrenceOptions struct {
 	// field can be used as a filter in list requests.
 	NoteName *string `json:"note_name" validate:"required"`
 
-	// The type of note. Use this field to filter notes and occurences by kind.
+	// The type of note. Use this field to filter notes and occurrences by kind.
 	//  - FINDING&#58; The note and occurrence represent a finding.
 	//  - KPI&#58; The note and occurrence represent a KPI value.
 	//  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -3006,6 +3036,12 @@ type UpdateOccurrenceOptions struct {
 
 	// The id of the occurrence.
 	ID *string `json:"id" validate:"required"`
+
+	// A one sentence description of your occurrence.
+	ShortDescription *string `json:"short_description,omitempty"`
+
+	// A more detailed description of your occurrence.
+	LongDescription *string `json:"long_description,omitempty"`
 
 	// The unique URL of the resource, image or the container, for which the `Occurrence` applies. For example,
 	// https://gcr.io/provider/image@sha256:foo. This field can be used as a filter in list requests.
@@ -3039,7 +3075,7 @@ type UpdateOccurrenceOptions struct {
 }
 
 // Constants associated with the UpdateOccurrenceOptions.Kind property.
-// The type of note. Use this field to filter notes and occurences by kind.
+// The type of note. Use this field to filter notes and occurrences by kind.
 //  - FINDING&#58; The note and occurrence represent a finding.
 //  - KPI&#58; The note and occurrence represent a KPI value.
 //  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -3091,6 +3127,18 @@ func (_options *UpdateOccurrenceOptions) SetKind(kind string) *UpdateOccurrenceO
 // SetID : Allow user to set ID
 func (_options *UpdateOccurrenceOptions) SetID(id string) *UpdateOccurrenceOptions {
 	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetShortDescription : Allow user to set ShortDescription
+func (_options *UpdateOccurrenceOptions) SetShortDescription(shortDescription string) *UpdateOccurrenceOptions {
+	_options.ShortDescription = core.StringPtr(shortDescription)
+	return _options
+}
+
+// SetLongDescription : Allow user to set LongDescription
+func (_options *UpdateOccurrenceOptions) SetLongDescription(longDescription string) *UpdateOccurrenceOptions {
+	_options.LongDescription = core.StringPtr(longDescription)
 	return _options
 }
 
@@ -3331,7 +3379,7 @@ type APINote struct {
 	// A more detailed description of your note.
 	LongDescription *string `json:"long_description" validate:"required"`
 
-	// The type of note. Use this field to filter notes and occurences by kind.
+	// The type of note. Use this field to filter notes and occurrences by kind.
 	//  - FINDING&#58; The note and occurrence represent a finding.
 	//  - KPI&#58; The note and occurrence represent a KPI value.
 	//  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -3370,7 +3418,7 @@ type APINote struct {
 }
 
 // Constants associated with the APINote.Kind property.
-// The type of note. Use this field to filter notes and occurences by kind.
+// The type of note. Use this field to filter notes and occurrences by kind.
 //  - FINDING&#58; The note and occurrence represent a finding.
 //  - KPI&#58; The note and occurrence represent a KPI value.
 //  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -3492,6 +3540,12 @@ func UnmarshalAPINoteRelatedURL(m map[string]json.RawMessage, result interface{}
 
 // APIOccurrence : `Occurrence` includes information about analysis occurrences for an image.
 type APIOccurrence struct {
+	// A one sentence description of your occurrence.
+	ShortDescription *string `json:"short_description,omitempty"`
+
+	// A more detailed description of your occurrence.
+	LongDescription *string `json:"long_description,omitempty"`
+
 	// The unique URL of the resource, image or the container, for which the `Occurrence` applies. For example,
 	// https://gcr.io/provider/image@sha256:foo. This field can be used as a filter in list requests.
 	ResourceURL *string `json:"resource_url,omitempty"`
@@ -3500,7 +3554,7 @@ type APIOccurrence struct {
 	// field can be used as a filter in list requests.
 	NoteName *string `json:"note_name" validate:"required"`
 
-	// The type of note. Use this field to filter notes and occurences by kind.
+	// The type of note. Use this field to filter notes and occurrences by kind.
 	//  - FINDING&#58; The note and occurrence represent a finding.
 	//  - KPI&#58; The note and occurrence represent a KPI value.
 	//  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -3533,7 +3587,7 @@ type APIOccurrence struct {
 }
 
 // Constants associated with the APIOccurrence.Kind property.
-// The type of note. Use this field to filter notes and occurences by kind.
+// The type of note. Use this field to filter notes and occurrences by kind.
 //  - FINDING&#58; The note and occurrence represent a finding.
 //  - KPI&#58; The note and occurrence represent a KPI value.
 //  - CARD&#58; The note represents a card showing findings and related metric values.
@@ -3561,6 +3615,14 @@ func (*FindingsV1) NewAPIOccurrence(noteName string, kind string, id string) (_m
 // UnmarshalAPIOccurrence unmarshals an instance of APIOccurrence from the specified map of raw messages.
 func UnmarshalAPIOccurrence(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(APIOccurrence)
+	err = core.UnmarshalPrimitive(m, "short_description", &obj.ShortDescription)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "long_description", &obj.LongDescription)
+	if err != nil {
+		return
+	}
 	err = core.UnmarshalPrimitive(m, "resource_url", &obj.ResourceURL)
 	if err != nil {
 		return

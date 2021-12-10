@@ -3,7 +3,7 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/IBM/scc-go-sdk.svg)](https://pkg.go.dev/github.com/IBM/scc-go-sdk)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/IBM/scc-go-sdk)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![codecov](https://codecov.io/gh/IBM/scc-go-sdk/branch/main/graph/badge.svg?token=59EXPRL5V5)](https://codecov.io/gh/IBM/scc-go-sdk)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/ad2d585c763ad627e0cb/test_coverage)](https://codeclimate.com/github/IBM/scc-go-sdk/test_coverage)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 

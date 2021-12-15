@@ -1696,6 +1696,13 @@ func (options *CreateNoteOptions) SetHeaders(param map[string]string) *CreateNot
 
 // CreateOccurrenceOptions : The CreateOccurrence options.
 type CreateOccurrenceOptions struct {
+
+	// A one sentence description of your note.
+	ShortDescription *string `json:"short_description,omitempty"`
+
+	// A more detailed description of your note.
+	LongDescription *string `json:"long_description,omitempty"`
+
 	// Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
 	ProviderID *string `json:"provider_id" validate:"required,ne="`
 
@@ -1782,6 +1789,18 @@ func (_options *CreateOccurrenceOptions) SetProviderID(providerID string) *Creat
 // SetNoteName : Allow user to set NoteName
 func (_options *CreateOccurrenceOptions) SetNoteName(noteName string) *CreateOccurrenceOptions {
 	_options.NoteName = core.StringPtr(noteName)
+	return _options
+}
+
+// SetShortDescription : Allow user to set ShortDescription
+func (_options *CreateOccurrenceOptions) SetShortDescription(shortDescription string) *CreateOccurrenceOptions {
+	_options.ShortDescription = core.StringPtr(shortDescription)
+	return _options
+}
+
+// SetLongDescription : Allow user to set LongDescription
+func (_options *CreateOccurrenceOptions) SetLongDescription(longDescription string) *CreateOccurrenceOptions {
+	_options.LongDescription = core.StringPtr(longDescription)
 	return _options
 }
 
@@ -3492,6 +3511,13 @@ func UnmarshalAPINoteRelatedURL(m map[string]json.RawMessage, result interface{}
 
 // APIOccurrence : `Occurrence` includes information about analysis occurrences for an image.
 type APIOccurrence struct {
+
+	// A one sentence description of your note.
+	ShortDescription *string `json:"short_description,omitempty"`
+
+	// A more detailed description of your note.
+	LongDescription *string `json:"long_description,omitempty"`
+
 	// The unique URL of the resource, image or the container, for which the `Occurrence` applies. For example,
 	// https://gcr.io/provider/image@sha256:foo. This field can be used as a filter in list requests.
 	ResourceURL *string `json:"resource_url,omitempty"`

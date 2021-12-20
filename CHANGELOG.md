@@ -1,3 +1,13 @@
+# [2.0.0](https://github.com/IBM/scc-go-sdk/compare/v1.3.4...v2.0.0) (2021-12-20)
+
+
+* Merge pull request #64 from IBM/dep ([57d6d3b](https://github.com/IBM/scc-go-sdk/commit/57d6d3bf9d4cc0f39bb1f4deb29d38f27507550a)), closes [#64](https://github.com/IBM/scc-go-sdk/issues/64)
+
+
+### BREAKING CHANGES
+
+* releasing SDK without NotificationsAPI
+
 ## [1.3.4](https://github.com/IBM/scc-go-sdk/compare/v1.3.3...v1.3.4) (2021-11-29)
 
 

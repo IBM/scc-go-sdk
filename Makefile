@@ -1,28 +1,35 @@
 # Makefile to build the project
 
-COVERAGE = -coverprofile=c.out -covermode=atomic
+VDIR=v2
+COVERAGE = -coverprofile=../c.out -covermode=atomic
 SHELL := /usr/bin/env bash
 
 all: test lint fmtcheck tidy
 travis-ci: test-cov lint tidy
 
 test:
-	go test `go list ./...`
+	cd ${VDIR} && go test `go list ./...`
 
 test-cov:
-	go test `go list ./...` ${COVERAGE}
+	cd ${VDIR} && go test `go list ./...` ${COVERAGE}
 
 test-int:
-	go test `go list ./...` -tags=integration
+	cd ${VDIR} && go test `go list ./...` -tags=integration
 
 test-int-cov:
-	go test `go list ./...` -tags=integration ${COVERAGE}
+	cd ${VDIR} && go test `go list ./...` -tags=integration ${COVERAGE}
 
 lint:
-	golangci-lint run
+	cd ${VDIR} && golangci-lint run
 
 fmtcheck:
 	diff -u <(echo -n) <(gofmt -d -s .)
 
 tidy:
-	go mod tidy
+	cd ${VDIR} && go mod tidy
+
+install:
+	cd ${VDIR} && go mod download
+
+docs:
+	cd ${VDIR} && go run github.com/johnstarich/go/gopages -base https://ibm.github.io/scc-go-sdk

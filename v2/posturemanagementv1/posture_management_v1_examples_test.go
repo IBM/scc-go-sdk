@@ -1,3 +1,4 @@
+//go:build examples
 // +build examples
 
 /**
@@ -24,7 +25,7 @@ import (
 	"os"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/IBM/scc-go-sdk/posturemanagementv1"
+	"github.com/IBM/scc-go-sdk/v2/posturemanagementv1"
 )
 
 //

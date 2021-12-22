@@ -32,7 +32,7 @@ import (
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	common "github.com/IBM/scc-go-sdk/v2/common"
+	common "github.com/IBM/scc-go-sdk/v3/common"
 	"github.com/go-openapi/strfmt"
 )
 

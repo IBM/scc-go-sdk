@@ -28,7 +28,7 @@ import (
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/IBM/scc-go-sdk/v2/posturemanagementv2"
+	"github.com/IBM/scc-go-sdk/v3/posturemanagementv2"
 	"github.com/go-openapi/strfmt"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"

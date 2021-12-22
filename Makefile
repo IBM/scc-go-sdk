@@ -1,6 +1,6 @@
 # Makefile to build the project
 
-VDIR=v2
+VDIR=v3
 COVERAGE = -coverprofile=../c.out -covermode=atomic
 SHELL := /usr/bin/env bash
 
@@ -18,9 +18,6 @@ test-int:
 
 test-int-cov:
 	cd ${VDIR} && go test `go list ./...` -tags=integration ${COVERAGE}
-
-lint:
-	cd ${VDIR} && golangci-lint run
 
 fmtcheck:
 	diff -u <(echo -n) <(gofmt -d -s .)

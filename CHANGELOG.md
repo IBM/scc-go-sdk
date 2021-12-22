@@ -1,3 +1,20 @@
+# [2.0.0](https://github.com/IBM/scc-go-sdk/compare/v1.3.4...v2.0.0) (2021-12-22)
+
+
+### Bug Fixes
+
+* **CI:** CI bumpversion fix ([0f774b0](https://github.com/IBM/scc-go-sdk/commit/0f774b0f03af7206b3baf17b4b9faf69be7e6336))
+* **CI:** fixing release issue ([a3506a6](https://github.com/IBM/scc-go-sdk/commit/a3506a6b44ee3a4bae6e92a9bd85db196aae7ebd))
+* **v2 Structure:** fixing file structure in v2 ([fcf7217](https://github.com/IBM/scc-go-sdk/commit/fcf7217f6ceb87338895fbabf789bc268fc45a46))
+
+
+* Merge pull request #64 from IBM/dep ([57d6d3b](https://github.com/IBM/scc-go-sdk/commit/57d6d3bf9d4cc0f39bb1f4deb29d38f27507550a)), closes [#64](https://github.com/IBM/scc-go-sdk/issues/64)
+
+
+### BREAKING CHANGES
+
+* releasing SDK without NotificationsAPI
+
 # [2.0.0](https://github.com/IBM/scc-go-sdk/compare/v1.3.4...v2.0.0) (2021-12-20)
 
 

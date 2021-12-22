@@ -1,7 +1,7 @@
 [![CI/CD Pipeline](https://github.com/IBM/scc-go-sdk/actions/workflows/main.yaml/badge.svg)](https://github.com/IBM/scc-go-sdk/actions/workflows/main.yaml)
 [![Release](https://img.shields.io/github/v/release/IBM/scc-go-sdk)](https://img.shields.io/github/v/release/IBM/scc-go-sdk)
 [![Go Reference](https://pkg.go.dev/badge/github.com/IBM/scc-go-sdk/v3.svg)](https://pkg.go.dev/github.com/IBM/scc-go-sdk/v3)
-![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/IBM/scc-go-sdk/v3)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/IBM/scc-go-sdk?filename=v3%2Fgo.mod)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/ad2d585c763ad627e0cb/test_coverage)](https://codeclimate.com/github/IBM/scc-go-sdk/test_coverage)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)

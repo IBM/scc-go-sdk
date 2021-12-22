@@ -97,7 +97,7 @@ jobs:
         uses: crazy-max/ghaction-github-pages@v1
         with:
           target_branch: gh-pages
-          build_dir: v2/dist
+          build_dir: v3/dist
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_TOKEN }}
           GIT_AUTHOR_NAME: sccdeveloper

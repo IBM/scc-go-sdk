@@ -32,7 +32,7 @@ import (
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	common "github.com/IBM/scc-go-sdk/v2/common"
+	common "github.com/IBM/scc-go-sdk/v3/common"
 	"github.com/go-openapi/strfmt"
 )
 
@@ -196,7 +196,7 @@ func (postureManagement *PostureManagementV2) CreateCredentialWithContext(ctx co
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/credentials`, nil)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/credentials`, nil)
 	if err != nil {
 		return
 	}
@@ -283,7 +283,7 @@ func (postureManagement *PostureManagementV2) ListCredentialsWithContext(ctx con
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/credentials`, nil)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/credentials`, nil)
 	if err != nil {
 		return
 	}
@@ -356,7 +356,7 @@ func (postureManagement *PostureManagementV2) GetCredentialWithContext(ctx conte
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/credentials/{id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/credentials/{id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -423,7 +423,7 @@ func (postureManagement *PostureManagementV2) UpdateCredentialWithContext(ctx co
 	builder := core.NewRequestBuilder(core.PATCH)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/credentials/{id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/credentials/{id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -515,7 +515,7 @@ func (postureManagement *PostureManagementV2) DeleteCredentialWithContext(ctx co
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/credentials/{id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/credentials/{id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -567,7 +567,7 @@ func (postureManagement *PostureManagementV2) CreateCollectorWithContext(ctx con
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/collectors`, nil)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/collectors`, nil)
 	if err != nil {
 		return
 	}
@@ -651,7 +651,7 @@ func (postureManagement *PostureManagementV2) ListCollectorsWithContext(ctx cont
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/collectors`, nil)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/collectors`, nil)
 	if err != nil {
 		return
 	}
@@ -718,7 +718,7 @@ func (postureManagement *PostureManagementV2) GetCollectorWithContext(ctx contex
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/collectors/{id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/collectors/{id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -785,7 +785,7 @@ func (postureManagement *PostureManagementV2) UpdateCollectorWithContext(ctx con
 	builder := core.NewRequestBuilder(core.PATCH)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/collectors/{id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/collectors/{id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -858,7 +858,7 @@ func (postureManagement *PostureManagementV2) DeleteCollectorWithContext(ctx con
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/collectors/{id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/collectors/{id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -910,7 +910,7 @@ func (postureManagement *PostureManagementV2) ImportProfilesWithContext(ctx cont
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/profiles/import`, nil)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/profiles/import`, nil)
 	if err != nil {
 		return
 	}
@@ -972,7 +972,7 @@ func (postureManagement *PostureManagementV2) ListProfilesWithContext(ctx contex
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/profiles`, nil)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/profiles`, nil)
 	if err != nil {
 		return
 	}
@@ -1045,7 +1045,7 @@ func (postureManagement *PostureManagementV2) GetProfileWithContext(ctx context.
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/profiles/{id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/profiles/{id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1113,7 +1113,7 @@ func (postureManagement *PostureManagementV2) UpdateProfilesWithContext(ctx cont
 	builder := core.NewRequestBuilder(core.PATCH)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/profiles/{id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/profiles/{id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1205,7 +1205,7 @@ func (postureManagement *PostureManagementV2) DeleteProfileWithContext(ctx conte
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/profiles/{id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/profiles/{id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1260,7 +1260,7 @@ func (postureManagement *PostureManagementV2) GetProfileControlsWithContext(ctx 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/profiles/{profile_id}/controls`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/profiles/{profile_id}/controls`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1333,7 +1333,7 @@ func (postureManagement *PostureManagementV2) GetGroupProfileControlsWithContext
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/profiles/groups/{group_id}/controls`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/profiles/groups/{group_id}/controls`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1402,7 +1402,7 @@ func (postureManagement *PostureManagementV2) CreateScopeWithContext(ctx context
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/scopes`, nil)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/scopes`, nil)
 	if err != nil {
 		return
 	}
@@ -1489,7 +1489,7 @@ func (postureManagement *PostureManagementV2) ListScopesWithContext(ctx context.
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/scopes`, nil)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/scopes`, nil)
 	if err != nil {
 		return
 	}
@@ -1556,7 +1556,7 @@ func (postureManagement *PostureManagementV2) GetScopeDetailsWithContext(ctx con
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/scopes/{id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/scopes/{id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1623,7 +1623,7 @@ func (postureManagement *PostureManagementV2) UpdateScopeDetailsWithContext(ctx 
 	builder := core.NewRequestBuilder(core.PATCH)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/scopes/{id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/scopes/{id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1703,7 +1703,7 @@ func (postureManagement *PostureManagementV2) DeleteScopeWithContext(ctx context
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/scopes/{id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/scopes/{id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1758,7 +1758,7 @@ func (postureManagement *PostureManagementV2) GetScopeTimelineWithContext(ctx co
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/scopes/{scope_id}/events`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/scopes/{scope_id}/events`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1825,7 +1825,7 @@ func (postureManagement *PostureManagementV2) GetScopeDetailsCredentialsWithCont
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/scopes/{scope_id}/credentials`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/scopes/{scope_id}/credentials`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1892,7 +1892,7 @@ func (postureManagement *PostureManagementV2) ReplaceScopeDetailsCredentialsWith
 	builder := core.NewRequestBuilder(core.PATCH)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/scopes/{scope_id}/credentials`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/scopes/{scope_id}/credentials`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1972,7 +1972,7 @@ func (postureManagement *PostureManagementV2) GetScopeDetailsCollectorWithContex
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/scopes/{scope_id}/collectors`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/scopes/{scope_id}/collectors`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2039,7 +2039,7 @@ func (postureManagement *PostureManagementV2) ReplaceScopeDetailsCollectorWithCo
 	builder := core.NewRequestBuilder(core.PATCH)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/scopes/{scope_id}/collectors`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/scopes/{scope_id}/collectors`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2117,7 +2117,7 @@ func (postureManagement *PostureManagementV2) GetCorrelationIDWithContext(ctx co
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/scope/status/{correlation_id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/scope/status/{correlation_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2176,7 +2176,7 @@ func (postureManagement *PostureManagementV2) ListLatestScansWithContext(ctx con
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/scans/validations/latest_scans`, nil)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/scans/validations/latest_scans`, nil)
 	if err != nil {
 		return
 	}
@@ -2248,7 +2248,7 @@ func (postureManagement *PostureManagementV2) CreateValidationWithContext(ctx co
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/scans/validations`, nil)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/scans/validations`, nil)
 	if err != nil {
 		return
 	}
@@ -2310,7 +2310,7 @@ func (postureManagement *PostureManagementV2) CreateValidationWithContext(ctx co
 // ScansSummary : View a specified scan
 // Retrieve the results summary of a validation scan by specifying a scan and profile ID combination. To obtain your
 // profile ID and scan ID for your most recent scan, make a GET request to the
-// "/posture/v2/scans/validations/latest_scans" endpoint.
+// "/posture/v3/scans/validations/latest_scans" endpoint.
 func (postureManagement *PostureManagementV2) ScansSummary(scansSummaryOptions *ScansSummaryOptions) (result *Summary, response *core.DetailedResponse, err error) {
 	return postureManagement.ScansSummaryWithContext(context.Background(), scansSummaryOptions)
 }
@@ -2333,7 +2333,7 @@ func (postureManagement *PostureManagementV2) ScansSummaryWithContext(ctx contex
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/scans/validations/{scan_id}/summary`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/scans/validations/{scan_id}/summary`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2397,7 +2397,7 @@ func (postureManagement *PostureManagementV2) ScanSummariesWithContext(ctx conte
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = postureManagement.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v2/scans/validations/summaries`, nil)
+	_, err = builder.ResolveRequestURL(postureManagement.Service.Options.URL, `/posture/v3/scans/validations/summaries`, nil)
 	if err != nil {
 		return
 	}

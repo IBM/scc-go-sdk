@@ -1,6 +1,6 @@
 # Makefile to build the project
 
-VDIR=v2
+VDIR=v3
 COVERAGE = -coverprofile=../c.out -covermode=atomic
 SHELL := /usr/bin/env bash
 

@@ -178,7 +178,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`CreateCredential(createCredentialOptions *CreateCredentialOptions) - Operation response error`, func() {
-		createCredentialPath := "/posture/v3/credentials"
+		createCredentialPath := "/posture/v2/credentials"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -264,7 +264,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`CreateCredential(createCredentialOptions *CreateCredentialOptions)`, func() {
-		createCredentialPath := "/posture/v3/credentials"
+		createCredentialPath := "/posture/v2/credentials"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -621,7 +621,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`ListCredentials(listCredentialsOptions *ListCredentialsOptions) - Operation response error`, func() {
-		listCredentialsPath := "/posture/v3/credentials"
+		listCredentialsPath := "/posture/v2/credentials"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -674,7 +674,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`ListCredentials(listCredentialsOptions *ListCredentialsOptions)`, func() {
-		listCredentialsPath := "/posture/v3/credentials"
+		listCredentialsPath := "/posture/v2/credentials"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -695,7 +695,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "credentials": [{"enabled": true, "id": "57", "type": "username_password", "name": "test_username", "description": "test_description", "display_fields": {"ibm_api_key": "sample_api_key", "aws_client_id": "sample_client_id", "aws_client_secret": "*********", "aws_region": "test_region", "aws_arn": "sample_arn", "username": "sample_username", "password": "************", "azure_client_id": "azure_124", "azure_client_secret": "************", "azure_subscription_id": "A32432890", "azure_resource_group": "azure_res_type", "database_name": "sample_db_name", "winrm_authtype": "sample_auth_type", "winrm_usessl": "ssl_test", "winrm_port": "80", "ms_365_client_id": "ms_client_id", "ms_365_client_secret": "ms_client_secret", "ms_365_tenant_id": "ms_tenant_id", "auth_url": "test.example.com", "project_name": "test_proj", "user_domain_name": "user_domain", "project_domain_name": "stack_domain_name"}, "created_by": "IBMid-5500081P5M", "created_at": "2021-02-26T04:07:25.000Z", "updated_at": "2021-02-26T04:07:25.000Z", "updated_by": "IBMid-5500081P5M", "group": {"id": "ID", "passphrase": "Passphrase"}, "purpose": "discovery_fact_collection_remediation"}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "credentials": [{"enabled": true, "id": "57", "type": "username_password", "name": "test_username", "description": "test_description", "display_fields": {"ibm_api_key": "sample_api_key", "aws_client_id": "sample_client_id", "aws_client_secret": "*********", "aws_region": "test_region", "aws_arn": "sample_arn", "username": "sample_username", "password": "************", "azure_client_id": "azure_124", "azure_client_secret": "************", "azure_subscription_id": "A32432890", "azure_resource_group": "azure_res_type", "database_name": "sample_db_name", "winrm_authtype": "sample_auth_type", "winrm_usessl": "ssl_test", "winrm_port": "80", "ms_365_client_id": "ms_client_id", "ms_365_client_secret": "ms_client_secret", "ms_365_tenant_id": "ms_tenant_id", "auth_url": "test.example.com", "project_name": "test_proj", "user_domain_name": "user_domain", "project_domain_name": "stack_domain_name"}, "created_by": "IBMid-5500081P5M", "created_at": "2021-02-26T04:07:25.000Z", "updated_at": "2021-02-26T04:07:25.000Z", "updated_by": "IBMid-5500081P5M", "group": {"id": "ID", "passphrase": "Passphrase"}, "purpose": "discovery_fact_collection_remediation"}]}`)
 				}))
 			})
 			It(`Invoke ListCredentials successfully with retries`, func() {
@@ -757,7 +757,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "credentials": [{"enabled": true, "id": "57", "type": "username_password", "name": "test_username", "description": "test_description", "display_fields": {"ibm_api_key": "sample_api_key", "aws_client_id": "sample_client_id", "aws_client_secret": "*********", "aws_region": "test_region", "aws_arn": "sample_arn", "username": "sample_username", "password": "************", "azure_client_id": "azure_124", "azure_client_secret": "************", "azure_subscription_id": "A32432890", "azure_resource_group": "azure_res_type", "database_name": "sample_db_name", "winrm_authtype": "sample_auth_type", "winrm_usessl": "ssl_test", "winrm_port": "80", "ms_365_client_id": "ms_client_id", "ms_365_client_secret": "ms_client_secret", "ms_365_tenant_id": "ms_tenant_id", "auth_url": "test.example.com", "project_name": "test_proj", "user_domain_name": "user_domain", "project_domain_name": "stack_domain_name"}, "created_by": "IBMid-5500081P5M", "created_at": "2021-02-26T04:07:25.000Z", "updated_at": "2021-02-26T04:07:25.000Z", "updated_by": "IBMid-5500081P5M", "group": {"id": "ID", "passphrase": "Passphrase"}, "purpose": "discovery_fact_collection_remediation"}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "credentials": [{"enabled": true, "id": "57", "type": "username_password", "name": "test_username", "description": "test_description", "display_fields": {"ibm_api_key": "sample_api_key", "aws_client_id": "sample_client_id", "aws_client_secret": "*********", "aws_region": "test_region", "aws_arn": "sample_arn", "username": "sample_username", "password": "************", "azure_client_id": "azure_124", "azure_client_secret": "************", "azure_subscription_id": "A32432890", "azure_resource_group": "azure_res_type", "database_name": "sample_db_name", "winrm_authtype": "sample_auth_type", "winrm_usessl": "ssl_test", "winrm_port": "80", "ms_365_client_id": "ms_client_id", "ms_365_client_secret": "ms_client_secret", "ms_365_tenant_id": "ms_tenant_id", "auth_url": "test.example.com", "project_name": "test_proj", "user_domain_name": "user_domain", "project_domain_name": "stack_domain_name"}, "created_by": "IBMid-5500081P5M", "created_at": "2021-02-26T04:07:25.000Z", "updated_at": "2021-02-26T04:07:25.000Z", "updated_by": "IBMid-5500081P5M", "group": {"id": "ID", "passphrase": "Passphrase"}, "purpose": "discovery_fact_collection_remediation"}]}`)
 				}))
 			})
 			It(`Invoke ListCredentials successfully`, func() {
@@ -895,7 +895,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`GetCredential(getCredentialOptions *GetCredentialOptions) - Operation response error`, func() {
-		getCredentialPath := "/posture/v3/credentials/testString"
+		getCredentialPath := "/posture/v2/credentials/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -945,7 +945,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`GetCredential(getCredentialOptions *GetCredentialOptions)`, func() {
-		getCredentialPath := "/posture/v3/credentials/testString"
+		getCredentialPath := "/posture/v2/credentials/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -1126,7 +1126,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`UpdateCredential(updateCredentialOptions *UpdateCredentialOptions) - Operation response error`, func() {
-		updateCredentialPath := "/posture/v3/credentials/testString"
+		updateCredentialPath := "/posture/v2/credentials/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -1207,7 +1207,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`UpdateCredential(updateCredentialOptions *UpdateCredentialOptions)`, func() {
-		updateCredentialPath := "/posture/v3/credentials/testString"
+		updateCredentialPath := "/posture/v2/credentials/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -1544,7 +1544,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`DeleteCredential(deleteCredentialOptions *DeleteCredentialOptions)`, func() {
-		deleteCredentialPath := "/posture/v3/credentials/testString"
+		deleteCredentialPath := "/posture/v2/credentials/testString"
 		Context(`Using mock server endpoint`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -1619,7 +1619,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`CreateCollector(createCollectorOptions *CreateCollectorOptions) - Operation response error`, func() {
-		createCollectorPath := "/posture/v3/collectors"
+		createCollectorPath := "/posture/v2/collectors"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -1674,7 +1674,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`CreateCollector(createCollectorOptions *CreateCollectorOptions)`, func() {
-		createCollectorPath := "/posture/v3/collectors"
+		createCollectorPath := "/posture/v2/collectors"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -1907,7 +1907,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`ListCollectors(listCollectorsOptions *ListCollectorsOptions) - Operation response error`, func() {
-		listCollectorsPath := "/posture/v3/collectors"
+		listCollectorsPath := "/posture/v2/collectors"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -1956,7 +1956,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`ListCollectors(listCollectorsOptions *ListCollectorsOptions)`, func() {
-		listCollectorsPath := "/posture/v3/collectors"
+		listCollectorsPath := "/posture/v2/collectors"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -1975,7 +1975,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 6, "limit": 5, "total_count": 10, "first": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "collectors": [{"id": "ID", "display_name": "DisplayName", "name": "Name", "public_key": "PublicKey", "last_heartbeat": "2019-01-01T12:00:00.000Z", "status": "ready_to_install", "collector_version": "1.0.0_06141eef8d03443c4c6544bac3ea192c54c83e70", "image_version": "1.0.0_ef6c07f1c622bc5472d29b9b82e9885d23d12e8b", "description": "Description", "created_by": "CreatedBy", "created_at": "2019-01-01T12:00:00.000Z", "updated_by": "UpdatedBy", "updated_at": "2019-01-01T12:00:00.000Z", "enabled": false, "registration_code": "RegistrationCode", "type": "restricted", "credential_public_key": "CredentialPublicKey", "failure_count": 12, "approved_local_gateway_ip": "ApprovedLocalGatewayIP", "approved_internet_gateway_ip": "ApprovedInternetGatewayIP", "last_failed_local_gateway_ip": "LastFailedLocalGatewayIP", "reset_reason": "ResetReason", "hostname": "Test-MacBook-Pro.local", "install_path": "/Users/test/project/containers/collector1", "use_private_endpoint": true, "managed_by": "ibm", "trial_expiry": "2019-01-01T12:00:00.000Z", "last_failed_internet_gateway_ip": "LastFailedInternetGatewayIP", "status_description": "StatusDescription", "reset_time": "2019-01-01T12:00:00.000Z", "is_public": true, "is_ubi_image": true}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 6, "limit": 5, "total_count": 10, "first": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "collectors": [{"id": "ID", "display_name": "DisplayName", "name": "Name", "public_key": "PublicKey", "last_heartbeat": "2019-01-01T12:00:00.000Z", "status": "ready_to_install", "collector_version": "1.0.0_06141eef8d03443c4c6544bac3ea192c54c83e70", "image_version": "1.0.0_ef6c07f1c622bc5472d29b9b82e9885d23d12e8b", "description": "Description", "created_by": "CreatedBy", "created_at": "2019-01-01T12:00:00.000Z", "updated_by": "UpdatedBy", "updated_at": "2019-01-01T12:00:00.000Z", "enabled": false, "registration_code": "RegistrationCode", "type": "restricted", "credential_public_key": "CredentialPublicKey", "failure_count": 12, "approved_local_gateway_ip": "ApprovedLocalGatewayIP", "approved_internet_gateway_ip": "ApprovedInternetGatewayIP", "last_failed_local_gateway_ip": "LastFailedLocalGatewayIP", "reset_reason": "ResetReason", "hostname": "Test-MacBook-Pro.local", "install_path": "/Users/test/project/containers/collector1", "use_private_endpoint": true, "managed_by": "ibm", "trial_expiry": "2019-01-01T12:00:00.000Z", "last_failed_internet_gateway_ip": "LastFailedInternetGatewayIP", "status_description": "StatusDescription", "reset_time": "2019-01-01T12:00:00.000Z", "is_public": true, "is_ubi_image": true}]}`)
 				}))
 			})
 			It(`Invoke ListCollectors successfully with retries`, func() {
@@ -2033,7 +2033,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 6, "limit": 5, "total_count": 10, "first": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "collectors": [{"id": "ID", "display_name": "DisplayName", "name": "Name", "public_key": "PublicKey", "last_heartbeat": "2019-01-01T12:00:00.000Z", "status": "ready_to_install", "collector_version": "1.0.0_06141eef8d03443c4c6544bac3ea192c54c83e70", "image_version": "1.0.0_ef6c07f1c622bc5472d29b9b82e9885d23d12e8b", "description": "Description", "created_by": "CreatedBy", "created_at": "2019-01-01T12:00:00.000Z", "updated_by": "UpdatedBy", "updated_at": "2019-01-01T12:00:00.000Z", "enabled": false, "registration_code": "RegistrationCode", "type": "restricted", "credential_public_key": "CredentialPublicKey", "failure_count": 12, "approved_local_gateway_ip": "ApprovedLocalGatewayIP", "approved_internet_gateway_ip": "ApprovedInternetGatewayIP", "last_failed_local_gateway_ip": "LastFailedLocalGatewayIP", "reset_reason": "ResetReason", "hostname": "Test-MacBook-Pro.local", "install_path": "/Users/test/project/containers/collector1", "use_private_endpoint": true, "managed_by": "ibm", "trial_expiry": "2019-01-01T12:00:00.000Z", "last_failed_internet_gateway_ip": "LastFailedInternetGatewayIP", "status_description": "StatusDescription", "reset_time": "2019-01-01T12:00:00.000Z", "is_public": true, "is_ubi_image": true}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 6, "limit": 5, "total_count": 10, "first": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "collectors": [{"id": "ID", "display_name": "DisplayName", "name": "Name", "public_key": "PublicKey", "last_heartbeat": "2019-01-01T12:00:00.000Z", "status": "ready_to_install", "collector_version": "1.0.0_06141eef8d03443c4c6544bac3ea192c54c83e70", "image_version": "1.0.0_ef6c07f1c622bc5472d29b9b82e9885d23d12e8b", "description": "Description", "created_by": "CreatedBy", "created_at": "2019-01-01T12:00:00.000Z", "updated_by": "UpdatedBy", "updated_at": "2019-01-01T12:00:00.000Z", "enabled": false, "registration_code": "RegistrationCode", "type": "restricted", "credential_public_key": "CredentialPublicKey", "failure_count": 12, "approved_local_gateway_ip": "ApprovedLocalGatewayIP", "approved_internet_gateway_ip": "ApprovedInternetGatewayIP", "last_failed_local_gateway_ip": "LastFailedLocalGatewayIP", "reset_reason": "ResetReason", "hostname": "Test-MacBook-Pro.local", "install_path": "/Users/test/project/containers/collector1", "use_private_endpoint": true, "managed_by": "ibm", "trial_expiry": "2019-01-01T12:00:00.000Z", "last_failed_internet_gateway_ip": "LastFailedInternetGatewayIP", "status_description": "StatusDescription", "reset_time": "2019-01-01T12:00:00.000Z", "is_public": true, "is_ubi_image": true}]}`)
 				}))
 			})
 			It(`Invoke ListCollectors successfully`, func() {
@@ -2126,7 +2126,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`GetCollector(getCollectorOptions *GetCollectorOptions) - Operation response error`, func() {
-		getCollectorPath := "/posture/v3/collectors/testString"
+		getCollectorPath := "/posture/v2/collectors/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -2176,7 +2176,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`GetCollector(getCollectorOptions *GetCollectorOptions)`, func() {
-		getCollectorPath := "/posture/v3/collectors/testString"
+		getCollectorPath := "/posture/v2/collectors/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -2357,7 +2357,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`UpdateCollector(updateCollectorOptions *UpdateCollectorOptions) - Operation response error`, func() {
-		updateCollectorPath := "/posture/v3/collectors/testString"
+		updateCollectorPath := "/posture/v2/collectors/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -2415,7 +2415,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`UpdateCollector(updateCollectorOptions *UpdateCollectorOptions)`, func() {
-		updateCollectorPath := "/posture/v3/collectors/testString"
+		updateCollectorPath := "/posture/v2/collectors/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -2660,7 +2660,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`DeleteCollector(deleteCollectorOptions *DeleteCollectorOptions)`, func() {
-		deleteCollectorPath := "/posture/v3/collectors/testString"
+		deleteCollectorPath := "/posture/v2/collectors/testString"
 		Context(`Using mock server endpoint`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -2735,7 +2735,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`ImportProfiles(importProfilesOptions *ImportProfilesOptions) - Operation response error`, func() {
-		importProfilesPath := "/posture/v3/profiles/import"
+		importProfilesPath := "/posture/v2/profiles/import"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -2785,7 +2785,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`ImportProfiles(importProfilesOptions *ImportProfilesOptions)`, func() {
-		importProfilesPath := "/posture/v3/profiles/import"
+		importProfilesPath := "/posture/v2/profiles/import"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -2966,7 +2966,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`ListProfiles(listProfilesOptions *ListProfilesOptions) - Operation response error`, func() {
-		listProfilesPath := "/posture/v3/profiles"
+		listProfilesPath := "/posture/v2/profiles"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -3019,7 +3019,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`ListProfiles(listProfilesOptions *ListProfilesOptions)`, func() {
-		listProfilesPath := "/posture/v3/profiles"
+		listProfilesPath := "/posture/v2/profiles"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -3040,7 +3040,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "description": "This profile contains controls for the CIS IBM Foundations Benchmark 1.0.0.", "version": 1, "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "reason_for_delete": "ReasonForDelete", "applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}, "id": "3045", "base_profile": "CIS IBM Foundations Benchmark 1.0.0", "type": "predefined", "no_of_controls": 1, "created_at": "2021-02-26T04:07:25.000Z", "updated_at": "2021-02-26T04:07:25.000Z", "enabled": true}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "description": "This profile contains controls for the CIS IBM Foundations Benchmark 1.0.0.", "version": 1, "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "reason_for_delete": "ReasonForDelete", "applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}, "id": "3045", "base_profile": "CIS IBM Foundations Benchmark 1.0.0", "type": "predefined", "no_of_controls": 1, "created_at": "2021-02-26T04:07:25.000Z", "updated_at": "2021-02-26T04:07:25.000Z", "enabled": true}]}`)
 				}))
 			})
 			It(`Invoke ListProfiles successfully with retries`, func() {
@@ -3102,7 +3102,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "description": "This profile contains controls for the CIS IBM Foundations Benchmark 1.0.0.", "version": 1, "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "reason_for_delete": "ReasonForDelete", "applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}, "id": "3045", "base_profile": "CIS IBM Foundations Benchmark 1.0.0", "type": "predefined", "no_of_controls": 1, "created_at": "2021-02-26T04:07:25.000Z", "updated_at": "2021-02-26T04:07:25.000Z", "enabled": true}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "description": "This profile contains controls for the CIS IBM Foundations Benchmark 1.0.0.", "version": 1, "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "reason_for_delete": "ReasonForDelete", "applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}, "id": "3045", "base_profile": "CIS IBM Foundations Benchmark 1.0.0", "type": "predefined", "no_of_controls": 1, "created_at": "2021-02-26T04:07:25.000Z", "updated_at": "2021-02-26T04:07:25.000Z", "enabled": true}]}`)
 				}))
 			})
 			It(`Invoke ListProfiles successfully`, func() {
@@ -3240,7 +3240,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`GetProfile(getProfileOptions *GetProfileOptions) - Operation response error`, func() {
-		getProfilePath := "/posture/v3/profiles/testString"
+		getProfilePath := "/posture/v2/profiles/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -3292,7 +3292,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`GetProfile(getProfileOptions *GetProfileOptions)`, func() {
-		getProfilePath := "/posture/v3/profiles/testString"
+		getProfilePath := "/posture/v2/profiles/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -3479,7 +3479,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`UpdateProfiles(updateProfilesOptions *UpdateProfilesOptions) - Operation response error`, func() {
-		updateProfilesPath := "/posture/v3/profiles/testString"
+		updateProfilesPath := "/posture/v2/profiles/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -3535,7 +3535,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`UpdateProfiles(updateProfilesOptions *UpdateProfilesOptions)`, func() {
-		updateProfilesPath := "/posture/v3/profiles/testString"
+		updateProfilesPath := "/posture/v2/profiles/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -3772,7 +3772,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`DeleteProfile(deleteProfileOptions *DeleteProfileOptions)`, func() {
-		deleteProfilePath := "/posture/v3/profiles/testString"
+		deleteProfilePath := "/posture/v2/profiles/testString"
 		Context(`Using mock server endpoint`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -3847,7 +3847,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`GetProfileControls(getProfileControlsOptions *GetProfileControlsOptions) - Operation response error`, func() {
-		getProfileControlsPath := "/posture/v3/profiles/testString/controls"
+		getProfileControlsPath := "/posture/v2/profiles/testString/controls"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -3901,7 +3901,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`GetProfileControls(getProfileControlsOptions *GetProfileControlsOptions)`, func() {
-		getProfileControlsPath := "/posture/v3/profiles/testString/controls"
+		getProfileControlsPath := "/posture/v2/profiles/testString/controls"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -3922,7 +3922,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "controls": [{"id": "9979", "description": "Identity and Access Management", "external_control_id": "1.2", "goals": [{"description": "Check whether API keys unused for 180 days are detected and optionally disabled", "id": "3000039", "severity": "Medium", "is_manual": false, "is_remediable": false, "is_reversible": false, "is_automatable": false, "is_auto_remediable": false}]}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "controls": [{"id": "9979", "description": "Identity and Access Management", "external_control_id": "1.2", "goals": [{"description": "Check whether API keys unused for 180 days are detected and optionally disabled", "id": "3000039", "severity": "Medium", "is_manual": false, "is_remediable": false, "is_reversible": false, "is_automatable": false, "is_auto_remediable": false}]}]}`)
 				}))
 			})
 			It(`Invoke GetProfileControls successfully with retries`, func() {
@@ -3985,7 +3985,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "controls": [{"id": "9979", "description": "Identity and Access Management", "external_control_id": "1.2", "goals": [{"description": "Check whether API keys unused for 180 days are detected and optionally disabled", "id": "3000039", "severity": "Medium", "is_manual": false, "is_remediable": false, "is_reversible": false, "is_automatable": false, "is_auto_remediable": false}]}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "controls": [{"id": "9979", "description": "Identity and Access Management", "external_control_id": "1.2", "goals": [{"description": "Check whether API keys unused for 180 days are detected and optionally disabled", "id": "3000039", "severity": "Medium", "is_manual": false, "is_remediable": false, "is_reversible": false, "is_automatable": false, "is_auto_remediable": false}]}]}`)
 				}))
 			})
 			It(`Invoke GetProfileControls successfully`, func() {
@@ -4133,7 +4133,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`GetGroupProfileControls(getGroupProfileControlsOptions *GetGroupProfileControlsOptions) - Operation response error`, func() {
-		getGroupProfileControlsPath := "/posture/v3/profiles/groups/testString/controls"
+		getGroupProfileControlsPath := "/posture/v2/profiles/groups/testString/controls"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -4187,7 +4187,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`GetGroupProfileControls(getGroupProfileControlsOptions *GetGroupProfileControlsOptions)`, func() {
-		getGroupProfileControlsPath := "/posture/v3/profiles/groups/testString/controls"
+		getGroupProfileControlsPath := "/posture/v2/profiles/groups/testString/controls"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -4208,7 +4208,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "controls": [{"id": "9979", "description": "Identity and Access Management", "external_control_id": "1.2", "goals": [{"description": "Check whether API keys unused for 180 days are detected and optionally disabled", "id": "3000039", "severity": "Medium", "is_manual": false, "is_remediable": false, "is_reversible": false, "is_automatable": false, "is_auto_remediable": false}]}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "controls": [{"id": "9979", "description": "Identity and Access Management", "external_control_id": "1.2", "goals": [{"description": "Check whether API keys unused for 180 days are detected and optionally disabled", "id": "3000039", "severity": "Medium", "is_manual": false, "is_remediable": false, "is_reversible": false, "is_automatable": false, "is_auto_remediable": false}]}]}`)
 				}))
 			})
 			It(`Invoke GetGroupProfileControls successfully with retries`, func() {
@@ -4271,7 +4271,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "controls": [{"id": "9979", "description": "Identity and Access Management", "external_control_id": "1.2", "goals": [{"description": "Check whether API keys unused for 180 days are detected and optionally disabled", "id": "3000039", "severity": "Medium", "is_manual": false, "is_remediable": false, "is_reversible": false, "is_automatable": false, "is_auto_remediable": false}]}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "controls": [{"id": "9979", "description": "Identity and Access Management", "external_control_id": "1.2", "goals": [{"description": "Check whether API keys unused for 180 days are detected and optionally disabled", "id": "3000039", "severity": "Medium", "is_manual": false, "is_remediable": false, "is_reversible": false, "is_automatable": false, "is_auto_remediable": false}]}]}`)
 				}))
 			})
 			It(`Invoke GetGroupProfileControls successfully`, func() {
@@ -4419,7 +4419,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`CreateScope(createScopeOptions *CreateScopeOptions) - Operation response error`, func() {
-		createScopePath := "/posture/v3/scopes"
+		createScopePath := "/posture/v2/scopes"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -4475,7 +4475,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`CreateScope(createScopeOptions *CreateScopeOptions)`, func() {
-		createScopePath := "/posture/v3/scopes"
+		createScopePath := "/posture/v2/scopes"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -4712,7 +4712,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`ListScopes(listScopesOptions *ListScopesOptions) - Operation response error`, func() {
-		listScopesPath := "/posture/v3/scopes"
+		listScopesPath := "/posture/v2/scopes"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -4761,7 +4761,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`ListScopes(listScopesOptions *ListScopesOptions)`, func() {
-		listScopesPath := "/posture/v3/scopes"
+		listScopesPath := "/posture/v2/scopes"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -4780,7 +4780,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "scopes": [{"description": "This scope targets all of the resources that are available in our IBM Cloud staging environment.", "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "id": "1", "uuid": "1", "name": "My_Example_Scope", "enabled": true, "credential_type": "ibm", "created_at": "2021-02-26T04:07:25.000Z", "updated_at": "2021-02-26T04:07:25.000Z", "collectors": [{"id": "ID", "display_name": "DisplayName", "name": "Name", "public_key": "PublicKey", "last_heartbeat": "2019-01-01T12:00:00.000Z", "status": "ready_to_install", "collector_version": "1.0.0_06141eef8d03443c4c6544bac3ea192c54c83e70", "image_version": "1.0.0_ef6c07f1c622bc5472d29b9b82e9885d23d12e8b", "description": "Description", "created_by": "CreatedBy", "created_at": "2019-01-01T12:00:00.000Z", "updated_by": "UpdatedBy", "updated_at": "2019-01-01T12:00:00.000Z", "enabled": false, "registration_code": "RegistrationCode", "type": "restricted", "credential_public_key": "CredentialPublicKey", "failure_count": 12, "approved_local_gateway_ip": "ApprovedLocalGatewayIP", "approved_internet_gateway_ip": "ApprovedInternetGatewayIP", "last_failed_local_gateway_ip": "LastFailedLocalGatewayIP", "reset_reason": "ResetReason", "hostname": "Test-MacBook-Pro.local", "install_path": "/Users/test/project/containers/collector1", "use_private_endpoint": true, "managed_by": "ibm", "trial_expiry": "2019-01-01T12:00:00.000Z", "last_failed_internet_gateway_ip": "LastFailedInternetGatewayIP", "status_description": "StatusDescription", "reset_time": "2019-01-01T12:00:00.000Z", "is_public": true, "is_ubi_image": true}]}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "scopes": [{"description": "This scope targets all of the resources that are available in our IBM Cloud staging environment.", "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "id": "1", "uuid": "1", "name": "My_Example_Scope", "enabled": true, "credential_type": "ibm", "created_at": "2021-02-26T04:07:25.000Z", "updated_at": "2021-02-26T04:07:25.000Z", "collectors": [{"id": "ID", "display_name": "DisplayName", "name": "Name", "public_key": "PublicKey", "last_heartbeat": "2019-01-01T12:00:00.000Z", "status": "ready_to_install", "collector_version": "1.0.0_06141eef8d03443c4c6544bac3ea192c54c83e70", "image_version": "1.0.0_ef6c07f1c622bc5472d29b9b82e9885d23d12e8b", "description": "Description", "created_by": "CreatedBy", "created_at": "2019-01-01T12:00:00.000Z", "updated_by": "UpdatedBy", "updated_at": "2019-01-01T12:00:00.000Z", "enabled": false, "registration_code": "RegistrationCode", "type": "restricted", "credential_public_key": "CredentialPublicKey", "failure_count": 12, "approved_local_gateway_ip": "ApprovedLocalGatewayIP", "approved_internet_gateway_ip": "ApprovedInternetGatewayIP", "last_failed_local_gateway_ip": "LastFailedLocalGatewayIP", "reset_reason": "ResetReason", "hostname": "Test-MacBook-Pro.local", "install_path": "/Users/test/project/containers/collector1", "use_private_endpoint": true, "managed_by": "ibm", "trial_expiry": "2019-01-01T12:00:00.000Z", "last_failed_internet_gateway_ip": "LastFailedInternetGatewayIP", "status_description": "StatusDescription", "reset_time": "2019-01-01T12:00:00.000Z", "is_public": true, "is_ubi_image": true}]}]}`)
 				}))
 			})
 			It(`Invoke ListScopes successfully with retries`, func() {
@@ -4838,7 +4838,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "scopes": [{"description": "This scope targets all of the resources that are available in our IBM Cloud staging environment.", "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "id": "1", "uuid": "1", "name": "My_Example_Scope", "enabled": true, "credential_type": "ibm", "created_at": "2021-02-26T04:07:25.000Z", "updated_at": "2021-02-26T04:07:25.000Z", "collectors": [{"id": "ID", "display_name": "DisplayName", "name": "Name", "public_key": "PublicKey", "last_heartbeat": "2019-01-01T12:00:00.000Z", "status": "ready_to_install", "collector_version": "1.0.0_06141eef8d03443c4c6544bac3ea192c54c83e70", "image_version": "1.0.0_ef6c07f1c622bc5472d29b9b82e9885d23d12e8b", "description": "Description", "created_by": "CreatedBy", "created_at": "2019-01-01T12:00:00.000Z", "updated_by": "UpdatedBy", "updated_at": "2019-01-01T12:00:00.000Z", "enabled": false, "registration_code": "RegistrationCode", "type": "restricted", "credential_public_key": "CredentialPublicKey", "failure_count": 12, "approved_local_gateway_ip": "ApprovedLocalGatewayIP", "approved_internet_gateway_ip": "ApprovedInternetGatewayIP", "last_failed_local_gateway_ip": "LastFailedLocalGatewayIP", "reset_reason": "ResetReason", "hostname": "Test-MacBook-Pro.local", "install_path": "/Users/test/project/containers/collector1", "use_private_endpoint": true, "managed_by": "ibm", "trial_expiry": "2019-01-01T12:00:00.000Z", "last_failed_internet_gateway_ip": "LastFailedInternetGatewayIP", "status_description": "StatusDescription", "reset_time": "2019-01-01T12:00:00.000Z", "is_public": true, "is_ubi_image": true}]}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "scopes": [{"description": "This scope targets all of the resources that are available in our IBM Cloud staging environment.", "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "id": "1", "uuid": "1", "name": "My_Example_Scope", "enabled": true, "credential_type": "ibm", "created_at": "2021-02-26T04:07:25.000Z", "updated_at": "2021-02-26T04:07:25.000Z", "collectors": [{"id": "ID", "display_name": "DisplayName", "name": "Name", "public_key": "PublicKey", "last_heartbeat": "2019-01-01T12:00:00.000Z", "status": "ready_to_install", "collector_version": "1.0.0_06141eef8d03443c4c6544bac3ea192c54c83e70", "image_version": "1.0.0_ef6c07f1c622bc5472d29b9b82e9885d23d12e8b", "description": "Description", "created_by": "CreatedBy", "created_at": "2019-01-01T12:00:00.000Z", "updated_by": "UpdatedBy", "updated_at": "2019-01-01T12:00:00.000Z", "enabled": false, "registration_code": "RegistrationCode", "type": "restricted", "credential_public_key": "CredentialPublicKey", "failure_count": 12, "approved_local_gateway_ip": "ApprovedLocalGatewayIP", "approved_internet_gateway_ip": "ApprovedInternetGatewayIP", "last_failed_local_gateway_ip": "LastFailedLocalGatewayIP", "reset_reason": "ResetReason", "hostname": "Test-MacBook-Pro.local", "install_path": "/Users/test/project/containers/collector1", "use_private_endpoint": true, "managed_by": "ibm", "trial_expiry": "2019-01-01T12:00:00.000Z", "last_failed_internet_gateway_ip": "LastFailedInternetGatewayIP", "status_description": "StatusDescription", "reset_time": "2019-01-01T12:00:00.000Z", "is_public": true, "is_ubi_image": true}]}]}`)
 				}))
 			})
 			It(`Invoke ListScopes successfully`, func() {
@@ -4931,7 +4931,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`GetScopeDetails(getScopeDetailsOptions *GetScopeDetailsOptions) - Operation response error`, func() {
-		getScopeDetailsPath := "/posture/v3/scopes/testString"
+		getScopeDetailsPath := "/posture/v2/scopes/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -4981,7 +4981,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`GetScopeDetails(getScopeDetailsOptions *GetScopeDetailsOptions)`, func() {
-		getScopeDetailsPath := "/posture/v3/scopes/testString"
+		getScopeDetailsPath := "/posture/v2/scopes/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -5162,7 +5162,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`UpdateScopeDetails(updateScopeDetailsOptions *UpdateScopeDetailsOptions) - Operation response error`, func() {
-		updateScopeDetailsPath := "/posture/v3/scopes/testString"
+		updateScopeDetailsPath := "/posture/v2/scopes/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -5214,7 +5214,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`UpdateScopeDetails(updateScopeDetailsOptions *UpdateScopeDetailsOptions)`, func() {
-		updateScopeDetailsPath := "/posture/v3/scopes/testString"
+		updateScopeDetailsPath := "/posture/v2/scopes/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -5435,7 +5435,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`DeleteScope(deleteScopeOptions *DeleteScopeOptions)`, func() {
-		deleteScopePath := "/posture/v3/scopes/testString"
+		deleteScopePath := "/posture/v2/scopes/testString"
 		Context(`Using mock server endpoint`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -5510,7 +5510,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`GetScopeTimeline(getScopeTimelineOptions *GetScopeTimelineOptions) - Operation response error`, func() {
-		getScopeTimelinePath := "/posture/v3/scopes/testString/events"
+		getScopeTimelinePath := "/posture/v2/scopes/testString/events"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -5560,7 +5560,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`GetScopeTimeline(getScopeTimelineOptions *GetScopeTimelineOptions)`, func() {
-		getScopeTimelinePath := "/posture/v3/scopes/testString/events"
+		getScopeTimelinePath := "/posture/v2/scopes/testString/events"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -5741,7 +5741,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`GetScopeDetailsCredentials(getScopeDetailsCredentialsOptions *GetScopeDetailsCredentialsOptions) - Operation response error`, func() {
-		getScopeDetailsCredentialsPath := "/posture/v3/scopes/testString/credentials"
+		getScopeDetailsCredentialsPath := "/posture/v2/scopes/testString/credentials"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -5791,7 +5791,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`GetScopeDetailsCredentials(getScopeDetailsCredentialsOptions *GetScopeDetailsCredentialsOptions)`, func() {
-		getScopeDetailsCredentialsPath := "/posture/v3/scopes/testString/credentials"
+		getScopeDetailsCredentialsPath := "/posture/v2/scopes/testString/credentials"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -5972,7 +5972,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`ReplaceScopeDetailsCredentials(replaceScopeDetailsCredentialsOptions *ReplaceScopeDetailsCredentialsOptions) - Operation response error`, func() {
-		replaceScopeDetailsCredentialsPath := "/posture/v3/scopes/testString/credentials"
+		replaceScopeDetailsCredentialsPath := "/posture/v2/scopes/testString/credentials"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -6024,7 +6024,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`ReplaceScopeDetailsCredentials(replaceScopeDetailsCredentialsOptions *ReplaceScopeDetailsCredentialsOptions)`, func() {
-		replaceScopeDetailsCredentialsPath := "/posture/v3/scopes/testString/credentials"
+		replaceScopeDetailsCredentialsPath := "/posture/v2/scopes/testString/credentials"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -6245,7 +6245,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`GetScopeDetailsCollector(getScopeDetailsCollectorOptions *GetScopeDetailsCollectorOptions) - Operation response error`, func() {
-		getScopeDetailsCollectorPath := "/posture/v3/scopes/testString/collectors"
+		getScopeDetailsCollectorPath := "/posture/v2/scopes/testString/collectors"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -6295,7 +6295,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`GetScopeDetailsCollector(getScopeDetailsCollectorOptions *GetScopeDetailsCollectorOptions)`, func() {
-		getScopeDetailsCollectorPath := "/posture/v3/scopes/testString/collectors"
+		getScopeDetailsCollectorPath := "/posture/v2/scopes/testString/collectors"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -6476,7 +6476,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`ReplaceScopeDetailsCollector(replaceScopeDetailsCollectorOptions *ReplaceScopeDetailsCollectorOptions) - Operation response error`, func() {
-		replaceScopeDetailsCollectorPath := "/posture/v3/scopes/testString/collectors"
+		replaceScopeDetailsCollectorPath := "/posture/v2/scopes/testString/collectors"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -6527,7 +6527,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`ReplaceScopeDetailsCollector(replaceScopeDetailsCollectorOptions *ReplaceScopeDetailsCollectorOptions)`, func() {
-		replaceScopeDetailsCollectorPath := "/posture/v3/scopes/testString/collectors"
+		replaceScopeDetailsCollectorPath := "/posture/v2/scopes/testString/collectors"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -6744,7 +6744,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`GetCorrelationID(getCorrelationIDOptions *GetCorrelationIDOptions) - Operation response error`, func() {
-		getCorrelationIDPath := "/posture/v3/scope/status/testString"
+		getCorrelationIDPath := "/posture/v2/scope/status/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -6794,7 +6794,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`GetCorrelationID(getCorrelationIDOptions *GetCorrelationIDOptions)`, func() {
-		getCorrelationIDPath := "/posture/v3/scope/status/testString"
+		getCorrelationIDPath := "/posture/v2/scope/status/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -6975,7 +6975,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`ListLatestScans(listLatestScansOptions *ListLatestScansOptions) - Operation response error`, func() {
-		listLatestScansPath := "/posture/v3/scans/validations/latest_scans"
+		listLatestScansPath := "/posture/v2/scans/validations/latest_scans"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -7028,7 +7028,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`ListLatestScans(listLatestScansOptions *ListLatestScansOptions)`, func() {
-		listLatestScansPath := "/posture/v3/scans/validations/latest_scans"
+		listLatestScansPath := "/posture/v2/scans/validations/latest_scans"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -7049,7 +7049,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "latest_scans": [{"scan_id": "262", "scan_name": "IBM_Schema_Full - IBMCloudBestPractice", "scope_id": "21", "scope_name": "IBM_Schema_Full", "profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "id": "1", "type": "predefined"}], "group_profile_id": "1", "group_profile_name": "CIS Windows Server Benchmarks", "report_run_by": "controller", "start_time": "2020-09-23T12:45:24.000Z", "report_setting_id": "66", "end_time": "2020-09-23T12:45:24.000Z", "result": {"goals_pass_count": 118, "goals_unable_to_perform_count": 16, "goals_not_applicable_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_not_applicable_count": 6, "controls_unable_to_perform_count": 16, "controls_total_count": 293}}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "latest_scans": [{"scan_id": "262", "scan_name": "IBM_Schema_Full - IBMCloudBestPractice", "scope_id": "21", "scope_name": "IBM_Schema_Full", "profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "id": "1", "type": "predefined"}], "group_profile_id": "1", "group_profile_name": "CIS Windows Server Benchmarks", "report_run_by": "controller", "start_time": "2020-09-23T12:45:24.000Z", "report_setting_id": "66", "end_time": "2020-09-23T12:45:24.000Z", "result": {"goals_pass_count": 118, "goals_unable_to_perform_count": 16, "goals_not_applicable_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_not_applicable_count": 6, "controls_unable_to_perform_count": 16, "controls_total_count": 293}}]}`)
 				}))
 			})
 			It(`Invoke ListLatestScans successfully with retries`, func() {
@@ -7111,7 +7111,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "latest_scans": [{"scan_id": "262", "scan_name": "IBM_Schema_Full - IBMCloudBestPractice", "scope_id": "21", "scope_name": "IBM_Schema_Full", "profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "id": "1", "type": "predefined"}], "group_profile_id": "1", "group_profile_name": "CIS Windows Server Benchmarks", "report_run_by": "controller", "start_time": "2020-09-23T12:45:24.000Z", "report_setting_id": "66", "end_time": "2020-09-23T12:45:24.000Z", "result": {"goals_pass_count": 118, "goals_unable_to_perform_count": 16, "goals_not_applicable_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_not_applicable_count": 6, "controls_unable_to_perform_count": 16, "controls_total_count": 293}}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "latest_scans": [{"scan_id": "262", "scan_name": "IBM_Schema_Full - IBMCloudBestPractice", "scope_id": "21", "scope_name": "IBM_Schema_Full", "profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "id": "1", "type": "predefined"}], "group_profile_id": "1", "group_profile_name": "CIS Windows Server Benchmarks", "report_run_by": "controller", "start_time": "2020-09-23T12:45:24.000Z", "report_setting_id": "66", "end_time": "2020-09-23T12:45:24.000Z", "result": {"goals_pass_count": 118, "goals_unable_to_perform_count": 16, "goals_not_applicable_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_not_applicable_count": 6, "controls_unable_to_perform_count": 16, "controls_total_count": 293}}]}`)
 				}))
 			})
 			It(`Invoke ListLatestScans successfully`, func() {
@@ -7249,7 +7249,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`CreateValidation(createValidationOptions *CreateValidationOptions) - Operation response error`, func() {
-		createValidationPath := "/posture/v3/scans/validations"
+		createValidationPath := "/posture/v2/scans/validations"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -7301,7 +7301,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`CreateValidation(createValidationOptions *CreateValidationOptions)`, func() {
-		createValidationPath := "/posture/v3/scans/validations"
+		createValidationPath := "/posture/v2/scans/validations"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -7522,7 +7522,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`ScansSummary(scansSummaryOptions *ScansSummaryOptions) - Operation response error`, func() {
-		scansSummaryPath := "/posture/v3/scans/validations/testString/summary"
+		scansSummaryPath := "/posture/v2/scans/validations/testString/summary"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -7574,7 +7574,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`ScansSummary(scansSummaryOptions *ScansSummaryOptions)`, func() {
-		scansSummaryPath := "/posture/v3/scans/validations/testString/summary"
+		scansSummaryPath := "/posture/v2/scans/validations/testString/summary"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -7761,7 +7761,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`ScanSummaries(scanSummariesOptions *ScanSummariesOptions) - Operation response error`, func() {
-		scanSummariesPath := "/posture/v3/scans/validations/summaries"
+		scanSummariesPath := "/posture/v2/scans/validations/summaries"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -7816,7 +7816,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 		})
 	})
 	Describe(`ScanSummaries(scanSummariesOptions *ScanSummariesOptions)`, func() {
-		scanSummariesPath := "/posture/v3/scans/validations/summaries"
+		scanSummariesPath := "/posture/v2/scans/validations/summaries"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -7838,7 +7838,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "summaries": [{"id": "262", "name": "IBM_Schema_Full - IBMCloudBestPractice", "scope_id": "21", "scope_name": "IBM_Schema_Full", "report_run_by": "controller", "start_time": "2020-09-23T12:45:24.000Z", "end_time": "2020-09-23T12:45:24.000Z", "status": "validation_completed", "profiles": [{"id": "48", "name": "IBM Cloud Best Practices Controls 1.0", "type": "standard", "validation_result": {"goals_pass_count": 118, "goals_unable_to_perform_count": 16, "goals_not_applicable_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_not_applicable_count": 6, "controls_unable_to_perform_count": 16, "controls_total_count": 293}}], "group_profiles": [{"id": "48", "name": "IBM Cloud Best Practices Controls 1.0", "type": "standard", "validation_result": {"goals_pass_count": 118, "goals_unable_to_perform_count": 16, "goals_not_applicable_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_not_applicable_count": 6, "controls_unable_to_perform_count": 16, "controls_total_count": 293}}]}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "summaries": [{"id": "262", "name": "IBM_Schema_Full - IBMCloudBestPractice", "scope_id": "21", "scope_name": "IBM_Schema_Full", "report_run_by": "controller", "start_time": "2020-09-23T12:45:24.000Z", "end_time": "2020-09-23T12:45:24.000Z", "status": "validation_completed", "profiles": [{"id": "48", "name": "IBM Cloud Best Practices Controls 1.0", "type": "standard", "validation_result": {"goals_pass_count": 118, "goals_unable_to_perform_count": 16, "goals_not_applicable_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_not_applicable_count": 6, "controls_unable_to_perform_count": 16, "controls_total_count": 293}}], "group_profiles": [{"id": "48", "name": "IBM Cloud Best Practices Controls 1.0", "type": "standard", "validation_result": {"goals_pass_count": 118, "goals_unable_to_perform_count": 16, "goals_not_applicable_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_not_applicable_count": 6, "controls_unable_to_perform_count": 16, "controls_total_count": 293}}]}]}`)
 				}))
 			})
 			It(`Invoke ScanSummaries successfully with retries`, func() {
@@ -7902,7 +7902,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v3/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "summaries": [{"id": "262", "name": "IBM_Schema_Full - IBMCloudBestPractice", "scope_id": "21", "scope_name": "IBM_Schema_Full", "report_run_by": "controller", "start_time": "2020-09-23T12:45:24.000Z", "end_time": "2020-09-23T12:45:24.000Z", "status": "validation_completed", "profiles": [{"id": "48", "name": "IBM Cloud Best Practices Controls 1.0", "type": "standard", "validation_result": {"goals_pass_count": 118, "goals_unable_to_perform_count": 16, "goals_not_applicable_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_not_applicable_count": 6, "controls_unable_to_perform_count": 16, "controls_total_count": 293}}], "group_profiles": [{"id": "48", "name": "IBM Cloud Best Practices Controls 1.0", "type": "standard", "validation_result": {"goals_pass_count": 118, "goals_unable_to_perform_count": 16, "goals_not_applicable_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_not_applicable_count": 6, "controls_unable_to_perform_count": 16, "controls_total_count": 293}}]}]}`)
+					fmt.Fprintf(res, "%s", `{"offset": 10, "limit": 15, "total_count": 50, "first": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "last": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "previous": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "next": {"href": "https://us-south.cloud.ibm.com/posture/v2/profiles/groups/1/controls?account_id=d194db5f52544a8f953aa539ced9b570&offset=10&limit=15"}, "summaries": [{"id": "262", "name": "IBM_Schema_Full - IBMCloudBestPractice", "scope_id": "21", "scope_name": "IBM_Schema_Full", "report_run_by": "controller", "start_time": "2020-09-23T12:45:24.000Z", "end_time": "2020-09-23T12:45:24.000Z", "status": "validation_completed", "profiles": [{"id": "48", "name": "IBM Cloud Best Practices Controls 1.0", "type": "standard", "validation_result": {"goals_pass_count": 118, "goals_unable_to_perform_count": 16, "goals_not_applicable_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_not_applicable_count": 6, "controls_unable_to_perform_count": 16, "controls_total_count": 293}}], "group_profiles": [{"id": "48", "name": "IBM Cloud Best Practices Controls 1.0", "type": "standard", "validation_result": {"goals_pass_count": 118, "goals_unable_to_perform_count": 16, "goals_not_applicable_count": 6, "goals_fail_count": 154, "goals_total_count": 294, "controls_pass_count": 117, "controls_fail_count": 154, "controls_not_applicable_count": 6, "controls_unable_to_perform_count": 16, "controls_total_count": 293}}]}]}`)
 				}))
 			})
 			It(`Invoke ScanSummaries successfully`, func() {

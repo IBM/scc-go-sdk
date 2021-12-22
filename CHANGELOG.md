@@ -1,3 +1,17 @@
+# [3.0.0](https://github.com/IBM/scc-go-sdk/compare/v2.0.0...v3.0.0) (2021-12-22)
+
+
+### Bug Fixes
+
+* **Go:** fixing go module structure ([4c1a122](https://github.com/IBM/scc-go-sdk/commit/4c1a12249a095fdc4a3b5e81393f39276600a85d))
+* **golangci-lint:** using official github action for linting ([40ff5ca](https://github.com/IBM/scc-go-sdk/commit/40ff5ca254e8b15ec5881e4c84f854736af2779a))
+* **UT:** fixed UTs ([15ec691](https://github.com/IBM/scc-go-sdk/commit/15ec691dd5f28c90dd55fdd04e369ae7d550dbfd))
+
+
+### BREAKING CHANGES
+
+* **Go:** bumping up to v3
+
 # [2.0.0](https://github.com/IBM/scc-go-sdk/compare/v1.3.4...v2.0.0) (2021-12-22)
 
 

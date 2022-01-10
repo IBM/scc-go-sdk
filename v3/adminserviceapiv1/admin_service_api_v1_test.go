@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,8 +27,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/IBM/scc-go-sdk/v3/adminserviceapiv1"
+	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/go-openapi/strfmt"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -67,13 +67,14 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"ADMIN_SERVICE_API_URL":       "https://adminserviceapiv1/api",
+				"ADMIN_SERVICE_API_URL": "https://adminserviceapiv1/api",
 				"ADMIN_SERVICE_API_AUTH_TYPE": "noauth",
 			}
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				adminServiceApiService, serviceErr := adminserviceapiv1.NewAdminServiceApiV1UsingExternalConfig(&adminserviceapiv1.AdminServiceApiV1Options{})
+				adminServiceApiService, serviceErr := adminserviceapiv1.NewAdminServiceApiV1UsingExternalConfig(&adminserviceapiv1.AdminServiceApiV1Options{
+				})
 				Expect(adminServiceApiService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
@@ -102,7 +103,8 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				adminServiceApiService, serviceErr := adminserviceapiv1.NewAdminServiceApiV1UsingExternalConfig(&adminserviceapiv1.AdminServiceApiV1Options{})
+				adminServiceApiService, serviceErr := adminserviceapiv1.NewAdminServiceApiV1UsingExternalConfig(&adminserviceapiv1.AdminServiceApiV1Options{
+				})
 				err := adminServiceApiService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
 				Expect(adminServiceApiService).ToNot(BeNil())
@@ -120,12 +122,13 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"ADMIN_SERVICE_API_URL":       "https://adminserviceapiv1/api",
+				"ADMIN_SERVICE_API_URL": "https://adminserviceapiv1/api",
 				"ADMIN_SERVICE_API_AUTH_TYPE": "someOtherAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			adminServiceApiService, serviceErr := adminserviceapiv1.NewAdminServiceApiV1UsingExternalConfig(&adminserviceapiv1.AdminServiceApiV1Options{})
+			adminServiceApiService, serviceErr := adminserviceapiv1.NewAdminServiceApiV1UsingExternalConfig(&adminserviceapiv1.AdminServiceApiV1Options{
+			})
 
 			It(`Instantiate service client with error`, func() {
 				Expect(adminServiceApiService).To(BeNil())
@@ -136,7 +139,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"ADMIN_SERVICE_API_AUTH_TYPE": "NOAuth",
+				"ADMIN_SERVICE_API_AUTH_TYPE":   "NOAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
@@ -155,6 +158,22 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 		It(`GetServiceURLForRegion(region string)`, func() {
 			var url string
 			var err error
+			url, err = adminserviceapiv1.GetServiceURLForRegion("us-south")
+			Expect(url).To(Equal("https://us.compliance.cloud.ibm.com"))
+			Expect(err).To(BeNil())
+
+			url, err = adminserviceapiv1.GetServiceURLForRegion("us-east")
+			Expect(url).To(Equal("https://us.compliance.cloud.ibm.com"))
+			Expect(err).To(BeNil())
+
+			url, err = adminserviceapiv1.GetServiceURLForRegion("eu-de")
+			Expect(url).To(Equal("https://eu.compliance.cloud.ibm.com"))
+			Expect(err).To(BeNil())
+
+			url, err = adminserviceapiv1.GetServiceURLForRegion("eu-gb")
+			Expect(url).To(Equal("https://uk.compliance.cloud.ibm.com"))
+			Expect(err).To(BeNil())
+
 			url, err = adminserviceapiv1.GetServiceURLForRegion("INVALID_REGION")
 			Expect(url).To(BeEmpty())
 			Expect(err).ToNot(BeNil())
@@ -398,7 +417,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 
 				// Construct an instance of the LocationID model
 				locationIdModel := new(adminserviceapiv1.LocationID)
-				locationIdModel.ID = core.StringPtr("eu")
+				locationIdModel.ID = core.StringPtr("us")
 
 				// Construct an instance of the PatchAccountSettingsOptions model
 				patchAccountSettingsOptionsModel := new(adminserviceapiv1.PatchAccountSettingsOptions)
@@ -470,7 +489,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 
 				// Construct an instance of the LocationID model
 				locationIdModel := new(adminserviceapiv1.LocationID)
-				locationIdModel.ID = core.StringPtr("eu")
+				locationIdModel.ID = core.StringPtr("us")
 
 				// Construct an instance of the PatchAccountSettingsOptions model
 				patchAccountSettingsOptionsModel := new(adminserviceapiv1.PatchAccountSettingsOptions)
@@ -550,7 +569,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 
 				// Construct an instance of the LocationID model
 				locationIdModel := new(adminserviceapiv1.LocationID)
-				locationIdModel.ID = core.StringPtr("eu")
+				locationIdModel.ID = core.StringPtr("us")
 
 				// Construct an instance of the PatchAccountSettingsOptions model
 				patchAccountSettingsOptionsModel := new(adminserviceapiv1.PatchAccountSettingsOptions)
@@ -575,7 +594,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 
 				// Construct an instance of the LocationID model
 				locationIdModel := new(adminserviceapiv1.LocationID)
-				locationIdModel.ID = core.StringPtr("eu")
+				locationIdModel.ID = core.StringPtr("us")
 
 				// Construct an instance of the PatchAccountSettingsOptions model
 				patchAccountSettingsOptionsModel := new(adminserviceapiv1.PatchAccountSettingsOptions)
@@ -621,7 +640,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 
 				// Construct an instance of the LocationID model
 				locationIdModel := new(adminserviceapiv1.LocationID)
-				locationIdModel.ID = core.StringPtr("eu")
+				locationIdModel.ID = core.StringPtr("us")
 
 				// Construct an instance of the PatchAccountSettingsOptions model
 				patchAccountSettingsOptionsModel := new(adminserviceapiv1.PatchAccountSettingsOptions)
@@ -703,7 +722,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"locations": [{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "si_endpoint_url": "SiEndpointURL", "regions": [{"id": "ID"}]}]}`)
+					fmt.Fprintf(res, "%s", `{"locations": [{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "si_endpoint_url": "SiEndpointURL", "regions": [{"id": "us"}]}]}`)
 				}))
 			})
 			It(`Invoke ListLocations successfully with retries`, func() {
@@ -756,7 +775,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"locations": [{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "si_endpoint_url": "SiEndpointURL", "regions": [{"id": "ID"}]}]}`)
+					fmt.Fprintf(res, "%s", `{"locations": [{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "si_endpoint_url": "SiEndpointURL", "regions": [{"id": "us"}]}]}`)
 				}))
 			})
 			It(`Invoke ListLocations successfully`, func() {
@@ -904,7 +923,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "si_endpoint_url": "SiEndpointURL", "regions": [{"id": "ID"}]}`)
+					fmt.Fprintf(res, "%s", `{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "si_endpoint_url": "SiEndpointURL", "regions": [{"id": "us"}]}`)
 				}))
 			})
 			It(`Invoke GetLocation successfully with retries`, func() {
@@ -958,7 +977,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "si_endpoint_url": "SiEndpointURL", "regions": [{"id": "ID"}]}`)
+					fmt.Fprintf(res, "%s", `{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "si_endpoint_url": "SiEndpointURL", "regions": [{"id": "us"}]}`)
 				}))
 			})
 			It(`Invoke GetLocation successfully`, func() {
@@ -1102,8 +1121,8 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 				// Construct an instance of the LocationID model
 				locationIdModel := new(adminserviceapiv1.LocationID)
 				Expect(locationIdModel).ToNot(BeNil())
-				locationIdModel.ID = core.StringPtr("eu")
-				Expect(locationIdModel.ID).To(Equal(core.StringPtr("eu")))
+				locationIdModel.ID = core.StringPtr("us")
+				Expect(locationIdModel.ID).To(Equal(core.StringPtr("us")))
 
 				// Construct an instance of the PatchAccountSettingsOptions model
 				accountID := "testString"

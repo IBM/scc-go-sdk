@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.34.0-e2a502a2-20210616-185634
+ * IBM OpenAPI SDK Code Generator Version: 3.43.3-d49d4b21-20220104-223519
  */
 
 // Package adminserviceapiv1 : Operations and models for the AdminServiceApiV1 service
@@ -29,19 +29,19 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/IBM/go-sdk-core/v5/core"
 	common "github.com/IBM/scc-go-sdk/v3/common"
+	"github.com/IBM/go-sdk-core/v5/core"
 )
 
 // AdminServiceApiV1 : This is an API for the Admin Service
 //
-// Version: 1.0.0
+// API Version: 1.0.0
 type AdminServiceApiV1 struct {
 	Service *core.BaseService
 }
 
 // DefaultServiceURL is the default URL to make service requests to.
-const DefaultServiceURL = "https://admin-service-api.cloud.ibm.com"
+const DefaultServiceURL = "https://us.compliance.cloud.ibm.com"
 
 // DefaultServiceName is the default key used to find external configuration information.
 const DefaultServiceName = "admin_service_api"
@@ -110,7 +110,17 @@ func NewAdminServiceApiV1(options *AdminServiceApiV1Options) (service *AdminServ
 
 // GetServiceURLForRegion returns the service URL to be used for the specified region
 func GetServiceURLForRegion(region string) (string, error) {
-	return "", fmt.Errorf("service does not support regional URLs")
+	var endpoints = map[string]string{
+		"us-south": "https://us.compliance.cloud.ibm.com",
+		"us-east": "https://us.compliance.cloud.ibm.com",
+		"eu-de": "https://eu.compliance.cloud.ibm.com",
+		"eu-gb": "https://uk.compliance.cloud.ibm.com",
+	}
+
+	if url, ok := endpoints[region]; ok {
+		return url, nil
+	}
+	return "", fmt.Errorf("service URL for region '%s' not found", region)
 }
 
 // Clone makes a copy of "adminServiceApi" suitable for processing requests.
@@ -431,7 +441,7 @@ func UnmarshalAccountSettings(m map[string]json.RawMessage, result interface{}) 
 // GetLocationOptions : The GetLocation options.
 type GetLocationOptions struct {
 	// The programatic ID of the location that you want to work in.
-	LocationID *string `validate:"required,ne="`
+	LocationID *string `json:"location_id" validate:"required,ne="`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -467,7 +477,7 @@ func (options *GetLocationOptions) SetHeaders(param map[string]string) *GetLocat
 // GetSettingsOptions : The GetSettings options.
 type GetSettingsOptions struct {
 	// The ID of the managing account.
-	AccountID *string `validate:"required,ne="`
+	AccountID *string `json:"account_id" validate:"required,ne="`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -515,16 +525,22 @@ type Location struct {
 	// The programatic ID of the location that you want to work in.
 	ID *string `json:"id,omitempty"`
 
+	// The base URL for the service.
 	MainEndpointURL *string `json:"main_endpoint_url,omitempty"`
 
+	// The endpoint that is used to call the Configuration Governance APIs.
 	GovernanceEndpointURL *string `json:"governance_endpoint_url,omitempty"`
 
+	// The endpoint that is used to get the results for the Configuration Governance component.
 	ResultsEndpointURL *string `json:"results_endpoint_url,omitempty"`
 
+	// The endpoint that is used to call the Posture Management APIs.
 	ComplianceEndpointURL *string `json:"compliance_endpoint_url,omitempty"`
 
+	// The endpoint that is used to generate analytics for the Posture Management component.
 	AnalyticsEndpointURL *string `json:"analytics_endpoint_url,omitempty"`
 
+	// The endpoint that is used to call the Security Insights APIs.
 	SiEndpointURL *string `json:"si_endpoint_url,omitempty"`
 
 	Regions []Region `json:"regions,omitempty"`
@@ -630,10 +646,10 @@ func UnmarshalLocations(m map[string]json.RawMessage, result interface{}) (err e
 // PatchAccountSettingsOptions : The PatchAccountSettings options.
 type PatchAccountSettingsOptions struct {
 	// The ID of the managing account.
-	AccountID *string `validate:"required,ne="`
+	AccountID *string `json:"account_id" validate:"required,ne="`
 
 	// Location settings.
-	Location *LocationID `validate:"required"`
+	Location *LocationID `json:"location" validate:"required"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -643,7 +659,7 @@ type PatchAccountSettingsOptions struct {
 func (*AdminServiceApiV1) NewPatchAccountSettingsOptions(accountID string, location *LocationID) *PatchAccountSettingsOptions {
 	return &PatchAccountSettingsOptions{
 		AccountID: core.StringPtr(accountID),
-		Location:  location,
+		Location: location,
 	}
 }
 
@@ -665,10 +681,20 @@ func (options *PatchAccountSettingsOptions) SetHeaders(param map[string]string) 
 	return options
 }
 
-// Region : Region.
+// Region : The region or regions that are available for each location. Be sure to use the correct region ID when making your API
+// call.
 type Region struct {
+	// The programatic ID of the available regions.
 	ID *string `json:"id" validate:"required"`
 }
+
+// Constants associated with the Region.ID property.
+// The programatic ID of the available regions.
+const (
+	Region_ID_Eu = "eu"
+	Region_ID_Uk = "uk"
+	Region_ID_Us = "us"
+)
 
 // UnmarshalRegion unmarshals an instance of Region from the specified map of raw messages.
 func UnmarshalRegion(m map[string]json.RawMessage, result interface{}) (err error) {

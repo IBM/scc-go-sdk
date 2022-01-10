@@ -1,8 +1,7 @@
-//go:build examples
 // +build examples
 
 /**
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,8 +23,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/IBM/scc-go-sdk/v3/adminserviceapiv1"
+	"github.com/IBM/go-sdk-core/v5/core"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -47,8 +46,8 @@ const externalConfigFile = "../admin_service_api_v1.env"
 
 var (
 	adminServiceApiService *adminserviceapiv1.AdminServiceApiV1
-	config                 map[string]string
-	configLoaded           bool = false
+	config       map[string]string
+	configLoaded bool = false
 )
 
 func shouldSkipTest() {
@@ -130,7 +129,7 @@ var _ = Describe(`AdminServiceApiV1 Examples Tests`, func() {
 			// begin-PatchAccountSettings
 
 			locationIdModel := &adminserviceapiv1.LocationID{
-				ID: core.StringPtr("eu"),
+				ID: core.StringPtr("us"),
 			}
 
 			patchAccountSettingsOptions := adminServiceApiService.NewPatchAccountSettingsOptions(

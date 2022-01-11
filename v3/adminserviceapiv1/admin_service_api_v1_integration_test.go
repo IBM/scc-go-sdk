@@ -1,3 +1,4 @@
+//go:build integration
 // +build integration
 
 /**
@@ -24,8 +25,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/IBM/scc-go-sdk/v3/adminserviceapiv1"
 	"github.com/IBM/go-sdk-core/v5/core"
+	"github.com/IBM/scc-go-sdk/v3/adminserviceapiv1"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -43,10 +44,10 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 	const externalConfigFile = "../admin_service_api_v1.env"
 
 	var (
-		err          error
+		err                    error
 		adminServiceApiService *adminserviceapiv1.AdminServiceApiV1
-		serviceURL   string
-		config       map[string]string
+		serviceURL             string
+		config                 map[string]string
 	)
 
 	var shouldSkipTest = func() {
@@ -132,14 +133,14 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 			}
 
 			notificationsRegistrationModel := &adminserviceapiv1.NotificationsRegistration{
-				InstanceCrn: core.StringPtr("testString"),
-				SourceName: core.StringPtr("testString"),
+				InstanceCrn:       core.StringPtr("testString"),
+				SourceName:        core.StringPtr("testString"),
 				SourceDescription: core.StringPtr("testString"),
 			}
 
 			patchAccountSettingsOptions := &adminserviceapiv1.PatchAccountSettingsOptions{
-				AccountID: core.StringPtr("testString"),
-				Location: locationIdModel,
+				AccountID:          core.StringPtr("testString"),
+				Location:           locationIdModel,
 				EventNotifications: notificationsRegistrationModel,
 			}
 
@@ -167,8 +168,7 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 		})
 		It(`ListLocations(listLocationsOptions *ListLocationsOptions)`, func() {
 
-			listLocationsOptions := &adminserviceapiv1.ListLocationsOptions{
-			}
+			listLocationsOptions := &adminserviceapiv1.ListLocationsOptions{}
 
 			locations, response, err := adminServiceApiService.ListLocations(listLocationsOptions)
 

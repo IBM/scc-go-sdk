@@ -132,9 +132,14 @@ var _ = Describe(`AdminServiceApiV1 Examples Tests`, func() {
 				ID: core.StringPtr("us"),
 			}
 
+			notificationsRegistrationModel := &adminserviceapiv1.NotificationsRegistration{
+				InstanceCrn: core.StringPtr("testString"),
+			}
+
 			patchAccountSettingsOptions := adminServiceApiService.NewPatchAccountSettingsOptions(
 				"testString",
 				locationIdModel,
+				notificationsRegistrationModel,
 			)
 
 			accountSettings, response, err := adminServiceApiService.PatchAccountSettings(patchAccountSettingsOptions)
@@ -191,6 +196,28 @@ var _ = Describe(`AdminServiceApiV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(location).ToNot(BeNil())
+
+		})
+		It(`SendTestEvent request example`, func() {
+			fmt.Println("\nSendTestEvent() result:")
+			// begin-SendTestEvent
+
+			sendTestEventOptions := adminServiceApiService.NewSendTestEventOptions(
+				"testString",
+			)
+
+			testEvent, response, err := adminServiceApiService.SendTestEvent(sendTestEventOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(testEvent, "", "  ")
+			fmt.Println(string(b))
+
+			// end-SendTestEvent
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(testEvent).ToNot(BeNil())
 
 		})
 	})

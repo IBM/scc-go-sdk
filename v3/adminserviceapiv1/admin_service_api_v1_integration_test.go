@@ -24,7 +24,7 @@ import (
 	"os"
 	"time"
 
-    "github.com/IBM/scc-go-sdk/v3/adminserviceapiv1"
+	"github.com/IBM/scc-go-sdk/v3/adminserviceapiv1"
 	"github.com/IBM/go-sdk-core/v5/core"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -131,9 +131,16 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 				ID: core.StringPtr("us"),
 			}
 
+			notificationsRegistrationModel := &adminserviceapiv1.NotificationsRegistration{
+				InstanceCrn: core.StringPtr("testString"),
+				SourceName: core.StringPtr("testString"),
+				SourceDescription: core.StringPtr("testString"),
+			}
+
 			patchAccountSettingsOptions := &adminserviceapiv1.PatchAccountSettingsOptions{
 				AccountID: core.StringPtr("testString"),
 				Location: locationIdModel,
+				EventNotifications: notificationsRegistrationModel,
 			}
 
 			accountSettings, response, err := adminServiceApiService.PatchAccountSettings(patchAccountSettingsOptions)
@@ -201,6 +208,33 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 			//
 			// 403
 			// 404
+			// 500
+			//
+		})
+	})
+
+	Describe(`SendTestEvent - Send test event`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`SendTestEvent(sendTestEventOptions *SendTestEventOptions)`, func() {
+
+			sendTestEventOptions := &adminserviceapiv1.SendTestEventOptions{
+				AccountID: core.StringPtr("testString"),
+			}
+
+			testEvent, response, err := adminServiceApiService.SendTestEvent(sendTestEventOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(testEvent).ToNot(BeNil())
+
+			//
+			// The following status codes aren't covered by tests.
+			// Please provide integration tests for these too.
+			//
+			// 401
+			// 403
 			// 500
 			//
 		})

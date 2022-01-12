@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.34.0-e2a502a2-20210616-185634
+ * IBM OpenAPI SDK Code Generator Version: 3.43.3-d49d4b21-20220104-223519
  */
 
 // Package adminserviceapiv1 : Operations and models for the AdminServiceApiV1 service
@@ -29,19 +29,19 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/IBM/go-sdk-core/v5/core"
 	common "github.com/IBM/scc-go-sdk/v3/common"
+	"github.com/IBM/go-sdk-core/v5/core"
 )
 
 // AdminServiceApiV1 : This is an API for the Admin Service
 //
-// Version: 1.0.0
+// API Version: 1.0.0
 type AdminServiceApiV1 struct {
 	Service *core.BaseService
 }
 
 // DefaultServiceURL is the default URL to make service requests to.
-const DefaultServiceURL = "https://admin-service-api.cloud.ibm.com"
+const DefaultServiceURL = "https://us.compliance.cloud.ibm.com"
 
 // DefaultServiceName is the default key used to find external configuration information.
 const DefaultServiceName = "admin_service_api"
@@ -110,7 +110,17 @@ func NewAdminServiceApiV1(options *AdminServiceApiV1Options) (service *AdminServ
 
 // GetServiceURLForRegion returns the service URL to be used for the specified region
 func GetServiceURLForRegion(region string) (string, error) {
-	return "", fmt.Errorf("service does not support regional URLs")
+	var endpoints = map[string]string{
+		"us-south": "https://us.compliance.cloud.ibm.com",
+		"us-east": "https://us.compliance.cloud.ibm.com",
+		"eu-de": "https://eu.compliance.cloud.ibm.com",
+		"eu-gb": "https://uk.compliance.cloud.ibm.com",
+	}
+
+	if url, ok := endpoints[region]; ok {
+		return url, nil
+	}
+	return "", fmt.Errorf("service URL for region '%s' not found", region)
 }
 
 // Clone makes a copy of "adminServiceApi" suitable for processing requests.
@@ -263,6 +273,9 @@ func (adminServiceApi *AdminServiceApiV1) PatchAccountSettingsWithContext(ctx co
 	if patchAccountSettingsOptions.Location != nil {
 		body["location"] = patchAccountSettingsOptions.Location
 	}
+	if patchAccountSettingsOptions.EventNotifications != nil {
+		body["event_notifications"] = patchAccountSettingsOptions.EventNotifications
+	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
 		return
@@ -402,16 +415,80 @@ func (adminServiceApi *AdminServiceApiV1) GetLocationWithContext(ctx context.Con
 	return
 }
 
+// SendTestEvent : Send test event
+// Send a test event using your configured Event Notifications instance.
+func (adminServiceApi *AdminServiceApiV1) SendTestEvent(sendTestEventOptions *SendTestEventOptions) (result *TestEvent, response *core.DetailedResponse, err error) {
+	return adminServiceApi.SendTestEventWithContext(context.Background(), sendTestEventOptions)
+}
+
+// SendTestEventWithContext is an alternate form of the SendTestEvent method which supports a Context parameter
+func (adminServiceApi *AdminServiceApiV1) SendTestEventWithContext(ctx context.Context, sendTestEventOptions *SendTestEventOptions) (result *TestEvent, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(sendTestEventOptions, "sendTestEventOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(sendTestEventOptions, "sendTestEventOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"account_id": *sendTestEventOptions.AccountID,
+	}
+
+	builder := core.NewRequestBuilder(core.POST)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = adminServiceApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(adminServiceApi.Service.Options.URL, `/admin/v1/accounts/{account_id}/test_event`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range sendTestEventOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("admin_service_api", "V1", "SendTestEvent")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = adminServiceApi.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalTestEvent)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
 // AccountSettings : Account settings.
 type AccountSettings struct {
 	// Location settings.
 	Location *LocationID `json:"location" validate:"required"`
+
+	// The Event Notification settings to register.
+	EventNotifications *NotificationsRegistration `json:"event_notifications" validate:"required"`
 }
 
 // NewAccountSettings : Instantiate AccountSettings (Generic Model Constructor)
-func (*AdminServiceApiV1) NewAccountSettings(location *LocationID) (_model *AccountSettings, err error) {
+func (*AdminServiceApiV1) NewAccountSettings(location *LocationID, eventNotifications *NotificationsRegistration) (_model *AccountSettings, err error) {
 	_model = &AccountSettings{
 		Location: location,
+		EventNotifications: eventNotifications,
 	}
 	err = core.ValidateStruct(_model, "required parameters")
 	return
@@ -424,6 +501,10 @@ func UnmarshalAccountSettings(m map[string]json.RawMessage, result interface{}) 
 	if err != nil {
 		return
 	}
+	err = core.UnmarshalModel(m, "event_notifications", &obj.EventNotifications, UnmarshalNotificationsRegistration)
+	if err != nil {
+		return
+	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
 }
@@ -431,7 +512,7 @@ func UnmarshalAccountSettings(m map[string]json.RawMessage, result interface{}) 
 // GetLocationOptions : The GetLocation options.
 type GetLocationOptions struct {
 	// The programatic ID of the location that you want to work in.
-	LocationID *string `validate:"required,ne="`
+	LocationID *string `json:"location_id" validate:"required,ne="`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -467,7 +548,7 @@ func (options *GetLocationOptions) SetHeaders(param map[string]string) *GetLocat
 // GetSettingsOptions : The GetSettings options.
 type GetSettingsOptions struct {
 	// The ID of the managing account.
-	AccountID *string `validate:"required,ne="`
+	AccountID *string `json:"account_id" validate:"required,ne="`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -515,16 +596,22 @@ type Location struct {
 	// The programatic ID of the location that you want to work in.
 	ID *string `json:"id,omitempty"`
 
+	// The base URL for the service.
 	MainEndpointURL *string `json:"main_endpoint_url,omitempty"`
 
+	// The endpoint that is used to call the Configuration Governance APIs.
 	GovernanceEndpointURL *string `json:"governance_endpoint_url,omitempty"`
 
+	// The endpoint that is used to get the results for the Configuration Governance component.
 	ResultsEndpointURL *string `json:"results_endpoint_url,omitempty"`
 
+	// The endpoint that is used to call the Posture Management APIs.
 	ComplianceEndpointURL *string `json:"compliance_endpoint_url,omitempty"`
 
+	// The endpoint that is used to generate analytics for the Posture Management component.
 	AnalyticsEndpointURL *string `json:"analytics_endpoint_url,omitempty"`
 
+	// The endpoint that is used to call the Security Insights APIs.
 	SiEndpointURL *string `json:"si_endpoint_url,omitempty"`
 
 	Regions []Region `json:"regions,omitempty"`
@@ -627,23 +714,67 @@ func UnmarshalLocations(m map[string]json.RawMessage, result interface{}) (err e
 	return
 }
 
+// NotificationsRegistration : The Event Notification settings to register.
+type NotificationsRegistration struct {
+	// The Cloud Resource Name (CRN) of the Event Notifications instance that you want to connect.
+	InstanceCrn *string `json:"instance_crn" validate:"required"`
+
+	// The name to register as a source in your Event Notifications instance.
+	SourceName *string `json:"source_name,omitempty"`
+
+	// An optional description for the source in your Event Notifications instance.
+	SourceDescription *string `json:"source_description,omitempty"`
+}
+
+// NewNotificationsRegistration : Instantiate NotificationsRegistration (Generic Model Constructor)
+func (*AdminServiceApiV1) NewNotificationsRegistration(instanceCrn string) (_model *NotificationsRegistration, err error) {
+	_model = &NotificationsRegistration{
+		InstanceCrn: core.StringPtr(instanceCrn),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+// UnmarshalNotificationsRegistration unmarshals an instance of NotificationsRegistration from the specified map of raw messages.
+func UnmarshalNotificationsRegistration(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(NotificationsRegistration)
+	err = core.UnmarshalPrimitive(m, "instance_crn", &obj.InstanceCrn)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "source_name", &obj.SourceName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "source_description", &obj.SourceDescription)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // PatchAccountSettingsOptions : The PatchAccountSettings options.
 type PatchAccountSettingsOptions struct {
 	// The ID of the managing account.
-	AccountID *string `validate:"required,ne="`
+	AccountID *string `json:"account_id" validate:"required,ne="`
 
 	// Location settings.
-	Location *LocationID `validate:"required"`
+	Location *LocationID `json:"location" validate:"required"`
+
+	// The Event Notification settings to register.
+	EventNotifications *NotificationsRegistration `json:"event_notifications" validate:"required"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
 }
 
 // NewPatchAccountSettingsOptions : Instantiate PatchAccountSettingsOptions
-func (*AdminServiceApiV1) NewPatchAccountSettingsOptions(accountID string, location *LocationID) *PatchAccountSettingsOptions {
+func (*AdminServiceApiV1) NewPatchAccountSettingsOptions(accountID string, location *LocationID, eventNotifications *NotificationsRegistration) *PatchAccountSettingsOptions {
 	return &PatchAccountSettingsOptions{
 		AccountID: core.StringPtr(accountID),
-		Location:  location,
+		Location: location,
+		EventNotifications: eventNotifications,
 	}
 }
 
@@ -659,21 +790,82 @@ func (_options *PatchAccountSettingsOptions) SetLocation(location *LocationID) *
 	return _options
 }
 
+// SetEventNotifications : Allow user to set EventNotifications
+func (_options *PatchAccountSettingsOptions) SetEventNotifications(eventNotifications *NotificationsRegistration) *PatchAccountSettingsOptions {
+	_options.EventNotifications = eventNotifications
+	return _options
+}
+
 // SetHeaders : Allow user to set Headers
 func (options *PatchAccountSettingsOptions) SetHeaders(param map[string]string) *PatchAccountSettingsOptions {
 	options.Headers = param
 	return options
 }
 
-// Region : Region.
+// Region : The region or regions that are available for each location. Be sure to use the correct region ID when making your API
+// call.
 type Region struct {
+	// The programatic ID of the available regions.
 	ID *string `json:"id" validate:"required"`
 }
+
+// Constants associated with the Region.ID property.
+// The programatic ID of the available regions.
+const (
+	Region_ID_Eu = "eu"
+	Region_ID_Uk = "uk"
+	Region_ID_Us = "us"
+)
 
 // UnmarshalRegion unmarshals an instance of Region from the specified map of raw messages.
 func UnmarshalRegion(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(Region)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SendTestEventOptions : The SendTestEvent options.
+type SendTestEventOptions struct {
+	// The ID of the managing account.
+	AccountID *string `json:"account_id" validate:"required,ne="`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewSendTestEventOptions : Instantiate SendTestEventOptions
+func (*AdminServiceApiV1) NewSendTestEventOptions(accountID string) *SendTestEventOptions {
+	return &SendTestEventOptions{
+		AccountID: core.StringPtr(accountID),
+	}
+}
+
+// SetAccountID : Allow user to set AccountID
+func (_options *SendTestEventOptions) SetAccountID(accountID string) *SendTestEventOptions {
+	_options.AccountID = core.StringPtr(accountID)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *SendTestEventOptions) SetHeaders(param map[string]string) *SendTestEventOptions {
+	options.Headers = param
+	return options
+}
+
+// TestEvent : The details of a test event response.
+type TestEvent struct {
+	// Indicates whether the event was received by Event Notifications.
+	Success *bool `json:"success" validate:"required"`
+}
+
+// UnmarshalTestEvent unmarshals an instance of TestEvent from the specified map of raw messages.
+func UnmarshalTestEvent(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(TestEvent)
+	err = core.UnmarshalPrimitive(m, "success", &obj.Success)
 	if err != nil {
 		return
 	}

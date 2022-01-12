@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -155,6 +155,22 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 		It(`GetServiceURLForRegion(region string)`, func() {
 			var url string
 			var err error
+			url, err = adminserviceapiv1.GetServiceURLForRegion("us-south")
+			Expect(url).To(Equal("https://us.compliance.cloud.ibm.com"))
+			Expect(err).To(BeNil())
+
+			url, err = adminserviceapiv1.GetServiceURLForRegion("us-east")
+			Expect(url).To(Equal("https://us.compliance.cloud.ibm.com"))
+			Expect(err).To(BeNil())
+
+			url, err = adminserviceapiv1.GetServiceURLForRegion("eu-de")
+			Expect(url).To(Equal("https://eu.compliance.cloud.ibm.com"))
+			Expect(err).To(BeNil())
+
+			url, err = adminserviceapiv1.GetServiceURLForRegion("eu-gb")
+			Expect(url).To(Equal("https://uk.compliance.cloud.ibm.com"))
+			Expect(err).To(BeNil())
+
 			url, err = adminserviceapiv1.GetServiceURLForRegion("INVALID_REGION")
 			Expect(url).To(BeEmpty())
 			Expect(err).ToNot(BeNil())
@@ -223,7 +239,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"location": {"id": "us"}}`)
+					fmt.Fprintf(res, "%s", `{"location": {"id": "us"}, "event_notifications": {"instance_crn": "InstanceCrn", "source_name": "SourceName", "source_description": "SourceDescription"}}`)
 				}))
 			})
 			It(`Invoke GetSettings successfully with retries`, func() {
@@ -277,7 +293,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"location": {"id": "us"}}`)
+					fmt.Fprintf(res, "%s", `{"location": {"id": "us"}, "event_notifications": {"instance_crn": "InstanceCrn", "source_name": "SourceName", "source_description": "SourceDescription"}}`)
 				}))
 			})
 			It(`Invoke GetSettings successfully`, func() {
@@ -398,12 +414,19 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 
 				// Construct an instance of the LocationID model
 				locationIdModel := new(adminserviceapiv1.LocationID)
-				locationIdModel.ID = core.StringPtr("eu")
+				locationIdModel.ID = core.StringPtr("us")
+
+				// Construct an instance of the NotificationsRegistration model
+				notificationsRegistrationModel := new(adminserviceapiv1.NotificationsRegistration)
+				notificationsRegistrationModel.InstanceCrn = core.StringPtr("testString")
+				notificationsRegistrationModel.SourceName = core.StringPtr("testString")
+				notificationsRegistrationModel.SourceDescription = core.StringPtr("testString")
 
 				// Construct an instance of the PatchAccountSettingsOptions model
 				patchAccountSettingsOptionsModel := new(adminserviceapiv1.PatchAccountSettingsOptions)
 				patchAccountSettingsOptionsModel.AccountID = core.StringPtr("testString")
 				patchAccountSettingsOptionsModel.Location = locationIdModel
+				patchAccountSettingsOptionsModel.EventNotifications = notificationsRegistrationModel
 				patchAccountSettingsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
 				result, response, operationErr := adminServiceApiService.PatchAccountSettings(patchAccountSettingsOptionsModel)
@@ -456,7 +479,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"location": {"id": "us"}}`)
+					fmt.Fprintf(res, "%s", `{"location": {"id": "us"}, "event_notifications": {"instance_crn": "InstanceCrn", "source_name": "SourceName", "source_description": "SourceDescription"}}`)
 				}))
 			})
 			It(`Invoke PatchAccountSettings successfully with retries`, func() {
@@ -470,12 +493,19 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 
 				// Construct an instance of the LocationID model
 				locationIdModel := new(adminserviceapiv1.LocationID)
-				locationIdModel.ID = core.StringPtr("eu")
+				locationIdModel.ID = core.StringPtr("us")
+
+				// Construct an instance of the NotificationsRegistration model
+				notificationsRegistrationModel := new(adminserviceapiv1.NotificationsRegistration)
+				notificationsRegistrationModel.InstanceCrn = core.StringPtr("testString")
+				notificationsRegistrationModel.SourceName = core.StringPtr("testString")
+				notificationsRegistrationModel.SourceDescription = core.StringPtr("testString")
 
 				// Construct an instance of the PatchAccountSettingsOptions model
 				patchAccountSettingsOptionsModel := new(adminserviceapiv1.PatchAccountSettingsOptions)
 				patchAccountSettingsOptionsModel.AccountID = core.StringPtr("testString")
 				patchAccountSettingsOptionsModel.Location = locationIdModel
+				patchAccountSettingsOptionsModel.EventNotifications = notificationsRegistrationModel
 				patchAccountSettingsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with a Context to test a timeout error
@@ -531,7 +561,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"location": {"id": "us"}}`)
+					fmt.Fprintf(res, "%s", `{"location": {"id": "us"}, "event_notifications": {"instance_crn": "InstanceCrn", "source_name": "SourceName", "source_description": "SourceDescription"}}`)
 				}))
 			})
 			It(`Invoke PatchAccountSettings successfully`, func() {
@@ -550,12 +580,19 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 
 				// Construct an instance of the LocationID model
 				locationIdModel := new(adminserviceapiv1.LocationID)
-				locationIdModel.ID = core.StringPtr("eu")
+				locationIdModel.ID = core.StringPtr("us")
+
+				// Construct an instance of the NotificationsRegistration model
+				notificationsRegistrationModel := new(adminserviceapiv1.NotificationsRegistration)
+				notificationsRegistrationModel.InstanceCrn = core.StringPtr("testString")
+				notificationsRegistrationModel.SourceName = core.StringPtr("testString")
+				notificationsRegistrationModel.SourceDescription = core.StringPtr("testString")
 
 				// Construct an instance of the PatchAccountSettingsOptions model
 				patchAccountSettingsOptionsModel := new(adminserviceapiv1.PatchAccountSettingsOptions)
 				patchAccountSettingsOptionsModel.AccountID = core.StringPtr("testString")
 				patchAccountSettingsOptionsModel.Location = locationIdModel
+				patchAccountSettingsOptionsModel.EventNotifications = notificationsRegistrationModel
 				patchAccountSettingsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
@@ -575,12 +612,19 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 
 				// Construct an instance of the LocationID model
 				locationIdModel := new(adminserviceapiv1.LocationID)
-				locationIdModel.ID = core.StringPtr("eu")
+				locationIdModel.ID = core.StringPtr("us")
+
+				// Construct an instance of the NotificationsRegistration model
+				notificationsRegistrationModel := new(adminserviceapiv1.NotificationsRegistration)
+				notificationsRegistrationModel.InstanceCrn = core.StringPtr("testString")
+				notificationsRegistrationModel.SourceName = core.StringPtr("testString")
+				notificationsRegistrationModel.SourceDescription = core.StringPtr("testString")
 
 				// Construct an instance of the PatchAccountSettingsOptions model
 				patchAccountSettingsOptionsModel := new(adminserviceapiv1.PatchAccountSettingsOptions)
 				patchAccountSettingsOptionsModel.AccountID = core.StringPtr("testString")
 				patchAccountSettingsOptionsModel.Location = locationIdModel
+				patchAccountSettingsOptionsModel.EventNotifications = notificationsRegistrationModel
 				patchAccountSettingsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
 				err := adminServiceApiService.SetServiceURL("")
@@ -621,12 +665,19 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 
 				// Construct an instance of the LocationID model
 				locationIdModel := new(adminserviceapiv1.LocationID)
-				locationIdModel.ID = core.StringPtr("eu")
+				locationIdModel.ID = core.StringPtr("us")
+
+				// Construct an instance of the NotificationsRegistration model
+				notificationsRegistrationModel := new(adminserviceapiv1.NotificationsRegistration)
+				notificationsRegistrationModel.InstanceCrn = core.StringPtr("testString")
+				notificationsRegistrationModel.SourceName = core.StringPtr("testString")
+				notificationsRegistrationModel.SourceDescription = core.StringPtr("testString")
 
 				// Construct an instance of the PatchAccountSettingsOptions model
 				patchAccountSettingsOptionsModel := new(adminserviceapiv1.PatchAccountSettingsOptions)
 				patchAccountSettingsOptionsModel.AccountID = core.StringPtr("testString")
 				patchAccountSettingsOptionsModel.Location = locationIdModel
+				patchAccountSettingsOptionsModel.EventNotifications = notificationsRegistrationModel
 				patchAccountSettingsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation
@@ -703,7 +754,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"locations": [{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "si_endpoint_url": "SiEndpointURL", "regions": [{"id": "ID"}]}]}`)
+					fmt.Fprintf(res, "%s", `{"locations": [{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "si_endpoint_url": "SiEndpointURL", "regions": [{"id": "us"}]}]}`)
 				}))
 			})
 			It(`Invoke ListLocations successfully with retries`, func() {
@@ -756,7 +807,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"locations": [{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "si_endpoint_url": "SiEndpointURL", "regions": [{"id": "ID"}]}]}`)
+					fmt.Fprintf(res, "%s", `{"locations": [{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "si_endpoint_url": "SiEndpointURL", "regions": [{"id": "us"}]}]}`)
 				}))
 			})
 			It(`Invoke ListLocations successfully`, func() {
@@ -904,7 +955,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "si_endpoint_url": "SiEndpointURL", "regions": [{"id": "ID"}]}`)
+					fmt.Fprintf(res, "%s", `{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "si_endpoint_url": "SiEndpointURL", "regions": [{"id": "us"}]}`)
 				}))
 			})
 			It(`Invoke GetLocation successfully with retries`, func() {
@@ -958,7 +1009,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "si_endpoint_url": "SiEndpointURL", "regions": [{"id": "ID"}]}`)
+					fmt.Fprintf(res, "%s", `{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "si_endpoint_url": "SiEndpointURL", "regions": [{"id": "us"}]}`)
 				}))
 			})
 			It(`Invoke GetLocation successfully`, func() {
@@ -1054,6 +1105,218 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 			})
 		})
 	})
+	Describe(`SendTestEvent(sendTestEventOptions *SendTestEventOptions) - Operation response error`, func() {
+		sendTestEventPath := "/admin/v1/accounts/testString/test_event"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(sendTestEventPath))
+					Expect(req.Method).To(Equal("POST"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke SendTestEvent with error: Operation response processing error`, func() {
+				adminServiceApiService, serviceErr := adminserviceapiv1.NewAdminServiceApiV1(&adminserviceapiv1.AdminServiceApiV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(adminServiceApiService).ToNot(BeNil())
+
+				// Construct an instance of the SendTestEventOptions model
+				sendTestEventOptionsModel := new(adminserviceapiv1.SendTestEventOptions)
+				sendTestEventOptionsModel.AccountID = core.StringPtr("testString")
+				sendTestEventOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := adminServiceApiService.SendTestEvent(sendTestEventOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				adminServiceApiService.EnableRetries(0, 0)
+				result, response, operationErr = adminServiceApiService.SendTestEvent(sendTestEventOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`SendTestEvent(sendTestEventOptions *SendTestEventOptions)`, func() {
+		sendTestEventPath := "/admin/v1/accounts/testString/test_event"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(sendTestEventPath))
+					Expect(req.Method).To(Equal("POST"))
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"success": false}`)
+				}))
+			})
+			It(`Invoke SendTestEvent successfully with retries`, func() {
+				adminServiceApiService, serviceErr := adminserviceapiv1.NewAdminServiceApiV1(&adminserviceapiv1.AdminServiceApiV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(adminServiceApiService).ToNot(BeNil())
+				adminServiceApiService.EnableRetries(0, 0)
+
+				// Construct an instance of the SendTestEventOptions model
+				sendTestEventOptionsModel := new(adminserviceapiv1.SendTestEventOptions)
+				sendTestEventOptionsModel.AccountID = core.StringPtr("testString")
+				sendTestEventOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := adminServiceApiService.SendTestEventWithContext(ctx, sendTestEventOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				adminServiceApiService.DisableRetries()
+				result, response, operationErr := adminServiceApiService.SendTestEvent(sendTestEventOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = adminServiceApiService.SendTestEventWithContext(ctx, sendTestEventOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(sendTestEventPath))
+					Expect(req.Method).To(Equal("POST"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"success": false}`)
+				}))
+			})
+			It(`Invoke SendTestEvent successfully`, func() {
+				adminServiceApiService, serviceErr := adminserviceapiv1.NewAdminServiceApiV1(&adminserviceapiv1.AdminServiceApiV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(adminServiceApiService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := adminServiceApiService.SendTestEvent(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the SendTestEventOptions model
+				sendTestEventOptionsModel := new(adminserviceapiv1.SendTestEventOptions)
+				sendTestEventOptionsModel.AccountID = core.StringPtr("testString")
+				sendTestEventOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = adminServiceApiService.SendTestEvent(sendTestEventOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke SendTestEvent with error: Operation validation and request error`, func() {
+				adminServiceApiService, serviceErr := adminserviceapiv1.NewAdminServiceApiV1(&adminserviceapiv1.AdminServiceApiV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(adminServiceApiService).ToNot(BeNil())
+
+				// Construct an instance of the SendTestEventOptions model
+				sendTestEventOptionsModel := new(adminserviceapiv1.SendTestEventOptions)
+				sendTestEventOptionsModel.AccountID = core.StringPtr("testString")
+				sendTestEventOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := adminServiceApiService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := adminServiceApiService.SendTestEvent(sendTestEventOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the SendTestEventOptions model with no property values
+				sendTestEventOptionsModelNew := new(adminserviceapiv1.SendTestEventOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = adminServiceApiService.SendTestEvent(sendTestEventOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke SendTestEvent successfully`, func() {
+				adminServiceApiService, serviceErr := adminserviceapiv1.NewAdminServiceApiV1(&adminserviceapiv1.AdminServiceApiV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(adminServiceApiService).ToNot(BeNil())
+
+				// Construct an instance of the SendTestEventOptions model
+				sendTestEventOptionsModel := new(adminserviceapiv1.SendTestEventOptions)
+				sendTestEventOptionsModel.AccountID = core.StringPtr("testString")
+				sendTestEventOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := adminServiceApiService.SendTestEvent(sendTestEventOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
 	Describe(`Model constructor tests`, func() {
 		Context(`Using a service client instance`, func() {
 			adminServiceApiService, _ := adminserviceapiv1.NewAdminServiceApiV1(&adminserviceapiv1.AdminServiceApiV1Options{
@@ -1062,7 +1325,8 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 			})
 			It(`Invoke NewAccountSettings successfully`, func() {
 				var location *adminserviceapiv1.LocationID = nil
-				_, err := adminServiceApiService.NewAccountSettings(location)
+				var eventNotifications *adminserviceapiv1.NotificationsRegistration = nil
+				_, err := adminServiceApiService.NewAccountSettings(location, eventNotifications)
 				Expect(err).ToNot(BeNil())
 			})
 			It(`Invoke NewGetLocationOptions successfully`, func() {
@@ -1098,24 +1362,53 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
+			It(`Invoke NewNotificationsRegistration successfully`, func() {
+				instanceCrn := "testString"
+				_model, err := adminServiceApiService.NewNotificationsRegistration(instanceCrn)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewPatchAccountSettingsOptions successfully`, func() {
 				// Construct an instance of the LocationID model
 				locationIdModel := new(adminserviceapiv1.LocationID)
 				Expect(locationIdModel).ToNot(BeNil())
-				locationIdModel.ID = core.StringPtr("eu")
-				Expect(locationIdModel.ID).To(Equal(core.StringPtr("eu")))
+				locationIdModel.ID = core.StringPtr("us")
+				Expect(locationIdModel.ID).To(Equal(core.StringPtr("us")))
+
+				// Construct an instance of the NotificationsRegistration model
+				notificationsRegistrationModel := new(adminserviceapiv1.NotificationsRegistration)
+				Expect(notificationsRegistrationModel).ToNot(BeNil())
+				notificationsRegistrationModel.InstanceCrn = core.StringPtr("testString")
+				notificationsRegistrationModel.SourceName = core.StringPtr("testString")
+				notificationsRegistrationModel.SourceDescription = core.StringPtr("testString")
+				Expect(notificationsRegistrationModel.InstanceCrn).To(Equal(core.StringPtr("testString")))
+				Expect(notificationsRegistrationModel.SourceName).To(Equal(core.StringPtr("testString")))
+				Expect(notificationsRegistrationModel.SourceDescription).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the PatchAccountSettingsOptions model
 				accountID := "testString"
 				var patchAccountSettingsOptionsLocation *adminserviceapiv1.LocationID = nil
-				patchAccountSettingsOptionsModel := adminServiceApiService.NewPatchAccountSettingsOptions(accountID, patchAccountSettingsOptionsLocation)
+				var patchAccountSettingsOptionsEventNotifications *adminserviceapiv1.NotificationsRegistration = nil
+				patchAccountSettingsOptionsModel := adminServiceApiService.NewPatchAccountSettingsOptions(accountID, patchAccountSettingsOptionsLocation, patchAccountSettingsOptionsEventNotifications)
 				patchAccountSettingsOptionsModel.SetAccountID("testString")
 				patchAccountSettingsOptionsModel.SetLocation(locationIdModel)
+				patchAccountSettingsOptionsModel.SetEventNotifications(notificationsRegistrationModel)
 				patchAccountSettingsOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(patchAccountSettingsOptionsModel).ToNot(BeNil())
 				Expect(patchAccountSettingsOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(patchAccountSettingsOptionsModel.Location).To(Equal(locationIdModel))
+				Expect(patchAccountSettingsOptionsModel.EventNotifications).To(Equal(notificationsRegistrationModel))
 				Expect(patchAccountSettingsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewSendTestEventOptions successfully`, func() {
+				// Construct an instance of the SendTestEventOptions model
+				accountID := "testString"
+				sendTestEventOptionsModel := adminServiceApiService.NewSendTestEventOptions(accountID)
+				sendTestEventOptionsModel.SetAccountID("testString")
+				sendTestEventOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(sendTestEventOptionsModel).ToNot(BeNil())
+				Expect(sendTestEventOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
+				Expect(sendTestEventOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 		})
 	})

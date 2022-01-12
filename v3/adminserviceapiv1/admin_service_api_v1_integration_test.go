@@ -2,7 +2,7 @@
 // +build integration
 
 /**
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,9 @@ package adminserviceapiv1_test
 
 import (
 	"fmt"
+	"log"
 	"os"
+	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/IBM/scc-go-sdk/v3/adminserviceapiv1"
@@ -36,8 +38,6 @@ import (
  *
  * The integration test will automatically skip tests if the required config file is not available.
  */
-
-var accountID = os.Getenv("ACCOUNT_ID")
 
 var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 
@@ -89,6 +89,9 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(adminServiceApiService).ToNot(BeNil())
 			Expect(adminServiceApiService.Service.Options.URL).To(Equal(serviceURL))
+
+			core.SetLogger(core.NewLogger(core.LevelDebug, log.New(GinkgoWriter, "", log.LstdFlags), log.New(GinkgoWriter, "", log.LstdFlags)))
+			adminServiceApiService.EnableRetries(4, 30*time.Second)
 		})
 	})
 
@@ -99,7 +102,7 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 		It(`GetSettings(getSettingsOptions *GetSettingsOptions)`, func() {
 
 			getSettingsOptions := &adminserviceapiv1.GetSettingsOptions{
-				AccountID: &accountID,
+				AccountID: core.StringPtr("testString"),
 			}
 
 			accountSettings, response, err := adminServiceApiService.GetSettings(getSettingsOptions)
@@ -108,6 +111,14 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(accountSettings).ToNot(BeNil())
 
+			//
+			// The following status codes aren't covered by tests.
+			// Please provide integration tests for these too.
+			//
+			// 401
+			// 403
+			// 500
+			//
 		})
 	})
 
@@ -121,20 +132,33 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 				ID: core.StringPtr("us"),
 			}
 
+			notificationsRegistrationModel := &adminserviceapiv1.NotificationsRegistration{
+				InstanceCrn:       core.StringPtr("testString"),
+				SourceName:        core.StringPtr("testString"),
+				SourceDescription: core.StringPtr("testString"),
+			}
+
 			patchAccountSettingsOptions := &adminserviceapiv1.PatchAccountSettingsOptions{
-				AccountID: &accountID,
-				Location:  locationIdModel,
+				AccountID:          core.StringPtr("testString"),
+				Location:           locationIdModel,
+				EventNotifications: notificationsRegistrationModel,
 			}
 
 			accountSettings, response, err := adminServiceApiService.PatchAccountSettings(patchAccountSettingsOptions)
 
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Or(Equal(200), Equal(201), Equal(204)))
-			if response.StatusCode == 204 {
-				Expect(accountSettings).To(BeNil())
-			} else {
-				Expect(accountSettings).ToNot(BeNil())
-			}
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(accountSettings).ToNot(BeNil())
+
+			//
+			// The following status codes aren't covered by tests.
+			// Please provide integration tests for these too.
+			//
+			// 400
+			// 401
+			// 403
+			// 500
+			//
 		})
 	})
 
@@ -152,6 +176,13 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(locations).ToNot(BeNil())
 
+			//
+			// The following status codes aren't covered by tests.
+			// Please provide integration tests for these too.
+			//
+			// 403
+			// 500
+			//
 		})
 	})
 
@@ -171,6 +202,41 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(location).ToNot(BeNil())
 
+			//
+			// The following status codes aren't covered by tests.
+			// Please provide integration tests for these too.
+			//
+			// 403
+			// 404
+			// 500
+			//
+		})
+	})
+
+	Describe(`SendTestEvent - Send test event`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`SendTestEvent(sendTestEventOptions *SendTestEventOptions)`, func() {
+
+			sendTestEventOptions := &adminserviceapiv1.SendTestEventOptions{
+				AccountID: core.StringPtr("testString"),
+			}
+
+			testEvent, response, err := adminServiceApiService.SendTestEvent(sendTestEventOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(testEvent).ToNot(BeNil())
+
+			//
+			// The following status codes aren't covered by tests.
+			// Please provide integration tests for these too.
+			//
+			// 401
+			// 403
+			// 500
+			//
 		})
 	})
 })

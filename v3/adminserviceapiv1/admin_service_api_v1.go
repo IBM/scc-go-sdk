@@ -29,8 +29,8 @@ import (
 	"reflect"
 	"time"
 
-	common "github.com/IBM/scc-go-sdk/v3/common"
 	"github.com/IBM/go-sdk-core/v5/core"
+	common "github.com/IBM/scc-go-sdk/v3/common"
 )
 
 // AdminServiceApiV1 : This is an API for the Admin Service
@@ -112,9 +112,9 @@ func NewAdminServiceApiV1(options *AdminServiceApiV1Options) (service *AdminServ
 func GetServiceURLForRegion(region string) (string, error) {
 	var endpoints = map[string]string{
 		"us-south": "https://us.compliance.cloud.ibm.com",
-		"us-east": "https://us.compliance.cloud.ibm.com",
-		"eu-de": "https://eu.compliance.cloud.ibm.com",
-		"eu-gb": "https://uk.compliance.cloud.ibm.com",
+		"us-east":  "https://us.compliance.cloud.ibm.com",
+		"eu-de":    "https://eu.compliance.cloud.ibm.com",
+		"eu-gb":    "https://uk.compliance.cloud.ibm.com",
 	}
 
 	if url, ok := endpoints[region]; ok {
@@ -487,7 +487,7 @@ type AccountSettings struct {
 // NewAccountSettings : Instantiate AccountSettings (Generic Model Constructor)
 func (*AdminServiceApiV1) NewAccountSettings(location *LocationID, eventNotifications *NotificationsRegistration) (_model *AccountSettings, err error) {
 	_model = &AccountSettings{
-		Location: location,
+		Location:           location,
 		EventNotifications: eventNotifications,
 	}
 	err = core.ValidateStruct(_model, "required parameters")
@@ -772,8 +772,8 @@ type PatchAccountSettingsOptions struct {
 // NewPatchAccountSettingsOptions : Instantiate PatchAccountSettingsOptions
 func (*AdminServiceApiV1) NewPatchAccountSettingsOptions(accountID string, location *LocationID, eventNotifications *NotificationsRegistration) *PatchAccountSettingsOptions {
 	return &PatchAccountSettingsOptions{
-		AccountID: core.StringPtr(accountID),
-		Location: location,
+		AccountID:          core.StringPtr(accountID),
+		Location:           location,
 		EventNotifications: eventNotifications,
 	}
 }

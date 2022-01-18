@@ -171,12 +171,12 @@ func (adminServiceApi *AdminServiceApiV1) DisableRetries() {
 
 // GetSettings : View account settings
 // View the current settings for a specific account.
-func (adminServiceApi *AdminServiceApiV1) GetSettings(getSettingsOptions *GetSettingsOptions) (result AccountSettingsIntf, response *core.DetailedResponse, err error) {
+func (adminServiceApi *AdminServiceApiV1) GetSettings(getSettingsOptions *GetSettingsOptions) (result *AccountSettings, response *core.DetailedResponse, err error) {
 	return adminServiceApi.GetSettingsWithContext(context.Background(), getSettingsOptions)
 }
 
 // GetSettingsWithContext is an alternate form of the GetSettings method which supports a Context parameter
-func (adminServiceApi *AdminServiceApiV1) GetSettingsWithContext(ctx context.Context, getSettingsOptions *GetSettingsOptions) (result AccountSettingsIntf, response *core.DetailedResponse, err error) {
+func (adminServiceApi *AdminServiceApiV1) GetSettingsWithContext(ctx context.Context, getSettingsOptions *GetSettingsOptions) (result *AccountSettings, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getSettingsOptions, "getSettingsOptions cannot be nil")
 	if err != nil {
 		return
@@ -231,12 +231,12 @@ func (adminServiceApi *AdminServiceApiV1) GetSettingsWithContext(ctx context.Con
 
 // PatchAccountSettings : Update account settings
 // Update the settings for a specific account.
-func (adminServiceApi *AdminServiceApiV1) PatchAccountSettings(patchAccountSettingsOptions *PatchAccountSettingsOptions) (result AccountSettingsIntf, response *core.DetailedResponse, err error) {
+func (adminServiceApi *AdminServiceApiV1) PatchAccountSettings(patchAccountSettingsOptions *PatchAccountSettingsOptions) (result *AccountSettings, response *core.DetailedResponse, err error) {
 	return adminServiceApi.PatchAccountSettingsWithContext(context.Background(), patchAccountSettingsOptions)
 }
 
 // PatchAccountSettingsWithContext is an alternate form of the PatchAccountSettings method which supports a Context parameter
-func (adminServiceApi *AdminServiceApiV1) PatchAccountSettingsWithContext(ctx context.Context, patchAccountSettingsOptions *PatchAccountSettingsOptions) (result AccountSettingsIntf, response *core.DetailedResponse, err error) {
+func (adminServiceApi *AdminServiceApiV1) PatchAccountSettingsWithContext(ctx context.Context, patchAccountSettingsOptions *PatchAccountSettingsOptions) (result *AccountSettings, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(patchAccountSettingsOptions, "patchAccountSettingsOptions cannot be nil")
 	if err != nil {
 		return
@@ -269,7 +269,14 @@ func (adminServiceApi *AdminServiceApiV1) PatchAccountSettingsWithContext(ctx co
 	builder.AddHeader("Accept", "application/json")
 	builder.AddHeader("Content-Type", "application/json")
 
-	_, err = builder.SetBodyContentJSON(patchAccountSettingsOptions.Body)
+	body := make(map[string]interface{})
+	if patchAccountSettingsOptions.Location != nil {
+		body["location"] = patchAccountSettingsOptions.Location
+	}
+	if patchAccountSettingsOptions.EventNotifications != nil {
+		body["event_notifications"] = patchAccountSettingsOptions.EventNotifications
+	}
+	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
 		return
 	}
@@ -469,23 +476,12 @@ func (adminServiceApi *AdminServiceApiV1) SendTestEventWithContext(ctx context.C
 }
 
 // AccountSettings : Account settings.
-// Models which "extend" this model:
-// - AccountSettingsLocation
-// - AccountSettingsEventNotifications
 type AccountSettings struct {
 	// Location settings.
 	Location *LocationID `json:"location,omitempty"`
 
 	// The Event Notification settings to register.
 	EventNotifications *NotificationsRegistration `json:"event_notifications,omitempty"`
-}
-
-func (*AccountSettings) isaAccountSettings() bool {
-	return true
-}
-
-type AccountSettingsIntf interface {
-	isaAccountSettings() bool
 }
 
 // UnmarshalAccountSettings unmarshals an instance of AccountSettings from the specified map of raw messages.
@@ -753,18 +749,20 @@ type PatchAccountSettingsOptions struct {
 	// The ID of the managing account.
 	AccountID *string `json:"account_id" validate:"required,ne="`
 
-	// The settings that you want to update to as a JSON object.
-	Body AccountSettingsIntf `json:"body" validate:"required"`
+	// Location settings.
+	Location *LocationID `json:"location,omitempty"`
+
+	// The Event Notification settings to register.
+	EventNotifications *NotificationsRegistration `json:"event_notifications,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
 }
 
 // NewPatchAccountSettingsOptions : Instantiate PatchAccountSettingsOptions
-func (*AdminServiceApiV1) NewPatchAccountSettingsOptions(accountID string, body AccountSettingsIntf) *PatchAccountSettingsOptions {
+func (*AdminServiceApiV1) NewPatchAccountSettingsOptions(accountID string) *PatchAccountSettingsOptions {
 	return &PatchAccountSettingsOptions{
 		AccountID: core.StringPtr(accountID),
-		Body:      body,
 	}
 }
 
@@ -774,9 +772,15 @@ func (_options *PatchAccountSettingsOptions) SetAccountID(accountID string) *Pat
 	return _options
 }
 
-// SetBody : Allow user to set Body
-func (_options *PatchAccountSettingsOptions) SetBody(body AccountSettingsIntf) *PatchAccountSettingsOptions {
-	_options.Body = body
+// SetLocation : Allow user to set Location
+func (_options *PatchAccountSettingsOptions) SetLocation(location *LocationID) *PatchAccountSettingsOptions {
+	_options.Location = location
+	return _options
+}
+
+// SetEventNotifications : Allow user to set EventNotifications
+func (_options *PatchAccountSettingsOptions) SetEventNotifications(eventNotifications *NotificationsRegistration) *PatchAccountSettingsOptions {
+	_options.EventNotifications = eventNotifications
 	return _options
 }
 
@@ -850,68 +854,6 @@ type TestEvent struct {
 func UnmarshalTestEvent(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(TestEvent)
 	err = core.UnmarshalPrimitive(m, "success", &obj.Success)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// AccountSettingsEventNotifications : AccountSettingsEventNotifications struct
-// This model "extends" AccountSettings
-type AccountSettingsEventNotifications struct {
-	// The Event Notification settings to register.
-	EventNotifications *NotificationsRegistration `json:"event_notifications" validate:"required"`
-}
-
-// NewAccountSettingsEventNotifications : Instantiate AccountSettingsEventNotifications (Generic Model Constructor)
-func (*AdminServiceApiV1) NewAccountSettingsEventNotifications(eventNotifications *NotificationsRegistration) (_model *AccountSettingsEventNotifications, err error) {
-	_model = &AccountSettingsEventNotifications{
-		EventNotifications: eventNotifications,
-	}
-	err = core.ValidateStruct(_model, "required parameters")
-	return
-}
-
-func (*AccountSettingsEventNotifications) isaAccountSettings() bool {
-	return true
-}
-
-// UnmarshalAccountSettingsEventNotifications unmarshals an instance of AccountSettingsEventNotifications from the specified map of raw messages.
-func UnmarshalAccountSettingsEventNotifications(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(AccountSettingsEventNotifications)
-	err = core.UnmarshalModel(m, "event_notifications", &obj.EventNotifications, UnmarshalNotificationsRegistration)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// AccountSettingsLocation : AccountSettingsLocation struct
-// This model "extends" AccountSettings
-type AccountSettingsLocation struct {
-	// Location settings.
-	Location *LocationID `json:"location" validate:"required"`
-}
-
-// NewAccountSettingsLocation : Instantiate AccountSettingsLocation (Generic Model Constructor)
-func (*AdminServiceApiV1) NewAccountSettingsLocation(location *LocationID) (_model *AccountSettingsLocation, err error) {
-	_model = &AccountSettingsLocation{
-		Location: location,
-	}
-	err = core.ValidateStruct(_model, "required parameters")
-	return
-}
-
-func (*AccountSettingsLocation) isaAccountSettings() bool {
-	return true
-}
-
-// UnmarshalAccountSettingsLocation unmarshals an instance of AccountSettingsLocation from the specified map of raw messages.
-func UnmarshalAccountSettingsLocation(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(AccountSettingsLocation)
-	err = core.UnmarshalModel(m, "location", &obj.Location, UnmarshalLocationID)
 	if err != nil {
 		return
 	}

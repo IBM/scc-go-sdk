@@ -129,17 +129,8 @@ var _ = Describe(`AdminServiceApiV1 Examples Tests`, func() {
 			fmt.Println("\nPatchAccountSettings() result:")
 			// begin-PatchAccountSettings
 
-			locationIdModel := &adminserviceapiv1.LocationID{
-				ID: core.StringPtr("us"),
-			}
-
-			accountSettingsModel := &adminserviceapiv1.AccountSettingsLocation{
-				Location: locationIdModel,
-			}
-
 			patchAccountSettingsOptions := adminServiceApiService.NewPatchAccountSettingsOptions(
 				"testString",
-				accountSettingsModel,
 			)
 
 			accountSettings, response, err := adminServiceApiService.PatchAccountSettings(patchAccountSettingsOptions)
@@ -216,7 +207,7 @@ var _ = Describe(`AdminServiceApiV1 Examples Tests`, func() {
 			// end-SendTestEvent
 
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
+			Expect(response.StatusCode).To(Equal(202))
 			Expect(testEvent).ToNot(BeNil())
 
 		})

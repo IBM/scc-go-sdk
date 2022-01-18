@@ -148,7 +148,6 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 			} else {
 				Expect(accountSettings).ToNot(BeNil())
 			}
-			Expect(accountSettings).ToNot(BeNil())
 
 			//
 			// The following status codes aren't covered by tests.

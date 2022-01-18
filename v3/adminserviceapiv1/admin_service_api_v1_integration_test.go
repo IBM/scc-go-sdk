@@ -229,7 +229,7 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 			testEvent, response, err := adminServiceApiService.SendTestEvent(sendTestEventOptions)
 
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
+			Expect(response.StatusCode).To(Equal(202))
 			Expect(testEvent).ToNot(BeNil())
 
 			//

@@ -39,6 +39,8 @@ import (
  * The integration test will automatically skip tests if the required config file is not available.
  */
 
+var accountID = os.Getenv("ACCOUNT_ID")
+
 var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 
 	const externalConfigFile = "../admin_service_api_v1.env"
@@ -102,7 +104,7 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 		It(`GetSettings(getSettingsOptions *GetSettingsOptions)`, func() {
 
 			getSettingsOptions := &adminserviceapiv1.GetSettingsOptions{
-				AccountID: core.StringPtr("testString"),
+				AccountID: &accountID,
 			}
 
 			accountSettings, response, err := adminServiceApiService.GetSettings(getSettingsOptions)
@@ -139,7 +141,7 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 			}
 
 			patchAccountSettingsOptions := &adminserviceapiv1.PatchAccountSettingsOptions{
-				AccountID:          core.StringPtr("testString"),
+				AccountID:          &accountID,
 				Location:           locationIdModel,
 				EventNotifications: notificationsRegistrationModel,
 			}
@@ -147,8 +149,14 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 			accountSettings, response, err := adminServiceApiService.PatchAccountSettings(patchAccountSettingsOptions)
 
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(accountSettings).ToNot(BeNil())
+            Expect(response.StatusCode).To(Or(Equal(200), Equal(201), Equal(204)))
+			if response.StatusCode == 204 {
+				Expect(accountSettings).To(BeNil())
+			} else {
+				Expect(accountSettings).ToNot(BeNil())
+			}
+			// Expect(response.StatusCode).To(Equal(200))
+			// Expect(accountSettings).ToNot(BeNil())
 
 			//
 			// The following status codes aren't covered by tests.
@@ -220,7 +228,7 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 		It(`SendTestEvent(sendTestEventOptions *SendTestEventOptions)`, func() {
 
 			sendTestEventOptions := &adminserviceapiv1.SendTestEventOptions{
-				AccountID: core.StringPtr("testString"),
+				AccountID: &accountID,
 			}
 
 			testEvent, response, err := adminServiceApiService.SendTestEvent(sendTestEventOptions)

@@ -141,8 +141,9 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 			}
 
 			patchAccountSettingsOptions := &adminserviceapiv1.PatchAccountSettingsOptions{
-				AccountID: &accountID,
-				Location:  locationIdModel,
+				AccountID:          &accountID,
+				Location:           locationIdModel,
+				EventNotifications: notificationsRegistrationModel,
 			}
 
 			accountSettings, response, err := adminServiceApiService.PatchAccountSettings(patchAccountSettingsOptions)

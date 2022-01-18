@@ -141,9 +141,8 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 			}
 
 			patchAccountSettingsOptions := &adminserviceapiv1.PatchAccountSettingsOptions{
-				AccountID:          &accountID,
-				Location:           locationIdModel,
-				EventNotifications: notificationsRegistrationModel,
+				AccountID: &accountID,
+				Location:  locationIdModel,
 			}
 
 			accountSettings, response, err := adminServiceApiService.PatchAccountSettings(patchAccountSettingsOptions)
@@ -234,7 +233,7 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 			testEvent, response, err := adminServiceApiService.SendTestEvent(sendTestEventOptions)
 
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
+			Expect(response.StatusCode).To(Equal(202))
 			Expect(testEvent).ToNot(BeNil())
 
 			//

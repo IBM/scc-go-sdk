@@ -134,16 +134,16 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 				ID: core.StringPtr("us"),
 			}
 
-			notificationsRegistrationModel := &adminserviceapiv1.NotificationsRegistration{
-				InstanceCrn:       core.StringPtr("testString"),
-				SourceName:        core.StringPtr("testString"),
-				SourceDescription: core.StringPtr("testString"),
-			}
+			// notificationsRegistrationModel := &adminserviceapiv1.NotificationsRegistration{
+			// 	InstanceCrn:       core.StringPtr("testString"),
+			// 	SourceName:        core.StringPtr("testString"),
+			// 	SourceDescription: core.StringPtr("testString"),
+			// }
 
 			patchAccountSettingsOptions := &adminserviceapiv1.PatchAccountSettingsOptions{
 				AccountID:          &accountID,
 				Location:           locationIdModel,
-				EventNotifications: notificationsRegistrationModel,
+				// EventNotifications: notificationsRegistrationModel,
 			}
 
 			accountSettings, response, err := adminServiceApiService.PatchAccountSettings(patchAccountSettingsOptions)

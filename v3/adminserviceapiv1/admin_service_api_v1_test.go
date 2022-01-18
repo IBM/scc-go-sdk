@@ -239,7 +239,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"location": {"id": "us"}, "event_notifications": {"instance_crn": "InstanceCrn", "source_name": "SourceName", "source_description": "SourceDescription"}}`)
+					fmt.Fprintf(res, "%s", `{"location": {"id": "us"}}`)
 				}))
 			})
 			It(`Invoke GetSettings successfully with retries`, func() {
@@ -293,7 +293,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"location": {"id": "us"}, "event_notifications": {"instance_crn": "InstanceCrn", "source_name": "SourceName", "source_description": "SourceDescription"}}`)
+					fmt.Fprintf(res, "%s", `{"location": {"id": "us"}}`)
 				}))
 			})
 			It(`Invoke GetSettings successfully`, func() {
@@ -416,17 +416,14 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 				locationIdModel := new(adminserviceapiv1.LocationID)
 				locationIdModel.ID = core.StringPtr("us")
 
-				// Construct an instance of the NotificationsRegistration model
-				notificationsRegistrationModel := new(adminserviceapiv1.NotificationsRegistration)
-				notificationsRegistrationModel.InstanceCrn = core.StringPtr("testString")
-				notificationsRegistrationModel.SourceName = core.StringPtr("testString")
-				notificationsRegistrationModel.SourceDescription = core.StringPtr("testString")
+				// Construct an instance of the AccountSettingsLocation model
+				accountSettingsModel := new(adminserviceapiv1.AccountSettingsLocation)
+				accountSettingsModel.Location = locationIdModel
 
 				// Construct an instance of the PatchAccountSettingsOptions model
 				patchAccountSettingsOptionsModel := new(adminserviceapiv1.PatchAccountSettingsOptions)
 				patchAccountSettingsOptionsModel.AccountID = core.StringPtr("testString")
-				patchAccountSettingsOptionsModel.Location = locationIdModel
-				patchAccountSettingsOptionsModel.EventNotifications = notificationsRegistrationModel
+				patchAccountSettingsOptionsModel.Body = accountSettingsModel
 				patchAccountSettingsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
 				result, response, operationErr := adminServiceApiService.PatchAccountSettings(patchAccountSettingsOptionsModel)
@@ -479,7 +476,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"location": {"id": "us"}, "event_notifications": {"instance_crn": "InstanceCrn", "source_name": "SourceName", "source_description": "SourceDescription"}}`)
+					fmt.Fprintf(res, "%s", `{"location": {"id": "us"}}`)
 				}))
 			})
 			It(`Invoke PatchAccountSettings successfully with retries`, func() {
@@ -495,17 +492,14 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 				locationIdModel := new(adminserviceapiv1.LocationID)
 				locationIdModel.ID = core.StringPtr("us")
 
-				// Construct an instance of the NotificationsRegistration model
-				notificationsRegistrationModel := new(adminserviceapiv1.NotificationsRegistration)
-				notificationsRegistrationModel.InstanceCrn = core.StringPtr("testString")
-				notificationsRegistrationModel.SourceName = core.StringPtr("testString")
-				notificationsRegistrationModel.SourceDescription = core.StringPtr("testString")
+				// Construct an instance of the AccountSettingsLocation model
+				accountSettingsModel := new(adminserviceapiv1.AccountSettingsLocation)
+				accountSettingsModel.Location = locationIdModel
 
 				// Construct an instance of the PatchAccountSettingsOptions model
 				patchAccountSettingsOptionsModel := new(adminserviceapiv1.PatchAccountSettingsOptions)
 				patchAccountSettingsOptionsModel.AccountID = core.StringPtr("testString")
-				patchAccountSettingsOptionsModel.Location = locationIdModel
-				patchAccountSettingsOptionsModel.EventNotifications = notificationsRegistrationModel
+				patchAccountSettingsOptionsModel.Body = accountSettingsModel
 				patchAccountSettingsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with a Context to test a timeout error
@@ -561,7 +555,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"location": {"id": "us"}, "event_notifications": {"instance_crn": "InstanceCrn", "source_name": "SourceName", "source_description": "SourceDescription"}}`)
+					fmt.Fprintf(res, "%s", `{"location": {"id": "us"}}`)
 				}))
 			})
 			It(`Invoke PatchAccountSettings successfully`, func() {
@@ -582,17 +576,14 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 				locationIdModel := new(adminserviceapiv1.LocationID)
 				locationIdModel.ID = core.StringPtr("us")
 
-				// Construct an instance of the NotificationsRegistration model
-				notificationsRegistrationModel := new(adminserviceapiv1.NotificationsRegistration)
-				notificationsRegistrationModel.InstanceCrn = core.StringPtr("testString")
-				notificationsRegistrationModel.SourceName = core.StringPtr("testString")
-				notificationsRegistrationModel.SourceDescription = core.StringPtr("testString")
+				// Construct an instance of the AccountSettingsLocation model
+				accountSettingsModel := new(adminserviceapiv1.AccountSettingsLocation)
+				accountSettingsModel.Location = locationIdModel
 
 				// Construct an instance of the PatchAccountSettingsOptions model
 				patchAccountSettingsOptionsModel := new(adminserviceapiv1.PatchAccountSettingsOptions)
 				patchAccountSettingsOptionsModel.AccountID = core.StringPtr("testString")
-				patchAccountSettingsOptionsModel.Location = locationIdModel
-				patchAccountSettingsOptionsModel.EventNotifications = notificationsRegistrationModel
+				patchAccountSettingsOptionsModel.Body = accountSettingsModel
 				patchAccountSettingsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
@@ -614,17 +605,14 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 				locationIdModel := new(adminserviceapiv1.LocationID)
 				locationIdModel.ID = core.StringPtr("us")
 
-				// Construct an instance of the NotificationsRegistration model
-				notificationsRegistrationModel := new(adminserviceapiv1.NotificationsRegistration)
-				notificationsRegistrationModel.InstanceCrn = core.StringPtr("testString")
-				notificationsRegistrationModel.SourceName = core.StringPtr("testString")
-				notificationsRegistrationModel.SourceDescription = core.StringPtr("testString")
+				// Construct an instance of the AccountSettingsLocation model
+				accountSettingsModel := new(adminserviceapiv1.AccountSettingsLocation)
+				accountSettingsModel.Location = locationIdModel
 
 				// Construct an instance of the PatchAccountSettingsOptions model
 				patchAccountSettingsOptionsModel := new(adminserviceapiv1.PatchAccountSettingsOptions)
 				patchAccountSettingsOptionsModel.AccountID = core.StringPtr("testString")
-				patchAccountSettingsOptionsModel.Location = locationIdModel
-				patchAccountSettingsOptionsModel.EventNotifications = notificationsRegistrationModel
+				patchAccountSettingsOptionsModel.Body = accountSettingsModel
 				patchAccountSettingsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
 				err := adminServiceApiService.SetServiceURL("")
@@ -667,17 +655,14 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 				locationIdModel := new(adminserviceapiv1.LocationID)
 				locationIdModel.ID = core.StringPtr("us")
 
-				// Construct an instance of the NotificationsRegistration model
-				notificationsRegistrationModel := new(adminserviceapiv1.NotificationsRegistration)
-				notificationsRegistrationModel.InstanceCrn = core.StringPtr("testString")
-				notificationsRegistrationModel.SourceName = core.StringPtr("testString")
-				notificationsRegistrationModel.SourceDescription = core.StringPtr("testString")
+				// Construct an instance of the AccountSettingsLocation model
+				accountSettingsModel := new(adminserviceapiv1.AccountSettingsLocation)
+				accountSettingsModel.Location = locationIdModel
 
 				// Construct an instance of the PatchAccountSettingsOptions model
 				patchAccountSettingsOptionsModel := new(adminserviceapiv1.PatchAccountSettingsOptions)
 				patchAccountSettingsOptionsModel.AccountID = core.StringPtr("testString")
-				patchAccountSettingsOptionsModel.Location = locationIdModel
-				patchAccountSettingsOptionsModel.EventNotifications = notificationsRegistrationModel
+				patchAccountSettingsOptionsModel.Body = accountSettingsModel
 				patchAccountSettingsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation
@@ -1323,12 +1308,6 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 				URL:           "http://adminserviceapiv1modelgenerator.com",
 				Authenticator: &core.NoAuthAuthenticator{},
 			})
-			It(`Invoke NewAccountSettings successfully`, func() {
-				var location *adminserviceapiv1.LocationID = nil
-				var eventNotifications *adminserviceapiv1.NotificationsRegistration = nil
-				_, err := adminServiceApiService.NewAccountSettings(location, eventNotifications)
-				Expect(err).ToNot(BeNil())
-			})
 			It(`Invoke NewGetLocationOptions successfully`, func() {
 				// Construct an instance of the GetLocationOptions model
 				locationID := "us"
@@ -1375,29 +1354,22 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 				locationIdModel.ID = core.StringPtr("us")
 				Expect(locationIdModel.ID).To(Equal(core.StringPtr("us")))
 
-				// Construct an instance of the NotificationsRegistration model
-				notificationsRegistrationModel := new(adminserviceapiv1.NotificationsRegistration)
-				Expect(notificationsRegistrationModel).ToNot(BeNil())
-				notificationsRegistrationModel.InstanceCrn = core.StringPtr("testString")
-				notificationsRegistrationModel.SourceName = core.StringPtr("testString")
-				notificationsRegistrationModel.SourceDescription = core.StringPtr("testString")
-				Expect(notificationsRegistrationModel.InstanceCrn).To(Equal(core.StringPtr("testString")))
-				Expect(notificationsRegistrationModel.SourceName).To(Equal(core.StringPtr("testString")))
-				Expect(notificationsRegistrationModel.SourceDescription).To(Equal(core.StringPtr("testString")))
+				// Construct an instance of the AccountSettingsLocation model
+				accountSettingsModel := new(adminserviceapiv1.AccountSettingsLocation)
+				Expect(accountSettingsModel).ToNot(BeNil())
+				accountSettingsModel.Location = locationIdModel
+				Expect(accountSettingsModel.Location).To(Equal(locationIdModel))
 
 				// Construct an instance of the PatchAccountSettingsOptions model
 				accountID := "testString"
-				var patchAccountSettingsOptionsLocation *adminserviceapiv1.LocationID = nil
-				var patchAccountSettingsOptionsEventNotifications *adminserviceapiv1.NotificationsRegistration = nil
-				patchAccountSettingsOptionsModel := adminServiceApiService.NewPatchAccountSettingsOptions(accountID, patchAccountSettingsOptionsLocation, patchAccountSettingsOptionsEventNotifications)
+				var body adminserviceapiv1.AccountSettingsIntf = nil
+				patchAccountSettingsOptionsModel := adminServiceApiService.NewPatchAccountSettingsOptions(accountID, body)
 				patchAccountSettingsOptionsModel.SetAccountID("testString")
-				patchAccountSettingsOptionsModel.SetLocation(locationIdModel)
-				patchAccountSettingsOptionsModel.SetEventNotifications(notificationsRegistrationModel)
+				patchAccountSettingsOptionsModel.SetBody(accountSettingsModel)
 				patchAccountSettingsOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(patchAccountSettingsOptionsModel).ToNot(BeNil())
 				Expect(patchAccountSettingsOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
-				Expect(patchAccountSettingsOptionsModel.Location).To(Equal(locationIdModel))
-				Expect(patchAccountSettingsOptionsModel.EventNotifications).To(Equal(notificationsRegistrationModel))
+				Expect(patchAccountSettingsOptionsModel.Body).To(Equal(accountSettingsModel))
 				Expect(patchAccountSettingsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewSendTestEventOptions successfully`, func() {
@@ -1409,6 +1381,16 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 				Expect(sendTestEventOptionsModel).ToNot(BeNil())
 				Expect(sendTestEventOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(sendTestEventOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewAccountSettingsEventNotifications successfully`, func() {
+				var eventNotifications *adminserviceapiv1.NotificationsRegistration = nil
+				_, err := adminServiceApiService.NewAccountSettingsEventNotifications(eventNotifications)
+				Expect(err).ToNot(BeNil())
+			})
+			It(`Invoke NewAccountSettingsLocation successfully`, func() {
+				var location *adminserviceapiv1.LocationID = nil
+				_, err := adminServiceApiService.NewAccountSettingsLocation(location)
+				Expect(err).ToNot(BeNil())
 			})
 		})
 	})

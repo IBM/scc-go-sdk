@@ -134,29 +134,20 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 				ID: core.StringPtr("us"),
 			}
 
-			// notificationsRegistrationModel := &adminserviceapiv1.NotificationsRegistration{
-			// 	InstanceCrn:       core.StringPtr("testString"),
-			// 	SourceName:        core.StringPtr("testString"),
-			// 	SourceDescription: core.StringPtr("testString"),
-			// }
+			accountSettingsModel := &adminserviceapiv1.AccountSettingsLocation{
+				Location: locationIdModel,
+			}
 
 			patchAccountSettingsOptions := &adminserviceapiv1.PatchAccountSettingsOptions{
 				AccountID: &accountID,
-				Location:  locationIdModel,
-				// EventNotifications: notificationsRegistrationModel,
+				Body:      accountSettingsModel,
 			}
 
 			accountSettings, response, err := adminServiceApiService.PatchAccountSettings(patchAccountSettingsOptions)
 
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Or(Equal(200), Equal(201), Equal(204)))
-			if response.StatusCode == 204 {
-				Expect(accountSettings).To(BeNil())
-			} else {
-				Expect(accountSettings).ToNot(BeNil())
-			}
-			// Expect(response.StatusCode).To(Equal(200))
-			// Expect(accountSettings).ToNot(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(accountSettings).ToNot(BeNil())
 
 			//
 			// The following status codes aren't covered by tests.
@@ -234,7 +225,7 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 			testEvent, response, err := adminServiceApiService.SendTestEvent(sendTestEventOptions)
 
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(202))
+			Expect(response.StatusCode).To(Equal(200))
 			Expect(testEvent).ToNot(BeNil())
 
 			//

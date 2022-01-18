@@ -133,14 +133,13 @@ var _ = Describe(`AdminServiceApiV1 Examples Tests`, func() {
 				ID: core.StringPtr("us"),
 			}
 
-			notificationsRegistrationModel := &adminserviceapiv1.NotificationsRegistration{
-				InstanceCrn: core.StringPtr("testString"),
+			accountSettingsModel := &adminserviceapiv1.AccountSettingsLocation{
+				Location: locationIdModel,
 			}
 
 			patchAccountSettingsOptions := adminServiceApiService.NewPatchAccountSettingsOptions(
 				"testString",
-				locationIdModel,
-				notificationsRegistrationModel,
+				accountSettingsModel,
 			)
 
 			accountSettings, response, err := adminServiceApiService.PatchAccountSettings(patchAccountSettingsOptions)

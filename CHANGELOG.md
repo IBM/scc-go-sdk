@@ -1,3 +1,10 @@
+# [3.1.0](https://github.com/IBM/scc-go-sdk/compare/v3.0.0...v3.1.0) (2022-01-21)
+
+
+### Features
+
+* **AdminAPI:** Adding the notifications feature introduced Q4 2021 ([ccbfe65](https://github.com/IBM/scc-go-sdk/commit/ccbfe653a89cfd89fe0ee3fded23c7228e977827))
+
 # [3.0.0](https://github.com/IBM/scc-go-sdk/compare/v2.0.0...v3.0.0) (2021-12-22)
 
 

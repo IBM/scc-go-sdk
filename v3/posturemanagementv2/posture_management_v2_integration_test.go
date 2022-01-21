@@ -464,7 +464,7 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 
 			getProfileOptions := &posturemanagementv2.GetProfileOptions{
 				ID:            core.StringPtr(profileID),
-				ProfileType:   core.StringPtr("4"),
+				ProfileType:   core.StringPtr("custom"),
 				AccountID:     core.StringPtr(accountID),
 				TransactionID: core.StringPtr(transactionID),
 			}

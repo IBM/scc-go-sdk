@@ -1,3 +1,10 @@
+## [3.1.1](https://github.com/IBM/scc-go-sdk/compare/v3.1.0...v3.1.1) (2022-02-01)
+
+
+### Bug Fixes
+
+* **PostureManagementAPI:** Service URL to be picked according to selected region ([05a0ae8](https://github.com/IBM/scc-go-sdk/commit/05a0ae87daae55c4594f629e180d39ca82876c02))
+
 # [3.1.0](https://github.com/IBM/scc-go-sdk/compare/v3.0.0...v3.1.0) (2022-01-21)
 
 

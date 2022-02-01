@@ -4,7 +4,7 @@ VDIR=v3
 COVERAGE = -coverprofile=../c.out -covermode=atomic
 SHELL := /usr/bin/env bash
 
-all: test lint fmtcheck tidy
+all: test lint lint tidy
 travis-ci: test-cov lint tidy
 
 test:
@@ -19,7 +19,7 @@ test-int:
 test-int-cov:
 	cd ${VDIR} && go test `go list ./...` -tags=integration ${COVERAGE}
 
-fmtcheck:
+lint:
 	diff -u <(echo -n) <(gofmt -d -s .)
 
 tidy:

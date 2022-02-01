@@ -133,6 +133,15 @@ func NewPostureManagementV1(options *PostureManagementV1Options) (service *Postu
 
 // GetServiceURLForRegion returns the service URL to be used for the specified region
 func GetServiceURLForRegion(region string) (string, error) {
+	var endpoints = map[string]string{
+		"us-south": "https://us.compliance.cloud.ibm.com",
+		"us-east":  "https://us.compliance.cloud.ibm.com",
+		"eu-de":    "https://eu.compliance.cloud.ibm.com",
+	}
+
+	if url, ok := endpoints[region]; ok {
+		return url, nil
+	}
 	return "", fmt.Errorf("service does not support regional URLs")
 }
 

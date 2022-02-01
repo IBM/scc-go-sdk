@@ -2,7 +2,7 @@
 // +build integration
 
 /**
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,9 @@ package adminserviceapiv1_test
 
 import (
 	"fmt"
+	"log"
 	"os"
+	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/IBM/scc-go-sdk/v3/adminserviceapiv1"
@@ -89,6 +91,9 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(adminServiceApiService).ToNot(BeNil())
 			Expect(adminServiceApiService.Service.Options.URL).To(Equal(serviceURL))
+
+			core.SetLogger(core.NewLogger(core.LevelDebug, log.New(GinkgoWriter, "", log.LstdFlags), log.New(GinkgoWriter, "", log.LstdFlags)))
+			adminServiceApiService.EnableRetries(4, 30*time.Second)
 		})
 	})
 
@@ -108,6 +113,14 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(accountSettings).ToNot(BeNil())
 
+			//
+			// The following status codes aren't covered by tests.
+			// Please provide integration tests for these too.
+			//
+			// 401
+			// 403
+			// 500
+			//
 		})
 	})
 
@@ -135,6 +148,16 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 			} else {
 				Expect(accountSettings).ToNot(BeNil())
 			}
+
+			//
+			// The following status codes aren't covered by tests.
+			// Please provide integration tests for these too.
+			//
+			// 400
+			// 401
+			// 403
+			// 500
+			//
 		})
 	})
 
@@ -152,6 +175,13 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(locations).ToNot(BeNil())
 
+			//
+			// The following status codes aren't covered by tests.
+			// Please provide integration tests for these too.
+			//
+			// 403
+			// 500
+			//
 		})
 	})
 
@@ -171,6 +201,41 @@ var _ = Describe(`AdminServiceApiV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(location).ToNot(BeNil())
 
+			//
+			// The following status codes aren't covered by tests.
+			// Please provide integration tests for these too.
+			//
+			// 403
+			// 404
+			// 500
+			//
+		})
+	})
+
+	Describe(`SendTestEvent - Send test event`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`SendTestEvent(sendTestEventOptions *SendTestEventOptions)`, func() {
+
+			sendTestEventOptions := &adminserviceapiv1.SendTestEventOptions{
+				AccountID: &accountID,
+			}
+
+			testEvent, response, err := adminServiceApiService.SendTestEvent(sendTestEventOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(202))
+			Expect(testEvent).ToNot(BeNil())
+
+			//
+			// The following status codes aren't covered by tests.
+			// Please provide integration tests for these too.
+			//
+			// 401
+			// 403
+			// 500
+			//
 		})
 	})
 })

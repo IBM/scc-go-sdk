@@ -2,7 +2,7 @@
 // +build examples
 
 /**
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -129,13 +129,8 @@ var _ = Describe(`AdminServiceApiV1 Examples Tests`, func() {
 			fmt.Println("\nPatchAccountSettings() result:")
 			// begin-PatchAccountSettings
 
-			locationIdModel := &adminserviceapiv1.LocationID{
-				ID: core.StringPtr("eu"),
-			}
-
 			patchAccountSettingsOptions := adminServiceApiService.NewPatchAccountSettingsOptions(
 				"testString",
-				locationIdModel,
 			)
 
 			accountSettings, response, err := adminServiceApiService.PatchAccountSettings(patchAccountSettingsOptions)
@@ -192,6 +187,28 @@ var _ = Describe(`AdminServiceApiV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(location).ToNot(BeNil())
+
+		})
+		It(`SendTestEvent request example`, func() {
+			fmt.Println("\nSendTestEvent() result:")
+			// begin-SendTestEvent
+
+			sendTestEventOptions := adminServiceApiService.NewSendTestEventOptions(
+				"testString",
+			)
+
+			testEvent, response, err := adminServiceApiService.SendTestEvent(sendTestEventOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(testEvent, "", "  ")
+			fmt.Println(string(b))
+
+			// end-SendTestEvent
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(202))
+			Expect(testEvent).ToNot(BeNil())
 
 		})
 	})

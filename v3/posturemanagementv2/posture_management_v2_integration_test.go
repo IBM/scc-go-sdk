@@ -65,6 +65,8 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 		correlationID            string
 		reportSettingID          string
 		transactionID            string
+		profileIDValidation      string
+		profileType              string
 	)
 
 	var shouldSkipTest = func() {
@@ -99,6 +101,8 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 			collectorIDScopeUpdate = config["COLLECTOR_ID_SCOPE_UPDATE"]
 			correlationID = config["CORRELATION_ID"]
 			reportSettingID = config["REPORT_SETTING_ID"]
+			profileIDValidation = config["PROFILE_ID_VALIDATION"]
+			profileType = config["PROFILE_TYPE"]
 			transactionID = uuid.NewString()
 			fmt.Printf("Service URL: %s\n", serviceURL)
 			shouldSkipTest = func() {}
@@ -193,7 +197,6 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 
 			listCredentialsOptions.Offset, err = credentialList.GetNextOffset()
 			Expect(err).To(BeNil())
-
 		})
 	})
 
@@ -214,7 +217,6 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(credential).ToNot(BeNil())
-
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -252,7 +254,6 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(credential).ToNot(BeNil())
-
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -312,7 +313,6 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(collectorList).ToNot(BeNil())
-
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -340,7 +340,6 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(collector).ToNot(BeNil())
-
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -376,7 +375,6 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(collector).ToNot(BeNil())
-
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -464,7 +462,7 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 
 			getProfileOptions := &posturemanagementv2.GetProfileOptions{
 				ID:            core.StringPtr(profileID),
-				ProfileType:   core.StringPtr("custom"),
+				ProfileType:   core.StringPtr(profileType),
 				AccountID:     core.StringPtr(accountID),
 				TransactionID: core.StringPtr(transactionID),
 			}
@@ -911,8 +909,8 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 		It(`CreateValidation(createValidationOptions *CreateValidationOptions)`, func() {
 
 			createValidationOptions := &posturemanagementv2.CreateValidationOptions{
-				ScopeID:   core.StringPtr(scopeID),
-				ProfileID: core.StringPtr(profileID),
+				ScopeID:   core.StringPtr(scopeIDScan),
+				ProfileID: core.StringPtr(profileIDValidation),
 				//GroupProfileID: core.StringPtr("13"),
 				AccountID:     core.StringPtr(accountID),
 				TransactionID: core.StringPtr(transactionID),

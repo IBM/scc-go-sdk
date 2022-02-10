@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ import (
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	common "github.com/IBM/scc-go-sdk/v3/common"
+	common "github.com/IBM/scc-go-sdk/common"
 	"github.com/go-openapi/strfmt"
 )
 
@@ -121,15 +121,6 @@ func NewPostureManagementV2(options *PostureManagementV2Options) (service *Postu
 
 // GetServiceURLForRegion returns the service URL to be used for the specified region
 func GetServiceURLForRegion(region string) (string, error) {
-	var endpoints = map[string]string{
-		"us-south": "https://us.compliance.cloud.ibm.com",
-		"us-east":  "https://us.compliance.cloud.ibm.com",
-		"eu-de":    "https://eu.compliance.cloud.ibm.com",
-	}
-
-	if url, ok := endpoints[region]; ok {
-		return url, nil
-	}
 	return "", fmt.Errorf("service does not support regional URLs")
 }
 
@@ -185,8 +176,8 @@ func (postureManagement *PostureManagementV2) DisableRetries() {
 }
 
 // CreateCredential : Add a credential
-// Add an existing credential that can be used by a collector to access your resources in order to gather information
-// about your configurations, validate them, and initiate any remediation where possible.
+// Add an existing credential that can be used by a collector to access your resources to gather information about your
+// configurations, validate them, and initiate any remediation where possible.
 func (postureManagement *PostureManagementV2) CreateCredential(createCredentialOptions *CreateCredentialOptions) (result *Credential, response *core.DetailedResponse, err error) {
 	return postureManagement.CreateCredentialWithContext(context.Background(), createCredentialOptions)
 }
@@ -277,7 +268,7 @@ func (postureManagement *PostureManagementV2) CreateCredentialWithContext(ctx co
 }
 
 // ListCredentials : List credentials
-// List the credentials results that are available in your account.
+// List the credentials that were previously added to the Security and Compliance Center.
 func (postureManagement *PostureManagementV2) ListCredentials(listCredentialsOptions *ListCredentialsOptions) (result *CredentialList, response *core.DetailedResponse, err error) {
 	return postureManagement.ListCredentialsWithContext(context.Background(), listCredentialsOptions)
 }
@@ -342,7 +333,7 @@ func (postureManagement *PostureManagementV2) ListCredentialsWithContext(ctx con
 }
 
 // GetCredential : View credential details
-// View a stored credential details including its name, type, and secret.
+// View the details of a stored credential, which include its name, type, and secret.
 func (postureManagement *PostureManagementV2) GetCredential(getCredentialOptions *GetCredentialOptions) (result *Credential, response *core.DetailedResponse, err error) {
 	return postureManagement.GetCredentialWithContext(context.Background(), getCredentialOptions)
 }
@@ -409,7 +400,7 @@ func (postureManagement *PostureManagementV2) GetCredentialWithContext(ctx conte
 }
 
 // UpdateCredential : Update a credential
-// Update the way a credential is stored in the Security and Compliance Center, or update the credential itself.
+// Update the way that a credential is stored in the Security and Compliance Center, or update the credential itself.
 func (postureManagement *PostureManagementV2) UpdateCredential(updateCredentialOptions *UpdateCredentialOptions) (result *Credential, response *core.DetailedResponse, err error) {
 	return postureManagement.UpdateCredentialWithContext(context.Background(), updateCredentialOptions)
 }
@@ -645,7 +636,7 @@ func (postureManagement *PostureManagementV2) CreateCollectorWithContext(ctx con
 }
 
 // ListCollectors : List collectors
-// View a list of all of the collectors that are avilable in your account and their current status.
+// View a list of all of the collectors that are available in your account and their status.
 func (postureManagement *PostureManagementV2) ListCollectors(listCollectorsOptions *ListCollectorsOptions) (result *CollectorList, response *core.DetailedResponse, err error) {
 	return postureManagement.ListCollectorsWithContext(context.Background(), listCollectorsOptions)
 }
@@ -899,8 +890,8 @@ func (postureManagement *PostureManagementV2) DeleteCollectorWithContext(ctx con
 }
 
 // ImportProfiles : Import profile
-// Import a profile that you've formatted locally. For more information about the way in which your profile must be
-// formatted, see [the docs](/docs/security-compliance?topic=security-compliance-custom-profiles#CSV-format).
+// Import a profile that you formatted locally. For more information about how your profile must be formatted, see [the
+// docs](/docs/security-compliance?topic=security-compliance-custom-profiles#CSV-format).
 func (postureManagement *PostureManagementV2) ImportProfiles(importProfilesOptions *ImportProfilesOptions) (result *BasicResult, response *core.DetailedResponse, err error) {
 	return postureManagement.ImportProfilesWithContext(context.Background(), importProfilesOptions)
 }
@@ -1608,8 +1599,8 @@ func (postureManagement *PostureManagementV2) GetScopeDetailsWithContext(ctx con
 	return
 }
 
-// UpdateScopeDetails : Update Scope
-// Updates the Scope details.
+// UpdateScopeDetails : Update scope
+// Update a scope's details.
 func (postureManagement *PostureManagementV2) UpdateScopeDetails(updateScopeDetailsOptions *UpdateScopeDetailsOptions) (result *Scope, response *core.DetailedResponse, err error) {
 	return postureManagement.UpdateScopeDetailsWithContext(context.Background(), updateScopeDetailsOptions)
 }
@@ -1743,8 +1734,8 @@ func (postureManagement *PostureManagementV2) DeleteScopeWithContext(ctx context
 	return
 }
 
-// GetScopeTimeline : Get scope timelines
-// Gives the list of events for a given scope like Discovery, fact collection.
+// GetScopeTimeline : Get scope event history
+// Get the list of events for a scope such as the last discovery or fact collection.
 func (postureManagement *PostureManagementV2) GetScopeTimeline(getScopeTimelineOptions *GetScopeTimelineOptions) (result *EventList, response *core.DetailedResponse, err error) {
 	return postureManagement.GetScopeTimelineWithContext(context.Background(), getScopeTimelineOptions)
 }
@@ -2101,9 +2092,10 @@ func (postureManagement *PostureManagementV2) ReplaceScopeDetailsCollectorWithCo
 	return
 }
 
-// GetCorrelationID : Get status of a scope by giving correlation ID
-// This API is used to track any task completion. In case of scope creation, using this API we can check the status of
-// discovery task and in case of scan trigger we can check the status of validation task.
+// GetCorrelationID : Get status of a scope
+// Get the status of any task. By providing a correlation ID, you can track the status of any task that is running or
+// completed. So, for example, you can check the status of an initial discovery after scope creation or the status of
+// validation after a scan is triggered.
 func (postureManagement *PostureManagementV2) GetCorrelationID(getCorrelationIDOptions *GetCorrelationIDOptions) (result *ScopeTaskStatus, response *core.DetailedResponse, err error) {
 	return postureManagement.GetCorrelationIDWithContext(context.Background(), getCorrelationIDOptions)
 }
@@ -2236,8 +2228,8 @@ func (postureManagement *PostureManagementV2) ListLatestScansWithContext(ctx con
 
 // CreateValidation : Initiate a validation scan
 // Validation scans determine a specified scope's adherence to regulatory controls by validating the configuration of
-// the resources in your scope to the attached profile. To initiate a scan, you must have configured a collector,
-// provided credentials, and completed both a fact collection and discovery scan. [Learn
+// the resources in your scope to the attached profile. To initiate a scan, you must configure a collector, provided
+// credentials, and completed both a fact collection and discovery scan. [Learn
 // more](/docs/security-compliance?topic=security-compliance-schedule-scan).
 func (postureManagement *PostureManagementV2) CreateValidation(createValidationOptions *CreateValidationOptions) (result *Result, response *core.DetailedResponse, err error) {
 	return postureManagement.CreateValidationWithContext(context.Background(), createValidationOptions)
@@ -2476,7 +2468,7 @@ type ApplicabilityCriteria struct {
 	// The software that the profile applies to.
 	SoftwareDetails interface{} `json:"software_details,omitempty"`
 
-	// The operatoring system that the profile applies to.
+	// The operating system that the profile applies to.
 	OsDetails interface{} `json:"os_details,omitempty"`
 
 	// Any additional details about the profile.
@@ -2564,6 +2556,9 @@ type BasicResult struct {
 
 	// The result of the operation.
 	Result *bool `json:"result" validate:"required"`
+
+	// Id of created Profile.
+	ProfileID *string `json:"profile_id,omitempty"`
 }
 
 // UnmarshalBasicResult unmarshals an instance of BasicResult from the specified map of raw messages.
@@ -2577,13 +2572,17 @@ func UnmarshalBasicResult(m map[string]json.RawMessage, result interface{}) (err
 	if err != nil {
 		return
 	}
+	err = core.UnmarshalPrimitive(m, "profile_id", &obj.ProfileID)
+	if err != nil {
+		return
+	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
 }
 
 // Collector : The details of a collector.
 type Collector struct {
-	// The id of the collector.
+	// The ID of the collector.
 	ID *string `json:"id" validate:"required"`
 
 	// The user-friendly name of the collector.
@@ -2592,106 +2591,107 @@ type Collector struct {
 	// The name of the collector.
 	Name *string `json:"name" validate:"required"`
 
-	// The public key of the collector.Will be used for ssl communciation between collector and orchestrator .This will be
-	// populated when collector is installed.
+	// The public key of the collector. The key is used for SSL communication between collector and orchestrator. This
+	// property is populated when the collector is installed.
 	PublicKey *string `json:"public_key,omitempty"`
 
-	// Stores the heartbeat time of a controller . This value exists when collector is installed and running.
+	// The heartbeat time of the controller. This value exists when the collector is installed and running.
 	LastHeartbeat *strfmt.DateTime `json:"last_heartbeat,omitempty"`
 
-	// The status of collector.
+	// The status of the collector.
 	Status *string `json:"status" validate:"required"`
 
-	// The collector version. This field is populated when collector is installed.
+	// The collector version. This field is populated when the collector is installed.
 	CollectorVersion *string `json:"collector_version,omitempty"`
 
-	// The image version of the collector. This field is populated when collector is installed. ".
+	// The image version of the collector. This field is populated when the collector is installed.".
 	ImageVersion *string `json:"image_version,omitempty"`
 
 	// The description of the collector.
 	Description *string `json:"description" validate:"required"`
 
-	// The id of the user that created the collector.
+	// The ID of the user that created the collector.
 	CreatedBy *string `json:"created_by" validate:"required"`
 
-	// The ISO Date/Time the collector was created.
+	// The ISO date and time when the collector was created.
 	CreatedAt *strfmt.DateTime `json:"created_at" validate:"required"`
 
-	// The id of the user that modified the collector.
+	// The ID of the user that modified the collector.
 	UpdatedBy *string `json:"updated_by" validate:"required"`
 
-	// The ISO Date/Time the collector was modified.
+	// The ISO date and time when the collector was modified.
 	UpdatedAt *strfmt.DateTime `json:"updated_at" validate:"required"`
 
-	// Identifies whether the collector is enabled or not(deleted).
+	// The indication of whether the collector is enabled or not(deleted).
 	Enabled *bool `json:"enabled" validate:"required"`
 
-	// The registration code of the collector.This is will be used for initial authentication during installation of
+	// The registration code of the collector. The code is used for initial authentication during the installation of the
 	// collector.
 	RegistrationCode *string `json:"registration_code" validate:"required"`
 
 	// The type of the collector.
 	Type *string `json:"type" validate:"required"`
 
-	// The credential public key.
+	// The credential's public key.
 	CredentialPublicKey *string `json:"credential_public_key,omitempty"`
 
-	// The number of times the collector has failed.
+	// The number of times that the collector failed.
 	FailureCount *int64 `json:"failure_count" validate:"required"`
 
-	// The approved local gateway ip of the collector. This field will be populated only when collector is installed.
+	// The approved local gateway IP of the collector. The IP is populated only when the collector is installed.
 	ApprovedLocalGatewayIP *string `json:"approved_local_gateway_ip,omitempty"`
 
-	// The approved internet gateway ip of the collector. This field will be populated only when collector is installed.
+	// The approved internet gateway IP of the collector. The IP is populated only when the collector is installed.
 	ApprovedInternetGatewayIP *string `json:"approved_internet_gateway_ip,omitempty"`
 
-	// The failed local gateway ip. This field will be populated only when collector is installed.
+	// The failed local gateway IP. The IP is populated only when the collector is installed.
 	LastFailedLocalGatewayIP *string `json:"last_failed_local_gateway_ip,omitempty"`
 
-	// The reason for the collector reset .User resets the collector with a reason for reset. The reason entered by the
-	// user is saved in this field .
+	// The reason for the collector reset. User resets the collector with a reason for reset. The reason that is entered by
+	// the user is saved in this field .
 	ResetReason *string `json:"reset_reason,omitempty"`
 
-	// The collector host name. This field will be populated when collector is installed.This will have fully qualified
-	// domain name.
+	// The collector hostname. The hostname is populated when the collector is installed. The fully qualified domain name
+	// is included.
 	Hostname *string `json:"hostname,omitempty"`
 
-	// The installation path of the collector. This field will be populated when collector is installed.The value will be
-	// folder path.
+	// The installation path of the collector. This field is populated when the collector is installed. The value includes
+	// the folder path.
 	InstallPath *string `json:"install_path,omitempty"`
 
-	// Whether the collector should use a public or private endpoint. This value is generated based on is_public field
-	// value during collector creation. If is_public is set to true, this value will be false.
+	// The indication of whether the collector uses a public or private endpoint. This value is generated based on the
+	// `is_public` field value during collector creation. If `is_public` is set to true, the `use_private_endpoint` value
+	// is false.
 	UsePrivateEndpoint *bool `json:"use_private_endpoint" validate:"required"`
 
 	// The entity that manages the collector.
 	ManagedBy *string `json:"managed_by" validate:"required"`
 
-	// The trial expiry. This holds the expiry date of registration_code. This field will be populated when collector is
+	// The trial expiry indicates the expiry date of `registration_code`. This field is populated when the collector is
 	// installed.
 	TrialExpiry *strfmt.DateTime `json:"trial_expiry,omitempty"`
 
-	// The failed internet gateway ip of the collector.
+	// The failed internet gateway IP of the collector.
 	LastFailedInternetGatewayIP *string `json:"last_failed_internet_gateway_ip,omitempty"`
 
 	// The collector status.
 	StatusDescription *string `json:"status_description" validate:"required"`
 
-	// The ISO Date/Time of the collector reset. This value will be populated when a collector is reset. The data-time when
-	// the reset event is occured is captured in this field.
+	// The ISO date and time of the collector reset. This value is populated when a collector is reset. The data-time when
+	// the reset event occurs is captured in this field.
 	ResetTime *strfmt.DateTime `json:"reset_time,omitempty"`
 
-	// Determines whether the collector endpoint is accessible on a public network.If set to `true`, the collector connects
-	// to resources in your account over a public network. If set to `false`, the collector connects to resources by using
-	// a private IP that is accessible only through the IBM Cloud private network.
+	// An indication of whether the collector endpoint is accessible on a public network. If set to `true`, the collector
+	// connects to resources in your account over a public network. If set to `false`, the collector connects to resources
+	// by using a private IP that is accessible only through the IBM Cloud private network.
 	IsPublic *bool `json:"is_public" validate:"required"`
 
-	// Determines whether the collector has a Ubi image.
+	// An indication of whether the collector has a UBI image.
 	IsUbiImage *bool `json:"is_ubi_image,omitempty"`
 }
 
 // Constants associated with the Collector.Status property.
-// The status of collector.
+// The status of the collector.
 const (
 	CollectorStatusActiveConst                        = "active"
 	CollectorStatusApprovalRequiredConst              = "approval_required"
@@ -2858,16 +2858,16 @@ func UnmarshalCollector(m map[string]json.RawMessage, result interface{}) (err e
 	return
 }
 
-// CollectorList : The response to a list collectors request.
+// CollectorList : The response to a request to list collectors.
 type CollectorList struct {
 	// The offset from the start of the list (0-based).
 	Offset *int64 `json:"offset" validate:"required"`
 
-	// The number of items to return.
+	// The number of items that are returned.
 	Limit *int64 `json:"limit" validate:"required"`
 
-	// The total number of items in the list. This will have value as 0 when no collectors are available and below values
-	// will not be populated in that case.
+	// The total number of items that are in the list. The field's value is 0 when no collectors are available and the
+	// details are not populated in that case.
 	TotalCount *int64 `json:"total_count" validate:"required"`
 
 	// The URL of a page.
@@ -2882,7 +2882,7 @@ type CollectorList struct {
 	// The URL of a page.
 	Previous *PageLink `json:"previous,omitempty"`
 
-	// The array of items returned.
+	// The array of items that are returned.
 	Collectors []Collector `json:"collectors" validate:"required"`
 }
 
@@ -2927,10 +2927,10 @@ func UnmarshalCollectorList(m map[string]json.RawMessage, result interface{}) (e
 
 // CollectorUpdate : The instance of the collector update.
 type CollectorUpdate struct {
-	// The user-friendly name of the collector.
+	// The display name of the collector.
 	DisplayName *string `json:"display_name,omitempty"`
 
-	// The desciption of the collector.
+	// The description of the collector.
 	Description *string `json:"description,omitempty"`
 }
 
@@ -2959,7 +2959,7 @@ func (collectorUpdate *CollectorUpdate) AsPatch() (_patch map[string]interface{}
 	return
 }
 
-// Control : A scans summary controls.
+// Control : A scan's summary controls.
 type Control struct {
 	// The scan summary control ID.
 	ID *string `json:"id,omitempty"`
@@ -2971,12 +2971,12 @@ type Control struct {
 	ExternalControlID *string `json:"external_control_id,omitempty"`
 
 	// The scan profile name.
-	Desciption *string `json:"desciption,omitempty"`
+	Description *string `json:"description,omitempty"`
 
-	// The list of goals on the control.
+	// The list of goals that are on the control.
 	Goals []Goal `json:"goals,omitempty"`
 
-	// A scans summary controls.
+	// A scan's summary controls.
 	ResourceStatistics *ResourceStatistics `json:"resource_statistics,omitempty"`
 }
 
@@ -3002,7 +3002,7 @@ func UnmarshalControl(m map[string]json.RawMessage, result interface{}) (err err
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "desciption", &obj.Desciption)
+	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
 		return
 	}
@@ -3029,7 +3029,7 @@ type ControlItem struct {
 	// The external identifier number of the control.
 	ExternalControlID *string `json:"external_control_id" validate:"required"`
 
-	// Mapped goals aganist the control identifier.
+	// The goals that are mapped against the control identifier.
 	Goals []GoalItem `json:"goals" validate:"required"`
 }
 
@@ -3056,15 +3056,15 @@ func UnmarshalControlItem(m map[string]json.RawMessage, result interface{}) (err
 	return
 }
 
-// ControlList : The details of controls for the given profile.
+// ControlList : The details of the controls for the profile.
 type ControlList struct {
 	// The offset of the page.
 	Offset *int64 `json:"offset" validate:"required"`
 
-	// The number of profiles displayed per page.
+	// The number of profiles that are displayed per page.
 	Limit *int64 `json:"limit" validate:"required"`
 
-	// The total number of profiles.If no profiles are available this will be 0 and below fields will not be populated.
+	// The total number of profiles. If no profiles are available, the count is 0 and the detail fields are not populated.
 	TotalCount *int64 `json:"total_count" validate:"required"`
 
 	// The URL of a page.
@@ -3144,15 +3144,16 @@ type CreateCollectorOptions struct {
 	// A unique name for your collector.
 	Name *string `json:"name" validate:"required"`
 
-	// Determines whether the collector endpoint is accessible on a public network. If set to `true`, the collector
-	// connects to resources in your account over a public network. If set to `false`, the collector connects to resources
-	// by using a private IP that is accessible only through the IBM Cloud private network.
+	// The parameter `is_public` determines whether the collector endpoint is accessible on a public network. If set to
+	// `true`, the collector connects to resources that are in your account over a public network. If set to `false`, the
+	// collector connects to your resources by using a private IP that is accessible only through the IBM Cloud private
+	// network.
 	IsPublic *bool `json:"is_public" validate:"required"`
 
-	// Determines whether the collector is an IBM or customer-managed virtual machine. Use `ibm` to allow Security and
-	// Compliance Center to create, install, and manage the collector on your behalf. The collector is installed in an
-	// OpenShift cluster and approved automatically for use. Use `customer` if you would like to install the collector by
-	// using your own virtual machine. For more information, check out the
+	// The parameter `managed_by` determines whether the collector is an IBM or customer-managed virtual machine. Use `ibm`
+	// to allow Security and Compliance Center to create, install, and manage the collector on your behalf. The collector
+	// is installed in an Red Hat OpenShift cluster and approved automatically for use. Use `customer` if you would like to
+	// install the collector by using your own virtual machine. For more information, check out the
 	// [docs](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-collector).
 	ManagedBy *string `json:"managed_by" validate:"required"`
 
@@ -3163,7 +3164,7 @@ type CreateCollectorOptions struct {
 	// key is used to securely store your credentials and prevent anyone from accessing them.
 	Passphrase *string `json:"passphrase,omitempty"`
 
-	// Determines whether the collector has a Ubi image.
+	// The parameter `is_ubi_image` determines whether the collector has a UBI image.
 	IsUbiImage *bool `json:"is_ubi_image,omitempty"`
 
 	// Your IBM Cloud account ID.
@@ -3178,10 +3179,10 @@ type CreateCollectorOptions struct {
 }
 
 // Constants associated with the CreateCollectorOptions.ManagedBy property.
-// Determines whether the collector is an IBM or customer-managed virtual machine. Use `ibm` to allow Security and
-// Compliance Center to create, install, and manage the collector on your behalf. The collector is installed in an
-// OpenShift cluster and approved automatically for use. Use `customer` if you would like to install the collector by
-// using your own virtual machine. For more information, check out the
+// The parameter `managed_by` determines whether the collector is an IBM or customer-managed virtual machine. Use `ibm`
+// to allow Security and Compliance Center to create, install, and manage the collector on your behalf. The collector is
+// installed in an Red Hat OpenShift cluster and approved automatically for use. Use `customer` if you would like to
+// install the collector by using your own virtual machine. For more information, check out the
 // [docs](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-collector).
 const (
 	CreateCollectorOptionsManagedByCustomerConst = "customer"
@@ -3253,25 +3254,25 @@ func (options *CreateCollectorOptions) SetHeaders(param map[string]string) *Crea
 
 // CreateCredentialOptions : The CreateCredential options.
 type CreateCredentialOptions struct {
-	// Credentials status enabled/disbaled.
+	// The status of credentials is enabled or disabled.
 	Enabled *bool `json:"enabled" validate:"required"`
 
-	// Credentials type.
+	// The type of credential.
 	Type *string `json:"type" validate:"required"`
 
-	// Credentials name.
+	// The name of the credential.
 	Name *string `json:"name" validate:"required"`
 
-	// Credentials description.
+	// The description of the credential.
 	Description *string `json:"description" validate:"required"`
 
-	// Details the fields on the credential. This will change as per credential type selected.
+	// The details of the credential. The details change as the selected credential type varies.
 	DisplayFields *NewCredentialDisplayFields `json:"display_fields" validate:"required"`
 
-	// Credential group details.
+	// The details of the credential group.
 	Group *CredentialGroup `json:"group" validate:"required"`
 
-	// Purpose for which the credential is created.
+	// The purpose for which the credential is created.
 	Purpose *string `json:"purpose" validate:"required"`
 
 	// Your IBM Cloud account ID.
@@ -3286,7 +3287,7 @@ type CreateCredentialOptions struct {
 }
 
 // Constants associated with the CreateCredentialOptions.Type property.
-// Credentials type.
+// The type of credential.
 const (
 	CreateCredentialOptionsTypeAwsCloudConst         = "aws_cloud"
 	CreateCredentialOptionsTypeAzureCloudConst       = "azure_cloud"
@@ -3295,11 +3296,12 @@ const (
 	CreateCredentialOptionsTypeKerberosWindowsConst  = "kerberos_windows"
 	CreateCredentialOptionsTypeMs365Const            = "ms_365"
 	CreateCredentialOptionsTypeOpenstackCloudConst   = "openstack_cloud"
+	CreateCredentialOptionsTypeUserNamePemConst      = "user_name_pem"
 	CreateCredentialOptionsTypeUsernamePasswordConst = "username_password"
 )
 
 // Constants associated with the CreateCredentialOptions.Purpose property.
-// Purpose for which the credential is created.
+// The purpose for which the credential is created.
 const (
 	CreateCredentialOptionsPurposeDiscoveryCollectionConst                = "discovery_collection"
 	CreateCredentialOptionsPurposeDiscoveryCollectionRemediationConst     = "discovery_collection_remediation"
@@ -3398,12 +3400,12 @@ type CreateScopeOptions struct {
 	// The environment that the scope is targeted to.
 	CredentialType *string `json:"credential_type" validate:"required"`
 
-	// Stores the value of Frequency. This is used in case of on-prem Scope if the user wants to schedule a discovery
-	// task.The unit is seconds. Example if a user wants to trigger discovery every hour, this value will be set to 3600.
+	// The frequency of the scope. `interval` is used with on-prem scope if the user wants to schedule a discovery task.
+	// The unit is seconds. For example, if a user wants to trigger discovery every hour, this value is set to 3600.
 	Interval *int64 `json:"interval,omitempty"`
 
-	// Stores the value of Discovery Scheduled.This is used in case of on-prem Scope if the user wants to schedule a
-	// discovery task.
+	// The discovery scheduled for the scope. `is_discovery_scheduled` is used with on-prem scope if the user wants to
+	// schedule a discovery task.
 	IsDiscoveryScheduled *bool `json:"is_discovery_scheduled,omitempty"`
 
 	// Your IBM Cloud account ID.
@@ -3567,47 +3569,47 @@ func (options *CreateValidationOptions) SetHeaders(param map[string]string) *Cre
 	return options
 }
 
-// Credential : gets the credential details.
+// Credential : Get the credential details.
 type Credential struct {
-	// Credentials status enabled/disbaled.
+	// The status of the credential is enabled or disabled.
 	Enabled *bool `json:"enabled" validate:"required"`
 
-	// Credentials ID.
+	// The credential's ID.
 	ID *string `json:"id" validate:"required"`
 
-	// Credentials type.
+	// The credential's type.
 	Type *string `json:"type" validate:"required"`
 
-	// Credentials name.
+	// The credential's name.
 	Name *string `json:"name" validate:"required"`
 
-	// Credentials description.
+	// The credential's description.
 	Description *string `json:"description" validate:"required"`
 
-	// Details the fields on the credential. This will change as per credential type selected.
+	// The details of the credential. The details change as the selected credential type changes.
 	DisplayFields *CredentialDisplayFields `json:"display_fields" validate:"required"`
 
-	// ID of the user who created the credentials.
+	// The ID of the user who created the credentials.
 	CreatedBy *string `json:"created_by" validate:"required"`
 
-	// The time that the credentials was created in UTC.
+	// The time of creation of the credentials in UTC.
 	CreatedAt *strfmt.DateTime `json:"created_at" validate:"required"`
 
-	// The modified time that the credentials was modified in UTC.
+	// The modified time of the credentials in UTC.
 	UpdatedAt *strfmt.DateTime `json:"updated_at" validate:"required"`
 
-	// ID of the user who modified the credentials.
+	// The ID of the user who modified the credentials.
 	UpdatedBy *string `json:"updated_by" validate:"required"`
 
-	// Credential group details.
+	// The details of the credential group.
 	Group *CredentialGroup `json:"group" validate:"required"`
 
-	// Purpose for which the credential is created.
+	// The purpose for which the credential is created.
 	Purpose *string `json:"purpose" validate:"required"`
 }
 
 // Constants associated with the Credential.Type property.
-// Credentials type.
+// The credential's type.
 const (
 	CredentialTypeAwsCloudConst         = "aws_cloud"
 	CredentialTypeAzureCloudConst       = "azure_cloud"
@@ -3620,7 +3622,7 @@ const (
 )
 
 // Constants associated with the Credential.Purpose property.
-// Purpose for which the credential is created.
+// The purpose for which the credential is created.
 const (
 	CredentialPurposeDiscoveryCollectionConst                = "discovery_collection"
 	CredentialPurposeDiscoveryCollectionRemediationConst     = "discovery_collection_remediation"
@@ -3684,73 +3686,80 @@ func UnmarshalCredential(m map[string]json.RawMessage, result interface{}) (err 
 	return
 }
 
-// CredentialDisplayFields : Details the fields on the credential. This will change as per credential type selected.
+// CredentialDisplayFields : The details of the credential. The details change as the selected credential type changes.
 type CredentialDisplayFields struct {
-	// The IBM Cloud API Key. This is mandatory for IBM Credential Type.
+	// The IBM Cloud API key. The API key is mandatory when IBM is the credential type.
 	IBMAPIKey *string `json:"ibm_api_key,omitempty"`
 
-	// AWS client Id.This is mandatory for AWS Cloud.
+	// The Amazon Web Services client ID. The client ID is mandatory when AWS Cloud is the credential type.
 	AwsClientID *string `json:"aws_client_id,omitempty"`
 
-	// AWS client secret.This is mandatory for AWS Cloud.
+	// The Amazon Web Services client secret. The secret is mandatory when AWS Cloud is the credential type.
 	AwsClientSecret *string `json:"aws_client_secret,omitempty"`
 
-	// AWS region.
+	// The Amazon Web Services region. The region is mandatory when AWS Cloud is the credential type.
 	AwsRegion *string `json:"aws_region,omitempty"`
 
 	// AWS arn value.
 	AwsArn *string `json:"aws_arn,omitempty"`
 
-	// username of the user.This is mandatory for DataBase, Kerbros,OpenStack Credentials.
+	// The username of the user. The username is mandatory when the credential type is DataBase, Kerberos, or OpenStack.
 	Username *string `json:"username,omitempty"`
 
-	// password of the user.This is mandatory for DataBase, Kerbros,OpenStack Credentials.
+	// The password of the user. The password is mandatory when the credential type is DataBase, Kerberos, or OpenStack.
 	Password *string `json:"password,omitempty"`
 
-	// Azure client Id. This is mandatory for Azure Credential type.
+	// The Microsoft Azure client ID. The client ID is mandatory when Azure is the credential type.
 	AzureClientID *string `json:"azure_client_id,omitempty"`
 
-	// Azure client secret.This is mandatory for Azure Credential type.
+	// The Microsoft Azure client secret. The secret is mandatory when Azure is the credential type.
 	AzureClientSecret *string `json:"azure_client_secret,omitempty"`
 
-	// Azure subscription Id.This is mandatory for Azure Credential type.
+	// The Microsoft Azure subscription ID. The subscription ID is mandatory when Azure is the credential type.
 	AzureSubscriptionID *string `json:"azure_subscription_id,omitempty"`
 
-	// Azure resource group.
+	// The Microsoft Azure resource group. The resource group is mandatory when Azure is the credential type.
 	AzureResourceGroup *string `json:"azure_resource_group,omitempty"`
 
-	// Database name.This is mandatory for Database Credential type.
+	// The Database name. The name is mandatory when Database is the credential type.
 	DatabaseName *string `json:"database_name,omitempty"`
 
-	// Kerberos windows auth type.This is mandatory for Windows Kerberos Credential type.
+	// The Kerberos Windows auth type. The auth type is mandatory when Kerberos is the credential type.
 	WinrmAuthtype *string `json:"winrm_authtype,omitempty"`
 
-	// Kerberos windows ssl.This is mandatory for Windows Kerberos Credential type.
+	// The Kerberos Windows SSL. The SSL is mandatory when Kerberos is the credential type.
 	WinrmUsessl *string `json:"winrm_usessl,omitempty"`
 
-	// Kerberos windows port.This is mandatory for Windows Kerberos Credential type.
+	// The Kerberos Windows port. The port is mandatory when Kerberos is the credential type.
 	WinrmPort *string `json:"winrm_port,omitempty"`
 
-	// The MS365 client Id.This is mandatory for Windows MS365 Credential type.
+	// The Microsoft 365 client ID. The client ID is mandatory when Microsoft 365 is the credential type.
 	Ms365ClientID *string `json:"ms_365_client_id,omitempty"`
 
-	// The MS365 client secret.This is mandatory for Windows MS365 Credential type.
+	// The Microsoft 365 client secret. The secret is mandatory when Microsoft 365 is the credential type.
 	Ms365ClientSecret *string `json:"ms_365_client_secret,omitempty"`
 
-	// The MS365 tenantId.This is mandatory for Windows MS365 Credential type.
+	// The Microsoft 365 tenant ID. The tenant ID is mandatory when Microsoft 365 is the credential type.
 	Ms365TenantID *string `json:"ms_365_tenant_id,omitempty"`
 
-	// auth url of the Open Stack cloud.This is mandatory for Open Stack Credential type.
+	// The auth url of the OpenStack cloud. The auth url is mandatory when OpenStack is the credential type.
 	AuthURL *string `json:"auth_url,omitempty"`
 
-	// Project name of the Open Stack cloud.This is mandatory for Open Stack Credential type.
+	// The project name of the OpenStack cloud. The project name is mandatory when OpenStack is the credential type.
 	ProjectName *string `json:"project_name,omitempty"`
 
-	// user domain name of the Open Stack cloud.This is mandatory for Open Stack Credential type.
+	// The user domain name of the OpenStack cloud. The domain name is mandatory when OpenStack is the credential type.
 	UserDomainName *string `json:"user_domain_name,omitempty"`
 
-	// project domain name of the Open Stack cloud.This is mandatory for Open Stack Credential type.
+	// The project domain name of the OpenStack cloud. The project domain name is mandatory when OpenStack is the
+	// credential type.
 	ProjectDomainName *string `json:"project_domain_name,omitempty"`
+
+	// The user pem file name.
+	PemFileName *string `json:"pem_file_name,omitempty"`
+
+	// The base64 encoded form of pem.Will be displayed a xxxxxx.
+	PemData *string `json:"pem_data,omitempty"`
 }
 
 // UnmarshalCredentialDisplayFields unmarshals an instance of CredentialDisplayFields from the specified map of raw messages.
@@ -3844,16 +3853,24 @@ func UnmarshalCredentialDisplayFields(m map[string]json.RawMessage, result inter
 	if err != nil {
 		return
 	}
+	err = core.UnmarshalPrimitive(m, "pem_file_name", &obj.PemFileName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "pem_data", &obj.PemData)
+	if err != nil {
+		return
+	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
 }
 
-// CredentialGroup : Credential group details.
+// CredentialGroup : The details of the credential group.
 type CredentialGroup struct {
-	// credential group id.
+	// The credential group ID.
 	ID *string `json:"id" validate:"required"`
 
-	// passphase of the credential.
+	// The passphrase of the credential.
 	Passphrase *string `json:"passphrase" validate:"required"`
 }
 
@@ -3887,11 +3904,11 @@ type CredentialList struct {
 	// The offset of the page.
 	Offset *int64 `json:"offset" validate:"required"`
 
-	// The number of credentials displayed per page.
+	// The number of credentials that are displayed per page.
 	Limit *int64 `json:"limit" validate:"required"`
 
-	// The total number of credentials in the list.This will be 0 if no credentials are available and below fields will not
-	// be populated in that case.
+	// The total number of credentials that are in the list. The number is 0 if no credentials are available and the detail
+	// fields of the credentials are not populated in that case.
 	TotalCount *int64 `json:"total_count" validate:"required"`
 
 	// The URL of a page.
@@ -3906,7 +3923,7 @@ type CredentialList struct {
 	// The URL of a page.
 	Next *PageLink `json:"next,omitempty"`
 
-	// The details of a credentials.
+	// The details of a credential.
 	Credentials []Credential `json:"credentials" validate:"required"`
 }
 
@@ -3968,7 +3985,7 @@ func (resp *CredentialList) GetNextOffset() (*int64, error) {
 
 // DeleteCollectorOptions : The DeleteCollector options.
 type DeleteCollectorOptions struct {
-	// The id for the given API.
+	// The ID for the API.
 	ID *string `json:"-" validate:"required,ne="`
 
 	// Your IBM Cloud account ID.
@@ -4015,7 +4032,7 @@ func (options *DeleteCollectorOptions) SetHeaders(param map[string]string) *Dele
 
 // DeleteCredentialOptions : The DeleteCredential options.
 type DeleteCredentialOptions struct {
-	// The id for the given API.
+	// The ID for the API.
 	ID *string `json:"-" validate:"required,ne="`
 
 	// Your IBM Cloud account ID.
@@ -4062,7 +4079,7 @@ func (options *DeleteCredentialOptions) SetHeaders(param map[string]string) *Del
 
 // DeleteProfileOptions : The DeleteProfile options.
 type DeleteProfileOptions struct {
-	// The id for the given API.
+	// The ID for the API.
 	ID *string `json:"-" validate:"required,ne="`
 
 	// Your IBM Cloud account ID.
@@ -4109,7 +4126,7 @@ func (options *DeleteProfileOptions) SetHeaders(param map[string]string) *Delete
 
 // DeleteScopeOptions : The DeleteScope options.
 type DeleteScopeOptions struct {
-	// The id for the given API.
+	// The ID for the API.
 	ID *string `json:"-" validate:"required,ne="`
 
 	// Your IBM Cloud account ID.
@@ -4154,9 +4171,9 @@ func (options *DeleteScopeOptions) SetHeaders(param map[string]string) *DeleteSc
 	return options
 }
 
-// EventItem : Event.
+// EventItem : Th event details.
 type EventItem struct {
-	// The eventId for the given scope .
+	// The event ID for the scope.
 	ID *string `json:"id" validate:"required"`
 
 	// The time that the event was created in UTC for this scope.
@@ -4165,28 +4182,28 @@ type EventItem struct {
 	// The time that the event was last updated in UTC for this scope.
 	UpdatedAt *strfmt.DateTime `json:"updated_at" validate:"required"`
 
-	// Task type.This will have 2 values - fact_collection and discovery.
+	// The task type. The task type has two values (fact_collection and discovery).
 	TaskType *string `json:"task_type" validate:"required"`
 
-	// The status of the event .
+	// The status of the event.
 	Status *string `json:"status" validate:"required"`
 
-	// Indicates whether data is available for this event .
+	// Data is available for this event.
 	DataAvailable *bool `json:"data_available" validate:"required"`
 
-	// The status of the event .
+	// The status of the event.
 	StatusMessage *string `json:"status_message" validate:"required"`
 }
 
 // Constants associated with the EventItem.TaskType property.
-// Task type.This will have 2 values - fact_collection and discovery.
+// The task type. The task type has two values (fact_collection and discovery).
 const (
 	EventItemTaskTypeDiscoveryConst      = "discovery"
 	EventItemTaskTypeFactCollectionConst = "fact_collection"
 )
 
 // Constants associated with the EventItem.Status property.
-// The status of the event .
+// The status of the event.
 const (
 	EventItemStatusAbortTaskRequestCompletedConst       = "abort_task_request_completed"
 	EventItemStatusAbortTaskRequestFailedConst          = "abort_task_request_failed"
@@ -4283,9 +4300,9 @@ func UnmarshalEventItem(m map[string]json.RawMessage, result interface{}) (err e
 	return
 }
 
-// EventList : Event list.
+// EventList : The list of events.
 type EventList struct {
-	// Events for a given scope.
+	// The events for a given scope.
 	Events []EventItem `json:"events,omitempty"`
 }
 
@@ -4302,7 +4319,7 @@ func UnmarshalEventList(m map[string]json.RawMessage, result interface{}) (err e
 
 // GetCollectorOptions : The GetCollector options.
 type GetCollectorOptions struct {
-	// The id for the given API.
+	// The ID for the API.
 	ID *string `json:"-" validate:"required,ne="`
 
 	// Your IBM Cloud account ID.
@@ -4349,8 +4366,8 @@ func (options *GetCollectorOptions) SetHeaders(param map[string]string) *GetColl
 
 // GetCorrelationIDOptions : The GetCorrelationID options.
 type GetCorrelationIDOptions struct {
-	// A correlation_Id is created when a scope is created and discovery task is triggered or when a validation is
-	// triggered on a Scope. This is used to get the status of the task(discovery or validation).
+	// Get the status of a task such as discovery or validation. A correlation ID is created when a scope is created and
+	// discovery or validation is triggered for a scope.
 	CorrelationID *string `json:"-" validate:"required,ne="`
 
 	// Your IBM Cloud account ID.
@@ -4397,7 +4414,7 @@ func (options *GetCorrelationIDOptions) SetHeaders(param map[string]string) *Get
 
 // GetCredentialOptions : The GetCredential options.
 type GetCredentialOptions struct {
-	// The id for the given API.
+	// The ID for the API.
 	ID *string `json:"-" validate:"required,ne="`
 
 	// Your IBM Cloud account ID.
@@ -4444,8 +4461,8 @@ func (options *GetCredentialOptions) SetHeaders(param map[string]string) *GetCre
 
 // GetGroupProfileControlsOptions : The GetGroupProfileControls options.
 type GetGroupProfileControlsOptions struct {
-	// The group ID. This can be obtained from Profile list API call. In Profile list API call, the records which have
-	// type='profile_group' are the groups. The Id of that object gives group_id.
+	// The group ID. The ID can be obtained from the profile list API call. In the profile list API call, the records that
+	// have type='profile_group' are the groups. The ID of that object displays group_id.
 	GroupID *string `json:"-" validate:"required,ne="`
 
 	// Your IBM Cloud account ID.
@@ -4510,7 +4527,7 @@ func (options *GetGroupProfileControlsOptions) SetHeaders(param map[string]strin
 
 // GetProfileControlsOptions : The GetProfileControls options.
 type GetProfileControlsOptions struct {
-	// The profile ID. This can be obtained from the Security and Compliance Center UI by clicking on the profile name. The
+	// The profile ID. The ID can be obtained from the Security and Compliance Center UI by clicking the profile name. The
 	// URL contains the ID.
 	ProfileID *string `json:"-" validate:"required,ne="`
 
@@ -4576,10 +4593,10 @@ func (options *GetProfileControlsOptions) SetHeaders(param map[string]string) *G
 
 // GetProfileOptions : The GetProfile options.
 type GetProfileOptions struct {
-	// The id for the given API.
+	// The ID for the API.
 	ID *string `json:"-" validate:"required,ne="`
 
-	// The profile type ID. This will be 4 for profiles and 6 for group profiles.
+	// The profile type name. The name can be authored/custom/predefined for profiles and profile_group for group profiles.
 	ProfileType *string `json:"-" validate:"required"`
 
 	// Your IBM Cloud account ID.
@@ -4592,6 +4609,15 @@ type GetProfileOptions struct {
 	// Allows users to set headers on API requests
 	Headers map[string]string
 }
+
+// Constants associated with the GetProfileOptions.ProfileType property.
+// The profile type name. The name can be authored/custom/predefined for profiles and profile_group for group profiles.
+const (
+	GetProfileOptionsProfileTypeAuthoredConst     = "authored"
+	GetProfileOptionsProfileTypeCustomConst       = "custom"
+	GetProfileOptionsProfileTypePredefinedConst   = "predefined"
+	GetProfileOptionsProfileTypeProfileGroupConst = "profile_group"
+)
 
 // NewGetProfileOptions : Instantiate GetProfileOptions
 func (*PostureManagementV2) NewGetProfileOptions(id string, profileType string) *GetProfileOptions {
@@ -4727,7 +4753,7 @@ func (options *GetScopeDetailsCredentialsOptions) SetHeaders(param map[string]st
 
 // GetScopeDetailsOptions : The GetScopeDetails options.
 type GetScopeDetailsOptions struct {
-	// The id for the given API.
+	// The ID for the API.
 	ID *string `json:"-" validate:"required,ne="`
 
 	// Your IBM Cloud account ID.
@@ -4819,7 +4845,7 @@ func (options *GetScopeTimelineOptions) SetHeaders(param map[string]string) *Get
 	return options
 }
 
-// Goal : The goals on goals list.
+// Goal : The goals that are on the goals list.
 type Goal struct {
 	// The description of the goal.
 	Description *string `json:"description,omitempty"`
@@ -4833,10 +4859,10 @@ type Goal struct {
 	// The severity of the goal.
 	Severity *string `json:"severity,omitempty"`
 
-	// The report completed time.
+	// The report's time of completion.
 	CompletedTime *strfmt.DateTime `json:"completed_time,omitempty"`
 
-	// The error on goal validation.
+	// The error that occurred on goal validation.
 	Error *string `json:"error,omitempty"`
 
 	// The list of resource results.
@@ -4900,10 +4926,10 @@ type GoalApplicabilityCriteria struct {
 	// A list of resources that a profile can be used with.
 	Resource []string `json:"resource,omitempty"`
 
-	// The type of environment that a profile is able to be applied to.
+	// The type of environment that a profile can be applied to.
 	EnvironmentCategory []string `json:"environment_category,omitempty"`
 
-	// The type of resource that a profile is able to be applied to.
+	// The type of resource that a profile can be applied to.
 	ResourceCategory []string `json:"resource_category,omitempty"`
 
 	// The resource type that the profile applies to.
@@ -4927,7 +4953,7 @@ type GoalApplicabilityCriteria struct {
 	// The type of resource that your scope is targeted to.
 	ResourceCategoryDescription map[string]string `json:"resource_category_description,omitempty"`
 
-	// A further classification of the type of resource that your scope is targeted to.
+	// The type of resource that your scope is targeted to.
 	ResourceTypeDescription map[string]string `json:"resource_type_description,omitempty"`
 
 	// The resource that is scanned as part of your scope.
@@ -4993,7 +5019,7 @@ func UnmarshalGoalApplicabilityCriteria(m map[string]json.RawMessage, result int
 	return
 }
 
-// GoalItem : The goals on goals list.
+// GoalItem : The details of the goal.
 type GoalItem struct {
 	// The description of the goal.
 	Description *string `json:"description" validate:"required"`
@@ -5004,7 +5030,7 @@ type GoalItem struct {
 	// The severity of the goal.
 	Severity *string `json:"severity" validate:"required"`
 
-	// The goal is manual check.
+	// The goal is manually checked.
 	IsManual *bool `json:"is_manual" validate:"required"`
 
 	// The goal is remediable or not.
@@ -5340,77 +5366,84 @@ func (options *ListScopesOptions) SetHeaders(param map[string]string) *ListScope
 	return options
 }
 
-// NewCredentialDisplayFields : Details the fields on the credential. This will change as per credential type selected.
+// NewCredentialDisplayFields : The details of the credential. The details change as the selected credential type varies.
 type NewCredentialDisplayFields struct {
-	// The IBM Cloud API Key. This is mandatory for IBM Credential Type ie when type=ibm_cloud.
+	// The IBM Cloud API Key. The API key is mandatory when IBM is selected as the credential type.
 	IBMAPIKey *string `json:"ibm_api_key,omitempty"`
 
-	// AWS client Id.This is mandatory for AWS Cloud ie when type=aws_cloud.
+	// The Amazon Web Services client ID. The client ID is mandatory when AWS Cloud is selected as the credential type.
 	AwsClientID *string `json:"aws_client_id,omitempty"`
 
-	// AWS client secret.This is mandatory for AWS Cloud ie when type=aws_cloud.
+	// The Amazon Web Services client secret. The client secret is mandatory when AWS Cloud is selected as the credential
+	// type.
 	AwsClientSecret *string `json:"aws_client_secret,omitempty"`
 
-	// AWS region.This is used for AWS Cloud ie when type=aws_cloud.
+	// The Amazon Web Services region. The region is used when AWS Cloud is selected as the credential type.
 	AwsRegion *string `json:"aws_region,omitempty"`
 
-	// AWS arn value.This is used for AWS Cloud ie when type=aws_cloud.
+	// The Amazon Web Services arn value. The arn value is used when AWS Cloud is selected as the credential type.
 	AwsArn *string `json:"aws_arn,omitempty"`
 
-	// username of the user.This is mandatory for DataBase(ie type=database), Kerbros(ie
-	// type=kerberos_windows),OpenStack(ie type=openstack_cloud) and Username-Password(type=username_password) Credentials.
+	// The username of the user. The username is mandatory when the credential type is DataBase, Kerberos, OpenStack, and
+	// Username-Password.
 	Username *string `json:"username,omitempty"`
 
-	// password of the user.This is mandatory for DataBase(ie type=database), Kerbros(ie
-	// type=kerberos_windows),OpenStack(ie type=openstack_cloud) and Username-Password(type=username_password) Credentials.
+	// The password of the user. The password is mandatory when the credential type is DataBase, Kerberos, OpenStack, and
+	// Username-Password.
 	Password *string `json:"password,omitempty"`
 
-	// Azure client Id. This is mandatory for Azure Credential type ie when type=azure_cloud.
+	// The Microsoft Azure client ID. The client ID is mandatory when Azure is selected as the credential type.
 	AzureClientID *string `json:"azure_client_id,omitempty"`
 
-	// Azure client secret.This is mandatory for Azure Credential type ie when type=azure_cloud.
+	// The Microsoft Azure client secret. The secret is mandatory when the type of credential is set to Azure.
 	AzureClientSecret *string `json:"azure_client_secret,omitempty"`
 
-	// Azure subscription Id.This is mandatory for Azure Credential type ie when type=azure_cloud.
+	// The Microsoft Azure subscription ID. The subscription ID is mandatory when the type of credential is set to Azure.
 	AzureSubscriptionID *string `json:"azure_subscription_id,omitempty"`
 
-	// Azure resource group.This field is used for Azure Credential type ie when type=azure_cloud.
+	// The Microsoft Azure resource group. The resource group is used when Azure is the credential type.
 	AzureResourceGroup *string `json:"azure_resource_group,omitempty"`
 
-	// Database name.This is mandatory for Database Credential type ie when type=database.
+	// The database name. The database name is mandatory when Database is the credential type.
 	DatabaseName *string `json:"database_name,omitempty"`
 
-	// Kerberos windows auth type.This is mandatory for Windows Kerberos Credential type ie when type=kerberos_windows.
+	// The Kerberos Windows authentication type. The authentication type is mandatory when the credential type is Kerberos
+	// Windows.
 	WinrmAuthtype *string `json:"winrm_authtype,omitempty"`
 
-	// Kerberos windows ssl.This is mandatory for Windows Kerberos Credential type ie when type=kerberos_windows.
+	// The Kerberos Windows SSL. The SSL is mandatory when the credential type is Kerberos Windows.
 	WinrmUsessl *string `json:"winrm_usessl,omitempty"`
 
-	// Kerberos windows port.This is mandatory for Windows Kerberos Credential type ie when type=kerberos_windows.
+	// The Kerberos Windows port. The port is mandatory When Kerberos Windows is the credential type.
 	WinrmPort *string `json:"winrm_port,omitempty"`
 
-	// The MS365 client Id.This is mandatory for Windows MS365 Credential type ie when type=ms_365.
+	// The Microsoft 365 client ID. The client ID is mandatory when Microsoft 365 is the credential type.
 	Ms365ClientID *string `json:"ms_365_client_id,omitempty"`
 
-	// The MS365 client secret.This is mandatory for Windows MS365 Credential type ie when type=ms_365.
+	// The Microsoft 365 client secret. The secret is mandatory when Microsoft 365 is the credential type.
 	Ms365ClientSecret *string `json:"ms_365_client_secret,omitempty"`
 
-	// The MS365 tenantId.This is mandatory for Windows MS365 Credential type ie when type=ms_365.
+	// The Microsoft 365 tenant ID. The tenant ID is mandatory when Microsoft 365 is the credential type.
 	Ms365TenantID *string `json:"ms_365_tenant_id,omitempty"`
 
-	// auth url of the Open Stack cloud.This is mandatory for Open Stack Credential type ie when type=openstack_cloud.
+	// The auth url of the OpenStack cloud. The auth url is mandatory when OpenStack is the credential type.
 	AuthURL *string `json:"auth_url,omitempty"`
 
-	// Project name of the Open Stack cloud.This is mandatory for Open Stack Credential type ie when type=openstack_cloud.
+	// The project name of the OpenStack cloud. The project name is mandatory when OpenStack is the credential type.
 	ProjectName *string `json:"project_name,omitempty"`
 
-	// user domain name of the Open Stack cloud.This is mandatory for Open Stack Credential type ie when
-	// type=openstack_cloud.
+	// The user domain name of the OpenStack cloud. The domain name is mandatory when OpenStack is the credential type.
 	UserDomainName *string `json:"user_domain_name,omitempty"`
 
-	// project domain name of the Open Stack cloud.This is mandatory for Open Stack Credential type ie when
-	// type=openstack_cloud.
+	// The project domain name of the OpenStack cloud. The project domain name is mandatory when OpenStack is the
+	// credential type.
 	ProjectDomainName *string `json:"project_domain_name,omitempty"`
+
+	// The user pem file name.
+	PemFileName *string `json:"pem_file_name,omitempty"`
+
+	// The base64 encoded form of pem.
+	PemData *string `json:"pem_data,omitempty"`
 }
 
 // UnmarshalNewCredentialDisplayFields unmarshals an instance of NewCredentialDisplayFields from the specified map of raw messages.
@@ -5504,6 +5537,14 @@ func UnmarshalNewCredentialDisplayFields(m map[string]json.RawMessage, result in
 	if err != nil {
 		return
 	}
+	err = core.UnmarshalPrimitive(m, "pem_file_name", &obj.PemFileName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "pem_data", &obj.PemData)
+	if err != nil {
+		return
+	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
 }
@@ -5542,7 +5583,7 @@ type Profile struct {
 	// The user who last modified the profile.
 	ModifiedBy *string `json:"modified_by" validate:"required"`
 
-	// A reason that you want to delete a profile.
+	// A reason why you want to delete a profile.
 	ReasonForDelete *string `json:"reason_for_delete" validate:"required"`
 
 	// The criteria that defines how a profile applies.
@@ -5573,6 +5614,7 @@ type Profile struct {
 // Constants associated with the Profile.Type property.
 // The type of profile.
 const (
+	ProfileTypeAuthoredConst      = "authored"
 	ProfileTypeCustomConst        = "custom"
 	ProfileTypePredefinedConst    = "predefined"
 	ProfileTypeTemplateGroupConst = "template_group"
@@ -5688,8 +5730,7 @@ type ProfileList struct {
 	// The number of profiles displayed per page.
 	Limit *int64 `json:"limit" validate:"required"`
 
-	// The total number of profiles. This value is 0 if no profiles are available and below fields will not be available in
-	// that case.
+	// The total number of profiles. If no profiles are available, the value of this field is 0.
 	TotalCount *int64 `json:"total_count" validate:"required"`
 
 	// The URL of a page.
@@ -5772,17 +5813,17 @@ type ProfileResult struct {
 	// The name of the profile.
 	Name *string `json:"name" validate:"required"`
 
-	// The type of profile. To learn more about profile types, check out the [docs]
-	// (https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-profiles).
+	// The type of profile. To learn more about profile types, check out the
+	// [docs](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-profiles).
 	Type *string `json:"type" validate:"required"`
 
-	// The result of a scan.The above values will not be avaialble if no scopes are available.
+	// The result of a scan. The controls values are not available if no scopes are available.
 	ValidationResult *ScanResult `json:"validation_result" validate:"required"`
 }
 
 // Constants associated with the ProfileResult.Type property.
-// The type of profile. To learn more about profile types, check out the [docs]
-// (https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-profiles).
+// The type of profile. To learn more about profile types, check out the
+// [docs](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-profiles).
 const (
 	ProfileResultTypeAuthoredConst            = "authored"
 	ProfileResultTypeCustomConst              = "custom"
@@ -5821,7 +5862,7 @@ type ReplaceScopeDetailsCollectorOptions struct {
 	// The unique identifier that is used to trace an entire Scope request.
 	ScopeID *string `json:"-" validate:"required,ne="`
 
-	// Stores the value of collector_ids .
+	// The collector IDs of the scope.
 	CollectorIds []string `json:"collector_ids" validate:"required"`
 
 	// Your IBM Cloud account ID.
@@ -5878,10 +5919,10 @@ type ReplaceScopeDetailsCredentialsOptions struct {
 	// The unique identifier that is used to trace an entire Scope request.
 	ScopeID *string `json:"-" validate:"required,ne="`
 
-	// Stores the value of credentialId .
+	// The credential ID of the scope.
 	CredentialID *string `json:"credential_id" validate:"required"`
 
-	// Stores the value of credential_attribute .
+	// The credential attribute of the scope.
 	CredentialAttribute *string `json:"credential_attribute,omitempty"`
 
 	// Your IBM Cloud account ID.
@@ -5947,7 +5988,7 @@ type ResourceResult struct {
 	// The resource type.
 	Types *string `json:"types,omitempty"`
 
-	// The resource control result status.
+	// The result status of resource control.
 	Status *string `json:"status,omitempty"`
 
 	// The expected results of a resource.
@@ -5959,12 +6000,12 @@ type ResourceResult struct {
 	// The results information.
 	ResultsInfo *string `json:"results_info,omitempty"`
 
-	// The reason for goal not applicable for a resource.
+	// The reason why a goal is not applicable to a resource.
 	NotApplicableReason *string `json:"not_applicable_reason,omitempty"`
 }
 
 // Constants associated with the ResourceResult.Status property.
-// The resource control result status.
+// The result status of resource control.
 const (
 	ResourceResultStatusPassConst            = "pass"
 	ResourceResultStatusUnableToPerformConst = "unable_to_perform"
@@ -6005,7 +6046,7 @@ func UnmarshalResourceResult(m map[string]json.RawMessage, result interface{}) (
 	return
 }
 
-// ResourceStatistics : A scans summary controls.
+// ResourceStatistics : A scan's summary controls.
 type ResourceStatistics struct {
 	// The resource count of pass controls.
 	PassCount *int64 `json:"pass_count,omitempty"`
@@ -6016,7 +6057,7 @@ type ResourceStatistics struct {
 	// The number of resources that were unable to be scanned against a control.
 	UnableToPerformCount *int64 `json:"unable_to_perform_count,omitempty"`
 
-	// The resource count of not applicable(na) controls.
+	// The resource count of controls that are not applicable.
 	NotApplicableCount *int64 `json:"not_applicable_count,omitempty"`
 }
 
@@ -6072,7 +6113,7 @@ type ScanItem struct {
 	// The ID of the scan.
 	ScanID *string `json:"scan_id" validate:"required"`
 
-	// A system generated name that is the combination of 12 characters in the scope name and 12 characters of a profile
+	// A system-generated name that is the combination of 12 characters in the scope name and 12 characters of a profile
 	// name.
 	ScanName *string `json:"scan_name" validate:"required"`
 
@@ -6097,13 +6138,13 @@ type ScanItem struct {
 	// The date and time the scan was run.
 	StartTime *strfmt.DateTime `json:"start_time" validate:"required"`
 
-	// The unique ID for Scan that is created.
+	// The unique ID for the scan that is created.
 	ReportSettingID *string `json:"report_setting_id,omitempty"`
 
-	// The date and time the scan completed.
+	// The date and time when the scan completed.
 	EndTime *strfmt.DateTime `json:"end_time" validate:"required"`
 
-	// The result of a scan.The above values will not be avaialble if no scopes are available.
+	// The result of a scan. The controls values are not available if no scopes are available.
 	Result *ScanResult `json:"result" validate:"required"`
 }
 
@@ -6167,11 +6208,11 @@ type ScanList struct {
 	// The offset of the page.
 	Offset *int64 `json:"offset" validate:"required"`
 
-	// The number of scans displayed per page.
+	// The number of scans that are displayed per page.
 	Limit *int64 `json:"limit" validate:"required"`
 
-	// The total number of scans in the list. This value will be 0 when no scans are available and below fields will not be
-	// displayed in taht case.
+	// The total number of scans that are in the list. This value is 0 when no scans are available and the detail fields
+	// are not displayed in that case.
 	TotalCount *int64 `json:"total_count" validate:"required"`
 
 	// The URL of a page.
@@ -6246,13 +6287,13 @@ func (resp *ScanList) GetNextOffset() (*int64, error) {
 	return core.Int64Ptr(offsetValue), nil
 }
 
-// ScanResult : The result of a scan.The above values will not be avaialble if no scopes are available.
+// ScanResult : The result of a scan. The controls values are not available if no scopes are available.
 type ScanResult struct {
 	// The number of goals that passed the scan.
 	GoalsPassCount *int64 `json:"goals_pass_count" validate:"required"`
 
-	// The number of goals that could not be validated. A control is listed as 'Unable to perform' when information about
-	// its associated resource can't be collected.
+	// The number of goals that can't be validated. A control is listed as 'Unable to perform' when information about its
+	// associated resource can't be collected.
 	GoalsUnableToPerformCount *int64 `json:"goals_unable_to_perform_count" validate:"required"`
 
 	// The number of goals that are not relevant to the current scan. A scan is listed as 'Not applicable' when information
@@ -6275,11 +6316,11 @@ type ScanResult struct {
 	// information about its associated resource can't be found.
 	ControlsNotApplicableCount *int64 `json:"controls_not_applicable_count" validate:"required"`
 
-	// The number of controls that could not be validated. A control is listed as 'Unable to perform' when information
-	// about its associated resource can't be collected.
+	// The number of controls that can't be validated. A control is listed as 'Unable to perform' when information about
+	// its associated resource can't be collected.
 	ControlsUnableToPerformCount *int64 `json:"controls_unable_to_perform_count" validate:"required"`
 
-	// The total number of controls that were included in the scan.
+	// The total number of controls that are included in the scan.
 	ControlsTotalCount *int64 `json:"controls_total_count" validate:"required"`
 }
 
@@ -6332,7 +6373,7 @@ func UnmarshalScanResult(m map[string]json.RawMessage, result interface{}) (err 
 
 // ScanSummariesOptions : The ScanSummaries options.
 type ScanSummariesOptions struct {
-	// The report setting ID. This can be obtained from the /validations/latest_scans API call.
+	// The report setting ID. The ID can be obtained from the /validations/latest_scans API call.
 	ReportSettingID *string `json:"-" validate:"required"`
 
 	// Your IBM Cloud account ID.
@@ -6400,7 +6441,7 @@ type ScansSummaryOptions struct {
 	// Your Scan ID.
 	ScanID *string `json:"-" validate:"required,ne="`
 
-	// The profile ID. This can be obtained from the Security and Compliance Center UI by clicking on the profile name. The
+	// The profile ID. The ID can be obtained from the Security and Compliance Center UI by clicking the profile name. The
 	// URL contains the ID.
 	ProfileID *string `json:"-" validate:"required"`
 
@@ -6453,147 +6494,147 @@ func (options *ScansSummaryOptions) SetHeaders(param map[string]string) *ScansSu
 	return options
 }
 
-// Scope : Stores the value of ScopeDetails .
+// Scope : Get the details of the scope.
 type Scope struct {
-	// Stores the value of scope_id .
+	// The ID of the scope.
 	ID *string `json:"id" validate:"required"`
 
-	// Stores the value of scope_name .
+	// The name of the scope.
 	Name *string `json:"name" validate:"required"`
 
-	// Stores the value of scope_uuid .Will be displayed only when value exists.
+	// The UUID of the scope. The unique user ID is displayed only when the value exists.
 	UUID *string `json:"uuid,omitempty"`
 
-	// Stores the value of partner_uuid .Will be displayed only when value exists.
+	// The partner_uuid of the scope. The ID is displayed only when the value exists.
 	PartnerUUID *string `json:"partner_uuid,omitempty"`
 
-	// Stores the value of scope_description .Will be displayed only when value exists.
+	// The description of the scope. The description is displayed only when the value exists.
 	Description *string `json:"description,omitempty"`
 
-	// Stores the value of scope_org_id .Will be displayed only when value exists.
+	// The organization ID of the scope. The organization ID is displayed only when the value exists.
 	OrgID *int64 `json:"org_id,omitempty"`
 
-	// Stores the value of scope_cloud_type_id .Will be displayed only when value exists.
+	// The cloud type ID of the scope. The ID is displayed only when the value exists.
 	CloudTypeID *int64 `json:"cloud_type_id,omitempty"`
 
-	// Stores the value of scope_tld_credential_id .Will be displayed only when value exists.
+	// The credential ID of the scope. The ID is displayed only when the value exists.
 	TldCredentialID *int64 `json:"tld_credential_id,omitempty"`
 
-	// Stores the value of scope_status .Will be displayed only when value exists.
+	// The status of the scope. The status is displayed only when the value exists.
 	Status *string `json:"status,omitempty"`
 
-	// Stores the value of scope_status_msg .Will be displayed only when value exists.
+	// The status message of the scope. The message is displayed only when the value exists.
 	StatusMsg *string `json:"status_msg,omitempty"`
 
-	// Stores the value of scope_subset_selected .Will be displayed only when value exists.
+	// The subset-selected field of the scope. The field is displayed only when the value exists.
 	SubsetSelected *bool `json:"subset_selected,omitempty"`
 
-	// Stores the value of scope_enabled .Will be displayed only when value exists.
+	// The enabled field of the scope. The field is displayed only when the value exists.
 	Enabled *bool `json:"enabled,omitempty"`
 
-	// Stores the value of scope_last_discover_start_time .Will be displayed only when value exists.
+	// The last discover start time of the scope. The time is displayed only when the value exists.
 	LastDiscoverStartTime *string `json:"last_discover_start_time,omitempty"`
 
-	// Stores the value of scope_last_discover_completed_time .Will be displayed only when value exists.
+	// The last discover completed time of the scope. The time is displayed only when the value exists.
 	LastDiscoverCompletedTime *string `json:"last_discover_completed_time,omitempty"`
 
-	// Stores the value of scope_last_successful_discover_start_time .Will be displayed only when value exists.
+	// The last successful discover start time of the scope. The time is displayed only when the value exists.
 	LastSuccessfulDiscoverStartTime *string `json:"last_successful_discover_start_time,omitempty"`
 
-	// Stores the value of scope_last_successful_discover_completed_time .Will be displayed only when value exists.
+	// The last successful discover completed time of the scope. The time is displayed only when the value exists.
 	LastSuccessfulDiscoverCompletedTime *string `json:"last_successful_discover_completed_time,omitempty"`
 
-	// Stores the value of scope_task_type .Will be displayed only when value exists.
+	// The task type of the scope. The task type is displayed only when the value exists.
 	TaskType *string `json:"task_type,omitempty"`
 
-	// Stores the value of scope_tasks .Will be displayed only when value exists.
+	// The tasks of the scope. The tasks are displayed only when the value exists.
 	Tasks []ScopeDetailsGatewayTask `json:"tasks,omitempty"`
 
-	// Stores the value of scope_status_updated_time .Will be displayed only when value exists.
+	// The status updated time of the scope. The time is displayed only when the value exists.
 	StatusUpdatedTime *string `json:"status_updated_time,omitempty"`
 
-	// Stores the value of collectors_by_type .Will be displayed only when value exists.
+	// The collectors by type of the scope. The collectors are displayed only when the values exist.
 	CollectorsByType map[string][]Collector `json:"collectors_by_type,omitempty"`
 
-	// Stores the value of scope_credentials_by_type .Will be displayed only when value exists.
+	// The credentials by type of the scope. The credentials are displayed only when the values exist.
 	CredentialsByType map[string][]ScopeDetailsCredential `json:"credentials_by_type,omitempty"`
 
-	// Stores the value of scope_credentials_by_sub_categeory_type .Will be displayed only when value exists.
+	// The credentials by sub category type of the scope. The credentials are displayed only when the values exist.
 	CredentialsBySubCategeoryType map[string][]ScopeDetailsCredential `json:"credentials_by_sub_categeory_type,omitempty"`
 
-	// Stores the value of scope_sub_categories_by_type .Will be displayed only when value exists.
+	// The sub categories by type of the scope. The categories are displayed only when the values exist.
 	SubCategoriesByType map[string][]string `json:"sub_categories_by_type,omitempty"`
 
-	// Stores the value of scope_resource_groups .Will be displayed only when value exists.
+	// The resource groups of the scope. The resource groups are displayed only when the values exist.
 	ResourceGroups *string `json:"resource_groups,omitempty"`
 
-	// Stores the value of scope_region_names .Will be displayed only when value exists.
+	// The region names of the scope. The names are displayed only when the values exist.
 	RegionNames *string `json:"region_names,omitempty"`
 
-	// Stores the value of scope_cloud_type .Will be displayed only when value exists.
+	// The cloud type of the scope. The cloud type is displayed only when the value exists.
 	CloudType *string `json:"cloud_type,omitempty"`
 
-	// Stores the value of scope_env_sub_category .Will be displayed only when value exists.
+	// The env sub category of the scope. The category is displayed only when the value exists.
 	EnvSubCategory *string `json:"env_sub_category,omitempty"`
 
-	// Stores the value of ScopeDetailsCredential .
+	// The credential details of the scope.
 	TldCredentail *ScopeDetailsCredential `json:"tld_credentail,omitempty"`
 
-	// Stores the value of collectors .Will be displayed only when value exists.
+	// The collectors of the scope. The collectors are displayed only when the values exist.
 	Collectors []Collector `json:"collectors,omitempty"`
 
-	// Stores the value of scope_first_level_scoped_data .Will be displayed only when value exists.
+	// The first-level scoped data of the scope. The data is displayed only when the value exists.
 	FirstLevelScopedData []ScopeDetailsAssetData `json:"first_level_scoped_data,omitempty"`
 
-	// Stores the value of scope_discovery_methods .Will be displayed only when value exists.
+	// The discovery methods of the scope. The methods are displayed only when the values exist.
 	DiscoveryMethods []string `json:"discovery_methods,omitempty"`
 
-	// Stores the value of scope_discovery_method .Will be displayed only when value exists.
+	// The discovery method of the scope. The method is displayed only when the value exists.
 	DiscoveryMethod *string `json:"discovery_method,omitempty"`
 
-	// Stores the value of scope_file_type .Will be displayed only when value exists.
+	// The file type of the scope. The type is displayed only when the value exists.
 	FileType *string `json:"file_type,omitempty"`
 
-	// Stores the value of scope_file_format .Will be displayed only when value exists.
+	// The file format of the scope. The format is displayed only when the value exists.
 	FileFormat *string `json:"file_format,omitempty"`
 
-	// Stores the value of scope_created_by .Will be displayed only when value exists.
+	// The user who created the scope. The user is displayed only when the value exists.
 	CreatedBy *string `json:"created_by,omitempty"`
 
-	// Stores the value of scope_created_on .Will be displayed only when value exists.
+	// The date of creation of the scope. The date is displayed only when the value exists.
 	CreatedAt *string `json:"created_at,omitempty"`
 
-	// Stores the value of scope_modified_by .Will be displayed only when value exists.
+	// The user who modified the scope. The user is displayed only when the value exists.
 	ModifiedBy *string `json:"modified_by,omitempty"`
 
-	// Stores the value of scope_modified_on .Will be displayed only when value exists.
+	// The modified date of the scope. The date is displayed only when the value exists.
 	ModifiedAt *string `json:"modified_at,omitempty"`
 
-	// Stores the value of scope_is_discovery_scheduled .Will be displayed only when value exists.
+	// The scheduled discovery configuration of the scope. The data is displayed only when the value exists.
 	IsDiscoveryScheduled *bool `json:"is_discovery_scheduled,omitempty"`
 
-	// Stores the value of scope_freq .Will be displayed only when value exists.
+	// The interval of the scope. The interval is displayed only when the value exists.
 	Interval *int64 `json:"interval,omitempty"`
 
-	// Stores the value of scope_discovery_setting_id .Will be displayed only when value exists.
+	// The discovery setting ID of the scope. The ID is displayed only when the value exists.
 	DiscoverySettingID *int64 `json:"discovery_setting_id,omitempty"`
 
-	// Stores the value of scope_include_new_eagerly .Will be displayed only when value exists.
+	// The `include_new_eagerly` of the scope. The data is displayed only when the value exists.
 	IncludeNewEagerly *bool `json:"include_new_eagerly,omitempty"`
 
-	// Stores the value of scope_type .Will be displayed only when value exists.
+	// The type of the scope. The type is displayed only when the value exists.
 	Type *string `json:"type,omitempty"`
 
-	// A correlation_Id is created when a scope is created and discovery task is triggered or when a validation is
-	// triggered on a Scope. This is used to get the status of the task(discovery or validation).
+	// Get the status of a task such as discovery or validation. A correlation ID is created when a scope is created and
+	// discovery or validation is triggered for a scope.
 	CorrelationID *string `json:"correlation_id,omitempty"`
 
-	// Stores the value of scope_credential_attributes .Will be displayed only when value exists.
+	// The credential attributes of the scope. The attributes are displayed only when the value exists.
 	CredentialAttributes *string `json:"credential_attributes,omitempty"`
 }
 
 // Constants associated with the Scope.Status property.
-// Stores the value of scope_status .Will be displayed only when value exists.
+// The status of the scope. The status is displayed only when the value exists.
 const (
 	ScopeStatusAbortTaskRequestCompletedConst       = "abort_task_request_completed"
 	ScopeStatusAbortTaskRequestFailedConst          = "abort_task_request_failed"
@@ -6657,7 +6698,7 @@ const (
 )
 
 // Constants associated with the Scope.TaskType property.
-// Stores the value of scope_task_type .Will be displayed only when value exists.
+// The task type of the scope. The task type is displayed only when the value exists.
 const (
 	ScopeTaskTypeAborttasksConst            = "aborttasks"
 	ScopeTaskTypeCertRegularValidationConst = "cert_regular_validation"
@@ -6679,13 +6720,13 @@ const (
 )
 
 // Constants associated with the Scope.SubCategoriesByType property.
-// Stores the value of scope_sub_categories_by_type .Will be displayed only when value exists.
+// The sub categories by type of the scope. The categories are displayed only when the values exist.
 const (
 	ScopeSubCategoriesByTypeMs365Const = "ms_365"
 )
 
 // Constants associated with the Scope.Type property.
-// Stores the value of scope_type .Will be displayed only when value exists.
+// The type of the scope. The type is displayed only when the value exists.
 const (
 	ScopeTypeInventoryConst  = "inventory"
 	ScopeTypeValidationConst = "validation"
@@ -6878,9 +6919,9 @@ func UnmarshalScope(m map[string]json.RawMessage, result interface{}) (err error
 	return
 }
 
-// ScopeCollector : Stores the value of Scope Collector Details .
+// ScopeCollector : The collector details of the scope.
 type ScopeCollector struct {
-	// Stores the value of collector_ids .
+	// The collector IDs of the scope.
 	CollectorIds []string `json:"collector_ids" validate:"required"`
 }
 
@@ -6904,12 +6945,12 @@ func UnmarshalScopeCollector(m map[string]json.RawMessage, result interface{}) (
 	return
 }
 
-// ScopeCredential : Stores the value of Scope Credential .
+// ScopeCredential : The details of the scope credential.
 type ScopeCredential struct {
-	// Stores the value of credential_attribute .
+	// The credential attribute of the scope.
 	CredentialAttribute *string `json:"credential_attribute,omitempty"`
 
-	// Stores the value of credentialId .
+	// The credential ID of the scope.
 	CredentialID *string `json:"credential_id" validate:"required"`
 }
 
@@ -6937,69 +6978,69 @@ func UnmarshalScopeCredential(m map[string]json.RawMessage, result interface{}) 
 	return
 }
 
-// ScopeDetailsAssetData : Stores the value of ScopeDetailsAssetData.
+// ScopeDetailsAssetData : The asset data details of the scope.
 type ScopeDetailsAssetData struct {
-	// Stores the value of  scope_object .
+	// The asset object of the scope.
 	ScopeObject *string `json:"scope_object,omitempty"`
 
-	// Stores the value of scope_init_scope .
+	// The initial value of the scope.
 	ScopeInitScope *string `json:"scope_init_scope,omitempty"`
 
-	// Stores the value of scope .
+	// The asset of the scope.
 	Scope *string `json:"scope,omitempty"`
 
-	// Stores the value of  scope_changed .
+	// The changed value of the scope.
 	ScopeChanged *bool `json:"scope_changed,omitempty"`
 
-	// Stores the value of scope_id .
+	// The ID of the scope.
 	ScopeID *string `json:"scope_id,omitempty"`
 
-	// Stores the value of  scope_properties .
+	// The properties of the scope.
 	ScopeProperties *string `json:"scope_properties,omitempty"`
 
-	// Stores the value of scope_overlay .
+	// The overlay of the scope.
 	ScopeOverlay *string `json:"scope_overlay,omitempty"`
 
-	// Stores the value of scope_new_found .
+	// The newfound value of the scope.
 	ScopeNewFound *bool `json:"scope_new_found,omitempty"`
 
-	// Stores the value of scope_discovery_status .
+	// The discovery status of the scope.
 	ScopeDiscoveryStatus interface{} `json:"scope_discovery_status,omitempty"`
 
-	// Stores the value of scope_fact_status .
+	// The fact status of the scope.
 	ScopeFactStatus interface{} `json:"scope_fact_status,omitempty"`
 
-	// Stores the value of scope_facts .
+	// The facts of the scope.
 	ScopeFacts *string `json:"scope_facts,omitempty"`
 
-	// Stores the value of scope_list_members .
+	// The list members of the scope.
 	ScopeListMembers interface{} `json:"scope_list_members,omitempty"`
 
-	// Stores the value of scope_children .
+	// The children of the scope.
 	ScopeChildren interface{} `json:"scope_children,omitempty"`
 
-	// Stores the value of scope_resource_category .
+	// The resource category of the scope.
 	ScopeResourceCategory *string `json:"scope_resource_category,omitempty"`
 
-	// Stores the value of scope_resource_type .
+	// The resource type of the scope.
 	ScopeResourceType *string `json:"scope_resource_type,omitempty"`
 
-	// Stores the value of scope_resource .
+	// The resource of the scope.
 	ScopeResource *string `json:"scope_resource,omitempty"`
 
-	// Stores the value of scope_resource_attributes .
+	// The resource attributes of the scope.
 	ScopeResourceAttributes interface{} `json:"scope_resource_attributes,omitempty"`
 
-	// Stores the value of  scope_drift .
+	// The drift of the scope.
 	ScopeDrift *string `json:"scope_drift,omitempty"`
 
-	// Stores the value of scope_parse_status .
+	// The parse status of the scope.
 	ScopeParseStatus *string `json:"scope_parse_status,omitempty"`
 
-	// Stores the value of scope_transformed_facts .
+	// The transformed facts of the scope.
 	ScopeTransformedFacts interface{} `json:"scope_transformed_facts,omitempty"`
 
-	// Stores the value of scope_collector_id .
+	// The collector ID of the scope.
 	ScopeCollectorID *int64 `json:"scope_collector_id,omitempty"`
 }
 
@@ -7094,48 +7135,48 @@ func UnmarshalScopeDetailsAssetData(m map[string]json.RawMessage, result interfa
 	return
 }
 
-// ScopeDetailsCredential : Stores the value of ScopeDetailsCredential .
+// ScopeDetailsCredential : The credential details of the scope.
 type ScopeDetailsCredential struct {
-	// Stores the value of credential_id .
+	// The credential ID of the scope.
 	ID *string `json:"id,omitempty"`
 
-	// Stores the value of credential_name .
+	// The credential name of the scope.
 	Name *string `json:"name,omitempty"`
 
-	// Stores the value of credential_uuid .
+	// The credential uuid of the scope.
 	UUID *string `json:"uuid,omitempty"`
 
-	// Stores the value of credential_type .
+	// The credential type of the scope.
 	Type *string `json:"type,omitempty"`
 
-	// Stores the value of credential_data .
+	// The credential data of the scope.
 	Data interface{} `json:"data,omitempty"`
 
-	// Details the fields on the credential. This will change as per credential type selected.
+	// The display fields of the credential. The fields change based on the selected credential type.
 	DisplayFields *ScopeDetailsCredentialDisplayFields `json:"display_fields,omitempty"`
 
-	// Stores the value of credential_version_timestamp .
+	// The credential version timestamp of the scope.
 	VersionTimestamp interface{} `json:"version_timestamp,omitempty"`
 
-	// Stores the value of credential_description .
+	// The credential description of the scope.
 	Description *string `json:"description,omitempty"`
 
-	// Stores the value of credential_is_enabled .
+	// The configuration of whether the scope's credential is enabled.
 	IsEnabled *bool `json:"is_enabled,omitempty"`
 
-	// Stores the value of credential_gateway_key .
+	// The credential gateway key of the scope.
 	GatewayKey *string `json:"gateway_key,omitempty"`
 
-	// Stores the value of credential_credential_group .
+	// The credential group of the scope.
 	CredentialGroup interface{} `json:"credential_group,omitempty"`
 
-	// Stores the value of credential_enabled_credential_group .
+	// The configuration of whether the scope's credential group is enabled.
 	EnabledCredentialGroup *bool `json:"enabled_credential_group,omitempty"`
 
-	// Stores the value of credential_groups .
+	// The credential groups of the scope.
 	Groups []CredentialGroup `json:"groups,omitempty"`
 
-	// Stores the value of credential_purpose .
+	// The credential purpose of the scope.
 	Purpose *string `json:"purpose,omitempty"`
 }
 
@@ -7202,72 +7243,77 @@ func UnmarshalScopeDetailsCredential(m map[string]json.RawMessage, result interf
 	return
 }
 
-// ScopeDetailsCredentialDisplayFields : Details the fields on the credential. This will change as per credential type selected.
+// ScopeDetailsCredentialDisplayFields : The display fields of the credential. The fields change based on the selected credential type.
 type ScopeDetailsCredentialDisplayFields struct {
-	// The IBM Cloud API Key. This is mandatory for IBM Credential Type.
+	// The IBM Cloud API Key. The API key is mandatory for the IBM Credential type.
 	IBMAPIKey *string `json:"ibm_api_key,omitempty"`
 
-	// AWS client Id.This is mandatory for AWS Cloud.
+	// The Amazon Web Services client ID. The client ID is mandatory when AWS Cloud is selected as the credential type.
 	AwsClientID *string `json:"aws_client_id,omitempty"`
 
-	// AWS client secret.This is mandatory for AWS Cloud.
+	// The Amazon Web Services client secret. The client secret is mandatory when AWS Cloud is selected as the credential
+	// type.
 	AwsClientSecret *string `json:"aws_client_secret,omitempty"`
 
-	// AWS region.
+	// The Amazon Web Services region. The region is used when AWS Cloud is selected as the credential type.
 	AwsRegion *string `json:"aws_region,omitempty"`
 
-	// AWS arn value.
+	// The Amazon Web Services arn value. The arn value is used when AWS Cloud is selected as the credential type.
 	AwsArn *string `json:"aws_arn,omitempty"`
 
-	// username of the user.This is mandatory for DataBase, Kerbros,OpenStack Credentials.
+	// The username of the user. The username is mandatory when the credential type is DataBase, Kerberos, OpenStack, and
+	// Username-Password.
 	Username *string `json:"username,omitempty"`
 
-	// password of the user.This is mandatory for DataBase, Kerbros,OpenStack Credentials.
+	// The password of the user. The password is mandatory when the credential type is DataBase, Kerberos, OpenStack, and
+	// Username-Password.
 	Password *string `json:"password,omitempty"`
 
-	// Azure client Id. This is mandatory for Azure Credential type.
+	// The Microsoft Azure client ID. The client ID is mandatory when Azure is selected as the credential type.
 	AzureClientID *string `json:"azure_client_id,omitempty"`
 
-	// Azure client secret.This is mandatory for Azure Credential type.
+	// The Microsoft Azure client secret. The secret is mandatory when the type of credential is set to Azure.
 	AzureClientSecret *string `json:"azure_client_secret,omitempty"`
 
-	// Azure subscription Id.This is mandatory for Azure Credential type.
+	// The Microsoft Azure subscription ID. The subscription ID is mandatory when the type of credential is set to Azure.
 	AzureSubscriptionID *string `json:"azure_subscription_id,omitempty"`
 
-	// Azure resource group.
+	// The Microsoft Azure resource group. The resource group is used when Azure is the credential type.
 	AzureResourceGroup *string `json:"azure_resource_group,omitempty"`
 
-	// Database name.This is mandatory for Database Credential type.
+	// The database name. The database name is mandatory when Database is the credential type.
 	DatabaseName *string `json:"database_name,omitempty"`
 
-	// Kerberos windows auth type.This is mandatory for Windows Kerberos Credential type.
+	// The Kerberos Windows authentication type. The authentication type is mandatory when the credential type is Kerberos
+	// Windows.
 	WinrmAuthtype *string `json:"winrm_authtype,omitempty"`
 
-	// Kerberos windows ssl.This is mandatory for Windows Kerberos Credential type.
+	// The Kerberos Windows SSL. The SSL is mandatory when the credential type is Kerberos Windows.
 	WinrmUsessl *string `json:"winrm_usessl,omitempty"`
 
-	// Kerberos windows port.This is mandatory for Windows Kerberos Credential type.
+	// The Kerberos Windows port. The port is mandatory When Kerberos Windows is the credential type.
 	WinrmPort *string `json:"winrm_port,omitempty"`
 
-	// The MS365 client Id.This is mandatory for Windows MS365 Credential type.
+	// The Microsoft 365 client ID. The client ID is mandatory when Microsoft 365 is the credential type.
 	Ms365ClientID *string `json:"ms_365_client_id,omitempty"`
 
-	// The MS365 client secret.This is mandatory for Windows MS365 Credential type.
+	// The Microsoft 365 client secret. The secret is mandatory when Microsoft 365 is the credential type.
 	Ms365ClientSecret *string `json:"ms_365_client_secret,omitempty"`
 
-	// The MS365 tenantId.This is mandatory for Windows MS365 Credential type.
+	// The Microsoft 365 tenant ID. The tenant ID is mandatory when Microsoft 365 is the credential type.
 	Ms365TenantID *string `json:"ms_365_tenant_id,omitempty"`
 
-	// auth url of the Open Stack cloud.This is mandatory for Open Stack Credential type.
+	// The auth url of the OpenStack cloud. The auth url is mandatory when OpenStack is the credential type.
 	AuthURL *string `json:"auth_url,omitempty"`
 
-	// Project name of the Open Stack cloud.This is mandatory for Open Stack Credential type.
+	// The project name of the OpenStack cloud. The project name is mandatory when OpenStack is the credential type.
 	ProjectName *string `json:"project_name,omitempty"`
 
-	// user domain name of the Open Stack cloud.This is mandatory for Open Stack Credential type.
+	// The user domain name of the OpenStack cloud. The domain name is mandatory when OpenStack is the credential type.
 	UserDomainName *string `json:"user_domain_name,omitempty"`
 
-	// project domain name of the Open Stack cloud.This is mandatory for Open Stack Credential type.
+	// The project domain name of the OpenStack cloud. The project domain name is mandatory when OpenStack is the
+	// credential type.
 	ProjectDomainName *string `json:"project_domain_name,omitempty"`
 }
 
@@ -7366,53 +7412,53 @@ func UnmarshalScopeDetailsCredentialDisplayFields(m map[string]json.RawMessage, 
 	return
 }
 
-// ScopeDetailsGatewayTask : Stores the value of ScopeDetailsGatewayTask .
+// ScopeDetailsGatewayTask : The gateway task details of the scope.
 type ScopeDetailsGatewayTask struct {
-	// Stores the value of task_logs .
+	// The task logs of the scope.
 	TaskLogs []TaskLogs `json:"task_logs,omitempty"`
 
-	// Stores the value of task_id .
+	// The task ID of the scope.
 	TaskID *int64 `json:"task_id,omitempty"`
 
-	// Stores the value of task_gateway_id .
+	// The task gateway ID of the scope.
 	TaskGatewayID *int64 `json:"task_gateway_id,omitempty"`
 
-	// Stores the value of task_gateway_name .
+	// The task gateway name of the scope.
 	TaskGatewayName *string `json:"task_gateway_name,omitempty"`
 
-	// Stores the value of task_task_type .
+	// The task type of the scope.
 	TaskTaskType *string `json:"task_task_type,omitempty"`
 
-	// Stores the value of task_gateway_schema_id .
+	// The task gateway schema ID of the scope.
 	TaskGatewaySchemaID *int64 `json:"task_gateway_schema_id,omitempty"`
 
-	// Stores the value of task_schema_name .
+	// The task schema name of the scope.
 	TaskSchemaName *string `json:"task_schema_name,omitempty"`
 
-	// Stores the value of task_discover_id .
+	// The task-discover ID of the scope.
 	TaskDiscoverID *int64 `json:"task_discover_id,omitempty"`
 
-	// Stores the value of task_status .
+	// The task status of the scope.
 	TaskStatus *string `json:"task_status,omitempty"`
 
-	// Stores the value of task_status_msg .
+	// The task status message of the scope.
 	TaskStatusMsg *string `json:"task_status_msg,omitempty"`
 
-	// Stores the value of task_start_time .
+	// The task start time of the scope.
 	TaskStartTime *int64 `json:"task_start_time,omitempty"`
 
-	// Stores the value of task_updated_time .
+	// The task updated time of the scope.
 	TaskUpdatedTime *int64 `json:"task_updated_time,omitempty"`
 
-	// Stores the value of task_derived_status .
+	// The task derived status of the scope.
 	TaskDerivedStatus *string `json:"task_derived_status,omitempty"`
 
-	// Stores the value of task_created_by .
+	// The user who created the task that is associated with scope.
 	TaskCreatedBy *string `json:"task_created_by,omitempty"`
 }
 
 // Constants associated with the ScopeDetailsGatewayTask.TaskTaskType property.
-// Stores the value of task_task_type .
+// The task type of the scope.
 const (
 	ScopeDetailsGatewayTaskTaskTaskTypeAborttasksConst            = "aborttasks"
 	ScopeDetailsGatewayTaskTaskTaskTypeCertRegularValidationConst = "cert_regular_validation"
@@ -7434,7 +7480,7 @@ const (
 )
 
 // Constants associated with the ScopeDetailsGatewayTask.TaskStatus property.
-// Stores the value of task_status .
+// The task status of the scope.
 const (
 	ScopeDetailsGatewayTaskTaskStatusAbortTaskRequestCompletedConst       = "abort_task_request_completed"
 	ScopeDetailsGatewayTaskTaskStatusAbortTaskRequestFailedConst          = "abort_task_request_failed"
@@ -7498,7 +7544,7 @@ const (
 )
 
 // Constants associated with the ScopeDetailsGatewayTask.TaskDerivedStatus property.
-// Stores the value of task_derived_status .
+// The task derived status of the scope.
 const (
 	ScopeDetailsGatewayTaskTaskDerivedStatusAbortTaskRequestCompletedConst       = "abort_task_request_completed"
 	ScopeDetailsGatewayTaskTaskDerivedStatusAbortTaskRequestFailedConst          = "abort_task_request_failed"
@@ -7638,13 +7684,13 @@ type ScopeItem struct {
 	// An auto-generated unique identifier for the scope.
 	ID *string `json:"id" validate:"required"`
 
-	// Stores the value of scope_uuid .
+	// The unique user ID of the scope.
 	UUID *string `json:"uuid" validate:"required"`
 
 	// A unique name for your scope.
 	Name *string `json:"name" validate:"required"`
 
-	// Indicates whether scope is enabled/disabled.
+	// The scope is enabled or disabled.
 	Enabled *bool `json:"enabled" validate:"required"`
 
 	// The environment that the scope is targeted to.
@@ -7656,7 +7702,7 @@ type ScopeItem struct {
 	// The time that the scope was last modified in UTC.
 	UpdatedAt *strfmt.DateTime `json:"updated_at" validate:"required"`
 
-	// Stores the value of collectors .Will be displayed only when value exists.
+	// The collectors of the scope. The collectors are displayed only when the values exist.
 	Collectors []Collector `json:"collectors" validate:"required"`
 }
 
@@ -7729,11 +7775,11 @@ type ScopeList struct {
 	// The offset of the page.
 	Offset *int64 `json:"offset" validate:"required"`
 
-	// The number of scopes displayed per page.
+	// The number of scopes that are displayed per page.
 	Limit *int64 `json:"limit" validate:"required"`
 
-	// The total number of scopes. This value is 0 if no scopes are available and below fields will not be available in
-	// that case.
+	// The total number of scopes. The value is 0 if no scopes are available. The detail fields are not available in that
+	// case.
 	TotalCount *int64 `json:"total_count" validate:"required"`
 
 	// The URL of a page.
@@ -7791,18 +7837,18 @@ func UnmarshalScopeList(m map[string]json.RawMessage, result interface{}) (err e
 	return
 }
 
-// ScopeTaskStatus : Returns the current task list for the collectors attached to the scope.
+// ScopeTaskStatus : Get the current task list for the collectors that are attached to the scope.
 type ScopeTaskStatus struct {
-	// Returns the correlation ID.
+	// The correlation ID.
 	CorrelationID *string `json:"correlation_id" validate:"required"`
 
-	// Returns the current status of a task.
+	// The status of a task.
 	Status *string `json:"status" validate:"required"`
 
-	// Returns the time that task started.
+	// The time that the task started.
 	StartTime *string `json:"start_time" validate:"required"`
 
-	// Returns the time that the scope was last updated. This value exists when collector is installed and running.
+	// The time that the scope was last updated. This value exists when a collector is installed and running.
 	LastHeartbeat *strfmt.DateTime `json:"last_heartbeat" validate:"required"`
 }
 
@@ -7829,7 +7875,7 @@ func UnmarshalScopeTaskStatus(m map[string]json.RawMessage, result interface{}) 
 	return
 }
 
-// Summary : A list of  scans summary.
+// Summary : A list of scans summary.
 type Summary struct {
 	// The scan ID.
 	ID *string `json:"id" validate:"required"`
@@ -7846,7 +7892,7 @@ type Summary struct {
 	// The scan summary scope ID.
 	ScopeID *string `json:"scope_id" validate:"required"`
 
-	// The list of controls on the scan summary.
+	// The list of controls that are on the scan summary.
 	Controls []Control `json:"controls" validate:"required"`
 }
 
@@ -7881,12 +7927,12 @@ func UnmarshalSummary(m map[string]json.RawMessage, result interface{}) (err err
 	return
 }
 
-// SummaryItem : The result of a scan summeries.
+// SummaryItem : The result of a scan summary.
 type SummaryItem struct {
 	// The ID of the scan.
 	ID *string `json:"id" validate:"required"`
 
-	// A system generated name that is the combination of 12 characters in the scope name and 12 characters of a profile
+	// A system-generated name that is the combination of 12 characters in the scope name and 12 characters in a profile
 	// name.
 	Name *string `json:"name" validate:"required"`
 
@@ -7899,10 +7945,10 @@ type SummaryItem struct {
 	// The entity that ran the report.
 	ReportRunBy *string `json:"report_run_by" validate:"required"`
 
-	// The date and time the scan was run.
+	// The date and time that the scan was run.
 	StartTime *strfmt.DateTime `json:"start_time" validate:"required"`
 
-	// The date and time the scan completed.
+	// The date and time that the scan completed.
 	EndTime *strfmt.DateTime `json:"end_time" validate:"required"`
 
 	// The status of the collector as it completes a scan.
@@ -8012,10 +8058,10 @@ type SummaryList struct {
 	// The offset of the page.
 	Offset *int64 `json:"offset" validate:"required"`
 
-	// The number of scans displayed per page.
+	// The number of scans that are displayed per page.
 	Limit *int64 `json:"limit" validate:"required"`
 
-	// The total number of scans available in the list of summaries.
+	// The total number of scans that are available in the list of summaries.
 	TotalCount *int64 `json:"total_count" validate:"required"`
 
 	// The URL of a page.
@@ -8090,7 +8136,7 @@ func (resp *SummaryList) GetNextOffset() (*int64, error) {
 	return core.Int64Ptr(offsetValue), nil
 }
 
-// TaskLogs : Returns the logs for the tasks that have run.
+// TaskLogs : The logs for the tasks that you ran.
 type TaskLogs struct {
 }
 
@@ -8103,7 +8149,7 @@ func UnmarshalTaskLogs(m map[string]json.RawMessage, result interface{}) (err er
 
 // UpdateCollectorOptions : The UpdateCollector options.
 type UpdateCollectorOptions struct {
-	// The id for the given API.
+	// The ID for the API.
 	ID *string `json:"-" validate:"required,ne="`
 
 	// JSON Merge-Patch content for update_collector.
@@ -8158,73 +8204,80 @@ func (options *UpdateCollectorOptions) SetHeaders(param map[string]string) *Upda
 	return options
 }
 
-// UpdateCredentialDisplayFields : Details the fields on the credential. This will change as per credential type selected.
+// UpdateCredentialDisplayFields : The details of the credential. The details change as the selected credential type varies.
 type UpdateCredentialDisplayFields struct {
-	// The IBM Cloud API Key. This is mandatory for IBM Credential Type.
+	// The IBM Cloud API key. The API key is mandatory when IBM is the credential type.
 	IBMAPIKey *string `json:"ibm_api_key,omitempty"`
 
-	// AWS client Id.This is mandatory for AWS Cloud.
+	// The Amazon Web Services client ID. The client ID is mandatory when AWS Cloud is the credential type.
 	AwsClientID *string `json:"aws_client_id,omitempty"`
 
-	// AWS client secret.This is mandatory for AWS Cloud.
+	// The Amazon Web Services client secret. The secret is mandatory when AWS Cloud is the credential type.
 	AwsClientSecret *string `json:"aws_client_secret,omitempty"`
 
-	// AWS region.
+	// The Amazon Web Services region. The region is mandatory when AWS Cloud is the credential type.
 	AwsRegion *string `json:"aws_region,omitempty"`
 
-	// AWS arn value.
+	// The Amazon Web Services arn value. The arn value is mandatory when AWS Cloud is the credential type.
 	AwsArn *string `json:"aws_arn,omitempty"`
 
-	// username of the user.This is mandatory for DataBase, Kerbros,OpenStack Credentials.
+	// The username of the user. The username is mandatory when the credential type is DataBase, Kerberos, or OpenStack.
 	Username *string `json:"username,omitempty"`
 
-	// password of the user.This is mandatory for DataBase, Kerbros,OpenStack Credentials.
+	// The password of the user. The password is mandatory for DataBase, Kerberos, OpenStack credentials.
 	Password *string `json:"password,omitempty"`
 
-	// Azure client Id. This is mandatory for Azure Credential type.
+	// The Microsoft Azure client ID. The client ID is mandatory when Azure is the credential type.
 	AzureClientID *string `json:"azure_client_id,omitempty"`
 
-	// Azure client secret.This is mandatory for Azure Credential type.
+	// The Microsoft Azure client secret. The secret is mandatory when Azure is the credential type.
 	AzureClientSecret *string `json:"azure_client_secret,omitempty"`
 
-	// Azure subscription Id.This is mandatory for Azure Credential type.
+	// The Microsoft Azure subscription ID. The subscription ID is mandatory when Azure is the credential type.
 	AzureSubscriptionID *string `json:"azure_subscription_id,omitempty"`
 
-	// Azure resource group.
+	// The Microsoft Azure resource group. The resource group is mandatory when Azure is the credential type.
 	AzureResourceGroup *string `json:"azure_resource_group,omitempty"`
 
-	// Database name.This is mandatory for Database Credential type.
+	// The Database name. The name is mandatory when Database is the credential type.
 	DatabaseName *string `json:"database_name,omitempty"`
 
-	// Kerberos windows auth type.This is mandatory for Windows Kerberos Credential type.
+	// The Kerberos Windows auth type. The auth type is mandatory when Kerberos is the credential type.
 	WinrmAuthtype *string `json:"winrm_authtype,omitempty"`
 
-	// Kerberos windows ssl.This is mandatory for Windows Kerberos Credential type.
+	// The Kerberos Windows SSL. The SSL is mandatory when Kerberos is the credential type.
 	WinrmUsessl *string `json:"winrm_usessl,omitempty"`
 
-	// Kerberos windows port.This is mandatory for Windows Kerberos Credential type.
+	// The Kerberos Windows port. The port is mandatory when Kerberos is the credential type.
 	WinrmPort *string `json:"winrm_port,omitempty"`
 
-	// The MS365 client Id.This is mandatory for Windows MS365 Credential type.
+	// The Microsoft 365 client ID. The client ID is mandatory when Microsoft 365 is the credential type.
 	Ms365ClientID *string `json:"ms_365_client_id,omitempty"`
 
-	// The MS365 client secret.This is mandatory for Windows MS365 Credential type.
+	// The Microsoft 365 client secret. The secret is mandatory when Microsoft 365 is the credential type.
 	Ms365ClientSecret *string `json:"ms_365_client_secret,omitempty"`
 
-	// The MS365 tenantId.This is mandatory for Windows MS365 Credential type.
+	// The Microsoft 365 tenant ID. The tenant ID is mandatory when Microsoft 365 is the credential type.
 	Ms365TenantID *string `json:"ms_365_tenant_id,omitempty"`
 
-	// auth url of the Open Stack cloud.This is mandatory for Open Stack Credential type.
+	// The auth url of the OpenStack cloud. The auth url is mandatory when OpenStack is the credential type.
 	AuthURL *string `json:"auth_url,omitempty"`
 
-	// Project name of the Open Stack cloud.This is mandatory for Open Stack Credential type.
+	// The project name of the OpenStack cloud. The project name is mandatory when OpenStack is the credential type.
 	ProjectName *string `json:"project_name,omitempty"`
 
-	// user domain name of the Open Stack cloud.This is mandatory for Open Stack Credential type.
+	// The user domain name of the OpenStack cloud. The domain name is mandatory when OpenStack is the credential type.
 	UserDomainName *string `json:"user_domain_name,omitempty"`
 
-	// project domain name of the Open Stack cloud.This is mandatory for Open Stack Credential type.
+	// The project domain name of the OpenStack cloud. The project domain name is mandatory when OpenStack is the
+	// credential type.
 	ProjectDomainName *string `json:"project_domain_name,omitempty"`
+
+	// The user pem file name.
+	PemFileName *string `json:"pem_file_name,omitempty"`
+
+	// The base64 encoded form of pem.
+	PemData *string `json:"pem_data,omitempty"`
 }
 
 // UnmarshalUpdateCredentialDisplayFields unmarshals an instance of UpdateCredentialDisplayFields from the specified map of raw messages.
@@ -8318,31 +8371,39 @@ func UnmarshalUpdateCredentialDisplayFields(m map[string]json.RawMessage, result
 	if err != nil {
 		return
 	}
+	err = core.UnmarshalPrimitive(m, "pem_file_name", &obj.PemFileName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "pem_data", &obj.PemData)
+	if err != nil {
+		return
+	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
 }
 
 // UpdateCredentialOptions : The UpdateCredential options.
 type UpdateCredentialOptions struct {
-	// The id for the given API.
+	// The ID for the API.
 	ID *string `json:"-" validate:"required,ne="`
 
-	// Credentials status enabled/disbaled.
+	// The status of the credential is enabled or disabled.
 	Enabled *bool `json:"enabled,omitempty"`
 
-	// Credentials type.
+	// The credential's type.
 	Type *string `json:"type,omitempty"`
 
-	// Credentials name.
+	// The credential's name.
 	Name *string `json:"name,omitempty"`
 
-	// Credentials description.
+	// The credential's description.
 	Description *string `json:"description,omitempty"`
 
-	// Details the fields on the credential. This will change as per credential type selected.
+	// The details of the credential. The details change as the selected credential type varies.
 	DisplayFields *UpdateCredentialDisplayFields `json:"display_fields,omitempty"`
 
-	// Purpose for which the credential is created.
+	// The purpose for which the credential is created.
 	Purpose *string `json:"purpose,omitempty"`
 
 	// Your IBM Cloud account ID.
@@ -8357,7 +8418,7 @@ type UpdateCredentialOptions struct {
 }
 
 // Constants associated with the UpdateCredentialOptions.Type property.
-// Credentials type.
+// The credential's type.
 const (
 	UpdateCredentialOptionsTypeAwsCloudConst         = "aws_cloud"
 	UpdateCredentialOptionsTypeAzureCloudConst       = "azure_cloud"
@@ -8366,11 +8427,12 @@ const (
 	UpdateCredentialOptionsTypeKerberosWindowsConst  = "kerberos_windows"
 	UpdateCredentialOptionsTypeMs365Const            = "ms_365"
 	UpdateCredentialOptionsTypeOpenstackCloudConst   = "openstack_cloud"
+	UpdateCredentialOptionsTypeUserNamePemConst      = "user_name_pem"
 	UpdateCredentialOptionsTypeUsernamePasswordConst = "username_password"
 )
 
 // Constants associated with the UpdateCredentialOptions.Purpose property.
-// Purpose for which the credential is created.
+// The purpose for which the credential is created.
 const (
 	UpdateCredentialOptionsPurposeDiscoveryCollectionConst                = "discovery_collection"
 	UpdateCredentialOptionsPurposeDiscoveryCollectionRemediationConst     = "discovery_collection_remediation"
@@ -8448,7 +8510,7 @@ func (options *UpdateCredentialOptions) SetHeaders(param map[string]string) *Upd
 
 // UpdateProfilesOptions : The UpdateProfiles options.
 type UpdateProfilesOptions struct {
-	// The id for the given API.
+	// The ID for the API.
 	ID *string `json:"-" validate:"required,ne="`
 
 	// The name of the profile.
@@ -8460,14 +8522,15 @@ type UpdateProfilesOptions struct {
 	// The base profile that the controls are pulled from.
 	BaseProfile *string `json:"base_profile,omitempty"`
 
-	// The type of profile. Seed profiles will have type as 'predefined',user generated profiles will be of type 'custom'.
+	// The type of profile. Seed profiles have the type set as 'predefined' and user-generated profiles have the type set
+	// as 'custom'.
 	Type *string `json:"type,omitempty"`
 
 	// The profile status. If the profile is enabled, the value is true. If the profile is disabled, the value is false.
 	IsEnabled *bool `json:"is_enabled,omitempty"`
 
-	// A list of goal/control ids needs to be updated in the profile.These values can be retrieved from
-	// profiles/{profile_id}/controls API call where profile_id of the base_profile should be provided.
+	// A list of goal and control IDs that needs to be updated in the profile. These values can be retrieved from the
+	// profiles/{profile_id}/controls API. The `profile_id` of the `base_profile` must be provided.
 	ControlIds []string `json:"control_ids,omitempty"`
 
 	// Your IBM Cloud account ID.
@@ -8482,7 +8545,8 @@ type UpdateProfilesOptions struct {
 }
 
 // Constants associated with the UpdateProfilesOptions.Type property.
-// The type of profile. Seed profiles will have type as 'predefined',user generated profiles will be of type 'custom'.
+// The type of profile. Seed profiles have the type set as 'predefined' and user-generated profiles have the type set as
+// 'custom'.
 const (
 	UpdateProfilesOptionsTypeCustomConst     = "custom"
 	UpdateProfilesOptionsTypePredefinedConst = "predefined"
@@ -8557,13 +8621,13 @@ func (options *UpdateProfilesOptions) SetHeaders(param map[string]string) *Updat
 
 // UpdateScopeDetailsOptions : The UpdateScopeDetails options.
 type UpdateScopeDetailsOptions struct {
-	// The id for the given API.
+	// The ID for the API.
 	ID *string `json:"-" validate:"required,ne="`
 
-	// Stores the value of scope_name .
+	// The name of the scope.
 	Name *string `json:"name,omitempty"`
 
-	// Stores the value of scope_description.
+	// The description of the scope.
 	Description *string `json:"description,omitempty"`
 
 	// Your IBM Cloud account ID.

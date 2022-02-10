@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -227,6 +227,8 @@ var _ = Describe(`PostureManagementV2`, func() {
 				newCredentialDisplayFieldsModel.ProjectName = core.StringPtr("test_proj")
 				newCredentialDisplayFieldsModel.UserDomainName = core.StringPtr("user_domain")
 				newCredentialDisplayFieldsModel.ProjectDomainName = core.StringPtr("stack_domain_name")
+				newCredentialDisplayFieldsModel.PemFileName = core.StringPtr("testpemfile.pem")
+				newCredentialDisplayFieldsModel.PemData = core.StringPtr("testString")
 
 				// Construct an instance of the CredentialGroup model
 				credentialGroupModel := new(posturemanagementv2.CredentialGroup)
@@ -335,6 +337,8 @@ var _ = Describe(`PostureManagementV2`, func() {
 				newCredentialDisplayFieldsModel.ProjectName = core.StringPtr("test_proj")
 				newCredentialDisplayFieldsModel.UserDomainName = core.StringPtr("user_domain")
 				newCredentialDisplayFieldsModel.ProjectDomainName = core.StringPtr("stack_domain_name")
+				newCredentialDisplayFieldsModel.PemFileName = core.StringPtr("testpemfile.pem")
+				newCredentialDisplayFieldsModel.PemData = core.StringPtr("testString")
 
 				// Construct an instance of the CredentialGroup model
 				credentialGroupModel := new(posturemanagementv2.CredentialGroup)
@@ -451,6 +455,8 @@ var _ = Describe(`PostureManagementV2`, func() {
 				newCredentialDisplayFieldsModel.ProjectName = core.StringPtr("test_proj")
 				newCredentialDisplayFieldsModel.UserDomainName = core.StringPtr("user_domain")
 				newCredentialDisplayFieldsModel.ProjectDomainName = core.StringPtr("stack_domain_name")
+				newCredentialDisplayFieldsModel.PemFileName = core.StringPtr("testpemfile.pem")
+				newCredentialDisplayFieldsModel.PemData = core.StringPtr("testString")
 
 				// Construct an instance of the CredentialGroup model
 				credentialGroupModel := new(posturemanagementv2.CredentialGroup)
@@ -509,6 +515,8 @@ var _ = Describe(`PostureManagementV2`, func() {
 				newCredentialDisplayFieldsModel.ProjectName = core.StringPtr("test_proj")
 				newCredentialDisplayFieldsModel.UserDomainName = core.StringPtr("user_domain")
 				newCredentialDisplayFieldsModel.ProjectDomainName = core.StringPtr("stack_domain_name")
+				newCredentialDisplayFieldsModel.PemFileName = core.StringPtr("testpemfile.pem")
+				newCredentialDisplayFieldsModel.PemData = core.StringPtr("testString")
 
 				// Construct an instance of the CredentialGroup model
 				credentialGroupModel := new(posturemanagementv2.CredentialGroup)
@@ -588,6 +596,8 @@ var _ = Describe(`PostureManagementV2`, func() {
 				newCredentialDisplayFieldsModel.ProjectName = core.StringPtr("test_proj")
 				newCredentialDisplayFieldsModel.UserDomainName = core.StringPtr("user_domain")
 				newCredentialDisplayFieldsModel.ProjectDomainName = core.StringPtr("stack_domain_name")
+				newCredentialDisplayFieldsModel.PemFileName = core.StringPtr("testpemfile.pem")
+				newCredentialDisplayFieldsModel.PemData = core.StringPtr("testString")
 
 				// Construct an instance of the CredentialGroup model
 				credentialGroupModel := new(posturemanagementv2.CredentialGroup)
@@ -1175,6 +1185,8 @@ var _ = Describe(`PostureManagementV2`, func() {
 				updateCredentialDisplayFieldsModel.ProjectName = core.StringPtr("test_proj")
 				updateCredentialDisplayFieldsModel.UserDomainName = core.StringPtr("user_domain")
 				updateCredentialDisplayFieldsModel.ProjectDomainName = core.StringPtr("stack_domain_name")
+				updateCredentialDisplayFieldsModel.PemFileName = core.StringPtr("testpemfile.pem")
+				updateCredentialDisplayFieldsModel.PemData = core.StringPtr("testString")
 
 				// Construct an instance of the UpdateCredentialOptions model
 				updateCredentialOptionsModel := new(posturemanagementv2.UpdateCredentialOptions)
@@ -1278,6 +1290,8 @@ var _ = Describe(`PostureManagementV2`, func() {
 				updateCredentialDisplayFieldsModel.ProjectName = core.StringPtr("test_proj")
 				updateCredentialDisplayFieldsModel.UserDomainName = core.StringPtr("user_domain")
 				updateCredentialDisplayFieldsModel.ProjectDomainName = core.StringPtr("stack_domain_name")
+				updateCredentialDisplayFieldsModel.PemFileName = core.StringPtr("testpemfile.pem")
+				updateCredentialDisplayFieldsModel.PemData = core.StringPtr("testString")
 
 				// Construct an instance of the UpdateCredentialOptions model
 				updateCredentialOptionsModel := new(posturemanagementv2.UpdateCredentialOptions)
@@ -1389,6 +1403,8 @@ var _ = Describe(`PostureManagementV2`, func() {
 				updateCredentialDisplayFieldsModel.ProjectName = core.StringPtr("test_proj")
 				updateCredentialDisplayFieldsModel.UserDomainName = core.StringPtr("user_domain")
 				updateCredentialDisplayFieldsModel.ProjectDomainName = core.StringPtr("stack_domain_name")
+				updateCredentialDisplayFieldsModel.PemFileName = core.StringPtr("testpemfile.pem")
+				updateCredentialDisplayFieldsModel.PemData = core.StringPtr("testString")
 
 				// Construct an instance of the UpdateCredentialOptions model
 				updateCredentialOptionsModel := new(posturemanagementv2.UpdateCredentialOptions)
@@ -1442,6 +1458,8 @@ var _ = Describe(`PostureManagementV2`, func() {
 				updateCredentialDisplayFieldsModel.ProjectName = core.StringPtr("test_proj")
 				updateCredentialDisplayFieldsModel.UserDomainName = core.StringPtr("user_domain")
 				updateCredentialDisplayFieldsModel.ProjectDomainName = core.StringPtr("stack_domain_name")
+				updateCredentialDisplayFieldsModel.PemFileName = core.StringPtr("testpemfile.pem")
+				updateCredentialDisplayFieldsModel.PemData = core.StringPtr("testString")
 
 				// Construct an instance of the UpdateCredentialOptions model
 				updateCredentialOptionsModel := new(posturemanagementv2.UpdateCredentialOptions)
@@ -1516,6 +1534,8 @@ var _ = Describe(`PostureManagementV2`, func() {
 				updateCredentialDisplayFieldsModel.ProjectName = core.StringPtr("test_proj")
 				updateCredentialDisplayFieldsModel.UserDomainName = core.StringPtr("user_domain")
 				updateCredentialDisplayFieldsModel.ProjectDomainName = core.StringPtr("stack_domain_name")
+				updateCredentialDisplayFieldsModel.PemFileName = core.StringPtr("testpemfile.pem")
+				updateCredentialDisplayFieldsModel.PemData = core.StringPtr("testString")
 
 				// Construct an instance of the UpdateCredentialOptions model
 				updateCredentialOptionsModel := new(posturemanagementv2.UpdateCredentialOptions)
@@ -2804,7 +2824,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"message": "The API processed successfully.", "result": true}`)
+					fmt.Fprintf(res, "%s", `{"message": "The API processed successfully.", "result": true, "profile_id": "2321"}`)
 				}))
 			})
 			It(`Invoke ImportProfiles successfully with retries`, func() {
@@ -2863,7 +2883,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"message": "The API processed successfully.", "result": true}`)
+					fmt.Fprintf(res, "%s", `{"message": "The API processed successfully.", "result": true, "profile_id": "2321"}`)
 				}))
 			})
 			It(`Invoke ImportProfiles successfully`, func() {
@@ -3251,7 +3271,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					Expect(req.Method).To(Equal("GET"))
 					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.URL.Query()["profile_type"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["profile_type"]).To(Equal([]string{"predefined"}))
 					Expect(req.URL.Query()["account_id"]).To(Equal([]string{"testString"}))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
@@ -3269,7 +3289,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 				// Construct an instance of the GetProfileOptions model
 				getProfileOptionsModel := new(posturemanagementv2.GetProfileOptions)
 				getProfileOptionsModel.ID = core.StringPtr("testString")
-				getProfileOptionsModel.ProfileType = core.StringPtr("testString")
+				getProfileOptionsModel.ProfileType = core.StringPtr("predefined")
 				getProfileOptionsModel.AccountID = core.StringPtr("testString")
 				getProfileOptionsModel.TransactionID = core.StringPtr("testString")
 				getProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3304,7 +3324,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 
 					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.URL.Query()["profile_type"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["profile_type"]).To(Equal([]string{"predefined"}))
 					Expect(req.URL.Query()["account_id"]).To(Equal([]string{"testString"}))
 					// Sleep a short time to support a timeout test
 					time.Sleep(100 * time.Millisecond)
@@ -3327,7 +3347,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 				// Construct an instance of the GetProfileOptions model
 				getProfileOptionsModel := new(posturemanagementv2.GetProfileOptions)
 				getProfileOptionsModel.ID = core.StringPtr("testString")
-				getProfileOptionsModel.ProfileType = core.StringPtr("testString")
+				getProfileOptionsModel.ProfileType = core.StringPtr("predefined")
 				getProfileOptionsModel.AccountID = core.StringPtr("testString")
 				getProfileOptionsModel.TransactionID = core.StringPtr("testString")
 				getProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3368,7 +3388,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 
 					Expect(req.Header["Transaction-Id"]).ToNot(BeNil())
 					Expect(req.Header["Transaction-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.URL.Query()["profile_type"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["profile_type"]).To(Equal([]string{"predefined"}))
 					Expect(req.URL.Query()["account_id"]).To(Equal([]string{"testString"}))
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
@@ -3393,7 +3413,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 				// Construct an instance of the GetProfileOptions model
 				getProfileOptionsModel := new(posturemanagementv2.GetProfileOptions)
 				getProfileOptionsModel.ID = core.StringPtr("testString")
-				getProfileOptionsModel.ProfileType = core.StringPtr("testString")
+				getProfileOptionsModel.ProfileType = core.StringPtr("predefined")
 				getProfileOptionsModel.AccountID = core.StringPtr("testString")
 				getProfileOptionsModel.TransactionID = core.StringPtr("testString")
 				getProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3416,7 +3436,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 				// Construct an instance of the GetProfileOptions model
 				getProfileOptionsModel := new(posturemanagementv2.GetProfileOptions)
 				getProfileOptionsModel.ID = core.StringPtr("testString")
-				getProfileOptionsModel.ProfileType = core.StringPtr("testString")
+				getProfileOptionsModel.ProfileType = core.StringPtr("predefined")
 				getProfileOptionsModel.AccountID = core.StringPtr("testString")
 				getProfileOptionsModel.TransactionID = core.StringPtr("testString")
 				getProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3460,7 +3480,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 				// Construct an instance of the GetProfileOptions model
 				getProfileOptionsModel := new(posturemanagementv2.GetProfileOptions)
 				getProfileOptionsModel.ID = core.StringPtr("testString")
-				getProfileOptionsModel.ProfileType = core.StringPtr("testString")
+				getProfileOptionsModel.ProfileType = core.StringPtr("predefined")
 				getProfileOptionsModel.AccountID = core.StringPtr("testString")
 				getProfileOptionsModel.TransactionID = core.StringPtr("testString")
 				getProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -5579,7 +5599,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"events": [{"id": "ID", "created_at": "2021-02-26T04:07:25.000Z", "updated_at": "2021-02-26T04:07:25.000Z", "task_type": "discovery", "status": "discovery_completed", "data_available": true, "status_message": "Discovery is completed, please check the report."}]}`)
+					fmt.Fprintf(res, "%s", `{"events": [{"id": "ID", "created_at": "2021-02-26T04:07:25.000Z", "updated_at": "2021-02-26T04:07:25.000Z", "task_type": "discovery", "status": "discovery_completed", "data_available": true, "status_message": "Discovery is completed. Check the report."}]}`)
 				}))
 			})
 			It(`Invoke GetScopeTimeline successfully with retries`, func() {
@@ -5638,7 +5658,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"events": [{"id": "ID", "created_at": "2021-02-26T04:07:25.000Z", "updated_at": "2021-02-26T04:07:25.000Z", "task_type": "discovery", "status": "discovery_completed", "data_available": true, "status_message": "Discovery is completed, please check the report."}]}`)
+					fmt.Fprintf(res, "%s", `{"events": [{"id": "ID", "created_at": "2021-02-26T04:07:25.000Z", "updated_at": "2021-02-26T04:07:25.000Z", "task_type": "discovery", "status": "discovery_completed", "data_available": true, "status_message": "Discovery is completed. Check the report."}]}`)
 				}))
 			})
 			It(`Invoke GetScopeTimeline successfully`, func() {
@@ -7594,7 +7614,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "4", "discover_id": "8", "profile_id": "50", "profile_name": "CIS IBM Foundations Benchmark 1.0.0", "scope_id": "2", "controls": [{"id": "7907", "status": "pass", "external_control_id": "50", "desciption": "CIS IBM Foundations Benchmark 1.0.0", "goals": [{"description": "Check whether API keys unused for 180 days are detected and optionally disabled", "id": "3000039", "status": "pass", "severity": "Medium", "completed_time": "2021-04-16T05:32:44.000Z", "error": "N/A", "resource_result": [{"name": "PasswordPolicy", "types": "Identity and Access Management", "status": "pass", "display_expected_value": "IBMid password policy should be required at least one lowercase letter", "actual_value": "{\"2fa\": \"Enabled\"}", "results_info": "IBMid password policy minimum password length is set to 8", "not_applicable_reason": "{\"isBootVolume\": \"True\"}"}], "applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}}], "resource_statistics": {"pass_count": 4, "fail_count": 4, "unable_to_perform_count": 4, "not_applicable_count": 4}}]}`)
+					fmt.Fprintf(res, "%s", `{"id": "4", "discover_id": "8", "profile_id": "50", "profile_name": "CIS IBM Foundations Benchmark 1.0.0", "scope_id": "2", "controls": [{"id": "7907", "status": "pass", "external_control_id": "50", "description": "CIS IBM Foundations Benchmark 1.0.0", "goals": [{"description": "Check whether API keys unused for 180 days are detected and optionally disabled", "id": "3000039", "status": "pass", "severity": "Medium", "completed_time": "2021-04-16T05:32:44.000Z", "error": "N/A", "resource_result": [{"name": "PasswordPolicy", "types": "Identity and Access Management", "status": "pass", "display_expected_value": "IBMid password policy requires at least one lowercase letter", "actual_value": "{\"2fa\": \"Enabled\"}", "results_info": "IBMid password policy minimum password length is set to 8", "not_applicable_reason": "{\"isBootVolume\": \"True\"}"}], "applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}}], "resource_statistics": {"pass_count": 4, "fail_count": 4, "unable_to_perform_count": 4, "not_applicable_count": 4}}]}`)
 				}))
 			})
 			It(`Invoke ScansSummary successfully with retries`, func() {
@@ -7655,7 +7675,7 @@ var _ = Describe(`PostureManagementV2`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "4", "discover_id": "8", "profile_id": "50", "profile_name": "CIS IBM Foundations Benchmark 1.0.0", "scope_id": "2", "controls": [{"id": "7907", "status": "pass", "external_control_id": "50", "desciption": "CIS IBM Foundations Benchmark 1.0.0", "goals": [{"description": "Check whether API keys unused for 180 days are detected and optionally disabled", "id": "3000039", "status": "pass", "severity": "Medium", "completed_time": "2021-04-16T05:32:44.000Z", "error": "N/A", "resource_result": [{"name": "PasswordPolicy", "types": "Identity and Access Management", "status": "pass", "display_expected_value": "IBMid password policy should be required at least one lowercase letter", "actual_value": "{\"2fa\": \"Enabled\"}", "results_info": "IBMid password policy minimum password length is set to 8", "not_applicable_reason": "{\"isBootVolume\": \"True\"}"}], "applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}}], "resource_statistics": {"pass_count": 4, "fail_count": 4, "unable_to_perform_count": 4, "not_applicable_count": 4}}]}`)
+					fmt.Fprintf(res, "%s", `{"id": "4", "discover_id": "8", "profile_id": "50", "profile_name": "CIS IBM Foundations Benchmark 1.0.0", "scope_id": "2", "controls": [{"id": "7907", "status": "pass", "external_control_id": "50", "description": "CIS IBM Foundations Benchmark 1.0.0", "goals": [{"description": "Check whether API keys unused for 180 days are detected and optionally disabled", "id": "3000039", "status": "pass", "severity": "Medium", "completed_time": "2021-04-16T05:32:44.000Z", "error": "N/A", "resource_result": [{"name": "PasswordPolicy", "types": "Identity and Access Management", "status": "pass", "display_expected_value": "IBMid password policy requires at least one lowercase letter", "actual_value": "{\"2fa\": \"Enabled\"}", "results_info": "IBMid password policy minimum password length is set to 8", "not_applicable_reason": "{\"isBootVolume\": \"True\"}"}], "applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}}], "resource_statistics": {"pass_count": 4, "fail_count": 4, "unable_to_perform_count": 4, "not_applicable_count": 4}}]}`)
 				}))
 			})
 			It(`Invoke ScansSummary successfully`, func() {
@@ -8107,6 +8127,8 @@ var _ = Describe(`PostureManagementV2`, func() {
 				newCredentialDisplayFieldsModel.ProjectName = core.StringPtr("test_proj")
 				newCredentialDisplayFieldsModel.UserDomainName = core.StringPtr("user_domain")
 				newCredentialDisplayFieldsModel.ProjectDomainName = core.StringPtr("stack_domain_name")
+				newCredentialDisplayFieldsModel.PemFileName = core.StringPtr("testpemfile.pem")
+				newCredentialDisplayFieldsModel.PemData = core.StringPtr("testString")
 				Expect(newCredentialDisplayFieldsModel.IBMAPIKey).To(Equal(core.StringPtr("sample_api_key")))
 				Expect(newCredentialDisplayFieldsModel.AwsClientID).To(Equal(core.StringPtr("sample_client_id")))
 				Expect(newCredentialDisplayFieldsModel.AwsClientSecret).To(Equal(core.StringPtr("*********")))
@@ -8129,6 +8151,8 @@ var _ = Describe(`PostureManagementV2`, func() {
 				Expect(newCredentialDisplayFieldsModel.ProjectName).To(Equal(core.StringPtr("test_proj")))
 				Expect(newCredentialDisplayFieldsModel.UserDomainName).To(Equal(core.StringPtr("user_domain")))
 				Expect(newCredentialDisplayFieldsModel.ProjectDomainName).To(Equal(core.StringPtr("stack_domain_name")))
+				Expect(newCredentialDisplayFieldsModel.PemFileName).To(Equal(core.StringPtr("testpemfile.pem")))
+				Expect(newCredentialDisplayFieldsModel.PemData).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the CredentialGroup model
 				credentialGroupModel := new(posturemanagementv2.CredentialGroup)
@@ -8362,16 +8386,16 @@ var _ = Describe(`PostureManagementV2`, func() {
 			It(`Invoke NewGetProfileOptions successfully`, func() {
 				// Construct an instance of the GetProfileOptions model
 				id := "testString"
-				profileType := "testString"
+				profileType := "predefined"
 				getProfileOptionsModel := postureManagementService.NewGetProfileOptions(id, profileType)
 				getProfileOptionsModel.SetID("testString")
-				getProfileOptionsModel.SetProfileType("testString")
+				getProfileOptionsModel.SetProfileType("predefined")
 				getProfileOptionsModel.SetAccountID("testString")
 				getProfileOptionsModel.SetTransactionID("testString")
 				getProfileOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(getProfileOptionsModel).ToNot(BeNil())
 				Expect(getProfileOptionsModel.ID).To(Equal(core.StringPtr("testString")))
-				Expect(getProfileOptionsModel.ProfileType).To(Equal(core.StringPtr("testString")))
+				Expect(getProfileOptionsModel.ProfileType).To(Equal(core.StringPtr("predefined")))
 				Expect(getProfileOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(getProfileOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(getProfileOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
@@ -8639,6 +8663,8 @@ var _ = Describe(`PostureManagementV2`, func() {
 				updateCredentialDisplayFieldsModel.ProjectName = core.StringPtr("test_proj")
 				updateCredentialDisplayFieldsModel.UserDomainName = core.StringPtr("user_domain")
 				updateCredentialDisplayFieldsModel.ProjectDomainName = core.StringPtr("stack_domain_name")
+				updateCredentialDisplayFieldsModel.PemFileName = core.StringPtr("testpemfile.pem")
+				updateCredentialDisplayFieldsModel.PemData = core.StringPtr("testString")
 				Expect(updateCredentialDisplayFieldsModel.IBMAPIKey).To(Equal(core.StringPtr("sample_api_key")))
 				Expect(updateCredentialDisplayFieldsModel.AwsClientID).To(Equal(core.StringPtr("sample_client_id")))
 				Expect(updateCredentialDisplayFieldsModel.AwsClientSecret).To(Equal(core.StringPtr("*********")))
@@ -8661,6 +8687,8 @@ var _ = Describe(`PostureManagementV2`, func() {
 				Expect(updateCredentialDisplayFieldsModel.ProjectName).To(Equal(core.StringPtr("test_proj")))
 				Expect(updateCredentialDisplayFieldsModel.UserDomainName).To(Equal(core.StringPtr("user_domain")))
 				Expect(updateCredentialDisplayFieldsModel.ProjectDomainName).To(Equal(core.StringPtr("stack_domain_name")))
+				Expect(updateCredentialDisplayFieldsModel.PemFileName).To(Equal(core.StringPtr("testpemfile.pem")))
+				Expect(updateCredentialDisplayFieldsModel.PemData).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the UpdateCredentialOptions model
 				id := "testString"

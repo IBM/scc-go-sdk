@@ -42,7 +42,7 @@ import (
 
 var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 
-	const externalConfigFile = "../posture_management_v2.env"
+	const externalConfigFile = "posture_management_v2.env"
 
 	var (
 		err                      error
@@ -65,7 +65,6 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 		correlationID            string
 		reportSettingID          string
 		transactionID            string
-		profileIDValidation      string
 		profileType              string
 	)
 
@@ -90,7 +89,7 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 				Skip("Unable to load service URL configuration property, skipping tests")
 			}
 			accountID = config["POSTURE_ACCOUNT_ID"]
-			profileID = config["PROFILE_ID"]
+			//profileID = config["PROFILE_ID"]
 			scanID = config["SCAN_ID"]
 			groupProfileID = config["GROUP_PROFILE_ID"]
 			scopeIDScan = config["SCOPE_ID_SCAN"]
@@ -101,7 +100,6 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 			collectorIDScopeUpdate = config["COLLECTOR_ID_SCOPE_UPDATE"]
 			correlationID = config["CORRELATION_ID"]
 			reportSettingID = config["REPORT_SETTING_ID"]
-			profileIDValidation = config["PROFILE_ID_VALIDATION"]
 			profileType = config["PROFILE_TYPE"]
 			transactionID = uuid.NewString()
 			fmt.Printf("Service URL: %s\n", serviceURL)
@@ -392,9 +390,9 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 		It(`ImportProfiles(importProfilesOptions *ImportProfilesOptions)`, func() {
 
 			importProfilesOptions := &posturemanagementv2.ImportProfilesOptions{
-				File: CreateMockReader("\"profilename\",\"ImportProfileTest\"\n" +
+				File: CreateMockReader("\"profilename\",\"CUSTOM PROFILE SDK\"\n" +
 					"\"profilemnemonic\",\n" +
-					"\"profiledescription\",\"test arc1 update\"\n" +
+					"\"profiledescription\",\"CUSTOM PROFILE SDK\"\n" +
 					"\"##METAINFO ENDS##\"\n" +
 					"\"ExternalControlId\",\"Description\",\"Parent\",\"ControlId\",\"Tags\""),
 				AccountID:     core.StringPtr(accountID),
@@ -406,7 +404,7 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(basicResult).ToNot(BeNil())
-
+			profileID = *(basicResult.ProfileID)
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -443,13 +441,6 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 
 			listProfilesOptions.Offset, err = profileList.GetNextOffset()
 			Expect(err).To(BeNil())
-
-			respprofiles := result.Profiles
-			for i := 0; i < len(respprofiles); i++ {
-				if *(respprofiles[i].Name) == "ImportProfileTest" {
-					profileID = *(respprofiles[i].ID)
-				}
-			}
 
 		})
 	})
@@ -491,12 +482,12 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 
 			updateProfilesOptions := &posturemanagementv2.UpdateProfilesOptions{
 				ID:            core.StringPtr(profileID),
-				Name:          core.StringPtr("AT_Controls_Testing"),
-				Description:   core.StringPtr("AT Controls"),
-				BaseProfile:   core.StringPtr("CIS IBM Foundations Benchmark 1.0.0"),
-				Type:          core.StringPtr("predefined"),
+				Name:          core.StringPtr("CUSTOM PROFILE SDK UPDATE"),
+				Description:   core.StringPtr("CUSTOM PROFILE SDK UPDATE"),
+				BaseProfile:   core.StringPtr(""),
+				Type:          core.StringPtr("custom"),
 				IsEnabled:     core.BoolPtr(true),
-				ControlIds:    []string{"9980", "9979", "9994"},
+				ControlIds:    []string{"1000101"},
 				AccountID:     core.StringPtr(accountID),
 				TransactionID: core.StringPtr(transactionID),
 			}
@@ -910,7 +901,7 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 
 			createValidationOptions := &posturemanagementv2.CreateValidationOptions{
 				ScopeID:   core.StringPtr(scopeIDScan),
-				ProfileID: core.StringPtr(profileIDValidation),
+				ProfileID: core.StringPtr(profileID),
 				//GroupProfileID: core.StringPtr("13"),
 				AccountID:     core.StringPtr(accountID),
 				TransactionID: core.StringPtr(transactionID),

@@ -1,3 +1,10 @@
+## [3.1.5](https://github.com/IBM/scc-go-sdk/compare/v3.1.4...v3.1.5) (2022-02-14)
+
+
+### Bug Fixes
+
+* **Go Docs:** fixed go docs generation process ([#88](https://github.com/IBM/scc-go-sdk/issues/88)) ([2f9b759](https://github.com/IBM/scc-go-sdk/commit/2f9b7593ebbca3f9ef160e33e48b7e6b07132c4a))
+
 ## [3.1.4](https://github.com/IBM/scc-go-sdk/compare/v3.1.3...v3.1.4) (2022-02-14)
 
 

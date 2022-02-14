@@ -1,3 +1,10 @@
+## [3.1.3](https://github.com/IBM/scc-go-sdk/compare/v3.1.2...v3.1.3) (2022-02-14)
+
+
+### Bug Fixes
+
+* **README:** fixed broken links and references ([#86](https://github.com/IBM/scc-go-sdk/issues/86)) ([cce51b7](https://github.com/IBM/scc-go-sdk/commit/cce51b7be2c36e80ec4d38bbf68f215b33fe21a2))
+
 # [3.1.2](https://github.com/IBM/scc-go-sdk/compare/v3.0.0...v3.1.0) (2022-02-14)
 
 

@@ -29,4 +29,4 @@ install:
 	cd ${VDIR} && go mod download
 
 docs:
-	cd ${VDIR} && go run github.com/johnstarich/go/gopages -base https://ibm.github.io/scc-go-sdk
+	cd ${VDIR} && go get github.com/johnstarich/go/gopages@v0.1.8 && go run github.com/johnstarich/go/gopages -base https://ibm.github.io/scc-go-sdk

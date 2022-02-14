@@ -1,3 +1,10 @@
+## [3.1.4](https://github.com/IBM/scc-go-sdk/compare/v3.1.3...v3.1.4) (2022-02-14)
+
+
+### Bug Fixes
+
+* **go.mod:** removed unused packages ([#87](https://github.com/IBM/scc-go-sdk/issues/87)) ([fb6c70f](https://github.com/IBM/scc-go-sdk/commit/fb6c70f8ee25aee04fc3fbbc4c8bdef1f3ee8606))
+
 ## [3.1.3](https://github.com/IBM/scc-go-sdk/compare/v3.1.2...v3.1.3) (2022-02-14)
 
 

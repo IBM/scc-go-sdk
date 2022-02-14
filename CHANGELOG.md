@@ -1,3 +1,12 @@
+# [3.1.2](https://github.com/IBM/scc-go-sdk/compare/v3.0.0...v3.1.0) (2022-02-14)
+
+
+### Bug Fixes
+
+* **CI:** GoPages version fix ([56e0447](https://github.com/IBM/scc-go-sdk/commit/56e0447fb513f6b7b3508975480ac967440e44c0))
+* **PostureManagementAPIv2:** New Credential Type ([b483e0f](https://github.com/IBM/scc-go-sdk/commit/b483e0fed011dbaf3a9a2875e5844f9665895d12))
+
+
 ## [3.1.1](https://github.com/IBM/scc-go-sdk/compare/v3.1.0...v3.1.1) (2022-02-01)
 
 

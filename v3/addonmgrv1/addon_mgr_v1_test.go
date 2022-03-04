@@ -991,93 +991,6 @@ var _ = Describe(`AddonMgrV1`, func() {
 			})
 		})
 	})
-	Describe(`TestAiFindingsV2(testAiFindingsV2Options *TestAiFindingsV2Options)`, func() {
-		accountID := "testString"
-		testAiFindingsV2Path := "/v2/addons/testString/activity-insights/test-ai-findings"
-		Context(`Using mock server endpoint`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(testAiFindingsV2Path))
-					Expect(req.Method).To(Equal("PUT"))
-
-					// For gzip-disabled operation, verify Content-Encoding is not set.
-					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
-
-					// If there is a body, then make sure we can read it
-					bodyBuf := new(bytes.Buffer)
-					if req.Header.Get("Content-Encoding") == "gzip" {
-						body, err := core.NewGzipDecompressionReader(req.Body)
-						Expect(err).To(BeNil())
-						_, err = bodyBuf.ReadFrom(body)
-						Expect(err).To(BeNil())
-					} else {
-						_, err := bodyBuf.ReadFrom(req.Body)
-						Expect(err).To(BeNil())
-					}
-					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
-
-					res.WriteHeader(200)
-				}))
-			})
-			It(`Invoke TestAiFindingsV2 successfully`, func() {
-				addonMgrService, serviceErr := addonmgrv1.NewAddonMgrV1(&addonmgrv1.AddonMgrV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(addonMgrService).ToNot(BeNil())
-
-				// Invoke operation with nil options model (negative test)
-				response, operationErr := addonMgrService.TestAiFindingsV2(nil)
-				Expect(operationErr).NotTo(BeNil())
-				Expect(response).To(BeNil())
-
-				// Construct an instance of the TestAiFindingsV2Options model
-				testAiFindingsV2OptionsModel := new(addonmgrv1.TestAiFindingsV2Options)
-				testAiFindingsV2OptionsModel.RegionID = core.StringPtr("testString")
-				testAiFindingsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation with valid options model (positive test)
-				response, operationErr = addonMgrService.TestAiFindingsV2(testAiFindingsV2OptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-			})
-			It(`Invoke TestAiFindingsV2 with error: Operation validation and request error`, func() {
-				addonMgrService, serviceErr := addonmgrv1.NewAddonMgrV1(&addonmgrv1.AddonMgrV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-					AccountID:     core.StringPtr(accountID),
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(addonMgrService).ToNot(BeNil())
-
-				// Construct an instance of the TestAiFindingsV2Options model
-				testAiFindingsV2OptionsModel := new(addonmgrv1.TestAiFindingsV2Options)
-				testAiFindingsV2OptionsModel.RegionID = core.StringPtr("testString")
-				testAiFindingsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-				// Invoke operation with empty URL (negative test)
-				err := addonMgrService.SetServiceURL("")
-				Expect(err).To(BeNil())
-				response, operationErr := addonMgrService.TestAiFindingsV2(testAiFindingsV2OptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
-				Expect(response).To(BeNil())
-				// Construct a second instance of the TestAiFindingsV2Options model with no property values
-				testAiFindingsV2OptionsModelNew := new(addonmgrv1.TestAiFindingsV2Options)
-				// Invoke operation with invalid model (negative test)
-				response, operationErr = addonMgrService.TestAiFindingsV2(testAiFindingsV2OptionsModelNew)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-	})
 	Describe(`Model constructor tests`, func() {
 		Context(`Using a service client instance`, func() {
 			accountID := "testString"
@@ -1216,16 +1129,6 @@ var _ = Describe(`AddonMgrV1`, func() {
 				Expect(getSupportedInsightsV2OptionsModel).ToNot(BeNil())
 				Expect(getSupportedInsightsV2OptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(getSupportedInsightsV2OptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
-			})
-			It(`Invoke NewTestAiFindingsV2Options successfully`, func() {
-				// Construct an instance of the TestAiFindingsV2Options model
-				testAiFindingsV2OptionsRegionID := "testString"
-				testAiFindingsV2OptionsModel := addonMgrService.NewTestAiFindingsV2Options(testAiFindingsV2OptionsRegionID)
-				testAiFindingsV2OptionsModel.SetRegionID("testString")
-				testAiFindingsV2OptionsModel.SetHeaders(map[string]string{"foo": "bar"})
-				Expect(testAiFindingsV2OptionsModel).ToNot(BeNil())
-				Expect(testAiFindingsV2OptionsModel.RegionID).To(Equal(core.StringPtr("testString")))
-				Expect(testAiFindingsV2OptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 		})
 	})

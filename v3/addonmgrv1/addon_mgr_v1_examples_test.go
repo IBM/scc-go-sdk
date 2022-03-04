@@ -226,27 +226,6 @@ var _ = Describe(`AddonMgrV1 Examples Tests`, func() {
 			Expect(allInsights).ToNot(BeNil())
 
 		})
-		It(`TestAiFindingsV2 request example`, func() {
-			// begin-testAIFindingsV2
-
-			testAiFindingsV2Options := addonMgrService.NewTestAiFindingsV2Options(
-				"testString",
-			)
-
-			response, err := addonMgrService.TestAiFindingsV2(testAiFindingsV2Options)
-			if err != nil {
-				panic(err)
-			}
-			if response.StatusCode != 200 {
-				fmt.Printf("\nUnexpected response status code received from TestAiFindingsV2(): %d\n", response.StatusCode)
-			}
-
-			// end-testAIFindingsV2
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-
-		})
 		It(`DeleteNetworkInsightsCosDetailsV2 request example`, func() {
 			// begin-deleteNetworkInsightsCosDetailsV2
 

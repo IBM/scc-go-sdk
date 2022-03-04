@@ -1,3 +1,4 @@
+//go:build integration
 // +build integration
 
 /**
@@ -82,7 +83,7 @@ var _ = Describe(`AddonMgrV1 Integration Tests`, func() {
 		It("Successfully construct the service client instance", func() {
 
 			addonMgrServiceOptions := &addonmgrv1.AddonMgrV1Options{
-				AccountID: core.StringPtr("testString"),
+				AccountID: core.StringPtr(config["ACCOUNT_ID"]),
 			}
 
 			addonMgrService, err = addonmgrv1.NewAddonMgrV1UsingExternalConfig(addonMgrServiceOptions)
@@ -111,14 +112,14 @@ var _ = Describe(`AddonMgrV1 Integration Tests`, func() {
 			}
 
 			addNetworkInsightsCosDetailsV2Options := &addonmgrv1.AddNetworkInsightsCosDetailsV2Options{
-				RegionID:   core.StringPtr("testString"),
+				RegionID:   core.StringPtr(config["REGION_ID"]),
 				CosDetails: []addonmgrv1.CosDetailsV2CosDetailsItem{*cosDetailsV2CosDetailsItemModel},
 			}
 
 			response, err := addonMgrService.AddNetworkInsightsCosDetailsV2(addNetworkInsightsCosDetailsV2Options)
 
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
+			Expect(response.StatusCode).To(Equal(201))
 
 		})
 	})
@@ -138,14 +139,14 @@ var _ = Describe(`AddonMgrV1 Integration Tests`, func() {
 			}
 
 			addActivityInsightsCosDetailsV2Options := &addonmgrv1.AddActivityInsightsCosDetailsV2Options{
-				RegionID:   core.StringPtr("testString"),
+				RegionID:   core.StringPtr(config["REGION_ID"]),
 				CosDetails: []addonmgrv1.CosDetailsV2CosDetailsItem{*cosDetailsV2CosDetailsItemModel},
 			}
 
 			response, err := addonMgrService.AddActivityInsightsCosDetailsV2(addActivityInsightsCosDetailsV2Options)
 
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
+			Expect(response.StatusCode).To(Equal(201))
 
 		})
 	})
@@ -157,7 +158,7 @@ var _ = Describe(`AddonMgrV1 Integration Tests`, func() {
 		It(`DisableInsightsV2(disableInsightsV2Options *DisableInsightsV2Options)`, func() {
 
 			disableInsightsV2Options := &addonmgrv1.DisableInsightsV2Options{
-				RegionID:         core.StringPtr("testString"),
+				RegionID:         core.StringPtr(config["REGION_ID"]),
 				NetworkInsights:  core.BoolPtr(true),
 				ActivityInsights: core.BoolPtr(true),
 			}
@@ -177,7 +178,7 @@ var _ = Describe(`AddonMgrV1 Integration Tests`, func() {
 		It(`EnableInsightsV2(enableInsightsV2Options *EnableInsightsV2Options)`, func() {
 
 			enableInsightsV2Options := &addonmgrv1.EnableInsightsV2Options{
-				RegionID:         core.StringPtr("testString"),
+				RegionID:         core.StringPtr(config["REGION_ID"]),
 				NetworkInsights:  core.BoolPtr(true),
 				ActivityInsights: core.BoolPtr(true),
 			}
@@ -203,24 +204,6 @@ var _ = Describe(`AddonMgrV1 Integration Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(allInsights).ToNot(BeNil())
-
-		})
-	})
-
-	Describe(`TestAiFindingsV2 - test findings for activity-insights`, func() {
-		BeforeEach(func() {
-			shouldSkipTest()
-		})
-		It(`TestAiFindingsV2(testAiFindingsV2Options *TestAiFindingsV2Options)`, func() {
-
-			testAiFindingsV2Options := &addonmgrv1.TestAiFindingsV2Options{
-				RegionID: core.StringPtr("testString"),
-			}
-
-			response, err := addonMgrService.TestAiFindingsV2(testAiFindingsV2Options)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
 
 		})
 	})

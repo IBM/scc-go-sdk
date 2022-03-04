@@ -630,65 +630,6 @@ func (addonMgr *AddonMgrV1) GetSupportedInsightsV2WithContext(ctx context.Contex
 	return
 }
 
-// TestAiFindingsV2 : test findings for activity-insights
-// Test findings for activity-insights.
-func (addonMgr *AddonMgrV1) TestAiFindingsV2(testAiFindingsV2Options *TestAiFindingsV2Options) (response *core.DetailedResponse, err error) {
-	return addonMgr.TestAiFindingsV2WithContext(context.Background(), testAiFindingsV2Options)
-}
-
-// TestAiFindingsV2WithContext is an alternate form of the TestAiFindingsV2 method which supports a Context parameter
-func (addonMgr *AddonMgrV1) TestAiFindingsV2WithContext(ctx context.Context, testAiFindingsV2Options *TestAiFindingsV2Options) (response *core.DetailedResponse, err error) {
-	err = core.ValidateNotNil(testAiFindingsV2Options, "testAiFindingsV2Options cannot be nil")
-	if err != nil {
-		return
-	}
-	err = core.ValidateStruct(testAiFindingsV2Options, "testAiFindingsV2Options")
-	if err != nil {
-		return
-	}
-
-	pathParamsMap := map[string]string{
-		"account_id": *addonMgr.AccountID,
-	}
-
-	builder := core.NewRequestBuilder(core.PUT)
-	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = addonMgr.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(addonMgr.Service.Options.URL, `/v2/addons/{account_id}/activity-insights/test-ai-findings`, pathParamsMap)
-	if err != nil {
-		return
-	}
-
-	for headerName, headerValue := range testAiFindingsV2Options.Headers {
-		builder.AddHeader(headerName, headerValue)
-	}
-
-	sdkHeaders := common.GetSdkHeaders("addon_mgr", "V1", "TestAiFindingsV2")
-	for headerName, headerValue := range sdkHeaders {
-		builder.AddHeader(headerName, headerValue)
-	}
-	builder.AddHeader("Accept", "application/json")
-	builder.AddHeader("Content-Type", "application/json")
-
-	body := make(map[string]interface{})
-	if testAiFindingsV2Options.RegionID != nil {
-		body["region_id"] = testAiFindingsV2Options.RegionID
-	}
-	_, err = builder.SetBodyContentJSON(body)
-	if err != nil {
-		return
-	}
-
-	request, err := builder.Build()
-	if err != nil {
-		return
-	}
-
-	response, err = addonMgr.Service.Request(request, nil)
-
-	return
-}
-
 // AddActivityInsightsCosDetailsV2Options : The AddActivityInsightsCosDetailsV2 options.
 type AddActivityInsightsCosDetailsV2Options struct {
 	// Region for example - us-south, eu-gb.
@@ -1064,34 +1005,6 @@ func (_options *GetSupportedInsightsV2Options) SetTransactionID(transactionID st
 
 // SetHeaders : Allow user to set Headers
 func (options *GetSupportedInsightsV2Options) SetHeaders(param map[string]string) *GetSupportedInsightsV2Options {
-	options.Headers = param
-	return options
-}
-
-// TestAiFindingsV2Options : The TestAiFindingsV2 options.
-type TestAiFindingsV2Options struct {
-	// Region for example - us-south, eu-gb.
-	RegionID *string `json:"region_id" validate:"required"`
-
-	// Allows users to set headers on API requests
-	Headers map[string]string
-}
-
-// NewTestAiFindingsV2Options : Instantiate TestAiFindingsV2Options
-func (*AddonMgrV1) NewTestAiFindingsV2Options(regionID string) *TestAiFindingsV2Options {
-	return &TestAiFindingsV2Options{
-		RegionID: core.StringPtr(regionID),
-	}
-}
-
-// SetRegionID : Allow user to set RegionID
-func (_options *TestAiFindingsV2Options) SetRegionID(regionID string) *TestAiFindingsV2Options {
-	_options.RegionID = core.StringPtr(regionID)
-	return _options
-}
-
-// SetHeaders : Allow user to set Headers
-func (options *TestAiFindingsV2Options) SetHeaders(param map[string]string) *TestAiFindingsV2Options {
 	options.Headers = param
 	return options
 }

@@ -1,3 +1,10 @@
+## [3.1.6](https://github.com/IBM/scc-go-sdk/compare/v3.1.5...v3.1.6) (2022-03-09)
+
+
+### Bug Fixes
+
+* **PostureManagementv2:** "Service based service URL feature introduction (https://github.com/IBM/scc-go-sdk/issues/91)" ([3e1aa0f](https://github.com/IBM/scc-go-sdk/commit/3e1aa0f551f6339cadd9ba418126ebbca9bbc713))
+
 ## [3.1.5](https://github.com/IBM/scc-go-sdk/compare/v3.1.4...v3.1.5) (2022-02-14)
 
 

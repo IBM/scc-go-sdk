@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>adminserviceapiv1 - GoPages</title>
+
+<link type="text/css" rel="stylesheet" href="https://ibm.github.io/scc-go-sdk/lib/godoc/style.css">
+
+<script>window.initFuncs = [];</script>
+<script src="https://ibm.github.io/scc-go-sdk/lib/godoc/jquery.js" defer></script>
+
+
+
+
+<script>var goVersion = "go1.16.14";</script>
+<script src="https://ibm.github.io/scc-go-sdk/lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/scc-go-sdk/v3/">GoPages | Auto-generated docs</a></div>
+<div class="top-heading" id="heading-narrow"><a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/scc-go-sdk/v3/">GoPages</a></div>
+<a href="#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package adminserviceapiv1
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/IBM/scc-go-sdk/v3/adminserviceapiv1"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package adminserviceapiv1 : Operations and models for the AdminServiceApiV1 service
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="#pkg-constants">Constants</a></dd>
+			
+			
+			
+				
+				<dd><a href="#GetServiceURLForRegion">func GetServiceURLForRegion(region string) (string, error)</a></dd>
+			
+				
+				<dd><a href="#UnmarshalAccountSettings">func UnmarshalAccountSettings(m map[string]json.RawMessage, result interface{}) (err error)</a></dd>
+			
+				
+				<dd><a href="#UnmarshalLocation">func UnmarshalLocation(m map[string]json.RawMessage, result interface{}) (err error)</a></dd>
+			
+				
+				<dd><a href="#UnmarshalLocationID">func UnmarshalLocationID(m map[string]json.RawMessage, result interface{}) (err error)</a></dd>
+			
+				
+				<dd><a href="#UnmarshalLocations">func UnmarshalLocations(m map[string]json.RawMessage, result interface{}) (err error)</a></dd>
+			
+				
+				<dd><a href="#UnmarshalNotificationsRegistration">func UnmarshalNotificationsRegistration(m map[string]json.RawMessage, result interface{}) (err error)</a></dd>
+			
+				
+				<dd><a href="#UnmarshalRegion">func UnmarshalRegion(m map[string]json.RawMessage, result interface{}) (err error)</a></dd>
+			
+				
+				<dd><a href="#UnmarshalTestEvent">func UnmarshalTestEvent(m map[string]json.RawMessage, result interface{}) (err error)</a></dd>
+			
+			
+				
+				<dd><a href="#AccountSettings">type AccountSettings</a></dd>
+				
+				
+			
+				
+				<dd><a href="#AdminServiceApiV1">type AdminServiceApiV1</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#NewAdminServiceApiV1">func NewAdminServiceApiV1(options *AdminServiceApiV1Options) (service *AdminServiceApiV1, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#NewAdminServiceApiV1UsingExternalConfig">func NewAdminServiceApiV1UsingExternalConfig(options *AdminServiceApiV1Options) (adminServiceApi *AdminServiceApiV1, err error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.Clone">func (adminServiceApi *AdminServiceApiV1) Clone() *AdminServiceApiV1</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.DisableRetries">func (adminServiceApi *AdminServiceApiV1) DisableRetries()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.EnableRetries">func (adminServiceApi *AdminServiceApiV1) EnableRetries(maxRetries int, maxRetryInterval time.Duration)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.GetEnableGzipCompression">func (adminServiceApi *AdminServiceApiV1) GetEnableGzipCompression() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.GetLocation">func (adminServiceApi *AdminServiceApiV1) GetLocation(getLocationOptions *GetLocationOptions) (result *Location, response *core.DetailedResponse, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.GetLocationWithContext">func (adminServiceApi *AdminServiceApiV1) GetLocationWithContext(ctx context.Context, getLocationOptions *GetLocationOptions) (result *Location, response *core.DetailedResponse, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.GetServiceURL">func (adminServiceApi *AdminServiceApiV1) GetServiceURL() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.GetSettings">func (adminServiceApi *AdminServiceApiV1) GetSettings(getSettingsOptions *GetSettingsOptions) (result *AccountSettings, response *core.DetailedResponse, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.GetSettingsWithContext">func (adminServiceApi *AdminServiceApiV1) GetSettingsWithContext(ctx context.Context, getSettingsOptions *GetSettingsOptions) (result *AccountSettings, response *core.DetailedResponse, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.ListLocations">func (adminServiceApi *AdminServiceApiV1) ListLocations(listLocationsOptions *ListLocationsOptions) (result *Locations, response *core.DetailedResponse, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.ListLocationsWithContext">func (adminServiceApi *AdminServiceApiV1) ListLocationsWithContext(ctx context.Context, listLocationsOptions *ListLocationsOptions) (result *Locations, response *core.DetailedResponse, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.NewGetLocationOptions">func (*AdminServiceApiV1) NewGetLocationOptions(locationID string) *GetLocationOptions</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.NewGetSettingsOptions">func (*AdminServiceApiV1) NewGetSettingsOptions(accountID string) *GetSettingsOptions</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.NewListLocationsOptions">func (*AdminServiceApiV1) NewListLocationsOptions() *ListLocationsOptions</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.NewLocationID">func (*AdminServiceApiV1) NewLocationID(id string) (_model *LocationID, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.NewNotificationsRegistration">func (*AdminServiceApiV1) NewNotificationsRegistration(instanceCrn string) (_model *NotificationsRegistration, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.NewPatchAccountSettingsOptions">func (*AdminServiceApiV1) NewPatchAccountSettingsOptions(accountID string) *PatchAccountSettingsOptions</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.NewSendTestEventOptions">func (*AdminServiceApiV1) NewSendTestEventOptions(accountID string) *SendTestEventOptions</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.PatchAccountSettings">func (adminServiceApi *AdminServiceApiV1) PatchAccountSettings(patchAccountSettingsOptions *PatchAccountSettingsOptions) (result *AccountSettings, response *core.DetailedResponse, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.PatchAccountSettingsWithContext">func (adminServiceApi *AdminServiceApiV1) PatchAccountSettingsWithContext(ctx context.Context, patchAccountSettingsOptions *PatchAccountSettingsOptions) (result *AccountSettings, response *core.DetailedResponse, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.SendTestEvent">func (adminServiceApi *AdminServiceApiV1) SendTestEvent(sendTestEventOptions *SendTestEventOptions) (result *TestEvent, response *core.DetailedResponse, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.SendTestEventWithContext">func (adminServiceApi *AdminServiceApiV1) SendTestEventWithContext(ctx context.Context, sendTestEventOptions *SendTestEventOptions) (result *TestEvent, response *core.DetailedResponse, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.SetDefaultHeaders">func (adminServiceApi *AdminServiceApiV1) SetDefaultHeaders(headers http.Header)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.SetEnableGzipCompression">func (adminServiceApi *AdminServiceApiV1) SetEnableGzipCompression(enableGzip bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AdminServiceApiV1.SetServiceURL">func (adminServiceApi *AdminServiceApiV1) SetServiceURL(url string) error</a></dd>
+				
+			
+				
+				<dd><a href="#AdminServiceApiV1Options">type AdminServiceApiV1Options</a></dd>
+				
+				
+			
+				
+				<dd><a href="#GetLocationOptions">type GetLocationOptions</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#GetLocationOptions.SetHeaders">func (options *GetLocationOptions) SetHeaders(param map[string]string) *GetLocationOptions</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#GetLocationOptions.SetLocationID">func (_options *GetLocationOptions) SetLocationID(locationID string) *GetLocationOptions</a></dd>
+				
+			
+				
+				<dd><a href="#GetSettingsOptions">type GetSettingsOptions</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#GetSettingsOptions.SetAccountID">func (_options *GetSettingsOptions) SetAccountID(accountID string) *GetSettingsOptions</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#GetSettingsOptions.SetHeaders">func (options *GetSettingsOptions) SetHeaders(param map[string]string) *GetSettingsOptions</a></dd>
+				
+			
+				
+				<dd><a href="#ListLocationsOptions">type ListLocationsOptions</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ListLocationsOptions.SetHeaders">func (options *ListLocationsOptions) SetHeaders(param map[string]string) *ListLocationsOptions</a></dd>
+				
+			
+				
+				<dd><a href="#Location">type Location</a></dd>
+				
+				
+			
+				
+				<dd><a href="#LocationID">type LocationID</a></dd>
+				
+				
+			
+				
+				<dd><a href="#Locations">type Locations</a></dd>
+				
+				
+			
+				
+				<dd><a href="#NotificationsRegistration">type NotificationsRegistration</a></dd>
+				
+				
+			
+				
+				<dd><a href="#PatchAccountSettingsOptions">type PatchAccountSettingsOptions</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#PatchAccountSettingsOptions.SetAccountID">func (_options *PatchAccountSettingsOptions) SetAccountID(accountID string) *PatchAccountSettingsOptions</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#PatchAccountSettingsOptions.SetEventNotifications">func (_options *PatchAccountSettingsOptions) SetEventNotifications(eventNotifications *NotificationsRegistration) *PatchAccountSettingsOptions</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#PatchAccountSettingsOptions.SetHeaders">func (options *PatchAccountSettingsOptions) SetHeaders(param map[string]string) *PatchAccountSettingsOptions</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#PatchAccountSettingsOptions.SetLocation">func (_options *PatchAccountSettingsOptions) SetLocation(location *LocationID) *PatchAccountSettingsOptions</a></dd>
+				
+			
+				
+				<dd><a href="#Region">type Region</a></dd>
+				
+				
+			
+				
+				<dd><a href="#SendTestEventOptions">type SendTestEventOptions</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SendTestEventOptions.SetAccountID">func (_options *SendTestEventOptions) SetAccountID(accountID string) *SendTestEventOptions</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SendTestEventOptions.SetHeaders">func (options *SendTestEventOptions) SetHeaders(param map[string]string) *SendTestEventOptions</a></dd>
+				
+			
+				
+				<dd><a href="#TestEvent">type TestEvent</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go">admin_service_api_v1.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				<p>
+Constants associated with the GetLocationOptions.LocationID property.
+The programatic ID of the location that you want to work in.
+</p>
+
+				<pre>const (
+    <span id="GetLocationOptions_LocationID_Eu">GetLocationOptions_LocationID_Eu</span> = &#34;eu&#34;
+    <span id="GetLocationOptions_LocationID_Uk">GetLocationOptions_LocationID_Uk</span> = &#34;uk&#34;
+    <span id="GetLocationOptions_LocationID_Us">GetLocationOptions_LocationID_Us</span> = &#34;us&#34;
+)</pre>
+			
+				<p>
+Constants associated with the Location.ID property.
+The programatic ID of the location that you want to work in.
+</p>
+
+				<pre>const (
+    <span id="Location_ID_Eu">Location_ID_Eu</span> = &#34;eu&#34;
+    <span id="Location_ID_Uk">Location_ID_Uk</span> = &#34;uk&#34;
+    <span id="Location_ID_Us">Location_ID_Us</span> = &#34;us&#34;
+)</pre>
+			
+				<p>
+Constants associated with the LocationID.ID property.
+The programatic ID of the location that you want to work in.
+</p>
+
+				<pre>const (
+    <span id="LocationID_ID_Eu">LocationID_ID_Eu</span> = &#34;eu&#34;
+    <span id="LocationID_ID_Uk">LocationID_ID_Uk</span> = &#34;uk&#34;
+    <span id="LocationID_ID_Us">LocationID_ID_Us</span> = &#34;us&#34;
+)</pre>
+			
+				<p>
+Constants associated with the Region.ID property.
+The programatic ID of the available regions.
+</p>
+
+				<pre>const (
+    <span id="Region_ID_Eu">Region_ID_Eu</span> = &#34;eu&#34;
+    <span id="Region_ID_Uk">Region_ID_Uk</span> = &#34;uk&#34;
+    <span id="Region_ID_Us">Region_ID_Us</span> = &#34;us&#34;
+)</pre>
+			
+				<p>
+DefaultServiceName is the default key used to find external configuration information.
+</p>
+
+				<pre>const <span id="DefaultServiceName">DefaultServiceName</span> = &#34;admin_service_api&#34;</pre>
+			
+				<p>
+DefaultServiceURL is the default URL to make service requests to.
+</p>
+
+				<pre>const <span id="DefaultServiceURL">DefaultServiceURL</span> = &#34;https://us.compliance.cloud.ibm.com&#34;</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="GetServiceURLForRegion">func <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L112">GetServiceURLForRegion</a>
+				<a class="permalink" href="#GetServiceURLForRegion">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetServiceURLForRegion(region <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>) (<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>, <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetServiceURLForRegion returns the service URL to be used for the specified region
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="UnmarshalAccountSettings">func <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L488">UnmarshalAccountSettings</a>
+				<a class="permalink" href="#UnmarshalAccountSettings">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func UnmarshalAccountSettings(m map[<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>]<a href="https:/ibm.github.io/scc-go-sdk/pkg/encoding/json/">json</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/encoding/json/#RawMessage">RawMessage</a>, result interface{}) (err <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+			<p>
+UnmarshalAccountSettings unmarshals an instance of AccountSettings from the specified map of raw messages.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="UnmarshalLocation">func <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L619">UnmarshalLocation</a>
+				<a class="permalink" href="#UnmarshalLocation">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func UnmarshalLocation(m map[<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>]<a href="https:/ibm.github.io/scc-go-sdk/pkg/encoding/json/">json</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/encoding/json/#RawMessage">RawMessage</a>, result interface{}) (err <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+			<p>
+UnmarshalLocation unmarshals an instance of Location from the specified map of raw messages.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="UnmarshalLocationID">func <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L681">UnmarshalLocationID</a>
+				<a class="permalink" href="#UnmarshalLocationID">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func UnmarshalLocationID(m map[<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>]<a href="https:/ibm.github.io/scc-go-sdk/pkg/encoding/json/">json</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/encoding/json/#RawMessage">RawMessage</a>, result interface{}) (err <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+			<p>
+UnmarshalLocationID unmarshals an instance of LocationID from the specified map of raw messages.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="UnmarshalLocations">func <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L697">UnmarshalLocations</a>
+				<a class="permalink" href="#UnmarshalLocations">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func UnmarshalLocations(m map[<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>]<a href="https:/ibm.github.io/scc-go-sdk/pkg/encoding/json/">json</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/encoding/json/#RawMessage">RawMessage</a>, result interface{}) (err <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+			<p>
+UnmarshalLocations unmarshals an instance of Locations from the specified map of raw messages.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="UnmarshalNotificationsRegistration">func <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L729">UnmarshalNotificationsRegistration</a>
+				<a class="permalink" href="#UnmarshalNotificationsRegistration">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func UnmarshalNotificationsRegistration(m map[<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>]<a href="https:/ibm.github.io/scc-go-sdk/pkg/encoding/json/">json</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/encoding/json/#RawMessage">RawMessage</a>, result interface{}) (err <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+			<p>
+UnmarshalNotificationsRegistration unmarshals an instance of NotificationsRegistration from the specified map of raw messages.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="UnmarshalRegion">func <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L809">UnmarshalRegion</a>
+				<a class="permalink" href="#UnmarshalRegion">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func UnmarshalRegion(m map[<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>]<a href="https:/ibm.github.io/scc-go-sdk/pkg/encoding/json/">json</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/encoding/json/#RawMessage">RawMessage</a>, result interface{}) (err <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+			<p>
+UnmarshalRegion unmarshals an instance of Region from the specified map of raw messages.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="UnmarshalTestEvent">func <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L854">UnmarshalTestEvent</a>
+				<a class="permalink" href="#UnmarshalTestEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func UnmarshalTestEvent(m map[<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>]<a href="https:/ibm.github.io/scc-go-sdk/pkg/encoding/json/">json</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/encoding/json/#RawMessage">RawMessage</a>, result interface{}) (err <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+			<p>
+UnmarshalTestEvent unmarshals an instance of TestEvent from the specified map of raw messages.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="AccountSettings">type <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L479">AccountSettings</a>
+				<a class="permalink" href="#AccountSettings">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AccountSettings : Account settings.
+</p>
+
+			<pre>type AccountSettings struct {
+<span id="AccountSettings.Location"></span>    <span class="comment">// Location settings.</span>
+    Location *<a href="#LocationID">LocationID</a> `json:&#34;location,omitempty&#34;`
+
+    <span class="comment">// The Event Notification settings to register.</span>
+<span id="AccountSettings.EventNotifications"></span>    EventNotifications *<a href="#NotificationsRegistration">NotificationsRegistration</a> `json:&#34;event_notifications,omitempty&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="AdminServiceApiV1">type <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L39">AdminServiceApiV1</a>
+				<a class="permalink" href="#AdminServiceApiV1">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AdminServiceApiV1 : This is an API for the Admin Service
+</p>
+<p>
+API Version: 1.0.0
+</p>
+
+			<pre>type AdminServiceApiV1 struct {
+<span id="AdminServiceApiV1.Service"></span>    Service *<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/">core</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/#BaseService">BaseService</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewAdminServiceApiV1">func <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L86">NewAdminServiceApiV1</a>
+					<a class="permalink" href="#NewAdminServiceApiV1">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewAdminServiceApiV1(options *<a href="#AdminServiceApiV1Options">AdminServiceApiV1Options</a>) (service *<a href="#AdminServiceApiV1">AdminServiceApiV1</a>, err <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewAdminServiceApiV1 : constructs an instance of AdminServiceApiV1 with passed in options.
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewAdminServiceApiV1UsingExternalConfig">func <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L57">NewAdminServiceApiV1UsingExternalConfig</a>
+					<a class="permalink" href="#NewAdminServiceApiV1UsingExternalConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewAdminServiceApiV1UsingExternalConfig(options *<a href="#AdminServiceApiV1Options">AdminServiceApiV1Options</a>) (adminServiceApi *<a href="#AdminServiceApiV1">AdminServiceApiV1</a>, err <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewAdminServiceApiV1UsingExternalConfig : constructs an instance of AdminServiceApiV1 with passed in options and external configuration.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="AdminServiceApiV1.Clone">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L127">Clone</a>
+					<a class="permalink" href="#AdminServiceApiV1.Clone">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (adminServiceApi *<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) Clone() *<a href="#AdminServiceApiV1">AdminServiceApiV1</a></pre>
+				<p>
+Clone makes a copy of &#34;adminServiceApi&#34; suitable for processing requests.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.DisableRetries">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L168">DisableRetries</a>
+					<a class="permalink" href="#AdminServiceApiV1.DisableRetries">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (adminServiceApi *<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) DisableRetries()</pre>
+				<p>
+DisableRetries disables automatic retries for requests invoked for this service instance.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.EnableRetries">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L163">EnableRetries</a>
+					<a class="permalink" href="#AdminServiceApiV1.EnableRetries">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (adminServiceApi *<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) EnableRetries(maxRetries <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#int">int</a>, maxRetryInterval <a href="https:/ibm.github.io/scc-go-sdk/pkg/time/">time</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/time/#Duration">Duration</a>)</pre>
+				<p>
+EnableRetries enables automatic retries for requests invoked for this service instance.
+If either parameter is specified as 0, then a default value is used instead.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.GetEnableGzipCompression">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L157">GetEnableGzipCompression</a>
+					<a class="permalink" href="#AdminServiceApiV1.GetEnableGzipCompression">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (adminServiceApi *<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) GetEnableGzipCompression() <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#bool">bool</a></pre>
+				<p>
+GetEnableGzipCompression returns the service&#39;s EnableGzipCompression field
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.GetLocation">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L360">GetLocation</a>
+					<a class="permalink" href="#AdminServiceApiV1.GetLocation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (adminServiceApi *<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) GetLocation(getLocationOptions *<a href="#GetLocationOptions">GetLocationOptions</a>) (result *<a href="#Location">Location</a>, response *<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/">core</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/#DetailedResponse">DetailedResponse</a>, err <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetLocation : View the details of a location
+View the endpoints and regions that are available for a specific region.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.GetLocationWithContext">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L365">GetLocationWithContext</a>
+					<a class="permalink" href="#AdminServiceApiV1.GetLocationWithContext">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (adminServiceApi *<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) GetLocationWithContext(ctx <a href="https:/ibm.github.io/scc-go-sdk/pkg/context/">context</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/context/#Context">Context</a>, getLocationOptions *<a href="#GetLocationOptions">GetLocationOptions</a>) (result *<a href="#Location">Location</a>, response *<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/">core</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/#DetailedResponse">DetailedResponse</a>, err <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetLocationWithContext is an alternate form of the GetLocation method which supports a Context parameter
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.GetServiceURL">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L142">GetServiceURL</a>
+					<a class="permalink" href="#AdminServiceApiV1.GetServiceURL">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (adminServiceApi *<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) GetServiceURL() <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a></pre>
+				<p>
+GetServiceURL returns the service URL
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.GetSettings">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L174">GetSettings</a>
+					<a class="permalink" href="#AdminServiceApiV1.GetSettings">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (adminServiceApi *<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) GetSettings(getSettingsOptions *<a href="#GetSettingsOptions">GetSettingsOptions</a>) (result *<a href="#AccountSettings">AccountSettings</a>, response *<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/">core</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/#DetailedResponse">DetailedResponse</a>, err <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetSettings : View account settings
+View the current settings for a specific account.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.GetSettingsWithContext">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L179">GetSettingsWithContext</a>
+					<a class="permalink" href="#AdminServiceApiV1.GetSettingsWithContext">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (adminServiceApi *<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) GetSettingsWithContext(ctx <a href="https:/ibm.github.io/scc-go-sdk/pkg/context/">context</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/context/#Context">Context</a>, getSettingsOptions *<a href="#GetSettingsOptions">GetSettingsOptions</a>) (result *<a href="#AccountSettings">AccountSettings</a>, response *<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/">core</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/#DetailedResponse">DetailedResponse</a>, err <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetSettingsWithContext is an alternate form of the GetSettings method which supports a Context parameter
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.ListLocations">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L308">ListLocations</a>
+					<a class="permalink" href="#AdminServiceApiV1.ListLocations">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (adminServiceApi *<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) ListLocations(listLocationsOptions *<a href="#ListLocationsOptions">ListLocationsOptions</a>) (result *<a href="#Locations">Locations</a>, response *<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/">core</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/#DetailedResponse">DetailedResponse</a>, err <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ListLocations : View available locations
+View the available locations in which the data that is generated by the Security and Compliance Center can be
+managed.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.ListLocationsWithContext">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L313">ListLocationsWithContext</a>
+					<a class="permalink" href="#AdminServiceApiV1.ListLocationsWithContext">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (adminServiceApi *<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) ListLocationsWithContext(ctx <a href="https:/ibm.github.io/scc-go-sdk/pkg/context/">context</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/context/#Context">Context</a>, listLocationsOptions *<a href="#ListLocationsOptions">ListLocationsOptions</a>) (result *<a href="#Locations">Locations</a>, response *<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/">core</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/#DetailedResponse">DetailedResponse</a>, err <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ListLocationsWithContext is an alternate form of the ListLocations method which supports a Context parameter
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.NewGetLocationOptions">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L520">NewGetLocationOptions</a>
+					<a class="permalink" href="#AdminServiceApiV1.NewGetLocationOptions">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) NewGetLocationOptions(locationID <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>) *<a href="#GetLocationOptions">GetLocationOptions</a></pre>
+				<p>
+NewGetLocationOptions : Instantiate GetLocationOptions
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.NewGetSettingsOptions">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L548">NewGetSettingsOptions</a>
+					<a class="permalink" href="#AdminServiceApiV1.NewGetSettingsOptions">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) NewGetSettingsOptions(accountID <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>) *<a href="#GetSettingsOptions">GetSettingsOptions</a></pre>
+				<p>
+NewGetSettingsOptions : Instantiate GetSettingsOptions
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.NewListLocationsOptions">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L574">NewListLocationsOptions</a>
+					<a class="permalink" href="#AdminServiceApiV1.NewListLocationsOptions">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) NewListLocationsOptions() *<a href="#ListLocationsOptions">ListLocationsOptions</a></pre>
+				<p>
+NewListLocationsOptions : Instantiate ListLocationsOptions
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.NewLocationID">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L672">NewLocationID</a>
+					<a class="permalink" href="#AdminServiceApiV1.NewLocationID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) NewLocationID(id <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>) (_model *<a href="#LocationID">LocationID</a>, err <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewLocationID : Instantiate LocationID (Generic Model Constructor)
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.NewNotificationsRegistration">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L720">NewNotificationsRegistration</a>
+					<a class="permalink" href="#AdminServiceApiV1.NewNotificationsRegistration">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) NewNotificationsRegistration(instanceCrn <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>) (_model *<a href="#NotificationsRegistration">NotificationsRegistration</a>, err <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewNotificationsRegistration : Instantiate NotificationsRegistration (Generic Model Constructor)
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.NewPatchAccountSettingsOptions">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L763">NewPatchAccountSettingsOptions</a>
+					<a class="permalink" href="#AdminServiceApiV1.NewPatchAccountSettingsOptions">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) NewPatchAccountSettingsOptions(accountID <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>) *<a href="#PatchAccountSettingsOptions">PatchAccountSettingsOptions</a></pre>
+				<p>
+NewPatchAccountSettingsOptions : Instantiate PatchAccountSettingsOptions
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.NewSendTestEventOptions">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L829">NewSendTestEventOptions</a>
+					<a class="permalink" href="#AdminServiceApiV1.NewSendTestEventOptions">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) NewSendTestEventOptions(accountID <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>) *<a href="#SendTestEventOptions">SendTestEventOptions</a></pre>
+				<p>
+NewSendTestEventOptions : Instantiate SendTestEventOptions
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.PatchAccountSettings">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L234">PatchAccountSettings</a>
+					<a class="permalink" href="#AdminServiceApiV1.PatchAccountSettings">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (adminServiceApi *<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) PatchAccountSettings(patchAccountSettingsOptions *<a href="#PatchAccountSettingsOptions">PatchAccountSettingsOptions</a>) (result *<a href="#AccountSettings">AccountSettings</a>, response *<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/">core</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/#DetailedResponse">DetailedResponse</a>, err <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+				<p>
+PatchAccountSettings : Update account settings
+Update the settings for a specific account.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.PatchAccountSettingsWithContext">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L239">PatchAccountSettingsWithContext</a>
+					<a class="permalink" href="#AdminServiceApiV1.PatchAccountSettingsWithContext">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (adminServiceApi *<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) PatchAccountSettingsWithContext(ctx <a href="https:/ibm.github.io/scc-go-sdk/pkg/context/">context</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/context/#Context">Context</a>, patchAccountSettingsOptions *<a href="#PatchAccountSettingsOptions">PatchAccountSettingsOptions</a>) (result *<a href="#AccountSettings">AccountSettings</a>, response *<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/">core</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/#DetailedResponse">DetailedResponse</a>, err <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+				<p>
+PatchAccountSettingsWithContext is an alternate form of the PatchAccountSettings method which supports a Context parameter
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.SendTestEvent">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L420">SendTestEvent</a>
+					<a class="permalink" href="#AdminServiceApiV1.SendTestEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (adminServiceApi *<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) SendTestEvent(sendTestEventOptions *<a href="#SendTestEventOptions">SendTestEventOptions</a>) (result *<a href="#TestEvent">TestEvent</a>, response *<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/">core</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/#DetailedResponse">DetailedResponse</a>, err <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+				<p>
+SendTestEvent : Send test event
+Send a test event using your configured Event Notifications instance.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.SendTestEventWithContext">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L425">SendTestEventWithContext</a>
+					<a class="permalink" href="#AdminServiceApiV1.SendTestEventWithContext">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (adminServiceApi *<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) SendTestEventWithContext(ctx <a href="https:/ibm.github.io/scc-go-sdk/pkg/context/">context</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/context/#Context">Context</a>, sendTestEventOptions *<a href="#SendTestEventOptions">SendTestEventOptions</a>) (result *<a href="#TestEvent">TestEvent</a>, response *<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/">core</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/#DetailedResponse">DetailedResponse</a>, err <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a>)</pre>
+				<p>
+SendTestEventWithContext is an alternate form of the SendTestEvent method which supports a Context parameter
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.SetDefaultHeaders">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L147">SetDefaultHeaders</a>
+					<a class="permalink" href="#AdminServiceApiV1.SetDefaultHeaders">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (adminServiceApi *<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) SetDefaultHeaders(headers <a href="https:/ibm.github.io/scc-go-sdk/pkg/net/http/">http</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/net/http/#Header">Header</a>)</pre>
+				<p>
+SetDefaultHeaders sets HTTP headers to be sent in every request
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.SetEnableGzipCompression">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L152">SetEnableGzipCompression</a>
+					<a class="permalink" href="#AdminServiceApiV1.SetEnableGzipCompression">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (adminServiceApi *<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) SetEnableGzipCompression(enableGzip <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+SetEnableGzipCompression sets the service&#39;s EnableGzipCompression field
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AdminServiceApiV1.SetServiceURL">func (*AdminServiceApiV1) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L137">SetServiceURL</a>
+					<a class="permalink" href="#AdminServiceApiV1.SetServiceURL">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (adminServiceApi *<a href="#AdminServiceApiV1">AdminServiceApiV1</a>) SetServiceURL(url <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>) <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#error">error</a></pre>
+				<p>
+SetServiceURL sets the service URL
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="AdminServiceApiV1Options">type <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L50">AdminServiceApiV1Options</a>
+				<a class="permalink" href="#AdminServiceApiV1Options">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AdminServiceApiV1Options : Service options
+</p>
+
+			<pre>type AdminServiceApiV1Options struct {
+<span id="AdminServiceApiV1Options.ServiceName"></span>    ServiceName   <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>
+<span id="AdminServiceApiV1Options.URL"></span>    URL           <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>
+<span id="AdminServiceApiV1Options.Authenticator"></span>    Authenticator <a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/">core</a>.<a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/go-sdk-core/v5/core/#Authenticator">Authenticator</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="GetLocationOptions">type <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L503">GetLocationOptions</a>
+				<a class="permalink" href="#GetLocationOptions">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+GetLocationOptions : The GetLocation options.
+</p>
+
+			<pre>type GetLocationOptions struct {
+    <span class="comment">// The programatic ID of the location that you want to work in.</span>
+<span id="GetLocationOptions.LocationID"></span>    LocationID *<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a> `json:&#34;location_id&#34; validate:&#34;required,ne=&#34;`
+
+    <span class="comment">// Allows users to set headers on API requests</span>
+<span id="GetLocationOptions.Headers"></span>    Headers map[<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>]<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="GetLocationOptions.SetHeaders">func (*GetLocationOptions) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L533">SetHeaders</a>
+					<a class="permalink" href="#GetLocationOptions.SetHeaders">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (options *<a href="#GetLocationOptions">GetLocationOptions</a>) SetHeaders(param map[<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>]<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>) *<a href="#GetLocationOptions">GetLocationOptions</a></pre>
+				<p>
+SetHeaders : Allow user to set Headers
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="GetLocationOptions.SetLocationID">func (*GetLocationOptions) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L527">SetLocationID</a>
+					<a class="permalink" href="#GetLocationOptions.SetLocationID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_options *<a href="#GetLocationOptions">GetLocationOptions</a>) SetLocationID(locationID <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>) *<a href="#GetLocationOptions">GetLocationOptions</a></pre>
+				<p>
+SetLocationID : Allow user to set LocationID
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="GetSettingsOptions">type <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L539">GetSettingsOptions</a>
+				<a class="permalink" href="#GetSettingsOptions">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+GetSettingsOptions : The GetSettings options.
+</p>
+
+			<pre>type GetSettingsOptions struct {
+    <span class="comment">// The ID of the managing account.</span>
+<span id="GetSettingsOptions.AccountID"></span>    AccountID *<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a> `json:&#34;account_id&#34; validate:&#34;required,ne=&#34;`
+
+    <span class="comment">// Allows users to set headers on API requests</span>
+<span id="GetSettingsOptions.Headers"></span>    Headers map[<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>]<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="GetSettingsOptions.SetAccountID">func (*GetSettingsOptions) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L555">SetAccountID</a>
+					<a class="permalink" href="#GetSettingsOptions.SetAccountID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_options *<a href="#GetSettingsOptions">GetSettingsOptions</a>) SetAccountID(accountID <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>) *<a href="#GetSettingsOptions">GetSettingsOptions</a></pre>
+				<p>
+SetAccountID : Allow user to set AccountID
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="GetSettingsOptions.SetHeaders">func (*GetSettingsOptions) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L561">SetHeaders</a>
+					<a class="permalink" href="#GetSettingsOptions.SetHeaders">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (options *<a href="#GetSettingsOptions">GetSettingsOptions</a>) SetHeaders(param map[<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>]<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>) *<a href="#GetSettingsOptions">GetSettingsOptions</a></pre>
+				<p>
+SetHeaders : Allow user to set Headers
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ListLocationsOptions">type <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L567">ListLocationsOptions</a>
+				<a class="permalink" href="#ListLocationsOptions">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ListLocationsOptions : The ListLocations options.
+</p>
+
+			<pre>type ListLocationsOptions struct {
+
+    <span class="comment">// Allows users to set headers on API requests</span>
+<span id="ListLocationsOptions.Headers"></span>    Headers map[<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>]<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ListLocationsOptions.SetHeaders">func (*ListLocationsOptions) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L579">SetHeaders</a>
+					<a class="permalink" href="#ListLocationsOptions.SetHeaders">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (options *<a href="#ListLocationsOptions">ListLocationsOptions</a>) SetHeaders(param map[<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>]<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>) *<a href="#ListLocationsOptions">ListLocationsOptions</a></pre>
+				<p>
+SetHeaders : Allow user to set Headers
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Location">type <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L585">Location</a>
+				<a class="permalink" href="#Location">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Location : The location that your account is current set to use.
+</p>
+
+			<pre>type Location struct {
+    <span class="comment">// The programatic ID of the location that you want to work in.</span>
+<span id="Location.ID"></span>    ID *<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a> `json:&#34;id,omitempty&#34;`
+
+    <span class="comment">// The base URL for the service.</span>
+<span id="Location.MainEndpointURL"></span>    MainEndpointURL *<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a> `json:&#34;main_endpoint_url,omitempty&#34;`
+
+    <span class="comment">// The endpoint that is used to call the Configuration Governance APIs.</span>
+<span id="Location.GovernanceEndpointURL"></span>    GovernanceEndpointURL *<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a> `json:&#34;governance_endpoint_url,omitempty&#34;`
+
+    <span class="comment">// The endpoint that is used to get the results for the Configuration Governance component.</span>
+<span id="Location.ResultsEndpointURL"></span>    ResultsEndpointURL *<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a> `json:&#34;results_endpoint_url,omitempty&#34;`
+
+    <span class="comment">// The endpoint that is used to call the Posture Management APIs.</span>
+<span id="Location.ComplianceEndpointURL"></span>    ComplianceEndpointURL *<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a> `json:&#34;compliance_endpoint_url,omitempty&#34;`
+
+    <span class="comment">// The endpoint that is used to generate analytics for the Posture Management component.</span>
+<span id="Location.AnalyticsEndpointURL"></span>    AnalyticsEndpointURL *<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a> `json:&#34;analytics_endpoint_url,omitempty&#34;`
+
+    <span class="comment">// The endpoint that is used to call the Security Insights APIs.</span>
+<span id="Location.SiEndpointURL"></span>    SiEndpointURL *<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a> `json:&#34;si_endpoint_url,omitempty&#34;`
+
+<span id="Location.Regions"></span>    Regions []<a href="#Region">Region</a> `json:&#34;regions,omitempty&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="LocationID">type <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L658">LocationID</a>
+				<a class="permalink" href="#LocationID">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LocationID : Location settings.
+</p>
+
+			<pre>type LocationID struct {
+    <span class="comment">// The programatic ID of the location that you want to work in.</span>
+<span id="LocationID.ID"></span>    ID *<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a> `json:&#34;id&#34; validate:&#34;required&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Locations">type <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L692">Locations</a>
+				<a class="permalink" href="#Locations">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Locations : An array of available locations.
+</p>
+
+			<pre>type Locations struct {
+<span id="Locations.Locations"></span>    Locations []<a href="#Location">Location</a> `json:&#34;locations&#34; validate:&#34;required&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="NotificationsRegistration">type <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L708">NotificationsRegistration</a>
+				<a class="permalink" href="#NotificationsRegistration">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+NotificationsRegistration : The Event Notification settings to register.
+</p>
+
+			<pre>type NotificationsRegistration struct {
+    <span class="comment">// The Cloud Resource Name (CRN) of the Event Notifications instance that you want to connect.</span>
+<span id="NotificationsRegistration.InstanceCrn"></span>    InstanceCrn *<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a> `json:&#34;instance_crn&#34; validate:&#34;required&#34;`
+
+    <span class="comment">// The name to register as a source in your Event Notifications instance.</span>
+<span id="NotificationsRegistration.SourceName"></span>    SourceName *<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a> `json:&#34;source_name,omitempty&#34;`
+
+    <span class="comment">// An optional description for the source in your Event Notifications instance.</span>
+<span id="NotificationsRegistration.SourceDescription"></span>    SourceDescription *<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a> `json:&#34;source_description,omitempty&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PatchAccountSettingsOptions">type <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L748">PatchAccountSettingsOptions</a>
+				<a class="permalink" href="#PatchAccountSettingsOptions">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PatchAccountSettingsOptions : The PatchAccountSettings options.
+</p>
+
+			<pre>type PatchAccountSettingsOptions struct {
+    <span class="comment">// The ID of the managing account.</span>
+<span id="PatchAccountSettingsOptions.AccountID"></span>    AccountID *<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a> `json:&#34;account_id&#34; validate:&#34;required,ne=&#34;`
+
+<span id="PatchAccountSettingsOptions.Location"></span>    <span class="comment">// Location settings.</span>
+    Location *<a href="#LocationID">LocationID</a> `json:&#34;location,omitempty&#34;`
+
+    <span class="comment">// The Event Notification settings to register.</span>
+<span id="PatchAccountSettingsOptions.EventNotifications"></span>    EventNotifications *<a href="#NotificationsRegistration">NotificationsRegistration</a> `json:&#34;event_notifications,omitempty&#34;`
+
+    <span class="comment">// Allows users to set headers on API requests</span>
+<span id="PatchAccountSettingsOptions.Headers"></span>    Headers map[<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>]<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="PatchAccountSettingsOptions.SetAccountID">func (*PatchAccountSettingsOptions) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L770">SetAccountID</a>
+					<a class="permalink" href="#PatchAccountSettingsOptions.SetAccountID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_options *<a href="#PatchAccountSettingsOptions">PatchAccountSettingsOptions</a>) SetAccountID(accountID <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>) *<a href="#PatchAccountSettingsOptions">PatchAccountSettingsOptions</a></pre>
+				<p>
+SetAccountID : Allow user to set AccountID
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PatchAccountSettingsOptions.SetEventNotifications">func (*PatchAccountSettingsOptions) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L782">SetEventNotifications</a>
+					<a class="permalink" href="#PatchAccountSettingsOptions.SetEventNotifications">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_options *<a href="#PatchAccountSettingsOptions">PatchAccountSettingsOptions</a>) SetEventNotifications(eventNotifications *<a href="#NotificationsRegistration">NotificationsRegistration</a>) *<a href="#PatchAccountSettingsOptions">PatchAccountSettingsOptions</a></pre>
+				<p>
+SetEventNotifications : Allow user to set EventNotifications
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PatchAccountSettingsOptions.SetHeaders">func (*PatchAccountSettingsOptions) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L788">SetHeaders</a>
+					<a class="permalink" href="#PatchAccountSettingsOptions.SetHeaders">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (options *<a href="#PatchAccountSettingsOptions">PatchAccountSettingsOptions</a>) SetHeaders(param map[<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>]<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>) *<a href="#PatchAccountSettingsOptions">PatchAccountSettingsOptions</a></pre>
+				<p>
+SetHeaders : Allow user to set Headers
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PatchAccountSettingsOptions.SetLocation">func (*PatchAccountSettingsOptions) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L776">SetLocation</a>
+					<a class="permalink" href="#PatchAccountSettingsOptions.SetLocation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_options *<a href="#PatchAccountSettingsOptions">PatchAccountSettingsOptions</a>) SetLocation(location *<a href="#LocationID">LocationID</a>) *<a href="#PatchAccountSettingsOptions">PatchAccountSettingsOptions</a></pre>
+				<p>
+SetLocation : Allow user to set Location
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Region">type <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L795">Region</a>
+				<a class="permalink" href="#Region">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Region : The region or regions that are available for each location. Be sure to use the correct region ID when making your API
+call.
+</p>
+
+			<pre>type Region struct {
+    <span class="comment">// The programatic ID of the available regions.</span>
+<span id="Region.ID"></span>    ID *<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a> `json:&#34;id&#34; validate:&#34;required&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SendTestEventOptions">type <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L820">SendTestEventOptions</a>
+				<a class="permalink" href="#SendTestEventOptions">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SendTestEventOptions : The SendTestEvent options.
+</p>
+
+			<pre>type SendTestEventOptions struct {
+    <span class="comment">// The ID of the managing account.</span>
+<span id="SendTestEventOptions.AccountID"></span>    AccountID *<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a> `json:&#34;account_id&#34; validate:&#34;required,ne=&#34;`
+
+    <span class="comment">// Allows users to set headers on API requests</span>
+<span id="SendTestEventOptions.Headers"></span>    Headers map[<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>]<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SendTestEventOptions.SetAccountID">func (*SendTestEventOptions) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L836">SetAccountID</a>
+					<a class="permalink" href="#SendTestEventOptions.SetAccountID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_options *<a href="#SendTestEventOptions">SendTestEventOptions</a>) SetAccountID(accountID <a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>) *<a href="#SendTestEventOptions">SendTestEventOptions</a></pre>
+				<p>
+SetAccountID : Allow user to set AccountID
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SendTestEventOptions.SetHeaders">func (*SendTestEventOptions) <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L842">SetHeaders</a>
+					<a class="permalink" href="#SendTestEventOptions.SetHeaders">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (options *<a href="#SendTestEventOptions">SendTestEventOptions</a>) SetHeaders(param map[<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>]<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#string">string</a>) *<a href="#SendTestEventOptions">SendTestEventOptions</a></pre>
+				<p>
+SetHeaders : Allow user to set Headers
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="TestEvent">type <a href="./https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v3/adminserviceapiv1/admin_service_api_v1.go#L848">TestEvent</a>
+				<a class="permalink" href="#TestEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TestEvent : The details of a test event response.
+</p>
+
+			<pre>type TestEvent struct {
+    <span class="comment">// Indicates whether the event was received by Event Notifications.</span>
+<span id="TestEvent.Success"></span>    Success *<a href="https:/ibm.github.io/scc-go-sdk/pkg/builtin/#bool">bool</a> `json:&#34;success&#34; validate:&#34;required&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.16.14.<br>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+</body>
+</html>

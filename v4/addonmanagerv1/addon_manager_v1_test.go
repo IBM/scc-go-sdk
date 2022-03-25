@@ -1,0 +1,2377 @@
+/**
+ * (C) Copyright IBM Corp. 2022.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package addonmanagerv1_test
+
+import (
+	"bytes"
+	"context"
+	"fmt"
+	"io"
+	"io/ioutil"
+	"net/http"
+	"net/http/httptest"
+	"os"
+	"time"
+
+	"github.com/IBM/go-sdk-core/v5/core"
+	"github.com/IBM/scc-go-sdk/v4/addonmanagerv1"
+	"github.com/go-openapi/strfmt"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
+)
+
+var _ = Describe(`AddonManagerV1`, func() {
+	var testServer *httptest.Server
+	Describe(`Service constructor tests`, func() {
+		accountID := "testString"
+		It(`Instantiate service client`, func() {
+			addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+				Authenticator: &core.NoAuthAuthenticator{},
+				AccountID:     core.StringPtr(accountID),
+			})
+			Expect(addonManagerService).ToNot(BeNil())
+			Expect(serviceErr).To(BeNil())
+		})
+		It(`Instantiate service client with error: Invalid URL`, func() {
+			addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+				URL:       "{BAD_URL_STRING",
+				AccountID: core.StringPtr(accountID),
+			})
+			Expect(addonManagerService).To(BeNil())
+			Expect(serviceErr).ToNot(BeNil())
+		})
+		It(`Instantiate service client with error: Invalid Auth`, func() {
+			addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+				URL:       "https://addonmanagerv1/api",
+				AccountID: core.StringPtr(accountID),
+				Authenticator: &core.BasicAuthenticator{
+					Username: "",
+					Password: "",
+				},
+			})
+			Expect(addonManagerService).To(BeNil())
+			Expect(serviceErr).ToNot(BeNil())
+		})
+		It(`Instantiate service client with error: Validation Error`, func() {
+			addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{})
+			Expect(addonManagerService).To(BeNil())
+			Expect(serviceErr).ToNot(BeNil())
+		})
+	})
+	Describe(`Service constructor tests using external config`, func() {
+		accountID := "testString"
+		Context(`Using external config, construct service client instances`, func() {
+			// Map containing environment variables used in testing.
+			var testEnvironment = map[string]string{
+				"ADDON_MANAGER_URL":       "https://addonmanagerv1/api",
+				"ADDON_MANAGER_AUTH_TYPE": "noauth",
+			}
+
+			It(`Create service client using external config successfully`, func() {
+				SetTestEnvironment(testEnvironment)
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1UsingExternalConfig(&addonmanagerv1.AddonManagerV1Options{
+					AccountID: core.StringPtr(accountID),
+				})
+				Expect(addonManagerService).ToNot(BeNil())
+				Expect(serviceErr).To(BeNil())
+				ClearTestEnvironment(testEnvironment)
+
+				clone := addonManagerService.Clone()
+				Expect(clone).ToNot(BeNil())
+				Expect(clone.Service != addonManagerService.Service).To(BeTrue())
+				Expect(clone.GetServiceURL()).To(Equal(addonManagerService.GetServiceURL()))
+				Expect(clone.Service.Options.Authenticator).To(Equal(addonManagerService.Service.Options.Authenticator))
+			})
+			It(`Create service client using external config and set url from constructor successfully`, func() {
+				SetTestEnvironment(testEnvironment)
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1UsingExternalConfig(&addonmanagerv1.AddonManagerV1Options{
+					URL:       "https://testService/api",
+					AccountID: core.StringPtr(accountID),
+				})
+				Expect(addonManagerService).ToNot(BeNil())
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService.Service.GetServiceURL()).To(Equal("https://testService/api"))
+				ClearTestEnvironment(testEnvironment)
+
+				clone := addonManagerService.Clone()
+				Expect(clone).ToNot(BeNil())
+				Expect(clone.Service != addonManagerService.Service).To(BeTrue())
+				Expect(clone.GetServiceURL()).To(Equal(addonManagerService.GetServiceURL()))
+				Expect(clone.Service.Options.Authenticator).To(Equal(addonManagerService.Service.Options.Authenticator))
+			})
+			It(`Create service client using external config and set url programatically successfully`, func() {
+				SetTestEnvironment(testEnvironment)
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1UsingExternalConfig(&addonmanagerv1.AddonManagerV1Options{
+					AccountID: core.StringPtr(accountID),
+				})
+				err := addonManagerService.SetServiceURL("https://testService/api")
+				Expect(err).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService.Service.GetServiceURL()).To(Equal("https://testService/api"))
+				ClearTestEnvironment(testEnvironment)
+
+				clone := addonManagerService.Clone()
+				Expect(clone).ToNot(BeNil())
+				Expect(clone.Service != addonManagerService.Service).To(BeTrue())
+				Expect(clone.GetServiceURL()).To(Equal(addonManagerService.GetServiceURL()))
+				Expect(clone.Service.Options.Authenticator).To(Equal(addonManagerService.Service.Options.Authenticator))
+			})
+		})
+		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
+			// Map containing environment variables used in testing.
+			var testEnvironment = map[string]string{
+				"ADDON_MANAGER_URL":       "https://addonmanagerv1/api",
+				"ADDON_MANAGER_AUTH_TYPE": "someOtherAuth",
+			}
+
+			SetTestEnvironment(testEnvironment)
+			addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1UsingExternalConfig(&addonmanagerv1.AddonManagerV1Options{
+				AccountID: core.StringPtr(accountID),
+			})
+
+			It(`Instantiate service client with error`, func() {
+				Expect(addonManagerService).To(BeNil())
+				Expect(serviceErr).ToNot(BeNil())
+				ClearTestEnvironment(testEnvironment)
+			})
+		})
+		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
+			// Map containing environment variables used in testing.
+			var testEnvironment = map[string]string{
+				"ADDON_MANAGER_AUTH_TYPE": "NOAuth",
+			}
+
+			SetTestEnvironment(testEnvironment)
+			addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1UsingExternalConfig(&addonmanagerv1.AddonManagerV1Options{
+				URL:       "{BAD_URL_STRING",
+				AccountID: core.StringPtr(accountID),
+			})
+
+			It(`Instantiate service client with error`, func() {
+				Expect(addonManagerService).To(BeNil())
+				Expect(serviceErr).ToNot(BeNil())
+				ClearTestEnvironment(testEnvironment)
+			})
+		})
+	})
+	Describe(`Regional endpoint tests`, func() {
+		It(`GetServiceURLForRegion(region string)`, func() {
+			var url string
+			var err error
+			url, err = addonmanagerv1.GetServiceURLForRegion("us-south")
+			Expect(url).To(Equal("https://us-south.secadvisor.cloud.ibm.com/addonmgr"))
+			Expect(err).To(BeNil())
+
+			url, err = addonmanagerv1.GetServiceURLForRegion("us-east")
+			Expect(url).To(Equal("https://us-south.secadvisor.cloud.ibm.com/addonmgr"))
+			Expect(err).To(BeNil())
+
+			url, err = addonmanagerv1.GetServiceURLForRegion("eu-gb")
+			Expect(url).To(Equal("https://eu-gb.secadvisor.cloud.ibm.com/addonmgr"))
+			Expect(err).To(BeNil())
+
+			url, err = addonmanagerv1.GetServiceURLForRegion("eu-de")
+			Expect(url).To(Equal("https://eu.compliance.cloud.ibm.com/si/addonmgr"))
+			Expect(err).To(BeNil())
+
+			url, err = addonmanagerv1.GetServiceURLForRegion("INVALID_REGION")
+			Expect(url).To(BeEmpty())
+			Expect(err).ToNot(BeNil())
+			fmt.Fprintf(GinkgoWriter, "Expected error: %s\n", err.Error())
+		})
+	})
+	Describe(`GetSupportedInsightsV2(getSupportedInsightsV2Options *GetSupportedInsightsV2Options) - Operation response error`, func() {
+		accountID := "testString"
+		getSupportedInsightsV2Path := "/v2/addons/testString/insights"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getSupportedInsightsV2Path))
+					Expect(req.Method).To(Equal("GET"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke GetSupportedInsightsV2 with error: Operation response processing error`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the GetSupportedInsightsV2Options model
+				getSupportedInsightsV2OptionsModel := new(addonmanagerv1.GetSupportedInsightsV2Options)
+				getSupportedInsightsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := addonManagerService.GetSupportedInsightsV2(getSupportedInsightsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				addonManagerService.EnableRetries(0, 0)
+				result, response, operationErr = addonManagerService.GetSupportedInsightsV2(getSupportedInsightsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`GetSupportedInsightsV2(getSupportedInsightsV2Options *GetSupportedInsightsV2Options)`, func() {
+		accountID := "testString"
+		getSupportedInsightsV2Path := "/v2/addons/testString/insights"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getSupportedInsightsV2Path))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"type": ["network_insights"]}`)
+				}))
+			})
+			It(`Invoke GetSupportedInsightsV2 successfully with retries`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+				addonManagerService.EnableRetries(0, 0)
+
+				// Construct an instance of the GetSupportedInsightsV2Options model
+				getSupportedInsightsV2OptionsModel := new(addonmanagerv1.GetSupportedInsightsV2Options)
+				getSupportedInsightsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := addonManagerService.GetSupportedInsightsV2WithContext(ctx, getSupportedInsightsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				addonManagerService.DisableRetries()
+				result, response, operationErr := addonManagerService.GetSupportedInsightsV2(getSupportedInsightsV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = addonManagerService.GetSupportedInsightsV2WithContext(ctx, getSupportedInsightsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getSupportedInsightsV2Path))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"type": ["network_insights"]}`)
+				}))
+			})
+			It(`Invoke GetSupportedInsightsV2 successfully`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := addonManagerService.GetSupportedInsightsV2(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the GetSupportedInsightsV2Options model
+				getSupportedInsightsV2OptionsModel := new(addonmanagerv1.GetSupportedInsightsV2Options)
+				getSupportedInsightsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = addonManagerService.GetSupportedInsightsV2(getSupportedInsightsV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke GetSupportedInsightsV2 with error: Operation request error`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the GetSupportedInsightsV2Options model
+				getSupportedInsightsV2OptionsModel := new(addonmanagerv1.GetSupportedInsightsV2Options)
+				getSupportedInsightsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := addonManagerService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := addonManagerService.GetSupportedInsightsV2(getSupportedInsightsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke GetSupportedInsightsV2 successfully`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the GetSupportedInsightsV2Options model
+				getSupportedInsightsV2OptionsModel := new(addonmanagerv1.GetSupportedInsightsV2Options)
+				getSupportedInsightsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := addonManagerService.GetSupportedInsightsV2(getSupportedInsightsV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`AddNetworkInsightsCosDetailsV2(addNetworkInsightsCosDetailsV2Options *AddNetworkInsightsCosDetailsV2Options) - Operation response error`, func() {
+		accountID := "testString"
+		addNetworkInsightsCosDetailsV2Path := "/v2/addons/testString/network_insights/buckets"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(addNetworkInsightsCosDetailsV2Path))
+					Expect(req.Method).To(Equal("POST"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(201)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke AddNetworkInsightsCosDetailsV2 with error: Operation response processing error`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the CosDetails model
+				cosDetailsModel := new(addonmanagerv1.CosDetails)
+				cosDetailsModel.Type = core.StringPtr("network_insights")
+				cosDetailsModel.CosInstance = core.StringPtr("testString")
+				cosDetailsModel.BucketName = core.StringPtr("testString")
+				cosDetailsModel.Description = core.StringPtr("testString")
+				cosDetailsModel.CosBucketURL = core.StringPtr("testString")
+
+				// Construct an instance of the AddNetworkInsightsCosDetailsV2Options model
+				addNetworkInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.AddNetworkInsightsCosDetailsV2Options)
+				addNetworkInsightsCosDetailsV2OptionsModel.RegionID = core.StringPtr("testString")
+				addNetworkInsightsCosDetailsV2OptionsModel.CosDetails = []addonmanagerv1.CosDetails{*cosDetailsModel}
+				addNetworkInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := addonManagerService.AddNetworkInsightsCosDetailsV2(addNetworkInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				addonManagerService.EnableRetries(0, 0)
+				result, response, operationErr = addonManagerService.AddNetworkInsightsCosDetailsV2(addNetworkInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`AddNetworkInsightsCosDetailsV2(addNetworkInsightsCosDetailsV2Options *AddNetworkInsightsCosDetailsV2Options)`, func() {
+		accountID := "testString"
+		addNetworkInsightsCosDetailsV2Path := "/v2/addons/testString/network_insights/buckets"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(addNetworkInsightsCosDetailsV2Path))
+					Expect(req.Method).To(Equal("POST"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(201)
+					fmt.Fprintf(res, "%s", `{"cos_details": [{"type": "network_insights", "cos_instance": "CosInstance", "bucket_name": "BucketName", "description": "Description", "cos_bucket_url": "CosBucketURL", "id": "ID"}]}`)
+				}))
+			})
+			It(`Invoke AddNetworkInsightsCosDetailsV2 successfully with retries`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+				addonManagerService.EnableRetries(0, 0)
+
+				// Construct an instance of the CosDetails model
+				cosDetailsModel := new(addonmanagerv1.CosDetails)
+				cosDetailsModel.Type = core.StringPtr("network_insights")
+				cosDetailsModel.CosInstance = core.StringPtr("testString")
+				cosDetailsModel.BucketName = core.StringPtr("testString")
+				cosDetailsModel.Description = core.StringPtr("testString")
+				cosDetailsModel.CosBucketURL = core.StringPtr("testString")
+
+				// Construct an instance of the AddNetworkInsightsCosDetailsV2Options model
+				addNetworkInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.AddNetworkInsightsCosDetailsV2Options)
+				addNetworkInsightsCosDetailsV2OptionsModel.RegionID = core.StringPtr("testString")
+				addNetworkInsightsCosDetailsV2OptionsModel.CosDetails = []addonmanagerv1.CosDetails{*cosDetailsModel}
+				addNetworkInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := addonManagerService.AddNetworkInsightsCosDetailsV2WithContext(ctx, addNetworkInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				addonManagerService.DisableRetries()
+				result, response, operationErr := addonManagerService.AddNetworkInsightsCosDetailsV2(addNetworkInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = addonManagerService.AddNetworkInsightsCosDetailsV2WithContext(ctx, addNetworkInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(addNetworkInsightsCosDetailsV2Path))
+					Expect(req.Method).To(Equal("POST"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(201)
+					fmt.Fprintf(res, "%s", `{"cos_details": [{"type": "network_insights", "cos_instance": "CosInstance", "bucket_name": "BucketName", "description": "Description", "cos_bucket_url": "CosBucketURL", "id": "ID"}]}`)
+				}))
+			})
+			It(`Invoke AddNetworkInsightsCosDetailsV2 successfully`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := addonManagerService.AddNetworkInsightsCosDetailsV2(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the CosDetails model
+				cosDetailsModel := new(addonmanagerv1.CosDetails)
+				cosDetailsModel.Type = core.StringPtr("network_insights")
+				cosDetailsModel.CosInstance = core.StringPtr("testString")
+				cosDetailsModel.BucketName = core.StringPtr("testString")
+				cosDetailsModel.Description = core.StringPtr("testString")
+				cosDetailsModel.CosBucketURL = core.StringPtr("testString")
+
+				// Construct an instance of the AddNetworkInsightsCosDetailsV2Options model
+				addNetworkInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.AddNetworkInsightsCosDetailsV2Options)
+				addNetworkInsightsCosDetailsV2OptionsModel.RegionID = core.StringPtr("testString")
+				addNetworkInsightsCosDetailsV2OptionsModel.CosDetails = []addonmanagerv1.CosDetails{*cosDetailsModel}
+				addNetworkInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = addonManagerService.AddNetworkInsightsCosDetailsV2(addNetworkInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke AddNetworkInsightsCosDetailsV2 with error: Operation validation and request error`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the CosDetails model
+				cosDetailsModel := new(addonmanagerv1.CosDetails)
+				cosDetailsModel.Type = core.StringPtr("network_insights")
+				cosDetailsModel.CosInstance = core.StringPtr("testString")
+				cosDetailsModel.BucketName = core.StringPtr("testString")
+				cosDetailsModel.Description = core.StringPtr("testString")
+				cosDetailsModel.CosBucketURL = core.StringPtr("testString")
+
+				// Construct an instance of the AddNetworkInsightsCosDetailsV2Options model
+				addNetworkInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.AddNetworkInsightsCosDetailsV2Options)
+				addNetworkInsightsCosDetailsV2OptionsModel.RegionID = core.StringPtr("testString")
+				addNetworkInsightsCosDetailsV2OptionsModel.CosDetails = []addonmanagerv1.CosDetails{*cosDetailsModel}
+				addNetworkInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := addonManagerService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := addonManagerService.AddNetworkInsightsCosDetailsV2(addNetworkInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the AddNetworkInsightsCosDetailsV2Options model with no property values
+				addNetworkInsightsCosDetailsV2OptionsModelNew := new(addonmanagerv1.AddNetworkInsightsCosDetailsV2Options)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = addonManagerService.AddNetworkInsightsCosDetailsV2(addNetworkInsightsCosDetailsV2OptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(201)
+				}))
+			})
+			It(`Invoke AddNetworkInsightsCosDetailsV2 successfully`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the CosDetails model
+				cosDetailsModel := new(addonmanagerv1.CosDetails)
+				cosDetailsModel.Type = core.StringPtr("network_insights")
+				cosDetailsModel.CosInstance = core.StringPtr("testString")
+				cosDetailsModel.BucketName = core.StringPtr("testString")
+				cosDetailsModel.Description = core.StringPtr("testString")
+				cosDetailsModel.CosBucketURL = core.StringPtr("testString")
+
+				// Construct an instance of the AddNetworkInsightsCosDetailsV2Options model
+				addNetworkInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.AddNetworkInsightsCosDetailsV2Options)
+				addNetworkInsightsCosDetailsV2OptionsModel.RegionID = core.StringPtr("testString")
+				addNetworkInsightsCosDetailsV2OptionsModel.CosDetails = []addonmanagerv1.CosDetails{*cosDetailsModel}
+				addNetworkInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := addonManagerService.AddNetworkInsightsCosDetailsV2(addNetworkInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`DeleteNetworkInsightsCosDetailsV2(deleteNetworkInsightsCosDetailsV2Options *DeleteNetworkInsightsCosDetailsV2Options)`, func() {
+		accountID := "testString"
+		deleteNetworkInsightsCosDetailsV2Path := "/v2/addons/testString/network_insights/buckets"
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(deleteNetworkInsightsCosDetailsV2Path))
+					Expect(req.Method).To(Equal("DELETE"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke DeleteNetworkInsightsCosDetailsV2 successfully`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				response, operationErr := addonManagerService.DeleteNetworkInsightsCosDetailsV2(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+
+				// Construct an instance of the DeleteNetworkInsightsCosDetailsV2Options model
+				deleteNetworkInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.DeleteNetworkInsightsCosDetailsV2Options)
+				deleteNetworkInsightsCosDetailsV2OptionsModel.Ids = []string{"testString"}
+				deleteNetworkInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				response, operationErr = addonManagerService.DeleteNetworkInsightsCosDetailsV2(deleteNetworkInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+			})
+			It(`Invoke DeleteNetworkInsightsCosDetailsV2 with error: Operation request error`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the DeleteNetworkInsightsCosDetailsV2Options model
+				deleteNetworkInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.DeleteNetworkInsightsCosDetailsV2Options)
+				deleteNetworkInsightsCosDetailsV2OptionsModel.Ids = []string{"testString"}
+				deleteNetworkInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := addonManagerService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				response, operationErr := addonManagerService.DeleteNetworkInsightsCosDetailsV2(deleteNetworkInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`GetNetworkInsightsCosDetailsV2(getNetworkInsightsCosDetailsV2Options *GetNetworkInsightsCosDetailsV2Options) - Operation response error`, func() {
+		accountID := "testString"
+		getNetworkInsightsCosDetailsV2Path := "/v2/addons/testString/network_insights/buckets"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getNetworkInsightsCosDetailsV2Path))
+					Expect(req.Method).To(Equal("GET"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke GetNetworkInsightsCosDetailsV2 with error: Operation response processing error`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the GetNetworkInsightsCosDetailsV2Options model
+				getNetworkInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.GetNetworkInsightsCosDetailsV2Options)
+				getNetworkInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := addonManagerService.GetNetworkInsightsCosDetailsV2(getNetworkInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				addonManagerService.EnableRetries(0, 0)
+				result, response, operationErr = addonManagerService.GetNetworkInsightsCosDetailsV2(getNetworkInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`GetNetworkInsightsCosDetailsV2(getNetworkInsightsCosDetailsV2Options *GetNetworkInsightsCosDetailsV2Options)`, func() {
+		accountID := "testString"
+		getNetworkInsightsCosDetailsV2Path := "/v2/addons/testString/network_insights/buckets"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getNetworkInsightsCosDetailsV2Path))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"cos_details": [{"type": "network_insights", "cos_instance": "CosInstance", "bucket_name": "BucketName", "description": "Description", "cos_bucket_url": "CosBucketURL", "id": "ID"}]}`)
+				}))
+			})
+			It(`Invoke GetNetworkInsightsCosDetailsV2 successfully with retries`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+				addonManagerService.EnableRetries(0, 0)
+
+				// Construct an instance of the GetNetworkInsightsCosDetailsV2Options model
+				getNetworkInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.GetNetworkInsightsCosDetailsV2Options)
+				getNetworkInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := addonManagerService.GetNetworkInsightsCosDetailsV2WithContext(ctx, getNetworkInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				addonManagerService.DisableRetries()
+				result, response, operationErr := addonManagerService.GetNetworkInsightsCosDetailsV2(getNetworkInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = addonManagerService.GetNetworkInsightsCosDetailsV2WithContext(ctx, getNetworkInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getNetworkInsightsCosDetailsV2Path))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"cos_details": [{"type": "network_insights", "cos_instance": "CosInstance", "bucket_name": "BucketName", "description": "Description", "cos_bucket_url": "CosBucketURL", "id": "ID"}]}`)
+				}))
+			})
+			It(`Invoke GetNetworkInsightsCosDetailsV2 successfully`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := addonManagerService.GetNetworkInsightsCosDetailsV2(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the GetNetworkInsightsCosDetailsV2Options model
+				getNetworkInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.GetNetworkInsightsCosDetailsV2Options)
+				getNetworkInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = addonManagerService.GetNetworkInsightsCosDetailsV2(getNetworkInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke GetNetworkInsightsCosDetailsV2 with error: Operation request error`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the GetNetworkInsightsCosDetailsV2Options model
+				getNetworkInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.GetNetworkInsightsCosDetailsV2Options)
+				getNetworkInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := addonManagerService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := addonManagerService.GetNetworkInsightsCosDetailsV2(getNetworkInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke GetNetworkInsightsCosDetailsV2 successfully`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the GetNetworkInsightsCosDetailsV2Options model
+				getNetworkInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.GetNetworkInsightsCosDetailsV2Options)
+				getNetworkInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := addonManagerService.GetNetworkInsightsCosDetailsV2(getNetworkInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`GetNetworkInsightStatusV2(getNetworkInsightStatusV2Options *GetNetworkInsightStatusV2Options) - Operation response error`, func() {
+		accountID := "testString"
+		getNetworkInsightStatusV2Path := "/v2/addons/testString/network_insights/configuration"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getNetworkInsightStatusV2Path))
+					Expect(req.Method).To(Equal("GET"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke GetNetworkInsightStatusV2 with error: Operation response processing error`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the GetNetworkInsightStatusV2Options model
+				getNetworkInsightStatusV2OptionsModel := new(addonmanagerv1.GetNetworkInsightStatusV2Options)
+				getNetworkInsightStatusV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := addonManagerService.GetNetworkInsightStatusV2(getNetworkInsightStatusV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				addonManagerService.EnableRetries(0, 0)
+				result, response, operationErr = addonManagerService.GetNetworkInsightStatusV2(getNetworkInsightStatusV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`GetNetworkInsightStatusV2(getNetworkInsightStatusV2Options *GetNetworkInsightStatusV2Options)`, func() {
+		accountID := "testString"
+		getNetworkInsightStatusV2Path := "/v2/addons/testString/network_insights/configuration"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getNetworkInsightStatusV2Path))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"addon": "Addon", "status": "enable"}`)
+				}))
+			})
+			It(`Invoke GetNetworkInsightStatusV2 successfully with retries`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+				addonManagerService.EnableRetries(0, 0)
+
+				// Construct an instance of the GetNetworkInsightStatusV2Options model
+				getNetworkInsightStatusV2OptionsModel := new(addonmanagerv1.GetNetworkInsightStatusV2Options)
+				getNetworkInsightStatusV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := addonManagerService.GetNetworkInsightStatusV2WithContext(ctx, getNetworkInsightStatusV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				addonManagerService.DisableRetries()
+				result, response, operationErr := addonManagerService.GetNetworkInsightStatusV2(getNetworkInsightStatusV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = addonManagerService.GetNetworkInsightStatusV2WithContext(ctx, getNetworkInsightStatusV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getNetworkInsightStatusV2Path))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"addon": "Addon", "status": "enable"}`)
+				}))
+			})
+			It(`Invoke GetNetworkInsightStatusV2 successfully`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := addonManagerService.GetNetworkInsightStatusV2(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the GetNetworkInsightStatusV2Options model
+				getNetworkInsightStatusV2OptionsModel := new(addonmanagerv1.GetNetworkInsightStatusV2Options)
+				getNetworkInsightStatusV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = addonManagerService.GetNetworkInsightStatusV2(getNetworkInsightStatusV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke GetNetworkInsightStatusV2 with error: Operation request error`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the GetNetworkInsightStatusV2Options model
+				getNetworkInsightStatusV2OptionsModel := new(addonmanagerv1.GetNetworkInsightStatusV2Options)
+				getNetworkInsightStatusV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := addonManagerService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := addonManagerService.GetNetworkInsightStatusV2(getNetworkInsightStatusV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke GetNetworkInsightStatusV2 successfully`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the GetNetworkInsightStatusV2Options model
+				getNetworkInsightStatusV2OptionsModel := new(addonmanagerv1.GetNetworkInsightStatusV2Options)
+				getNetworkInsightStatusV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := addonManagerService.GetNetworkInsightStatusV2(getNetworkInsightStatusV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`UpdateNetworkInsightStatusV2(updateNetworkInsightStatusV2Options *UpdateNetworkInsightStatusV2Options)`, func() {
+		accountID := "testString"
+		updateNetworkInsightStatusV2Path := "/v2/addons/testString/network_insights/configuration"
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(updateNetworkInsightStatusV2Path))
+					Expect(req.Method).To(Equal("PUT"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke UpdateNetworkInsightStatusV2 successfully`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				response, operationErr := addonManagerService.UpdateNetworkInsightStatusV2(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+
+				// Construct an instance of the UpdateNetworkInsightStatusV2Options model
+				updateNetworkInsightStatusV2OptionsModel := new(addonmanagerv1.UpdateNetworkInsightStatusV2Options)
+				updateNetworkInsightStatusV2OptionsModel.RegionID = core.StringPtr("testString")
+				updateNetworkInsightStatusV2OptionsModel.Status = core.StringPtr("enable")
+				updateNetworkInsightStatusV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				response, operationErr = addonManagerService.UpdateNetworkInsightStatusV2(updateNetworkInsightStatusV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+			})
+			It(`Invoke UpdateNetworkInsightStatusV2 with error: Operation validation and request error`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the UpdateNetworkInsightStatusV2Options model
+				updateNetworkInsightStatusV2OptionsModel := new(addonmanagerv1.UpdateNetworkInsightStatusV2Options)
+				updateNetworkInsightStatusV2OptionsModel.RegionID = core.StringPtr("testString")
+				updateNetworkInsightStatusV2OptionsModel.Status = core.StringPtr("enable")
+				updateNetworkInsightStatusV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := addonManagerService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				response, operationErr := addonManagerService.UpdateNetworkInsightStatusV2(updateNetworkInsightStatusV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				// Construct a second instance of the UpdateNetworkInsightStatusV2Options model with no property values
+				updateNetworkInsightStatusV2OptionsModelNew := new(addonmanagerv1.UpdateNetworkInsightStatusV2Options)
+				// Invoke operation with invalid model (negative test)
+				response, operationErr = addonManagerService.UpdateNetworkInsightStatusV2(updateNetworkInsightStatusV2OptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`AddActivityInsightsCosDetailsV2(addActivityInsightsCosDetailsV2Options *AddActivityInsightsCosDetailsV2Options) - Operation response error`, func() {
+		accountID := "testString"
+		addActivityInsightsCosDetailsV2Path := "/v2/addons/testString/activity_insights/buckets"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(addActivityInsightsCosDetailsV2Path))
+					Expect(req.Method).To(Equal("POST"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(201)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke AddActivityInsightsCosDetailsV2 with error: Operation response processing error`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the CosDetails model
+				cosDetailsModel := new(addonmanagerv1.CosDetails)
+				cosDetailsModel.Type = core.StringPtr("network_insights")
+				cosDetailsModel.CosInstance = core.StringPtr("testString")
+				cosDetailsModel.BucketName = core.StringPtr("testString")
+				cosDetailsModel.Description = core.StringPtr("testString")
+				cosDetailsModel.CosBucketURL = core.StringPtr("testString")
+
+				// Construct an instance of the AddActivityInsightsCosDetailsV2Options model
+				addActivityInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.AddActivityInsightsCosDetailsV2Options)
+				addActivityInsightsCosDetailsV2OptionsModel.RegionID = core.StringPtr("testString")
+				addActivityInsightsCosDetailsV2OptionsModel.CosDetails = []addonmanagerv1.CosDetails{*cosDetailsModel}
+				addActivityInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := addonManagerService.AddActivityInsightsCosDetailsV2(addActivityInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				addonManagerService.EnableRetries(0, 0)
+				result, response, operationErr = addonManagerService.AddActivityInsightsCosDetailsV2(addActivityInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`AddActivityInsightsCosDetailsV2(addActivityInsightsCosDetailsV2Options *AddActivityInsightsCosDetailsV2Options)`, func() {
+		accountID := "testString"
+		addActivityInsightsCosDetailsV2Path := "/v2/addons/testString/activity_insights/buckets"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(addActivityInsightsCosDetailsV2Path))
+					Expect(req.Method).To(Equal("POST"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(201)
+					fmt.Fprintf(res, "%s", `{"cos_details": [{"type": "network_insights", "cos_instance": "CosInstance", "bucket_name": "BucketName", "description": "Description", "cos_bucket_url": "CosBucketURL", "id": "ID"}]}`)
+				}))
+			})
+			It(`Invoke AddActivityInsightsCosDetailsV2 successfully with retries`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+				addonManagerService.EnableRetries(0, 0)
+
+				// Construct an instance of the CosDetails model
+				cosDetailsModel := new(addonmanagerv1.CosDetails)
+				cosDetailsModel.Type = core.StringPtr("network_insights")
+				cosDetailsModel.CosInstance = core.StringPtr("testString")
+				cosDetailsModel.BucketName = core.StringPtr("testString")
+				cosDetailsModel.Description = core.StringPtr("testString")
+				cosDetailsModel.CosBucketURL = core.StringPtr("testString")
+
+				// Construct an instance of the AddActivityInsightsCosDetailsV2Options model
+				addActivityInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.AddActivityInsightsCosDetailsV2Options)
+				addActivityInsightsCosDetailsV2OptionsModel.RegionID = core.StringPtr("testString")
+				addActivityInsightsCosDetailsV2OptionsModel.CosDetails = []addonmanagerv1.CosDetails{*cosDetailsModel}
+				addActivityInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := addonManagerService.AddActivityInsightsCosDetailsV2WithContext(ctx, addActivityInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				addonManagerService.DisableRetries()
+				result, response, operationErr := addonManagerService.AddActivityInsightsCosDetailsV2(addActivityInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = addonManagerService.AddActivityInsightsCosDetailsV2WithContext(ctx, addActivityInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(addActivityInsightsCosDetailsV2Path))
+					Expect(req.Method).To(Equal("POST"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(201)
+					fmt.Fprintf(res, "%s", `{"cos_details": [{"type": "network_insights", "cos_instance": "CosInstance", "bucket_name": "BucketName", "description": "Description", "cos_bucket_url": "CosBucketURL", "id": "ID"}]}`)
+				}))
+			})
+			It(`Invoke AddActivityInsightsCosDetailsV2 successfully`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := addonManagerService.AddActivityInsightsCosDetailsV2(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the CosDetails model
+				cosDetailsModel := new(addonmanagerv1.CosDetails)
+				cosDetailsModel.Type = core.StringPtr("network_insights")
+				cosDetailsModel.CosInstance = core.StringPtr("testString")
+				cosDetailsModel.BucketName = core.StringPtr("testString")
+				cosDetailsModel.Description = core.StringPtr("testString")
+				cosDetailsModel.CosBucketURL = core.StringPtr("testString")
+
+				// Construct an instance of the AddActivityInsightsCosDetailsV2Options model
+				addActivityInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.AddActivityInsightsCosDetailsV2Options)
+				addActivityInsightsCosDetailsV2OptionsModel.RegionID = core.StringPtr("testString")
+				addActivityInsightsCosDetailsV2OptionsModel.CosDetails = []addonmanagerv1.CosDetails{*cosDetailsModel}
+				addActivityInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = addonManagerService.AddActivityInsightsCosDetailsV2(addActivityInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke AddActivityInsightsCosDetailsV2 with error: Operation validation and request error`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the CosDetails model
+				cosDetailsModel := new(addonmanagerv1.CosDetails)
+				cosDetailsModel.Type = core.StringPtr("network_insights")
+				cosDetailsModel.CosInstance = core.StringPtr("testString")
+				cosDetailsModel.BucketName = core.StringPtr("testString")
+				cosDetailsModel.Description = core.StringPtr("testString")
+				cosDetailsModel.CosBucketURL = core.StringPtr("testString")
+
+				// Construct an instance of the AddActivityInsightsCosDetailsV2Options model
+				addActivityInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.AddActivityInsightsCosDetailsV2Options)
+				addActivityInsightsCosDetailsV2OptionsModel.RegionID = core.StringPtr("testString")
+				addActivityInsightsCosDetailsV2OptionsModel.CosDetails = []addonmanagerv1.CosDetails{*cosDetailsModel}
+				addActivityInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := addonManagerService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := addonManagerService.AddActivityInsightsCosDetailsV2(addActivityInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the AddActivityInsightsCosDetailsV2Options model with no property values
+				addActivityInsightsCosDetailsV2OptionsModelNew := new(addonmanagerv1.AddActivityInsightsCosDetailsV2Options)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = addonManagerService.AddActivityInsightsCosDetailsV2(addActivityInsightsCosDetailsV2OptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(201)
+				}))
+			})
+			It(`Invoke AddActivityInsightsCosDetailsV2 successfully`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the CosDetails model
+				cosDetailsModel := new(addonmanagerv1.CosDetails)
+				cosDetailsModel.Type = core.StringPtr("network_insights")
+				cosDetailsModel.CosInstance = core.StringPtr("testString")
+				cosDetailsModel.BucketName = core.StringPtr("testString")
+				cosDetailsModel.Description = core.StringPtr("testString")
+				cosDetailsModel.CosBucketURL = core.StringPtr("testString")
+
+				// Construct an instance of the AddActivityInsightsCosDetailsV2Options model
+				addActivityInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.AddActivityInsightsCosDetailsV2Options)
+				addActivityInsightsCosDetailsV2OptionsModel.RegionID = core.StringPtr("testString")
+				addActivityInsightsCosDetailsV2OptionsModel.CosDetails = []addonmanagerv1.CosDetails{*cosDetailsModel}
+				addActivityInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := addonManagerService.AddActivityInsightsCosDetailsV2(addActivityInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`DeleteActivityInsightsCosDetailsV2(deleteActivityInsightsCosDetailsV2Options *DeleteActivityInsightsCosDetailsV2Options)`, func() {
+		accountID := "testString"
+		deleteActivityInsightsCosDetailsV2Path := "/v2/addons/testString/activity_insights/buckets"
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(deleteActivityInsightsCosDetailsV2Path))
+					Expect(req.Method).To(Equal("DELETE"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke DeleteActivityInsightsCosDetailsV2 successfully`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				response, operationErr := addonManagerService.DeleteActivityInsightsCosDetailsV2(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+
+				// Construct an instance of the DeleteActivityInsightsCosDetailsV2Options model
+				deleteActivityInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.DeleteActivityInsightsCosDetailsV2Options)
+				deleteActivityInsightsCosDetailsV2OptionsModel.Ids = []string{"testString"}
+				deleteActivityInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				response, operationErr = addonManagerService.DeleteActivityInsightsCosDetailsV2(deleteActivityInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+			})
+			It(`Invoke DeleteActivityInsightsCosDetailsV2 with error: Operation request error`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the DeleteActivityInsightsCosDetailsV2Options model
+				deleteActivityInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.DeleteActivityInsightsCosDetailsV2Options)
+				deleteActivityInsightsCosDetailsV2OptionsModel.Ids = []string{"testString"}
+				deleteActivityInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := addonManagerService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				response, operationErr := addonManagerService.DeleteActivityInsightsCosDetailsV2(deleteActivityInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`GetActivityInsightsCosDetailsV2(getActivityInsightsCosDetailsV2Options *GetActivityInsightsCosDetailsV2Options) - Operation response error`, func() {
+		accountID := "testString"
+		getActivityInsightsCosDetailsV2Path := "/v2/addons/testString/activity_insights/buckets"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getActivityInsightsCosDetailsV2Path))
+					Expect(req.Method).To(Equal("GET"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke GetActivityInsightsCosDetailsV2 with error: Operation response processing error`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the GetActivityInsightsCosDetailsV2Options model
+				getActivityInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.GetActivityInsightsCosDetailsV2Options)
+				getActivityInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := addonManagerService.GetActivityInsightsCosDetailsV2(getActivityInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				addonManagerService.EnableRetries(0, 0)
+				result, response, operationErr = addonManagerService.GetActivityInsightsCosDetailsV2(getActivityInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`GetActivityInsightsCosDetailsV2(getActivityInsightsCosDetailsV2Options *GetActivityInsightsCosDetailsV2Options)`, func() {
+		accountID := "testString"
+		getActivityInsightsCosDetailsV2Path := "/v2/addons/testString/activity_insights/buckets"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getActivityInsightsCosDetailsV2Path))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"cos_details": [{"type": "network_insights", "cos_instance": "CosInstance", "bucket_name": "BucketName", "description": "Description", "cos_bucket_url": "CosBucketURL", "id": "ID"}]}`)
+				}))
+			})
+			It(`Invoke GetActivityInsightsCosDetailsV2 successfully with retries`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+				addonManagerService.EnableRetries(0, 0)
+
+				// Construct an instance of the GetActivityInsightsCosDetailsV2Options model
+				getActivityInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.GetActivityInsightsCosDetailsV2Options)
+				getActivityInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := addonManagerService.GetActivityInsightsCosDetailsV2WithContext(ctx, getActivityInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				addonManagerService.DisableRetries()
+				result, response, operationErr := addonManagerService.GetActivityInsightsCosDetailsV2(getActivityInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = addonManagerService.GetActivityInsightsCosDetailsV2WithContext(ctx, getActivityInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getActivityInsightsCosDetailsV2Path))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"cos_details": [{"type": "network_insights", "cos_instance": "CosInstance", "bucket_name": "BucketName", "description": "Description", "cos_bucket_url": "CosBucketURL", "id": "ID"}]}`)
+				}))
+			})
+			It(`Invoke GetActivityInsightsCosDetailsV2 successfully`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := addonManagerService.GetActivityInsightsCosDetailsV2(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the GetActivityInsightsCosDetailsV2Options model
+				getActivityInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.GetActivityInsightsCosDetailsV2Options)
+				getActivityInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = addonManagerService.GetActivityInsightsCosDetailsV2(getActivityInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke GetActivityInsightsCosDetailsV2 with error: Operation request error`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the GetActivityInsightsCosDetailsV2Options model
+				getActivityInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.GetActivityInsightsCosDetailsV2Options)
+				getActivityInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := addonManagerService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := addonManagerService.GetActivityInsightsCosDetailsV2(getActivityInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke GetActivityInsightsCosDetailsV2 successfully`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the GetActivityInsightsCosDetailsV2Options model
+				getActivityInsightsCosDetailsV2OptionsModel := new(addonmanagerv1.GetActivityInsightsCosDetailsV2Options)
+				getActivityInsightsCosDetailsV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := addonManagerService.GetActivityInsightsCosDetailsV2(getActivityInsightsCosDetailsV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`GetActivityInsightStatusV2(getActivityInsightStatusV2Options *GetActivityInsightStatusV2Options) - Operation response error`, func() {
+		accountID := "testString"
+		getActivityInsightStatusV2Path := "/v2/addons/testString/activity_insights/configuration"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getActivityInsightStatusV2Path))
+					Expect(req.Method).To(Equal("GET"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke GetActivityInsightStatusV2 with error: Operation response processing error`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the GetActivityInsightStatusV2Options model
+				getActivityInsightStatusV2OptionsModel := new(addonmanagerv1.GetActivityInsightStatusV2Options)
+				getActivityInsightStatusV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := addonManagerService.GetActivityInsightStatusV2(getActivityInsightStatusV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				addonManagerService.EnableRetries(0, 0)
+				result, response, operationErr = addonManagerService.GetActivityInsightStatusV2(getActivityInsightStatusV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`GetActivityInsightStatusV2(getActivityInsightStatusV2Options *GetActivityInsightStatusV2Options)`, func() {
+		accountID := "testString"
+		getActivityInsightStatusV2Path := "/v2/addons/testString/activity_insights/configuration"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getActivityInsightStatusV2Path))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"addon": "Addon", "status": "enable"}`)
+				}))
+			})
+			It(`Invoke GetActivityInsightStatusV2 successfully with retries`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+				addonManagerService.EnableRetries(0, 0)
+
+				// Construct an instance of the GetActivityInsightStatusV2Options model
+				getActivityInsightStatusV2OptionsModel := new(addonmanagerv1.GetActivityInsightStatusV2Options)
+				getActivityInsightStatusV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := addonManagerService.GetActivityInsightStatusV2WithContext(ctx, getActivityInsightStatusV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				addonManagerService.DisableRetries()
+				result, response, operationErr := addonManagerService.GetActivityInsightStatusV2(getActivityInsightStatusV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = addonManagerService.GetActivityInsightStatusV2WithContext(ctx, getActivityInsightStatusV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getActivityInsightStatusV2Path))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"addon": "Addon", "status": "enable"}`)
+				}))
+			})
+			It(`Invoke GetActivityInsightStatusV2 successfully`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := addonManagerService.GetActivityInsightStatusV2(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the GetActivityInsightStatusV2Options model
+				getActivityInsightStatusV2OptionsModel := new(addonmanagerv1.GetActivityInsightStatusV2Options)
+				getActivityInsightStatusV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = addonManagerService.GetActivityInsightStatusV2(getActivityInsightStatusV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke GetActivityInsightStatusV2 with error: Operation request error`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the GetActivityInsightStatusV2Options model
+				getActivityInsightStatusV2OptionsModel := new(addonmanagerv1.GetActivityInsightStatusV2Options)
+				getActivityInsightStatusV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := addonManagerService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := addonManagerService.GetActivityInsightStatusV2(getActivityInsightStatusV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke GetActivityInsightStatusV2 successfully`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the GetActivityInsightStatusV2Options model
+				getActivityInsightStatusV2OptionsModel := new(addonmanagerv1.GetActivityInsightStatusV2Options)
+				getActivityInsightStatusV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := addonManagerService.GetActivityInsightStatusV2(getActivityInsightStatusV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`UpdateActivityInsightStatusV2(updateActivityInsightStatusV2Options *UpdateActivityInsightStatusV2Options)`, func() {
+		accountID := "testString"
+		updateActivityInsightStatusV2Path := "/v2/addons/testString/activity_insights/configuration"
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(updateActivityInsightStatusV2Path))
+					Expect(req.Method).To(Equal("PUT"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke UpdateActivityInsightStatusV2 successfully`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				response, operationErr := addonManagerService.UpdateActivityInsightStatusV2(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+
+				// Construct an instance of the UpdateActivityInsightStatusV2Options model
+				updateActivityInsightStatusV2OptionsModel := new(addonmanagerv1.UpdateActivityInsightStatusV2Options)
+				updateActivityInsightStatusV2OptionsModel.RegionID = core.StringPtr("testString")
+				updateActivityInsightStatusV2OptionsModel.Status = core.StringPtr("enable")
+				updateActivityInsightStatusV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				response, operationErr = addonManagerService.UpdateActivityInsightStatusV2(updateActivityInsightStatusV2OptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+			})
+			It(`Invoke UpdateActivityInsightStatusV2 with error: Operation validation and request error`, func() {
+				addonManagerService, serviceErr := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+					AccountID:     core.StringPtr(accountID),
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(addonManagerService).ToNot(BeNil())
+
+				// Construct an instance of the UpdateActivityInsightStatusV2Options model
+				updateActivityInsightStatusV2OptionsModel := new(addonmanagerv1.UpdateActivityInsightStatusV2Options)
+				updateActivityInsightStatusV2OptionsModel.RegionID = core.StringPtr("testString")
+				updateActivityInsightStatusV2OptionsModel.Status = core.StringPtr("enable")
+				updateActivityInsightStatusV2OptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := addonManagerService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				response, operationErr := addonManagerService.UpdateActivityInsightStatusV2(updateActivityInsightStatusV2OptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				// Construct a second instance of the UpdateActivityInsightStatusV2Options model with no property values
+				updateActivityInsightStatusV2OptionsModelNew := new(addonmanagerv1.UpdateActivityInsightStatusV2Options)
+				// Invoke operation with invalid model (negative test)
+				response, operationErr = addonManagerService.UpdateActivityInsightStatusV2(updateActivityInsightStatusV2OptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`Model constructor tests`, func() {
+		Context(`Using a service client instance`, func() {
+			accountID := "testString"
+			addonManagerService, _ := addonmanagerv1.NewAddonManagerV1(&addonmanagerv1.AddonManagerV1Options{
+				URL:           "http://addonmanagerv1modelgenerator.com",
+				Authenticator: &core.NoAuthAuthenticator{},
+				AccountID:     core.StringPtr(accountID),
+			})
+			It(`Invoke NewAddActivityInsightsCosDetailsV2Options successfully`, func() {
+				// Construct an instance of the CosDetails model
+				cosDetailsModel := new(addonmanagerv1.CosDetails)
+				Expect(cosDetailsModel).ToNot(BeNil())
+				cosDetailsModel.Type = core.StringPtr("network_insights")
+				cosDetailsModel.CosInstance = core.StringPtr("testString")
+				cosDetailsModel.BucketName = core.StringPtr("testString")
+				cosDetailsModel.Description = core.StringPtr("testString")
+				cosDetailsModel.CosBucketURL = core.StringPtr("testString")
+				Expect(cosDetailsModel.Type).To(Equal(core.StringPtr("network_insights")))
+				Expect(cosDetailsModel.CosInstance).To(Equal(core.StringPtr("testString")))
+				Expect(cosDetailsModel.BucketName).To(Equal(core.StringPtr("testString")))
+				Expect(cosDetailsModel.Description).To(Equal(core.StringPtr("testString")))
+				Expect(cosDetailsModel.CosBucketURL).To(Equal(core.StringPtr("testString")))
+
+				// Construct an instance of the AddActivityInsightsCosDetailsV2Options model
+				addActivityInsightsCosDetailsV2OptionsRegionID := "testString"
+				addActivityInsightsCosDetailsV2OptionsCosDetails := []addonmanagerv1.CosDetails{}
+				addActivityInsightsCosDetailsV2OptionsModel := addonManagerService.NewAddActivityInsightsCosDetailsV2Options(addActivityInsightsCosDetailsV2OptionsRegionID, addActivityInsightsCosDetailsV2OptionsCosDetails)
+				addActivityInsightsCosDetailsV2OptionsModel.SetRegionID("testString")
+				addActivityInsightsCosDetailsV2OptionsModel.SetCosDetails([]addonmanagerv1.CosDetails{*cosDetailsModel})
+				addActivityInsightsCosDetailsV2OptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(addActivityInsightsCosDetailsV2OptionsModel).ToNot(BeNil())
+				Expect(addActivityInsightsCosDetailsV2OptionsModel.RegionID).To(Equal(core.StringPtr("testString")))
+				Expect(addActivityInsightsCosDetailsV2OptionsModel.CosDetails).To(Equal([]addonmanagerv1.CosDetails{*cosDetailsModel}))
+				Expect(addActivityInsightsCosDetailsV2OptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewAddNetworkInsightsCosDetailsV2Options successfully`, func() {
+				// Construct an instance of the CosDetails model
+				cosDetailsModel := new(addonmanagerv1.CosDetails)
+				Expect(cosDetailsModel).ToNot(BeNil())
+				cosDetailsModel.Type = core.StringPtr("network_insights")
+				cosDetailsModel.CosInstance = core.StringPtr("testString")
+				cosDetailsModel.BucketName = core.StringPtr("testString")
+				cosDetailsModel.Description = core.StringPtr("testString")
+				cosDetailsModel.CosBucketURL = core.StringPtr("testString")
+				Expect(cosDetailsModel.Type).To(Equal(core.StringPtr("network_insights")))
+				Expect(cosDetailsModel.CosInstance).To(Equal(core.StringPtr("testString")))
+				Expect(cosDetailsModel.BucketName).To(Equal(core.StringPtr("testString")))
+				Expect(cosDetailsModel.Description).To(Equal(core.StringPtr("testString")))
+				Expect(cosDetailsModel.CosBucketURL).To(Equal(core.StringPtr("testString")))
+
+				// Construct an instance of the AddNetworkInsightsCosDetailsV2Options model
+				addNetworkInsightsCosDetailsV2OptionsRegionID := "testString"
+				addNetworkInsightsCosDetailsV2OptionsCosDetails := []addonmanagerv1.CosDetails{}
+				addNetworkInsightsCosDetailsV2OptionsModel := addonManagerService.NewAddNetworkInsightsCosDetailsV2Options(addNetworkInsightsCosDetailsV2OptionsRegionID, addNetworkInsightsCosDetailsV2OptionsCosDetails)
+				addNetworkInsightsCosDetailsV2OptionsModel.SetRegionID("testString")
+				addNetworkInsightsCosDetailsV2OptionsModel.SetCosDetails([]addonmanagerv1.CosDetails{*cosDetailsModel})
+				addNetworkInsightsCosDetailsV2OptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(addNetworkInsightsCosDetailsV2OptionsModel).ToNot(BeNil())
+				Expect(addNetworkInsightsCosDetailsV2OptionsModel.RegionID).To(Equal(core.StringPtr("testString")))
+				Expect(addNetworkInsightsCosDetailsV2OptionsModel.CosDetails).To(Equal([]addonmanagerv1.CosDetails{*cosDetailsModel}))
+				Expect(addNetworkInsightsCosDetailsV2OptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewDeleteActivityInsightsCosDetailsV2Options successfully`, func() {
+				// Construct an instance of the DeleteActivityInsightsCosDetailsV2Options model
+				deleteActivityInsightsCosDetailsV2OptionsModel := addonManagerService.NewDeleteActivityInsightsCosDetailsV2Options()
+				deleteActivityInsightsCosDetailsV2OptionsModel.SetIds([]string{"testString"})
+				deleteActivityInsightsCosDetailsV2OptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(deleteActivityInsightsCosDetailsV2OptionsModel).ToNot(BeNil())
+				Expect(deleteActivityInsightsCosDetailsV2OptionsModel.Ids).To(Equal([]string{"testString"}))
+				Expect(deleteActivityInsightsCosDetailsV2OptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewDeleteNetworkInsightsCosDetailsV2Options successfully`, func() {
+				// Construct an instance of the DeleteNetworkInsightsCosDetailsV2Options model
+				deleteNetworkInsightsCosDetailsV2OptionsModel := addonManagerService.NewDeleteNetworkInsightsCosDetailsV2Options()
+				deleteNetworkInsightsCosDetailsV2OptionsModel.SetIds([]string{"testString"})
+				deleteNetworkInsightsCosDetailsV2OptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(deleteNetworkInsightsCosDetailsV2OptionsModel).ToNot(BeNil())
+				Expect(deleteNetworkInsightsCosDetailsV2OptionsModel.Ids).To(Equal([]string{"testString"}))
+				Expect(deleteNetworkInsightsCosDetailsV2OptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewGetActivityInsightStatusV2Options successfully`, func() {
+				// Construct an instance of the GetActivityInsightStatusV2Options model
+				getActivityInsightStatusV2OptionsModel := addonManagerService.NewGetActivityInsightStatusV2Options()
+				getActivityInsightStatusV2OptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(getActivityInsightStatusV2OptionsModel).ToNot(BeNil())
+				Expect(getActivityInsightStatusV2OptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewGetActivityInsightsCosDetailsV2Options successfully`, func() {
+				// Construct an instance of the GetActivityInsightsCosDetailsV2Options model
+				getActivityInsightsCosDetailsV2OptionsModel := addonManagerService.NewGetActivityInsightsCosDetailsV2Options()
+				getActivityInsightsCosDetailsV2OptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(getActivityInsightsCosDetailsV2OptionsModel).ToNot(BeNil())
+				Expect(getActivityInsightsCosDetailsV2OptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewGetNetworkInsightStatusV2Options successfully`, func() {
+				// Construct an instance of the GetNetworkInsightStatusV2Options model
+				getNetworkInsightStatusV2OptionsModel := addonManagerService.NewGetNetworkInsightStatusV2Options()
+				getNetworkInsightStatusV2OptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(getNetworkInsightStatusV2OptionsModel).ToNot(BeNil())
+				Expect(getNetworkInsightStatusV2OptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewGetNetworkInsightsCosDetailsV2Options successfully`, func() {
+				// Construct an instance of the GetNetworkInsightsCosDetailsV2Options model
+				getNetworkInsightsCosDetailsV2OptionsModel := addonManagerService.NewGetNetworkInsightsCosDetailsV2Options()
+				getNetworkInsightsCosDetailsV2OptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(getNetworkInsightsCosDetailsV2OptionsModel).ToNot(BeNil())
+				Expect(getNetworkInsightsCosDetailsV2OptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewGetSupportedInsightsV2Options successfully`, func() {
+				// Construct an instance of the GetSupportedInsightsV2Options model
+				getSupportedInsightsV2OptionsModel := addonManagerService.NewGetSupportedInsightsV2Options()
+				getSupportedInsightsV2OptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(getSupportedInsightsV2OptionsModel).ToNot(BeNil())
+				Expect(getSupportedInsightsV2OptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewUpdateActivityInsightStatusV2Options successfully`, func() {
+				// Construct an instance of the UpdateActivityInsightStatusV2Options model
+				updateActivityInsightStatusV2OptionsRegionID := "testString"
+				updateActivityInsightStatusV2OptionsStatus := "enable"
+				updateActivityInsightStatusV2OptionsModel := addonManagerService.NewUpdateActivityInsightStatusV2Options(updateActivityInsightStatusV2OptionsRegionID, updateActivityInsightStatusV2OptionsStatus)
+				updateActivityInsightStatusV2OptionsModel.SetRegionID("testString")
+				updateActivityInsightStatusV2OptionsModel.SetStatus("enable")
+				updateActivityInsightStatusV2OptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(updateActivityInsightStatusV2OptionsModel).ToNot(BeNil())
+				Expect(updateActivityInsightStatusV2OptionsModel.RegionID).To(Equal(core.StringPtr("testString")))
+				Expect(updateActivityInsightStatusV2OptionsModel.Status).To(Equal(core.StringPtr("enable")))
+				Expect(updateActivityInsightStatusV2OptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewUpdateNetworkInsightStatusV2Options successfully`, func() {
+				// Construct an instance of the UpdateNetworkInsightStatusV2Options model
+				updateNetworkInsightStatusV2OptionsRegionID := "testString"
+				updateNetworkInsightStatusV2OptionsStatus := "enable"
+				updateNetworkInsightStatusV2OptionsModel := addonManagerService.NewUpdateNetworkInsightStatusV2Options(updateNetworkInsightStatusV2OptionsRegionID, updateNetworkInsightStatusV2OptionsStatus)
+				updateNetworkInsightStatusV2OptionsModel.SetRegionID("testString")
+				updateNetworkInsightStatusV2OptionsModel.SetStatus("enable")
+				updateNetworkInsightStatusV2OptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(updateNetworkInsightStatusV2OptionsModel).ToNot(BeNil())
+				Expect(updateNetworkInsightStatusV2OptionsModel.RegionID).To(Equal(core.StringPtr("testString")))
+				Expect(updateNetworkInsightStatusV2OptionsModel.Status).To(Equal(core.StringPtr("enable")))
+				Expect(updateNetworkInsightStatusV2OptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+		})
+	})
+	Describe(`Utility function tests`, func() {
+		It(`Invoke CreateMockByteArray() successfully`, func() {
+			mockByteArray := CreateMockByteArray("This is a test")
+			Expect(mockByteArray).ToNot(BeNil())
+		})
+		It(`Invoke CreateMockUUID() successfully`, func() {
+			mockUUID := CreateMockUUID("9fab83da-98cb-4f18-a7ba-b6f0435c9673")
+			Expect(mockUUID).ToNot(BeNil())
+		})
+		It(`Invoke CreateMockReader() successfully`, func() {
+			mockReader := CreateMockReader("This is a test.")
+			Expect(mockReader).ToNot(BeNil())
+		})
+		It(`Invoke CreateMockDate() successfully`, func() {
+			mockDate := CreateMockDate("2019-01-01")
+			Expect(mockDate).ToNot(BeNil())
+		})
+		It(`Invoke CreateMockDateTime() successfully`, func() {
+			mockDateTime := CreateMockDateTime("2019-01-01T12:00:00.000Z")
+			Expect(mockDateTime).ToNot(BeNil())
+		})
+	})
+})
+
+//
+// Utility functions used by the generated test code
+//
+
+func CreateMockByteArray(mockData string) *[]byte {
+	ba := make([]byte, 0)
+	ba = append(ba, mockData...)
+	return &ba
+}
+
+func CreateMockUUID(mockData string) *strfmt.UUID {
+	uuid := strfmt.UUID(mockData)
+	return &uuid
+}
+
+func CreateMockReader(mockData string) io.ReadCloser {
+	return ioutil.NopCloser(bytes.NewReader([]byte(mockData)))
+}
+
+func CreateMockDate(mockData string) *strfmt.Date {
+	d, err := core.ParseDate(mockData)
+	if err != nil {
+		return nil
+	}
+	return &d
+}
+
+func CreateMockDateTime(mockData string) *strfmt.DateTime {
+	d, err := core.ParseDateTime(mockData)
+	if err != nil {
+		return nil
+	}
+	return &d
+}
+
+func SetTestEnvironment(testEnvironment map[string]string) {
+	for key, value := range testEnvironment {
+		os.Setenv(key, value)
+	}
+}
+
+func ClearTestEnvironment(testEnvironment map[string]string) {
+	for key := range testEnvironment {
+		os.Unsetenv(key)
+	}
+}

@@ -49,6 +49,7 @@ jobs:
           POSTURE_MANAGEMENT_V2_ENV: ${{ secrets.POSTURE_MANAGEMENT_V2_ENV }}
           ADMIN_SERVICE_API_ENV: ${{ secrets.ADMIN_SERVICE_API_ENV }}
           RESOURCE_GROUP_ID: ${{ secrets.RESOURCE_GROUP_ID }}
+          ADDON_MANAGER_API_ENV: ${{ secrets.ADDON_MANAGER_API_ENV }}
         run: build/testScript.sh
 
   release:
@@ -103,7 +104,7 @@ jobs:
         uses: crazy-max/ghaction-github-pages@v1
         with:
           target_branch: gh-pages
-          build_dir: v3/dist
+          build_dir: v4/dist
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_TOKEN }}
           GIT_AUTHOR_NAME: sccdeveloper

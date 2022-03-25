@@ -1,6 +1,6 @@
 [![CI/CD Pipeline](https://github.com/IBM/scc-go-sdk/actions/workflows/main.yaml/badge.svg)](https://github.com/IBM/scc-go-sdk/actions/workflows/main.yaml)
 [![Release](https://img.shields.io/github/v/release/IBM/scc-go-sdk)](https://img.shields.io/github/v/release/IBM/scc-go-sdk)
-[![Go Reference](https://pkg.go.dev/badge/github.com/IBM/scc-go-sdk/v3.svg)](https://pkg.go.dev/github.com/IBM/scc-go-sdk/v3)
+[![Go Reference](https://pkg.go.dev/badge/github.com/IBM/scc-go-sdk/v4.svg)](https://pkg.go.dev/github.com/IBM/scc-go-sdk/v4)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/IBM/scc-go-sdk?filename=v3%2Fgo.mod)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/ad2d585c763ad627e0cb/test_coverage)](https://codeclimate.com/github/IBM/scc-go-sdk/test_coverage)
@@ -52,6 +52,7 @@ The IBM Cloud Security & Compliance Center Go SDK allows developers to programma
 | [Admin Service](https://cloud.ibm.com/apidocs/security-compliance/admin)             | adminserviceapiv1         |
 | [Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture-v1.0)      | posturemanagementv1       |
 | [Posture Management v2](https://cloud.ibm.com/apidocs/security-compliance/posture-v2.0)      | posturemanagementv2       |
+| [Addon Manager](https://cloud.ibm.com/apidocs/security-compliance/config)      | addonmgrv1       |
 
 
 
@@ -74,7 +75,7 @@ Here is an example:
 
 ```go
 import (
-	"github.com/IBM/scc-go-sdk/v3/findingsv1"
+	"github.com/IBM/scc-go-sdk/v4/findingsv1"
 )
 ```
 Next, run `go build` or `go mod tidy` to download and install the new dependencies and update your application's
@@ -87,7 +88,7 @@ See the service table above to find the appropriate package name for the service
 ### `go get` command  
 Alternatively, you can use the `go get` command to download and install the appropriate packages needed by your application:
 ```
-go get -u github.com/IBM/scc-go-sdk/v3/findingsv1
+go get -u github.com/IBM/scc-go-sdk/v4/findingsv1
 ```
 Be sure to use the appropriate package name from the service table above for the services used by your application.
 

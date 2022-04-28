@@ -22,7 +22,7 @@ package posturemanagementv1_test
 import (
 	"fmt"
 	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/IBM/scc-go-sdk/v3/posturemanagementv1"
+	"github.com/IBM/scc-go-sdk/v4/posturemanagementv1"
 	"github.com/google/uuid"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"

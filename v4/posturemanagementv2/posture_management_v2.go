@@ -2291,6 +2291,21 @@ func (postureManagement *PostureManagementV2) CreateValidationWithContext(ctx co
 	if createValidationOptions.GroupProfileID != nil {
 		body["group_profile_id"] = createValidationOptions.GroupProfileID
 	}
+	if createValidationOptions.Name != nil {
+		body["name"] = createValidationOptions.Name
+	}
+	if createValidationOptions.Description != nil {
+		body["description"] = createValidationOptions.Description
+	}
+	if createValidationOptions.Frequency != nil {
+		body["frequency"] = createValidationOptions.Frequency
+	}
+	if createValidationOptions.NoOfOccurrences != nil {
+		body["no_of_occurrences"] = createValidationOptions.NoOfOccurrences
+	}
+	if createValidationOptions.EndTime != nil {
+		body["end_time"] = createValidationOptions.EndTime
+	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
 		return
@@ -3523,6 +3538,21 @@ type CreateValidationOptions struct {
 	// The ID of the profile group.
 	GroupProfileID *string `json:"group_profile_id,omitempty"`
 
+	// The name of a scheduled scan.This is mandatory when scheduled scan is initiated.
+	Name *string `json:"name,omitempty"`
+
+	// The description of a scheduled scan.
+	Description *string `json:"description,omitempty"`
+
+	// The frequency of a scheduled scan in milliseconds.
+	Frequency *int64 `json:"frequency,omitempty"`
+
+	// The no_of_occurrences of a scheduled scan.
+	NoOfOccurrences *int64 `json:"no_of_occurrences,omitempty"`
+
+	// The end date-time of a scheduled scan in UTC.
+	EndTime *strfmt.DateTime `json:"end_time,omitempty"`
+
 	// Your IBM Cloud account ID.
 	AccountID *string `json:"-"`
 
@@ -3557,6 +3587,36 @@ func (_options *CreateValidationOptions) SetProfileID(profileID string) *CreateV
 // SetGroupProfileID : Allow user to set GroupProfileID
 func (_options *CreateValidationOptions) SetGroupProfileID(groupProfileID string) *CreateValidationOptions {
 	_options.GroupProfileID = core.StringPtr(groupProfileID)
+	return _options
+}
+
+// SetName : Allow user to set Name
+func (_options *CreateValidationOptions) SetName(name string) *CreateValidationOptions {
+	_options.Name = core.StringPtr(name)
+	return _options
+}
+
+// SetDescription : Allow user to set Description
+func (_options *CreateValidationOptions) SetDescription(description string) *CreateValidationOptions {
+	_options.Description = core.StringPtr(description)
+	return _options
+}
+
+// SetFrequency : Allow user to set Frequency
+func (_options *CreateValidationOptions) SetFrequency(frequency int64) *CreateValidationOptions {
+	_options.Frequency = core.Int64Ptr(frequency)
+	return _options
+}
+
+// SetNoOfOccurrences : Allow user to set NoOfOccurrences
+func (_options *CreateValidationOptions) SetNoOfOccurrences(noOfOccurrences int64) *CreateValidationOptions {
+	_options.NoOfOccurrences = core.Int64Ptr(noOfOccurrences)
+	return _options
+}
+
+// SetEndTime : Allow user to set EndTime
+func (_options *CreateValidationOptions) SetEndTime(endTime *strfmt.DateTime) *CreateValidationOptions {
+	_options.EndTime = endTime
 	return _options
 }
 

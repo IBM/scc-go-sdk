@@ -1,3 +1,24 @@
+# [4.0.0](https://github.com/IBM/scc-go-sdk/compare/v3.1.6...v4.0.0) (2022-09-01)
+
+
+### Bug Fixes
+
+* **FindingsAPI:** deprecated ([5781048](https://github.com/IBM/scc-go-sdk/commit/5781048edcbb77d5cfe859b54485642e798f187a))
+
+
+* Merge pull request #94 from IBM/si-deprecation ([e5ea2e8](https://github.com/IBM/scc-go-sdk/commit/e5ea2e8dcce245eb50c16a4f007e729ff3cecaa4)), closes [#94](https://github.com/IBM/scc-go-sdk/issues/94)
+
+
+### Features
+
+* **PostureManagementV2:** add scheduling parameters for scan ([#96](https://github.com/IBM/scc-go-sdk/issues/96)) ([eea7245](https://github.com/IBM/scc-go-sdk/commit/eea72456b917fb577433dccc772abb1e63338078))
+
+
+### BREAKING CHANGES
+
+* Deprecating Security Insights
+* **FindingsAPI:** deprecating Security Insights - SCC
+
 ## [3.1.6](https://github.com/IBM/scc-go-sdk/compare/v3.1.5...v3.1.6) (2022-03-09)
 
 

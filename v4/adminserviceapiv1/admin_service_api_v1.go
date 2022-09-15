@@ -114,7 +114,6 @@ func GetServiceURLForRegion(region string) (string, error) {
 		"us-south": "https://us.compliance.cloud.ibm.com",
 		"us-east":  "https://us.compliance.cloud.ibm.com",
 		"eu-de":    "https://eu.compliance.cloud.ibm.com",
-		"eu-gb":    "https://uk.compliance.cloud.ibm.com",
 	}
 
 	if url, ok := endpoints[region]; ok {
@@ -512,7 +511,6 @@ type GetLocationOptions struct {
 // The programatic ID of the location that you want to work in.
 const (
 	GetLocationOptions_LocationID_Eu = "eu"
-	GetLocationOptions_LocationID_Uk = "uk"
 	GetLocationOptions_LocationID_Us = "us"
 )
 
@@ -601,9 +599,6 @@ type Location struct {
 	// The endpoint that is used to generate analytics for the Posture Management component.
 	AnalyticsEndpointURL *string `json:"analytics_endpoint_url,omitempty"`
 
-	// The endpoint that is used to call the Security Insights APIs.
-	SiEndpointURL *string `json:"si_endpoint_url,omitempty"`
-
 	Regions []Region `json:"regions,omitempty"`
 }
 
@@ -611,7 +606,6 @@ type Location struct {
 // The programatic ID of the location that you want to work in.
 const (
 	Location_ID_Eu = "eu"
-	Location_ID_Uk = "uk"
 	Location_ID_Us = "us"
 )
 
@@ -642,10 +636,6 @@ func UnmarshalLocation(m map[string]json.RawMessage, result interface{}) (err er
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "si_endpoint_url", &obj.SiEndpointURL)
-	if err != nil {
-		return
-	}
 	err = core.UnmarshalModel(m, "regions", &obj.Regions, UnmarshalRegion)
 	if err != nil {
 		return
@@ -664,7 +654,6 @@ type LocationID struct {
 // The programatic ID of the location that you want to work in.
 const (
 	LocationID_ID_Eu = "eu"
-	LocationID_ID_Uk = "uk"
 	LocationID_ID_Us = "us"
 )
 
@@ -801,7 +790,6 @@ type Region struct {
 // The programatic ID of the available regions.
 const (
 	Region_ID_Eu = "eu"
-	Region_ID_Uk = "uk"
 	Region_ID_Us = "us"
 )
 

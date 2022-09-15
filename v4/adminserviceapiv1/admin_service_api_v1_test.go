@@ -167,10 +167,6 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 			Expect(url).To(Equal("https://eu.compliance.cloud.ibm.com"))
 			Expect(err).To(BeNil())
 
-			url, err = adminserviceapiv1.GetServiceURLForRegion("eu-gb")
-			Expect(url).To(Equal("https://uk.compliance.cloud.ibm.com"))
-			Expect(err).To(BeNil())
-
 			url, err = adminserviceapiv1.GetServiceURLForRegion("INVALID_REGION")
 			Expect(url).To(BeEmpty())
 			Expect(err).ToNot(BeNil())

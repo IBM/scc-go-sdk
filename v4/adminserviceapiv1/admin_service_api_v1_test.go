@@ -750,7 +750,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"locations": [{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "si_endpoint_url": "SiEndpointURL", "regions": [{"id": "us"}]}]}`)
+					fmt.Fprintf(res, "%s", `{"locations": [{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "regions": [{"id": "us"}]}]}`)
 				}))
 			})
 			It(`Invoke ListLocations successfully with retries`, func() {
@@ -803,7 +803,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"locations": [{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "si_endpoint_url": "SiEndpointURL", "regions": [{"id": "us"}]}]}`)
+					fmt.Fprintf(res, "%s", `{"locations": [{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "regions": [{"id": "us"}]}]}`)
 				}))
 			})
 			It(`Invoke ListLocations successfully`, func() {
@@ -951,7 +951,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "si_endpoint_url": "SiEndpointURL", "regions": [{"id": "us"}]}`)
+					fmt.Fprintf(res, "%s", `{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "regions": [{"id": "us"}]}`)
 				}))
 			})
 			It(`Invoke GetLocation successfully with retries`, func() {
@@ -1005,7 +1005,7 @@ var _ = Describe(`AdminServiceApiV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "si_endpoint_url": "SiEndpointURL", "regions": [{"id": "us"}]}`)
+					fmt.Fprintf(res, "%s", `{"id": "us", "main_endpoint_url": "MainEndpointURL", "governance_endpoint_url": "GovernanceEndpointURL", "results_endpoint_url": "ResultsEndpointURL", "compliance_endpoint_url": "ComplianceEndpointURL", "analytics_endpoint_url": "AnalyticsEndpointURL", "regions": [{"id": "us"}]}`)
 				}))
 			})
 			It(`Invoke GetLocation successfully`, func() {

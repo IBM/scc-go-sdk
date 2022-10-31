@@ -43,7 +43,7 @@ import (
 // in a configuration file and then:
 // export IBM_CREDENTIALS_FILE=<name of configuration file>
 //
-const externalConfigFile = "posture_management_v2.env"
+const externalConfigFile = "../posture_management_v2.env"
 
 var (
 	postureManagementService *posturemanagementv2.PostureManagementV2

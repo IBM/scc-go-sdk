@@ -112,18 +112,12 @@ var _ = Describe(`PostureManagementV2 Examples Tests`, func() {
 				Password: core.StringPtr("**********"),
 			}
 
-			credentialGroupModel := &posturemanagementv2.CredentialGroup{
-				ID:         core.StringPtr("1"),
-				Passphrase: core.StringPtr("passphrase"),
-			}
-
 			createCredentialOptions := postureManagementService.NewCreateCredentialOptions(
 				true,
 				"username_password",
 				"test_create",
 				"This credential is used for testing.",
 				newCredentialDisplayFieldsModel,
-				credentialGroupModel,
 				"discovery_fact_collection_remediation",
 			)
 

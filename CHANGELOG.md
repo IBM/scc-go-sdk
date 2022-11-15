@@ -1,3 +1,10 @@
+## [4.0.1](https://github.com/IBM/scc-go-sdk/compare/v4.0.0...v4.0.1) (2022-11-15)
+
+
+### Bug Fixes
+
+* disable ITs from configuration governance ([#102](https://github.com/IBM/scc-go-sdk/issues/102)) ([9f2e4d0](https://github.com/IBM/scc-go-sdk/commit/9f2e4d01f3ac59c220384965c35f28423305f29f))
+
 # [4.0.0](https://github.com/IBM/scc-go-sdk/compare/v3.1.6...v4.0.0) (2022-09-01)
 
 

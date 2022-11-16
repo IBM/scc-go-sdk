@@ -1,3 +1,10 @@
+## [4.0.2](https://github.com/IBM/scc-go-sdk/compare/v4.0.1...v4.0.2) (2022-11-16)
+
+
+### Bug Fixes
+
+* removing the group property support from the credential from both v1 and v2  ([#100](https://github.com/IBM/scc-go-sdk/issues/100)) ([#105](https://github.com/IBM/scc-go-sdk/issues/105)) ([ad6e9d9](https://github.com/IBM/scc-go-sdk/commit/ad6e9d9e48cfdd329be6276cd81e46de1d312646))
+
 ## [4.0.1](https://github.com/IBM/scc-go-sdk/compare/v4.0.0...v4.0.1) (2022-11-15)
 
 

@@ -244,9 +244,6 @@ func (postureManagement *PostureManagementV2) CreateCredentialWithContext(ctx co
 	if createCredentialOptions.DisplayFields != nil {
 		body["display_fields"] = createCredentialOptions.DisplayFields
 	}
-	if createCredentialOptions.Group != nil {
-		body["group"] = createCredentialOptions.Group
-	}
 	if createCredentialOptions.Purpose != nil {
 		body["purpose"] = createCredentialOptions.Purpose
 	}
@@ -3293,9 +3290,6 @@ type CreateCredentialOptions struct {
 	// The details of the credential. The details change as the selected credential type varies.
 	DisplayFields *NewCredentialDisplayFields `json:"display_fields" validate:"required"`
 
-	// The details of the credential group.
-	Group *CredentialGroup `json:"group" validate:"required"`
-
 	// The purpose for which the credential is created.
 	Purpose *string `json:"purpose" validate:"required"`
 
@@ -3335,14 +3329,13 @@ const (
 )
 
 // NewCreateCredentialOptions : Instantiate CreateCredentialOptions
-func (*PostureManagementV2) NewCreateCredentialOptions(enabled bool, typeVar string, name string, description string, displayFields *NewCredentialDisplayFields, group *CredentialGroup, purpose string) *CreateCredentialOptions {
+func (*PostureManagementV2) NewCreateCredentialOptions(enabled bool, typeVar string, name string, description string, displayFields *NewCredentialDisplayFields, purpose string) *CreateCredentialOptions {
 	return &CreateCredentialOptions{
 		Enabled:       core.BoolPtr(enabled),
 		Type:          core.StringPtr(typeVar),
 		Name:          core.StringPtr(name),
 		Description:   core.StringPtr(description),
 		DisplayFields: displayFields,
-		Group:         group,
 		Purpose:       core.StringPtr(purpose),
 	}
 }
@@ -3374,12 +3367,6 @@ func (_options *CreateCredentialOptions) SetDescription(description string) *Cre
 // SetDisplayFields : Allow user to set DisplayFields
 func (_options *CreateCredentialOptions) SetDisplayFields(displayFields *NewCredentialDisplayFields) *CreateCredentialOptions {
 	_options.DisplayFields = displayFields
-	return _options
-}
-
-// SetGroup : Allow user to set Group
-func (_options *CreateCredentialOptions) SetGroup(group *CredentialGroup) *CreateCredentialOptions {
-	_options.Group = group
 	return _options
 }
 
@@ -3670,9 +3657,6 @@ type Credential struct {
 	// The ID of the user who modified the credentials.
 	UpdatedBy *string `json:"updated_by" validate:"required"`
 
-	// The details of the credential group.
-	Group *CredentialGroup `json:"group" validate:"required"`
-
 	// The purpose for which the credential is created.
 	Purpose *string `json:"purpose" validate:"required"`
 }
@@ -3743,10 +3727,7 @@ func UnmarshalCredential(m map[string]json.RawMessage, result interface{}) (err 
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(m, "group", &obj.Group, UnmarshalCredentialGroup)
-	if err != nil {
-		return
-	}
+
 	err = core.UnmarshalPrimitive(m, "purpose", &obj.Purpose)
 	if err != nil {
 		return
@@ -3927,40 +3908,6 @@ func UnmarshalCredentialDisplayFields(m map[string]json.RawMessage, result inter
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "pem_data", &obj.PemData)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// CredentialGroup : The details of the credential group.
-type CredentialGroup struct {
-	// The credential group ID.
-	ID *string `json:"id" validate:"required"`
-
-	// The passphrase of the credential.
-	Passphrase *string `json:"passphrase" validate:"required"`
-}
-
-// NewCredentialGroup : Instantiate CredentialGroup (Generic Model Constructor)
-func (*PostureManagementV2) NewCredentialGroup(id string, passphrase string) (_model *CredentialGroup, err error) {
-	_model = &CredentialGroup{
-		ID:         core.StringPtr(id),
-		Passphrase: core.StringPtr(passphrase),
-	}
-	err = core.ValidateStruct(_model, "required parameters")
-	return
-}
-
-// UnmarshalCredentialGroup unmarshals an instance of CredentialGroup from the specified map of raw messages.
-func UnmarshalCredentialGroup(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(CredentialGroup)
-	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "passphrase", &obj.Passphrase)
 	if err != nil {
 		return
 	}
@@ -7236,15 +7183,6 @@ type ScopeDetailsCredential struct {
 	// The credential gateway key of the scope.
 	GatewayKey *string `json:"gateway_key,omitempty"`
 
-	// The credential group of the scope.
-	CredentialGroup interface{} `json:"credential_group,omitempty"`
-
-	// The configuration of whether the scope's credential group is enabled.
-	EnabledCredentialGroup *bool `json:"enabled_credential_group,omitempty"`
-
-	// The credential groups of the scope.
-	Groups []CredentialGroup `json:"groups,omitempty"`
-
 	// The credential purpose of the scope.
 	Purpose *string `json:"purpose,omitempty"`
 }
@@ -7289,18 +7227,6 @@ func UnmarshalScopeDetailsCredential(m map[string]json.RawMessage, result interf
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "gateway_key", &obj.GatewayKey)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "credential_group", &obj.CredentialGroup)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "enabled_credential_group", &obj.EnabledCredentialGroup)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalModel(m, "groups", &obj.Groups, UnmarshalCredentialGroup)
 	if err != nil {
 		return
 	}

@@ -136,18 +136,12 @@ var _ = Describe(`PostureManagementV2 Integration Tests`, func() {
 				IBMAPIKey: core.StringPtr("sample_api_key"),
 			}
 
-			credentialGroupModel := &posturemanagementv2.CredentialGroup{
-				ID:         core.StringPtr("1"),
-				Passphrase: core.StringPtr("passphrase"),
-			}
-
 			createCredentialOptions := &posturemanagementv2.CreateCredentialOptions{
 				Enabled:       core.BoolPtr(true),
 				Type:          core.StringPtr("ibm_cloud"),
 				Name:          core.StringPtr("test_create"),
 				Description:   core.StringPtr("This credential is used for testing."),
 				DisplayFields: newCredentialDisplayFieldsModel,
-				Group:         credentialGroupModel,
 				Purpose:       core.StringPtr("discovery_fact_collection_remediation"),
 				AccountID:     core.StringPtr(accountID),
 				TransactionID: core.StringPtr(transactionID),

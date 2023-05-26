@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package sccphoenixcomplianceapisv1_test
+package compliancev2_test
 
 import (
 	"bytes"
@@ -27,7 +27,7 @@ import (
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/IBM/scc-go-sdk/v4/sccphoenixcomplianceapisv1"
+	"github.com/IBM/scc-go-sdk/v4/compliancev2"
 	"github.com/go-openapi/strfmt"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -37,22 +37,22 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 	var testServer *httptest.Server
 	Describe(`Service constructor tests`, func() {
 		It(`Instantiate service client`, func() {
-			sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+			sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 				Authenticator: &core.NoAuthAuthenticator{},
 			})
 			Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 			Expect(serviceErr).To(BeNil())
 		})
 		It(`Instantiate service client with error: Invalid URL`, func() {
-			sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+			sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 				URL: "{BAD_URL_STRING",
 			})
 			Expect(sccPhoenixComplianceApisService).To(BeNil())
 			Expect(serviceErr).ToNot(BeNil())
 		})
 		It(`Instantiate service client with error: Invalid Auth`, func() {
-			sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
-				URL: "https://sccphoenixcomplianceapisv1/api",
+			sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
+				URL: "https://compliancev2/api",
 				Authenticator: &core.BasicAuthenticator{
 					Username: "",
 					Password: "",
@@ -66,13 +66,13 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"SCC_PHOENIX_COMPLIANCE_APIS_URL":       "https://sccphoenixcomplianceapisv1/api",
+				"SCC_PHOENIX_COMPLIANCE_APIS_URL":       "https://compliancev2/api",
 				"SCC_PHOENIX_COMPLIANCE_APIS_AUTH_TYPE": "noauth",
 			}
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1UsingExternalConfig(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{})
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1UsingExternalConfig(&compliancev2.SccPhoenixComplianceApisV1Options{})
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
@@ -85,7 +85,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 			})
 			It(`Create service client using external config and set url from constructor successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1UsingExternalConfig(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1UsingExternalConfig(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL: "https://testService/api",
 				})
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
@@ -101,7 +101,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1UsingExternalConfig(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{})
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1UsingExternalConfig(&compliancev2.SccPhoenixComplianceApisV1Options{})
 				err := sccPhoenixComplianceApisService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
@@ -119,12 +119,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"SCC_PHOENIX_COMPLIANCE_APIS_URL":       "https://sccphoenixcomplianceapisv1/api",
+				"SCC_PHOENIX_COMPLIANCE_APIS_URL":       "https://compliancev2/api",
 				"SCC_PHOENIX_COMPLIANCE_APIS_AUTH_TYPE": "someOtherAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1UsingExternalConfig(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{})
+			sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1UsingExternalConfig(&compliancev2.SccPhoenixComplianceApisV1Options{})
 
 			It(`Instantiate service client with error`, func() {
 				Expect(sccPhoenixComplianceApisService).To(BeNil())
@@ -139,7 +139,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 			}
 
 			SetTestEnvironment(testEnvironment)
-			sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1UsingExternalConfig(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+			sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1UsingExternalConfig(&compliancev2.SccPhoenixComplianceApisV1Options{
 				URL: "{BAD_URL_STRING",
 			})
 
@@ -154,7 +154,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 		It(`GetServiceURLForRegion(region string)`, func() {
 			var url string
 			var err error
-			url, err = sccphoenixcomplianceapisv1.GetServiceURLForRegion("INVALID_REGION")
+			url, err = compliancev2.GetServiceURLForRegion("INVALID_REGION")
 			Expect(url).To(BeEmpty())
 			Expect(err).ToNot(BeNil())
 			fmt.Fprintf(GinkgoWriter, "Expected error: %s\n", err.Error())
@@ -178,7 +178,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke CreateProfile with error: Operation response processing error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -186,12 +186,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ProfileControlsInRequest model
-				profileControlsInRequestModel := new(sccphoenixcomplianceapisv1.ProfileControlsInRequest)
+				profileControlsInRequestModel := new(compliancev2.ProfileControlsInRequest)
 				profileControlsInRequestModel.ControlLibraryID = core.StringPtr("testString")
 				profileControlsInRequestModel.ControlID = core.StringPtr("testString")
 
 				// Construct an instance of the DefaultParameters model
-				defaultParametersModel := new(sccphoenixcomplianceapisv1.DefaultParameters)
+				defaultParametersModel := new(compliancev2.DefaultParameters)
 				defaultParametersModel.AssessmentType = core.StringPtr("testString")
 				defaultParametersModel.AssessmentID = core.StringPtr("testString")
 				defaultParametersModel.ParameterName = core.StringPtr("testString")
@@ -200,7 +200,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				defaultParametersModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the CreateProfileOptions model
-				createProfileOptionsModel := new(sccphoenixcomplianceapisv1.CreateProfileOptions)
+				createProfileOptionsModel := new(compliancev2.CreateProfileOptions)
 				createProfileOptionsModel.InstanceID = core.StringPtr("testString")
 				createProfileOptionsModel.ProfileName = core.StringPtr("testString")
 				createProfileOptionsModel.ProfileDescription = core.StringPtr("testString")
@@ -208,8 +208,8 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				createProfileOptionsModel.ProfileVersion = core.StringPtr("testString")
 				createProfileOptionsModel.Latest = core.BoolPtr(true)
 				createProfileOptionsModel.VersionGroupLabel = core.StringPtr("testString")
-				createProfileOptionsModel.Controls = []sccphoenixcomplianceapisv1.ProfileControlsInRequest{*profileControlsInRequestModel}
-				createProfileOptionsModel.DefaultParameters = []sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel}
+				createProfileOptionsModel.Controls = []compliancev2.ProfileControlsInRequest{*profileControlsInRequestModel}
+				createProfileOptionsModel.DefaultParameters = []compliancev2.DefaultParameters{*defaultParametersModel}
 				createProfileOptionsModel.TransactionID = core.StringPtr("testString")
 				createProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
@@ -269,7 +269,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke CreateProfile successfully with retries`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -278,12 +278,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				sccPhoenixComplianceApisService.EnableRetries(0, 0)
 
 				// Construct an instance of the ProfileControlsInRequest model
-				profileControlsInRequestModel := new(sccphoenixcomplianceapisv1.ProfileControlsInRequest)
+				profileControlsInRequestModel := new(compliancev2.ProfileControlsInRequest)
 				profileControlsInRequestModel.ControlLibraryID = core.StringPtr("testString")
 				profileControlsInRequestModel.ControlID = core.StringPtr("testString")
 
 				// Construct an instance of the DefaultParameters model
-				defaultParametersModel := new(sccphoenixcomplianceapisv1.DefaultParameters)
+				defaultParametersModel := new(compliancev2.DefaultParameters)
 				defaultParametersModel.AssessmentType = core.StringPtr("testString")
 				defaultParametersModel.AssessmentID = core.StringPtr("testString")
 				defaultParametersModel.ParameterName = core.StringPtr("testString")
@@ -292,7 +292,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				defaultParametersModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the CreateProfileOptions model
-				createProfileOptionsModel := new(sccphoenixcomplianceapisv1.CreateProfileOptions)
+				createProfileOptionsModel := new(compliancev2.CreateProfileOptions)
 				createProfileOptionsModel.InstanceID = core.StringPtr("testString")
 				createProfileOptionsModel.ProfileName = core.StringPtr("testString")
 				createProfileOptionsModel.ProfileDescription = core.StringPtr("testString")
@@ -300,8 +300,8 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				createProfileOptionsModel.ProfileVersion = core.StringPtr("testString")
 				createProfileOptionsModel.Latest = core.BoolPtr(true)
 				createProfileOptionsModel.VersionGroupLabel = core.StringPtr("testString")
-				createProfileOptionsModel.Controls = []sccphoenixcomplianceapisv1.ProfileControlsInRequest{*profileControlsInRequestModel}
-				createProfileOptionsModel.DefaultParameters = []sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel}
+				createProfileOptionsModel.Controls = []compliancev2.ProfileControlsInRequest{*profileControlsInRequestModel}
+				createProfileOptionsModel.DefaultParameters = []compliancev2.DefaultParameters{*defaultParametersModel}
 				createProfileOptionsModel.TransactionID = core.StringPtr("testString")
 				createProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -364,7 +364,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke CreateProfile successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -378,12 +378,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the ProfileControlsInRequest model
-				profileControlsInRequestModel := new(sccphoenixcomplianceapisv1.ProfileControlsInRequest)
+				profileControlsInRequestModel := new(compliancev2.ProfileControlsInRequest)
 				profileControlsInRequestModel.ControlLibraryID = core.StringPtr("testString")
 				profileControlsInRequestModel.ControlID = core.StringPtr("testString")
 
 				// Construct an instance of the DefaultParameters model
-				defaultParametersModel := new(sccphoenixcomplianceapisv1.DefaultParameters)
+				defaultParametersModel := new(compliancev2.DefaultParameters)
 				defaultParametersModel.AssessmentType = core.StringPtr("testString")
 				defaultParametersModel.AssessmentID = core.StringPtr("testString")
 				defaultParametersModel.ParameterName = core.StringPtr("testString")
@@ -392,7 +392,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				defaultParametersModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the CreateProfileOptions model
-				createProfileOptionsModel := new(sccphoenixcomplianceapisv1.CreateProfileOptions)
+				createProfileOptionsModel := new(compliancev2.CreateProfileOptions)
 				createProfileOptionsModel.InstanceID = core.StringPtr("testString")
 				createProfileOptionsModel.ProfileName = core.StringPtr("testString")
 				createProfileOptionsModel.ProfileDescription = core.StringPtr("testString")
@@ -400,8 +400,8 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				createProfileOptionsModel.ProfileVersion = core.StringPtr("testString")
 				createProfileOptionsModel.Latest = core.BoolPtr(true)
 				createProfileOptionsModel.VersionGroupLabel = core.StringPtr("testString")
-				createProfileOptionsModel.Controls = []sccphoenixcomplianceapisv1.ProfileControlsInRequest{*profileControlsInRequestModel}
-				createProfileOptionsModel.DefaultParameters = []sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel}
+				createProfileOptionsModel.Controls = []compliancev2.ProfileControlsInRequest{*profileControlsInRequestModel}
+				createProfileOptionsModel.DefaultParameters = []compliancev2.DefaultParameters{*defaultParametersModel}
 				createProfileOptionsModel.TransactionID = core.StringPtr("testString")
 				createProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -413,7 +413,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 
 			})
 			It(`Invoke CreateProfile with error: Operation validation and request error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -421,12 +421,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ProfileControlsInRequest model
-				profileControlsInRequestModel := new(sccphoenixcomplianceapisv1.ProfileControlsInRequest)
+				profileControlsInRequestModel := new(compliancev2.ProfileControlsInRequest)
 				profileControlsInRequestModel.ControlLibraryID = core.StringPtr("testString")
 				profileControlsInRequestModel.ControlID = core.StringPtr("testString")
 
 				// Construct an instance of the DefaultParameters model
-				defaultParametersModel := new(sccphoenixcomplianceapisv1.DefaultParameters)
+				defaultParametersModel := new(compliancev2.DefaultParameters)
 				defaultParametersModel.AssessmentType = core.StringPtr("testString")
 				defaultParametersModel.AssessmentID = core.StringPtr("testString")
 				defaultParametersModel.ParameterName = core.StringPtr("testString")
@@ -435,7 +435,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				defaultParametersModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the CreateProfileOptions model
-				createProfileOptionsModel := new(sccphoenixcomplianceapisv1.CreateProfileOptions)
+				createProfileOptionsModel := new(compliancev2.CreateProfileOptions)
 				createProfileOptionsModel.InstanceID = core.StringPtr("testString")
 				createProfileOptionsModel.ProfileName = core.StringPtr("testString")
 				createProfileOptionsModel.ProfileDescription = core.StringPtr("testString")
@@ -443,8 +443,8 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				createProfileOptionsModel.ProfileVersion = core.StringPtr("testString")
 				createProfileOptionsModel.Latest = core.BoolPtr(true)
 				createProfileOptionsModel.VersionGroupLabel = core.StringPtr("testString")
-				createProfileOptionsModel.Controls = []sccphoenixcomplianceapisv1.ProfileControlsInRequest{*profileControlsInRequestModel}
-				createProfileOptionsModel.DefaultParameters = []sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel}
+				createProfileOptionsModel.Controls = []compliancev2.ProfileControlsInRequest{*profileControlsInRequestModel}
+				createProfileOptionsModel.DefaultParameters = []compliancev2.DefaultParameters{*defaultParametersModel}
 				createProfileOptionsModel.TransactionID = core.StringPtr("testString")
 				createProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
@@ -456,7 +456,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the CreateProfileOptions model with no property values
-				createProfileOptionsModelNew := new(sccphoenixcomplianceapisv1.CreateProfileOptions)
+				createProfileOptionsModelNew := new(compliancev2.CreateProfileOptions)
 				// Invoke operation with invalid model (negative test)
 				result, response, operationErr = sccPhoenixComplianceApisService.CreateProfile(createProfileOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
@@ -477,7 +477,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke CreateProfile successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -485,12 +485,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ProfileControlsInRequest model
-				profileControlsInRequestModel := new(sccphoenixcomplianceapisv1.ProfileControlsInRequest)
+				profileControlsInRequestModel := new(compliancev2.ProfileControlsInRequest)
 				profileControlsInRequestModel.ControlLibraryID = core.StringPtr("testString")
 				profileControlsInRequestModel.ControlID = core.StringPtr("testString")
 
 				// Construct an instance of the DefaultParameters model
-				defaultParametersModel := new(sccphoenixcomplianceapisv1.DefaultParameters)
+				defaultParametersModel := new(compliancev2.DefaultParameters)
 				defaultParametersModel.AssessmentType = core.StringPtr("testString")
 				defaultParametersModel.AssessmentID = core.StringPtr("testString")
 				defaultParametersModel.ParameterName = core.StringPtr("testString")
@@ -499,7 +499,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				defaultParametersModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the CreateProfileOptions model
-				createProfileOptionsModel := new(sccphoenixcomplianceapisv1.CreateProfileOptions)
+				createProfileOptionsModel := new(compliancev2.CreateProfileOptions)
 				createProfileOptionsModel.InstanceID = core.StringPtr("testString")
 				createProfileOptionsModel.ProfileName = core.StringPtr("testString")
 				createProfileOptionsModel.ProfileDescription = core.StringPtr("testString")
@@ -507,8 +507,8 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				createProfileOptionsModel.ProfileVersion = core.StringPtr("testString")
 				createProfileOptionsModel.Latest = core.BoolPtr(true)
 				createProfileOptionsModel.VersionGroupLabel = core.StringPtr("testString")
-				createProfileOptionsModel.Controls = []sccphoenixcomplianceapisv1.ProfileControlsInRequest{*profileControlsInRequestModel}
-				createProfileOptionsModel.DefaultParameters = []sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel}
+				createProfileOptionsModel.Controls = []compliancev2.ProfileControlsInRequest{*profileControlsInRequestModel}
+				createProfileOptionsModel.DefaultParameters = []compliancev2.DefaultParameters{*defaultParametersModel}
 				createProfileOptionsModel.TransactionID = core.StringPtr("testString")
 				createProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -543,7 +543,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ListProfiles with error: Operation response processing error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -551,7 +551,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ListProfilesOptions model
-				listProfilesOptionsModel := new(sccphoenixcomplianceapisv1.ListProfilesOptions)
+				listProfilesOptionsModel := new(compliancev2.ListProfilesOptions)
 				listProfilesOptionsModel.InstanceID = core.StringPtr("testString")
 				listProfilesOptionsModel.TransactionID = core.StringPtr("testString")
 				listProfilesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -596,7 +596,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ListProfiles successfully with retries`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -605,7 +605,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				sccPhoenixComplianceApisService.EnableRetries(0, 0)
 
 				// Construct an instance of the ListProfilesOptions model
-				listProfilesOptionsModel := new(sccphoenixcomplianceapisv1.ListProfilesOptions)
+				listProfilesOptionsModel := new(compliancev2.ListProfilesOptions)
 				listProfilesOptionsModel.InstanceID = core.StringPtr("testString")
 				listProfilesOptionsModel.TransactionID = core.StringPtr("testString")
 				listProfilesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -653,7 +653,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ListProfiles successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -667,7 +667,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the ListProfilesOptions model
-				listProfilesOptionsModel := new(sccphoenixcomplianceapisv1.ListProfilesOptions)
+				listProfilesOptionsModel := new(compliancev2.ListProfilesOptions)
 				listProfilesOptionsModel.InstanceID = core.StringPtr("testString")
 				listProfilesOptionsModel.TransactionID = core.StringPtr("testString")
 				listProfilesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -680,7 +680,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 
 			})
 			It(`Invoke ListProfiles with error: Operation validation and request error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -688,7 +688,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ListProfilesOptions model
-				listProfilesOptionsModel := new(sccphoenixcomplianceapisv1.ListProfilesOptions)
+				listProfilesOptionsModel := new(compliancev2.ListProfilesOptions)
 				listProfilesOptionsModel.InstanceID = core.StringPtr("testString")
 				listProfilesOptionsModel.TransactionID = core.StringPtr("testString")
 				listProfilesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -701,7 +701,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the ListProfilesOptions model with no property values
-				listProfilesOptionsModelNew := new(sccphoenixcomplianceapisv1.ListProfilesOptions)
+				listProfilesOptionsModelNew := new(compliancev2.ListProfilesOptions)
 				// Invoke operation with invalid model (negative test)
 				result, response, operationErr = sccPhoenixComplianceApisService.ListProfiles(listProfilesOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
@@ -722,7 +722,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ListProfiles successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -730,7 +730,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ListProfilesOptions model
-				listProfilesOptionsModel := new(sccphoenixcomplianceapisv1.ListProfilesOptions)
+				listProfilesOptionsModel := new(compliancev2.ListProfilesOptions)
 				listProfilesOptionsModel.InstanceID = core.StringPtr("testString")
 				listProfilesOptionsModel.TransactionID = core.StringPtr("testString")
 				listProfilesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -766,7 +766,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke AddProfile with error: Operation response processing error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -774,12 +774,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ProfileControlsInRequest model
-				profileControlsInRequestModel := new(sccphoenixcomplianceapisv1.ProfileControlsInRequest)
+				profileControlsInRequestModel := new(compliancev2.ProfileControlsInRequest)
 				profileControlsInRequestModel.ControlLibraryID = core.StringPtr("testString")
 				profileControlsInRequestModel.ControlID = core.StringPtr("testString")
 
 				// Construct an instance of the DefaultParameters model
-				defaultParametersModel := new(sccphoenixcomplianceapisv1.DefaultParameters)
+				defaultParametersModel := new(compliancev2.DefaultParameters)
 				defaultParametersModel.AssessmentType = core.StringPtr("testString")
 				defaultParametersModel.AssessmentID = core.StringPtr("testString")
 				defaultParametersModel.ParameterName = core.StringPtr("testString")
@@ -788,7 +788,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				defaultParametersModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the AddProfileOptions model
-				addProfileOptionsModel := new(sccphoenixcomplianceapisv1.AddProfileOptions)
+				addProfileOptionsModel := new(compliancev2.AddProfileOptions)
 				addProfileOptionsModel.ProfilesID = core.StringPtr("testString")
 				addProfileOptionsModel.InstanceID = core.StringPtr("testString")
 				addProfileOptionsModel.ProfileName = core.StringPtr("testString")
@@ -797,8 +797,8 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				addProfileOptionsModel.ProfileVersion = core.StringPtr("testString")
 				addProfileOptionsModel.Latest = core.BoolPtr(true)
 				addProfileOptionsModel.VersionGroupLabel = core.StringPtr("testString")
-				addProfileOptionsModel.Controls = []sccphoenixcomplianceapisv1.ProfileControlsInRequest{*profileControlsInRequestModel}
-				addProfileOptionsModel.DefaultParameters = []sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel}
+				addProfileOptionsModel.Controls = []compliancev2.ProfileControlsInRequest{*profileControlsInRequestModel}
+				addProfileOptionsModel.DefaultParameters = []compliancev2.DefaultParameters{*defaultParametersModel}
 				addProfileOptionsModel.TransactionID = core.StringPtr("testString")
 				addProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
@@ -858,7 +858,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke AddProfile successfully with retries`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -867,12 +867,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				sccPhoenixComplianceApisService.EnableRetries(0, 0)
 
 				// Construct an instance of the ProfileControlsInRequest model
-				profileControlsInRequestModel := new(sccphoenixcomplianceapisv1.ProfileControlsInRequest)
+				profileControlsInRequestModel := new(compliancev2.ProfileControlsInRequest)
 				profileControlsInRequestModel.ControlLibraryID = core.StringPtr("testString")
 				profileControlsInRequestModel.ControlID = core.StringPtr("testString")
 
 				// Construct an instance of the DefaultParameters model
-				defaultParametersModel := new(sccphoenixcomplianceapisv1.DefaultParameters)
+				defaultParametersModel := new(compliancev2.DefaultParameters)
 				defaultParametersModel.AssessmentType = core.StringPtr("testString")
 				defaultParametersModel.AssessmentID = core.StringPtr("testString")
 				defaultParametersModel.ParameterName = core.StringPtr("testString")
@@ -881,7 +881,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				defaultParametersModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the AddProfileOptions model
-				addProfileOptionsModel := new(sccphoenixcomplianceapisv1.AddProfileOptions)
+				addProfileOptionsModel := new(compliancev2.AddProfileOptions)
 				addProfileOptionsModel.ProfilesID = core.StringPtr("testString")
 				addProfileOptionsModel.InstanceID = core.StringPtr("testString")
 				addProfileOptionsModel.ProfileName = core.StringPtr("testString")
@@ -890,8 +890,8 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				addProfileOptionsModel.ProfileVersion = core.StringPtr("testString")
 				addProfileOptionsModel.Latest = core.BoolPtr(true)
 				addProfileOptionsModel.VersionGroupLabel = core.StringPtr("testString")
-				addProfileOptionsModel.Controls = []sccphoenixcomplianceapisv1.ProfileControlsInRequest{*profileControlsInRequestModel}
-				addProfileOptionsModel.DefaultParameters = []sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel}
+				addProfileOptionsModel.Controls = []compliancev2.ProfileControlsInRequest{*profileControlsInRequestModel}
+				addProfileOptionsModel.DefaultParameters = []compliancev2.DefaultParameters{*defaultParametersModel}
 				addProfileOptionsModel.TransactionID = core.StringPtr("testString")
 				addProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -954,7 +954,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke AddProfile successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -968,12 +968,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the ProfileControlsInRequest model
-				profileControlsInRequestModel := new(sccphoenixcomplianceapisv1.ProfileControlsInRequest)
+				profileControlsInRequestModel := new(compliancev2.ProfileControlsInRequest)
 				profileControlsInRequestModel.ControlLibraryID = core.StringPtr("testString")
 				profileControlsInRequestModel.ControlID = core.StringPtr("testString")
 
 				// Construct an instance of the DefaultParameters model
-				defaultParametersModel := new(sccphoenixcomplianceapisv1.DefaultParameters)
+				defaultParametersModel := new(compliancev2.DefaultParameters)
 				defaultParametersModel.AssessmentType = core.StringPtr("testString")
 				defaultParametersModel.AssessmentID = core.StringPtr("testString")
 				defaultParametersModel.ParameterName = core.StringPtr("testString")
@@ -982,7 +982,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				defaultParametersModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the AddProfileOptions model
-				addProfileOptionsModel := new(sccphoenixcomplianceapisv1.AddProfileOptions)
+				addProfileOptionsModel := new(compliancev2.AddProfileOptions)
 				addProfileOptionsModel.ProfilesID = core.StringPtr("testString")
 				addProfileOptionsModel.InstanceID = core.StringPtr("testString")
 				addProfileOptionsModel.ProfileName = core.StringPtr("testString")
@@ -991,8 +991,8 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				addProfileOptionsModel.ProfileVersion = core.StringPtr("testString")
 				addProfileOptionsModel.Latest = core.BoolPtr(true)
 				addProfileOptionsModel.VersionGroupLabel = core.StringPtr("testString")
-				addProfileOptionsModel.Controls = []sccphoenixcomplianceapisv1.ProfileControlsInRequest{*profileControlsInRequestModel}
-				addProfileOptionsModel.DefaultParameters = []sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel}
+				addProfileOptionsModel.Controls = []compliancev2.ProfileControlsInRequest{*profileControlsInRequestModel}
+				addProfileOptionsModel.DefaultParameters = []compliancev2.DefaultParameters{*defaultParametersModel}
 				addProfileOptionsModel.TransactionID = core.StringPtr("testString")
 				addProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -1004,7 +1004,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 
 			})
 			It(`Invoke AddProfile with error: Operation validation and request error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1012,12 +1012,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ProfileControlsInRequest model
-				profileControlsInRequestModel := new(sccphoenixcomplianceapisv1.ProfileControlsInRequest)
+				profileControlsInRequestModel := new(compliancev2.ProfileControlsInRequest)
 				profileControlsInRequestModel.ControlLibraryID = core.StringPtr("testString")
 				profileControlsInRequestModel.ControlID = core.StringPtr("testString")
 
 				// Construct an instance of the DefaultParameters model
-				defaultParametersModel := new(sccphoenixcomplianceapisv1.DefaultParameters)
+				defaultParametersModel := new(compliancev2.DefaultParameters)
 				defaultParametersModel.AssessmentType = core.StringPtr("testString")
 				defaultParametersModel.AssessmentID = core.StringPtr("testString")
 				defaultParametersModel.ParameterName = core.StringPtr("testString")
@@ -1026,7 +1026,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				defaultParametersModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the AddProfileOptions model
-				addProfileOptionsModel := new(sccphoenixcomplianceapisv1.AddProfileOptions)
+				addProfileOptionsModel := new(compliancev2.AddProfileOptions)
 				addProfileOptionsModel.ProfilesID = core.StringPtr("testString")
 				addProfileOptionsModel.InstanceID = core.StringPtr("testString")
 				addProfileOptionsModel.ProfileName = core.StringPtr("testString")
@@ -1035,8 +1035,8 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				addProfileOptionsModel.ProfileVersion = core.StringPtr("testString")
 				addProfileOptionsModel.Latest = core.BoolPtr(true)
 				addProfileOptionsModel.VersionGroupLabel = core.StringPtr("testString")
-				addProfileOptionsModel.Controls = []sccphoenixcomplianceapisv1.ProfileControlsInRequest{*profileControlsInRequestModel}
-				addProfileOptionsModel.DefaultParameters = []sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel}
+				addProfileOptionsModel.Controls = []compliancev2.ProfileControlsInRequest{*profileControlsInRequestModel}
+				addProfileOptionsModel.DefaultParameters = []compliancev2.DefaultParameters{*defaultParametersModel}
 				addProfileOptionsModel.TransactionID = core.StringPtr("testString")
 				addProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
@@ -1048,7 +1048,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the AddProfileOptions model with no property values
-				addProfileOptionsModelNew := new(sccphoenixcomplianceapisv1.AddProfileOptions)
+				addProfileOptionsModelNew := new(compliancev2.AddProfileOptions)
 				// Invoke operation with invalid model (negative test)
 				result, response, operationErr = sccPhoenixComplianceApisService.AddProfile(addProfileOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
@@ -1069,7 +1069,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke AddProfile successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1077,12 +1077,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ProfileControlsInRequest model
-				profileControlsInRequestModel := new(sccphoenixcomplianceapisv1.ProfileControlsInRequest)
+				profileControlsInRequestModel := new(compliancev2.ProfileControlsInRequest)
 				profileControlsInRequestModel.ControlLibraryID = core.StringPtr("testString")
 				profileControlsInRequestModel.ControlID = core.StringPtr("testString")
 
 				// Construct an instance of the DefaultParameters model
-				defaultParametersModel := new(sccphoenixcomplianceapisv1.DefaultParameters)
+				defaultParametersModel := new(compliancev2.DefaultParameters)
 				defaultParametersModel.AssessmentType = core.StringPtr("testString")
 				defaultParametersModel.AssessmentID = core.StringPtr("testString")
 				defaultParametersModel.ParameterName = core.StringPtr("testString")
@@ -1091,7 +1091,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				defaultParametersModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the AddProfileOptions model
-				addProfileOptionsModel := new(sccphoenixcomplianceapisv1.AddProfileOptions)
+				addProfileOptionsModel := new(compliancev2.AddProfileOptions)
 				addProfileOptionsModel.ProfilesID = core.StringPtr("testString")
 				addProfileOptionsModel.InstanceID = core.StringPtr("testString")
 				addProfileOptionsModel.ProfileName = core.StringPtr("testString")
@@ -1100,8 +1100,8 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				addProfileOptionsModel.ProfileVersion = core.StringPtr("testString")
 				addProfileOptionsModel.Latest = core.BoolPtr(true)
 				addProfileOptionsModel.VersionGroupLabel = core.StringPtr("testString")
-				addProfileOptionsModel.Controls = []sccphoenixcomplianceapisv1.ProfileControlsInRequest{*profileControlsInRequestModel}
-				addProfileOptionsModel.DefaultParameters = []sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel}
+				addProfileOptionsModel.Controls = []compliancev2.ProfileControlsInRequest{*profileControlsInRequestModel}
+				addProfileOptionsModel.DefaultParameters = []compliancev2.DefaultParameters{*defaultParametersModel}
 				addProfileOptionsModel.TransactionID = core.StringPtr("testString")
 				addProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -1136,7 +1136,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke GetProfile with error: Operation response processing error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1144,7 +1144,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the GetProfileOptions model
-				getProfileOptionsModel := new(sccphoenixcomplianceapisv1.GetProfileOptions)
+				getProfileOptionsModel := new(compliancev2.GetProfileOptions)
 				getProfileOptionsModel.ProfilesID = core.StringPtr("testString")
 				getProfileOptionsModel.InstanceID = core.StringPtr("testString")
 				getProfileOptionsModel.TransactionID = core.StringPtr("testString")
@@ -1190,7 +1190,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke GetProfile successfully with retries`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1199,7 +1199,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				sccPhoenixComplianceApisService.EnableRetries(0, 0)
 
 				// Construct an instance of the GetProfileOptions model
-				getProfileOptionsModel := new(sccphoenixcomplianceapisv1.GetProfileOptions)
+				getProfileOptionsModel := new(compliancev2.GetProfileOptions)
 				getProfileOptionsModel.ProfilesID = core.StringPtr("testString")
 				getProfileOptionsModel.InstanceID = core.StringPtr("testString")
 				getProfileOptionsModel.TransactionID = core.StringPtr("testString")
@@ -1248,7 +1248,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke GetProfile successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1262,7 +1262,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the GetProfileOptions model
-				getProfileOptionsModel := new(sccphoenixcomplianceapisv1.GetProfileOptions)
+				getProfileOptionsModel := new(compliancev2.GetProfileOptions)
 				getProfileOptionsModel.ProfilesID = core.StringPtr("testString")
 				getProfileOptionsModel.InstanceID = core.StringPtr("testString")
 				getProfileOptionsModel.TransactionID = core.StringPtr("testString")
@@ -1276,7 +1276,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 
 			})
 			It(`Invoke GetProfile with error: Operation validation and request error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1284,7 +1284,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the GetProfileOptions model
-				getProfileOptionsModel := new(sccphoenixcomplianceapisv1.GetProfileOptions)
+				getProfileOptionsModel := new(compliancev2.GetProfileOptions)
 				getProfileOptionsModel.ProfilesID = core.StringPtr("testString")
 				getProfileOptionsModel.InstanceID = core.StringPtr("testString")
 				getProfileOptionsModel.TransactionID = core.StringPtr("testString")
@@ -1298,7 +1298,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the GetProfileOptions model with no property values
-				getProfileOptionsModelNew := new(sccphoenixcomplianceapisv1.GetProfileOptions)
+				getProfileOptionsModelNew := new(compliancev2.GetProfileOptions)
 				// Invoke operation with invalid model (negative test)
 				result, response, operationErr = sccPhoenixComplianceApisService.GetProfile(getProfileOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
@@ -1319,7 +1319,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke GetProfile successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1327,7 +1327,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the GetProfileOptions model
-				getProfileOptionsModel := new(sccphoenixcomplianceapisv1.GetProfileOptions)
+				getProfileOptionsModel := new(compliancev2.GetProfileOptions)
 				getProfileOptionsModel.ProfilesID = core.StringPtr("testString")
 				getProfileOptionsModel.InstanceID = core.StringPtr("testString")
 				getProfileOptionsModel.TransactionID = core.StringPtr("testString")
@@ -1364,7 +1364,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke DeleteCustomProfile with error: Operation response processing error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1372,7 +1372,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteCustomProfileOptions model
-				deleteCustomProfileOptionsModel := new(sccphoenixcomplianceapisv1.DeleteCustomProfileOptions)
+				deleteCustomProfileOptionsModel := new(compliancev2.DeleteCustomProfileOptions)
 				deleteCustomProfileOptionsModel.ProfilesID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.InstanceID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.TransactionID = core.StringPtr("testString")
@@ -1418,7 +1418,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke DeleteCustomProfile successfully with retries`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1427,7 +1427,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				sccPhoenixComplianceApisService.EnableRetries(0, 0)
 
 				// Construct an instance of the DeleteCustomProfileOptions model
-				deleteCustomProfileOptionsModel := new(sccphoenixcomplianceapisv1.DeleteCustomProfileOptions)
+				deleteCustomProfileOptionsModel := new(compliancev2.DeleteCustomProfileOptions)
 				deleteCustomProfileOptionsModel.ProfilesID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.InstanceID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.TransactionID = core.StringPtr("testString")
@@ -1476,7 +1476,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke DeleteCustomProfile successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1490,7 +1490,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the DeleteCustomProfileOptions model
-				deleteCustomProfileOptionsModel := new(sccphoenixcomplianceapisv1.DeleteCustomProfileOptions)
+				deleteCustomProfileOptionsModel := new(compliancev2.DeleteCustomProfileOptions)
 				deleteCustomProfileOptionsModel.ProfilesID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.InstanceID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.TransactionID = core.StringPtr("testString")
@@ -1504,7 +1504,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 
 			})
 			It(`Invoke DeleteCustomProfile with error: Operation validation and request error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1512,7 +1512,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteCustomProfileOptions model
-				deleteCustomProfileOptionsModel := new(sccphoenixcomplianceapisv1.DeleteCustomProfileOptions)
+				deleteCustomProfileOptionsModel := new(compliancev2.DeleteCustomProfileOptions)
 				deleteCustomProfileOptionsModel.ProfilesID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.InstanceID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.TransactionID = core.StringPtr("testString")
@@ -1526,7 +1526,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the DeleteCustomProfileOptions model with no property values
-				deleteCustomProfileOptionsModelNew := new(sccphoenixcomplianceapisv1.DeleteCustomProfileOptions)
+				deleteCustomProfileOptionsModelNew := new(compliancev2.DeleteCustomProfileOptions)
 				// Invoke operation with invalid model (negative test)
 				result, response, operationErr = sccPhoenixComplianceApisService.DeleteCustomProfile(deleteCustomProfileOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
@@ -1547,7 +1547,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke DeleteCustomProfile successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1555,7 +1555,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteCustomProfileOptions model
-				deleteCustomProfileOptionsModel := new(sccphoenixcomplianceapisv1.DeleteCustomProfileOptions)
+				deleteCustomProfileOptionsModel := new(compliancev2.DeleteCustomProfileOptions)
 				deleteCustomProfileOptionsModel.ProfilesID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.InstanceID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.TransactionID = core.StringPtr("testString")
@@ -1592,7 +1592,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ReplaceProfileParameters with error: Operation response processing error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1600,7 +1600,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the DefaultParameters model
-				defaultParametersModel := new(sccphoenixcomplianceapisv1.DefaultParameters)
+				defaultParametersModel := new(compliancev2.DefaultParameters)
 				defaultParametersModel.AssessmentType = core.StringPtr("testString")
 				defaultParametersModel.AssessmentID = core.StringPtr("testString")
 				defaultParametersModel.ParameterName = core.StringPtr("testString")
@@ -1609,11 +1609,11 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				defaultParametersModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ReplaceProfileParametersOptions model
-				replaceProfileParametersOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceProfileParametersOptions)
+				replaceProfileParametersOptionsModel := new(compliancev2.ReplaceProfileParametersOptions)
 				replaceProfileParametersOptionsModel.ProfilesID = core.StringPtr("testString")
 				replaceProfileParametersOptionsModel.InstanceID = core.StringPtr("testString")
 				replaceProfileParametersOptionsModel.ID = core.StringPtr("testString")
-				replaceProfileParametersOptionsModel.DefaultParameters = []sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel}
+				replaceProfileParametersOptionsModel.DefaultParameters = []compliancev2.DefaultParameters{*defaultParametersModel}
 				replaceProfileParametersOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceProfileParametersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
@@ -1673,7 +1673,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ReplaceProfileParameters successfully with retries`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1682,7 +1682,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				sccPhoenixComplianceApisService.EnableRetries(0, 0)
 
 				// Construct an instance of the DefaultParameters model
-				defaultParametersModel := new(sccphoenixcomplianceapisv1.DefaultParameters)
+				defaultParametersModel := new(compliancev2.DefaultParameters)
 				defaultParametersModel.AssessmentType = core.StringPtr("testString")
 				defaultParametersModel.AssessmentID = core.StringPtr("testString")
 				defaultParametersModel.ParameterName = core.StringPtr("testString")
@@ -1691,11 +1691,11 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				defaultParametersModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ReplaceProfileParametersOptions model
-				replaceProfileParametersOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceProfileParametersOptions)
+				replaceProfileParametersOptionsModel := new(compliancev2.ReplaceProfileParametersOptions)
 				replaceProfileParametersOptionsModel.ProfilesID = core.StringPtr("testString")
 				replaceProfileParametersOptionsModel.InstanceID = core.StringPtr("testString")
 				replaceProfileParametersOptionsModel.ID = core.StringPtr("testString")
-				replaceProfileParametersOptionsModel.DefaultParameters = []sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel}
+				replaceProfileParametersOptionsModel.DefaultParameters = []compliancev2.DefaultParameters{*defaultParametersModel}
 				replaceProfileParametersOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceProfileParametersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -1758,7 +1758,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ReplaceProfileParameters successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1772,7 +1772,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the DefaultParameters model
-				defaultParametersModel := new(sccphoenixcomplianceapisv1.DefaultParameters)
+				defaultParametersModel := new(compliancev2.DefaultParameters)
 				defaultParametersModel.AssessmentType = core.StringPtr("testString")
 				defaultParametersModel.AssessmentID = core.StringPtr("testString")
 				defaultParametersModel.ParameterName = core.StringPtr("testString")
@@ -1781,11 +1781,11 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				defaultParametersModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ReplaceProfileParametersOptions model
-				replaceProfileParametersOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceProfileParametersOptions)
+				replaceProfileParametersOptionsModel := new(compliancev2.ReplaceProfileParametersOptions)
 				replaceProfileParametersOptionsModel.ProfilesID = core.StringPtr("testString")
 				replaceProfileParametersOptionsModel.InstanceID = core.StringPtr("testString")
 				replaceProfileParametersOptionsModel.ID = core.StringPtr("testString")
-				replaceProfileParametersOptionsModel.DefaultParameters = []sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel}
+				replaceProfileParametersOptionsModel.DefaultParameters = []compliancev2.DefaultParameters{*defaultParametersModel}
 				replaceProfileParametersOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceProfileParametersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -1797,7 +1797,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 
 			})
 			It(`Invoke ReplaceProfileParameters with error: Operation validation and request error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1805,7 +1805,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the DefaultParameters model
-				defaultParametersModel := new(sccphoenixcomplianceapisv1.DefaultParameters)
+				defaultParametersModel := new(compliancev2.DefaultParameters)
 				defaultParametersModel.AssessmentType = core.StringPtr("testString")
 				defaultParametersModel.AssessmentID = core.StringPtr("testString")
 				defaultParametersModel.ParameterName = core.StringPtr("testString")
@@ -1814,11 +1814,11 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				defaultParametersModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ReplaceProfileParametersOptions model
-				replaceProfileParametersOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceProfileParametersOptions)
+				replaceProfileParametersOptionsModel := new(compliancev2.ReplaceProfileParametersOptions)
 				replaceProfileParametersOptionsModel.ProfilesID = core.StringPtr("testString")
 				replaceProfileParametersOptionsModel.InstanceID = core.StringPtr("testString")
 				replaceProfileParametersOptionsModel.ID = core.StringPtr("testString")
-				replaceProfileParametersOptionsModel.DefaultParameters = []sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel}
+				replaceProfileParametersOptionsModel.DefaultParameters = []compliancev2.DefaultParameters{*defaultParametersModel}
 				replaceProfileParametersOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceProfileParametersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
@@ -1830,7 +1830,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the ReplaceProfileParametersOptions model with no property values
-				replaceProfileParametersOptionsModelNew := new(sccphoenixcomplianceapisv1.ReplaceProfileParametersOptions)
+				replaceProfileParametersOptionsModelNew := new(compliancev2.ReplaceProfileParametersOptions)
 				// Invoke operation with invalid model (negative test)
 				result, response, operationErr = sccPhoenixComplianceApisService.ReplaceProfileParameters(replaceProfileParametersOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
@@ -1851,7 +1851,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ReplaceProfileParameters successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1859,7 +1859,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the DefaultParameters model
-				defaultParametersModel := new(sccphoenixcomplianceapisv1.DefaultParameters)
+				defaultParametersModel := new(compliancev2.DefaultParameters)
 				defaultParametersModel.AssessmentType = core.StringPtr("testString")
 				defaultParametersModel.AssessmentID = core.StringPtr("testString")
 				defaultParametersModel.ParameterName = core.StringPtr("testString")
@@ -1868,11 +1868,11 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				defaultParametersModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ReplaceProfileParametersOptions model
-				replaceProfileParametersOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceProfileParametersOptions)
+				replaceProfileParametersOptionsModel := new(compliancev2.ReplaceProfileParametersOptions)
 				replaceProfileParametersOptionsModel.ProfilesID = core.StringPtr("testString")
 				replaceProfileParametersOptionsModel.InstanceID = core.StringPtr("testString")
 				replaceProfileParametersOptionsModel.ID = core.StringPtr("testString")
-				replaceProfileParametersOptionsModel.DefaultParameters = []sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel}
+				replaceProfileParametersOptionsModel.DefaultParameters = []compliancev2.DefaultParameters{*defaultParametersModel}
 				replaceProfileParametersOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceProfileParametersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -1907,7 +1907,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke CreateAttachment with error: Operation response processing error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1915,55 +1915,55 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ScopePayload model
-				scopePayloadModel := new(sccphoenixcomplianceapisv1.ScopePayload)
+				scopePayloadModel := new(compliancev2.ScopePayload)
 				scopePayloadModel.ScopeID = core.StringPtr("testString")
 				scopePayloadModel.ScopeType = core.StringPtr("testString")
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ParameterDetails model
-				parameterDetailsModel := new(sccphoenixcomplianceapisv1.ParameterDetails)
+				parameterDetailsModel := new(compliancev2.ParameterDetails)
 				parameterDetailsModel.ParameterName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterType = core.StringPtr("numeric")
 				parameterDetailsModel.ParameterValue = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentType = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentID = core.StringPtr("testString")
-				parameterDetailsModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				parameterDetailsModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 
 				// Construct an instance of the FailedControls model
-				failedControlsModel := new(sccphoenixcomplianceapisv1.FailedControls)
+				failedControlsModel := new(compliancev2.FailedControls)
 				failedControlsModel.ThresholdLimit = core.Int64Ptr(int64(38))
 				failedControlsModel.FailedControlIds = []string{"testString"}
 
 				// Construct an instance of the AttachmentsNotificationsPayload model
-				attachmentsNotificationsPayloadModel := new(sccphoenixcomplianceapisv1.AttachmentsNotificationsPayload)
+				attachmentsNotificationsPayloadModel := new(compliancev2.AttachmentsNotificationsPayload)
 				attachmentsNotificationsPayloadModel.Enabled = core.BoolPtr(true)
 				attachmentsNotificationsPayloadModel.Controls = failedControlsModel
 
 				// Construct an instance of the AttachmentPayload model
-				attachmentPayloadModel := new(sccphoenixcomplianceapisv1.AttachmentPayload)
+				attachmentPayloadModel := new(compliancev2.AttachmentPayload)
 				attachmentPayloadModel.ID = core.StringPtr("testString")
 				attachmentPayloadModel.AccountID = core.StringPtr("testString")
 				attachmentPayloadModel.IncludedScope = scopePayloadModel
-				attachmentPayloadModel.Exclusions = []sccphoenixcomplianceapisv1.ScopePayload{*scopePayloadModel}
+				attachmentPayloadModel.Exclusions = []compliancev2.ScopePayload{*scopePayloadModel}
 				attachmentPayloadModel.CreatedBy = core.StringPtr("testString")
 				attachmentPayloadModel.CreatedOn = core.StringPtr("testString")
 				attachmentPayloadModel.UpdatedBy = core.StringPtr("testString")
 				attachmentPayloadModel.UpdatedOn = core.StringPtr("testString")
 				attachmentPayloadModel.Status = core.StringPtr("enabled")
-				attachmentPayloadModel.AttachmentParameters = []sccphoenixcomplianceapisv1.ParameterDetails{*parameterDetailsModel}
+				attachmentPayloadModel.AttachmentParameters = []compliancev2.ParameterDetails{*parameterDetailsModel}
 				attachmentPayloadModel.AttachmentNotifications = attachmentsNotificationsPayloadModel
 
 				// Construct an instance of the CreateAttachmentOptions model
-				createAttachmentOptionsModel := new(sccphoenixcomplianceapisv1.CreateAttachmentOptions)
+				createAttachmentOptionsModel := new(compliancev2.CreateAttachmentOptions)
 				createAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
 				createAttachmentOptionsModel.InstanceID = core.StringPtr("testString")
-				createAttachmentOptionsModel.Attachments = []sccphoenixcomplianceapisv1.AttachmentPayload{*attachmentPayloadModel}
+				createAttachmentOptionsModel.Attachments = []compliancev2.AttachmentPayload{*attachmentPayloadModel}
 				createAttachmentOptionsModel.TransactionID = core.StringPtr("testString")
 				createAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
@@ -2023,7 +2023,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke CreateAttachment successfully with retries`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2032,55 +2032,55 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				sccPhoenixComplianceApisService.EnableRetries(0, 0)
 
 				// Construct an instance of the ScopePayload model
-				scopePayloadModel := new(sccphoenixcomplianceapisv1.ScopePayload)
+				scopePayloadModel := new(compliancev2.ScopePayload)
 				scopePayloadModel.ScopeID = core.StringPtr("testString")
 				scopePayloadModel.ScopeType = core.StringPtr("testString")
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ParameterDetails model
-				parameterDetailsModel := new(sccphoenixcomplianceapisv1.ParameterDetails)
+				parameterDetailsModel := new(compliancev2.ParameterDetails)
 				parameterDetailsModel.ParameterName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterType = core.StringPtr("numeric")
 				parameterDetailsModel.ParameterValue = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentType = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentID = core.StringPtr("testString")
-				parameterDetailsModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				parameterDetailsModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 
 				// Construct an instance of the FailedControls model
-				failedControlsModel := new(sccphoenixcomplianceapisv1.FailedControls)
+				failedControlsModel := new(compliancev2.FailedControls)
 				failedControlsModel.ThresholdLimit = core.Int64Ptr(int64(38))
 				failedControlsModel.FailedControlIds = []string{"testString"}
 
 				// Construct an instance of the AttachmentsNotificationsPayload model
-				attachmentsNotificationsPayloadModel := new(sccphoenixcomplianceapisv1.AttachmentsNotificationsPayload)
+				attachmentsNotificationsPayloadModel := new(compliancev2.AttachmentsNotificationsPayload)
 				attachmentsNotificationsPayloadModel.Enabled = core.BoolPtr(true)
 				attachmentsNotificationsPayloadModel.Controls = failedControlsModel
 
 				// Construct an instance of the AttachmentPayload model
-				attachmentPayloadModel := new(sccphoenixcomplianceapisv1.AttachmentPayload)
+				attachmentPayloadModel := new(compliancev2.AttachmentPayload)
 				attachmentPayloadModel.ID = core.StringPtr("testString")
 				attachmentPayloadModel.AccountID = core.StringPtr("testString")
 				attachmentPayloadModel.IncludedScope = scopePayloadModel
-				attachmentPayloadModel.Exclusions = []sccphoenixcomplianceapisv1.ScopePayload{*scopePayloadModel}
+				attachmentPayloadModel.Exclusions = []compliancev2.ScopePayload{*scopePayloadModel}
 				attachmentPayloadModel.CreatedBy = core.StringPtr("testString")
 				attachmentPayloadModel.CreatedOn = core.StringPtr("testString")
 				attachmentPayloadModel.UpdatedBy = core.StringPtr("testString")
 				attachmentPayloadModel.UpdatedOn = core.StringPtr("testString")
 				attachmentPayloadModel.Status = core.StringPtr("enabled")
-				attachmentPayloadModel.AttachmentParameters = []sccphoenixcomplianceapisv1.ParameterDetails{*parameterDetailsModel}
+				attachmentPayloadModel.AttachmentParameters = []compliancev2.ParameterDetails{*parameterDetailsModel}
 				attachmentPayloadModel.AttachmentNotifications = attachmentsNotificationsPayloadModel
 
 				// Construct an instance of the CreateAttachmentOptions model
-				createAttachmentOptionsModel := new(sccphoenixcomplianceapisv1.CreateAttachmentOptions)
+				createAttachmentOptionsModel := new(compliancev2.CreateAttachmentOptions)
 				createAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
 				createAttachmentOptionsModel.InstanceID = core.StringPtr("testString")
-				createAttachmentOptionsModel.Attachments = []sccphoenixcomplianceapisv1.AttachmentPayload{*attachmentPayloadModel}
+				createAttachmentOptionsModel.Attachments = []compliancev2.AttachmentPayload{*attachmentPayloadModel}
 				createAttachmentOptionsModel.TransactionID = core.StringPtr("testString")
 				createAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -2143,7 +2143,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke CreateAttachment successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2157,55 +2157,55 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the ScopePayload model
-				scopePayloadModel := new(sccphoenixcomplianceapisv1.ScopePayload)
+				scopePayloadModel := new(compliancev2.ScopePayload)
 				scopePayloadModel.ScopeID = core.StringPtr("testString")
 				scopePayloadModel.ScopeType = core.StringPtr("testString")
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ParameterDetails model
-				parameterDetailsModel := new(sccphoenixcomplianceapisv1.ParameterDetails)
+				parameterDetailsModel := new(compliancev2.ParameterDetails)
 				parameterDetailsModel.ParameterName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterType = core.StringPtr("numeric")
 				parameterDetailsModel.ParameterValue = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentType = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentID = core.StringPtr("testString")
-				parameterDetailsModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				parameterDetailsModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 
 				// Construct an instance of the FailedControls model
-				failedControlsModel := new(sccphoenixcomplianceapisv1.FailedControls)
+				failedControlsModel := new(compliancev2.FailedControls)
 				failedControlsModel.ThresholdLimit = core.Int64Ptr(int64(38))
 				failedControlsModel.FailedControlIds = []string{"testString"}
 
 				// Construct an instance of the AttachmentsNotificationsPayload model
-				attachmentsNotificationsPayloadModel := new(sccphoenixcomplianceapisv1.AttachmentsNotificationsPayload)
+				attachmentsNotificationsPayloadModel := new(compliancev2.AttachmentsNotificationsPayload)
 				attachmentsNotificationsPayloadModel.Enabled = core.BoolPtr(true)
 				attachmentsNotificationsPayloadModel.Controls = failedControlsModel
 
 				// Construct an instance of the AttachmentPayload model
-				attachmentPayloadModel := new(sccphoenixcomplianceapisv1.AttachmentPayload)
+				attachmentPayloadModel := new(compliancev2.AttachmentPayload)
 				attachmentPayloadModel.ID = core.StringPtr("testString")
 				attachmentPayloadModel.AccountID = core.StringPtr("testString")
 				attachmentPayloadModel.IncludedScope = scopePayloadModel
-				attachmentPayloadModel.Exclusions = []sccphoenixcomplianceapisv1.ScopePayload{*scopePayloadModel}
+				attachmentPayloadModel.Exclusions = []compliancev2.ScopePayload{*scopePayloadModel}
 				attachmentPayloadModel.CreatedBy = core.StringPtr("testString")
 				attachmentPayloadModel.CreatedOn = core.StringPtr("testString")
 				attachmentPayloadModel.UpdatedBy = core.StringPtr("testString")
 				attachmentPayloadModel.UpdatedOn = core.StringPtr("testString")
 				attachmentPayloadModel.Status = core.StringPtr("enabled")
-				attachmentPayloadModel.AttachmentParameters = []sccphoenixcomplianceapisv1.ParameterDetails{*parameterDetailsModel}
+				attachmentPayloadModel.AttachmentParameters = []compliancev2.ParameterDetails{*parameterDetailsModel}
 				attachmentPayloadModel.AttachmentNotifications = attachmentsNotificationsPayloadModel
 
 				// Construct an instance of the CreateAttachmentOptions model
-				createAttachmentOptionsModel := new(sccphoenixcomplianceapisv1.CreateAttachmentOptions)
+				createAttachmentOptionsModel := new(compliancev2.CreateAttachmentOptions)
 				createAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
 				createAttachmentOptionsModel.InstanceID = core.StringPtr("testString")
-				createAttachmentOptionsModel.Attachments = []sccphoenixcomplianceapisv1.AttachmentPayload{*attachmentPayloadModel}
+				createAttachmentOptionsModel.Attachments = []compliancev2.AttachmentPayload{*attachmentPayloadModel}
 				createAttachmentOptionsModel.TransactionID = core.StringPtr("testString")
 				createAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -2217,7 +2217,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 
 			})
 			It(`Invoke CreateAttachment with error: Operation validation and request error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2225,55 +2225,55 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ScopePayload model
-				scopePayloadModel := new(sccphoenixcomplianceapisv1.ScopePayload)
+				scopePayloadModel := new(compliancev2.ScopePayload)
 				scopePayloadModel.ScopeID = core.StringPtr("testString")
 				scopePayloadModel.ScopeType = core.StringPtr("testString")
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ParameterDetails model
-				parameterDetailsModel := new(sccphoenixcomplianceapisv1.ParameterDetails)
+				parameterDetailsModel := new(compliancev2.ParameterDetails)
 				parameterDetailsModel.ParameterName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterType = core.StringPtr("numeric")
 				parameterDetailsModel.ParameterValue = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentType = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentID = core.StringPtr("testString")
-				parameterDetailsModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				parameterDetailsModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 
 				// Construct an instance of the FailedControls model
-				failedControlsModel := new(sccphoenixcomplianceapisv1.FailedControls)
+				failedControlsModel := new(compliancev2.FailedControls)
 				failedControlsModel.ThresholdLimit = core.Int64Ptr(int64(38))
 				failedControlsModel.FailedControlIds = []string{"testString"}
 
 				// Construct an instance of the AttachmentsNotificationsPayload model
-				attachmentsNotificationsPayloadModel := new(sccphoenixcomplianceapisv1.AttachmentsNotificationsPayload)
+				attachmentsNotificationsPayloadModel := new(compliancev2.AttachmentsNotificationsPayload)
 				attachmentsNotificationsPayloadModel.Enabled = core.BoolPtr(true)
 				attachmentsNotificationsPayloadModel.Controls = failedControlsModel
 
 				// Construct an instance of the AttachmentPayload model
-				attachmentPayloadModel := new(sccphoenixcomplianceapisv1.AttachmentPayload)
+				attachmentPayloadModel := new(compliancev2.AttachmentPayload)
 				attachmentPayloadModel.ID = core.StringPtr("testString")
 				attachmentPayloadModel.AccountID = core.StringPtr("testString")
 				attachmentPayloadModel.IncludedScope = scopePayloadModel
-				attachmentPayloadModel.Exclusions = []sccphoenixcomplianceapisv1.ScopePayload{*scopePayloadModel}
+				attachmentPayloadModel.Exclusions = []compliancev2.ScopePayload{*scopePayloadModel}
 				attachmentPayloadModel.CreatedBy = core.StringPtr("testString")
 				attachmentPayloadModel.CreatedOn = core.StringPtr("testString")
 				attachmentPayloadModel.UpdatedBy = core.StringPtr("testString")
 				attachmentPayloadModel.UpdatedOn = core.StringPtr("testString")
 				attachmentPayloadModel.Status = core.StringPtr("enabled")
-				attachmentPayloadModel.AttachmentParameters = []sccphoenixcomplianceapisv1.ParameterDetails{*parameterDetailsModel}
+				attachmentPayloadModel.AttachmentParameters = []compliancev2.ParameterDetails{*parameterDetailsModel}
 				attachmentPayloadModel.AttachmentNotifications = attachmentsNotificationsPayloadModel
 
 				// Construct an instance of the CreateAttachmentOptions model
-				createAttachmentOptionsModel := new(sccphoenixcomplianceapisv1.CreateAttachmentOptions)
+				createAttachmentOptionsModel := new(compliancev2.CreateAttachmentOptions)
 				createAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
 				createAttachmentOptionsModel.InstanceID = core.StringPtr("testString")
-				createAttachmentOptionsModel.Attachments = []sccphoenixcomplianceapisv1.AttachmentPayload{*attachmentPayloadModel}
+				createAttachmentOptionsModel.Attachments = []compliancev2.AttachmentPayload{*attachmentPayloadModel}
 				createAttachmentOptionsModel.TransactionID = core.StringPtr("testString")
 				createAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
@@ -2285,7 +2285,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the CreateAttachmentOptions model with no property values
-				createAttachmentOptionsModelNew := new(sccphoenixcomplianceapisv1.CreateAttachmentOptions)
+				createAttachmentOptionsModelNew := new(compliancev2.CreateAttachmentOptions)
 				// Invoke operation with invalid model (negative test)
 				result, response, operationErr = sccPhoenixComplianceApisService.CreateAttachment(createAttachmentOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
@@ -2306,7 +2306,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke CreateAttachment successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2314,55 +2314,55 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ScopePayload model
-				scopePayloadModel := new(sccphoenixcomplianceapisv1.ScopePayload)
+				scopePayloadModel := new(compliancev2.ScopePayload)
 				scopePayloadModel.ScopeID = core.StringPtr("testString")
 				scopePayloadModel.ScopeType = core.StringPtr("testString")
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ParameterDetails model
-				parameterDetailsModel := new(sccphoenixcomplianceapisv1.ParameterDetails)
+				parameterDetailsModel := new(compliancev2.ParameterDetails)
 				parameterDetailsModel.ParameterName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterType = core.StringPtr("numeric")
 				parameterDetailsModel.ParameterValue = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentType = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentID = core.StringPtr("testString")
-				parameterDetailsModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				parameterDetailsModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 
 				// Construct an instance of the FailedControls model
-				failedControlsModel := new(sccphoenixcomplianceapisv1.FailedControls)
+				failedControlsModel := new(compliancev2.FailedControls)
 				failedControlsModel.ThresholdLimit = core.Int64Ptr(int64(38))
 				failedControlsModel.FailedControlIds = []string{"testString"}
 
 				// Construct an instance of the AttachmentsNotificationsPayload model
-				attachmentsNotificationsPayloadModel := new(sccphoenixcomplianceapisv1.AttachmentsNotificationsPayload)
+				attachmentsNotificationsPayloadModel := new(compliancev2.AttachmentsNotificationsPayload)
 				attachmentsNotificationsPayloadModel.Enabled = core.BoolPtr(true)
 				attachmentsNotificationsPayloadModel.Controls = failedControlsModel
 
 				// Construct an instance of the AttachmentPayload model
-				attachmentPayloadModel := new(sccphoenixcomplianceapisv1.AttachmentPayload)
+				attachmentPayloadModel := new(compliancev2.AttachmentPayload)
 				attachmentPayloadModel.ID = core.StringPtr("testString")
 				attachmentPayloadModel.AccountID = core.StringPtr("testString")
 				attachmentPayloadModel.IncludedScope = scopePayloadModel
-				attachmentPayloadModel.Exclusions = []sccphoenixcomplianceapisv1.ScopePayload{*scopePayloadModel}
+				attachmentPayloadModel.Exclusions = []compliancev2.ScopePayload{*scopePayloadModel}
 				attachmentPayloadModel.CreatedBy = core.StringPtr("testString")
 				attachmentPayloadModel.CreatedOn = core.StringPtr("testString")
 				attachmentPayloadModel.UpdatedBy = core.StringPtr("testString")
 				attachmentPayloadModel.UpdatedOn = core.StringPtr("testString")
 				attachmentPayloadModel.Status = core.StringPtr("enabled")
-				attachmentPayloadModel.AttachmentParameters = []sccphoenixcomplianceapisv1.ParameterDetails{*parameterDetailsModel}
+				attachmentPayloadModel.AttachmentParameters = []compliancev2.ParameterDetails{*parameterDetailsModel}
 				attachmentPayloadModel.AttachmentNotifications = attachmentsNotificationsPayloadModel
 
 				// Construct an instance of the CreateAttachmentOptions model
-				createAttachmentOptionsModel := new(sccphoenixcomplianceapisv1.CreateAttachmentOptions)
+				createAttachmentOptionsModel := new(compliancev2.CreateAttachmentOptions)
 				createAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
 				createAttachmentOptionsModel.InstanceID = core.StringPtr("testString")
-				createAttachmentOptionsModel.Attachments = []sccphoenixcomplianceapisv1.AttachmentPayload{*attachmentPayloadModel}
+				createAttachmentOptionsModel.Attachments = []compliancev2.AttachmentPayload{*attachmentPayloadModel}
 				createAttachmentOptionsModel.TransactionID = core.StringPtr("testString")
 				createAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -2397,7 +2397,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke CheckProfileAttachmnets with error: Operation response processing error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2405,7 +2405,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the CheckProfileAttachmnetsOptions model
-				checkProfileAttachmnetsOptionsModel := new(sccphoenixcomplianceapisv1.CheckProfileAttachmnetsOptions)
+				checkProfileAttachmnetsOptionsModel := new(compliancev2.CheckProfileAttachmnetsOptions)
 				checkProfileAttachmnetsOptionsModel.ProfilesID = core.StringPtr("testString")
 				checkProfileAttachmnetsOptionsModel.InstanceID = core.StringPtr("testString")
 				checkProfileAttachmnetsOptionsModel.TransactionID = core.StringPtr("testString")
@@ -2451,7 +2451,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke CheckProfileAttachmnets successfully with retries`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2460,7 +2460,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				sccPhoenixComplianceApisService.EnableRetries(0, 0)
 
 				// Construct an instance of the CheckProfileAttachmnetsOptions model
-				checkProfileAttachmnetsOptionsModel := new(sccphoenixcomplianceapisv1.CheckProfileAttachmnetsOptions)
+				checkProfileAttachmnetsOptionsModel := new(compliancev2.CheckProfileAttachmnetsOptions)
 				checkProfileAttachmnetsOptionsModel.ProfilesID = core.StringPtr("testString")
 				checkProfileAttachmnetsOptionsModel.InstanceID = core.StringPtr("testString")
 				checkProfileAttachmnetsOptionsModel.TransactionID = core.StringPtr("testString")
@@ -2509,7 +2509,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke CheckProfileAttachmnets successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2523,7 +2523,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the CheckProfileAttachmnetsOptions model
-				checkProfileAttachmnetsOptionsModel := new(sccphoenixcomplianceapisv1.CheckProfileAttachmnetsOptions)
+				checkProfileAttachmnetsOptionsModel := new(compliancev2.CheckProfileAttachmnetsOptions)
 				checkProfileAttachmnetsOptionsModel.ProfilesID = core.StringPtr("testString")
 				checkProfileAttachmnetsOptionsModel.InstanceID = core.StringPtr("testString")
 				checkProfileAttachmnetsOptionsModel.TransactionID = core.StringPtr("testString")
@@ -2537,7 +2537,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 
 			})
 			It(`Invoke CheckProfileAttachmnets with error: Operation validation and request error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2545,7 +2545,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the CheckProfileAttachmnetsOptions model
-				checkProfileAttachmnetsOptionsModel := new(sccphoenixcomplianceapisv1.CheckProfileAttachmnetsOptions)
+				checkProfileAttachmnetsOptionsModel := new(compliancev2.CheckProfileAttachmnetsOptions)
 				checkProfileAttachmnetsOptionsModel.ProfilesID = core.StringPtr("testString")
 				checkProfileAttachmnetsOptionsModel.InstanceID = core.StringPtr("testString")
 				checkProfileAttachmnetsOptionsModel.TransactionID = core.StringPtr("testString")
@@ -2559,7 +2559,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the CheckProfileAttachmnetsOptions model with no property values
-				checkProfileAttachmnetsOptionsModelNew := new(sccphoenixcomplianceapisv1.CheckProfileAttachmnetsOptions)
+				checkProfileAttachmnetsOptionsModelNew := new(compliancev2.CheckProfileAttachmnetsOptions)
 				// Invoke operation with invalid model (negative test)
 				result, response, operationErr = sccPhoenixComplianceApisService.CheckProfileAttachmnets(checkProfileAttachmnetsOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
@@ -2580,7 +2580,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke CheckProfileAttachmnets successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2588,7 +2588,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the CheckProfileAttachmnetsOptions model
-				checkProfileAttachmnetsOptionsModel := new(sccphoenixcomplianceapisv1.CheckProfileAttachmnetsOptions)
+				checkProfileAttachmnetsOptionsModel := new(compliancev2.CheckProfileAttachmnetsOptions)
 				checkProfileAttachmnetsOptionsModel.ProfilesID = core.StringPtr("testString")
 				checkProfileAttachmnetsOptionsModel.InstanceID = core.StringPtr("testString")
 				checkProfileAttachmnetsOptionsModel.TransactionID = core.StringPtr("testString")
@@ -2625,7 +2625,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke GetProfileAttachmnet with error: Operation response processing error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2633,7 +2633,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the GetProfileAttachmnetOptions model
-				getProfileAttachmnetOptionsModel := new(sccphoenixcomplianceapisv1.GetProfileAttachmnetOptions)
+				getProfileAttachmnetOptionsModel := new(compliancev2.GetProfileAttachmnetOptions)
 				getProfileAttachmnetOptionsModel.ProfilesID = core.StringPtr("testString")
 				getProfileAttachmnetOptionsModel.AttachmentID = core.StringPtr("testString")
 				getProfileAttachmnetOptionsModel.InstanceID = core.StringPtr("testString")
@@ -2680,7 +2680,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke GetProfileAttachmnet successfully with retries`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2689,7 +2689,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				sccPhoenixComplianceApisService.EnableRetries(0, 0)
 
 				// Construct an instance of the GetProfileAttachmnetOptions model
-				getProfileAttachmnetOptionsModel := new(sccphoenixcomplianceapisv1.GetProfileAttachmnetOptions)
+				getProfileAttachmnetOptionsModel := new(compliancev2.GetProfileAttachmnetOptions)
 				getProfileAttachmnetOptionsModel.ProfilesID = core.StringPtr("testString")
 				getProfileAttachmnetOptionsModel.AttachmentID = core.StringPtr("testString")
 				getProfileAttachmnetOptionsModel.InstanceID = core.StringPtr("testString")
@@ -2739,7 +2739,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke GetProfileAttachmnet successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2753,7 +2753,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the GetProfileAttachmnetOptions model
-				getProfileAttachmnetOptionsModel := new(sccphoenixcomplianceapisv1.GetProfileAttachmnetOptions)
+				getProfileAttachmnetOptionsModel := new(compliancev2.GetProfileAttachmnetOptions)
 				getProfileAttachmnetOptionsModel.ProfilesID = core.StringPtr("testString")
 				getProfileAttachmnetOptionsModel.AttachmentID = core.StringPtr("testString")
 				getProfileAttachmnetOptionsModel.InstanceID = core.StringPtr("testString")
@@ -2768,7 +2768,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 
 			})
 			It(`Invoke GetProfileAttachmnet with error: Operation validation and request error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2776,7 +2776,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the GetProfileAttachmnetOptions model
-				getProfileAttachmnetOptionsModel := new(sccphoenixcomplianceapisv1.GetProfileAttachmnetOptions)
+				getProfileAttachmnetOptionsModel := new(compliancev2.GetProfileAttachmnetOptions)
 				getProfileAttachmnetOptionsModel.ProfilesID = core.StringPtr("testString")
 				getProfileAttachmnetOptionsModel.AttachmentID = core.StringPtr("testString")
 				getProfileAttachmnetOptionsModel.InstanceID = core.StringPtr("testString")
@@ -2791,7 +2791,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the GetProfileAttachmnetOptions model with no property values
-				getProfileAttachmnetOptionsModelNew := new(sccphoenixcomplianceapisv1.GetProfileAttachmnetOptions)
+				getProfileAttachmnetOptionsModelNew := new(compliancev2.GetProfileAttachmnetOptions)
 				// Invoke operation with invalid model (negative test)
 				result, response, operationErr = sccPhoenixComplianceApisService.GetProfileAttachmnet(getProfileAttachmnetOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
@@ -2812,7 +2812,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke GetProfileAttachmnet successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2820,7 +2820,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the GetProfileAttachmnetOptions model
-				getProfileAttachmnetOptionsModel := new(sccphoenixcomplianceapisv1.GetProfileAttachmnetOptions)
+				getProfileAttachmnetOptionsModel := new(compliancev2.GetProfileAttachmnetOptions)
 				getProfileAttachmnetOptionsModel.ProfilesID = core.StringPtr("testString")
 				getProfileAttachmnetOptionsModel.AttachmentID = core.StringPtr("testString")
 				getProfileAttachmnetOptionsModel.InstanceID = core.StringPtr("testString")
@@ -2858,7 +2858,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ReplaceProfileAttachment with error: Operation response processing error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2866,51 +2866,51 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ScopePayload model
-				scopePayloadModel := new(sccphoenixcomplianceapisv1.ScopePayload)
+				scopePayloadModel := new(compliancev2.ScopePayload)
 				scopePayloadModel.ScopeID = core.StringPtr("testString")
 				scopePayloadModel.ScopeType = core.StringPtr("testString")
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ParameterDetails model
-				parameterDetailsModel := new(sccphoenixcomplianceapisv1.ParameterDetails)
+				parameterDetailsModel := new(compliancev2.ParameterDetails)
 				parameterDetailsModel.ParameterName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterType = core.StringPtr("numeric")
 				parameterDetailsModel.ParameterValue = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentType = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentID = core.StringPtr("testString")
-				parameterDetailsModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				parameterDetailsModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 
 				// Construct an instance of the FailedControls model
-				failedControlsModel := new(sccphoenixcomplianceapisv1.FailedControls)
+				failedControlsModel := new(compliancev2.FailedControls)
 				failedControlsModel.ThresholdLimit = core.Int64Ptr(int64(38))
 				failedControlsModel.FailedControlIds = []string{"testString"}
 
 				// Construct an instance of the AttachmentsNotificationsPayload model
-				attachmentsNotificationsPayloadModel := new(sccphoenixcomplianceapisv1.AttachmentsNotificationsPayload)
+				attachmentsNotificationsPayloadModel := new(compliancev2.AttachmentsNotificationsPayload)
 				attachmentsNotificationsPayloadModel.Enabled = core.BoolPtr(true)
 				attachmentsNotificationsPayloadModel.Controls = failedControlsModel
 
 				// Construct an instance of the ReplaceProfileAttachmentOptions model
-				replaceProfileAttachmentOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceProfileAttachmentOptions)
+				replaceProfileAttachmentOptionsModel := new(compliancev2.ReplaceProfileAttachmentOptions)
 				replaceProfileAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.AccountID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.IncludedScope = scopePayloadModel
-				replaceProfileAttachmentOptionsModel.Exclusions = []sccphoenixcomplianceapisv1.ScopePayload{*scopePayloadModel}
+				replaceProfileAttachmentOptionsModel.Exclusions = []compliancev2.ScopePayload{*scopePayloadModel}
 				replaceProfileAttachmentOptionsModel.CreatedBy = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.CreatedOn = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.UpdatedBy = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.UpdatedOn = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.Status = core.StringPtr("enabled")
-				replaceProfileAttachmentOptionsModel.AttachmentParameters = []sccphoenixcomplianceapisv1.ParameterDetails{*parameterDetailsModel}
+				replaceProfileAttachmentOptionsModel.AttachmentParameters = []compliancev2.ParameterDetails{*parameterDetailsModel}
 				replaceProfileAttachmentOptionsModel.AttachmentNotifications = attachmentsNotificationsPayloadModel
 				replaceProfileAttachmentOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -2971,7 +2971,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ReplaceProfileAttachment successfully with retries`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2980,51 +2980,51 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				sccPhoenixComplianceApisService.EnableRetries(0, 0)
 
 				// Construct an instance of the ScopePayload model
-				scopePayloadModel := new(sccphoenixcomplianceapisv1.ScopePayload)
+				scopePayloadModel := new(compliancev2.ScopePayload)
 				scopePayloadModel.ScopeID = core.StringPtr("testString")
 				scopePayloadModel.ScopeType = core.StringPtr("testString")
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ParameterDetails model
-				parameterDetailsModel := new(sccphoenixcomplianceapisv1.ParameterDetails)
+				parameterDetailsModel := new(compliancev2.ParameterDetails)
 				parameterDetailsModel.ParameterName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterType = core.StringPtr("numeric")
 				parameterDetailsModel.ParameterValue = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentType = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentID = core.StringPtr("testString")
-				parameterDetailsModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				parameterDetailsModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 
 				// Construct an instance of the FailedControls model
-				failedControlsModel := new(sccphoenixcomplianceapisv1.FailedControls)
+				failedControlsModel := new(compliancev2.FailedControls)
 				failedControlsModel.ThresholdLimit = core.Int64Ptr(int64(38))
 				failedControlsModel.FailedControlIds = []string{"testString"}
 
 				// Construct an instance of the AttachmentsNotificationsPayload model
-				attachmentsNotificationsPayloadModel := new(sccphoenixcomplianceapisv1.AttachmentsNotificationsPayload)
+				attachmentsNotificationsPayloadModel := new(compliancev2.AttachmentsNotificationsPayload)
 				attachmentsNotificationsPayloadModel.Enabled = core.BoolPtr(true)
 				attachmentsNotificationsPayloadModel.Controls = failedControlsModel
 
 				// Construct an instance of the ReplaceProfileAttachmentOptions model
-				replaceProfileAttachmentOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceProfileAttachmentOptions)
+				replaceProfileAttachmentOptionsModel := new(compliancev2.ReplaceProfileAttachmentOptions)
 				replaceProfileAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.AccountID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.IncludedScope = scopePayloadModel
-				replaceProfileAttachmentOptionsModel.Exclusions = []sccphoenixcomplianceapisv1.ScopePayload{*scopePayloadModel}
+				replaceProfileAttachmentOptionsModel.Exclusions = []compliancev2.ScopePayload{*scopePayloadModel}
 				replaceProfileAttachmentOptionsModel.CreatedBy = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.CreatedOn = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.UpdatedBy = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.UpdatedOn = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.Status = core.StringPtr("enabled")
-				replaceProfileAttachmentOptionsModel.AttachmentParameters = []sccphoenixcomplianceapisv1.ParameterDetails{*parameterDetailsModel}
+				replaceProfileAttachmentOptionsModel.AttachmentParameters = []compliancev2.ParameterDetails{*parameterDetailsModel}
 				replaceProfileAttachmentOptionsModel.AttachmentNotifications = attachmentsNotificationsPayloadModel
 				replaceProfileAttachmentOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3088,7 +3088,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ReplaceProfileAttachment successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3102,51 +3102,51 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the ScopePayload model
-				scopePayloadModel := new(sccphoenixcomplianceapisv1.ScopePayload)
+				scopePayloadModel := new(compliancev2.ScopePayload)
 				scopePayloadModel.ScopeID = core.StringPtr("testString")
 				scopePayloadModel.ScopeType = core.StringPtr("testString")
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ParameterDetails model
-				parameterDetailsModel := new(sccphoenixcomplianceapisv1.ParameterDetails)
+				parameterDetailsModel := new(compliancev2.ParameterDetails)
 				parameterDetailsModel.ParameterName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterType = core.StringPtr("numeric")
 				parameterDetailsModel.ParameterValue = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentType = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentID = core.StringPtr("testString")
-				parameterDetailsModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				parameterDetailsModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 
 				// Construct an instance of the FailedControls model
-				failedControlsModel := new(sccphoenixcomplianceapisv1.FailedControls)
+				failedControlsModel := new(compliancev2.FailedControls)
 				failedControlsModel.ThresholdLimit = core.Int64Ptr(int64(38))
 				failedControlsModel.FailedControlIds = []string{"testString"}
 
 				// Construct an instance of the AttachmentsNotificationsPayload model
-				attachmentsNotificationsPayloadModel := new(sccphoenixcomplianceapisv1.AttachmentsNotificationsPayload)
+				attachmentsNotificationsPayloadModel := new(compliancev2.AttachmentsNotificationsPayload)
 				attachmentsNotificationsPayloadModel.Enabled = core.BoolPtr(true)
 				attachmentsNotificationsPayloadModel.Controls = failedControlsModel
 
 				// Construct an instance of the ReplaceProfileAttachmentOptions model
-				replaceProfileAttachmentOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceProfileAttachmentOptions)
+				replaceProfileAttachmentOptionsModel := new(compliancev2.ReplaceProfileAttachmentOptions)
 				replaceProfileAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.AccountID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.IncludedScope = scopePayloadModel
-				replaceProfileAttachmentOptionsModel.Exclusions = []sccphoenixcomplianceapisv1.ScopePayload{*scopePayloadModel}
+				replaceProfileAttachmentOptionsModel.Exclusions = []compliancev2.ScopePayload{*scopePayloadModel}
 				replaceProfileAttachmentOptionsModel.CreatedBy = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.CreatedOn = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.UpdatedBy = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.UpdatedOn = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.Status = core.StringPtr("enabled")
-				replaceProfileAttachmentOptionsModel.AttachmentParameters = []sccphoenixcomplianceapisv1.ParameterDetails{*parameterDetailsModel}
+				replaceProfileAttachmentOptionsModel.AttachmentParameters = []compliancev2.ParameterDetails{*parameterDetailsModel}
 				replaceProfileAttachmentOptionsModel.AttachmentNotifications = attachmentsNotificationsPayloadModel
 				replaceProfileAttachmentOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3159,7 +3159,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 
 			})
 			It(`Invoke ReplaceProfileAttachment with error: Operation validation and request error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3167,51 +3167,51 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ScopePayload model
-				scopePayloadModel := new(sccphoenixcomplianceapisv1.ScopePayload)
+				scopePayloadModel := new(compliancev2.ScopePayload)
 				scopePayloadModel.ScopeID = core.StringPtr("testString")
 				scopePayloadModel.ScopeType = core.StringPtr("testString")
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ParameterDetails model
-				parameterDetailsModel := new(sccphoenixcomplianceapisv1.ParameterDetails)
+				parameterDetailsModel := new(compliancev2.ParameterDetails)
 				parameterDetailsModel.ParameterName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterType = core.StringPtr("numeric")
 				parameterDetailsModel.ParameterValue = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentType = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentID = core.StringPtr("testString")
-				parameterDetailsModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				parameterDetailsModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 
 				// Construct an instance of the FailedControls model
-				failedControlsModel := new(sccphoenixcomplianceapisv1.FailedControls)
+				failedControlsModel := new(compliancev2.FailedControls)
 				failedControlsModel.ThresholdLimit = core.Int64Ptr(int64(38))
 				failedControlsModel.FailedControlIds = []string{"testString"}
 
 				// Construct an instance of the AttachmentsNotificationsPayload model
-				attachmentsNotificationsPayloadModel := new(sccphoenixcomplianceapisv1.AttachmentsNotificationsPayload)
+				attachmentsNotificationsPayloadModel := new(compliancev2.AttachmentsNotificationsPayload)
 				attachmentsNotificationsPayloadModel.Enabled = core.BoolPtr(true)
 				attachmentsNotificationsPayloadModel.Controls = failedControlsModel
 
 				// Construct an instance of the ReplaceProfileAttachmentOptions model
-				replaceProfileAttachmentOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceProfileAttachmentOptions)
+				replaceProfileAttachmentOptionsModel := new(compliancev2.ReplaceProfileAttachmentOptions)
 				replaceProfileAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.AccountID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.IncludedScope = scopePayloadModel
-				replaceProfileAttachmentOptionsModel.Exclusions = []sccphoenixcomplianceapisv1.ScopePayload{*scopePayloadModel}
+				replaceProfileAttachmentOptionsModel.Exclusions = []compliancev2.ScopePayload{*scopePayloadModel}
 				replaceProfileAttachmentOptionsModel.CreatedBy = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.CreatedOn = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.UpdatedBy = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.UpdatedOn = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.Status = core.StringPtr("enabled")
-				replaceProfileAttachmentOptionsModel.AttachmentParameters = []sccphoenixcomplianceapisv1.ParameterDetails{*parameterDetailsModel}
+				replaceProfileAttachmentOptionsModel.AttachmentParameters = []compliancev2.ParameterDetails{*parameterDetailsModel}
 				replaceProfileAttachmentOptionsModel.AttachmentNotifications = attachmentsNotificationsPayloadModel
 				replaceProfileAttachmentOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3224,7 +3224,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the ReplaceProfileAttachmentOptions model with no property values
-				replaceProfileAttachmentOptionsModelNew := new(sccphoenixcomplianceapisv1.ReplaceProfileAttachmentOptions)
+				replaceProfileAttachmentOptionsModelNew := new(compliancev2.ReplaceProfileAttachmentOptions)
 				// Invoke operation with invalid model (negative test)
 				result, response, operationErr = sccPhoenixComplianceApisService.ReplaceProfileAttachment(replaceProfileAttachmentOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
@@ -3245,7 +3245,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ReplaceProfileAttachment successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3253,51 +3253,51 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ScopePayload model
-				scopePayloadModel := new(sccphoenixcomplianceapisv1.ScopePayload)
+				scopePayloadModel := new(compliancev2.ScopePayload)
 				scopePayloadModel.ScopeID = core.StringPtr("testString")
 				scopePayloadModel.ScopeType = core.StringPtr("testString")
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ParameterDetails model
-				parameterDetailsModel := new(sccphoenixcomplianceapisv1.ParameterDetails)
+				parameterDetailsModel := new(compliancev2.ParameterDetails)
 				parameterDetailsModel.ParameterName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterType = core.StringPtr("numeric")
 				parameterDetailsModel.ParameterValue = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentType = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentID = core.StringPtr("testString")
-				parameterDetailsModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				parameterDetailsModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 
 				// Construct an instance of the FailedControls model
-				failedControlsModel := new(sccphoenixcomplianceapisv1.FailedControls)
+				failedControlsModel := new(compliancev2.FailedControls)
 				failedControlsModel.ThresholdLimit = core.Int64Ptr(int64(38))
 				failedControlsModel.FailedControlIds = []string{"testString"}
 
 				// Construct an instance of the AttachmentsNotificationsPayload model
-				attachmentsNotificationsPayloadModel := new(sccphoenixcomplianceapisv1.AttachmentsNotificationsPayload)
+				attachmentsNotificationsPayloadModel := new(compliancev2.AttachmentsNotificationsPayload)
 				attachmentsNotificationsPayloadModel.Enabled = core.BoolPtr(true)
 				attachmentsNotificationsPayloadModel.Controls = failedControlsModel
 
 				// Construct an instance of the ReplaceProfileAttachmentOptions model
-				replaceProfileAttachmentOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceProfileAttachmentOptions)
+				replaceProfileAttachmentOptionsModel := new(compliancev2.ReplaceProfileAttachmentOptions)
 				replaceProfileAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.AccountID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.IncludedScope = scopePayloadModel
-				replaceProfileAttachmentOptionsModel.Exclusions = []sccphoenixcomplianceapisv1.ScopePayload{*scopePayloadModel}
+				replaceProfileAttachmentOptionsModel.Exclusions = []compliancev2.ScopePayload{*scopePayloadModel}
 				replaceProfileAttachmentOptionsModel.CreatedBy = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.CreatedOn = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.UpdatedBy = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.UpdatedOn = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.Status = core.StringPtr("enabled")
-				replaceProfileAttachmentOptionsModel.AttachmentParameters = []sccphoenixcomplianceapisv1.ParameterDetails{*parameterDetailsModel}
+				replaceProfileAttachmentOptionsModel.AttachmentParameters = []compliancev2.ParameterDetails{*parameterDetailsModel}
 				replaceProfileAttachmentOptionsModel.AttachmentNotifications = attachmentsNotificationsPayloadModel
 				replaceProfileAttachmentOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3333,7 +3333,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke DeleteProfileAttachmnet with error: Operation response processing error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3341,7 +3341,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteProfileAttachmnetOptions model
-				deleteProfileAttachmnetOptionsModel := new(sccphoenixcomplianceapisv1.DeleteProfileAttachmnetOptions)
+				deleteProfileAttachmnetOptionsModel := new(compliancev2.DeleteProfileAttachmnetOptions)
 				deleteProfileAttachmnetOptionsModel.ProfilesID = core.StringPtr("testString")
 				deleteProfileAttachmnetOptionsModel.AttachmentID = core.StringPtr("testString")
 				deleteProfileAttachmnetOptionsModel.InstanceID = core.StringPtr("testString")
@@ -3388,7 +3388,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke DeleteProfileAttachmnet successfully with retries`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3397,7 +3397,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				sccPhoenixComplianceApisService.EnableRetries(0, 0)
 
 				// Construct an instance of the DeleteProfileAttachmnetOptions model
-				deleteProfileAttachmnetOptionsModel := new(sccphoenixcomplianceapisv1.DeleteProfileAttachmnetOptions)
+				deleteProfileAttachmnetOptionsModel := new(compliancev2.DeleteProfileAttachmnetOptions)
 				deleteProfileAttachmnetOptionsModel.ProfilesID = core.StringPtr("testString")
 				deleteProfileAttachmnetOptionsModel.AttachmentID = core.StringPtr("testString")
 				deleteProfileAttachmnetOptionsModel.InstanceID = core.StringPtr("testString")
@@ -3447,7 +3447,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke DeleteProfileAttachmnet successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3461,7 +3461,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the DeleteProfileAttachmnetOptions model
-				deleteProfileAttachmnetOptionsModel := new(sccphoenixcomplianceapisv1.DeleteProfileAttachmnetOptions)
+				deleteProfileAttachmnetOptionsModel := new(compliancev2.DeleteProfileAttachmnetOptions)
 				deleteProfileAttachmnetOptionsModel.ProfilesID = core.StringPtr("testString")
 				deleteProfileAttachmnetOptionsModel.AttachmentID = core.StringPtr("testString")
 				deleteProfileAttachmnetOptionsModel.InstanceID = core.StringPtr("testString")
@@ -3476,7 +3476,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 
 			})
 			It(`Invoke DeleteProfileAttachmnet with error: Operation validation and request error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3484,7 +3484,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteProfileAttachmnetOptions model
-				deleteProfileAttachmnetOptionsModel := new(sccphoenixcomplianceapisv1.DeleteProfileAttachmnetOptions)
+				deleteProfileAttachmnetOptionsModel := new(compliancev2.DeleteProfileAttachmnetOptions)
 				deleteProfileAttachmnetOptionsModel.ProfilesID = core.StringPtr("testString")
 				deleteProfileAttachmnetOptionsModel.AttachmentID = core.StringPtr("testString")
 				deleteProfileAttachmnetOptionsModel.InstanceID = core.StringPtr("testString")
@@ -3499,7 +3499,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the DeleteProfileAttachmnetOptions model with no property values
-				deleteProfileAttachmnetOptionsModelNew := new(sccphoenixcomplianceapisv1.DeleteProfileAttachmnetOptions)
+				deleteProfileAttachmnetOptionsModelNew := new(compliancev2.DeleteProfileAttachmnetOptions)
 				// Invoke operation with invalid model (negative test)
 				result, response, operationErr = sccPhoenixComplianceApisService.DeleteProfileAttachmnet(deleteProfileAttachmnetOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
@@ -3520,7 +3520,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke DeleteProfileAttachmnet successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3528,7 +3528,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteProfileAttachmnetOptions model
-				deleteProfileAttachmnetOptionsModel := new(sccphoenixcomplianceapisv1.DeleteProfileAttachmnetOptions)
+				deleteProfileAttachmnetOptionsModel := new(compliancev2.DeleteProfileAttachmnetOptions)
 				deleteProfileAttachmnetOptionsModel.ProfilesID = core.StringPtr("testString")
 				deleteProfileAttachmnetOptionsModel.AttachmentID = core.StringPtr("testString")
 				deleteProfileAttachmnetOptionsModel.InstanceID = core.StringPtr("testString")
@@ -3566,7 +3566,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ListAttachmentParameters with error: Operation response processing error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3574,7 +3574,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ListAttachmentParametersOptions model
-				listAttachmentParametersOptionsModel := new(sccphoenixcomplianceapisv1.ListAttachmentParametersOptions)
+				listAttachmentParametersOptionsModel := new(compliancev2.ListAttachmentParametersOptions)
 				listAttachmentParametersOptionsModel.ProfilesID = core.StringPtr("testString")
 				listAttachmentParametersOptionsModel.AttachmentID = core.StringPtr("testString")
 				listAttachmentParametersOptionsModel.InstanceID = core.StringPtr("testString")
@@ -3621,7 +3621,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ListAttachmentParameters successfully with retries`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3630,7 +3630,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				sccPhoenixComplianceApisService.EnableRetries(0, 0)
 
 				// Construct an instance of the ListAttachmentParametersOptions model
-				listAttachmentParametersOptionsModel := new(sccphoenixcomplianceapisv1.ListAttachmentParametersOptions)
+				listAttachmentParametersOptionsModel := new(compliancev2.ListAttachmentParametersOptions)
 				listAttachmentParametersOptionsModel.ProfilesID = core.StringPtr("testString")
 				listAttachmentParametersOptionsModel.AttachmentID = core.StringPtr("testString")
 				listAttachmentParametersOptionsModel.InstanceID = core.StringPtr("testString")
@@ -3680,7 +3680,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ListAttachmentParameters successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3694,7 +3694,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the ListAttachmentParametersOptions model
-				listAttachmentParametersOptionsModel := new(sccphoenixcomplianceapisv1.ListAttachmentParametersOptions)
+				listAttachmentParametersOptionsModel := new(compliancev2.ListAttachmentParametersOptions)
 				listAttachmentParametersOptionsModel.ProfilesID = core.StringPtr("testString")
 				listAttachmentParametersOptionsModel.AttachmentID = core.StringPtr("testString")
 				listAttachmentParametersOptionsModel.InstanceID = core.StringPtr("testString")
@@ -3709,7 +3709,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 
 			})
 			It(`Invoke ListAttachmentParameters with error: Operation validation and request error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3717,7 +3717,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ListAttachmentParametersOptions model
-				listAttachmentParametersOptionsModel := new(sccphoenixcomplianceapisv1.ListAttachmentParametersOptions)
+				listAttachmentParametersOptionsModel := new(compliancev2.ListAttachmentParametersOptions)
 				listAttachmentParametersOptionsModel.ProfilesID = core.StringPtr("testString")
 				listAttachmentParametersOptionsModel.AttachmentID = core.StringPtr("testString")
 				listAttachmentParametersOptionsModel.InstanceID = core.StringPtr("testString")
@@ -3732,7 +3732,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the ListAttachmentParametersOptions model with no property values
-				listAttachmentParametersOptionsModelNew := new(sccphoenixcomplianceapisv1.ListAttachmentParametersOptions)
+				listAttachmentParametersOptionsModelNew := new(compliancev2.ListAttachmentParametersOptions)
 				// Invoke operation with invalid model (negative test)
 				result, response, operationErr = sccPhoenixComplianceApisService.ListAttachmentParameters(listAttachmentParametersOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
@@ -3753,7 +3753,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ListAttachmentParameters successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3761,7 +3761,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ListAttachmentParametersOptions model
-				listAttachmentParametersOptionsModel := new(sccphoenixcomplianceapisv1.ListAttachmentParametersOptions)
+				listAttachmentParametersOptionsModel := new(compliancev2.ListAttachmentParametersOptions)
 				listAttachmentParametersOptionsModel.ProfilesID = core.StringPtr("testString")
 				listAttachmentParametersOptionsModel.AttachmentID = core.StringPtr("testString")
 				listAttachmentParametersOptionsModel.InstanceID = core.StringPtr("testString")
@@ -3799,7 +3799,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ReplaceAttachment with error: Operation response processing error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3807,13 +3807,13 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ReplaceAttachmentOptions model
-				replaceAttachmentOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceAttachmentOptions)
+				replaceAttachmentOptionsModel := new(compliancev2.ReplaceAttachmentOptions)
 				replaceAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.InstanceID = core.StringPtr("testString")
@@ -3823,7 +3823,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				replaceAttachmentOptionsModel.ParameterValue = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.AssessmentType = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.AssessmentID = core.StringPtr("testString")
-				replaceAttachmentOptionsModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				replaceAttachmentOptionsModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 				replaceAttachmentOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
@@ -3883,7 +3883,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ReplaceAttachment successfully with retries`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3892,13 +3892,13 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				sccPhoenixComplianceApisService.EnableRetries(0, 0)
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ReplaceAttachmentOptions model
-				replaceAttachmentOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceAttachmentOptions)
+				replaceAttachmentOptionsModel := new(compliancev2.ReplaceAttachmentOptions)
 				replaceAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.InstanceID = core.StringPtr("testString")
@@ -3908,7 +3908,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				replaceAttachmentOptionsModel.ParameterValue = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.AssessmentType = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.AssessmentID = core.StringPtr("testString")
-				replaceAttachmentOptionsModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				replaceAttachmentOptionsModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 				replaceAttachmentOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -3971,7 +3971,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ReplaceAttachment successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3985,13 +3985,13 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ReplaceAttachmentOptions model
-				replaceAttachmentOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceAttachmentOptions)
+				replaceAttachmentOptionsModel := new(compliancev2.ReplaceAttachmentOptions)
 				replaceAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.InstanceID = core.StringPtr("testString")
@@ -4001,7 +4001,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				replaceAttachmentOptionsModel.ParameterValue = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.AssessmentType = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.AssessmentID = core.StringPtr("testString")
-				replaceAttachmentOptionsModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				replaceAttachmentOptionsModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 				replaceAttachmentOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -4013,7 +4013,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 
 			})
 			It(`Invoke ReplaceAttachment with error: Operation validation and request error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4021,13 +4021,13 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ReplaceAttachmentOptions model
-				replaceAttachmentOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceAttachmentOptions)
+				replaceAttachmentOptionsModel := new(compliancev2.ReplaceAttachmentOptions)
 				replaceAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.InstanceID = core.StringPtr("testString")
@@ -4037,7 +4037,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				replaceAttachmentOptionsModel.ParameterValue = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.AssessmentType = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.AssessmentID = core.StringPtr("testString")
-				replaceAttachmentOptionsModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				replaceAttachmentOptionsModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 				replaceAttachmentOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
@@ -4049,7 +4049,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the ReplaceAttachmentOptions model with no property values
-				replaceAttachmentOptionsModelNew := new(sccphoenixcomplianceapisv1.ReplaceAttachmentOptions)
+				replaceAttachmentOptionsModelNew := new(compliancev2.ReplaceAttachmentOptions)
 				// Invoke operation with invalid model (negative test)
 				result, response, operationErr = sccPhoenixComplianceApisService.ReplaceAttachment(replaceAttachmentOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
@@ -4070,7 +4070,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ReplaceAttachment successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4078,13 +4078,13 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ReplaceAttachmentOptions model
-				replaceAttachmentOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceAttachmentOptions)
+				replaceAttachmentOptionsModel := new(compliancev2.ReplaceAttachmentOptions)
 				replaceAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.InstanceID = core.StringPtr("testString")
@@ -4094,7 +4094,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				replaceAttachmentOptionsModel.ParameterValue = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.AssessmentType = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.AssessmentID = core.StringPtr("testString")
-				replaceAttachmentOptionsModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				replaceAttachmentOptionsModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 				replaceAttachmentOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -4129,7 +4129,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke GetParametersByName with error: Operation response processing error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4137,7 +4137,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the GetParametersByNameOptions model
-				getParametersByNameOptionsModel := new(sccphoenixcomplianceapisv1.GetParametersByNameOptions)
+				getParametersByNameOptionsModel := new(compliancev2.GetParametersByNameOptions)
 				getParametersByNameOptionsModel.ProfilesID = core.StringPtr("testString")
 				getParametersByNameOptionsModel.AttachmentID = core.StringPtr("testString")
 				getParametersByNameOptionsModel.ParameterName = core.StringPtr("testString")
@@ -4185,7 +4185,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke GetParametersByName successfully with retries`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4194,7 +4194,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				sccPhoenixComplianceApisService.EnableRetries(0, 0)
 
 				// Construct an instance of the GetParametersByNameOptions model
-				getParametersByNameOptionsModel := new(sccphoenixcomplianceapisv1.GetParametersByNameOptions)
+				getParametersByNameOptionsModel := new(compliancev2.GetParametersByNameOptions)
 				getParametersByNameOptionsModel.ProfilesID = core.StringPtr("testString")
 				getParametersByNameOptionsModel.AttachmentID = core.StringPtr("testString")
 				getParametersByNameOptionsModel.ParameterName = core.StringPtr("testString")
@@ -4245,7 +4245,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke GetParametersByName successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4259,7 +4259,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the GetParametersByNameOptions model
-				getParametersByNameOptionsModel := new(sccphoenixcomplianceapisv1.GetParametersByNameOptions)
+				getParametersByNameOptionsModel := new(compliancev2.GetParametersByNameOptions)
 				getParametersByNameOptionsModel.ProfilesID = core.StringPtr("testString")
 				getParametersByNameOptionsModel.AttachmentID = core.StringPtr("testString")
 				getParametersByNameOptionsModel.ParameterName = core.StringPtr("testString")
@@ -4275,7 +4275,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 
 			})
 			It(`Invoke GetParametersByName with error: Operation validation and request error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4283,7 +4283,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the GetParametersByNameOptions model
-				getParametersByNameOptionsModel := new(sccphoenixcomplianceapisv1.GetParametersByNameOptions)
+				getParametersByNameOptionsModel := new(compliancev2.GetParametersByNameOptions)
 				getParametersByNameOptionsModel.ProfilesID = core.StringPtr("testString")
 				getParametersByNameOptionsModel.AttachmentID = core.StringPtr("testString")
 				getParametersByNameOptionsModel.ParameterName = core.StringPtr("testString")
@@ -4299,7 +4299,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the GetParametersByNameOptions model with no property values
-				getParametersByNameOptionsModelNew := new(sccphoenixcomplianceapisv1.GetParametersByNameOptions)
+				getParametersByNameOptionsModelNew := new(compliancev2.GetParametersByNameOptions)
 				// Invoke operation with invalid model (negative test)
 				result, response, operationErr = sccPhoenixComplianceApisService.GetParametersByName(getParametersByNameOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
@@ -4320,7 +4320,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke GetParametersByName successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4328,7 +4328,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the GetParametersByNameOptions model
-				getParametersByNameOptionsModel := new(sccphoenixcomplianceapisv1.GetParametersByNameOptions)
+				getParametersByNameOptionsModel := new(compliancev2.GetParametersByNameOptions)
 				getParametersByNameOptionsModel.ProfilesID = core.StringPtr("testString")
 				getParametersByNameOptionsModel.AttachmentID = core.StringPtr("testString")
 				getParametersByNameOptionsModel.ParameterName = core.StringPtr("testString")
@@ -4367,7 +4367,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ReplaceAttachmnetParametersByName with error: Operation response processing error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4375,13 +4375,13 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ReplaceAttachmnetParametersByNameOptions model
-				replaceAttachmnetParametersByNameOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceAttachmnetParametersByNameOptions)
+				replaceAttachmnetParametersByNameOptionsModel := new(compliancev2.ReplaceAttachmnetParametersByNameOptions)
 				replaceAttachmnetParametersByNameOptionsModel.ProfilesID = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.AttachmentID = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.ParameterName = core.StringPtr("testString")
@@ -4392,7 +4392,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				replaceAttachmnetParametersByNameOptionsModel.NewParameterValue = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.NewAssessmentType = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.NewAssessmentID = core.StringPtr("testString")
-				replaceAttachmnetParametersByNameOptionsModel.NewParameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				replaceAttachmnetParametersByNameOptionsModel.NewParameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 				replaceAttachmnetParametersByNameOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
@@ -4452,7 +4452,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ReplaceAttachmnetParametersByName successfully with retries`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4461,13 +4461,13 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				sccPhoenixComplianceApisService.EnableRetries(0, 0)
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ReplaceAttachmnetParametersByNameOptions model
-				replaceAttachmnetParametersByNameOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceAttachmnetParametersByNameOptions)
+				replaceAttachmnetParametersByNameOptionsModel := new(compliancev2.ReplaceAttachmnetParametersByNameOptions)
 				replaceAttachmnetParametersByNameOptionsModel.ProfilesID = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.AttachmentID = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.ParameterName = core.StringPtr("testString")
@@ -4478,7 +4478,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				replaceAttachmnetParametersByNameOptionsModel.NewParameterValue = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.NewAssessmentType = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.NewAssessmentID = core.StringPtr("testString")
-				replaceAttachmnetParametersByNameOptionsModel.NewParameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				replaceAttachmnetParametersByNameOptionsModel.NewParameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 				replaceAttachmnetParametersByNameOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -4541,7 +4541,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ReplaceAttachmnetParametersByName successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4555,13 +4555,13 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ReplaceAttachmnetParametersByNameOptions model
-				replaceAttachmnetParametersByNameOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceAttachmnetParametersByNameOptions)
+				replaceAttachmnetParametersByNameOptionsModel := new(compliancev2.ReplaceAttachmnetParametersByNameOptions)
 				replaceAttachmnetParametersByNameOptionsModel.ProfilesID = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.AttachmentID = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.ParameterName = core.StringPtr("testString")
@@ -4572,7 +4572,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				replaceAttachmnetParametersByNameOptionsModel.NewParameterValue = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.NewAssessmentType = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.NewAssessmentID = core.StringPtr("testString")
-				replaceAttachmnetParametersByNameOptionsModel.NewParameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				replaceAttachmnetParametersByNameOptionsModel.NewParameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 				replaceAttachmnetParametersByNameOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -4584,7 +4584,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 
 			})
 			It(`Invoke ReplaceAttachmnetParametersByName with error: Operation validation and request error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4592,13 +4592,13 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ReplaceAttachmnetParametersByNameOptions model
-				replaceAttachmnetParametersByNameOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceAttachmnetParametersByNameOptions)
+				replaceAttachmnetParametersByNameOptionsModel := new(compliancev2.ReplaceAttachmnetParametersByNameOptions)
 				replaceAttachmnetParametersByNameOptionsModel.ProfilesID = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.AttachmentID = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.ParameterName = core.StringPtr("testString")
@@ -4609,7 +4609,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				replaceAttachmnetParametersByNameOptionsModel.NewParameterValue = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.NewAssessmentType = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.NewAssessmentID = core.StringPtr("testString")
-				replaceAttachmnetParametersByNameOptionsModel.NewParameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				replaceAttachmnetParametersByNameOptionsModel.NewParameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 				replaceAttachmnetParametersByNameOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
@@ -4621,7 +4621,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the ReplaceAttachmnetParametersByNameOptions model with no property values
-				replaceAttachmnetParametersByNameOptionsModelNew := new(sccphoenixcomplianceapisv1.ReplaceAttachmnetParametersByNameOptions)
+				replaceAttachmnetParametersByNameOptionsModelNew := new(compliancev2.ReplaceAttachmnetParametersByNameOptions)
 				// Invoke operation with invalid model (negative test)
 				result, response, operationErr = sccPhoenixComplianceApisService.ReplaceAttachmnetParametersByName(replaceAttachmnetParametersByNameOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
@@ -4642,7 +4642,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ReplaceAttachmnetParametersByName successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4650,13 +4650,13 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ReplaceAttachmnetParametersByNameOptions model
-				replaceAttachmnetParametersByNameOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceAttachmnetParametersByNameOptions)
+				replaceAttachmnetParametersByNameOptionsModel := new(compliancev2.ReplaceAttachmnetParametersByNameOptions)
 				replaceAttachmnetParametersByNameOptionsModel.ProfilesID = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.AttachmentID = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.ParameterName = core.StringPtr("testString")
@@ -4667,7 +4667,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				replaceAttachmnetParametersByNameOptionsModel.NewParameterValue = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.NewAssessmentType = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.NewAssessmentID = core.StringPtr("testString")
-				replaceAttachmnetParametersByNameOptionsModel.NewParameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				replaceAttachmnetParametersByNameOptionsModel.NewParameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 				replaceAttachmnetParametersByNameOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceAttachmnetParametersByNameOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -4702,7 +4702,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke CreateCustomControlLibrary with error: Operation response processing error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4710,37 +4710,37 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ImplementationPayload model
-				implementationPayloadModel := new(sccphoenixcomplianceapisv1.ImplementationPayload)
+				implementationPayloadModel := new(compliancev2.ImplementationPayload)
 				implementationPayloadModel.AssessmentID = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentMethod = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentType = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentDescription = core.StringPtr("testString")
 				implementationPayloadModel.ParameterCount = core.Int64Ptr(int64(38))
-				implementationPayloadModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				implementationPayloadModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 
 				// Construct an instance of the ControlSpecifications model
-				controlSpecificationsModel := new(sccphoenixcomplianceapisv1.ControlSpecifications)
+				controlSpecificationsModel := new(compliancev2.ControlSpecifications)
 				controlSpecificationsModel.ID = core.StringPtr("testString")
 				controlSpecificationsModel.Responsibility = core.StringPtr("user")
 				controlSpecificationsModel.ComponentID = core.StringPtr("testString")
 				controlSpecificationsModel.Environment = core.StringPtr("testString")
 				controlSpecificationsModel.Description = core.StringPtr("testString")
 				controlSpecificationsModel.AssessmentsCount = core.Int64Ptr(int64(38))
-				controlSpecificationsModel.Assessments = []sccphoenixcomplianceapisv1.ImplementationPayload{*implementationPayloadModel}
+				controlSpecificationsModel.Assessments = []compliancev2.ImplementationPayload{*implementationPayloadModel}
 
 				// Construct an instance of the ControlDocs model
-				controlDocsModel := new(sccphoenixcomplianceapisv1.ControlDocs)
+				controlDocsModel := new(compliancev2.ControlDocs)
 				controlDocsModel.ControlDocsID = core.StringPtr("testString")
 				controlDocsModel.ControlDocsType = core.StringPtr("testString")
 
 				// Construct an instance of the ControlsInControlLibRequestPayload model
-				controlsInControlLibRequestPayloadModel := new(sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload)
+				controlsInControlLibRequestPayloadModel := new(compliancev2.ControlsInControlLibRequestPayload)
 				controlsInControlLibRequestPayloadModel.ControlName = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlID = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlDescription = core.StringPtr("testString")
@@ -4748,12 +4748,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				controlsInControlLibRequestPayloadModel.ControlParent = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlSeverity = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlTags = []string{"testString"}
-				controlsInControlLibRequestPayloadModel.ControlSpecifications = []sccphoenixcomplianceapisv1.ControlSpecifications{*controlSpecificationsModel}
+				controlsInControlLibRequestPayloadModel.ControlSpecifications = []compliancev2.ControlSpecifications{*controlSpecificationsModel}
 				controlsInControlLibRequestPayloadModel.ControlDocs = controlDocsModel
 				controlsInControlLibRequestPayloadModel.Status = core.StringPtr("enabled")
 
 				// Construct an instance of the CreateCustomControlLibraryOptions model
-				createCustomControlLibraryOptionsModel := new(sccphoenixcomplianceapisv1.CreateCustomControlLibraryOptions)
+				createCustomControlLibraryOptionsModel := new(compliancev2.CreateCustomControlLibraryOptions)
 				createCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.ID = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.AccountID = core.StringPtr("testString")
@@ -4764,7 +4764,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				createCustomControlLibraryOptionsModel.ControlLibraryVersion = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.Latest = core.BoolPtr(true)
 				createCustomControlLibraryOptionsModel.ControlsCount = core.Int64Ptr(int64(38))
-				createCustomControlLibraryOptionsModel.Controls = []sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}
+				createCustomControlLibraryOptionsModel.Controls = []compliancev2.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}
 				createCustomControlLibraryOptionsModel.TransactionID = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
@@ -4824,7 +4824,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke CreateCustomControlLibrary successfully with retries`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4833,37 +4833,37 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				sccPhoenixComplianceApisService.EnableRetries(0, 0)
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ImplementationPayload model
-				implementationPayloadModel := new(sccphoenixcomplianceapisv1.ImplementationPayload)
+				implementationPayloadModel := new(compliancev2.ImplementationPayload)
 				implementationPayloadModel.AssessmentID = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentMethod = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentType = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentDescription = core.StringPtr("testString")
 				implementationPayloadModel.ParameterCount = core.Int64Ptr(int64(38))
-				implementationPayloadModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				implementationPayloadModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 
 				// Construct an instance of the ControlSpecifications model
-				controlSpecificationsModel := new(sccphoenixcomplianceapisv1.ControlSpecifications)
+				controlSpecificationsModel := new(compliancev2.ControlSpecifications)
 				controlSpecificationsModel.ID = core.StringPtr("testString")
 				controlSpecificationsModel.Responsibility = core.StringPtr("user")
 				controlSpecificationsModel.ComponentID = core.StringPtr("testString")
 				controlSpecificationsModel.Environment = core.StringPtr("testString")
 				controlSpecificationsModel.Description = core.StringPtr("testString")
 				controlSpecificationsModel.AssessmentsCount = core.Int64Ptr(int64(38))
-				controlSpecificationsModel.Assessments = []sccphoenixcomplianceapisv1.ImplementationPayload{*implementationPayloadModel}
+				controlSpecificationsModel.Assessments = []compliancev2.ImplementationPayload{*implementationPayloadModel}
 
 				// Construct an instance of the ControlDocs model
-				controlDocsModel := new(sccphoenixcomplianceapisv1.ControlDocs)
+				controlDocsModel := new(compliancev2.ControlDocs)
 				controlDocsModel.ControlDocsID = core.StringPtr("testString")
 				controlDocsModel.ControlDocsType = core.StringPtr("testString")
 
 				// Construct an instance of the ControlsInControlLibRequestPayload model
-				controlsInControlLibRequestPayloadModel := new(sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload)
+				controlsInControlLibRequestPayloadModel := new(compliancev2.ControlsInControlLibRequestPayload)
 				controlsInControlLibRequestPayloadModel.ControlName = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlID = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlDescription = core.StringPtr("testString")
@@ -4871,12 +4871,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				controlsInControlLibRequestPayloadModel.ControlParent = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlSeverity = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlTags = []string{"testString"}
-				controlsInControlLibRequestPayloadModel.ControlSpecifications = []sccphoenixcomplianceapisv1.ControlSpecifications{*controlSpecificationsModel}
+				controlsInControlLibRequestPayloadModel.ControlSpecifications = []compliancev2.ControlSpecifications{*controlSpecificationsModel}
 				controlsInControlLibRequestPayloadModel.ControlDocs = controlDocsModel
 				controlsInControlLibRequestPayloadModel.Status = core.StringPtr("enabled")
 
 				// Construct an instance of the CreateCustomControlLibraryOptions model
-				createCustomControlLibraryOptionsModel := new(sccphoenixcomplianceapisv1.CreateCustomControlLibraryOptions)
+				createCustomControlLibraryOptionsModel := new(compliancev2.CreateCustomControlLibraryOptions)
 				createCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.ID = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.AccountID = core.StringPtr("testString")
@@ -4887,7 +4887,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				createCustomControlLibraryOptionsModel.ControlLibraryVersion = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.Latest = core.BoolPtr(true)
 				createCustomControlLibraryOptionsModel.ControlsCount = core.Int64Ptr(int64(38))
-				createCustomControlLibraryOptionsModel.Controls = []sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}
+				createCustomControlLibraryOptionsModel.Controls = []compliancev2.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}
 				createCustomControlLibraryOptionsModel.TransactionID = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -4950,7 +4950,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke CreateCustomControlLibrary successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4964,37 +4964,37 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ImplementationPayload model
-				implementationPayloadModel := new(sccphoenixcomplianceapisv1.ImplementationPayload)
+				implementationPayloadModel := new(compliancev2.ImplementationPayload)
 				implementationPayloadModel.AssessmentID = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentMethod = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentType = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentDescription = core.StringPtr("testString")
 				implementationPayloadModel.ParameterCount = core.Int64Ptr(int64(38))
-				implementationPayloadModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				implementationPayloadModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 
 				// Construct an instance of the ControlSpecifications model
-				controlSpecificationsModel := new(sccphoenixcomplianceapisv1.ControlSpecifications)
+				controlSpecificationsModel := new(compliancev2.ControlSpecifications)
 				controlSpecificationsModel.ID = core.StringPtr("testString")
 				controlSpecificationsModel.Responsibility = core.StringPtr("user")
 				controlSpecificationsModel.ComponentID = core.StringPtr("testString")
 				controlSpecificationsModel.Environment = core.StringPtr("testString")
 				controlSpecificationsModel.Description = core.StringPtr("testString")
 				controlSpecificationsModel.AssessmentsCount = core.Int64Ptr(int64(38))
-				controlSpecificationsModel.Assessments = []sccphoenixcomplianceapisv1.ImplementationPayload{*implementationPayloadModel}
+				controlSpecificationsModel.Assessments = []compliancev2.ImplementationPayload{*implementationPayloadModel}
 
 				// Construct an instance of the ControlDocs model
-				controlDocsModel := new(sccphoenixcomplianceapisv1.ControlDocs)
+				controlDocsModel := new(compliancev2.ControlDocs)
 				controlDocsModel.ControlDocsID = core.StringPtr("testString")
 				controlDocsModel.ControlDocsType = core.StringPtr("testString")
 
 				// Construct an instance of the ControlsInControlLibRequestPayload model
-				controlsInControlLibRequestPayloadModel := new(sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload)
+				controlsInControlLibRequestPayloadModel := new(compliancev2.ControlsInControlLibRequestPayload)
 				controlsInControlLibRequestPayloadModel.ControlName = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlID = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlDescription = core.StringPtr("testString")
@@ -5002,12 +5002,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				controlsInControlLibRequestPayloadModel.ControlParent = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlSeverity = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlTags = []string{"testString"}
-				controlsInControlLibRequestPayloadModel.ControlSpecifications = []sccphoenixcomplianceapisv1.ControlSpecifications{*controlSpecificationsModel}
+				controlsInControlLibRequestPayloadModel.ControlSpecifications = []compliancev2.ControlSpecifications{*controlSpecificationsModel}
 				controlsInControlLibRequestPayloadModel.ControlDocs = controlDocsModel
 				controlsInControlLibRequestPayloadModel.Status = core.StringPtr("enabled")
 
 				// Construct an instance of the CreateCustomControlLibraryOptions model
-				createCustomControlLibraryOptionsModel := new(sccphoenixcomplianceapisv1.CreateCustomControlLibraryOptions)
+				createCustomControlLibraryOptionsModel := new(compliancev2.CreateCustomControlLibraryOptions)
 				createCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.ID = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.AccountID = core.StringPtr("testString")
@@ -5018,7 +5018,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				createCustomControlLibraryOptionsModel.ControlLibraryVersion = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.Latest = core.BoolPtr(true)
 				createCustomControlLibraryOptionsModel.ControlsCount = core.Int64Ptr(int64(38))
-				createCustomControlLibraryOptionsModel.Controls = []sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}
+				createCustomControlLibraryOptionsModel.Controls = []compliancev2.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}
 				createCustomControlLibraryOptionsModel.TransactionID = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -5030,7 +5030,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 
 			})
 			It(`Invoke CreateCustomControlLibrary with error: Operation validation and request error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5038,37 +5038,37 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ImplementationPayload model
-				implementationPayloadModel := new(sccphoenixcomplianceapisv1.ImplementationPayload)
+				implementationPayloadModel := new(compliancev2.ImplementationPayload)
 				implementationPayloadModel.AssessmentID = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentMethod = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentType = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentDescription = core.StringPtr("testString")
 				implementationPayloadModel.ParameterCount = core.Int64Ptr(int64(38))
-				implementationPayloadModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				implementationPayloadModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 
 				// Construct an instance of the ControlSpecifications model
-				controlSpecificationsModel := new(sccphoenixcomplianceapisv1.ControlSpecifications)
+				controlSpecificationsModel := new(compliancev2.ControlSpecifications)
 				controlSpecificationsModel.ID = core.StringPtr("testString")
 				controlSpecificationsModel.Responsibility = core.StringPtr("user")
 				controlSpecificationsModel.ComponentID = core.StringPtr("testString")
 				controlSpecificationsModel.Environment = core.StringPtr("testString")
 				controlSpecificationsModel.Description = core.StringPtr("testString")
 				controlSpecificationsModel.AssessmentsCount = core.Int64Ptr(int64(38))
-				controlSpecificationsModel.Assessments = []sccphoenixcomplianceapisv1.ImplementationPayload{*implementationPayloadModel}
+				controlSpecificationsModel.Assessments = []compliancev2.ImplementationPayload{*implementationPayloadModel}
 
 				// Construct an instance of the ControlDocs model
-				controlDocsModel := new(sccphoenixcomplianceapisv1.ControlDocs)
+				controlDocsModel := new(compliancev2.ControlDocs)
 				controlDocsModel.ControlDocsID = core.StringPtr("testString")
 				controlDocsModel.ControlDocsType = core.StringPtr("testString")
 
 				// Construct an instance of the ControlsInControlLibRequestPayload model
-				controlsInControlLibRequestPayloadModel := new(sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload)
+				controlsInControlLibRequestPayloadModel := new(compliancev2.ControlsInControlLibRequestPayload)
 				controlsInControlLibRequestPayloadModel.ControlName = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlID = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlDescription = core.StringPtr("testString")
@@ -5076,12 +5076,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				controlsInControlLibRequestPayloadModel.ControlParent = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlSeverity = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlTags = []string{"testString"}
-				controlsInControlLibRequestPayloadModel.ControlSpecifications = []sccphoenixcomplianceapisv1.ControlSpecifications{*controlSpecificationsModel}
+				controlsInControlLibRequestPayloadModel.ControlSpecifications = []compliancev2.ControlSpecifications{*controlSpecificationsModel}
 				controlsInControlLibRequestPayloadModel.ControlDocs = controlDocsModel
 				controlsInControlLibRequestPayloadModel.Status = core.StringPtr("enabled")
 
 				// Construct an instance of the CreateCustomControlLibraryOptions model
-				createCustomControlLibraryOptionsModel := new(sccphoenixcomplianceapisv1.CreateCustomControlLibraryOptions)
+				createCustomControlLibraryOptionsModel := new(compliancev2.CreateCustomControlLibraryOptions)
 				createCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.ID = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.AccountID = core.StringPtr("testString")
@@ -5092,7 +5092,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				createCustomControlLibraryOptionsModel.ControlLibraryVersion = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.Latest = core.BoolPtr(true)
 				createCustomControlLibraryOptionsModel.ControlsCount = core.Int64Ptr(int64(38))
-				createCustomControlLibraryOptionsModel.Controls = []sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}
+				createCustomControlLibraryOptionsModel.Controls = []compliancev2.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}
 				createCustomControlLibraryOptionsModel.TransactionID = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
@@ -5104,7 +5104,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the CreateCustomControlLibraryOptions model with no property values
-				createCustomControlLibraryOptionsModelNew := new(sccphoenixcomplianceapisv1.CreateCustomControlLibraryOptions)
+				createCustomControlLibraryOptionsModelNew := new(compliancev2.CreateCustomControlLibraryOptions)
 				// Invoke operation with invalid model (negative test)
 				result, response, operationErr = sccPhoenixComplianceApisService.CreateCustomControlLibrary(createCustomControlLibraryOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
@@ -5125,7 +5125,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke CreateCustomControlLibrary successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5133,37 +5133,37 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ImplementationPayload model
-				implementationPayloadModel := new(sccphoenixcomplianceapisv1.ImplementationPayload)
+				implementationPayloadModel := new(compliancev2.ImplementationPayload)
 				implementationPayloadModel.AssessmentID = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentMethod = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentType = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentDescription = core.StringPtr("testString")
 				implementationPayloadModel.ParameterCount = core.Int64Ptr(int64(38))
-				implementationPayloadModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				implementationPayloadModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 
 				// Construct an instance of the ControlSpecifications model
-				controlSpecificationsModel := new(sccphoenixcomplianceapisv1.ControlSpecifications)
+				controlSpecificationsModel := new(compliancev2.ControlSpecifications)
 				controlSpecificationsModel.ID = core.StringPtr("testString")
 				controlSpecificationsModel.Responsibility = core.StringPtr("user")
 				controlSpecificationsModel.ComponentID = core.StringPtr("testString")
 				controlSpecificationsModel.Environment = core.StringPtr("testString")
 				controlSpecificationsModel.Description = core.StringPtr("testString")
 				controlSpecificationsModel.AssessmentsCount = core.Int64Ptr(int64(38))
-				controlSpecificationsModel.Assessments = []sccphoenixcomplianceapisv1.ImplementationPayload{*implementationPayloadModel}
+				controlSpecificationsModel.Assessments = []compliancev2.ImplementationPayload{*implementationPayloadModel}
 
 				// Construct an instance of the ControlDocs model
-				controlDocsModel := new(sccphoenixcomplianceapisv1.ControlDocs)
+				controlDocsModel := new(compliancev2.ControlDocs)
 				controlDocsModel.ControlDocsID = core.StringPtr("testString")
 				controlDocsModel.ControlDocsType = core.StringPtr("testString")
 
 				// Construct an instance of the ControlsInControlLibRequestPayload model
-				controlsInControlLibRequestPayloadModel := new(sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload)
+				controlsInControlLibRequestPayloadModel := new(compliancev2.ControlsInControlLibRequestPayload)
 				controlsInControlLibRequestPayloadModel.ControlName = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlID = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlDescription = core.StringPtr("testString")
@@ -5171,12 +5171,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				controlsInControlLibRequestPayloadModel.ControlParent = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlSeverity = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlTags = []string{"testString"}
-				controlsInControlLibRequestPayloadModel.ControlSpecifications = []sccphoenixcomplianceapisv1.ControlSpecifications{*controlSpecificationsModel}
+				controlsInControlLibRequestPayloadModel.ControlSpecifications = []compliancev2.ControlSpecifications{*controlSpecificationsModel}
 				controlsInControlLibRequestPayloadModel.ControlDocs = controlDocsModel
 				controlsInControlLibRequestPayloadModel.Status = core.StringPtr("enabled")
 
 				// Construct an instance of the CreateCustomControlLibraryOptions model
-				createCustomControlLibraryOptionsModel := new(sccphoenixcomplianceapisv1.CreateCustomControlLibraryOptions)
+				createCustomControlLibraryOptionsModel := new(compliancev2.CreateCustomControlLibraryOptions)
 				createCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.ID = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.AccountID = core.StringPtr("testString")
@@ -5187,7 +5187,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				createCustomControlLibraryOptionsModel.ControlLibraryVersion = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.Latest = core.BoolPtr(true)
 				createCustomControlLibraryOptionsModel.ControlsCount = core.Int64Ptr(int64(38))
-				createCustomControlLibraryOptionsModel.Controls = []sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}
+				createCustomControlLibraryOptionsModel.Controls = []compliancev2.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}
 				createCustomControlLibraryOptionsModel.TransactionID = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -5222,7 +5222,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ListControlLibraries with error: Operation response processing error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5230,7 +5230,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ListControlLibrariesOptions model
-				listControlLibrariesOptionsModel := new(sccphoenixcomplianceapisv1.ListControlLibrariesOptions)
+				listControlLibrariesOptionsModel := new(compliancev2.ListControlLibrariesOptions)
 				listControlLibrariesOptionsModel.InstanceID = core.StringPtr("testString")
 				listControlLibrariesOptionsModel.TransactionID = core.StringPtr("testString")
 				listControlLibrariesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -5275,7 +5275,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ListControlLibraries successfully with retries`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5284,7 +5284,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				sccPhoenixComplianceApisService.EnableRetries(0, 0)
 
 				// Construct an instance of the ListControlLibrariesOptions model
-				listControlLibrariesOptionsModel := new(sccphoenixcomplianceapisv1.ListControlLibrariesOptions)
+				listControlLibrariesOptionsModel := new(compliancev2.ListControlLibrariesOptions)
 				listControlLibrariesOptionsModel.InstanceID = core.StringPtr("testString")
 				listControlLibrariesOptionsModel.TransactionID = core.StringPtr("testString")
 				listControlLibrariesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -5332,7 +5332,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ListControlLibraries successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5346,7 +5346,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the ListControlLibrariesOptions model
-				listControlLibrariesOptionsModel := new(sccphoenixcomplianceapisv1.ListControlLibrariesOptions)
+				listControlLibrariesOptionsModel := new(compliancev2.ListControlLibrariesOptions)
 				listControlLibrariesOptionsModel.InstanceID = core.StringPtr("testString")
 				listControlLibrariesOptionsModel.TransactionID = core.StringPtr("testString")
 				listControlLibrariesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -5359,7 +5359,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 
 			})
 			It(`Invoke ListControlLibraries with error: Operation validation and request error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5367,7 +5367,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ListControlLibrariesOptions model
-				listControlLibrariesOptionsModel := new(sccphoenixcomplianceapisv1.ListControlLibrariesOptions)
+				listControlLibrariesOptionsModel := new(compliancev2.ListControlLibrariesOptions)
 				listControlLibrariesOptionsModel.InstanceID = core.StringPtr("testString")
 				listControlLibrariesOptionsModel.TransactionID = core.StringPtr("testString")
 				listControlLibrariesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -5380,7 +5380,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the ListControlLibrariesOptions model with no property values
-				listControlLibrariesOptionsModelNew := new(sccphoenixcomplianceapisv1.ListControlLibrariesOptions)
+				listControlLibrariesOptionsModelNew := new(compliancev2.ListControlLibrariesOptions)
 				// Invoke operation with invalid model (negative test)
 				result, response, operationErr = sccPhoenixComplianceApisService.ListControlLibraries(listControlLibrariesOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
@@ -5401,7 +5401,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ListControlLibraries successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5409,7 +5409,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ListControlLibrariesOptions model
-				listControlLibrariesOptionsModel := new(sccphoenixcomplianceapisv1.ListControlLibrariesOptions)
+				listControlLibrariesOptionsModel := new(compliancev2.ListControlLibrariesOptions)
 				listControlLibrariesOptionsModel.InstanceID = core.StringPtr("testString")
 				listControlLibrariesOptionsModel.TransactionID = core.StringPtr("testString")
 				listControlLibrariesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -5445,7 +5445,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ReplaceCustomControlLibrary with error: Operation response processing error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5453,37 +5453,37 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ImplementationPayload model
-				implementationPayloadModel := new(sccphoenixcomplianceapisv1.ImplementationPayload)
+				implementationPayloadModel := new(compliancev2.ImplementationPayload)
 				implementationPayloadModel.AssessmentID = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentMethod = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentType = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentDescription = core.StringPtr("testString")
 				implementationPayloadModel.ParameterCount = core.Int64Ptr(int64(38))
-				implementationPayloadModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				implementationPayloadModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 
 				// Construct an instance of the ControlSpecifications model
-				controlSpecificationsModel := new(sccphoenixcomplianceapisv1.ControlSpecifications)
+				controlSpecificationsModel := new(compliancev2.ControlSpecifications)
 				controlSpecificationsModel.ID = core.StringPtr("testString")
 				controlSpecificationsModel.Responsibility = core.StringPtr("user")
 				controlSpecificationsModel.ComponentID = core.StringPtr("testString")
 				controlSpecificationsModel.Environment = core.StringPtr("testString")
 				controlSpecificationsModel.Description = core.StringPtr("testString")
 				controlSpecificationsModel.AssessmentsCount = core.Int64Ptr(int64(38))
-				controlSpecificationsModel.Assessments = []sccphoenixcomplianceapisv1.ImplementationPayload{*implementationPayloadModel}
+				controlSpecificationsModel.Assessments = []compliancev2.ImplementationPayload{*implementationPayloadModel}
 
 				// Construct an instance of the ControlDocs model
-				controlDocsModel := new(sccphoenixcomplianceapisv1.ControlDocs)
+				controlDocsModel := new(compliancev2.ControlDocs)
 				controlDocsModel.ControlDocsID = core.StringPtr("testString")
 				controlDocsModel.ControlDocsType = core.StringPtr("testString")
 
 				// Construct an instance of the ControlsInControlLibRequestPayload model
-				controlsInControlLibRequestPayloadModel := new(sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload)
+				controlsInControlLibRequestPayloadModel := new(compliancev2.ControlsInControlLibRequestPayload)
 				controlsInControlLibRequestPayloadModel.ControlName = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlID = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlDescription = core.StringPtr("testString")
@@ -5491,12 +5491,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				controlsInControlLibRequestPayloadModel.ControlParent = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlSeverity = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlTags = []string{"testString"}
-				controlsInControlLibRequestPayloadModel.ControlSpecifications = []sccphoenixcomplianceapisv1.ControlSpecifications{*controlSpecificationsModel}
+				controlsInControlLibRequestPayloadModel.ControlSpecifications = []compliancev2.ControlSpecifications{*controlSpecificationsModel}
 				controlsInControlLibRequestPayloadModel.ControlDocs = controlDocsModel
 				controlsInControlLibRequestPayloadModel.Status = core.StringPtr("enabled")
 
 				// Construct an instance of the ReplaceCustomControlLibraryOptions model
-				replaceCustomControlLibraryOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceCustomControlLibraryOptions)
+				replaceCustomControlLibraryOptionsModel := new(compliancev2.ReplaceCustomControlLibraryOptions)
 				replaceCustomControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.ID = core.StringPtr("testString")
@@ -5508,7 +5508,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				replaceCustomControlLibraryOptionsModel.ControlLibraryVersion = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.Latest = core.BoolPtr(true)
 				replaceCustomControlLibraryOptionsModel.ControlsCount = core.Int64Ptr(int64(38))
-				replaceCustomControlLibraryOptionsModel.Controls = []sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}
+				replaceCustomControlLibraryOptionsModel.Controls = []compliancev2.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}
 				replaceCustomControlLibraryOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
@@ -5568,7 +5568,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ReplaceCustomControlLibrary successfully with retries`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5577,37 +5577,37 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				sccPhoenixComplianceApisService.EnableRetries(0, 0)
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ImplementationPayload model
-				implementationPayloadModel := new(sccphoenixcomplianceapisv1.ImplementationPayload)
+				implementationPayloadModel := new(compliancev2.ImplementationPayload)
 				implementationPayloadModel.AssessmentID = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentMethod = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentType = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentDescription = core.StringPtr("testString")
 				implementationPayloadModel.ParameterCount = core.Int64Ptr(int64(38))
-				implementationPayloadModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				implementationPayloadModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 
 				// Construct an instance of the ControlSpecifications model
-				controlSpecificationsModel := new(sccphoenixcomplianceapisv1.ControlSpecifications)
+				controlSpecificationsModel := new(compliancev2.ControlSpecifications)
 				controlSpecificationsModel.ID = core.StringPtr("testString")
 				controlSpecificationsModel.Responsibility = core.StringPtr("user")
 				controlSpecificationsModel.ComponentID = core.StringPtr("testString")
 				controlSpecificationsModel.Environment = core.StringPtr("testString")
 				controlSpecificationsModel.Description = core.StringPtr("testString")
 				controlSpecificationsModel.AssessmentsCount = core.Int64Ptr(int64(38))
-				controlSpecificationsModel.Assessments = []sccphoenixcomplianceapisv1.ImplementationPayload{*implementationPayloadModel}
+				controlSpecificationsModel.Assessments = []compliancev2.ImplementationPayload{*implementationPayloadModel}
 
 				// Construct an instance of the ControlDocs model
-				controlDocsModel := new(sccphoenixcomplianceapisv1.ControlDocs)
+				controlDocsModel := new(compliancev2.ControlDocs)
 				controlDocsModel.ControlDocsID = core.StringPtr("testString")
 				controlDocsModel.ControlDocsType = core.StringPtr("testString")
 
 				// Construct an instance of the ControlsInControlLibRequestPayload model
-				controlsInControlLibRequestPayloadModel := new(sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload)
+				controlsInControlLibRequestPayloadModel := new(compliancev2.ControlsInControlLibRequestPayload)
 				controlsInControlLibRequestPayloadModel.ControlName = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlID = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlDescription = core.StringPtr("testString")
@@ -5615,12 +5615,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				controlsInControlLibRequestPayloadModel.ControlParent = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlSeverity = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlTags = []string{"testString"}
-				controlsInControlLibRequestPayloadModel.ControlSpecifications = []sccphoenixcomplianceapisv1.ControlSpecifications{*controlSpecificationsModel}
+				controlsInControlLibRequestPayloadModel.ControlSpecifications = []compliancev2.ControlSpecifications{*controlSpecificationsModel}
 				controlsInControlLibRequestPayloadModel.ControlDocs = controlDocsModel
 				controlsInControlLibRequestPayloadModel.Status = core.StringPtr("enabled")
 
 				// Construct an instance of the ReplaceCustomControlLibraryOptions model
-				replaceCustomControlLibraryOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceCustomControlLibraryOptions)
+				replaceCustomControlLibraryOptionsModel := new(compliancev2.ReplaceCustomControlLibraryOptions)
 				replaceCustomControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.ID = core.StringPtr("testString")
@@ -5632,7 +5632,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				replaceCustomControlLibraryOptionsModel.ControlLibraryVersion = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.Latest = core.BoolPtr(true)
 				replaceCustomControlLibraryOptionsModel.ControlsCount = core.Int64Ptr(int64(38))
-				replaceCustomControlLibraryOptionsModel.Controls = []sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}
+				replaceCustomControlLibraryOptionsModel.Controls = []compliancev2.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}
 				replaceCustomControlLibraryOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -5695,7 +5695,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ReplaceCustomControlLibrary successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5709,37 +5709,37 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ImplementationPayload model
-				implementationPayloadModel := new(sccphoenixcomplianceapisv1.ImplementationPayload)
+				implementationPayloadModel := new(compliancev2.ImplementationPayload)
 				implementationPayloadModel.AssessmentID = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentMethod = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentType = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentDescription = core.StringPtr("testString")
 				implementationPayloadModel.ParameterCount = core.Int64Ptr(int64(38))
-				implementationPayloadModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				implementationPayloadModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 
 				// Construct an instance of the ControlSpecifications model
-				controlSpecificationsModel := new(sccphoenixcomplianceapisv1.ControlSpecifications)
+				controlSpecificationsModel := new(compliancev2.ControlSpecifications)
 				controlSpecificationsModel.ID = core.StringPtr("testString")
 				controlSpecificationsModel.Responsibility = core.StringPtr("user")
 				controlSpecificationsModel.ComponentID = core.StringPtr("testString")
 				controlSpecificationsModel.Environment = core.StringPtr("testString")
 				controlSpecificationsModel.Description = core.StringPtr("testString")
 				controlSpecificationsModel.AssessmentsCount = core.Int64Ptr(int64(38))
-				controlSpecificationsModel.Assessments = []sccphoenixcomplianceapisv1.ImplementationPayload{*implementationPayloadModel}
+				controlSpecificationsModel.Assessments = []compliancev2.ImplementationPayload{*implementationPayloadModel}
 
 				// Construct an instance of the ControlDocs model
-				controlDocsModel := new(sccphoenixcomplianceapisv1.ControlDocs)
+				controlDocsModel := new(compliancev2.ControlDocs)
 				controlDocsModel.ControlDocsID = core.StringPtr("testString")
 				controlDocsModel.ControlDocsType = core.StringPtr("testString")
 
 				// Construct an instance of the ControlsInControlLibRequestPayload model
-				controlsInControlLibRequestPayloadModel := new(sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload)
+				controlsInControlLibRequestPayloadModel := new(compliancev2.ControlsInControlLibRequestPayload)
 				controlsInControlLibRequestPayloadModel.ControlName = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlID = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlDescription = core.StringPtr("testString")
@@ -5747,12 +5747,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				controlsInControlLibRequestPayloadModel.ControlParent = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlSeverity = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlTags = []string{"testString"}
-				controlsInControlLibRequestPayloadModel.ControlSpecifications = []sccphoenixcomplianceapisv1.ControlSpecifications{*controlSpecificationsModel}
+				controlsInControlLibRequestPayloadModel.ControlSpecifications = []compliancev2.ControlSpecifications{*controlSpecificationsModel}
 				controlsInControlLibRequestPayloadModel.ControlDocs = controlDocsModel
 				controlsInControlLibRequestPayloadModel.Status = core.StringPtr("enabled")
 
 				// Construct an instance of the ReplaceCustomControlLibraryOptions model
-				replaceCustomControlLibraryOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceCustomControlLibraryOptions)
+				replaceCustomControlLibraryOptionsModel := new(compliancev2.ReplaceCustomControlLibraryOptions)
 				replaceCustomControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.ID = core.StringPtr("testString")
@@ -5764,7 +5764,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				replaceCustomControlLibraryOptionsModel.ControlLibraryVersion = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.Latest = core.BoolPtr(true)
 				replaceCustomControlLibraryOptionsModel.ControlsCount = core.Int64Ptr(int64(38))
-				replaceCustomControlLibraryOptionsModel.Controls = []sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}
+				replaceCustomControlLibraryOptionsModel.Controls = []compliancev2.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}
 				replaceCustomControlLibraryOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -5776,7 +5776,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 
 			})
 			It(`Invoke ReplaceCustomControlLibrary with error: Operation validation and request error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5784,37 +5784,37 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ImplementationPayload model
-				implementationPayloadModel := new(sccphoenixcomplianceapisv1.ImplementationPayload)
+				implementationPayloadModel := new(compliancev2.ImplementationPayload)
 				implementationPayloadModel.AssessmentID = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentMethod = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentType = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentDescription = core.StringPtr("testString")
 				implementationPayloadModel.ParameterCount = core.Int64Ptr(int64(38))
-				implementationPayloadModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				implementationPayloadModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 
 				// Construct an instance of the ControlSpecifications model
-				controlSpecificationsModel := new(sccphoenixcomplianceapisv1.ControlSpecifications)
+				controlSpecificationsModel := new(compliancev2.ControlSpecifications)
 				controlSpecificationsModel.ID = core.StringPtr("testString")
 				controlSpecificationsModel.Responsibility = core.StringPtr("user")
 				controlSpecificationsModel.ComponentID = core.StringPtr("testString")
 				controlSpecificationsModel.Environment = core.StringPtr("testString")
 				controlSpecificationsModel.Description = core.StringPtr("testString")
 				controlSpecificationsModel.AssessmentsCount = core.Int64Ptr(int64(38))
-				controlSpecificationsModel.Assessments = []sccphoenixcomplianceapisv1.ImplementationPayload{*implementationPayloadModel}
+				controlSpecificationsModel.Assessments = []compliancev2.ImplementationPayload{*implementationPayloadModel}
 
 				// Construct an instance of the ControlDocs model
-				controlDocsModel := new(sccphoenixcomplianceapisv1.ControlDocs)
+				controlDocsModel := new(compliancev2.ControlDocs)
 				controlDocsModel.ControlDocsID = core.StringPtr("testString")
 				controlDocsModel.ControlDocsType = core.StringPtr("testString")
 
 				// Construct an instance of the ControlsInControlLibRequestPayload model
-				controlsInControlLibRequestPayloadModel := new(sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload)
+				controlsInControlLibRequestPayloadModel := new(compliancev2.ControlsInControlLibRequestPayload)
 				controlsInControlLibRequestPayloadModel.ControlName = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlID = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlDescription = core.StringPtr("testString")
@@ -5822,12 +5822,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				controlsInControlLibRequestPayloadModel.ControlParent = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlSeverity = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlTags = []string{"testString"}
-				controlsInControlLibRequestPayloadModel.ControlSpecifications = []sccphoenixcomplianceapisv1.ControlSpecifications{*controlSpecificationsModel}
+				controlsInControlLibRequestPayloadModel.ControlSpecifications = []compliancev2.ControlSpecifications{*controlSpecificationsModel}
 				controlsInControlLibRequestPayloadModel.ControlDocs = controlDocsModel
 				controlsInControlLibRequestPayloadModel.Status = core.StringPtr("enabled")
 
 				// Construct an instance of the ReplaceCustomControlLibraryOptions model
-				replaceCustomControlLibraryOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceCustomControlLibraryOptions)
+				replaceCustomControlLibraryOptionsModel := new(compliancev2.ReplaceCustomControlLibraryOptions)
 				replaceCustomControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.ID = core.StringPtr("testString")
@@ -5839,7 +5839,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				replaceCustomControlLibraryOptionsModel.ControlLibraryVersion = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.Latest = core.BoolPtr(true)
 				replaceCustomControlLibraryOptionsModel.ControlsCount = core.Int64Ptr(int64(38))
-				replaceCustomControlLibraryOptionsModel.Controls = []sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}
+				replaceCustomControlLibraryOptionsModel.Controls = []compliancev2.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}
 				replaceCustomControlLibraryOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
@@ -5851,7 +5851,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the ReplaceCustomControlLibraryOptions model with no property values
-				replaceCustomControlLibraryOptionsModelNew := new(sccphoenixcomplianceapisv1.ReplaceCustomControlLibraryOptions)
+				replaceCustomControlLibraryOptionsModelNew := new(compliancev2.ReplaceCustomControlLibraryOptions)
 				// Invoke operation with invalid model (negative test)
 				result, response, operationErr = sccPhoenixComplianceApisService.ReplaceCustomControlLibrary(replaceCustomControlLibraryOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
@@ -5872,7 +5872,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke ReplaceCustomControlLibrary successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5880,37 +5880,37 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
 				parameterInfoModel.ParameterType = core.StringPtr("numeric")
 
 				// Construct an instance of the ImplementationPayload model
-				implementationPayloadModel := new(sccphoenixcomplianceapisv1.ImplementationPayload)
+				implementationPayloadModel := new(compliancev2.ImplementationPayload)
 				implementationPayloadModel.AssessmentID = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentMethod = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentType = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentDescription = core.StringPtr("testString")
 				implementationPayloadModel.ParameterCount = core.Int64Ptr(int64(38))
-				implementationPayloadModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				implementationPayloadModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 
 				// Construct an instance of the ControlSpecifications model
-				controlSpecificationsModel := new(sccphoenixcomplianceapisv1.ControlSpecifications)
+				controlSpecificationsModel := new(compliancev2.ControlSpecifications)
 				controlSpecificationsModel.ID = core.StringPtr("testString")
 				controlSpecificationsModel.Responsibility = core.StringPtr("user")
 				controlSpecificationsModel.ComponentID = core.StringPtr("testString")
 				controlSpecificationsModel.Environment = core.StringPtr("testString")
 				controlSpecificationsModel.Description = core.StringPtr("testString")
 				controlSpecificationsModel.AssessmentsCount = core.Int64Ptr(int64(38))
-				controlSpecificationsModel.Assessments = []sccphoenixcomplianceapisv1.ImplementationPayload{*implementationPayloadModel}
+				controlSpecificationsModel.Assessments = []compliancev2.ImplementationPayload{*implementationPayloadModel}
 
 				// Construct an instance of the ControlDocs model
-				controlDocsModel := new(sccphoenixcomplianceapisv1.ControlDocs)
+				controlDocsModel := new(compliancev2.ControlDocs)
 				controlDocsModel.ControlDocsID = core.StringPtr("testString")
 				controlDocsModel.ControlDocsType = core.StringPtr("testString")
 
 				// Construct an instance of the ControlsInControlLibRequestPayload model
-				controlsInControlLibRequestPayloadModel := new(sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload)
+				controlsInControlLibRequestPayloadModel := new(compliancev2.ControlsInControlLibRequestPayload)
 				controlsInControlLibRequestPayloadModel.ControlName = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlID = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlDescription = core.StringPtr("testString")
@@ -5918,12 +5918,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				controlsInControlLibRequestPayloadModel.ControlParent = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlSeverity = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlTags = []string{"testString"}
-				controlsInControlLibRequestPayloadModel.ControlSpecifications = []sccphoenixcomplianceapisv1.ControlSpecifications{*controlSpecificationsModel}
+				controlsInControlLibRequestPayloadModel.ControlSpecifications = []compliancev2.ControlSpecifications{*controlSpecificationsModel}
 				controlsInControlLibRequestPayloadModel.ControlDocs = controlDocsModel
 				controlsInControlLibRequestPayloadModel.Status = core.StringPtr("enabled")
 
 				// Construct an instance of the ReplaceCustomControlLibraryOptions model
-				replaceCustomControlLibraryOptionsModel := new(sccphoenixcomplianceapisv1.ReplaceCustomControlLibraryOptions)
+				replaceCustomControlLibraryOptionsModel := new(compliancev2.ReplaceCustomControlLibraryOptions)
 				replaceCustomControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.ID = core.StringPtr("testString")
@@ -5935,7 +5935,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				replaceCustomControlLibraryOptionsModel.ControlLibraryVersion = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.Latest = core.BoolPtr(true)
 				replaceCustomControlLibraryOptionsModel.ControlsCount = core.Int64Ptr(int64(38))
-				replaceCustomControlLibraryOptionsModel.Controls = []sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}
+				replaceCustomControlLibraryOptionsModel.Controls = []compliancev2.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}
 				replaceCustomControlLibraryOptionsModel.TransactionID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -5970,7 +5970,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke GetControlLibrary with error: Operation response processing error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5978,7 +5978,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the GetControlLibraryOptions model
-				getControlLibraryOptionsModel := new(sccphoenixcomplianceapisv1.GetControlLibraryOptions)
+				getControlLibraryOptionsModel := new(compliancev2.GetControlLibraryOptions)
 				getControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				getControlLibraryOptionsModel.InstanceID = core.StringPtr("testString")
 				getControlLibraryOptionsModel.TransactionID = core.StringPtr("testString")
@@ -6024,7 +6024,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke GetControlLibrary successfully with retries`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6033,7 +6033,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				sccPhoenixComplianceApisService.EnableRetries(0, 0)
 
 				// Construct an instance of the GetControlLibraryOptions model
-				getControlLibraryOptionsModel := new(sccphoenixcomplianceapisv1.GetControlLibraryOptions)
+				getControlLibraryOptionsModel := new(compliancev2.GetControlLibraryOptions)
 				getControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				getControlLibraryOptionsModel.InstanceID = core.StringPtr("testString")
 				getControlLibraryOptionsModel.TransactionID = core.StringPtr("testString")
@@ -6082,7 +6082,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke GetControlLibrary successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6096,7 +6096,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the GetControlLibraryOptions model
-				getControlLibraryOptionsModel := new(sccphoenixcomplianceapisv1.GetControlLibraryOptions)
+				getControlLibraryOptionsModel := new(compliancev2.GetControlLibraryOptions)
 				getControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				getControlLibraryOptionsModel.InstanceID = core.StringPtr("testString")
 				getControlLibraryOptionsModel.TransactionID = core.StringPtr("testString")
@@ -6110,7 +6110,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 
 			})
 			It(`Invoke GetControlLibrary with error: Operation validation and request error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6118,7 +6118,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the GetControlLibraryOptions model
-				getControlLibraryOptionsModel := new(sccphoenixcomplianceapisv1.GetControlLibraryOptions)
+				getControlLibraryOptionsModel := new(compliancev2.GetControlLibraryOptions)
 				getControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				getControlLibraryOptionsModel.InstanceID = core.StringPtr("testString")
 				getControlLibraryOptionsModel.TransactionID = core.StringPtr("testString")
@@ -6132,7 +6132,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the GetControlLibraryOptions model with no property values
-				getControlLibraryOptionsModelNew := new(sccphoenixcomplianceapisv1.GetControlLibraryOptions)
+				getControlLibraryOptionsModelNew := new(compliancev2.GetControlLibraryOptions)
 				// Invoke operation with invalid model (negative test)
 				result, response, operationErr = sccPhoenixComplianceApisService.GetControlLibrary(getControlLibraryOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
@@ -6153,7 +6153,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke GetControlLibrary successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6161,7 +6161,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the GetControlLibraryOptions model
-				getControlLibraryOptionsModel := new(sccphoenixcomplianceapisv1.GetControlLibraryOptions)
+				getControlLibraryOptionsModel := new(compliancev2.GetControlLibraryOptions)
 				getControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				getControlLibraryOptionsModel.InstanceID = core.StringPtr("testString")
 				getControlLibraryOptionsModel.TransactionID = core.StringPtr("testString")
@@ -6198,7 +6198,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke DeleteCustomControllibrary with error: Operation response processing error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6206,7 +6206,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteCustomControllibraryOptions model
-				deleteCustomControllibraryOptionsModel := new(sccphoenixcomplianceapisv1.DeleteCustomControllibraryOptions)
+				deleteCustomControllibraryOptionsModel := new(compliancev2.DeleteCustomControllibraryOptions)
 				deleteCustomControllibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				deleteCustomControllibraryOptionsModel.InstanceID = core.StringPtr("testString")
 				deleteCustomControllibraryOptionsModel.TransactionID = core.StringPtr("testString")
@@ -6252,7 +6252,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke DeleteCustomControllibrary successfully with retries`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6261,7 +6261,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				sccPhoenixComplianceApisService.EnableRetries(0, 0)
 
 				// Construct an instance of the DeleteCustomControllibraryOptions model
-				deleteCustomControllibraryOptionsModel := new(sccphoenixcomplianceapisv1.DeleteCustomControllibraryOptions)
+				deleteCustomControllibraryOptionsModel := new(compliancev2.DeleteCustomControllibraryOptions)
 				deleteCustomControllibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				deleteCustomControllibraryOptionsModel.InstanceID = core.StringPtr("testString")
 				deleteCustomControllibraryOptionsModel.TransactionID = core.StringPtr("testString")
@@ -6310,7 +6310,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke DeleteCustomControllibrary successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6324,7 +6324,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the DeleteCustomControllibraryOptions model
-				deleteCustomControllibraryOptionsModel := new(sccphoenixcomplianceapisv1.DeleteCustomControllibraryOptions)
+				deleteCustomControllibraryOptionsModel := new(compliancev2.DeleteCustomControllibraryOptions)
 				deleteCustomControllibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				deleteCustomControllibraryOptionsModel.InstanceID = core.StringPtr("testString")
 				deleteCustomControllibraryOptionsModel.TransactionID = core.StringPtr("testString")
@@ -6338,7 +6338,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 
 			})
 			It(`Invoke DeleteCustomControllibrary with error: Operation validation and request error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6346,7 +6346,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteCustomControllibraryOptions model
-				deleteCustomControllibraryOptionsModel := new(sccphoenixcomplianceapisv1.DeleteCustomControllibraryOptions)
+				deleteCustomControllibraryOptionsModel := new(compliancev2.DeleteCustomControllibraryOptions)
 				deleteCustomControllibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				deleteCustomControllibraryOptionsModel.InstanceID = core.StringPtr("testString")
 				deleteCustomControllibraryOptionsModel.TransactionID = core.StringPtr("testString")
@@ -6360,7 +6360,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the DeleteCustomControllibraryOptions model with no property values
-				deleteCustomControllibraryOptionsModelNew := new(sccphoenixcomplianceapisv1.DeleteCustomControllibraryOptions)
+				deleteCustomControllibraryOptionsModelNew := new(compliancev2.DeleteCustomControllibraryOptions)
 				// Invoke operation with invalid model (negative test)
 				result, response, operationErr = sccPhoenixComplianceApisService.DeleteCustomControllibrary(deleteCustomControllibraryOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
@@ -6381,7 +6381,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke DeleteCustomControllibrary successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6389,7 +6389,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the DeleteCustomControllibraryOptions model
-				deleteCustomControllibraryOptionsModel := new(sccphoenixcomplianceapisv1.DeleteCustomControllibraryOptions)
+				deleteCustomControllibraryOptionsModel := new(compliancev2.DeleteCustomControllibraryOptions)
 				deleteCustomControllibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				deleteCustomControllibraryOptionsModel.InstanceID = core.StringPtr("testString")
 				deleteCustomControllibraryOptionsModel.TransactionID = core.StringPtr("testString")
@@ -6426,7 +6426,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke CreateScan with error: Operation response processing error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6434,7 +6434,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the CreateScanOptions model
-				createScanOptionsModel := new(sccphoenixcomplianceapisv1.CreateScanOptions)
+				createScanOptionsModel := new(compliancev2.CreateScanOptions)
 				createScanOptionsModel.InstanceID = core.StringPtr("testString")
 				createScanOptionsModel.AttachmentID = core.StringPtr("testString")
 				createScanOptionsModel.TransactionID = core.StringPtr("testString")
@@ -6496,7 +6496,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke CreateScan successfully with retries`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6505,7 +6505,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				sccPhoenixComplianceApisService.EnableRetries(0, 0)
 
 				// Construct an instance of the CreateScanOptions model
-				createScanOptionsModel := new(sccphoenixcomplianceapisv1.CreateScanOptions)
+				createScanOptionsModel := new(compliancev2.CreateScanOptions)
 				createScanOptionsModel.InstanceID = core.StringPtr("testString")
 				createScanOptionsModel.AttachmentID = core.StringPtr("testString")
 				createScanOptionsModel.TransactionID = core.StringPtr("testString")
@@ -6570,7 +6570,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke CreateScan successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6584,7 +6584,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the CreateScanOptions model
-				createScanOptionsModel := new(sccphoenixcomplianceapisv1.CreateScanOptions)
+				createScanOptionsModel := new(compliancev2.CreateScanOptions)
 				createScanOptionsModel.InstanceID = core.StringPtr("testString")
 				createScanOptionsModel.AttachmentID = core.StringPtr("testString")
 				createScanOptionsModel.TransactionID = core.StringPtr("testString")
@@ -6598,7 +6598,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 
 			})
 			It(`Invoke CreateScan with error: Operation validation and request error`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6606,7 +6606,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the CreateScanOptions model
-				createScanOptionsModel := new(sccphoenixcomplianceapisv1.CreateScanOptions)
+				createScanOptionsModel := new(compliancev2.CreateScanOptions)
 				createScanOptionsModel.InstanceID = core.StringPtr("testString")
 				createScanOptionsModel.AttachmentID = core.StringPtr("testString")
 				createScanOptionsModel.TransactionID = core.StringPtr("testString")
@@ -6620,7 +6620,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 				// Construct a second instance of the CreateScanOptions model with no property values
-				createScanOptionsModelNew := new(sccphoenixcomplianceapisv1.CreateScanOptions)
+				createScanOptionsModelNew := new(compliancev2.CreateScanOptions)
 				// Invoke operation with invalid model (negative test)
 				result, response, operationErr = sccPhoenixComplianceApisService.CreateScan(createScanOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
@@ -6641,7 +6641,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				}))
 			})
 			It(`Invoke CreateScan successfully`, func() {
-				sccPhoenixComplianceApisService, serviceErr := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+				sccPhoenixComplianceApisService, serviceErr := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6649,7 +6649,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 
 				// Construct an instance of the CreateScanOptions model
-				createScanOptionsModel := new(sccphoenixcomplianceapisv1.CreateScanOptions)
+				createScanOptionsModel := new(compliancev2.CreateScanOptions)
 				createScanOptionsModel.InstanceID = core.StringPtr("testString")
 				createScanOptionsModel.AttachmentID = core.StringPtr("testString")
 				createScanOptionsModel.TransactionID = core.StringPtr("testString")
@@ -6670,13 +6670,13 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 	})
 	Describe(`Model constructor tests`, func() {
 		Context(`Using a service client instance`, func() {
-			sccPhoenixComplianceApisService, _ := sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1(&sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+			sccPhoenixComplianceApisService, _ := compliancev2.NewSccPhoenixComplianceApisV1(&compliancev2.SccPhoenixComplianceApisV1Options{
 				URL:           "http://sccphoenixcomplianceapisv1modelgenerator.com",
 				Authenticator: &core.NoAuthAuthenticator{},
 			})
 			It(`Invoke NewAddProfileOptions successfully`, func() {
 				// Construct an instance of the ProfileControlsInRequest model
-				profileControlsInRequestModel := new(sccphoenixcomplianceapisv1.ProfileControlsInRequest)
+				profileControlsInRequestModel := new(compliancev2.ProfileControlsInRequest)
 				Expect(profileControlsInRequestModel).ToNot(BeNil())
 				profileControlsInRequestModel.ControlLibraryID = core.StringPtr("testString")
 				profileControlsInRequestModel.ControlID = core.StringPtr("testString")
@@ -6684,7 +6684,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(profileControlsInRequestModel.ControlID).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the DefaultParameters model
-				defaultParametersModel := new(sccphoenixcomplianceapisv1.DefaultParameters)
+				defaultParametersModel := new(compliancev2.DefaultParameters)
 				Expect(defaultParametersModel).ToNot(BeNil())
 				defaultParametersModel.AssessmentType = core.StringPtr("testString")
 				defaultParametersModel.AssessmentID = core.StringPtr("testString")
@@ -6711,8 +6711,8 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				addProfileOptionsModel.SetProfileVersion("testString")
 				addProfileOptionsModel.SetLatest(true)
 				addProfileOptionsModel.SetVersionGroupLabel("testString")
-				addProfileOptionsModel.SetControls([]sccphoenixcomplianceapisv1.ProfileControlsInRequest{*profileControlsInRequestModel})
-				addProfileOptionsModel.SetDefaultParameters([]sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel})
+				addProfileOptionsModel.SetControls([]compliancev2.ProfileControlsInRequest{*profileControlsInRequestModel})
+				addProfileOptionsModel.SetDefaultParameters([]compliancev2.DefaultParameters{*defaultParametersModel})
 				addProfileOptionsModel.SetTransactionID("testString")
 				addProfileOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(addProfileOptionsModel).ToNot(BeNil())
@@ -6724,8 +6724,8 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(addProfileOptionsModel.ProfileVersion).To(Equal(core.StringPtr("testString")))
 				Expect(addProfileOptionsModel.Latest).To(Equal(core.BoolPtr(true)))
 				Expect(addProfileOptionsModel.VersionGroupLabel).To(Equal(core.StringPtr("testString")))
-				Expect(addProfileOptionsModel.Controls).To(Equal([]sccphoenixcomplianceapisv1.ProfileControlsInRequest{*profileControlsInRequestModel}))
-				Expect(addProfileOptionsModel.DefaultParameters).To(Equal([]sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel}))
+				Expect(addProfileOptionsModel.Controls).To(Equal([]compliancev2.ProfileControlsInRequest{*profileControlsInRequestModel}))
+				Expect(addProfileOptionsModel.DefaultParameters).To(Equal([]compliancev2.DefaultParameters{*defaultParametersModel}))
 				Expect(addProfileOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(addProfileOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
@@ -6746,7 +6746,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 			})
 			It(`Invoke NewCreateAttachmentOptions successfully`, func() {
 				// Construct an instance of the ScopePayload model
-				scopePayloadModel := new(sccphoenixcomplianceapisv1.ScopePayload)
+				scopePayloadModel := new(compliancev2.ScopePayload)
 				Expect(scopePayloadModel).ToNot(BeNil())
 				scopePayloadModel.ScopeID = core.StringPtr("testString")
 				scopePayloadModel.ScopeType = core.StringPtr("testString")
@@ -6754,7 +6754,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(scopePayloadModel.ScopeType).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				Expect(parameterInfoModel).ToNot(BeNil())
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
@@ -6764,7 +6764,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(parameterInfoModel.ParameterType).To(Equal(core.StringPtr("numeric")))
 
 				// Construct an instance of the ParameterDetails model
-				parameterDetailsModel := new(sccphoenixcomplianceapisv1.ParameterDetails)
+				parameterDetailsModel := new(compliancev2.ParameterDetails)
 				Expect(parameterDetailsModel).ToNot(BeNil())
 				parameterDetailsModel.ParameterName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterDisplayName = core.StringPtr("testString")
@@ -6772,17 +6772,17 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				parameterDetailsModel.ParameterValue = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentType = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentID = core.StringPtr("testString")
-				parameterDetailsModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				parameterDetailsModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 				Expect(parameterDetailsModel.ParameterName).To(Equal(core.StringPtr("testString")))
 				Expect(parameterDetailsModel.ParameterDisplayName).To(Equal(core.StringPtr("testString")))
 				Expect(parameterDetailsModel.ParameterType).To(Equal(core.StringPtr("numeric")))
 				Expect(parameterDetailsModel.ParameterValue).To(Equal(core.StringPtr("testString")))
 				Expect(parameterDetailsModel.AssessmentType).To(Equal(core.StringPtr("testString")))
 				Expect(parameterDetailsModel.AssessmentID).To(Equal(core.StringPtr("testString")))
-				Expect(parameterDetailsModel.Parameters).To(Equal([]sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}))
+				Expect(parameterDetailsModel.Parameters).To(Equal([]compliancev2.ParameterInfo{*parameterInfoModel}))
 
 				// Construct an instance of the FailedControls model
-				failedControlsModel := new(sccphoenixcomplianceapisv1.FailedControls)
+				failedControlsModel := new(compliancev2.FailedControls)
 				Expect(failedControlsModel).ToNot(BeNil())
 				failedControlsModel.ThresholdLimit = core.Int64Ptr(int64(38))
 				failedControlsModel.FailedControlIds = []string{"testString"}
@@ -6790,7 +6790,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(failedControlsModel.FailedControlIds).To(Equal([]string{"testString"}))
 
 				// Construct an instance of the AttachmentsNotificationsPayload model
-				attachmentsNotificationsPayloadModel := new(sccphoenixcomplianceapisv1.AttachmentsNotificationsPayload)
+				attachmentsNotificationsPayloadModel := new(compliancev2.AttachmentsNotificationsPayload)
 				Expect(attachmentsNotificationsPayloadModel).ToNot(BeNil())
 				attachmentsNotificationsPayloadModel.Enabled = core.BoolPtr(true)
 				attachmentsNotificationsPayloadModel.Controls = failedControlsModel
@@ -6798,29 +6798,29 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(attachmentsNotificationsPayloadModel.Controls).To(Equal(failedControlsModel))
 
 				// Construct an instance of the AttachmentPayload model
-				attachmentPayloadModel := new(sccphoenixcomplianceapisv1.AttachmentPayload)
+				attachmentPayloadModel := new(compliancev2.AttachmentPayload)
 				Expect(attachmentPayloadModel).ToNot(BeNil())
 				attachmentPayloadModel.ID = core.StringPtr("testString")
 				attachmentPayloadModel.AccountID = core.StringPtr("testString")
 				attachmentPayloadModel.IncludedScope = scopePayloadModel
-				attachmentPayloadModel.Exclusions = []sccphoenixcomplianceapisv1.ScopePayload{*scopePayloadModel}
+				attachmentPayloadModel.Exclusions = []compliancev2.ScopePayload{*scopePayloadModel}
 				attachmentPayloadModel.CreatedBy = core.StringPtr("testString")
 				attachmentPayloadModel.CreatedOn = core.StringPtr("testString")
 				attachmentPayloadModel.UpdatedBy = core.StringPtr("testString")
 				attachmentPayloadModel.UpdatedOn = core.StringPtr("testString")
 				attachmentPayloadModel.Status = core.StringPtr("enabled")
-				attachmentPayloadModel.AttachmentParameters = []sccphoenixcomplianceapisv1.ParameterDetails{*parameterDetailsModel}
+				attachmentPayloadModel.AttachmentParameters = []compliancev2.ParameterDetails{*parameterDetailsModel}
 				attachmentPayloadModel.AttachmentNotifications = attachmentsNotificationsPayloadModel
 				Expect(attachmentPayloadModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(attachmentPayloadModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(attachmentPayloadModel.IncludedScope).To(Equal(scopePayloadModel))
-				Expect(attachmentPayloadModel.Exclusions).To(Equal([]sccphoenixcomplianceapisv1.ScopePayload{*scopePayloadModel}))
+				Expect(attachmentPayloadModel.Exclusions).To(Equal([]compliancev2.ScopePayload{*scopePayloadModel}))
 				Expect(attachmentPayloadModel.CreatedBy).To(Equal(core.StringPtr("testString")))
 				Expect(attachmentPayloadModel.CreatedOn).To(Equal(core.StringPtr("testString")))
 				Expect(attachmentPayloadModel.UpdatedBy).To(Equal(core.StringPtr("testString")))
 				Expect(attachmentPayloadModel.UpdatedOn).To(Equal(core.StringPtr("testString")))
 				Expect(attachmentPayloadModel.Status).To(Equal(core.StringPtr("enabled")))
-				Expect(attachmentPayloadModel.AttachmentParameters).To(Equal([]sccphoenixcomplianceapisv1.ParameterDetails{*parameterDetailsModel}))
+				Expect(attachmentPayloadModel.AttachmentParameters).To(Equal([]compliancev2.ParameterDetails{*parameterDetailsModel}))
 				Expect(attachmentPayloadModel.AttachmentNotifications).To(Equal(attachmentsNotificationsPayloadModel))
 
 				// Construct an instance of the CreateAttachmentOptions model
@@ -6829,19 +6829,19 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				createAttachmentOptionsModel := sccPhoenixComplianceApisService.NewCreateAttachmentOptions(profilesID, instanceID)
 				createAttachmentOptionsModel.SetProfilesID("testString")
 				createAttachmentOptionsModel.SetInstanceID("testString")
-				createAttachmentOptionsModel.SetAttachments([]sccphoenixcomplianceapisv1.AttachmentPayload{*attachmentPayloadModel})
+				createAttachmentOptionsModel.SetAttachments([]compliancev2.AttachmentPayload{*attachmentPayloadModel})
 				createAttachmentOptionsModel.SetTransactionID("testString")
 				createAttachmentOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(createAttachmentOptionsModel).ToNot(BeNil())
 				Expect(createAttachmentOptionsModel.ProfilesID).To(Equal(core.StringPtr("testString")))
 				Expect(createAttachmentOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
-				Expect(createAttachmentOptionsModel.Attachments).To(Equal([]sccphoenixcomplianceapisv1.AttachmentPayload{*attachmentPayloadModel}))
+				Expect(createAttachmentOptionsModel.Attachments).To(Equal([]compliancev2.AttachmentPayload{*attachmentPayloadModel}))
 				Expect(createAttachmentOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(createAttachmentOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewCreateCustomControlLibraryOptions successfully`, func() {
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				Expect(parameterInfoModel).ToNot(BeNil())
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
@@ -6851,23 +6851,23 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(parameterInfoModel.ParameterType).To(Equal(core.StringPtr("numeric")))
 
 				// Construct an instance of the ImplementationPayload model
-				implementationPayloadModel := new(sccphoenixcomplianceapisv1.ImplementationPayload)
+				implementationPayloadModel := new(compliancev2.ImplementationPayload)
 				Expect(implementationPayloadModel).ToNot(BeNil())
 				implementationPayloadModel.AssessmentID = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentMethod = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentType = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentDescription = core.StringPtr("testString")
 				implementationPayloadModel.ParameterCount = core.Int64Ptr(int64(38))
-				implementationPayloadModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				implementationPayloadModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 				Expect(implementationPayloadModel.AssessmentID).To(Equal(core.StringPtr("testString")))
 				Expect(implementationPayloadModel.AssessmentMethod).To(Equal(core.StringPtr("testString")))
 				Expect(implementationPayloadModel.AssessmentType).To(Equal(core.StringPtr("testString")))
 				Expect(implementationPayloadModel.AssessmentDescription).To(Equal(core.StringPtr("testString")))
 				Expect(implementationPayloadModel.ParameterCount).To(Equal(core.Int64Ptr(int64(38))))
-				Expect(implementationPayloadModel.Parameters).To(Equal([]sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}))
+				Expect(implementationPayloadModel.Parameters).To(Equal([]compliancev2.ParameterInfo{*parameterInfoModel}))
 
 				// Construct an instance of the ControlSpecifications model
-				controlSpecificationsModel := new(sccphoenixcomplianceapisv1.ControlSpecifications)
+				controlSpecificationsModel := new(compliancev2.ControlSpecifications)
 				Expect(controlSpecificationsModel).ToNot(BeNil())
 				controlSpecificationsModel.ID = core.StringPtr("testString")
 				controlSpecificationsModel.Responsibility = core.StringPtr("user")
@@ -6875,17 +6875,17 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				controlSpecificationsModel.Environment = core.StringPtr("testString")
 				controlSpecificationsModel.Description = core.StringPtr("testString")
 				controlSpecificationsModel.AssessmentsCount = core.Int64Ptr(int64(38))
-				controlSpecificationsModel.Assessments = []sccphoenixcomplianceapisv1.ImplementationPayload{*implementationPayloadModel}
+				controlSpecificationsModel.Assessments = []compliancev2.ImplementationPayload{*implementationPayloadModel}
 				Expect(controlSpecificationsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(controlSpecificationsModel.Responsibility).To(Equal(core.StringPtr("user")))
 				Expect(controlSpecificationsModel.ComponentID).To(Equal(core.StringPtr("testString")))
 				Expect(controlSpecificationsModel.Environment).To(Equal(core.StringPtr("testString")))
 				Expect(controlSpecificationsModel.Description).To(Equal(core.StringPtr("testString")))
 				Expect(controlSpecificationsModel.AssessmentsCount).To(Equal(core.Int64Ptr(int64(38))))
-				Expect(controlSpecificationsModel.Assessments).To(Equal([]sccphoenixcomplianceapisv1.ImplementationPayload{*implementationPayloadModel}))
+				Expect(controlSpecificationsModel.Assessments).To(Equal([]compliancev2.ImplementationPayload{*implementationPayloadModel}))
 
 				// Construct an instance of the ControlDocs model
-				controlDocsModel := new(sccphoenixcomplianceapisv1.ControlDocs)
+				controlDocsModel := new(compliancev2.ControlDocs)
 				Expect(controlDocsModel).ToNot(BeNil())
 				controlDocsModel.ControlDocsID = core.StringPtr("testString")
 				controlDocsModel.ControlDocsType = core.StringPtr("testString")
@@ -6893,7 +6893,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(controlDocsModel.ControlDocsType).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the ControlsInControlLibRequestPayload model
-				controlsInControlLibRequestPayloadModel := new(sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload)
+				controlsInControlLibRequestPayloadModel := new(compliancev2.ControlsInControlLibRequestPayload)
 				Expect(controlsInControlLibRequestPayloadModel).ToNot(BeNil())
 				controlsInControlLibRequestPayloadModel.ControlName = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlID = core.StringPtr("testString")
@@ -6902,7 +6902,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				controlsInControlLibRequestPayloadModel.ControlParent = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlSeverity = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlTags = []string{"testString"}
-				controlsInControlLibRequestPayloadModel.ControlSpecifications = []sccphoenixcomplianceapisv1.ControlSpecifications{*controlSpecificationsModel}
+				controlsInControlLibRequestPayloadModel.ControlSpecifications = []compliancev2.ControlSpecifications{*controlSpecificationsModel}
 				controlsInControlLibRequestPayloadModel.ControlDocs = controlDocsModel
 				controlsInControlLibRequestPayloadModel.Status = core.StringPtr("enabled")
 				Expect(controlsInControlLibRequestPayloadModel.ControlName).To(Equal(core.StringPtr("testString")))
@@ -6912,7 +6912,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(controlsInControlLibRequestPayloadModel.ControlParent).To(Equal(core.StringPtr("testString")))
 				Expect(controlsInControlLibRequestPayloadModel.ControlSeverity).To(Equal(core.StringPtr("testString")))
 				Expect(controlsInControlLibRequestPayloadModel.ControlTags).To(Equal([]string{"testString"}))
-				Expect(controlsInControlLibRequestPayloadModel.ControlSpecifications).To(Equal([]sccphoenixcomplianceapisv1.ControlSpecifications{*controlSpecificationsModel}))
+				Expect(controlsInControlLibRequestPayloadModel.ControlSpecifications).To(Equal([]compliancev2.ControlSpecifications{*controlSpecificationsModel}))
 				Expect(controlsInControlLibRequestPayloadModel.ControlDocs).To(Equal(controlDocsModel))
 				Expect(controlsInControlLibRequestPayloadModel.Status).To(Equal(core.StringPtr("enabled")))
 
@@ -6929,7 +6929,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				createCustomControlLibraryOptionsModel.SetControlLibraryVersion("testString")
 				createCustomControlLibraryOptionsModel.SetLatest(true)
 				createCustomControlLibraryOptionsModel.SetControlsCount(int64(38))
-				createCustomControlLibraryOptionsModel.SetControls([]sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel})
+				createCustomControlLibraryOptionsModel.SetControls([]compliancev2.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel})
 				createCustomControlLibraryOptionsModel.SetTransactionID("testString")
 				createCustomControlLibraryOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(createCustomControlLibraryOptionsModel).ToNot(BeNil())
@@ -6943,13 +6943,13 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(createCustomControlLibraryOptionsModel.ControlLibraryVersion).To(Equal(core.StringPtr("testString")))
 				Expect(createCustomControlLibraryOptionsModel.Latest).To(Equal(core.BoolPtr(true)))
 				Expect(createCustomControlLibraryOptionsModel.ControlsCount).To(Equal(core.Int64Ptr(int64(38))))
-				Expect(createCustomControlLibraryOptionsModel.Controls).To(Equal([]sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}))
+				Expect(createCustomControlLibraryOptionsModel.Controls).To(Equal([]compliancev2.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}))
 				Expect(createCustomControlLibraryOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(createCustomControlLibraryOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewCreateProfileOptions successfully`, func() {
 				// Construct an instance of the ProfileControlsInRequest model
-				profileControlsInRequestModel := new(sccphoenixcomplianceapisv1.ProfileControlsInRequest)
+				profileControlsInRequestModel := new(compliancev2.ProfileControlsInRequest)
 				Expect(profileControlsInRequestModel).ToNot(BeNil())
 				profileControlsInRequestModel.ControlLibraryID = core.StringPtr("testString")
 				profileControlsInRequestModel.ControlID = core.StringPtr("testString")
@@ -6957,7 +6957,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(profileControlsInRequestModel.ControlID).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the DefaultParameters model
-				defaultParametersModel := new(sccphoenixcomplianceapisv1.DefaultParameters)
+				defaultParametersModel := new(compliancev2.DefaultParameters)
 				Expect(defaultParametersModel).ToNot(BeNil())
 				defaultParametersModel.AssessmentType = core.StringPtr("testString")
 				defaultParametersModel.AssessmentID = core.StringPtr("testString")
@@ -6982,8 +6982,8 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				createProfileOptionsModel.SetProfileVersion("testString")
 				createProfileOptionsModel.SetLatest(true)
 				createProfileOptionsModel.SetVersionGroupLabel("testString")
-				createProfileOptionsModel.SetControls([]sccphoenixcomplianceapisv1.ProfileControlsInRequest{*profileControlsInRequestModel})
-				createProfileOptionsModel.SetDefaultParameters([]sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel})
+				createProfileOptionsModel.SetControls([]compliancev2.ProfileControlsInRequest{*profileControlsInRequestModel})
+				createProfileOptionsModel.SetDefaultParameters([]compliancev2.DefaultParameters{*defaultParametersModel})
 				createProfileOptionsModel.SetTransactionID("testString")
 				createProfileOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(createProfileOptionsModel).ToNot(BeNil())
@@ -6994,8 +6994,8 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(createProfileOptionsModel.ProfileVersion).To(Equal(core.StringPtr("testString")))
 				Expect(createProfileOptionsModel.Latest).To(Equal(core.BoolPtr(true)))
 				Expect(createProfileOptionsModel.VersionGroupLabel).To(Equal(core.StringPtr("testString")))
-				Expect(createProfileOptionsModel.Controls).To(Equal([]sccphoenixcomplianceapisv1.ProfileControlsInRequest{*profileControlsInRequestModel}))
-				Expect(createProfileOptionsModel.DefaultParameters).To(Equal([]sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel}))
+				Expect(createProfileOptionsModel.Controls).To(Equal([]compliancev2.ProfileControlsInRequest{*profileControlsInRequestModel}))
+				Expect(createProfileOptionsModel.DefaultParameters).To(Equal([]compliancev2.DefaultParameters{*defaultParametersModel}))
 				Expect(createProfileOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(createProfileOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
@@ -7174,7 +7174,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 			})
 			It(`Invoke NewReplaceAttachmentOptions successfully`, func() {
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				Expect(parameterInfoModel).ToNot(BeNil())
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
@@ -7197,7 +7197,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				replaceAttachmentOptionsModel.SetParameterValue("testString")
 				replaceAttachmentOptionsModel.SetAssessmentType("testString")
 				replaceAttachmentOptionsModel.SetAssessmentID("testString")
-				replaceAttachmentOptionsModel.SetParameters([]sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel})
+				replaceAttachmentOptionsModel.SetParameters([]compliancev2.ParameterInfo{*parameterInfoModel})
 				replaceAttachmentOptionsModel.SetTransactionID("testString")
 				replaceAttachmentOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(replaceAttachmentOptionsModel).ToNot(BeNil())
@@ -7210,13 +7210,13 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(replaceAttachmentOptionsModel.ParameterValue).To(Equal(core.StringPtr("testString")))
 				Expect(replaceAttachmentOptionsModel.AssessmentType).To(Equal(core.StringPtr("testString")))
 				Expect(replaceAttachmentOptionsModel.AssessmentID).To(Equal(core.StringPtr("testString")))
-				Expect(replaceAttachmentOptionsModel.Parameters).To(Equal([]sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}))
+				Expect(replaceAttachmentOptionsModel.Parameters).To(Equal([]compliancev2.ParameterInfo{*parameterInfoModel}))
 				Expect(replaceAttachmentOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(replaceAttachmentOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewReplaceAttachmnetParametersByNameOptions successfully`, func() {
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				Expect(parameterInfoModel).ToNot(BeNil())
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
@@ -7241,7 +7241,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				replaceAttachmnetParametersByNameOptionsModel.SetNewParameterValue("testString")
 				replaceAttachmnetParametersByNameOptionsModel.SetNewAssessmentType("testString")
 				replaceAttachmnetParametersByNameOptionsModel.SetNewAssessmentID("testString")
-				replaceAttachmnetParametersByNameOptionsModel.SetNewParameters([]sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel})
+				replaceAttachmnetParametersByNameOptionsModel.SetNewParameters([]compliancev2.ParameterInfo{*parameterInfoModel})
 				replaceAttachmnetParametersByNameOptionsModel.SetTransactionID("testString")
 				replaceAttachmnetParametersByNameOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(replaceAttachmnetParametersByNameOptionsModel).ToNot(BeNil())
@@ -7255,13 +7255,13 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(replaceAttachmnetParametersByNameOptionsModel.NewParameterValue).To(Equal(core.StringPtr("testString")))
 				Expect(replaceAttachmnetParametersByNameOptionsModel.NewAssessmentType).To(Equal(core.StringPtr("testString")))
 				Expect(replaceAttachmnetParametersByNameOptionsModel.NewAssessmentID).To(Equal(core.StringPtr("testString")))
-				Expect(replaceAttachmnetParametersByNameOptionsModel.NewParameters).To(Equal([]sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}))
+				Expect(replaceAttachmnetParametersByNameOptionsModel.NewParameters).To(Equal([]compliancev2.ParameterInfo{*parameterInfoModel}))
 				Expect(replaceAttachmnetParametersByNameOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(replaceAttachmnetParametersByNameOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewReplaceCustomControlLibraryOptions successfully`, func() {
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				Expect(parameterInfoModel).ToNot(BeNil())
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
@@ -7271,23 +7271,23 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(parameterInfoModel.ParameterType).To(Equal(core.StringPtr("numeric")))
 
 				// Construct an instance of the ImplementationPayload model
-				implementationPayloadModel := new(sccphoenixcomplianceapisv1.ImplementationPayload)
+				implementationPayloadModel := new(compliancev2.ImplementationPayload)
 				Expect(implementationPayloadModel).ToNot(BeNil())
 				implementationPayloadModel.AssessmentID = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentMethod = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentType = core.StringPtr("testString")
 				implementationPayloadModel.AssessmentDescription = core.StringPtr("testString")
 				implementationPayloadModel.ParameterCount = core.Int64Ptr(int64(38))
-				implementationPayloadModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				implementationPayloadModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 				Expect(implementationPayloadModel.AssessmentID).To(Equal(core.StringPtr("testString")))
 				Expect(implementationPayloadModel.AssessmentMethod).To(Equal(core.StringPtr("testString")))
 				Expect(implementationPayloadModel.AssessmentType).To(Equal(core.StringPtr("testString")))
 				Expect(implementationPayloadModel.AssessmentDescription).To(Equal(core.StringPtr("testString")))
 				Expect(implementationPayloadModel.ParameterCount).To(Equal(core.Int64Ptr(int64(38))))
-				Expect(implementationPayloadModel.Parameters).To(Equal([]sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}))
+				Expect(implementationPayloadModel.Parameters).To(Equal([]compliancev2.ParameterInfo{*parameterInfoModel}))
 
 				// Construct an instance of the ControlSpecifications model
-				controlSpecificationsModel := new(sccphoenixcomplianceapisv1.ControlSpecifications)
+				controlSpecificationsModel := new(compliancev2.ControlSpecifications)
 				Expect(controlSpecificationsModel).ToNot(BeNil())
 				controlSpecificationsModel.ID = core.StringPtr("testString")
 				controlSpecificationsModel.Responsibility = core.StringPtr("user")
@@ -7295,17 +7295,17 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				controlSpecificationsModel.Environment = core.StringPtr("testString")
 				controlSpecificationsModel.Description = core.StringPtr("testString")
 				controlSpecificationsModel.AssessmentsCount = core.Int64Ptr(int64(38))
-				controlSpecificationsModel.Assessments = []sccphoenixcomplianceapisv1.ImplementationPayload{*implementationPayloadModel}
+				controlSpecificationsModel.Assessments = []compliancev2.ImplementationPayload{*implementationPayloadModel}
 				Expect(controlSpecificationsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(controlSpecificationsModel.Responsibility).To(Equal(core.StringPtr("user")))
 				Expect(controlSpecificationsModel.ComponentID).To(Equal(core.StringPtr("testString")))
 				Expect(controlSpecificationsModel.Environment).To(Equal(core.StringPtr("testString")))
 				Expect(controlSpecificationsModel.Description).To(Equal(core.StringPtr("testString")))
 				Expect(controlSpecificationsModel.AssessmentsCount).To(Equal(core.Int64Ptr(int64(38))))
-				Expect(controlSpecificationsModel.Assessments).To(Equal([]sccphoenixcomplianceapisv1.ImplementationPayload{*implementationPayloadModel}))
+				Expect(controlSpecificationsModel.Assessments).To(Equal([]compliancev2.ImplementationPayload{*implementationPayloadModel}))
 
 				// Construct an instance of the ControlDocs model
-				controlDocsModel := new(sccphoenixcomplianceapisv1.ControlDocs)
+				controlDocsModel := new(compliancev2.ControlDocs)
 				Expect(controlDocsModel).ToNot(BeNil())
 				controlDocsModel.ControlDocsID = core.StringPtr("testString")
 				controlDocsModel.ControlDocsType = core.StringPtr("testString")
@@ -7313,7 +7313,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(controlDocsModel.ControlDocsType).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the ControlsInControlLibRequestPayload model
-				controlsInControlLibRequestPayloadModel := new(sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload)
+				controlsInControlLibRequestPayloadModel := new(compliancev2.ControlsInControlLibRequestPayload)
 				Expect(controlsInControlLibRequestPayloadModel).ToNot(BeNil())
 				controlsInControlLibRequestPayloadModel.ControlName = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlID = core.StringPtr("testString")
@@ -7322,7 +7322,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				controlsInControlLibRequestPayloadModel.ControlParent = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlSeverity = core.StringPtr("testString")
 				controlsInControlLibRequestPayloadModel.ControlTags = []string{"testString"}
-				controlsInControlLibRequestPayloadModel.ControlSpecifications = []sccphoenixcomplianceapisv1.ControlSpecifications{*controlSpecificationsModel}
+				controlsInControlLibRequestPayloadModel.ControlSpecifications = []compliancev2.ControlSpecifications{*controlSpecificationsModel}
 				controlsInControlLibRequestPayloadModel.ControlDocs = controlDocsModel
 				controlsInControlLibRequestPayloadModel.Status = core.StringPtr("enabled")
 				Expect(controlsInControlLibRequestPayloadModel.ControlName).To(Equal(core.StringPtr("testString")))
@@ -7332,7 +7332,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(controlsInControlLibRequestPayloadModel.ControlParent).To(Equal(core.StringPtr("testString")))
 				Expect(controlsInControlLibRequestPayloadModel.ControlSeverity).To(Equal(core.StringPtr("testString")))
 				Expect(controlsInControlLibRequestPayloadModel.ControlTags).To(Equal([]string{"testString"}))
-				Expect(controlsInControlLibRequestPayloadModel.ControlSpecifications).To(Equal([]sccphoenixcomplianceapisv1.ControlSpecifications{*controlSpecificationsModel}))
+				Expect(controlsInControlLibRequestPayloadModel.ControlSpecifications).To(Equal([]compliancev2.ControlSpecifications{*controlSpecificationsModel}))
 				Expect(controlsInControlLibRequestPayloadModel.ControlDocs).To(Equal(controlDocsModel))
 				Expect(controlsInControlLibRequestPayloadModel.Status).To(Equal(core.StringPtr("enabled")))
 
@@ -7351,7 +7351,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				replaceCustomControlLibraryOptionsModel.SetControlLibraryVersion("testString")
 				replaceCustomControlLibraryOptionsModel.SetLatest(true)
 				replaceCustomControlLibraryOptionsModel.SetControlsCount(int64(38))
-				replaceCustomControlLibraryOptionsModel.SetControls([]sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel})
+				replaceCustomControlLibraryOptionsModel.SetControls([]compliancev2.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel})
 				replaceCustomControlLibraryOptionsModel.SetTransactionID("testString")
 				replaceCustomControlLibraryOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(replaceCustomControlLibraryOptionsModel).ToNot(BeNil())
@@ -7366,13 +7366,13 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(replaceCustomControlLibraryOptionsModel.ControlLibraryVersion).To(Equal(core.StringPtr("testString")))
 				Expect(replaceCustomControlLibraryOptionsModel.Latest).To(Equal(core.BoolPtr(true)))
 				Expect(replaceCustomControlLibraryOptionsModel.ControlsCount).To(Equal(core.Int64Ptr(int64(38))))
-				Expect(replaceCustomControlLibraryOptionsModel.Controls).To(Equal([]sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}))
+				Expect(replaceCustomControlLibraryOptionsModel.Controls).To(Equal([]compliancev2.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel}))
 				Expect(replaceCustomControlLibraryOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(replaceCustomControlLibraryOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewReplaceProfileAttachmentOptions successfully`, func() {
 				// Construct an instance of the ScopePayload model
-				scopePayloadModel := new(sccphoenixcomplianceapisv1.ScopePayload)
+				scopePayloadModel := new(compliancev2.ScopePayload)
 				Expect(scopePayloadModel).ToNot(BeNil())
 				scopePayloadModel.ScopeID = core.StringPtr("testString")
 				scopePayloadModel.ScopeType = core.StringPtr("testString")
@@ -7380,7 +7380,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(scopePayloadModel.ScopeType).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the ParameterInfo model
-				parameterInfoModel := new(sccphoenixcomplianceapisv1.ParameterInfo)
+				parameterInfoModel := new(compliancev2.ParameterInfo)
 				Expect(parameterInfoModel).ToNot(BeNil())
 				parameterInfoModel.ParameterName = core.StringPtr("testString")
 				parameterInfoModel.ParameterDisplayName = core.StringPtr("testString")
@@ -7390,7 +7390,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(parameterInfoModel.ParameterType).To(Equal(core.StringPtr("numeric")))
 
 				// Construct an instance of the ParameterDetails model
-				parameterDetailsModel := new(sccphoenixcomplianceapisv1.ParameterDetails)
+				parameterDetailsModel := new(compliancev2.ParameterDetails)
 				Expect(parameterDetailsModel).ToNot(BeNil())
 				parameterDetailsModel.ParameterName = core.StringPtr("testString")
 				parameterDetailsModel.ParameterDisplayName = core.StringPtr("testString")
@@ -7398,17 +7398,17 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				parameterDetailsModel.ParameterValue = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentType = core.StringPtr("testString")
 				parameterDetailsModel.AssessmentID = core.StringPtr("testString")
-				parameterDetailsModel.Parameters = []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}
+				parameterDetailsModel.Parameters = []compliancev2.ParameterInfo{*parameterInfoModel}
 				Expect(parameterDetailsModel.ParameterName).To(Equal(core.StringPtr("testString")))
 				Expect(parameterDetailsModel.ParameterDisplayName).To(Equal(core.StringPtr("testString")))
 				Expect(parameterDetailsModel.ParameterType).To(Equal(core.StringPtr("numeric")))
 				Expect(parameterDetailsModel.ParameterValue).To(Equal(core.StringPtr("testString")))
 				Expect(parameterDetailsModel.AssessmentType).To(Equal(core.StringPtr("testString")))
 				Expect(parameterDetailsModel.AssessmentID).To(Equal(core.StringPtr("testString")))
-				Expect(parameterDetailsModel.Parameters).To(Equal([]sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel}))
+				Expect(parameterDetailsModel.Parameters).To(Equal([]compliancev2.ParameterInfo{*parameterInfoModel}))
 
 				// Construct an instance of the FailedControls model
-				failedControlsModel := new(sccphoenixcomplianceapisv1.FailedControls)
+				failedControlsModel := new(compliancev2.FailedControls)
 				Expect(failedControlsModel).ToNot(BeNil())
 				failedControlsModel.ThresholdLimit = core.Int64Ptr(int64(38))
 				failedControlsModel.FailedControlIds = []string{"testString"}
@@ -7416,7 +7416,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(failedControlsModel.FailedControlIds).To(Equal([]string{"testString"}))
 
 				// Construct an instance of the AttachmentsNotificationsPayload model
-				attachmentsNotificationsPayloadModel := new(sccphoenixcomplianceapisv1.AttachmentsNotificationsPayload)
+				attachmentsNotificationsPayloadModel := new(compliancev2.AttachmentsNotificationsPayload)
 				Expect(attachmentsNotificationsPayloadModel).ToNot(BeNil())
 				attachmentsNotificationsPayloadModel.Enabled = core.BoolPtr(true)
 				attachmentsNotificationsPayloadModel.Controls = failedControlsModel
@@ -7434,13 +7434,13 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				replaceProfileAttachmentOptionsModel.SetID("testString")
 				replaceProfileAttachmentOptionsModel.SetAccountID("testString")
 				replaceProfileAttachmentOptionsModel.SetIncludedScope(scopePayloadModel)
-				replaceProfileAttachmentOptionsModel.SetExclusions([]sccphoenixcomplianceapisv1.ScopePayload{*scopePayloadModel})
+				replaceProfileAttachmentOptionsModel.SetExclusions([]compliancev2.ScopePayload{*scopePayloadModel})
 				replaceProfileAttachmentOptionsModel.SetCreatedBy("testString")
 				replaceProfileAttachmentOptionsModel.SetCreatedOn("testString")
 				replaceProfileAttachmentOptionsModel.SetUpdatedBy("testString")
 				replaceProfileAttachmentOptionsModel.SetUpdatedOn("testString")
 				replaceProfileAttachmentOptionsModel.SetStatus("enabled")
-				replaceProfileAttachmentOptionsModel.SetAttachmentParameters([]sccphoenixcomplianceapisv1.ParameterDetails{*parameterDetailsModel})
+				replaceProfileAttachmentOptionsModel.SetAttachmentParameters([]compliancev2.ParameterDetails{*parameterDetailsModel})
 				replaceProfileAttachmentOptionsModel.SetAttachmentNotifications(attachmentsNotificationsPayloadModel)
 				replaceProfileAttachmentOptionsModel.SetTransactionID("testString")
 				replaceProfileAttachmentOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
@@ -7451,20 +7451,20 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				Expect(replaceProfileAttachmentOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(replaceProfileAttachmentOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(replaceProfileAttachmentOptionsModel.IncludedScope).To(Equal(scopePayloadModel))
-				Expect(replaceProfileAttachmentOptionsModel.Exclusions).To(Equal([]sccphoenixcomplianceapisv1.ScopePayload{*scopePayloadModel}))
+				Expect(replaceProfileAttachmentOptionsModel.Exclusions).To(Equal([]compliancev2.ScopePayload{*scopePayloadModel}))
 				Expect(replaceProfileAttachmentOptionsModel.CreatedBy).To(Equal(core.StringPtr("testString")))
 				Expect(replaceProfileAttachmentOptionsModel.CreatedOn).To(Equal(core.StringPtr("testString")))
 				Expect(replaceProfileAttachmentOptionsModel.UpdatedBy).To(Equal(core.StringPtr("testString")))
 				Expect(replaceProfileAttachmentOptionsModel.UpdatedOn).To(Equal(core.StringPtr("testString")))
 				Expect(replaceProfileAttachmentOptionsModel.Status).To(Equal(core.StringPtr("enabled")))
-				Expect(replaceProfileAttachmentOptionsModel.AttachmentParameters).To(Equal([]sccphoenixcomplianceapisv1.ParameterDetails{*parameterDetailsModel}))
+				Expect(replaceProfileAttachmentOptionsModel.AttachmentParameters).To(Equal([]compliancev2.ParameterDetails{*parameterDetailsModel}))
 				Expect(replaceProfileAttachmentOptionsModel.AttachmentNotifications).To(Equal(attachmentsNotificationsPayloadModel))
 				Expect(replaceProfileAttachmentOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(replaceProfileAttachmentOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewReplaceProfileParametersOptions successfully`, func() {
 				// Construct an instance of the DefaultParameters model
-				defaultParametersModel := new(sccphoenixcomplianceapisv1.DefaultParameters)
+				defaultParametersModel := new(compliancev2.DefaultParameters)
 				Expect(defaultParametersModel).ToNot(BeNil())
 				defaultParametersModel.AssessmentType = core.StringPtr("testString")
 				defaultParametersModel.AssessmentID = core.StringPtr("testString")
@@ -7486,14 +7486,14 @@ var _ = Describe(`SccPhoenixComplianceApisV1`, func() {
 				replaceProfileParametersOptionsModel.SetProfilesID("testString")
 				replaceProfileParametersOptionsModel.SetInstanceID("testString")
 				replaceProfileParametersOptionsModel.SetID("testString")
-				replaceProfileParametersOptionsModel.SetDefaultParameters([]sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel})
+				replaceProfileParametersOptionsModel.SetDefaultParameters([]compliancev2.DefaultParameters{*defaultParametersModel})
 				replaceProfileParametersOptionsModel.SetTransactionID("testString")
 				replaceProfileParametersOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(replaceProfileParametersOptionsModel).ToNot(BeNil())
 				Expect(replaceProfileParametersOptionsModel.ProfilesID).To(Equal(core.StringPtr("testString")))
 				Expect(replaceProfileParametersOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
 				Expect(replaceProfileParametersOptionsModel.ID).To(Equal(core.StringPtr("testString")))
-				Expect(replaceProfileParametersOptionsModel.DefaultParameters).To(Equal([]sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel}))
+				Expect(replaceProfileParametersOptionsModel.DefaultParameters).To(Equal([]compliancev2.DefaultParameters{*defaultParametersModel}))
 				Expect(replaceProfileParametersOptionsModel.TransactionID).To(Equal(core.StringPtr("testString")))
 				Expect(replaceProfileParametersOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})

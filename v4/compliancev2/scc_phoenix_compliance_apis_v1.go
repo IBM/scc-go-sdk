@@ -18,8 +18,8 @@
  * IBM OpenAPI SDK Code Generator Version: 3.72.0-5d70f2bb-20230511-203609
  */
 
-// Package sccphoenixcomplianceapisv1 : Operations and models for the SccPhoenixComplianceApisV1 service
-package sccphoenixcomplianceapisv1
+// Package compliancev2 : Operations and models for the SccPhoenixComplianceApisV1 service
+package compliancev2
 
 import (
 	"context"

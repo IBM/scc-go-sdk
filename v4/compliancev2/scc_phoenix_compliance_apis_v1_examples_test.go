@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-package sccphoenixcomplianceapisv1_test
+package compliancev2_test
 
 import (
 	"encoding/json"
@@ -25,7 +25,7 @@ import (
 	"os"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/IBM/scc-go-sdk/v4/sccphoenixcomplianceapisv1"
+	"github.com/IBM/scc-go-sdk/v4/compliancev2"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -43,10 +43,10 @@ import (
 // export IBM_CREDENTIALS_FILE=<name of configuration file>
 var _ = Describe(`SccPhoenixComplianceApisV1 Examples Tests`, func() {
 
-	const externalConfigFile = "../scc_phoenix_compliance_apis_v1.env"
+	const externalConfigFile = "compliancev2.env"
 
 	var (
-		sccPhoenixComplianceApisService *sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1
+		sccPhoenixComplianceApisService *compliancev2.SccPhoenixComplianceApisV1
 		config                          map[string]string
 	)
 
@@ -63,7 +63,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Examples Tests`, func() {
 			}
 
 			os.Setenv("IBM_CREDENTIALS_FILE", externalConfigFile)
-			config, err = core.GetServiceProperties(sccphoenixcomplianceapisv1.DefaultServiceName)
+			config, err = core.GetServiceProperties(compliancev2.DefaultServiceName)
 			if err != nil {
 				Skip("Error loading service properties, skipping examples: " + err.Error())
 			} else if len(config) == 0 {
@@ -83,9 +83,9 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Examples Tests`, func() {
 
 			// begin-common
 
-			sccPhoenixComplianceApisServiceOptions := &sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{}
+			sccPhoenixComplianceApisServiceOptions := &compliancev2.SccPhoenixComplianceApisV1Options{}
 
-			sccPhoenixComplianceApisService, err = sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1UsingExternalConfig(sccPhoenixComplianceApisServiceOptions)
+			sccPhoenixComplianceApisService, err = compliancev2.NewSccPhoenixComplianceApisV1UsingExternalConfig(sccPhoenixComplianceApisServiceOptions)
 
 			if err != nil {
 				panic(err)

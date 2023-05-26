@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package sccphoenixcomplianceapisv1_test
+package compliancev2_test
 
 import (
 	"testing"

@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-package sccphoenixcomplianceapisv1_test
+package compliancev2_test
 
 import (
 	"fmt"
@@ -26,13 +26,13 @@ import (
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/IBM/scc-go-sdk/v4/sccphoenixcomplianceapisv1"
+	"github.com/IBM/scc-go-sdk/v4/compliancev2"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
 
 /**
- * This file contains an integration test for the sccphoenixcomplianceapisv1 package.
+ * This file contains an integration test for the compliancev2 package.
  *
  * Notes:
  *
@@ -40,11 +40,11 @@ import (
  */
 
 var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
-	const externalConfigFile = "scc_phoenix_compliance_apis_v1.env"
+	const externalConfigFile = "compliancev2.env"
 
 	var (
 		err                             error
-		sccPhoenixComplianceApisService *sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1
+		sccPhoenixComplianceApisService *compliancev2.SccPhoenixComplianceApisV1
 		serviceURL                      string
 		config                          map[string]string
 		authenticator                   core.IamAuthenticator
@@ -114,7 +114,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			}
 
 			os.Setenv("IBM_CREDENTIALS_FILE", externalConfigFile)
-			config, err = core.GetServiceProperties(sccphoenixcomplianceapisv1.DefaultServiceName)
+			config, err = core.GetServiceProperties(compliancev2.DefaultServiceName)
 			if err != nil {
 				Skip("Error loading service properties, skipping tests: " + err.Error())
 			}
@@ -212,13 +212,13 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It("Successfully construct the service client instance", func() {
-			sccPhoenixComplianceApisServiceOptions := &sccphoenixcomplianceapisv1.SccPhoenixComplianceApisV1Options{
+			sccPhoenixComplianceApisServiceOptions := &compliancev2.SccPhoenixComplianceApisV1Options{
 				URL:           serviceURL,
 				Authenticator: &authenticator,
 				ServiceName:   serviceName,
 			}
 
-			sccPhoenixComplianceApisService, err = sccphoenixcomplianceapisv1.NewSccPhoenixComplianceApisV1UsingExternalConfig(sccPhoenixComplianceApisServiceOptions)
+			sccPhoenixComplianceApisService, err = compliancev2.NewSccPhoenixComplianceApisV1UsingExternalConfig(sccPhoenixComplianceApisServiceOptions)
 			Expect(err).To(BeNil())
 			Expect(sccPhoenixComplianceApisService).ToNot(BeNil())
 			Expect(sccPhoenixComplianceApisService.Service.Options.URL).To(Equal(serviceURL))
@@ -233,12 +233,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`CreateProfile(createProfileOptions *CreateProfileOptions)`, func() {
-			profileControlsInRequestModel := &sccphoenixcomplianceapisv1.ProfileControlsInRequest{
+			profileControlsInRequestModel := &compliancev2.ProfileControlsInRequest{
 				ControlLibraryID: core.StringPtr(controlLibraryID),
 				ControlID:        core.StringPtr(controlID),
 			}
 
-			// defaultParametersModel := &sccphoenixcomplianceapisv1.DefaultParameters{
+			// defaultParametersModel := &compliancev2.DefaultParameters{
 			// 	AssessmentType:        core.StringPtr("testString"),
 			// 	AssessmentID:          core.StringPtr("testString"),
 			// 	ParameterName:         core.StringPtr("testString"),
@@ -247,15 +247,15 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			// 	ParameterType:         core.StringPtr("numeric"),
 			// }
 
-			createProfileOptions := &sccphoenixcomplianceapisv1.CreateProfileOptions{
+			createProfileOptions := &compliancev2.CreateProfileOptions{
 				InstanceID:         core.StringPtr(instanceID),
 				ProfileName:        core.StringPtr(profileName),
 				ProfileDescription: core.StringPtr(profileDescription),
 				ProfileType:        core.StringPtr(profileType),
 				ProfileVersion:     core.StringPtr(profileVersion),
 				Latest:             core.BoolPtr(true),
-				Controls:           []sccphoenixcomplianceapisv1.ProfileControlsInRequest{*profileControlsInRequestModel},
-				DefaultParameters:  []sccphoenixcomplianceapisv1.DefaultParameters{},
+				Controls:           []compliancev2.ProfileControlsInRequest{*profileControlsInRequestModel},
+				DefaultParameters:  []compliancev2.DefaultParameters{},
 				TransactionID:      core.StringPtr(transactionID),
 			}
 
@@ -271,7 +271,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`ListProfiles(listProfilesOptions *ListProfilesOptions)`, func() {
-			listProfilesOptions := &sccphoenixcomplianceapisv1.ListProfilesOptions{
+			listProfilesOptions := &compliancev2.ListProfilesOptions{
 				InstanceID:    core.StringPtr(instanceID),
 				TransactionID: core.StringPtr(transactionID),
 			}
@@ -289,12 +289,12 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`AddProfile(addProfileOptions *AddProfileOptions)`, func() {
-			profileControlsInRequestModel := &sccphoenixcomplianceapisv1.ProfileControlsInRequest{
+			profileControlsInRequestModel := &compliancev2.ProfileControlsInRequest{
 				ControlLibraryID: core.StringPtr(controlLibraryID),
 				ControlID:        core.StringPtr(controlID),
 			}
 
-			// defaultParametersModel := &sccphoenixcomplianceapisv1.DefaultParameters{
+			// defaultParametersModel := &compliancev2.DefaultParameters{
 			// 	AssessmentType:        core.StringPtr("testString"),
 			// 	AssessmentID:          core.StringPtr("testString"),
 			// 	ParameterName:         core.StringPtr("testString"),
@@ -303,7 +303,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			// 	ParameterType:         core.StringPtr("numeric"),
 			// }
 
-			addProfileOptions := &sccphoenixcomplianceapisv1.AddProfileOptions{
+			addProfileOptions := &compliancev2.AddProfileOptions{
 				ProfilesID:         core.StringPtr(profilesID),
 				InstanceID:         core.StringPtr(instanceID),
 				ProfileName:        core.StringPtr(profileName),
@@ -311,8 +311,8 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 				ProfileType:        core.StringPtr(profileType),
 				ProfileVersion:     core.StringPtr(profileVersion),
 				Latest:             core.BoolPtr(true),
-				Controls:           []sccphoenixcomplianceapisv1.ProfileControlsInRequest{*profileControlsInRequestModel},
-				DefaultParameters:  []sccphoenixcomplianceapisv1.DefaultParameters{},
+				Controls:           []compliancev2.ProfileControlsInRequest{*profileControlsInRequestModel},
+				DefaultParameters:  []compliancev2.DefaultParameters{},
 				TransactionID:      core.StringPtr(transactionID),
 			}
 
@@ -328,7 +328,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`GetProfile(getProfileOptions *GetProfileOptions)`, func() {
-			getProfileOptions := &sccphoenixcomplianceapisv1.GetProfileOptions{
+			getProfileOptions := &compliancev2.GetProfileOptions{
 				ProfilesID:    core.StringPtr(profilesID),
 				InstanceID:    core.StringPtr(instanceID),
 				TransactionID: core.StringPtr(transactionID),
@@ -346,7 +346,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`ReplaceProfileParameters(replaceProfileParametersOptions *ReplaceProfileParametersOptions)`, func() {
-			defaultParametersModel := &sccphoenixcomplianceapisv1.DefaultParameters{
+			defaultParametersModel := &compliancev2.DefaultParameters{
 				AssessmentType:        core.StringPtr(assessmentType),
 				AssessmentID:          core.StringPtr(assessmentID),
 				ParameterName:         core.StringPtr(parameterName),
@@ -355,10 +355,10 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 				ParameterType:         core.StringPtr(parameterType),
 			}
 
-			replaceProfileParametersOptions := &sccphoenixcomplianceapisv1.ReplaceProfileParametersOptions{
+			replaceProfileParametersOptions := &compliancev2.ReplaceProfileParametersOptions{
 				ProfilesID:        core.StringPtr(profilesID),
 				InstanceID:        core.StringPtr(instanceID),
-				DefaultParameters: []sccphoenixcomplianceapisv1.DefaultParameters{*defaultParametersModel},
+				DefaultParameters: []compliancev2.DefaultParameters{*defaultParametersModel},
 				TransactionID:     core.StringPtr("testString"),
 			}
 
@@ -374,53 +374,53 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`CreateAttachment(createAttachmentOptions *CreateAttachmentOptions)`, func() {
-			scopePayloadModel := &sccphoenixcomplianceapisv1.ScopePayload{
+			scopePayloadModel := &compliancev2.ScopePayload{
 				ScopeID:   core.StringPtr(scopeID),
 				ScopeType: core.StringPtr(scopeType),
 			}
 
-			// parameterInfoModel := &sccphoenixcomplianceapisv1.ParameterInfo{
+			// parameterInfoModel := &compliancev2.ParameterInfo{
 			// 	ParameterName:        core.StringPtr(parameterName),
 			// 	ParameterDisplayName: core.StringPtr(parameterDisplayName),
 			// 	ParameterType:        core.StringPtr(parameterType),
 			// }
 
-			parameterDetailsModel := &sccphoenixcomplianceapisv1.ParameterDetails{
+			parameterDetailsModel := &compliancev2.ParameterDetails{
 				ParameterName:        core.StringPtr(parameterName),
 				ParameterDisplayName: core.StringPtr(parameterDisplayName),
 				ParameterType:        core.StringPtr(parameterType),
 				ParameterValue:       core.StringPtr(parameterValue),
 				AssessmentType:       core.StringPtr(assessmentTypeParameter),
 				AssessmentID:         core.StringPtr(assessmentIdParameter),
-				// Parameters:           []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel},
+				// Parameters:           []compliancev2.ParameterInfo{*parameterInfoModel},
 			}
 
-			// failedControlsModel := &sccphoenixcomplianceapisv1.FailedControls{
+			// failedControlsModel := &compliancev2.FailedControls{
 			// 	ThresholdLimit:   core.Int64Ptr(int64(38)),
 			// 	FailedControlIds: []string{"testString"},
 			// }
 
-			// attachmentsNotificationsPayloadModel := &sccphoenixcomplianceapisv1.AttachmentsNotificationsPayload{
+			// attachmentsNotificationsPayloadModel := &compliancev2.AttachmentsNotificationsPayload{
 			// 	Enabled:  core.BoolPtr(true),
 			// 	Controls: failedControlsModel,
 			// }
 
-			attachmentPayloadModel := &sccphoenixcomplianceapisv1.AttachmentPayload{
+			attachmentPayloadModel := &compliancev2.AttachmentPayload{
 				AccountID:            core.StringPtr(accountID),
 				IncludedScope:        scopePayloadModel,
-				Exclusions:           []sccphoenixcomplianceapisv1.ScopePayload{},
+				Exclusions:           []compliancev2.ScopePayload{},
 				CreatedBy:            core.StringPtr(createdBy),
 				CreatedOn:            core.StringPtr(createdOn),
 				UpdatedBy:            core.StringPtr(updatedBy),
 				UpdatedOn:            core.StringPtr(updatedOn),
 				Status:               core.StringPtr("enabled"),
-				AttachmentParameters: []sccphoenixcomplianceapisv1.ParameterDetails{*parameterDetailsModel},
+				AttachmentParameters: []compliancev2.ParameterDetails{*parameterDetailsModel},
 			}
 
-			createAttachmentOptions := &sccphoenixcomplianceapisv1.CreateAttachmentOptions{
+			createAttachmentOptions := &compliancev2.CreateAttachmentOptions{
 				ProfilesID:    core.StringPtr(profilesID),
 				InstanceID:    core.StringPtr(instanceID),
-				Attachments:   []sccphoenixcomplianceapisv1.AttachmentPayload{*attachmentPayloadModel},
+				Attachments:   []compliancev2.AttachmentPayload{*attachmentPayloadModel},
 				TransactionID: core.StringPtr(transactionID),
 			}
 
@@ -436,7 +436,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`CheckProfileAttachmnets(checkProfileAttachmnetsOptions *CheckProfileAttachmnetsOptions)`, func() {
-			checkProfileAttachmnetsOptions := &sccphoenixcomplianceapisv1.CheckProfileAttachmnetsOptions{
+			checkProfileAttachmnetsOptions := &compliancev2.CheckProfileAttachmnetsOptions{
 				ProfilesID:    core.StringPtr(profilesID),
 				InstanceID:    core.StringPtr(instanceID),
 				TransactionID: core.StringPtr(transactionID),
@@ -454,7 +454,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`GetProfileAttachmnet(getProfileAttachmnetOptions *GetProfileAttachmnetOptions)`, func() {
-			getProfileAttachmnetOptions := &sccphoenixcomplianceapisv1.GetProfileAttachmnetOptions{
+			getProfileAttachmnetOptions := &compliancev2.GetProfileAttachmnetOptions{
 				ProfilesID:    core.StringPtr(profilesID),
 				AttachmentID:  core.StringPtr(attachmentID),
 				InstanceID:    core.StringPtr(instanceID),
@@ -473,51 +473,51 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`ReplaceProfileAttachment(replaceProfileAttachmentOptions *ReplaceProfileAttachmentOptions)`, func() {
-			scopePayloadModel := &sccphoenixcomplianceapisv1.ScopePayload{
+			scopePayloadModel := &compliancev2.ScopePayload{
 				ScopeID:   core.StringPtr(scopeID),
 				ScopeType: core.StringPtr(scopeType),
 			}
 
-			// parameterInfoModel := &sccphoenixcomplianceapisv1.ParameterInfo{
+			// parameterInfoModel := &compliancev2.ParameterInfo{
 			// 	ParameterName:        core.StringPtr("testString"),
 			// 	ParameterDisplayName: core.StringPtr("testString"),
 			// 	ParameterType:        core.StringPtr("numeric"),
 			// }
 
-			parameterDetailsModel := &sccphoenixcomplianceapisv1.ParameterDetails{
+			parameterDetailsModel := &compliancev2.ParameterDetails{
 				ParameterName:        core.StringPtr(parameterName),
 				ParameterDisplayName: core.StringPtr(parameterDisplayName),
 				ParameterType:        core.StringPtr(parameterType),
 				ParameterValue:       core.StringPtr(parameterValue),
 				AssessmentType:       core.StringPtr(assessmentTypeParameter),
 				AssessmentID:         core.StringPtr(assessmentIdParameter),
-				// Parameters:           []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel},
+				// Parameters:           []compliancev2.ParameterInfo{*parameterInfoModel},
 			}
 
-			// failedControlsModel := &sccphoenixcomplianceapisv1.FailedControls{
+			// failedControlsModel := &compliancev2.FailedControls{
 			// 	ThresholdLimit:   core.Int64Ptr(int64(38)),
 			// 	FailedControlIds: []string{"testString"},
 			// }
 
-			// attachmentsNotificationsPayloadModel := &sccphoenixcomplianceapisv1.AttachmentsNotificationsPayload{
+			// attachmentsNotificationsPayloadModel := &compliancev2.AttachmentsNotificationsPayload{
 			// 	Enabled:  core.BoolPtr(true),
 			// 	Controls: failedControlsModel,
 			// }
 
-			replaceProfileAttachmentOptions := &sccphoenixcomplianceapisv1.ReplaceProfileAttachmentOptions{
+			replaceProfileAttachmentOptions := &compliancev2.ReplaceProfileAttachmentOptions{
 				ProfilesID:           core.StringPtr(profilesID),
 				AttachmentID:         core.StringPtr(attachmentID),
 				InstanceID:           core.StringPtr(instanceID),
 				ID:                   core.StringPtr(attachmentID),
 				AccountID:            core.StringPtr(attachmentID),
 				IncludedScope:        scopePayloadModel,
-				Exclusions:           []sccphoenixcomplianceapisv1.ScopePayload{},
+				Exclusions:           []compliancev2.ScopePayload{},
 				CreatedBy:            core.StringPtr(createdBy),
 				CreatedOn:            core.StringPtr(createdOn),
 				UpdatedBy:            core.StringPtr(updatedBy),
 				UpdatedOn:            core.StringPtr(updatedOn),
 				Status:               core.StringPtr("enabled"),
-				AttachmentParameters: []sccphoenixcomplianceapisv1.ParameterDetails{*parameterDetailsModel},
+				AttachmentParameters: []compliancev2.ParameterDetails{*parameterDetailsModel},
 				// AttachmentNotifications: attachmentsNotificationsPayloadModel,
 				TransactionID: core.StringPtr(transactionID),
 			}
@@ -534,7 +534,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`ListAttachmentParameters(listAttachmentParametersOptions *ListAttachmentParametersOptions)`, func() {
-			listAttachmentParametersOptions := &sccphoenixcomplianceapisv1.ListAttachmentParametersOptions{
+			listAttachmentParametersOptions := &compliancev2.ListAttachmentParametersOptions{
 				ProfilesID:    core.StringPtr(profilesID),
 				AttachmentID:  core.StringPtr(attachmentID),
 				InstanceID:    core.StringPtr(instanceID),
@@ -551,13 +551,13 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`ReplaceAttachment(replaceAttachmentOptions *ReplaceAttachmentOptions)`, func() {
-			parameterInfoModel := &sccphoenixcomplianceapisv1.ParameterInfo{
+			parameterInfoModel := &compliancev2.ParameterInfo{
 				ParameterName:        core.StringPtr(parameterName),
 				ParameterDisplayName: core.StringPtr(parameterDisplayName),
 				ParameterType:        core.StringPtr(parameterType),
 			}
 
-			replaceAttachmentOptions := &sccphoenixcomplianceapisv1.ReplaceAttachmentOptions{
+			replaceAttachmentOptions := &compliancev2.ReplaceAttachmentOptions{
 				ProfilesID:           core.StringPtr(profilesID),
 				AttachmentID:         core.StringPtr(attachmentID),
 				InstanceID:           core.StringPtr(instanceID),
@@ -567,7 +567,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 				ParameterValue:       core.StringPtr(parameterValue),
 				AssessmentType:       core.StringPtr(assessmentType),
 				AssessmentID:         core.StringPtr(assessmentID),
-				Parameters:           []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel},
+				Parameters:           []compliancev2.ParameterInfo{*parameterInfoModel},
 				TransactionID:        core.StringPtr(transactionID),
 			}
 
@@ -581,7 +581,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`GetParametersByName(getParametersByNameOptions *GetParametersByNameOptions)`, func() {
-			getParametersByNameOptions := &sccphoenixcomplianceapisv1.GetParametersByNameOptions{
+			getParametersByNameOptions := &compliancev2.GetParametersByNameOptions{
 				ProfilesID:    core.StringPtr(profilesID),
 				AttachmentID:  core.StringPtr(attachmentID),
 				ParameterName: core.StringPtr(parameterName),
@@ -601,13 +601,13 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`ReplaceAttachmnetParametersByName(replaceAttachmnetParametersByNameOptions *ReplaceAttachmnetParametersByNameOptions)`, func() {
-			parameterInfoModel := &sccphoenixcomplianceapisv1.ParameterInfo{
+			parameterInfoModel := &compliancev2.ParameterInfo{
 				ParameterName:        core.StringPtr(parameterName),
 				ParameterDisplayName: core.StringPtr(parameterDisplayName),
 				ParameterType:        core.StringPtr(parameterType),
 			}
 
-			replaceAttachmnetParametersByNameOptions := &sccphoenixcomplianceapisv1.ReplaceAttachmnetParametersByNameOptions{
+			replaceAttachmnetParametersByNameOptions := &compliancev2.ReplaceAttachmnetParametersByNameOptions{
 				ProfilesID:              core.StringPtr(profilesID),
 				AttachmentID:            core.StringPtr(attachmentID),
 				ParameterName:           core.StringPtr(parameterName),
@@ -618,7 +618,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 				NewParameterValue:       core.StringPtr(newParameterValue),
 				NewAssessmentType:       core.StringPtr(newAssessmentType),
 				NewAssessmentID:         core.StringPtr(newAssessmentID),
-				NewParameters:           []sccphoenixcomplianceapisv1.ParameterInfo{*parameterInfoModel},
+				NewParameters:           []compliancev2.ParameterInfo{*parameterInfoModel},
 				TransactionID:           core.StringPtr(transactionID),
 			}
 
@@ -634,37 +634,37 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`CreateCustomControlLibrary(createCustomControlLibraryOptions *CreateCustomControlLibraryOptions)`, func() {
-			// parameterInfoModel := &sccphoenixcomplianceapisv1.ParameterInfo{
+			// parameterInfoModel := &compliancev2.ParameterInfo{
 			// 	ParameterName:        core.StringPtr("testString"),
 			// 	ParameterDisplayName: core.StringPtr("testString"),
 			// 	ParameterType:        core.StringPtr("numeric"),
 			// }
 
-			implementationPayloadModel := &sccphoenixcomplianceapisv1.ImplementationPayload{
+			implementationPayloadModel := &compliancev2.ImplementationPayload{
 				AssessmentID:          core.StringPtr(assessmentID),
 				AssessmentMethod:      core.StringPtr(assessmentMethod),
 				AssessmentType:        core.StringPtr(assessmentType),
 				AssessmentDescription: core.StringPtr(assessmentDescription),
-				Parameters:            []sccphoenixcomplianceapisv1.ParameterInfo{},
+				Parameters:            []compliancev2.ParameterInfo{},
 			}
 
-			controlSpecificationsModel := &sccphoenixcomplianceapisv1.ControlSpecifications{
+			controlSpecificationsModel := &compliancev2.ControlSpecifications{
 				ID:             core.StringPtr(controlID),
 				Responsibility: core.StringPtr(responsibility),
 				ComponentID:    core.StringPtr(componentID),
 				Environment:    core.StringPtr(environment),
 				Description:    core.StringPtr(description),
-				Assessments:    []sccphoenixcomplianceapisv1.ImplementationPayload{*implementationPayloadModel},
+				Assessments:    []compliancev2.ImplementationPayload{*implementationPayloadModel},
 			}
 
-			controlsInControlLibRequestPayloadModel := &sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload{
+			controlsInControlLibRequestPayloadModel := &compliancev2.ControlsInControlLibRequestPayload{
 				ControlName:           core.StringPtr(controlName),
 				ControlDescription:    core.StringPtr(controlDescription),
 				ControlCategory:       core.StringPtr(controlCategory),
-				ControlSpecifications: []sccphoenixcomplianceapisv1.ControlSpecifications{*controlSpecificationsModel},
+				ControlSpecifications: []compliancev2.ControlSpecifications{*controlSpecificationsModel},
 			}
 
-			createCustomControlLibraryOptions := &sccphoenixcomplianceapisv1.CreateCustomControlLibraryOptions{
+			createCustomControlLibraryOptions := &compliancev2.CreateCustomControlLibraryOptions{
 				InstanceID:                core.StringPtr(instanceID),
 				AccountID:                 core.StringPtr(accountID),
 				ControlLibraryName:        core.StringPtr(controlLibraryName),
@@ -672,7 +672,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 				ControlLibraryType:        core.StringPtr(controlLibraryType),
 				ControlLibraryVersion:     core.StringPtr(controlLibraryVersion),
 				Latest:                    core.BoolPtr(true),
-				Controls:                  []sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel},
+				Controls:                  []compliancev2.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel},
 				TransactionID:             core.StringPtr(transactionID),
 			}
 
@@ -686,7 +686,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`ListControlLibraries(listControlLibrariesOptions *ListControlLibrariesOptions)`, func() {
-			listControlLibrariesOptions := &sccphoenixcomplianceapisv1.ListControlLibrariesOptions{
+			listControlLibrariesOptions := &compliancev2.ListControlLibrariesOptions{
 				InstanceID:    core.StringPtr(instanceID),
 				TransactionID: core.StringPtr(transactionID),
 			}
@@ -702,42 +702,42 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`ReplaceCustomControlLibrary(replaceCustomControlLibraryOptions *ReplaceCustomControlLibraryOptions)`, func() {
-			// parameterInfoModel := &sccphoenixcomplianceapisv1.ParameterInfo{
+			// parameterInfoModel := &compliancev2.ParameterInfo{
 			// 	ParameterName:        core.StringPtr(parameter),
 			// 	ParameterDisplayName: core.StringPtr("testString"),
 			// 	ParameterType:        core.StringPtr("numeric"),
 			// }
 
-			implementationPayloadModel := &sccphoenixcomplianceapisv1.ImplementationPayload{
+			implementationPayloadModel := &compliancev2.ImplementationPayload{
 				AssessmentID:          core.StringPtr(assessmentID),
 				AssessmentMethod:      core.StringPtr(assessmentMethod),
 				AssessmentType:        core.StringPtr(assessmentType),
 				AssessmentDescription: core.StringPtr(assessmentDescription),
-				Parameters:            []sccphoenixcomplianceapisv1.ParameterInfo{},
+				Parameters:            []compliancev2.ParameterInfo{},
 			}
 
-			controlSpecificationsModel := &sccphoenixcomplianceapisv1.ControlSpecifications{
+			controlSpecificationsModel := &compliancev2.ControlSpecifications{
 				ID:             core.StringPtr(controlID),
 				Responsibility: core.StringPtr(responsibility),
 				ComponentID:    core.StringPtr(componentID),
 				Environment:    core.StringPtr(environment),
 				Description:    core.StringPtr(description),
-				Assessments:    []sccphoenixcomplianceapisv1.ImplementationPayload{*implementationPayloadModel},
+				Assessments:    []compliancev2.ImplementationPayload{*implementationPayloadModel},
 			}
 
-			// controlDocsModel := &sccphoenixcomplianceapisv1.ControlDocs{
+			// controlDocsModel := &compliancev2.ControlDocs{
 			// 	ControlDocsID:   core.StringPtr("testString"),
 			// 	ControlDocsType: core.StringPtr("testString"),
 			// }
 
-			controlsInControlLibRequestPayloadModel := &sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload{
+			controlsInControlLibRequestPayloadModel := &compliancev2.ControlsInControlLibRequestPayload{
 				ControlName:           core.StringPtr(controlName),
 				ControlDescription:    core.StringPtr(controlDescription),
 				ControlCategory:       core.StringPtr(controlCategory),
-				ControlSpecifications: []sccphoenixcomplianceapisv1.ControlSpecifications{*controlSpecificationsModel},
+				ControlSpecifications: []compliancev2.ControlSpecifications{*controlSpecificationsModel},
 			}
 
-			replaceCustomControlLibraryOptions := &sccphoenixcomplianceapisv1.ReplaceCustomControlLibraryOptions{
+			replaceCustomControlLibraryOptions := &compliancev2.ReplaceCustomControlLibraryOptions{
 				ControlLibrariesID:        core.StringPtr(controlLibrariesID),
 				InstanceID:                core.StringPtr(instanceID),
 				AccountID:                 core.StringPtr(accountID),
@@ -746,7 +746,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 				ControlLibraryType:        core.StringPtr(controlLibraryType),
 				ControlLibraryVersion:     core.StringPtr(controlLibraryVersion),
 				Latest:                    core.BoolPtr(true),
-				Controls:                  []sccphoenixcomplianceapisv1.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel},
+				Controls:                  []compliancev2.ControlsInControlLibRequestPayload{*controlsInControlLibRequestPayloadModel},
 				TransactionID:             core.StringPtr(transactionID),
 			}
 
@@ -762,7 +762,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`GetControlLibrary(getControlLibraryOptions *GetControlLibraryOptions)`, func() {
-			getControlLibraryOptions := &sccphoenixcomplianceapisv1.GetControlLibraryOptions{
+			getControlLibraryOptions := &compliancev2.GetControlLibraryOptions{
 				ControlLibrariesID: core.StringPtr(controlLibrariesID),
 				InstanceID:         core.StringPtr(instanceID),
 				TransactionID:      core.StringPtr(transactionID),
@@ -780,7 +780,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`CreateScan(createScanOptions *CreateScanOptions)`, func() {
-			createScanOptions := &sccphoenixcomplianceapisv1.CreateScanOptions{
+			createScanOptions := &compliancev2.CreateScanOptions{
 				InstanceID:    core.StringPtr(instanceID),
 				AttachmentID:  core.StringPtr(attachmentID),
 				TransactionID: core.StringPtr(transactionID),
@@ -798,7 +798,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`DeleteCustomProfile(deleteCustomProfileOptions *DeleteCustomProfileOptions)`, func() {
-			deleteCustomProfileOptions := &sccphoenixcomplianceapisv1.DeleteCustomProfileOptions{
+			deleteCustomProfileOptions := &compliancev2.DeleteCustomProfileOptions{
 				ProfilesID:    core.StringPtr(profilesIdDelete),
 				InstanceID:    core.StringPtr(instanceID),
 				TransactionID: core.StringPtr(transactionID),
@@ -814,7 +814,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`DeleteProfileAttachmnet(deleteProfileAttachmnetOptions *DeleteProfileAttachmnetOptions)`, func() {
-			deleteProfileAttachmnetOptions := &sccphoenixcomplianceapisv1.DeleteProfileAttachmnetOptions{
+			deleteProfileAttachmnetOptions := &compliancev2.DeleteProfileAttachmnetOptions{
 				ProfilesID:    core.StringPtr(profilesID),
 				AttachmentID:  core.StringPtr(attachmentIdDelete),
 				InstanceID:    core.StringPtr(instanceID),
@@ -831,7 +831,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`DeleteCustomControllibrary(deleteCustomControllibraryOptions *DeleteCustomControllibraryOptions)`, func() {
-			deleteCustomControllibraryOptions := &sccphoenixcomplianceapisv1.DeleteCustomControllibraryOptions{
+			deleteCustomControllibraryOptions := &compliancev2.DeleteCustomControllibraryOptions{
 				ControlLibrariesID: core.StringPtr(controlLibrariesIdDelete),
 				InstanceID:         core.StringPtr(instanceID),
 				TransactionID:      core.StringPtr(transactionID),

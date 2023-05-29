@@ -562,7 +562,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 				AttachmentID:         core.StringPtr(attachmentID),
 				InstanceID:           core.StringPtr(instanceID),
 				ParameterName:        core.StringPtr(parameterName),
-				ParameterDisplayName: core.StringPtr("dylannn display name"),
+				ParameterDisplayName: core.StringPtr(parameterDisplayName),
 				ParameterType:        core.StringPtr(parameterType),
 				ParameterValue:       core.StringPtr(parameterValue),
 				AssessmentType:       core.StringPtr(assessmentType),
@@ -603,7 +603,8 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 		It(`ReplaceAttachmnetParametersByName(replaceAttachmnetParametersByNameOptions *ReplaceAttachmnetParametersByNameOptions)`, func() {
 			parameterInfoModel := &compliancev2.ParameterInfo{
 				ParameterName:        core.StringPtr(parameterName),
-				ParameterDisplayName: core.StringPtr(parameterDisplayName),
+				
+				: core.StringPtr(parameterDisplayName),
 				ParameterType:        core.StringPtr(parameterType),
 			}
 

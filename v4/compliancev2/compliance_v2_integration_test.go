@@ -603,8 +603,7 @@ var _ = Describe(`SccPhoenixComplianceApisV1 Integration Tests`, func() {
 		It(`ReplaceAttachmnetParametersByName(replaceAttachmnetParametersByNameOptions *ReplaceAttachmnetParametersByNameOptions)`, func() {
 			parameterInfoModel := &compliancev2.ParameterInfo{
 				ParameterName:        core.StringPtr(parameterName),
-				
-				: core.StringPtr(parameterDisplayName),
+				ParameterDisplayName: core.StringPtr(parameterDisplayName),
 				ParameterType:        core.StringPtr(parameterType),
 			}
 

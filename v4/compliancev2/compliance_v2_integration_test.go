@@ -39,7 +39,7 @@ import (
  * The integration test will automatically skip tests if the required config file is not available.
  */
 var _ = Describe(`ComplianceV2 Integration Tests`, func() {
-	const externalConfigFile = "compliance_v2.env"
+	const externalConfigFile = "../compliance_v2.env"
 
 	var (
 		err                 error

@@ -43,7 +43,7 @@ import (
 // export IBM_CREDENTIALS_FILE=<name of configuration file>
 var _ = Describe(`ComplianceV2 Examples Tests`, func() {
 
-	const externalConfigFile = "compliance_v2.env"
+	const externalConfigFile = "../compliance_v2.env"
 
 	var (
 		complianceService *compliancev2.ComplianceV2

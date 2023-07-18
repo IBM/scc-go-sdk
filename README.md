@@ -51,7 +51,7 @@ The IBM Cloud Security & Compliance Center Go SDK allows developers to programma
 | [Admin Service](https://cloud.ibm.com/apidocs/security-compliance/admin)             | adminserviceapiv1         |
 | [Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture-v1.0)      | posturemanagementv1       |
 | [Posture Management v2](https://cloud.ibm.com/apidocs/security-compliance/posture-v2.0)      | posturemanagementv2       |
-
+| [Compliance v2]()      | compliancev2       |
 
 
 ## Prerequisites

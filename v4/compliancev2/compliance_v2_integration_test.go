@@ -137,8 +137,8 @@ var _ = Describe(`ComplianceV2 Integration Tests`, func() {
 		})
 		It(`ListControlLibraries(listControlLibrariesOptions *ListControlLibrariesOptions)`, func() {
 			listControlLibrariesOptions := &compliancev2.ListControlLibrariesOptions{
-				XCorrelationID:     core.StringPtr("testString"),
-				XRequestID:         core.StringPtr("testString"),
+				XCorrelationID:     core.StringPtr("SDK-automation-ListControlLibraries"),
+				XRequestID:         core.StringPtr("SDK-automation-ListControlLibraries"),
 				Limit:              core.Int64Ptr(int64(50)),
 				ControlLibraryType: core.StringPtr("custom"),
 			}
@@ -175,16 +175,15 @@ var _ = Describe(`ComplianceV2 Integration Tests`, func() {
 			}
 
 			createCustomControlLibraryOptions := &compliancev2.CreateCustomControlLibraryOptions{
-				ControlLibraryName:        core.StringPtr("IBM Cloud for Financial Services"),
-				ControlLibraryDescription: core.StringPtr("IBM Cloud for Financial Services"),
+				ControlLibraryName:        core.StringPtr("SDK-automation-CL"),
+				ControlLibraryDescription: core.StringPtr("SDK-automation-CL"),
 				ControlLibraryType:        core.StringPtr("custom"),
 				Controls:                  []compliancev2.ControlsInControlLib{*controlsInControlLibModel},
-				VersionGroupLabel:         core.StringPtr("33fc7b80-0fa5-4f16-bbba-1f293f660f0d"),
-				ControlLibraryVersion:     core.StringPtr("1.1.0"),
+				ControlLibraryVersion:     core.StringPtr("1.0.0"),
 				Latest:                    core.BoolPtr(true),
 				ControlsCount:             core.Int64Ptr(int64(38)),
-				XCorrelationID:            core.StringPtr("testString"),
-				XRequestID:                core.StringPtr("testString"),
+				XCorrelationID:            core.StringPtr("SDK-automation-CreateCustomControlLibrary"),
+				XRequestID:                core.StringPtr("SDK-automation-CreateCustomControlLibrary"),
 			}
 
 			controlLibrary, response, err := complianceService.CreateCustomControlLibrary(createCustomControlLibraryOptions)
@@ -204,8 +203,8 @@ var _ = Describe(`ComplianceV2 Integration Tests`, func() {
 		It(`GetControlLibrary(getControlLibraryOptions *GetControlLibraryOptions)`, func() {
 			getControlLibraryOptions := &compliancev2.GetControlLibraryOptions{
 				ControlLibrariesID: core.StringPtr(controlLibraryIdNew),
-				XCorrelationID:     core.StringPtr("testString"),
-				XRequestID:         core.StringPtr("testString"),
+				XCorrelationID:     core.StringPtr("SDK-automation-GetControlLibrary"),
+				XRequestID:         core.StringPtr("SDK-automation-GetControlLibrary"),
 			}
 
 			controlLibrary, response, err := complianceService.GetControlLibrary(getControlLibraryOptions)
@@ -243,22 +242,22 @@ var _ = Describe(`ComplianceV2 Integration Tests`, func() {
 				ControlLibrariesID:        core.StringPtr(controlLibraryIdNew),
 				ID:                        core.StringPtr(controlLibraryIdNew),
 				AccountID:                 core.StringPtr(accountID),
-				ControlLibraryName:        core.StringPtr("IBM Cloud for Financial Services"),
-				ControlLibraryDescription: core.StringPtr("IBM Cloud for Financial Services"),
+				ControlLibraryName:        core.StringPtr("SDK-automation-CL-Edit"),
+				ControlLibraryDescription: core.StringPtr("SDK-automation-CL-Edit"),
 				ControlLibraryType:        core.StringPtr("custom"),
 				VersionGroupLabel:         core.StringPtr("33fc7b80-0fa5-4f16-bbba-1f293f660f0d"),
 				ControlLibraryVersion:     core.StringPtr("1.1.0"),
 				CreatedOn:                 CreateMockDateTime("2019-01-01T12:00:00.000Z"),
-				CreatedBy:                 core.StringPtr("testString"),
+				CreatedBy:                 core.StringPtr("SDK-automation"),
 				UpdatedOn:                 CreateMockDateTime("2019-01-01T12:00:00.000Z"),
-				UpdatedBy:                 core.StringPtr("testString"),
+				UpdatedBy:                 core.StringPtr("SDK-automation"),
 				Latest:                    core.BoolPtr(true),
 				HierarchyEnabled:          core.BoolPtr(true),
 				ControlsCount:             core.Int64Ptr(int64(38)),
 				ControlParentsCount:       core.Int64Ptr(int64(38)),
 				Controls:                  []compliancev2.ControlsInControlLib{*controlsInControlLibModel},
-				XCorrelationID:            core.StringPtr("testString"),
-				XRequestID:                core.StringPtr("testString"),
+				XCorrelationID:            core.StringPtr("SDK-automation-ReplaceCustomControlLibrary"),
+				XRequestID:                core.StringPtr("SDK-automation-ReplaceCustomControlLibrary"),
 			}
 
 			controlLibrary, response, err := complianceService.ReplaceCustomControlLibrary(replaceCustomControlLibraryOptions)
@@ -274,8 +273,8 @@ var _ = Describe(`ComplianceV2 Integration Tests`, func() {
 		})
 		It(`ListProfiles(listProfilesOptions *ListProfilesOptions)`, func() {
 			listProfilesOptions := &compliancev2.ListProfilesOptions{
-				XCorrelationID: core.StringPtr("testString"),
-				XRequestID:     core.StringPtr("testString"),
+				XCorrelationID: core.StringPtr("SDK-automation-ListProfiles"),
+				XRequestID:     core.StringPtr("SDK-automation-ListProfiles"),
 				Limit:          core.Int64Ptr(int64(50)),
 				ProfileType:    core.StringPtr("custom"),
 			}
@@ -307,13 +306,13 @@ var _ = Describe(`ComplianceV2 Integration Tests`, func() {
 			}
 
 			createProfileOptions := &compliancev2.CreateProfileOptions{
-				ProfileName:        core.StringPtr("test_profile1"),
-				ProfileDescription: core.StringPtr("test_description1"),
+				ProfileName:        core.StringPtr("SDK-automation-CustomProfile"),
+				ProfileDescription: core.StringPtr("SDK-automation-CustomProfile"),
 				ProfileType:        core.StringPtr("custom"),
 				Controls:           []compliancev2.ProfileControlsPrototype{*profileControlsPrototypeModel},
 				DefaultParameters:  []compliancev2.DefaultParametersPrototype{*defaultParametersPrototypeModel},
-				XCorrelationID:     core.StringPtr("testString"),
-				XRequestID:         core.StringPtr("testString"),
+				XCorrelationID:     core.StringPtr("SDK-automation-CreateProfile"),
+				XRequestID:         core.StringPtr("SDK-automation-CreateProfile"),
 			}
 
 			profile, response, err := complianceService.CreateProfile(createProfileOptions)
@@ -333,8 +332,8 @@ var _ = Describe(`ComplianceV2 Integration Tests`, func() {
 		It(`GetProfile(getProfileOptions *GetProfileOptions)`, func() {
 			getProfileOptions := &compliancev2.GetProfileOptions{
 				ProfilesID:     core.StringPtr(profileIdNew),
-				XCorrelationID: core.StringPtr("testString"),
-				XRequestID:     core.StringPtr("testString"),
+				XCorrelationID: core.StringPtr("SDK-automation-GetProfile"),
+				XRequestID:     core.StringPtr("SDK-automation-GetProfile"),
 			}
 
 			profile, response, err := complianceService.GetProfile(getProfileOptions)
@@ -365,13 +364,13 @@ var _ = Describe(`ComplianceV2 Integration Tests`, func() {
 
 			replaceProfileOptions := &compliancev2.ReplaceProfileOptions{
 				ProfilesID:         core.StringPtr(profileIdNew),
-				ProfileName:        core.StringPtr("test_profile1"),
-				ProfileDescription: core.StringPtr("test_description1"),
+				ProfileName:        core.StringPtr("SDK-automation-CustomProfile-Edit"),
+				ProfileDescription: core.StringPtr("SDK-automation-CustomProfile-Edit"),
 				ProfileType:        core.StringPtr("custom"),
 				Controls:           []compliancev2.ProfileControlsPrototype{*profileControlsPrototypeModel},
 				DefaultParameters:  []compliancev2.DefaultParametersPrototype{*defaultParametersPrototypeModel},
-				XCorrelationID:     core.StringPtr("testString"),
-				XRequestID:         core.StringPtr("testString"),
+				XCorrelationID:     core.StringPtr("SDK-automation-ReplaceProfile"),
+				XRequestID:         core.StringPtr("SDK-automation-ReplaceProfile"),
 			}
 
 			profile, response, err := complianceService.ReplaceProfile(replaceProfileOptions)
@@ -386,18 +385,18 @@ var _ = Describe(`ComplianceV2 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`CreateAttachment(createAttachmentOptions *CreateAttachmentOptions)`, func() {
-			propertyScopeID := &compliancev2.Property{
+			propertyScopeID := &compliancev2.PropertyItem{
 				Name:  core.StringPtr("scope_id"),
 				Value: core.StringPtr(accountID),
 			}
-			propertyScopeType := &compliancev2.Property{
+			propertyScopeType := &compliancev2.PropertyItem{
 				Name:  core.StringPtr("scope_type"),
 				Value: core.StringPtr("account"),
 			}
 
 			multiCloudScopeModel := &compliancev2.MultiCloudScope{
 				Environment: core.StringPtr("ibm-cloud"),
-				Properties:  []compliancev2.Property{*propertyScopeID, *propertyScopeType},
+				Properties:  []compliancev2.PropertyItem{*propertyScopeID, *propertyScopeType},
 			}
 
 			failedControlsModel := &compliancev2.FailedControls{
@@ -421,8 +420,8 @@ var _ = Describe(`ComplianceV2 Integration Tests`, func() {
 
 			attachmentsPrototypeModel := &compliancev2.AttachmentsPrototype{
 				ID:                   core.StringPtr("130003ea8bfa43c5aacea07a86da3000"),
-				Name:                 core.StringPtr("account-0d8c3805dfea40aa8ad02265a18eb12b"),
-				Description:          core.StringPtr("Test description"),
+				Name:                 core.StringPtr("SDK-Automation-Attachment"),
+				Description:          core.StringPtr("SDK-Automation-Attachment"),
 				Scope:                []compliancev2.MultiCloudScope{*multiCloudScopeModel},
 				Status:               core.StringPtr("enabled"),
 				Schedule:             core.StringPtr("daily"),
@@ -434,8 +433,8 @@ var _ = Describe(`ComplianceV2 Integration Tests`, func() {
 				ProfilesID:     core.StringPtr(profileIdNew),
 				Attachments:    []compliancev2.AttachmentsPrototype{*attachmentsPrototypeModel},
 				ProfileID:      core.StringPtr(profileIdNew),
-				XCorrelationID: core.StringPtr("testString"),
-				XRequestID:     core.StringPtr("testString"),
+				XCorrelationID: core.StringPtr("SDK-automation-CreateAttachment"),
+				XRequestID:     core.StringPtr("SDK-automation-CreateAttachment"),
 			}
 
 			attachmentPrototype, response, err := complianceService.CreateAttachment(createAttachmentOptions)
@@ -455,8 +454,8 @@ var _ = Describe(`ComplianceV2 Integration Tests`, func() {
 		It(`ListAttachments(listAttachmentsOptions *ListAttachmentsOptions)`, func() {
 			listAttachmentsOptions := &compliancev2.ListAttachmentsOptions{
 				ProfilesID:     core.StringPtr(profileIdNew),
-				XCorrelationID: core.StringPtr("testString"),
-				XRequestID:     core.StringPtr("testString"),
+				XCorrelationID: core.StringPtr("SDK-automation-ListAttachments"),
+				XRequestID:     core.StringPtr("SDK-automation-ListAttachments"),
 				Limit:          core.Int64Ptr(int64(50)),
 			}
 
@@ -475,8 +474,8 @@ var _ = Describe(`ComplianceV2 Integration Tests`, func() {
 			getProfileAttachmentOptions := &compliancev2.GetProfileAttachmentOptions{
 				AttachmentID:   core.StringPtr(attachmentIdNew),
 				ProfilesID:     core.StringPtr(profileIdNew),
-				XCorrelationID: core.StringPtr("testString"),
-				XRequestID:     core.StringPtr("testString"),
+				XCorrelationID: core.StringPtr("SDK-automation-GetProfileAttachment"),
+				XRequestID:     core.StringPtr("SDK-automation-GetProfileAttachment"),
 			}
 
 			attachment, response, err := complianceService.GetProfileAttachment(getProfileAttachmentOptions)
@@ -491,18 +490,18 @@ var _ = Describe(`ComplianceV2 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`ReplaceProfileAttachment(replaceProfileAttachmentOptions *ReplaceProfileAttachmentOptions)`, func() {
-			propertyScopeID := &compliancev2.Property{
+			propertyScopeID := &compliancev2.PropertyItem{
 				Name:  core.StringPtr("scope_id"),
 				Value: core.StringPtr(accountID),
 			}
-			propertyScopeType := &compliancev2.Property{
+			propertyScopeType := &compliancev2.PropertyItem{
 				Name:  core.StringPtr("scope_type"),
 				Value: core.StringPtr("account"),
 			}
 
 			multiCloudScopeModel := &compliancev2.MultiCloudScope{
 				Environment: core.StringPtr("ibm-cloud"),
-				Properties:  []compliancev2.Property{*propertyScopeID, *propertyScopeType},
+				Properties:  []compliancev2.PropertyItem{*propertyScopeID, *propertyScopeType},
 			}
 
 			failedControlsModel := &compliancev2.FailedControls{
@@ -539,19 +538,19 @@ var _ = Describe(`ComplianceV2 Integration Tests`, func() {
 				InstanceID:           core.StringPtr(instanceID),
 				Scope:                []compliancev2.MultiCloudScope{*multiCloudScopeModel},
 				CreatedOn:            CreateMockDateTime("2019-01-01T12:00:00.000Z"),
-				CreatedBy:            core.StringPtr("testString"),
+				CreatedBy:            core.StringPtr("SDK-Automation"),
 				UpdatedOn:            CreateMockDateTime("2019-01-01T12:00:00.000Z"),
-				UpdatedBy:            core.StringPtr("testString"),
+				UpdatedBy:            core.StringPtr("SDK-Automation"),
 				Status:               core.StringPtr("enabled"),
 				Schedule:             core.StringPtr("daily"),
 				Notifications:        attachmentsNotificationsPrototypeModel,
 				AttachmentParameters: []compliancev2.AttachmentParametersPrototype{*attachmentParametersPrototypeModel},
 				LastScan:             lastScanModel,
-				NextScanTime:         core.StringPtr("testString"),
+				NextScanTime:         core.StringPtr(""),
 				Name:                 core.StringPtr("account-0d8c3805dfea40aa8ad02265a18eb12b"),
 				Description:          core.StringPtr("Test description"),
-				XCorrelationID:       core.StringPtr("testString"),
-				XRequestID:           core.StringPtr("testString"),
+				XCorrelationID:       core.StringPtr("SDK-automation-ReplaceProfileAttachment"),
+				XRequestID:           core.StringPtr("SDK-automation-ReplaceProfileAttachment"),
 			}
 
 			attachment, response, err := complianceService.ReplaceProfileAttachment(replaceProfileAttachmentOptions)
@@ -568,8 +567,8 @@ var _ = Describe(`ComplianceV2 Integration Tests`, func() {
 		It(`CreateScan(createScanOptions *CreateScanOptions)`, func() {
 			createScanOptions := &compliancev2.CreateScanOptions{
 				AttachmentID:   core.StringPtr(attachmentIdNew),
-				XCorrelationID: core.StringPtr("testString"),
-				XRequestID:     core.StringPtr("testString"),
+				XCorrelationID: core.StringPtr("SDK-automation-CreateScan"),
+				XRequestID:     core.StringPtr("SDK-automation-CreateScan"),
 			}
 
 			scan, response, err := complianceService.CreateScan(createScanOptions)
@@ -585,8 +584,8 @@ var _ = Describe(`ComplianceV2 Integration Tests`, func() {
 		})
 		It(`ListAttachmentsAccount(listAttachmentsAccountOptions *ListAttachmentsAccountOptions)`, func() {
 			listAttachmentsAccountOptions := &compliancev2.ListAttachmentsAccountOptions{
-				XCorrelationID: core.StringPtr("testString"),
-				XRequestID:     core.StringPtr("testString"),
+				XCorrelationID: core.StringPtr("SDK-automation-ListAttachmentsAccount"),
+				XRequestID:     core.StringPtr("SDK-automation-ListAttachmentsAccount"),
 				Limit:          core.Int64Ptr(int64(50)),
 			}
 
@@ -605,8 +604,8 @@ var _ = Describe(`ComplianceV2 Integration Tests`, func() {
 			deleteProfileAttachmentOptions := &compliancev2.DeleteProfileAttachmentOptions{
 				AttachmentID:   core.StringPtr(attachmentIdNew),
 				ProfilesID:     core.StringPtr(profileIdNew),
-				XCorrelationID: core.StringPtr("testString"),
-				XRequestID:     core.StringPtr("testString"),
+				XCorrelationID: core.StringPtr("SDK-automation-DeleteProfileAttachment"),
+				XRequestID:     core.StringPtr("SDK-automation-DeleteProfileAttachment"),
 			}
 
 			_, response, _ := complianceService.DeleteProfileAttachment(deleteProfileAttachmentOptions)
@@ -621,8 +620,8 @@ var _ = Describe(`ComplianceV2 Integration Tests`, func() {
 		It(`DeleteCustomProfile(deleteCustomProfileOptions *DeleteCustomProfileOptions)`, func() {
 			deleteCustomProfileOptions := &compliancev2.DeleteCustomProfileOptions{
 				ProfilesID:     core.StringPtr(profileIdNew),
-				XCorrelationID: core.StringPtr("testString"),
-				XRequestID:     core.StringPtr("testString"),
+				XCorrelationID: core.StringPtr("SDK-automation-DeleteCustomProfile"),
+				XRequestID:     core.StringPtr("SDK-automation-DeleteCustomProfile"),
 			}
 
 			profile, response, err := complianceService.DeleteCustomProfile(deleteCustomProfileOptions)
@@ -639,8 +638,8 @@ var _ = Describe(`ComplianceV2 Integration Tests`, func() {
 		It(`DeleteCustomControlLibrary(deleteCustomControlLibraryOptions *DeleteCustomControlLibraryOptions)`, func() {
 			deleteCustomControlLibraryOptions := &compliancev2.DeleteCustomControlLibraryOptions{
 				ControlLibrariesID: core.StringPtr(controlLibraryIdNew),
-				XCorrelationID:     core.StringPtr("testString"),
-				XRequestID:         core.StringPtr("testString"),
+				XCorrelationID:     core.StringPtr("SDK-automation-DeleteCustomControlLibrary"),
+				XRequestID:         core.StringPtr("SDK-automation-DeleteCustomControlLibrary"),
 			}
 
 			controlLibraryDelete, response, err := complianceService.DeleteCustomControlLibrary(deleteCustomControlLibraryOptions)

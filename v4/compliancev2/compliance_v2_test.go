@@ -3662,14 +3662,14 @@ var _ = Describe(`ComplianceV2`, func() {
 				Expect(complianceService).ToNot(BeNil())
 
 				// Construct an instance of the Property model
-				propertyModel := new(compliancev2.Property)
+				propertyModel := new(compliancev2.PropertyItem)
 				propertyModel.Name = core.StringPtr("scope_id")
 				propertyModel.Value = core.StringPtr("cg3335893hh1428692d6747cf300yeb5")
 
 				// Construct an instance of the MultiCloudScope model
 				multiCloudScopeModel := new(compliancev2.MultiCloudScope)
 				multiCloudScopeModel.Environment = core.StringPtr("ibm-cloud")
-				multiCloudScopeModel.Properties = []compliancev2.Property{*propertyModel}
+				multiCloudScopeModel.Properties = []compliancev2.PropertyItem{*propertyModel}
 
 				// Construct an instance of the FailedControls model
 				failedControlsModel := new(compliancev2.FailedControls)
@@ -3777,14 +3777,14 @@ var _ = Describe(`ComplianceV2`, func() {
 				complianceService.EnableRetries(0, 0)
 
 				// Construct an instance of the Property model
-				propertyModel := new(compliancev2.Property)
+				propertyModel := new(compliancev2.PropertyItem)
 				propertyModel.Name = core.StringPtr("scope_id")
 				propertyModel.Value = core.StringPtr("cg3335893hh1428692d6747cf300yeb5")
 
 				// Construct an instance of the MultiCloudScope model
 				multiCloudScopeModel := new(compliancev2.MultiCloudScope)
 				multiCloudScopeModel.Environment = core.StringPtr("ibm-cloud")
-				multiCloudScopeModel.Properties = []compliancev2.Property{*propertyModel}
+				multiCloudScopeModel.Properties = []compliancev2.PropertyItem{*propertyModel}
 
 				// Construct an instance of the FailedControls model
 				failedControlsModel := new(compliancev2.FailedControls)
@@ -3900,14 +3900,14 @@ var _ = Describe(`ComplianceV2`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the Property model
-				propertyModel := new(compliancev2.Property)
+				propertyModel := new(compliancev2.PropertyItem)
 				propertyModel.Name = core.StringPtr("scope_id")
 				propertyModel.Value = core.StringPtr("cg3335893hh1428692d6747cf300yeb5")
 
 				// Construct an instance of the MultiCloudScope model
 				multiCloudScopeModel := new(compliancev2.MultiCloudScope)
 				multiCloudScopeModel.Environment = core.StringPtr("ibm-cloud")
-				multiCloudScopeModel.Properties = []compliancev2.Property{*propertyModel}
+				multiCloudScopeModel.Properties = []compliancev2.PropertyItem{*propertyModel}
 
 				// Construct an instance of the FailedControls model
 				failedControlsModel := new(compliancev2.FailedControls)
@@ -3964,14 +3964,14 @@ var _ = Describe(`ComplianceV2`, func() {
 				Expect(complianceService).ToNot(BeNil())
 
 				// Construct an instance of the Property model
-				propertyModel := new(compliancev2.Property)
+				propertyModel := new(compliancev2.PropertyItem)
 				propertyModel.Name = core.StringPtr("scope_id")
 				propertyModel.Value = core.StringPtr("cg3335893hh1428692d6747cf300yeb5")
 
 				// Construct an instance of the MultiCloudScope model
 				multiCloudScopeModel := new(compliancev2.MultiCloudScope)
 				multiCloudScopeModel.Environment = core.StringPtr("ibm-cloud")
-				multiCloudScopeModel.Properties = []compliancev2.Property{*propertyModel}
+				multiCloudScopeModel.Properties = []compliancev2.PropertyItem{*propertyModel}
 
 				// Construct an instance of the FailedControls model
 				failedControlsModel := new(compliancev2.FailedControls)
@@ -4049,14 +4049,14 @@ var _ = Describe(`ComplianceV2`, func() {
 				Expect(complianceService).ToNot(BeNil())
 
 				// Construct an instance of the Property model
-				propertyModel := new(compliancev2.Property)
+				propertyModel := new(compliancev2.PropertyItem)
 				propertyModel.Name = core.StringPtr("scope_id")
 				propertyModel.Value = core.StringPtr("cg3335893hh1428692d6747cf300yeb5")
 
 				// Construct an instance of the MultiCloudScope model
 				multiCloudScopeModel := new(compliancev2.MultiCloudScope)
 				multiCloudScopeModel.Environment = core.StringPtr("ibm-cloud")
-				multiCloudScopeModel.Properties = []compliancev2.Property{*propertyModel}
+				multiCloudScopeModel.Properties = []compliancev2.PropertyItem{*propertyModel}
 
 				// Construct an instance of the FailedControls model
 				failedControlsModel := new(compliancev2.FailedControls)
@@ -4377,14 +4377,14 @@ var _ = Describe(`ComplianceV2`, func() {
 				Expect(complianceService).ToNot(BeNil())
 
 				// Construct an instance of the Property model
-				propertyModel := new(compliancev2.Property)
+				propertyModel := new(compliancev2.PropertyItem)
 				propertyModel.Name = core.StringPtr("scope_id")
 				propertyModel.Value = core.StringPtr("cg3335893hh1428692d6747cf300yeb5")
 
 				// Construct an instance of the MultiCloudScope model
 				multiCloudScopeModel := new(compliancev2.MultiCloudScope)
 				multiCloudScopeModel.Environment = core.StringPtr("ibm-cloud")
-				multiCloudScopeModel.Properties = []compliancev2.Property{*propertyModel}
+				multiCloudScopeModel.Properties = []compliancev2.PropertyItem{*propertyModel}
 
 				// Construct an instance of the FailedControls model
 				failedControlsModel := new(compliancev2.FailedControls)
@@ -4503,14 +4503,14 @@ var _ = Describe(`ComplianceV2`, func() {
 				complianceService.EnableRetries(0, 0)
 
 				// Construct an instance of the Property model
-				propertyModel := new(compliancev2.Property)
+				propertyModel := new(compliancev2.PropertyItem)
 				propertyModel.Name = core.StringPtr("scope_id")
 				propertyModel.Value = core.StringPtr("cg3335893hh1428692d6747cf300yeb5")
 
 				// Construct an instance of the MultiCloudScope model
 				multiCloudScopeModel := new(compliancev2.MultiCloudScope)
 				multiCloudScopeModel.Environment = core.StringPtr("ibm-cloud")
-				multiCloudScopeModel.Properties = []compliancev2.Property{*propertyModel}
+				multiCloudScopeModel.Properties = []compliancev2.PropertyItem{*propertyModel}
 
 				// Construct an instance of the FailedControls model
 				failedControlsModel := new(compliancev2.FailedControls)
@@ -4637,14 +4637,14 @@ var _ = Describe(`ComplianceV2`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the Property model
-				propertyModel := new(compliancev2.Property)
+				propertyModel := new(compliancev2.PropertyItem)
 				propertyModel.Name = core.StringPtr("scope_id")
 				propertyModel.Value = core.StringPtr("cg3335893hh1428692d6747cf300yeb5")
 
 				// Construct an instance of the MultiCloudScope model
 				multiCloudScopeModel := new(compliancev2.MultiCloudScope)
 				multiCloudScopeModel.Environment = core.StringPtr("ibm-cloud")
-				multiCloudScopeModel.Properties = []compliancev2.Property{*propertyModel}
+				multiCloudScopeModel.Properties = []compliancev2.PropertyItem{*propertyModel}
 
 				// Construct an instance of the FailedControls model
 				failedControlsModel := new(compliancev2.FailedControls)
@@ -4712,14 +4712,14 @@ var _ = Describe(`ComplianceV2`, func() {
 				Expect(complianceService).ToNot(BeNil())
 
 				// Construct an instance of the Property model
-				propertyModel := new(compliancev2.Property)
+				propertyModel := new(compliancev2.PropertyItem)
 				propertyModel.Name = core.StringPtr("scope_id")
 				propertyModel.Value = core.StringPtr("cg3335893hh1428692d6747cf300yeb5")
 
 				// Construct an instance of the MultiCloudScope model
 				multiCloudScopeModel := new(compliancev2.MultiCloudScope)
 				multiCloudScopeModel.Environment = core.StringPtr("ibm-cloud")
-				multiCloudScopeModel.Properties = []compliancev2.Property{*propertyModel}
+				multiCloudScopeModel.Properties = []compliancev2.PropertyItem{*propertyModel}
 
 				// Construct an instance of the FailedControls model
 				failedControlsModel := new(compliancev2.FailedControls)
@@ -4808,14 +4808,14 @@ var _ = Describe(`ComplianceV2`, func() {
 				Expect(complianceService).ToNot(BeNil())
 
 				// Construct an instance of the Property model
-				propertyModel := new(compliancev2.Property)
+				propertyModel := new(compliancev2.PropertyItem)
 				propertyModel.Name = core.StringPtr("scope_id")
 				propertyModel.Value = core.StringPtr("cg3335893hh1428692d6747cf300yeb5")
 
 				// Construct an instance of the MultiCloudScope model
 				multiCloudScopeModel := new(compliancev2.MultiCloudScope)
 				multiCloudScopeModel.Environment = core.StringPtr("ibm-cloud")
-				multiCloudScopeModel.Properties = []compliancev2.Property{*propertyModel}
+				multiCloudScopeModel.Properties = []compliancev2.PropertyItem{*propertyModel}
 
 				// Construct an instance of the FailedControls model
 				failedControlsModel := new(compliancev2.FailedControls)
@@ -5645,7 +5645,7 @@ var _ = Describe(`ComplianceV2`, func() {
 			})
 			It(`Invoke NewCreateAttachmentOptions successfully`, func() {
 				// Construct an instance of the Property model
-				propertyModel := new(compliancev2.Property)
+				propertyModel := new(compliancev2.PropertyItem)
 				Expect(propertyModel).ToNot(BeNil())
 				propertyModel.Name = core.StringPtr("scope_id")
 				propertyModel.Value = core.StringPtr("cg3335893hh1428692d6747cf300yeb5")
@@ -5656,9 +5656,9 @@ var _ = Describe(`ComplianceV2`, func() {
 				multiCloudScopeModel := new(compliancev2.MultiCloudScope)
 				Expect(multiCloudScopeModel).ToNot(BeNil())
 				multiCloudScopeModel.Environment = core.StringPtr("ibm-cloud")
-				multiCloudScopeModel.Properties = []compliancev2.Property{*propertyModel}
+				multiCloudScopeModel.Properties = []compliancev2.PropertyItem{*propertyModel}
 				Expect(multiCloudScopeModel.Environment).To(Equal(core.StringPtr("ibm-cloud")))
-				Expect(multiCloudScopeModel.Properties).To(Equal([]compliancev2.Property{*propertyModel}))
+				Expect(multiCloudScopeModel.Properties).To(Equal([]compliancev2.PropertyItem{*propertyModel}))
 
 				// Construct an instance of the FailedControls model
 				failedControlsModel := new(compliancev2.FailedControls)
@@ -6054,7 +6054,7 @@ var _ = Describe(`ComplianceV2`, func() {
 			})
 			It(`Invoke NewMultiCloudScope successfully`, func() {
 				environment := "testString"
-				properties := []compliancev2.Property{}
+				properties := []compliancev2.PropertyItem{}
 				_model, err := complianceService.NewMultiCloudScope(environment, properties)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
@@ -6185,7 +6185,7 @@ var _ = Describe(`ComplianceV2`, func() {
 			})
 			It(`Invoke NewReplaceProfileAttachmentOptions successfully`, func() {
 				// Construct an instance of the Property model
-				propertyModel := new(compliancev2.Property)
+				propertyModel := new(compliancev2.PropertyItem)
 				Expect(propertyModel).ToNot(BeNil())
 				propertyModel.Name = core.StringPtr("scope_id")
 				propertyModel.Value = core.StringPtr("cg3335893hh1428692d6747cf300yeb5")
@@ -6196,9 +6196,9 @@ var _ = Describe(`ComplianceV2`, func() {
 				multiCloudScopeModel := new(compliancev2.MultiCloudScope)
 				Expect(multiCloudScopeModel).ToNot(BeNil())
 				multiCloudScopeModel.Environment = core.StringPtr("ibm-cloud")
-				multiCloudScopeModel.Properties = []compliancev2.Property{*propertyModel}
+				multiCloudScopeModel.Properties = []compliancev2.PropertyItem{*propertyModel}
 				Expect(multiCloudScopeModel.Environment).To(Equal(core.StringPtr("ibm-cloud")))
-				Expect(multiCloudScopeModel.Properties).To(Equal([]compliancev2.Property{*propertyModel}))
+				Expect(multiCloudScopeModel.Properties).To(Equal([]compliancev2.PropertyItem{*propertyModel}))
 
 				// Construct an instance of the FailedControls model
 				failedControlsModel := new(compliancev2.FailedControls)

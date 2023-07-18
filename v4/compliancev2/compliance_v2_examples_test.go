@@ -413,14 +413,14 @@ var _ = Describe(`ComplianceV2 Examples Tests`, func() {
 			fmt.Println("\nCreateAttachment() result:")
 			// begin-create_attachment
 
-			propertyModel := &compliancev2.Property{
+			propertyModel := &compliancev2.PropertyItem{
 				Name:  core.StringPtr("scope_id"),
 				Value: core.StringPtr("cg3335893hh1428692d6747cf300yeb5"),
 			}
 
 			multiCloudScopeModel := &compliancev2.MultiCloudScope{
 				Environment: core.StringPtr("ibm-cloud"),
-				Properties:  []compliancev2.Property{*propertyModel},
+				Properties:  []compliancev2.PropertyItem{*propertyModel},
 			}
 
 			failedControlsModel := &compliancev2.FailedControls{
@@ -496,14 +496,14 @@ var _ = Describe(`ComplianceV2 Examples Tests`, func() {
 			fmt.Println("\nReplaceProfileAttachment() result:")
 			// begin-replace_profile_attachment
 
-			propertyModel := &compliancev2.Property{
+			propertyModel := &compliancev2.PropertyItem{
 				Name:  core.StringPtr("scope_id"),
 				Value: core.StringPtr("cg3335893hh1428692d6747cf300yeb5"),
 			}
 
 			multiCloudScopeModel := &compliancev2.MultiCloudScope{
 				Environment: core.StringPtr("ibm-cloud"),
-				Properties:  []compliancev2.Property{*propertyModel},
+				Properties:  []compliancev2.PropertyItem{*propertyModel},
 			}
 
 			failedControlsModel := &compliancev2.FailedControls{

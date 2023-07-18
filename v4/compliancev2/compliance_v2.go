@@ -1151,12 +1151,12 @@ func (compliance *ComplianceV2) CreateAttachmentWithContext(ctx context.Context,
 // View the details of an attachment a profile by providing the attachment ID.  You can find this value in the Security
 // and Compliance Center UI. For more information, see [Running an evaluation for IBM
 // Cloud](https://test.cloud.ibm.com/docs/security-compliance?topic=security-compliance-scan-resources).
-func (compliance *ComplianceV2) GetProfileAttachment(getProfileAttachmentOptions *GetProfileAttachmentOptions) (result *Attachment, response *core.DetailedResponse, err error) {
+func (compliance *ComplianceV2) GetProfileAttachment(getProfileAttachmentOptions *GetProfileAttachmentOptions) (result *AttachmentItem, response *core.DetailedResponse, err error) {
 	return compliance.GetProfileAttachmentWithContext(context.Background(), getProfileAttachmentOptions)
 }
 
 // GetProfileAttachmentWithContext is an alternate form of the GetProfileAttachment method which supports a Context parameter
-func (compliance *ComplianceV2) GetProfileAttachmentWithContext(ctx context.Context, getProfileAttachmentOptions *GetProfileAttachmentOptions) (result *Attachment, response *core.DetailedResponse, err error) {
+func (compliance *ComplianceV2) GetProfileAttachmentWithContext(ctx context.Context, getProfileAttachmentOptions *GetProfileAttachmentOptions) (result *AttachmentItem, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getProfileAttachmentOptions, "getProfileAttachmentOptions cannot be nil")
 	if err != nil {
 		return
@@ -1220,12 +1220,12 @@ func (compliance *ComplianceV2) GetProfileAttachmentWithContext(ctx context.Cont
 // Update an attachment that is linked to a profile to evaluate your resources  on a recurring schedule, or on-demand.
 // For more information, see [Running an evaluation for IBM
 // Cloud](https://test.cloud.ibm.com/docs/security-compliance?topic=security-compliance-scan-resources).
-func (compliance *ComplianceV2) ReplaceProfileAttachment(replaceProfileAttachmentOptions *ReplaceProfileAttachmentOptions) (result *Attachment, response *core.DetailedResponse, err error) {
+func (compliance *ComplianceV2) ReplaceProfileAttachment(replaceProfileAttachmentOptions *ReplaceProfileAttachmentOptions) (result *AttachmentItem, response *core.DetailedResponse, err error) {
 	return compliance.ReplaceProfileAttachmentWithContext(context.Background(), replaceProfileAttachmentOptions)
 }
 
 // ReplaceProfileAttachmentWithContext is an alternate form of the ReplaceProfileAttachment method which supports a Context parameter
-func (compliance *ComplianceV2) ReplaceProfileAttachmentWithContext(ctx context.Context, replaceProfileAttachmentOptions *ReplaceProfileAttachmentOptions) (result *Attachment, response *core.DetailedResponse, err error) {
+func (compliance *ComplianceV2) ReplaceProfileAttachmentWithContext(ctx context.Context, replaceProfileAttachmentOptions *ReplaceProfileAttachmentOptions) (result *AttachmentItem, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(replaceProfileAttachmentOptions, "replaceProfileAttachmentOptions cannot be nil")
 	if err != nil {
 		return
@@ -1347,12 +1347,12 @@ func (compliance *ComplianceV2) ReplaceProfileAttachmentWithContext(ctx context.
 // Delete an attachment. Alternatively, if you think that you might need  this configuration in the future, you can
 // pause an attachment to stop being charged. For more information, see [Running an evaluation for IBM
 // Cloud](https://test.cloud.ibm.com/docs/security-compliance?topic=security-compliance-scan-resources).
-func (compliance *ComplianceV2) DeleteProfileAttachment(deleteProfileAttachmentOptions *DeleteProfileAttachmentOptions) (result *Attachment, response *core.DetailedResponse, err error) {
+func (compliance *ComplianceV2) DeleteProfileAttachment(deleteProfileAttachmentOptions *DeleteProfileAttachmentOptions) (result *AttachmentItem, response *core.DetailedResponse, err error) {
 	return compliance.DeleteProfileAttachmentWithContext(context.Background(), deleteProfileAttachmentOptions)
 }
 
 // DeleteProfileAttachmentWithContext is an alternate form of the DeleteProfileAttachment method which supports a Context parameter
-func (compliance *ComplianceV2) DeleteProfileAttachmentWithContext(ctx context.Context, deleteProfileAttachmentOptions *DeleteProfileAttachmentOptions) (result *Attachment, response *core.DetailedResponse, err error) {
+func (compliance *ComplianceV2) DeleteProfileAttachmentWithContext(ctx context.Context, deleteProfileAttachmentOptions *DeleteProfileAttachmentOptions) (result *AttachmentItem, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(deleteProfileAttachmentOptions, "deleteProfileAttachmentOptions cannot be nil")
 	if err != nil {
 		return
@@ -1550,7 +1550,7 @@ func (compliance *ComplianceV2) ListAttachmentsAccountWithContext(ctx context.Co
 }
 
 // Attachment : The request payload of the attachments parameter.
-type Attachment struct {
+type AttachmentItem struct {
 	// The ID of the attachment.
 	ID *string `json:"id,omitempty"`
 
@@ -1620,7 +1620,7 @@ const (
 
 // UnmarshalAttachment unmarshals an instance of Attachment from the specified map of raw messages.
 func UnmarshalAttachment(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(Attachment)
+	obj := new(AttachmentItem)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
 		return
@@ -1708,7 +1708,7 @@ type AttachmentCollection struct {
 	Next *PaginatedCollectionNext `json:"next,omitempty"`
 
 	// The list of attachments.
-	Attachments []Attachment `json:"attachments,omitempty"`
+	Attachments []AttachmentItem `json:"attachments,omitempty"`
 }
 
 // UnmarshalAttachmentCollection unmarshals an instance of AttachmentCollection from the specified map of raw messages.
@@ -3502,11 +3502,11 @@ type MultiCloudScope struct {
 	Environment *string `json:"environment" validate:"required"`
 
 	// The properties supported for scoping by this environment.
-	Properties []Property `json:"properties" validate:"required"`
+	Properties []PropertyItem `json:"properties" validate:"required"`
 }
 
 // NewMultiCloudScope : Instantiate MultiCloudScope (Generic Model Constructor)
-func (*ComplianceV2) NewMultiCloudScope(environment string, properties []Property) (_model *MultiCloudScope, err error) {
+func (*ComplianceV2) NewMultiCloudScope(environment string, properties []PropertyItem) (_model *MultiCloudScope, err error) {
 	_model = &MultiCloudScope{
 		Environment: core.StringPtr(environment),
 		Properties:  properties,
@@ -4015,17 +4015,17 @@ func UnmarshalProfileItem(m map[string]json.RawMessage, result interface{}) (err
 }
 
 // Property : The properties supported for scoping by this environment.
-type Property struct {
+type PropertyItem struct {
 	// The name of the property.
 	Name *string `json:"name,omitempty"`
 
 	// The value of the property.
-	Value *string `json:"value,omitempty"`
+	Value interface{} `json:"value,omitempty"`
 }
 
 // UnmarshalProperty unmarshals an instance of Property from the specified map of raw messages.
 func UnmarshalProperty(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(Property)
+	obj := new(PropertyItem)
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
 		return

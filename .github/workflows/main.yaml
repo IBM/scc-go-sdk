@@ -48,6 +48,7 @@ jobs:
           POSTURE_MANAGEMENT_V2_ENV: ${{ secrets.POSTURE_MANAGEMENT_V2_ENV }}
           ADMIN_SERVICE_API_ENV: ${{ secrets.ADMIN_SERVICE_API_ENV }}
           RESOURCE_GROUP_ID: ${{ secrets.RESOURCE_GROUP_ID }}
+          COMPLIANCE_V2_ENV: ${{secrets.COMPLIANCE_V2_ENV}}
         run: build/testScript.sh
 
   release:

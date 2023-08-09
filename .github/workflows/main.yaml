@@ -99,10 +99,17 @@ jobs:
           make docs
       
       - name: deploy gopages to gh-pages
-        uses: crazy-max/ghaction-github-pages@v1
-        with:
-          target_branch: gh-pages
-          build_dir: v4/dist
+        run: |
+          git config --global user.email "scccomm@in.ibm.com"
+          git config --global user.name "sccdeveloper"
+          git config --global user.password "${{ secrets.ADMIN_TOKEN }}"
+          cd v4/dist
+          git init
+          git add .
+          git commit -m "Deploy to GitHub pages"
+          git branch -m gh-pages
+          git remote add origin https://github.com/IBM/scc-go-sdk
+          git push -f origin gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_TOKEN }}
           GIT_AUTHOR_NAME: sccdeveloper

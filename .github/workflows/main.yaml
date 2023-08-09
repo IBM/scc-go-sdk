@@ -63,6 +63,11 @@ jobs:
         with:
           node-version: '16'
 
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
       - name: release using semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_TOKEN }}
@@ -71,8 +76,6 @@ jobs:
           GIT_COMMITTER_NAME: sccdeveloper
           GIT_COMMITTER_EMAIL: scccomm@in.ibm.com
         run: |
-          sudo apt-get update
-          sudo apt-get install python
           pip install --user bumpversion
           npm install @semantic-release/changelog
           npm install @semantic-release/exec

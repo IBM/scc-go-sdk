@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2019, 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,7 @@
  * limitations under the License.
  */
 
-package adminserviceapiv1_test
+package common
 
-import (
-	"testing"
-
-	. "github.com/onsi/ginkgo"
-	. "github.com/onsi/gomega"
-)
-
-func TestAdminServiceApiV1(t *testing.T) {
-	RegisterFailHandler(Fail)
-	RunSpecs(t, "AdminServiceApiV1 Suite")
-}
+// Version of the SDK
+const Version = "4.0.3"

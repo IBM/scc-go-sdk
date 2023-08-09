@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package posturemanagementv1_test
+package securityandcompliancecenterapiv3_test
 
 import (
 	"testing"
@@ -23,7 +23,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-func TestPostureManagementV1(t *testing.T) {
+func TestSecurityAndComplianceCenterApiV3(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "PostureManagementV1 Suite")
+	RunSpecs(t, "SecurityAndComplianceCenterApiV3 Suite")
 }

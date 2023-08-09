@@ -1,0 +1,1549 @@
+<!DOCTYPE html><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="theme-color" content="#375EAB"/>
+
+  <title>src/github.com/IBM/scc-go-sdk/v5/securityandcompliancecenterapiv3/security_and_compliance_center_api_v3_examples_test.go - GoPages</title>
+
+<link type="text/css" rel="stylesheet" href="https://ibm.github.io/scc-go-sdk/lib/godoc/style.css"/>
+
+<script>window.initFuncs = [];</script>
+<script src="https://ibm.github.io/scc-go-sdk/lib/godoc/jquery.js" defer=""></script>
+
+
+
+
+<script>var goVersion = "go1.20.4";</script>
+<script src="https://ibm.github.io/scc-go-sdk/lib/godoc/godocs.js" defer=""></script>
+</head>
+<body>
+
+<div id="lowframe" style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/scc-go-sdk/v5/">GoPages | Auto-generated docs</a></div>
+<div class="top-heading" id="heading-narrow"><a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/scc-go-sdk/v5/">GoPages</a></div>
+<a href="#" id="menu-button"><span id="menu-button-arrow">▽</span></a>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Source file
+    <a href="https:/ibm.github.io/scc-go-sdk/src">src</a>/<a href="https:/ibm.github.io/scc-go-sdk/src/github.com">github.com</a>/<a href="https:/ibm.github.io/scc-go-sdk/src/github.com/IBM">IBM</a>/<a href="https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk">scc-go-sdk</a>/<a href="https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v5">v5</a>/<a href="https:/ibm.github.io/scc-go-sdk/src/github.com/IBM/scc-go-sdk/v5/securityandcompliancecenterapiv3">securityandcompliancecenterapiv3</a>/<span class="text-muted">security_and_compliance_center_api_v3_examples_test.go</span>
+  </h1>
+
+
+
+
+
+  <h2>
+    Documentation: <a href="https:/ibm.github.io/scc-go-sdk/pkg/github.com/IBM/scc-go-sdk/v5/securityandcompliancecenterapiv3">github.com/IBM/scc-go-sdk/v5/securityandcompliancecenterapiv3</a>
+  </h2>
+
+
+
+<div id="nav"></div>
+
+
+<script type="text/javascript">document.ANALYSIS_DATA = null;</script>
+<pre><span id="L1" class="ln">     1  </span><span class="comment">//go:build examples</span>
+<span id="L2" class="ln">     2  </span><span class="comment">// +build examples</span>
+<span id="L3" class="ln">     3  </span>
+<span id="L4" class="ln">     4  </span><span class="comment">/**
+<span id="L5" class="ln">     5  </span> * (C) Copyright IBM Corp. 2023.
+<span id="L6" class="ln">     6  </span> *
+<span id="L7" class="ln">     7  </span> * Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
+<span id="L8" class="ln">     8  </span> * you may not use this file except in compliance with the License.
+<span id="L9" class="ln">     9  </span> * You may obtain a copy of the License at
+<span id="L10" class="ln">    10  </span> *
+<span id="L11" class="ln">    11  </span> *      http://www.apache.org/licenses/LICENSE-2.0
+<span id="L12" class="ln">    12  </span> *
+<span id="L13" class="ln">    13  </span> * Unless required by applicable law or agreed to in writing, software
+<span id="L14" class="ln">    14  </span> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS,
+<span id="L15" class="ln">    15  </span> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+<span id="L16" class="ln">    16  </span> * See the License for the specific language governing permissions and
+<span id="L17" class="ln">    17  </span> * limitations under the License.
+<span id="L18" class="ln">    18  </span> */</span>
+<span id="L19" class="ln">    19  </span>
+<span id="L20" class="ln">    20  </span>package securityandcompliancecenterapiv3_test
+<span id="L21" class="ln">    21  </span>
+<span id="L22" class="ln">    22  </span>import (
+<span id="L23" class="ln">    23  </span>	&#34;encoding/json&#34;
+<span id="L24" class="ln">    24  </span>	&#34;fmt&#34;
+<span id="L25" class="ln">    25  </span>	&#34;io&#34;
+<span id="L26" class="ln">    26  </span>	&#34;os&#34;
+<span id="L27" class="ln">    27  </span>
+<span id="L28" class="ln">    28  </span>	&#34;github.com/IBM/go-sdk-core/v5/core&#34;
+<span id="L29" class="ln">    29  </span>	&#34;github.com/IBM/scc-go-sdk/v5/securityandcompliancecenterapiv3&#34;
+<span id="L30" class="ln">    30  </span>	. &#34;github.com/onsi/ginkgo&#34;
+<span id="L31" class="ln">    31  </span>	. &#34;github.com/onsi/gomega&#34;
+<span id="L32" class="ln">    32  </span>)
+<span id="L33" class="ln">    33  </span>
+<span id="L34" class="ln">    34  </span><span class="comment">// This file provides an example of how to use the Security and Compliance Center API service.</span>
+<span id="L35" class="ln">    35  </span><span class="comment">//</span>
+<span id="L36" class="ln">    36  </span><span class="comment">// The following configuration properties are assumed to be defined:</span>
+<span id="L37" class="ln">    37  </span><span class="comment">// SECURITY_AND_COMPLIANCE_CENTER_API_URL=&lt;service base url&gt;</span>
+<span id="L38" class="ln">    38  </span><span class="comment">// SECURITY_AND_COMPLIANCE_CENTER_API_AUTH_TYPE=iam</span>
+<span id="L39" class="ln">    39  </span><span class="comment">// SECURITY_AND_COMPLIANCE_CENTER_API_APIKEY=&lt;IAM apikey&gt;</span>
+<span id="L40" class="ln">    40  </span><span class="comment">// SECURITY_AND_COMPLIANCE_CENTER_API_AUTH_URL=&lt;IAM token service base URL - omit this if using the production environment&gt;</span>
+<span id="L41" class="ln">    41  </span><span class="comment">//</span>
+<span id="L42" class="ln">    42  </span><span class="comment">// These configuration properties can be exported as environment variables, or stored</span>
+<span id="L43" class="ln">    43  </span><span class="comment">// in a configuration file and then:</span>
+<span id="L44" class="ln">    44  </span><span class="comment">// export IBM_CREDENTIALS_FILE=&lt;name of configuration file&gt;</span>
+<span id="L45" class="ln">    45  </span>var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
+<span id="L46" class="ln">    46  </span>
+<span id="L47" class="ln">    47  </span>	const externalConfigFile = &#34;../security_and_compliance_center_api_v3.env&#34;
+<span id="L48" class="ln">    48  </span>
+<span id="L49" class="ln">    49  </span>	var (
+<span id="L50" class="ln">    50  </span>		securityAndComplianceCenterApiService *securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3
+<span id="L51" class="ln">    51  </span>		config                                map[string]string
+<span id="L52" class="ln">    52  </span>		serviceURL                            string
+<span id="L53" class="ln">    53  </span>		authenticator                         core.IamAuthenticator
+<span id="L54" class="ln">    54  </span>		authUrl                               string
+<span id="L55" class="ln">    55  </span>		apiKey                                string
+<span id="L56" class="ln">    56  </span>		serviceName                           string
+<span id="L57" class="ln">    57  </span>
+<span id="L58" class="ln">    58  </span>		<span class="comment">// Variables to hold link values</span>
+<span id="L59" class="ln">    59  </span>		accountIdForReportLink                     string
+<span id="L60" class="ln">    60  </span>		attachmentIdForReportLink                  string
+<span id="L61" class="ln">    61  </span>		attachmentIdLink                           string
+<span id="L62" class="ln">    62  </span>		controlLibraryIdLink                       string
+<span id="L63" class="ln">    63  </span>		eTagLink                                   string
+<span id="L64" class="ln">    64  </span>		eventNotificationsCrnForUpdateSettingsLink string
+<span id="L65" class="ln">    65  </span>		groupIdForReportLink                       string
+<span id="L66" class="ln">    66  </span>		objectStorageBucketForUpdateSettingsLink   string
+<span id="L67" class="ln">    67  </span>		objectStorageCrnForUpdateSettingsLink      string
+<span id="L68" class="ln">    68  </span>		objectStorageLocationForUpdateSettingsLink string
+<span id="L69" class="ln">    69  </span>		profileIdForReportLink                     string
+<span id="L70" class="ln">    70  </span>		profileIdLink                              string
+<span id="L71" class="ln">    71  </span>		providerTypeIdLink                         string
+<span id="L72" class="ln">    72  </span>		providerTypeInstanceIdLink                 string
+<span id="L73" class="ln">    73  </span>		reportIdForReportLink                      string
+<span id="L74" class="ln">    74  </span>		ruleIdLink                                 string
+<span id="L75" class="ln">    75  </span>		typeForReportLink                          string
+<span id="L76" class="ln">    76  </span>		accountID                                  string
+<span id="L77" class="ln">    77  </span>		instanceID                                 string
+<span id="L78" class="ln">    78  </span>		createScanAttachmentID                     string
+<span id="L79" class="ln">    79  </span>	)
+<span id="L80" class="ln">    80  </span>
+<span id="L81" class="ln">    81  </span>	var shouldSkipTest = func() {
+<span id="L82" class="ln">    82  </span>		Skip(&#34;External configuration is not available, skipping examples...&#34;)
+<span id="L83" class="ln">    83  </span>	}
+<span id="L84" class="ln">    84  </span>
+<span id="L85" class="ln">    85  </span>	Describe(`External configuration`, func() {
+<span id="L86" class="ln">    86  </span>		It(&#34;Successfully load the configuration&#34;, func() {
+<span id="L87" class="ln">    87  </span>			var err error
+<span id="L88" class="ln">    88  </span>			_, err = os.Stat(externalConfigFile)
+<span id="L89" class="ln">    89  </span>			if err != nil {
+<span id="L90" class="ln">    90  </span>				Skip(&#34;External configuration file not found, skipping examples: &#34; + err.Error())
+<span id="L91" class="ln">    91  </span>			}
+<span id="L92" class="ln">    92  </span>
+<span id="L93" class="ln">    93  </span>			os.Setenv(&#34;IBM_CREDENTIALS_FILE&#34;, externalConfigFile)
+<span id="L94" class="ln">    94  </span>			config, err = core.GetServiceProperties(securityandcompliancecenterapiv3.DefaultServiceName)
+<span id="L95" class="ln">    95  </span>			if err != nil {
+<span id="L96" class="ln">    96  </span>				Skip(&#34;Error loading service properties, skipping tests: &#34; + err.Error())
+<span id="L97" class="ln">    97  </span>			}
+<span id="L98" class="ln">    98  </span>			serviceURL = config[&#34;URL&#34;]
+<span id="L99" class="ln">    99  </span>			if serviceURL == &#34;&#34; {
+<span id="L100" class="ln">   100  </span>				Skip(&#34;Unable to load service URL configuration property, skipping tests&#34;)
+<span id="L101" class="ln">   101  </span>			}
+<span id="L102" class="ln">   102  </span>			authUrl = config[&#34;IAM_APIKEY_URL&#34;]
+<span id="L103" class="ln">   103  </span>			if authUrl == &#34;&#34; {
+<span id="L104" class="ln">   104  </span>				Skip(&#34;Unable to load auth service URL configuration property, skipping tests&#34;)
+<span id="L105" class="ln">   105  </span>			}
+<span id="L106" class="ln">   106  </span>			apiKey = config[&#34;IAM&#34;]
+<span id="L107" class="ln">   107  </span>			if apiKey == &#34;&#34; {
+<span id="L108" class="ln">   108  </span>				Skip(&#34;Unable to load IAM configuration property, skipping tests&#34;)
+<span id="L109" class="ln">   109  </span>			}
+<span id="L110" class="ln">   110  </span>			serviceName = config[&#34;SERVICENAME&#34;]
+<span id="L111" class="ln">   111  </span>			if serviceName == &#34;&#34; {
+<span id="L112" class="ln">   112  </span>				Skip(&#34;Unable to load SERVICENAME configuration property, skipping tests&#34;)
+<span id="L113" class="ln">   113  </span>			}
+<span id="L114" class="ln">   114  </span>			authenticator = core.IamAuthenticator{
+<span id="L115" class="ln">   115  </span>				ApiKey: apiKey,
+<span id="L116" class="ln">   116  </span>				URL:    authUrl,
+<span id="L117" class="ln">   117  </span>			}
+<span id="L118" class="ln">   118  </span>			accountID = config[&#34;ACCOUNTID&#34;]
+<span id="L119" class="ln">   119  </span>			instanceID = config[&#34;INSTANCEID&#34;]
+<span id="L120" class="ln">   120  </span>			if instanceID == &#34;&#34; {
+<span id="L121" class="ln">   121  </span>				Skip(&#34;Unable to load instanceID configuration property, skipping tests&#34;)
+<span id="L122" class="ln">   122  </span>			}
+<span id="L123" class="ln">   123  </span>			createScanAttachmentID = config[&#34;ATTACHMENTID&#34;]
+<span id="L124" class="ln">   124  </span>
+<span id="L125" class="ln">   125  </span>			shouldSkipTest = func() {}
+<span id="L126" class="ln">   126  </span>		})
+<span id="L127" class="ln">   127  </span>	})
+<span id="L128" class="ln">   128  </span>
+<span id="L129" class="ln">   129  </span>	Describe(`Client initialization`, func() {
+<span id="L130" class="ln">   130  </span>		BeforeEach(func() {
+<span id="L131" class="ln">   131  </span>			shouldSkipTest()
+<span id="L132" class="ln">   132  </span>		})
+<span id="L133" class="ln">   133  </span>		It(&#34;Successfully construct the service client instance&#34;, func() {
+<span id="L134" class="ln">   134  </span>			var err error
+<span id="L135" class="ln">   135  </span>
+<span id="L136" class="ln">   136  </span>			<span class="comment">// begin-common</span>
+<span id="L137" class="ln">   137  </span>
+<span id="L138" class="ln">   138  </span>			securityAndComplianceCenterApiServiceOptions := &amp;securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
+<span id="L139" class="ln">   139  </span>				URL:           serviceURL,
+<span id="L140" class="ln">   140  </span>				Authenticator: &amp;authenticator,
+<span id="L141" class="ln">   141  </span>				ServiceName:   serviceName,
+<span id="L142" class="ln">   142  </span>			}
+<span id="L143" class="ln">   143  </span>
+<span id="L144" class="ln">   144  </span>			securityAndComplianceCenterApiService, err = securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3UsingExternalConfig(securityAndComplianceCenterApiServiceOptions)
+<span id="L145" class="ln">   145  </span>
+<span id="L146" class="ln">   146  </span>			if err != nil {
+<span id="L147" class="ln">   147  </span>				panic(err)
+<span id="L148" class="ln">   148  </span>			}
+<span id="L149" class="ln">   149  </span>
+<span id="L150" class="ln">   150  </span>			<span class="comment">// end-common</span>
+<span id="L151" class="ln">   151  </span>
+<span id="L152" class="ln">   152  </span>			Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
+<span id="L153" class="ln">   153  </span>		})
+<span id="L154" class="ln">   154  </span>	})
+<span id="L155" class="ln">   155  </span>
+<span id="L156" class="ln">   156  </span>	Describe(`SecurityAndComplianceCenterApiV3 request examples`, func() {
+<span id="L157" class="ln">   157  </span>		BeforeEach(func() {
+<span id="L158" class="ln">   158  </span>			shouldSkipTest()
+<span id="L159" class="ln">   159  </span>		})
+<span id="L160" class="ln">   160  </span>		It(`GetSettings request example`, func() {
+<span id="L161" class="ln">   161  </span>			fmt.Println(&#34;\nGetSettings() result:&#34;)
+<span id="L162" class="ln">   162  </span>			<span class="comment">// begin-get_settings</span>
+<span id="L163" class="ln">   163  </span>
+<span id="L164" class="ln">   164  </span>			getSettingsOptions := securityAndComplianceCenterApiService.NewGetSettingsOptions()
+<span id="L165" class="ln">   165  </span>			getSettingsOptions.SetXCorrelationID(&#34;1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5&#34;)
+<span id="L166" class="ln">   166  </span>
+<span id="L167" class="ln">   167  </span>			settings, response, err := securityAndComplianceCenterApiService.GetSettings(getSettingsOptions)
+<span id="L168" class="ln">   168  </span>			if err != nil {
+<span id="L169" class="ln">   169  </span>				panic(err)
+<span id="L170" class="ln">   170  </span>			}
+<span id="L171" class="ln">   171  </span>			b, _ := json.MarshalIndent(settings, &#34;&#34;, &#34;  &#34;)
+<span id="L172" class="ln">   172  </span>			fmt.Println(string(b))
+<span id="L173" class="ln">   173  </span>
+<span id="L174" class="ln">   174  </span>			<span class="comment">// end-get_settings</span>
+<span id="L175" class="ln">   175  </span>
+<span id="L176" class="ln">   176  </span>			Expect(err).To(BeNil())
+<span id="L177" class="ln">   177  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L178" class="ln">   178  </span>			Expect(settings).ToNot(BeNil())
+<span id="L179" class="ln">   179  </span>
+<span id="L180" class="ln">   180  </span>			eventNotificationsCrnForUpdateSettingsLink = *settings.EventNotifications.InstanceCrn
+<span id="L181" class="ln">   181  </span>			fmt.Fprintf(GinkgoWriter, &#34;Saved eventNotificationsCrnForUpdateSettingsLink value: %v\n&#34;, eventNotificationsCrnForUpdateSettingsLink)
+<span id="L182" class="ln">   182  </span>			objectStorageCrnForUpdateSettingsLink = *settings.ObjectStorage.InstanceCrn
+<span id="L183" class="ln">   183  </span>			fmt.Fprintf(GinkgoWriter, &#34;Saved objectStorageCrnForUpdateSettingsLink value: %v\n&#34;, objectStorageCrnForUpdateSettingsLink)
+<span id="L184" class="ln">   184  </span>			objectStorageBucketForUpdateSettingsLink = *settings.ObjectStorage.Bucket
+<span id="L185" class="ln">   185  </span>			fmt.Fprintf(GinkgoWriter, &#34;Saved objectStorageBucketForUpdateSettingsLink value: %v\n&#34;, objectStorageBucketForUpdateSettingsLink)
+<span id="L186" class="ln">   186  </span>			objectStorageLocationForUpdateSettingsLink = *settings.ObjectStorage.BucketLocation
+<span id="L187" class="ln">   187  </span>			fmt.Fprintf(GinkgoWriter, &#34;Saved objectStorageLocationForUpdateSettingsLink value: %v\n&#34;, objectStorageLocationForUpdateSettingsLink)
+<span id="L188" class="ln">   188  </span>		})
+<span id="L189" class="ln">   189  </span>		It(`CreateRule request example`, func() {
+<span id="L190" class="ln">   190  </span>			fmt.Println(&#34;\nCreateRule() result:&#34;)
+<span id="L191" class="ln">   191  </span>			<span class="comment">// begin-create_rule</span>
+<span id="L192" class="ln">   192  </span>
+<span id="L193" class="ln">   193  </span>			additionalTargetAttributeModel := &amp;securityandcompliancecenterapiv3.AdditionalTargetAttribute{
+<span id="L194" class="ln">   194  </span>				Name:     core.StringPtr(&#34;location&#34;),
+<span id="L195" class="ln">   195  </span>				Operator: core.StringPtr(&#34;string_equals&#34;),
+<span id="L196" class="ln">   196  </span>				Value:    core.StringPtr(&#34;us-east&#34;),
+<span id="L197" class="ln">   197  </span>			}
+<span id="L198" class="ln">   198  </span>
+<span id="L199" class="ln">   199  </span>			targetModel := &amp;securityandcompliancecenterapiv3.Target{
+<span id="L200" class="ln">   200  </span>				ServiceName:                core.StringPtr(&#34;cloud-object-storage&#34;),
+<span id="L201" class="ln">   201  </span>				ResourceKind:               core.StringPtr(&#34;bucket&#34;),
+<span id="L202" class="ln">   202  </span>				AdditionalTargetAttributes: []securityandcompliancecenterapiv3.AdditionalTargetAttribute{*additionalTargetAttributeModel},
+<span id="L203" class="ln">   203  </span>			}
+<span id="L204" class="ln">   204  </span>
+<span id="L205" class="ln">   205  </span>			requiredConfigItemsModel := &amp;securityandcompliancecenterapiv3.RequiredConfigItemsRequiredConfigBase{
+<span id="L206" class="ln">   206  </span>				Property: core.StringPtr(&#34;hard_quota&#34;),
+<span id="L207" class="ln">   207  </span>				Operator: core.StringPtr(&#34;num_equals&#34;),
+<span id="L208" class="ln">   208  </span>				Value:    core.StringPtr(&#34;${hard_quota}&#34;),
+<span id="L209" class="ln">   209  </span>			}
+<span id="L210" class="ln">   210  </span>
+<span id="L211" class="ln">   211  </span>			requiredConfigModel := &amp;securityandcompliancecenterapiv3.RequiredConfigRequiredConfigAnd{
+<span id="L212" class="ln">   212  </span>				Description: core.StringPtr(&#34;The Cloud Object Storage rule.&#34;),
+<span id="L213" class="ln">   213  </span>				And:         []securityandcompliancecenterapiv3.RequiredConfigItemsIntf{requiredConfigItemsModel},
+<span id="L214" class="ln">   214  </span>			}
+<span id="L215" class="ln">   215  </span>
+<span id="L216" class="ln">   216  </span>			parameterModel := &amp;securityandcompliancecenterapiv3.Parameter{
+<span id="L217" class="ln">   217  </span>				Name:        core.StringPtr(&#34;hard_quota&#34;),
+<span id="L218" class="ln">   218  </span>				DisplayName: core.StringPtr(&#34;The Cloud Object Storage bucket quota.&#34;),
+<span id="L219" class="ln">   219  </span>				Description: core.StringPtr(&#34;The maximum bytes that are allocated to the Cloud Object Storage bucket.&#34;),
+<span id="L220" class="ln">   220  </span>				Type:        core.StringPtr(&#34;numeric&#34;),
+<span id="L221" class="ln">   221  </span>			}
+<span id="L222" class="ln">   222  </span>
+<span id="L223" class="ln">   223  </span>			importModel := &amp;securityandcompliancecenterapiv3.Import{
+<span id="L224" class="ln">   224  </span>				Parameters: []securityandcompliancecenterapiv3.Parameter{*parameterModel},
+<span id="L225" class="ln">   225  </span>			}
+<span id="L226" class="ln">   226  </span>
+<span id="L227" class="ln">   227  </span>			createRuleOptions := securityAndComplianceCenterApiService.NewCreateRuleOptions(
+<span id="L228" class="ln">   228  </span>				&#34;Example rule&#34;,
+<span id="L229" class="ln">   229  </span>				targetModel,
+<span id="L230" class="ln">   230  </span>				requiredConfigModel,
+<span id="L231" class="ln">   231  </span>			)
+<span id="L232" class="ln">   232  </span>			createRuleOptions.SetVersion(&#34;1.0.0&#34;)
+<span id="L233" class="ln">   233  </span>			createRuleOptions.SetImport(importModel)
+<span id="L234" class="ln">   234  </span>			createRuleOptions.SetLabels([]string{})
+<span id="L235" class="ln">   235  </span>
+<span id="L236" class="ln">   236  </span>			rule, response, err := securityAndComplianceCenterApiService.CreateRule(createRuleOptions)
+<span id="L237" class="ln">   237  </span>			if err != nil {
+<span id="L238" class="ln">   238  </span>				panic(err)
+<span id="L239" class="ln">   239  </span>			}
+<span id="L240" class="ln">   240  </span>			b, _ := json.MarshalIndent(rule, &#34;&#34;, &#34;  &#34;)
+<span id="L241" class="ln">   241  </span>			fmt.Println(string(b))
+<span id="L242" class="ln">   242  </span>
+<span id="L243" class="ln">   243  </span>			<span class="comment">// end-create_rule</span>
+<span id="L244" class="ln">   244  </span>
+<span id="L245" class="ln">   245  </span>			Expect(err).To(BeNil())
+<span id="L246" class="ln">   246  </span>			Expect(response.StatusCode).To(Equal(201))
+<span id="L247" class="ln">   247  </span>			Expect(rule).ToNot(BeNil())
+<span id="L248" class="ln">   248  </span>
+<span id="L249" class="ln">   249  </span>			ruleIdLink = *rule.ID
+<span id="L250" class="ln">   250  </span>			fmt.Fprintf(GinkgoWriter, &#34;Saved ruleIdLink value: %v\n&#34;, ruleIdLink)
+<span id="L251" class="ln">   251  </span>		})
+<span id="L252" class="ln">   252  </span>		It(`GetRule request example`, func() {
+<span id="L253" class="ln">   253  </span>			fmt.Println(&#34;\nGetRule() result:&#34;)
+<span id="L254" class="ln">   254  </span>			<span class="comment">// begin-get_rule</span>
+<span id="L255" class="ln">   255  </span>
+<span id="L256" class="ln">   256  </span>			getRuleOptions := securityAndComplianceCenterApiService.NewGetRuleOptions(
+<span id="L257" class="ln">   257  </span>				ruleIdLink,
+<span id="L258" class="ln">   258  </span>			)
+<span id="L259" class="ln">   259  </span>
+<span id="L260" class="ln">   260  </span>			rule, response, err := securityAndComplianceCenterApiService.GetRule(getRuleOptions)
+<span id="L261" class="ln">   261  </span>			if err != nil {
+<span id="L262" class="ln">   262  </span>				panic(err)
+<span id="L263" class="ln">   263  </span>			}
+<span id="L264" class="ln">   264  </span>			b, _ := json.MarshalIndent(rule, &#34;&#34;, &#34;  &#34;)
+<span id="L265" class="ln">   265  </span>			fmt.Println(string(b))
+<span id="L266" class="ln">   266  </span>
+<span id="L267" class="ln">   267  </span>			<span class="comment">// end-get_rule</span>
+<span id="L268" class="ln">   268  </span>
+<span id="L269" class="ln">   269  </span>			Expect(err).To(BeNil())
+<span id="L270" class="ln">   270  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L271" class="ln">   271  </span>			Expect(rule).ToNot(BeNil())
+<span id="L272" class="ln">   272  </span>
+<span id="L273" class="ln">   273  </span>			eTagLink = response.Headers.Get(&#34;ETag&#34;)
+<span id="L274" class="ln">   274  </span>			fmt.Fprintf(GinkgoWriter, &#34;Saved eTagLink value: %v\n&#34;, eTagLink)
+<span id="L275" class="ln">   275  </span>		})
+<span id="L276" class="ln">   276  </span>		It(`GetLatestReports request example`, func() {
+<span id="L277" class="ln">   277  </span>			fmt.Println(&#34;\nGetLatestReports() result:&#34;)
+<span id="L278" class="ln">   278  </span>			<span class="comment">// begin-get_latest_reports</span>
+<span id="L279" class="ln">   279  </span>
+<span id="L280" class="ln">   280  </span>			getLatestReportsOptions := securityAndComplianceCenterApiService.NewGetLatestReportsOptions()
+<span id="L281" class="ln">   281  </span>			getLatestReportsOptions.SetSort(&#34;profile_name&#34;)
+<span id="L282" class="ln">   282  </span>
+<span id="L283" class="ln">   283  </span>			reportLatest, response, err := securityAndComplianceCenterApiService.GetLatestReports(getLatestReportsOptions)
+<span id="L284" class="ln">   284  </span>			if err != nil {
+<span id="L285" class="ln">   285  </span>				panic(err)
+<span id="L286" class="ln">   286  </span>			}
+<span id="L287" class="ln">   287  </span>			b, _ := json.MarshalIndent(reportLatest, &#34;&#34;, &#34;  &#34;)
+<span id="L288" class="ln">   288  </span>			fmt.Println(string(b))
+<span id="L289" class="ln">   289  </span>
+<span id="L290" class="ln">   290  </span>			<span class="comment">// end-get_latest_reports</span>
+<span id="L291" class="ln">   291  </span>
+<span id="L292" class="ln">   292  </span>			Expect(err).To(BeNil())
+<span id="L293" class="ln">   293  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L294" class="ln">   294  </span>			Expect(reportLatest).ToNot(BeNil())
+<span id="L295" class="ln">   295  </span>
+<span id="L296" class="ln">   296  </span>			accountIdForReportLink = *reportLatest.Reports[0].Account.ID
+<span id="L297" class="ln">   297  </span>			fmt.Fprintf(GinkgoWriter, &#34;Saved accountIdForReportLink value: %v\n&#34;, accountIdForReportLink)
+<span id="L298" class="ln">   298  </span>			reportIdForReportLink = *reportLatest.Reports[0].ID
+<span id="L299" class="ln">   299  </span>			fmt.Fprintf(GinkgoWriter, &#34;Saved reportIdForReportLink value: %v\n&#34;, reportIdForReportLink)
+<span id="L300" class="ln">   300  </span>			attachmentIdForReportLink = *reportLatest.Reports[0].Attachment.ID
+<span id="L301" class="ln">   301  </span>			fmt.Fprintf(GinkgoWriter, &#34;Saved attachmentIdForReportLink value: %v\n&#34;, attachmentIdForReportLink)
+<span id="L302" class="ln">   302  </span>			groupIdForReportLink = *reportLatest.Reports[0].GroupID
+<span id="L303" class="ln">   303  </span>			fmt.Fprintf(GinkgoWriter, &#34;Saved groupIdForReportLink value: %v\n&#34;, groupIdForReportLink)
+<span id="L304" class="ln">   304  </span>			profileIdForReportLink = *reportLatest.Reports[0].Profile.ID
+<span id="L305" class="ln">   305  </span>			fmt.Fprintf(GinkgoWriter, &#34;Saved profileIdForReportLink value: %v\n&#34;, profileIdForReportLink)
+<span id="L306" class="ln">   306  </span>			typeForReportLink = *reportLatest.Reports[0].Type
+<span id="L307" class="ln">   307  </span>			fmt.Fprintf(GinkgoWriter, &#34;Saved typeForReportLink value: %v\n&#34;, typeForReportLink)
+<span id="L308" class="ln">   308  </span>		})
+<span id="L309" class="ln">   309  </span>		It(`UpdateSettings request example`, func() {
+<span id="L310" class="ln">   310  </span>			fmt.Println(&#34;\nUpdateSettings() result:&#34;)
+<span id="L311" class="ln">   311  </span>			<span class="comment">// begin-update_settings</span>
+<span id="L312" class="ln">   312  </span>
+<span id="L313" class="ln">   313  </span>			eventNotificationsModel := &amp;securityandcompliancecenterapiv3.EventNotifications{
+<span id="L314" class="ln">   314  </span>				InstanceCrn:       &amp;eventNotificationsCrnForUpdateSettingsLink,
+<span id="L315" class="ln">   315  </span>				SourceDescription: core.StringPtr(&#34;This source is used for integration with IBM Cloud Security and Compliance Center.&#34;),
+<span id="L316" class="ln">   316  </span>				SourceName:        core.StringPtr(&#34;compliance&#34;),
+<span id="L317" class="ln">   317  </span>			}
+<span id="L318" class="ln">   318  </span>
+<span id="L319" class="ln">   319  </span>			objectStorageModel := &amp;securityandcompliancecenterapiv3.ObjectStorage{
+<span id="L320" class="ln">   320  </span>				InstanceCrn:    &amp;objectStorageCrnForUpdateSettingsLink,
+<span id="L321" class="ln">   321  </span>				Bucket:         &amp;objectStorageBucketForUpdateSettingsLink,
+<span id="L322" class="ln">   322  </span>				BucketLocation: &amp;objectStorageLocationForUpdateSettingsLink,
+<span id="L323" class="ln">   323  </span>			}
+<span id="L324" class="ln">   324  </span>
+<span id="L325" class="ln">   325  </span>			updateSettingsOptions := securityAndComplianceCenterApiService.NewUpdateSettingsOptions()
+<span id="L326" class="ln">   326  </span>			updateSettingsOptions.SetEventNotifications(eventNotificationsModel)
+<span id="L327" class="ln">   327  </span>			updateSettingsOptions.SetObjectStorage(objectStorageModel)
+<span id="L328" class="ln">   328  </span>			updateSettingsOptions.SetXCorrelationID(&#34;1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5&#34;)
+<span id="L329" class="ln">   329  </span>
+<span id="L330" class="ln">   330  </span>			settings, response, err := securityAndComplianceCenterApiService.UpdateSettings(updateSettingsOptions)
+<span id="L331" class="ln">   331  </span>			if err != nil {
+<span id="L332" class="ln">   332  </span>				panic(err)
+<span id="L333" class="ln">   333  </span>			}
+<span id="L334" class="ln">   334  </span>			b, _ := json.MarshalIndent(settings, &#34;&#34;, &#34;  &#34;)
+<span id="L335" class="ln">   335  </span>			fmt.Println(string(b))
+<span id="L336" class="ln">   336  </span>
+<span id="L337" class="ln">   337  </span>			<span class="comment">// end-update_settings</span>
+<span id="L338" class="ln">   338  </span>
+<span id="L339" class="ln">   339  </span>			Expect(err).To(BeNil())
+<span id="L340" class="ln">   340  </span>			Expect(response.StatusCode).To(Equal(204))
+<span id="L341" class="ln">   341  </span>			Expect(settings).To(BeNil())
+<span id="L342" class="ln">   342  </span>		})
+<span id="L343" class="ln">   343  </span>		<span class="comment">/*It(`PostTestEvent request example`, func() {
+<span id="L344" class="ln">   344  </span>			fmt.Println(&#34;\nPostTestEvent() result:&#34;)
+<span id="L345" class="ln">   345  </span>			// begin-post_test_event
+<span id="L346" class="ln">   346  </span>
+<span id="L347" class="ln">   347  </span>			postTestEventOptions := securityAndComplianceCenterApiService.NewPostTestEventOptions()
+<span id="L348" class="ln">   348  </span>			postTestEventOptions.SetXCorrelationID(&#34;1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5&#34;)
+<span id="L349" class="ln">   349  </span>
+<span id="L350" class="ln">   350  </span>			testEvent, response, err := securityAndComplianceCenterApiService.PostTestEvent(postTestEventOptions)
+<span id="L351" class="ln">   351  </span>			if err != nil {
+<span id="L352" class="ln">   352  </span>				panic(err)
+<span id="L353" class="ln">   353  </span>			}
+<span id="L354" class="ln">   354  </span>			b, _ := json.MarshalIndent(testEvent, &#34;&#34;, &#34;  &#34;)
+<span id="L355" class="ln">   355  </span>			fmt.Println(string(b))
+<span id="L356" class="ln">   356  </span>
+<span id="L357" class="ln">   357  </span>			// end-post_test_event
+<span id="L358" class="ln">   358  </span>
+<span id="L359" class="ln">   359  </span>			Expect(err).To(BeNil())
+<span id="L360" class="ln">   360  </span>			Expect(response.StatusCode).To(Equal(202))
+<span id="L361" class="ln">   361  </span>			Expect(testEvent).ToNot(BeNil())
+<span id="L362" class="ln">   362  </span>		})*/</span>
+<span id="L363" class="ln">   363  </span>		It(`CreateCustomControlLibrary request example`, func() {
+<span id="L364" class="ln">   364  </span>			fmt.Println(&#34;\nCreateCustomControlLibrary() result:&#34;)
+<span id="L365" class="ln">   365  </span>			<span class="comment">// begin-create_custom_control_library</span>
+<span id="L366" class="ln">   366  </span>
+<span id="L367" class="ln">   367  </span>			parameterInfoModel := &amp;securityandcompliancecenterapiv3.ParameterInfo{
+<span id="L368" class="ln">   368  </span>				ParameterName:        core.StringPtr(&#34;session_invalidation_in_seconds&#34;),
+<span id="L369" class="ln">   369  </span>				ParameterDisplayName: core.StringPtr(&#34;Sign out due to inactivity in seconds&#34;),
+<span id="L370" class="ln">   370  </span>				ParameterType:        core.StringPtr(&#34;numeric&#34;),
+<span id="L371" class="ln">   371  </span>			}
+<span id="L372" class="ln">   372  </span>
+<span id="L373" class="ln">   373  </span>			implementationModel := &amp;securityandcompliancecenterapiv3.Implementation{
+<span id="L374" class="ln">   374  </span>				AssessmentID:          core.StringPtr(&#34;rule-a637949b-7e51-46c4-afd4-b96619001bf1&#34;),
+<span id="L375" class="ln">   375  </span>				AssessmentMethod:      core.StringPtr(&#34;ibm-cloud-rule&#34;),
+<span id="L376" class="ln">   376  </span>				AssessmentType:        core.StringPtr(&#34;automated&#34;),
+<span id="L377" class="ln">   377  </span>				AssessmentDescription: core.StringPtr(&#34;Check that there is an Activity Tracker event route defined to collect global events generated by IBM Cloud services&#34;),
+<span id="L378" class="ln">   378  </span>				Parameters:            []securityandcompliancecenterapiv3.ParameterInfo{*parameterInfoModel},
+<span id="L379" class="ln">   379  </span>			}
+<span id="L380" class="ln">   380  </span>
+<span id="L381" class="ln">   381  </span>			controlSpecificationsModel := &amp;securityandcompliancecenterapiv3.ControlSpecifications{
+<span id="L382" class="ln">   382  </span>				ControlSpecificationID:          core.StringPtr(&#34;5c7d6f88-a92f-4734-9b49-bd22b0900184&#34;),
+<span id="L383" class="ln">   383  </span>				ComponentID:                     core.StringPtr(&#34;iam-identity&#34;),
+<span id="L384" class="ln">   384  </span>				Environment:                     core.StringPtr(&#34;ibm-cloud&#34;),
+<span id="L385" class="ln">   385  </span>				ControlSpecificationDescription: core.StringPtr(&#34;IBM cloud&#34;),
+<span id="L386" class="ln">   386  </span>				Assessments:                     []securityandcompliancecenterapiv3.Implementation{*implementationModel},
+<span id="L387" class="ln">   387  </span>			}
+<span id="L388" class="ln">   388  </span>
+<span id="L389" class="ln">   389  </span>			controlDocsModel := &amp;securityandcompliancecenterapiv3.ControlDocs{
+<span id="L390" class="ln">   390  </span>				ControlDocsID:   core.StringPtr(&#34;sc-7&#34;),
+<span id="L391" class="ln">   391  </span>				ControlDocsType: core.StringPtr(&#34;ibm-cloud&#34;),
+<span id="L392" class="ln">   392  </span>			}
+<span id="L393" class="ln">   393  </span>
+<span id="L394" class="ln">   394  </span>			controlsInControlLibModel := &amp;securityandcompliancecenterapiv3.ControlsInControlLib{
+<span id="L395" class="ln">   395  </span>				ControlName:           core.StringPtr(&#34;SC-7&#34;),
+<span id="L396" class="ln">   396  </span>				ControlID:             core.StringPtr(&#34;1fa45e17-9322-4e6c-bbd6-1c51db08e790&#34;),
+<span id="L397" class="ln">   397  </span>				ControlDescription:    core.StringPtr(&#34;Boundary Protection&#34;),
+<span id="L398" class="ln">   398  </span>				ControlCategory:       core.StringPtr(&#34;System and Communications Protection&#34;),
+<span id="L399" class="ln">   399  </span>				ControlTags:           []string{&#34;1fa45e17-9322-4e6c-bbd6-1c51db08e790&#34;},
+<span id="L400" class="ln">   400  </span>				ControlSpecifications: []securityandcompliancecenterapiv3.ControlSpecifications{*controlSpecificationsModel},
+<span id="L401" class="ln">   401  </span>				ControlDocs:           controlDocsModel,
+<span id="L402" class="ln">   402  </span>				ControlRequirement:    core.BoolPtr(true),
+<span id="L403" class="ln">   403  </span>			}
+<span id="L404" class="ln">   404  </span>
+<span id="L405" class="ln">   405  </span>			createCustomControlLibraryOptions := securityAndComplianceCenterApiService.NewCreateCustomControlLibraryOptions(
+<span id="L406" class="ln">   406  </span>				&#34;IBM Cloud for Financial Services&#34;,
+<span id="L407" class="ln">   407  </span>				&#34;IBM Cloud for Financial Services&#34;,
+<span id="L408" class="ln">   408  </span>				&#34;custom&#34;,
+<span id="L409" class="ln">   409  </span>				[]securityandcompliancecenterapiv3.ControlsInControlLib{*controlsInControlLibModel},
+<span id="L410" class="ln">   410  </span>			)
+<span id="L411" class="ln">   411  </span>			createCustomControlLibraryOptions.SetVersionGroupLabel(&#34;&#34;)
+<span id="L412" class="ln">   412  </span>			createCustomControlLibraryOptions.SetControlLibraryVersion(&#34;1.0.0&#34;)
+<span id="L413" class="ln">   413  </span>
+<span id="L414" class="ln">   414  </span>			controlLibrary, response, err := securityAndComplianceCenterApiService.CreateCustomControlLibrary(createCustomControlLibraryOptions)
+<span id="L415" class="ln">   415  </span>			if err != nil {
+<span id="L416" class="ln">   416  </span>				panic(err)
+<span id="L417" class="ln">   417  </span>			}
+<span id="L418" class="ln">   418  </span>			b, _ := json.MarshalIndent(controlLibrary, &#34;&#34;, &#34;  &#34;)
+<span id="L419" class="ln">   419  </span>			fmt.Println(string(b))
+<span id="L420" class="ln">   420  </span>
+<span id="L421" class="ln">   421  </span>			<span class="comment">// end-create_custom_control_library</span>
+<span id="L422" class="ln">   422  </span>
+<span id="L423" class="ln">   423  </span>			Expect(err).To(BeNil())
+<span id="L424" class="ln">   424  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L425" class="ln">   425  </span>			Expect(controlLibrary).ToNot(BeNil())
+<span id="L426" class="ln">   426  </span>
+<span id="L427" class="ln">   427  </span>			controlLibraryIdLink = *controlLibrary.ID
+<span id="L428" class="ln">   428  </span>			fmt.Fprintf(GinkgoWriter, &#34;Saved controlLibraryIdLink value: %v\n&#34;, controlLibraryIdLink)
+<span id="L429" class="ln">   429  </span>		})
+<span id="L430" class="ln">   430  </span>		It(`ListControlLibraries request example`, func() {
+<span id="L431" class="ln">   431  </span>			fmt.Println(&#34;\nListControlLibraries() result:&#34;)
+<span id="L432" class="ln">   432  </span>			<span class="comment">// begin-list_control_libraries</span>
+<span id="L433" class="ln">   433  </span>			listControlLibrariesOptions := &amp;securityandcompliancecenterapiv3.ListControlLibrariesOptions{
+<span id="L434" class="ln">   434  </span>				XCorrelationID:     core.StringPtr(&#34;testString&#34;),
+<span id="L435" class="ln">   435  </span>				XRequestID:         core.StringPtr(&#34;testString&#34;),
+<span id="L436" class="ln">   436  </span>				Limit:              core.Int64Ptr(int64(50)),
+<span id="L437" class="ln">   437  </span>				ControlLibraryType: core.StringPtr(&#34;custom&#34;),
+<span id="L438" class="ln">   438  </span>			}
+<span id="L439" class="ln">   439  </span>
+<span id="L440" class="ln">   440  </span>			pager, err := securityAndComplianceCenterApiService.NewControlLibrariesPager(listControlLibrariesOptions)
+<span id="L441" class="ln">   441  </span>			if err != nil {
+<span id="L442" class="ln">   442  </span>				panic(err)
+<span id="L443" class="ln">   443  </span>			}
+<span id="L444" class="ln">   444  </span>
+<span id="L445" class="ln">   445  </span>			var allResults []securityandcompliancecenterapiv3.ControlLibraryItem
+<span id="L446" class="ln">   446  </span>			for pager.HasNext() {
+<span id="L447" class="ln">   447  </span>				nextPage, err := pager.GetNext()
+<span id="L448" class="ln">   448  </span>				if err != nil {
+<span id="L449" class="ln">   449  </span>					panic(err)
+<span id="L450" class="ln">   450  </span>				}
+<span id="L451" class="ln">   451  </span>				allResults = append(allResults, nextPage...)
+<span id="L452" class="ln">   452  </span>			}
+<span id="L453" class="ln">   453  </span>			b, _ := json.MarshalIndent(allResults, &#34;&#34;, &#34;  &#34;)
+<span id="L454" class="ln">   454  </span>			fmt.Println(string(b))
+<span id="L455" class="ln">   455  </span>			<span class="comment">// end-list_control_libraries</span>
+<span id="L456" class="ln">   456  </span>		})
+<span id="L457" class="ln">   457  </span>		It(`GetControlLibrary request example`, func() {
+<span id="L458" class="ln">   458  </span>			fmt.Println(&#34;\nGetControlLibrary() result:&#34;)
+<span id="L459" class="ln">   459  </span>			<span class="comment">// begin-get_control_library</span>
+<span id="L460" class="ln">   460  </span>
+<span id="L461" class="ln">   461  </span>			getControlLibraryOptions := securityAndComplianceCenterApiService.NewGetControlLibraryOptions(
+<span id="L462" class="ln">   462  </span>				controlLibraryIdLink,
+<span id="L463" class="ln">   463  </span>			)
+<span id="L464" class="ln">   464  </span>
+<span id="L465" class="ln">   465  </span>			controlLibrary, response, err := securityAndComplianceCenterApiService.GetControlLibrary(getControlLibraryOptions)
+<span id="L466" class="ln">   466  </span>			if err != nil {
+<span id="L467" class="ln">   467  </span>				panic(err)
+<span id="L468" class="ln">   468  </span>			}
+<span id="L469" class="ln">   469  </span>			b, _ := json.MarshalIndent(controlLibrary, &#34;&#34;, &#34;  &#34;)
+<span id="L470" class="ln">   470  </span>			fmt.Println(string(b))
+<span id="L471" class="ln">   471  </span>
+<span id="L472" class="ln">   472  </span>			<span class="comment">// end-get_control_library</span>
+<span id="L473" class="ln">   473  </span>
+<span id="L474" class="ln">   474  </span>			Expect(err).To(BeNil())
+<span id="L475" class="ln">   475  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L476" class="ln">   476  </span>			Expect(controlLibrary).ToNot(BeNil())
+<span id="L477" class="ln">   477  </span>		})
+<span id="L478" class="ln">   478  </span>		It(`ReplaceCustomControlLibrary request example`, func() {
+<span id="L479" class="ln">   479  </span>			fmt.Println(&#34;\nReplaceCustomControlLibrary() result:&#34;)
+<span id="L480" class="ln">   480  </span>			<span class="comment">// begin-replace_custom_control_library</span>
+<span id="L481" class="ln">   481  </span>
+<span id="L482" class="ln">   482  </span>			parameterInfoModel := &amp;securityandcompliancecenterapiv3.ParameterInfo{
+<span id="L483" class="ln">   483  </span>				ParameterName:        core.StringPtr(&#34;session_invalidation_in_seconds&#34;),
+<span id="L484" class="ln">   484  </span>				ParameterDisplayName: core.StringPtr(&#34;Sign out due to inactivity in seconds&#34;),
+<span id="L485" class="ln">   485  </span>				ParameterType:        core.StringPtr(&#34;numeric&#34;),
+<span id="L486" class="ln">   486  </span>			}
+<span id="L487" class="ln">   487  </span>
+<span id="L488" class="ln">   488  </span>			implementationModel := &amp;securityandcompliancecenterapiv3.Implementation{
+<span id="L489" class="ln">   489  </span>				AssessmentID:          core.StringPtr(&#34;rule-a637949b-7e51-46c4-afd4-b96619001bf1&#34;),
+<span id="L490" class="ln">   490  </span>				AssessmentMethod:      core.StringPtr(&#34;ibm-cloud-rule&#34;),
+<span id="L491" class="ln">   491  </span>				AssessmentType:        core.StringPtr(&#34;automated&#34;),
+<span id="L492" class="ln">   492  </span>				AssessmentDescription: core.StringPtr(&#34;Check that there is an Activity Tracker event route defined to collect global events generated by IBM Cloud services&#34;),
+<span id="L493" class="ln">   493  </span>				Parameters:            []securityandcompliancecenterapiv3.ParameterInfo{*parameterInfoModel},
+<span id="L494" class="ln">   494  </span>			}
+<span id="L495" class="ln">   495  </span>
+<span id="L496" class="ln">   496  </span>			controlSpecificationsModel := &amp;securityandcompliancecenterapiv3.ControlSpecifications{
+<span id="L497" class="ln">   497  </span>				ControlSpecificationID:          core.StringPtr(&#34;5c7d6f88-a92f-4734-9b49-bd22b0900184&#34;),
+<span id="L498" class="ln">   498  </span>				Responsibility:                  core.StringPtr(&#34;user&#34;),
+<span id="L499" class="ln">   499  </span>				ComponentID:                     core.StringPtr(&#34;iam-identity&#34;),
+<span id="L500" class="ln">   500  </span>				Environment:                     core.StringPtr(&#34;ibm-cloud&#34;),
+<span id="L501" class="ln">   501  </span>				ControlSpecificationDescription: core.StringPtr(&#34;IBM cloud&#34;),
+<span id="L502" class="ln">   502  </span>				Assessments:                     []securityandcompliancecenterapiv3.Implementation{*implementationModel},
+<span id="L503" class="ln">   503  </span>			}
+<span id="L504" class="ln">   504  </span>
+<span id="L505" class="ln">   505  </span>			controlDocsModel := &amp;securityandcompliancecenterapiv3.ControlDocs{
+<span id="L506" class="ln">   506  </span>				ControlDocsID:   core.StringPtr(&#34;sc-7&#34;),
+<span id="L507" class="ln">   507  </span>				ControlDocsType: core.StringPtr(&#34;ibm-cloud&#34;),
+<span id="L508" class="ln">   508  </span>			}
+<span id="L509" class="ln">   509  </span>
+<span id="L510" class="ln">   510  </span>			controlsInControlLibModel := &amp;securityandcompliancecenterapiv3.ControlsInControlLib{
+<span id="L511" class="ln">   511  </span>				ControlName:           core.StringPtr(&#34;SC-7&#34;),
+<span id="L512" class="ln">   512  </span>				ControlID:             core.StringPtr(&#34;1fa45e17-9322-4e6c-bbd6-1c51db08e790&#34;),
+<span id="L513" class="ln">   513  </span>				ControlDescription:    core.StringPtr(&#34;Boundary Protection&#34;),
+<span id="L514" class="ln">   514  </span>				ControlCategory:       core.StringPtr(&#34;System and Communications Protection&#34;),
+<span id="L515" class="ln">   515  </span>				ControlTags:           []string{&#34;1fa45e17-9322-4e6c-bbd6-1c51db08e790&#34;},
+<span id="L516" class="ln">   516  </span>				ControlSpecifications: []securityandcompliancecenterapiv3.ControlSpecifications{*controlSpecificationsModel},
+<span id="L517" class="ln">   517  </span>				ControlDocs:           controlDocsModel,
+<span id="L518" class="ln">   518  </span>				ControlRequirement:    core.BoolPtr(true),
+<span id="L519" class="ln">   519  </span>			}
+<span id="L520" class="ln">   520  </span>
+<span id="L521" class="ln">   521  </span>			replaceCustomControlLibraryOptions := securityAndComplianceCenterApiService.NewReplaceCustomControlLibraryOptions(
+<span id="L522" class="ln">   522  </span>				controlLibraryIdLink,
+<span id="L523" class="ln">   523  </span>			)
+<span id="L524" class="ln">   524  </span>			replaceCustomControlLibraryOptions.SetControlLibraryName(&#34;IBM Cloud for Financial Services&#34;)
+<span id="L525" class="ln">   525  </span>			replaceCustomControlLibraryOptions.SetControlLibraryDescription(&#34;IBM Cloud for Financial Services&#34;)
+<span id="L526" class="ln">   526  </span>			replaceCustomControlLibraryOptions.SetControlLibraryType(&#34;custom&#34;)
+<span id="L527" class="ln">   527  </span>			replaceCustomControlLibraryOptions.SetControlLibraryVersion(&#34;1.1.0&#34;)
+<span id="L528" class="ln">   528  </span>			replaceCustomControlLibraryOptions.SetControls([]securityandcompliancecenterapiv3.ControlsInControlLib{*controlsInControlLibModel})
+<span id="L529" class="ln">   529  </span>
+<span id="L530" class="ln">   530  </span>			controlLibrary, response, err := securityAndComplianceCenterApiService.ReplaceCustomControlLibrary(replaceCustomControlLibraryOptions)
+<span id="L531" class="ln">   531  </span>			if err != nil {
+<span id="L532" class="ln">   532  </span>				panic(err)
+<span id="L533" class="ln">   533  </span>			}
+<span id="L534" class="ln">   534  </span>			b, _ := json.MarshalIndent(controlLibrary, &#34;&#34;, &#34;  &#34;)
+<span id="L535" class="ln">   535  </span>			fmt.Println(string(b))
+<span id="L536" class="ln">   536  </span>
+<span id="L537" class="ln">   537  </span>			<span class="comment">// end-replace_custom_control_library</span>
+<span id="L538" class="ln">   538  </span>
+<span id="L539" class="ln">   539  </span>			Expect(err).To(BeNil())
+<span id="L540" class="ln">   540  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L541" class="ln">   541  </span>			Expect(controlLibrary).ToNot(BeNil())
+<span id="L542" class="ln">   542  </span>		})
+<span id="L543" class="ln">   543  </span>		It(`CreateProfile request example`, func() {
+<span id="L544" class="ln">   544  </span>			fmt.Println(&#34;\nCreateProfile() result:&#34;)
+<span id="L545" class="ln">   545  </span>			<span class="comment">// begin-create_profile</span>
+<span id="L546" class="ln">   546  </span>
+<span id="L547" class="ln">   547  </span>			profileControlsPrototypeModel := &amp;securityandcompliancecenterapiv3.ProfileControlsPrototype{
+<span id="L548" class="ln">   548  </span>				ControlLibraryID: &amp;controlLibraryIdLink,
+<span id="L549" class="ln">   549  </span>				ControlID:        core.StringPtr(&#34;1fa45e17-9322-4e6c-bbd6-1c51db08e790&#34;),
+<span id="L550" class="ln">   550  </span>			}
+<span id="L551" class="ln">   551  </span>
+<span id="L552" class="ln">   552  </span>			defaultParametersPrototypeModel := &amp;securityandcompliancecenterapiv3.DefaultParametersPrototype{
+<span id="L553" class="ln">   553  </span>				AssessmentType:        core.StringPtr(&#34;Automated&#34;),
+<span id="L554" class="ln">   554  </span>				AssessmentID:          core.StringPtr(&#34;rule-a637949b-7e51-46c4-afd4-b96619001bf1&#34;),
+<span id="L555" class="ln">   555  </span>				ParameterName:         core.StringPtr(&#34;session_invalidation_in_seconds&#34;),
+<span id="L556" class="ln">   556  </span>				ParameterDefaultValue: core.StringPtr(&#34;120&#34;),
+<span id="L557" class="ln">   557  </span>				ParameterDisplayName:  core.StringPtr(&#34;Sign out due to inactivity in seconds&#34;),
+<span id="L558" class="ln">   558  </span>				ParameterType:         core.StringPtr(&#34;numeric&#34;),
+<span id="L559" class="ln">   559  </span>			}
+<span id="L560" class="ln">   560  </span>
+<span id="L561" class="ln">   561  </span>			createProfileOptions := securityAndComplianceCenterApiService.NewCreateProfileOptions(
+<span id="L562" class="ln">   562  </span>				&#34;test_profile1&#34;,
+<span id="L563" class="ln">   563  </span>				&#34;test_description1&#34;,
+<span id="L564" class="ln">   564  </span>				&#34;custom&#34;,
+<span id="L565" class="ln">   565  </span>				[]securityandcompliancecenterapiv3.ProfileControlsPrototype{*profileControlsPrototypeModel},
+<span id="L566" class="ln">   566  </span>				[]securityandcompliancecenterapiv3.DefaultParametersPrototype{*defaultParametersPrototypeModel},
+<span id="L567" class="ln">   567  </span>			)
+<span id="L568" class="ln">   568  </span>
+<span id="L569" class="ln">   569  </span>			profile, response, err := securityAndComplianceCenterApiService.CreateProfile(createProfileOptions)
+<span id="L570" class="ln">   570  </span>			if err != nil {
+<span id="L571" class="ln">   571  </span>				panic(err)
+<span id="L572" class="ln">   572  </span>			}
+<span id="L573" class="ln">   573  </span>			b, _ := json.MarshalIndent(profile, &#34;&#34;, &#34;  &#34;)
+<span id="L574" class="ln">   574  </span>			fmt.Println(string(b))
+<span id="L575" class="ln">   575  </span>
+<span id="L576" class="ln">   576  </span>			<span class="comment">// end-create_profile</span>
+<span id="L577" class="ln">   577  </span>
+<span id="L578" class="ln">   578  </span>			Expect(err).To(BeNil())
+<span id="L579" class="ln">   579  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L580" class="ln">   580  </span>			Expect(profile).ToNot(BeNil())
+<span id="L581" class="ln">   581  </span>
+<span id="L582" class="ln">   582  </span>			profileIdLink = *profile.ID
+<span id="L583" class="ln">   583  </span>			fmt.Fprintf(GinkgoWriter, &#34;Saved profileIdLink value: %v\n&#34;, profileIdLink)
+<span id="L584" class="ln">   584  </span>		})
+<span id="L585" class="ln">   585  </span>		It(`ListProfiles request example`, func() {
+<span id="L586" class="ln">   586  </span>			fmt.Println(&#34;\nListProfiles() result:&#34;)
+<span id="L587" class="ln">   587  </span>			<span class="comment">// begin-list_profiles</span>
+<span id="L588" class="ln">   588  </span>			listProfilesOptions := &amp;securityandcompliancecenterapiv3.ListProfilesOptions{
+<span id="L589" class="ln">   589  </span>				XCorrelationID: core.StringPtr(&#34;testString&#34;),
+<span id="L590" class="ln">   590  </span>				XRequestID:     core.StringPtr(&#34;testString&#34;),
+<span id="L591" class="ln">   591  </span>				Limit:          core.Int64Ptr(int64(10)),
+<span id="L592" class="ln">   592  </span>				ProfileType:    core.StringPtr(&#34;custom&#34;),
+<span id="L593" class="ln">   593  </span>			}
+<span id="L594" class="ln">   594  </span>
+<span id="L595" class="ln">   595  </span>			pager, err := securityAndComplianceCenterApiService.NewProfilesPager(listProfilesOptions)
+<span id="L596" class="ln">   596  </span>			if err != nil {
+<span id="L597" class="ln">   597  </span>				panic(err)
+<span id="L598" class="ln">   598  </span>			}
+<span id="L599" class="ln">   599  </span>
+<span id="L600" class="ln">   600  </span>			var allResults []securityandcompliancecenterapiv3.ProfileItem
+<span id="L601" class="ln">   601  </span>			for pager.HasNext() {
+<span id="L602" class="ln">   602  </span>				nextPage, err := pager.GetNext()
+<span id="L603" class="ln">   603  </span>				if err != nil {
+<span id="L604" class="ln">   604  </span>					panic(err)
+<span id="L605" class="ln">   605  </span>				}
+<span id="L606" class="ln">   606  </span>				allResults = append(allResults, nextPage...)
+<span id="L607" class="ln">   607  </span>			}
+<span id="L608" class="ln">   608  </span>			b, _ := json.MarshalIndent(allResults, &#34;&#34;, &#34;  &#34;)
+<span id="L609" class="ln">   609  </span>			fmt.Println(string(b))
+<span id="L610" class="ln">   610  </span>			<span class="comment">// end-list_profiles</span>
+<span id="L611" class="ln">   611  </span>		})
+<span id="L612" class="ln">   612  </span>		It(`GetProfile request example`, func() {
+<span id="L613" class="ln">   613  </span>			fmt.Println(&#34;\nGetProfile() result:&#34;)
+<span id="L614" class="ln">   614  </span>			<span class="comment">// begin-get_profile</span>
+<span id="L615" class="ln">   615  </span>
+<span id="L616" class="ln">   616  </span>			getProfileOptions := securityAndComplianceCenterApiService.NewGetProfileOptions(
+<span id="L617" class="ln">   617  </span>				profileIdLink,
+<span id="L618" class="ln">   618  </span>			)
+<span id="L619" class="ln">   619  </span>
+<span id="L620" class="ln">   620  </span>			profile, response, err := securityAndComplianceCenterApiService.GetProfile(getProfileOptions)
+<span id="L621" class="ln">   621  </span>			if err != nil {
+<span id="L622" class="ln">   622  </span>				panic(err)
+<span id="L623" class="ln">   623  </span>			}
+<span id="L624" class="ln">   624  </span>			b, _ := json.MarshalIndent(profile, &#34;&#34;, &#34;  &#34;)
+<span id="L625" class="ln">   625  </span>			fmt.Println(string(b))
+<span id="L626" class="ln">   626  </span>
+<span id="L627" class="ln">   627  </span>			<span class="comment">// end-get_profile</span>
+<span id="L628" class="ln">   628  </span>
+<span id="L629" class="ln">   629  </span>			Expect(err).To(BeNil())
+<span id="L630" class="ln">   630  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L631" class="ln">   631  </span>			Expect(profile).ToNot(BeNil())
+<span id="L632" class="ln">   632  </span>		})
+<span id="L633" class="ln">   633  </span>		It(`ReplaceProfile request example`, func() {
+<span id="L634" class="ln">   634  </span>			fmt.Println(&#34;\nReplaceProfile() result:&#34;)
+<span id="L635" class="ln">   635  </span>			<span class="comment">// begin-replace_profile</span>
+<span id="L636" class="ln">   636  </span>
+<span id="L637" class="ln">   637  </span>			profileControlsPrototypeModel := &amp;securityandcompliancecenterapiv3.ProfileControlsPrototype{
+<span id="L638" class="ln">   638  </span>				ControlLibraryID: &amp;controlLibraryIdLink,
+<span id="L639" class="ln">   639  </span>				ControlID:        core.StringPtr(&#34;1fa45e17-9322-4e6c-bbd6-1c51db08e790&#34;),
+<span id="L640" class="ln">   640  </span>			}
+<span id="L641" class="ln">   641  </span>
+<span id="L642" class="ln">   642  </span>			defaultParametersPrototypeModel := &amp;securityandcompliancecenterapiv3.DefaultParametersPrototype{
+<span id="L643" class="ln">   643  </span>				AssessmentType:        core.StringPtr(&#34;Automated&#34;),
+<span id="L644" class="ln">   644  </span>				AssessmentID:          core.StringPtr(&#34;rule-a637949b-7e51-46c4-afd4-b96619001bf1&#34;),
+<span id="L645" class="ln">   645  </span>				ParameterName:         core.StringPtr(&#34;session_invalidation_in_seconds&#34;),
+<span id="L646" class="ln">   646  </span>				ParameterDefaultValue: core.StringPtr(&#34;120&#34;),
+<span id="L647" class="ln">   647  </span>				ParameterDisplayName:  core.StringPtr(&#34;Sign out due to inactivity in seconds&#34;),
+<span id="L648" class="ln">   648  </span>				ParameterType:         core.StringPtr(&#34;numeric&#34;),
+<span id="L649" class="ln">   649  </span>			}
+<span id="L650" class="ln">   650  </span>
+<span id="L651" class="ln">   651  </span>			replaceProfileOptions := securityAndComplianceCenterApiService.NewReplaceProfileOptions(
+<span id="L652" class="ln">   652  </span>				profileIdLink,
+<span id="L653" class="ln">   653  </span>				&#34;test_profile1&#34;,
+<span id="L654" class="ln">   654  </span>				&#34;test_description1&#34;,
+<span id="L655" class="ln">   655  </span>				&#34;custom&#34;,
+<span id="L656" class="ln">   656  </span>				[]securityandcompliancecenterapiv3.ProfileControlsPrototype{*profileControlsPrototypeModel},
+<span id="L657" class="ln">   657  </span>				[]securityandcompliancecenterapiv3.DefaultParametersPrototype{*defaultParametersPrototypeModel},
+<span id="L658" class="ln">   658  </span>			)
+<span id="L659" class="ln">   659  </span>
+<span id="L660" class="ln">   660  </span>			profile, response, err := securityAndComplianceCenterApiService.ReplaceProfile(replaceProfileOptions)
+<span id="L661" class="ln">   661  </span>			if err != nil {
+<span id="L662" class="ln">   662  </span>				panic(err)
+<span id="L663" class="ln">   663  </span>			}
+<span id="L664" class="ln">   664  </span>			b, _ := json.MarshalIndent(profile, &#34;&#34;, &#34;  &#34;)
+<span id="L665" class="ln">   665  </span>			fmt.Println(string(b))
+<span id="L666" class="ln">   666  </span>
+<span id="L667" class="ln">   667  </span>			<span class="comment">// end-replace_profile</span>
+<span id="L668" class="ln">   668  </span>
+<span id="L669" class="ln">   669  </span>			Expect(err).To(BeNil())
+<span id="L670" class="ln">   670  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L671" class="ln">   671  </span>			Expect(profile).ToNot(BeNil())
+<span id="L672" class="ln">   672  </span>		})
+<span id="L673" class="ln">   673  </span>		It(`ListRules request example`, func() {
+<span id="L674" class="ln">   674  </span>			fmt.Println(&#34;\nListRules() result:&#34;)
+<span id="L675" class="ln">   675  </span>			<span class="comment">// begin-list_rules</span>
+<span id="L676" class="ln">   676  </span>
+<span id="L677" class="ln">   677  </span>			listRulesOptions := securityAndComplianceCenterApiService.NewListRulesOptions()
+<span id="L678" class="ln">   678  </span>			listRulesOptions.SetType(&#34;system_defined&#34;)
+<span id="L679" class="ln">   679  </span>
+<span id="L680" class="ln">   680  </span>			rulesPageBase, response, err := securityAndComplianceCenterApiService.ListRules(listRulesOptions)
+<span id="L681" class="ln">   681  </span>			if err != nil {
+<span id="L682" class="ln">   682  </span>				panic(err)
+<span id="L683" class="ln">   683  </span>			}
+<span id="L684" class="ln">   684  </span>			b, _ := json.MarshalIndent(rulesPageBase, &#34;&#34;, &#34;  &#34;)
+<span id="L685" class="ln">   685  </span>			fmt.Println(string(b))
+<span id="L686" class="ln">   686  </span>
+<span id="L687" class="ln">   687  </span>			<span class="comment">// end-list_rules</span>
+<span id="L688" class="ln">   688  </span>
+<span id="L689" class="ln">   689  </span>			Expect(err).To(BeNil())
+<span id="L690" class="ln">   690  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L691" class="ln">   691  </span>			Expect(rulesPageBase).ToNot(BeNil())
+<span id="L692" class="ln">   692  </span>		})
+<span id="L693" class="ln">   693  </span>		It(`ReplaceRule request example`, func() {
+<span id="L694" class="ln">   694  </span>			fmt.Println(&#34;\nReplaceRule() result:&#34;)
+<span id="L695" class="ln">   695  </span>			<span class="comment">// begin-replace_rule</span>
+<span id="L696" class="ln">   696  </span>
+<span id="L697" class="ln">   697  </span>			additionalTargetAttributeModel := &amp;securityandcompliancecenterapiv3.AdditionalTargetAttribute{
+<span id="L698" class="ln">   698  </span>				Name:     core.StringPtr(&#34;location&#34;),
+<span id="L699" class="ln">   699  </span>				Operator: core.StringPtr(&#34;string_equals&#34;),
+<span id="L700" class="ln">   700  </span>				Value:    core.StringPtr(&#34;us-south&#34;),
+<span id="L701" class="ln">   701  </span>			}
+<span id="L702" class="ln">   702  </span>
+<span id="L703" class="ln">   703  </span>			targetModel := &amp;securityandcompliancecenterapiv3.Target{
+<span id="L704" class="ln">   704  </span>				ServiceName:                core.StringPtr(&#34;cloud-object-storage&#34;),
+<span id="L705" class="ln">   705  </span>				ServiceDisplayName:         core.StringPtr(&#34;Cloud Object Storage&#34;),
+<span id="L706" class="ln">   706  </span>				ResourceKind:               core.StringPtr(&#34;bucket&#34;),
+<span id="L707" class="ln">   707  </span>				AdditionalTargetAttributes: []securityandcompliancecenterapiv3.AdditionalTargetAttribute{*additionalTargetAttributeModel},
+<span id="L708" class="ln">   708  </span>			}
+<span id="L709" class="ln">   709  </span>
+<span id="L710" class="ln">   710  </span>			requiredConfigItemsModel := &amp;securityandcompliancecenterapiv3.RequiredConfigItemsRequiredConfigBase{
+<span id="L711" class="ln">   711  </span>				Property: core.StringPtr(&#34;hard_quota&#34;),
+<span id="L712" class="ln">   712  </span>				Operator: core.StringPtr(&#34;num_equals&#34;),
+<span id="L713" class="ln">   713  </span>				Value:    core.StringPtr(&#34;${hard_quota}&#34;),
+<span id="L714" class="ln">   714  </span>			}
+<span id="L715" class="ln">   715  </span>
+<span id="L716" class="ln">   716  </span>			requiredConfigModel := &amp;securityandcompliancecenterapiv3.RequiredConfigRequiredConfigAnd{
+<span id="L717" class="ln">   717  </span>				Description: core.StringPtr(&#34;The Cloud Object Storage rule.&#34;),
+<span id="L718" class="ln">   718  </span>				And:         []securityandcompliancecenterapiv3.RequiredConfigItemsIntf{requiredConfigItemsModel},
+<span id="L719" class="ln">   719  </span>			}
+<span id="L720" class="ln">   720  </span>
+<span id="L721" class="ln">   721  </span>			parameterModel := &amp;securityandcompliancecenterapiv3.Parameter{
+<span id="L722" class="ln">   722  </span>				Name:        core.StringPtr(&#34;hard_quota&#34;),
+<span id="L723" class="ln">   723  </span>				DisplayName: core.StringPtr(&#34;The Cloud Object Storage bucket quota.&#34;),
+<span id="L724" class="ln">   724  </span>				Description: core.StringPtr(&#34;The maximum bytes that are allocated to the Cloud Object Storage bucket.&#34;),
+<span id="L725" class="ln">   725  </span>				Type:        core.StringPtr(&#34;numeric&#34;),
+<span id="L726" class="ln">   726  </span>			}
+<span id="L727" class="ln">   727  </span>
+<span id="L728" class="ln">   728  </span>			importModel := &amp;securityandcompliancecenterapiv3.Import{
+<span id="L729" class="ln">   729  </span>				Parameters: []securityandcompliancecenterapiv3.Parameter{*parameterModel},
+<span id="L730" class="ln">   730  </span>			}
+<span id="L731" class="ln">   731  </span>
+<span id="L732" class="ln">   732  </span>			replaceRuleOptions := securityAndComplianceCenterApiService.NewReplaceRuleOptions(
+<span id="L733" class="ln">   733  </span>				ruleIdLink,
+<span id="L734" class="ln">   734  </span>				eTagLink,
+<span id="L735" class="ln">   735  </span>				&#34;Example rule&#34;,
+<span id="L736" class="ln">   736  </span>				targetModel,
+<span id="L737" class="ln">   737  </span>				requiredConfigModel,
+<span id="L738" class="ln">   738  </span>			)
+<span id="L739" class="ln">   739  </span>			replaceRuleOptions.SetType(&#34;user_defined&#34;)
+<span id="L740" class="ln">   740  </span>			replaceRuleOptions.SetVersion(&#34;1.0.1&#34;)
+<span id="L741" class="ln">   741  </span>			replaceRuleOptions.SetImport(importModel)
+<span id="L742" class="ln">   742  </span>			replaceRuleOptions.SetLabels([]string{})
+<span id="L743" class="ln">   743  </span>
+<span id="L744" class="ln">   744  </span>			rule, response, err := securityAndComplianceCenterApiService.ReplaceRule(replaceRuleOptions)
+<span id="L745" class="ln">   745  </span>			if err != nil {
+<span id="L746" class="ln">   746  </span>				panic(err)
+<span id="L747" class="ln">   747  </span>			}
+<span id="L748" class="ln">   748  </span>			b, _ := json.MarshalIndent(rule, &#34;&#34;, &#34;  &#34;)
+<span id="L749" class="ln">   749  </span>			fmt.Println(string(b))
+<span id="L750" class="ln">   750  </span>
+<span id="L751" class="ln">   751  </span>			<span class="comment">// end-replace_rule</span>
+<span id="L752" class="ln">   752  </span>
+<span id="L753" class="ln">   753  </span>			Expect(err).To(BeNil())
+<span id="L754" class="ln">   754  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L755" class="ln">   755  </span>			Expect(rule).ToNot(BeNil())
+<span id="L756" class="ln">   756  </span>		})
+<span id="L757" class="ln">   757  </span>		It(`CreateAttachment request example`, func() {
+<span id="L758" class="ln">   758  </span>			fmt.Println(&#34;\nCreateAttachment() result:&#34;)
+<span id="L759" class="ln">   759  </span>			<span class="comment">// begin-create_attachment</span>
+<span id="L760" class="ln">   760  </span>
+<span id="L761" class="ln">   761  </span>			propertyScopeID := &amp;securityandcompliancecenterapiv3.PropertyItem{
+<span id="L762" class="ln">   762  </span>				Name:  core.StringPtr(&#34;scope_id&#34;),
+<span id="L763" class="ln">   763  </span>				Value: core.StringPtr(accountID),
+<span id="L764" class="ln">   764  </span>			}
+<span id="L765" class="ln">   765  </span>			propertyScopeType := &amp;securityandcompliancecenterapiv3.PropertyItem{
+<span id="L766" class="ln">   766  </span>				Name:  core.StringPtr(&#34;scope_type&#34;),
+<span id="L767" class="ln">   767  </span>				Value: core.StringPtr(&#34;account&#34;),
+<span id="L768" class="ln">   768  </span>			}
+<span id="L769" class="ln">   769  </span>
+<span id="L770" class="ln">   770  </span>			multiCloudScopeModel := &amp;securityandcompliancecenterapiv3.MultiCloudScope{
+<span id="L771" class="ln">   771  </span>				Environment: core.StringPtr(&#34;ibm-cloud&#34;),
+<span id="L772" class="ln">   772  </span>				Properties:  []securityandcompliancecenterapiv3.PropertyItem{*propertyScopeID, *propertyScopeType},
+<span id="L773" class="ln">   773  </span>			}
+<span id="L774" class="ln">   774  </span>
+<span id="L775" class="ln">   775  </span>			failedControlsModel := &amp;securityandcompliancecenterapiv3.FailedControls{
+<span id="L776" class="ln">   776  </span>				ThresholdLimit:   core.Int64Ptr(int64(15)),
+<span id="L777" class="ln">   777  </span>				FailedControlIds: []string{},
+<span id="L778" class="ln">   778  </span>			}
+<span id="L779" class="ln">   779  </span>
+<span id="L780" class="ln">   780  </span>			attachmentsNotificationsPrototypeModel := &amp;securityandcompliancecenterapiv3.AttachmentsNotificationsPrototype{
+<span id="L781" class="ln">   781  </span>				Enabled:  core.BoolPtr(false),
+<span id="L782" class="ln">   782  </span>				Controls: failedControlsModel,
+<span id="L783" class="ln">   783  </span>			}
+<span id="L784" class="ln">   784  </span>
+<span id="L785" class="ln">   785  </span>			attachmentParameterPrototypeModel := &amp;securityandcompliancecenterapiv3.AttachmentParameterPrototype{
+<span id="L786" class="ln">   786  </span>				AssessmentType:       core.StringPtr(&#34;Automated&#34;),
+<span id="L787" class="ln">   787  </span>				AssessmentID:         core.StringPtr(&#34;rule-a637949b-7e51-46c4-afd4-b96619001bf1&#34;),
+<span id="L788" class="ln">   788  </span>				ParameterName:        core.StringPtr(&#34;session_invalidation_in_seconds&#34;),
+<span id="L789" class="ln">   789  </span>				ParameterValue:       core.StringPtr(&#34;120&#34;),
+<span id="L790" class="ln">   790  </span>				ParameterDisplayName: core.StringPtr(&#34;Sign out due to inactivity in seconds&#34;),
+<span id="L791" class="ln">   791  </span>				ParameterType:        core.StringPtr(&#34;numeric&#34;),
+<span id="L792" class="ln">   792  </span>			}
+<span id="L793" class="ln">   793  </span>
+<span id="L794" class="ln">   794  </span>			attachmentsPrototypeModel := &amp;securityandcompliancecenterapiv3.AttachmentsPrototype{
+<span id="L795" class="ln">   795  </span>				Name:                 core.StringPtr(&#34;account-0d8c3805dfea40aa8ad02265a18eb12b&#34;),
+<span id="L796" class="ln">   796  </span>				Description:          core.StringPtr(&#34;Test description&#34;),
+<span id="L797" class="ln">   797  </span>				Scope:                []securityandcompliancecenterapiv3.MultiCloudScope{*multiCloudScopeModel},
+<span id="L798" class="ln">   798  </span>				Status:               core.StringPtr(&#34;enabled&#34;),
+<span id="L799" class="ln">   799  </span>				Schedule:             core.StringPtr(&#34;every_30_days&#34;),
+<span id="L800" class="ln">   800  </span>				Notifications:        attachmentsNotificationsPrototypeModel,
+<span id="L801" class="ln">   801  </span>				AttachmentParameters: []securityandcompliancecenterapiv3.AttachmentParameterPrototype{*attachmentParameterPrototypeModel},
+<span id="L802" class="ln">   802  </span>			}
+<span id="L803" class="ln">   803  </span>
+<span id="L804" class="ln">   804  </span>			createAttachmentOptions := securityAndComplianceCenterApiService.NewCreateAttachmentOptions(
+<span id="L805" class="ln">   805  </span>				profileIdLink,
+<span id="L806" class="ln">   806  </span>				[]securityandcompliancecenterapiv3.AttachmentsPrototype{*attachmentsPrototypeModel},
+<span id="L807" class="ln">   807  </span>			)
+<span id="L808" class="ln">   808  </span>
+<span id="L809" class="ln">   809  </span>			attachmentPrototype, response, err := securityAndComplianceCenterApiService.CreateAttachment(createAttachmentOptions)
+<span id="L810" class="ln">   810  </span>			if err != nil {
+<span id="L811" class="ln">   811  </span>				panic(err)
+<span id="L812" class="ln">   812  </span>			}
+<span id="L813" class="ln">   813  </span>			b, _ := json.MarshalIndent(attachmentPrototype, &#34;&#34;, &#34;  &#34;)
+<span id="L814" class="ln">   814  </span>			fmt.Println(string(b))
+<span id="L815" class="ln">   815  </span>
+<span id="L816" class="ln">   816  </span>			<span class="comment">// end-create_attachment</span>
+<span id="L817" class="ln">   817  </span>
+<span id="L818" class="ln">   818  </span>			Expect(err).To(BeNil())
+<span id="L819" class="ln">   819  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L820" class="ln">   820  </span>			Expect(attachmentPrototype).ToNot(BeNil())
+<span id="L821" class="ln">   821  </span>
+<span id="L822" class="ln">   822  </span>			attachmentIdLink = *attachmentPrototype.Attachments[0].ID
+<span id="L823" class="ln">   823  </span>			fmt.Fprintf(GinkgoWriter, &#34;Saved attachmentIdLink value: %v\n&#34;, attachmentIdLink)
+<span id="L824" class="ln">   824  </span>		})
+<span id="L825" class="ln">   825  </span>		It(`ListAttachments request example`, func() {
+<span id="L826" class="ln">   826  </span>			fmt.Println(&#34;\nListAttachments() result:&#34;)
+<span id="L827" class="ln">   827  </span>			<span class="comment">// begin-list_attachments</span>
+<span id="L828" class="ln">   828  </span>			listAttachmentsOptions := &amp;securityandcompliancecenterapiv3.ListAttachmentsOptions{
+<span id="L829" class="ln">   829  </span>				ProfilesID:     &amp;profileIdLink,
+<span id="L830" class="ln">   830  </span>				XCorrelationID: core.StringPtr(&#34;testString&#34;),
+<span id="L831" class="ln">   831  </span>				XRequestID:     core.StringPtr(&#34;testString&#34;),
+<span id="L832" class="ln">   832  </span>				Limit:          core.Int64Ptr(int64(10)),
+<span id="L833" class="ln">   833  </span>			}
+<span id="L834" class="ln">   834  </span>
+<span id="L835" class="ln">   835  </span>			pager, err := securityAndComplianceCenterApiService.NewAttachmentsPager(listAttachmentsOptions)
+<span id="L836" class="ln">   836  </span>			if err != nil {
+<span id="L837" class="ln">   837  </span>				panic(err)
+<span id="L838" class="ln">   838  </span>			}
+<span id="L839" class="ln">   839  </span>
+<span id="L840" class="ln">   840  </span>			var allResults []securityandcompliancecenterapiv3.AttachmentItem
+<span id="L841" class="ln">   841  </span>			for pager.HasNext() {
+<span id="L842" class="ln">   842  </span>				nextPage, err := pager.GetNext()
+<span id="L843" class="ln">   843  </span>				if err != nil {
+<span id="L844" class="ln">   844  </span>					panic(err)
+<span id="L845" class="ln">   845  </span>				}
+<span id="L846" class="ln">   846  </span>				allResults = append(allResults, nextPage...)
+<span id="L847" class="ln">   847  </span>			}
+<span id="L848" class="ln">   848  </span>			b, _ := json.MarshalIndent(allResults, &#34;&#34;, &#34;  &#34;)
+<span id="L849" class="ln">   849  </span>			fmt.Println(string(b))
+<span id="L850" class="ln">   850  </span>			<span class="comment">// end-list_attachments</span>
+<span id="L851" class="ln">   851  </span>		})
+<span id="L852" class="ln">   852  </span>		It(`GetProfileAttachment request example`, func() {
+<span id="L853" class="ln">   853  </span>			fmt.Println(&#34;\nGetProfileAttachment() result:&#34;)
+<span id="L854" class="ln">   854  </span>			<span class="comment">// begin-get_profile_attachment</span>
+<span id="L855" class="ln">   855  </span>
+<span id="L856" class="ln">   856  </span>			getProfileAttachmentOptions := securityAndComplianceCenterApiService.NewGetProfileAttachmentOptions(
+<span id="L857" class="ln">   857  </span>				attachmentIdLink,
+<span id="L858" class="ln">   858  </span>				profileIdLink,
+<span id="L859" class="ln">   859  </span>			)
+<span id="L860" class="ln">   860  </span>
+<span id="L861" class="ln">   861  </span>			attachmentItem, response, err := securityAndComplianceCenterApiService.GetProfileAttachment(getProfileAttachmentOptions)
+<span id="L862" class="ln">   862  </span>			if err != nil {
+<span id="L863" class="ln">   863  </span>				panic(err)
+<span id="L864" class="ln">   864  </span>			}
+<span id="L865" class="ln">   865  </span>			b, _ := json.MarshalIndent(attachmentItem, &#34;&#34;, &#34;  &#34;)
+<span id="L866" class="ln">   866  </span>			fmt.Println(string(b))
+<span id="L867" class="ln">   867  </span>
+<span id="L868" class="ln">   868  </span>			<span class="comment">// end-get_profile_attachment</span>
+<span id="L869" class="ln">   869  </span>
+<span id="L870" class="ln">   870  </span>			Expect(err).To(BeNil())
+<span id="L871" class="ln">   871  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L872" class="ln">   872  </span>			Expect(attachmentItem).ToNot(BeNil())
+<span id="L873" class="ln">   873  </span>		})
+<span id="L874" class="ln">   874  </span>		It(`ReplaceProfileAttachment request example`, func() {
+<span id="L875" class="ln">   875  </span>			fmt.Println(&#34;\nReplaceProfileAttachment() result:&#34;)
+<span id="L876" class="ln">   876  </span>			<span class="comment">// begin-replace_profile_attachment</span>
+<span id="L877" class="ln">   877  </span>
+<span id="L878" class="ln">   878  </span>			propertyScopeID := &amp;securityandcompliancecenterapiv3.PropertyItem{
+<span id="L879" class="ln">   879  </span>				Name:  core.StringPtr(&#34;scope_id&#34;),
+<span id="L880" class="ln">   880  </span>				Value: core.StringPtr(accountID),
+<span id="L881" class="ln">   881  </span>			}
+<span id="L882" class="ln">   882  </span>			propertyScopeType := &amp;securityandcompliancecenterapiv3.PropertyItem{
+<span id="L883" class="ln">   883  </span>				Name:  core.StringPtr(&#34;scope_type&#34;),
+<span id="L884" class="ln">   884  </span>				Value: core.StringPtr(&#34;account&#34;),
+<span id="L885" class="ln">   885  </span>			}
+<span id="L886" class="ln">   886  </span>
+<span id="L887" class="ln">   887  </span>			multiCloudScopeModel := &amp;securityandcompliancecenterapiv3.MultiCloudScope{
+<span id="L888" class="ln">   888  </span>				Environment: core.StringPtr(&#34;ibm-cloud&#34;),
+<span id="L889" class="ln">   889  </span>				Properties:  []securityandcompliancecenterapiv3.PropertyItem{*propertyScopeID, *propertyScopeType},
+<span id="L890" class="ln">   890  </span>			}
+<span id="L891" class="ln">   891  </span>
+<span id="L892" class="ln">   892  </span>			failedControlsModel := &amp;securityandcompliancecenterapiv3.FailedControls{
+<span id="L893" class="ln">   893  </span>				ThresholdLimit:   core.Int64Ptr(int64(15)),
+<span id="L894" class="ln">   894  </span>				FailedControlIds: []string{},
+<span id="L895" class="ln">   895  </span>			}
+<span id="L896" class="ln">   896  </span>
+<span id="L897" class="ln">   897  </span>			attachmentsNotificationsPrototypeModel := &amp;securityandcompliancecenterapiv3.AttachmentsNotificationsPrototype{
+<span id="L898" class="ln">   898  </span>				Enabled:  core.BoolPtr(false),
+<span id="L899" class="ln">   899  </span>				Controls: failedControlsModel,
+<span id="L900" class="ln">   900  </span>			}
+<span id="L901" class="ln">   901  </span>
+<span id="L902" class="ln">   902  </span>			attachmentParameterPrototypeModel := &amp;securityandcompliancecenterapiv3.AttachmentParameterPrototype{
+<span id="L903" class="ln">   903  </span>				AssessmentType:       core.StringPtr(&#34;Automated&#34;),
+<span id="L904" class="ln">   904  </span>				AssessmentID:         core.StringPtr(&#34;rule-a637949b-7e51-46c4-afd4-b96619001bf1&#34;),
+<span id="L905" class="ln">   905  </span>				ParameterName:        core.StringPtr(&#34;session_invalidation_in_seconds&#34;),
+<span id="L906" class="ln">   906  </span>				ParameterValue:       core.StringPtr(&#34;120&#34;),
+<span id="L907" class="ln">   907  </span>				ParameterDisplayName: core.StringPtr(&#34;Sign out due to inactivity in seconds&#34;),
+<span id="L908" class="ln">   908  </span>				ParameterType:        core.StringPtr(&#34;numeric&#34;),
+<span id="L909" class="ln">   909  </span>			}
+<span id="L910" class="ln">   910  </span>
+<span id="L911" class="ln">   911  </span>			replaceProfileAttachmentOptions := securityAndComplianceCenterApiService.NewReplaceProfileAttachmentOptions(
+<span id="L912" class="ln">   912  </span>				attachmentIdLink,
+<span id="L913" class="ln">   913  </span>				profileIdLink,
+<span id="L914" class="ln">   914  </span>			)
+<span id="L915" class="ln">   915  </span>			replaceProfileAttachmentOptions.SetScope([]securityandcompliancecenterapiv3.MultiCloudScope{*multiCloudScopeModel})
+<span id="L916" class="ln">   916  </span>			replaceProfileAttachmentOptions.SetStatus(&#34;enabled&#34;)
+<span id="L917" class="ln">   917  </span>			replaceProfileAttachmentOptions.SetSchedule(&#34;every_30_days&#34;)
+<span id="L918" class="ln">   918  </span>			replaceProfileAttachmentOptions.SetNotifications(attachmentsNotificationsPrototypeModel)
+<span id="L919" class="ln">   919  </span>			replaceProfileAttachmentOptions.SetAttachmentParameters([]securityandcompliancecenterapiv3.AttachmentParameterPrototype{*attachmentParameterPrototypeModel})
+<span id="L920" class="ln">   920  </span>			replaceProfileAttachmentOptions.SetName(&#34;account-0d8c3805dfea40aa8ad02265a18eb12b&#34;)
+<span id="L921" class="ln">   921  </span>			replaceProfileAttachmentOptions.SetDescription(&#34;Test description&#34;)
+<span id="L922" class="ln">   922  </span>
+<span id="L923" class="ln">   923  </span>			attachmentItem, response, err := securityAndComplianceCenterApiService.ReplaceProfileAttachment(replaceProfileAttachmentOptions)
+<span id="L924" class="ln">   924  </span>			if err != nil {
+<span id="L925" class="ln">   925  </span>				panic(err)
+<span id="L926" class="ln">   926  </span>			}
+<span id="L927" class="ln">   927  </span>			b, _ := json.MarshalIndent(attachmentItem, &#34;&#34;, &#34;  &#34;)
+<span id="L928" class="ln">   928  </span>			fmt.Println(string(b))
+<span id="L929" class="ln">   929  </span>
+<span id="L930" class="ln">   930  </span>			<span class="comment">// end-replace_profile_attachment</span>
+<span id="L931" class="ln">   931  </span>
+<span id="L932" class="ln">   932  </span>			Expect(err).To(BeNil())
+<span id="L933" class="ln">   933  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L934" class="ln">   934  </span>			Expect(attachmentItem).ToNot(BeNil())
+<span id="L935" class="ln">   935  </span>		})
+<span id="L936" class="ln">   936  </span>		It(`CreateScan request example`, func() {
+<span id="L937" class="ln">   937  </span>			fmt.Println(&#34;\nCreateScan() result:&#34;)
+<span id="L938" class="ln">   938  </span>			<span class="comment">// begin-create_scan</span>
+<span id="L939" class="ln">   939  </span>
+<span id="L940" class="ln">   940  </span>			createScanOptions := securityAndComplianceCenterApiService.NewCreateScanOptions(
+<span id="L941" class="ln">   941  </span>				createScanAttachmentID,
+<span id="L942" class="ln">   942  </span>			)
+<span id="L943" class="ln">   943  </span>
+<span id="L944" class="ln">   944  </span>			scan, response, err := securityAndComplianceCenterApiService.CreateScan(createScanOptions)
+<span id="L945" class="ln">   945  </span>			if err != nil {
+<span id="L946" class="ln">   946  </span>				panic(err)
+<span id="L947" class="ln">   947  </span>			}
+<span id="L948" class="ln">   948  </span>			b, _ := json.MarshalIndent(scan, &#34;&#34;, &#34;  &#34;)
+<span id="L949" class="ln">   949  </span>			fmt.Println(string(b))
+<span id="L950" class="ln">   950  </span>
+<span id="L951" class="ln">   951  </span>			<span class="comment">// end-create_scan</span>
+<span id="L952" class="ln">   952  </span>
+<span id="L953" class="ln">   953  </span>			Expect(err).To(BeNil())
+<span id="L954" class="ln">   954  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L955" class="ln">   955  </span>			Expect(scan).ToNot(BeNil())
+<span id="L956" class="ln">   956  </span>		})
+<span id="L957" class="ln">   957  </span>		It(`ListAttachmentsAccount request example`, func() {
+<span id="L958" class="ln">   958  </span>			fmt.Println(&#34;\nListAttachmentsAccount() result:&#34;)
+<span id="L959" class="ln">   959  </span>			<span class="comment">// begin-list_attachments_account</span>
+<span id="L960" class="ln">   960  </span>			listAttachmentsAccountOptions := &amp;securityandcompliancecenterapiv3.ListAttachmentsAccountOptions{
+<span id="L961" class="ln">   961  </span>				XCorrelationID: core.StringPtr(&#34;testString&#34;),
+<span id="L962" class="ln">   962  </span>				XRequestID:     core.StringPtr(&#34;testString&#34;),
+<span id="L963" class="ln">   963  </span>				Limit:          core.Int64Ptr(int64(10)),
+<span id="L964" class="ln">   964  </span>			}
+<span id="L965" class="ln">   965  </span>
+<span id="L966" class="ln">   966  </span>			pager, err := securityAndComplianceCenterApiService.NewAttachmentsAccountPager(listAttachmentsAccountOptions)
+<span id="L967" class="ln">   967  </span>			if err != nil {
+<span id="L968" class="ln">   968  </span>				panic(err)
+<span id="L969" class="ln">   969  </span>			}
+<span id="L970" class="ln">   970  </span>
+<span id="L971" class="ln">   971  </span>			var allResults []securityandcompliancecenterapiv3.AttachmentItem
+<span id="L972" class="ln">   972  </span>			for pager.HasNext() {
+<span id="L973" class="ln">   973  </span>				nextPage, err := pager.GetNext()
+<span id="L974" class="ln">   974  </span>				if err != nil {
+<span id="L975" class="ln">   975  </span>					panic(err)
+<span id="L976" class="ln">   976  </span>				}
+<span id="L977" class="ln">   977  </span>				allResults = append(allResults, nextPage...)
+<span id="L978" class="ln">   978  </span>			}
+<span id="L979" class="ln">   979  </span>			b, _ := json.MarshalIndent(allResults, &#34;&#34;, &#34;  &#34;)
+<span id="L980" class="ln">   980  </span>			fmt.Println(string(b))
+<span id="L981" class="ln">   981  </span>			<span class="comment">// end-list_attachments_account</span>
+<span id="L982" class="ln">   982  </span>		})
+<span id="L983" class="ln">   983  </span>		It(`ListReports request example`, func() {
+<span id="L984" class="ln">   984  </span>			fmt.Println(&#34;\nListReports() result:&#34;)
+<span id="L985" class="ln">   985  </span>			<span class="comment">// begin-list_reports</span>
+<span id="L986" class="ln">   986  </span>			listReportsOptions := &amp;securityandcompliancecenterapiv3.ListReportsOptions{
+<span id="L987" class="ln">   987  </span>				XCorrelationID: core.StringPtr(&#34;testString&#34;),
+<span id="L988" class="ln">   988  </span>				XRequestID:     core.StringPtr(&#34;testString&#34;),
+<span id="L989" class="ln">   989  </span>				AttachmentID:   &amp;attachmentIdForReportLink,
+<span id="L990" class="ln">   990  </span>				GroupID:        &amp;groupIdForReportLink,
+<span id="L991" class="ln">   991  </span>				ProfileID:      &amp;profileIdForReportLink,
+<span id="L992" class="ln">   992  </span>				Type:           &amp;typeForReportLink,
+<span id="L993" class="ln">   993  </span>				Limit:          core.Int64Ptr(int64(10)),
+<span id="L994" class="ln">   994  </span>				Sort:           core.StringPtr(&#34;profile_name&#34;),
+<span id="L995" class="ln">   995  </span>			}
+<span id="L996" class="ln">   996  </span>
+<span id="L997" class="ln">   997  </span>			pager, err := securityAndComplianceCenterApiService.NewReportsPager(listReportsOptions)
+<span id="L998" class="ln">   998  </span>			if err != nil {
+<span id="L999" class="ln">   999  </span>				panic(err)
+<span id="L1000" class="ln">  1000  </span>			}
+<span id="L1001" class="ln">  1001  </span>
+<span id="L1002" class="ln">  1002  </span>			var allResults []securityandcompliancecenterapiv3.Report
+<span id="L1003" class="ln">  1003  </span>			for pager.HasNext() {
+<span id="L1004" class="ln">  1004  </span>				nextPage, err := pager.GetNext()
+<span id="L1005" class="ln">  1005  </span>				if err != nil {
+<span id="L1006" class="ln">  1006  </span>					panic(err)
+<span id="L1007" class="ln">  1007  </span>				}
+<span id="L1008" class="ln">  1008  </span>				allResults = append(allResults, nextPage...)
+<span id="L1009" class="ln">  1009  </span>			}
+<span id="L1010" class="ln">  1010  </span>			b, _ := json.MarshalIndent(allResults, &#34;&#34;, &#34;  &#34;)
+<span id="L1011" class="ln">  1011  </span>			fmt.Println(string(b))
+<span id="L1012" class="ln">  1012  </span>			<span class="comment">// end-list_reports</span>
+<span id="L1013" class="ln">  1013  </span>		})
+<span id="L1014" class="ln">  1014  </span>		It(`GetReport request example`, func() {
+<span id="L1015" class="ln">  1015  </span>			fmt.Println(&#34;\nGetReport() result:&#34;)
+<span id="L1016" class="ln">  1016  </span>			<span class="comment">// begin-get_report</span>
+<span id="L1017" class="ln">  1017  </span>
+<span id="L1018" class="ln">  1018  </span>			getReportOptions := securityAndComplianceCenterApiService.NewGetReportOptions(
+<span id="L1019" class="ln">  1019  </span>				reportIdForReportLink,
+<span id="L1020" class="ln">  1020  </span>			)
+<span id="L1021" class="ln">  1021  </span>
+<span id="L1022" class="ln">  1022  </span>			report, response, err := securityAndComplianceCenterApiService.GetReport(getReportOptions)
+<span id="L1023" class="ln">  1023  </span>			if err != nil {
+<span id="L1024" class="ln">  1024  </span>				panic(err)
+<span id="L1025" class="ln">  1025  </span>			}
+<span id="L1026" class="ln">  1026  </span>			b, _ := json.MarshalIndent(report, &#34;&#34;, &#34;  &#34;)
+<span id="L1027" class="ln">  1027  </span>			fmt.Println(string(b))
+<span id="L1028" class="ln">  1028  </span>
+<span id="L1029" class="ln">  1029  </span>			<span class="comment">// end-get_report</span>
+<span id="L1030" class="ln">  1030  </span>
+<span id="L1031" class="ln">  1031  </span>			Expect(err).To(BeNil())
+<span id="L1032" class="ln">  1032  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L1033" class="ln">  1033  </span>			Expect(report).ToNot(BeNil())
+<span id="L1034" class="ln">  1034  </span>		})
+<span id="L1035" class="ln">  1035  </span>		It(`GetReportSummary request example`, func() {
+<span id="L1036" class="ln">  1036  </span>			fmt.Println(&#34;\nGetReportSummary() result:&#34;)
+<span id="L1037" class="ln">  1037  </span>			<span class="comment">// begin-get_report_summary</span>
+<span id="L1038" class="ln">  1038  </span>
+<span id="L1039" class="ln">  1039  </span>			getReportSummaryOptions := securityAndComplianceCenterApiService.NewGetReportSummaryOptions(
+<span id="L1040" class="ln">  1040  </span>				reportIdForReportLink,
+<span id="L1041" class="ln">  1041  </span>			)
+<span id="L1042" class="ln">  1042  </span>
+<span id="L1043" class="ln">  1043  </span>			reportSummary, response, err := securityAndComplianceCenterApiService.GetReportSummary(getReportSummaryOptions)
+<span id="L1044" class="ln">  1044  </span>			if err != nil {
+<span id="L1045" class="ln">  1045  </span>				panic(err)
+<span id="L1046" class="ln">  1046  </span>			}
+<span id="L1047" class="ln">  1047  </span>			b, _ := json.MarshalIndent(reportSummary, &#34;&#34;, &#34;  &#34;)
+<span id="L1048" class="ln">  1048  </span>			fmt.Println(string(b))
+<span id="L1049" class="ln">  1049  </span>
+<span id="L1050" class="ln">  1050  </span>			<span class="comment">// end-get_report_summary</span>
+<span id="L1051" class="ln">  1051  </span>
+<span id="L1052" class="ln">  1052  </span>			Expect(err).To(BeNil())
+<span id="L1053" class="ln">  1053  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L1054" class="ln">  1054  </span>			Expect(reportSummary).ToNot(BeNil())
+<span id="L1055" class="ln">  1055  </span>		})
+<span id="L1056" class="ln">  1056  </span>		It(`GetReportEvaluation request example`, func() {
+<span id="L1057" class="ln">  1057  </span>			fmt.Println(&#34;\nGetReportEvaluation() result:&#34;)
+<span id="L1058" class="ln">  1058  </span>			<span class="comment">// begin-get_report_evaluation</span>
+<span id="L1059" class="ln">  1059  </span>
+<span id="L1060" class="ln">  1060  </span>			getReportEvaluationOptions := securityAndComplianceCenterApiService.NewGetReportEvaluationOptions(
+<span id="L1061" class="ln">  1061  </span>				reportIdForReportLink,
+<span id="L1062" class="ln">  1062  </span>			)
+<span id="L1063" class="ln">  1063  </span>
+<span id="L1064" class="ln">  1064  </span>			result, response, err := securityAndComplianceCenterApiService.GetReportEvaluation(getReportEvaluationOptions)
+<span id="L1065" class="ln">  1065  </span>			if err != nil {
+<span id="L1066" class="ln">  1066  </span>				panic(err)
+<span id="L1067" class="ln">  1067  </span>			}
+<span id="L1068" class="ln">  1068  </span>			if result != nil {
+<span id="L1069" class="ln">  1069  </span>				defer result.Close()
+<span id="L1070" class="ln">  1070  </span>				outFile, err := os.Create(&#34;result.out&#34;)
+<span id="L1071" class="ln">  1071  </span>				if err != nil {
+<span id="L1072" class="ln">  1072  </span>					panic(err)
+<span id="L1073" class="ln">  1073  </span>				}
+<span id="L1074" class="ln">  1074  </span>				defer outFile.Close()
+<span id="L1075" class="ln">  1075  </span>				_, err = io.Copy(outFile, result)
+<span id="L1076" class="ln">  1076  </span>				if err != nil {
+<span id="L1077" class="ln">  1077  </span>					panic(err)
+<span id="L1078" class="ln">  1078  </span>				}
+<span id="L1079" class="ln">  1079  </span>			}
+<span id="L1080" class="ln">  1080  </span>
+<span id="L1081" class="ln">  1081  </span>			<span class="comment">// end-get_report_evaluation</span>
+<span id="L1082" class="ln">  1082  </span>
+<span id="L1083" class="ln">  1083  </span>			Expect(err).To(BeNil())
+<span id="L1084" class="ln">  1084  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L1085" class="ln">  1085  </span>			Expect(result).ToNot(BeNil())
+<span id="L1086" class="ln">  1086  </span>		})
+<span id="L1087" class="ln">  1087  </span>		It(`GetReportControls request example`, func() {
+<span id="L1088" class="ln">  1088  </span>			fmt.Println(&#34;\nGetReportControls() result:&#34;)
+<span id="L1089" class="ln">  1089  </span>			<span class="comment">// begin-get_report_controls</span>
+<span id="L1090" class="ln">  1090  </span>
+<span id="L1091" class="ln">  1091  </span>			getReportControlsOptions := securityAndComplianceCenterApiService.NewGetReportControlsOptions(
+<span id="L1092" class="ln">  1092  </span>				reportIdForReportLink,
+<span id="L1093" class="ln">  1093  </span>			)
+<span id="L1094" class="ln">  1094  </span>			getReportControlsOptions.SetStatus(&#34;compliant&#34;)
+<span id="L1095" class="ln">  1095  </span>
+<span id="L1096" class="ln">  1096  </span>			reportControls, response, err := securityAndComplianceCenterApiService.GetReportControls(getReportControlsOptions)
+<span id="L1097" class="ln">  1097  </span>			if err != nil {
+<span id="L1098" class="ln">  1098  </span>				panic(err)
+<span id="L1099" class="ln">  1099  </span>			}
+<span id="L1100" class="ln">  1100  </span>			b, _ := json.MarshalIndent(reportControls, &#34;&#34;, &#34;  &#34;)
+<span id="L1101" class="ln">  1101  </span>			fmt.Println(string(b))
+<span id="L1102" class="ln">  1102  </span>
+<span id="L1103" class="ln">  1103  </span>			<span class="comment">// end-get_report_controls</span>
+<span id="L1104" class="ln">  1104  </span>
+<span id="L1105" class="ln">  1105  </span>			Expect(err).To(BeNil())
+<span id="L1106" class="ln">  1106  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L1107" class="ln">  1107  </span>			Expect(reportControls).ToNot(BeNil())
+<span id="L1108" class="ln">  1108  </span>		})
+<span id="L1109" class="ln">  1109  </span>		It(`ListReportEvaluations request example`, func() {
+<span id="L1110" class="ln">  1110  </span>			fmt.Println(&#34;\nListReportEvaluations() result:&#34;)
+<span id="L1111" class="ln">  1111  </span>			<span class="comment">// begin-list_report_evaluations</span>
+<span id="L1112" class="ln">  1112  </span>			listReportEvaluationsOptions := &amp;securityandcompliancecenterapiv3.ListReportEvaluationsOptions{
+<span id="L1113" class="ln">  1113  </span>				ReportID:       &amp;reportIdForReportLink,
+<span id="L1114" class="ln">  1114  </span>				XCorrelationID: core.StringPtr(&#34;testString&#34;),
+<span id="L1115" class="ln">  1115  </span>				XRequestID:     core.StringPtr(&#34;testString&#34;),
+<span id="L1116" class="ln">  1116  </span>				AssessmentID:   core.StringPtr(&#34;testString&#34;),
+<span id="L1117" class="ln">  1117  </span>				ComponentID:    core.StringPtr(&#34;testString&#34;),
+<span id="L1118" class="ln">  1118  </span>				TargetID:       core.StringPtr(&#34;testString&#34;),
+<span id="L1119" class="ln">  1119  </span>				TargetName:     core.StringPtr(&#34;testString&#34;),
+<span id="L1120" class="ln">  1120  </span>				Status:         core.StringPtr(&#34;failure&#34;),
+<span id="L1121" class="ln">  1121  </span>				Limit:          core.Int64Ptr(int64(10)),
+<span id="L1122" class="ln">  1122  </span>			}
+<span id="L1123" class="ln">  1123  </span>
+<span id="L1124" class="ln">  1124  </span>			pager, err := securityAndComplianceCenterApiService.NewReportEvaluationsPager(listReportEvaluationsOptions)
+<span id="L1125" class="ln">  1125  </span>			if err != nil {
+<span id="L1126" class="ln">  1126  </span>				panic(err)
+<span id="L1127" class="ln">  1127  </span>			}
+<span id="L1128" class="ln">  1128  </span>
+<span id="L1129" class="ln">  1129  </span>			var allResults []securityandcompliancecenterapiv3.Evaluation
+<span id="L1130" class="ln">  1130  </span>			for pager.HasNext() {
+<span id="L1131" class="ln">  1131  </span>				nextPage, err := pager.GetNext()
+<span id="L1132" class="ln">  1132  </span>				if err != nil {
+<span id="L1133" class="ln">  1133  </span>					panic(err)
+<span id="L1134" class="ln">  1134  </span>				}
+<span id="L1135" class="ln">  1135  </span>				allResults = append(allResults, nextPage...)
+<span id="L1136" class="ln">  1136  </span>			}
+<span id="L1137" class="ln">  1137  </span>			b, _ := json.MarshalIndent(allResults, &#34;&#34;, &#34;  &#34;)
+<span id="L1138" class="ln">  1138  </span>			fmt.Println(string(b))
+<span id="L1139" class="ln">  1139  </span>			<span class="comment">// end-list_report_evaluations</span>
+<span id="L1140" class="ln">  1140  </span>		})
+<span id="L1141" class="ln">  1141  </span>		It(`ListReportResources request example`, func() {
+<span id="L1142" class="ln">  1142  </span>			fmt.Println(&#34;\nListReportResources() result:&#34;)
+<span id="L1143" class="ln">  1143  </span>			<span class="comment">// begin-list_report_resources</span>
+<span id="L1144" class="ln">  1144  </span>			listReportResourcesOptions := &amp;securityandcompliancecenterapiv3.ListReportResourcesOptions{
+<span id="L1145" class="ln">  1145  </span>				ReportID:       &amp;reportIdForReportLink,
+<span id="L1146" class="ln">  1146  </span>				XCorrelationID: core.StringPtr(&#34;testString&#34;),
+<span id="L1147" class="ln">  1147  </span>				XRequestID:     core.StringPtr(&#34;testString&#34;),
+<span id="L1148" class="ln">  1148  </span>				ID:             core.StringPtr(&#34;testString&#34;),
+<span id="L1149" class="ln">  1149  </span>				ResourceName:   core.StringPtr(&#34;testString&#34;),
+<span id="L1150" class="ln">  1150  </span>				AccountID:      &amp;accountIdForReportLink,
+<span id="L1151" class="ln">  1151  </span>				ComponentID:    core.StringPtr(&#34;testString&#34;),
+<span id="L1152" class="ln">  1152  </span>				Status:         core.StringPtr(&#34;compliant&#34;),
+<span id="L1153" class="ln">  1153  </span>				Sort:           core.StringPtr(&#34;account_id&#34;),
+<span id="L1154" class="ln">  1154  </span>				Limit:          core.Int64Ptr(int64(10)),
+<span id="L1155" class="ln">  1155  </span>			}
+<span id="L1156" class="ln">  1156  </span>
+<span id="L1157" class="ln">  1157  </span>			pager, err := securityAndComplianceCenterApiService.NewReportResourcesPager(listReportResourcesOptions)
+<span id="L1158" class="ln">  1158  </span>			if err != nil {
+<span id="L1159" class="ln">  1159  </span>				panic(err)
+<span id="L1160" class="ln">  1160  </span>			}
+<span id="L1161" class="ln">  1161  </span>
+<span id="L1162" class="ln">  1162  </span>			var allResults []securityandcompliancecenterapiv3.Resource
+<span id="L1163" class="ln">  1163  </span>			for pager.HasNext() {
+<span id="L1164" class="ln">  1164  </span>				nextPage, err := pager.GetNext()
+<span id="L1165" class="ln">  1165  </span>				if err != nil {
+<span id="L1166" class="ln">  1166  </span>					panic(err)
+<span id="L1167" class="ln">  1167  </span>				}
+<span id="L1168" class="ln">  1168  </span>				allResults = append(allResults, nextPage...)
+<span id="L1169" class="ln">  1169  </span>			}
+<span id="L1170" class="ln">  1170  </span>			b, _ := json.MarshalIndent(allResults, &#34;&#34;, &#34;  &#34;)
+<span id="L1171" class="ln">  1171  </span>			fmt.Println(string(b))
+<span id="L1172" class="ln">  1172  </span>			<span class="comment">// end-list_report_resources</span>
+<span id="L1173" class="ln">  1173  </span>		})
+<span id="L1174" class="ln">  1174  </span>		It(`GetReportTags request example`, func() {
+<span id="L1175" class="ln">  1175  </span>			fmt.Println(&#34;\nGetReportTags() result:&#34;)
+<span id="L1176" class="ln">  1176  </span>			<span class="comment">// begin-get_report_tags</span>
+<span id="L1177" class="ln">  1177  </span>
+<span id="L1178" class="ln">  1178  </span>			getReportTagsOptions := securityAndComplianceCenterApiService.NewGetReportTagsOptions(
+<span id="L1179" class="ln">  1179  </span>				reportIdForReportLink,
+<span id="L1180" class="ln">  1180  </span>			)
+<span id="L1181" class="ln">  1181  </span>
+<span id="L1182" class="ln">  1182  </span>			reportTags, response, err := securityAndComplianceCenterApiService.GetReportTags(getReportTagsOptions)
+<span id="L1183" class="ln">  1183  </span>			if err != nil {
+<span id="L1184" class="ln">  1184  </span>				panic(err)
+<span id="L1185" class="ln">  1185  </span>			}
+<span id="L1186" class="ln">  1186  </span>			b, _ := json.MarshalIndent(reportTags, &#34;&#34;, &#34;  &#34;)
+<span id="L1187" class="ln">  1187  </span>			fmt.Println(string(b))
+<span id="L1188" class="ln">  1188  </span>
+<span id="L1189" class="ln">  1189  </span>			<span class="comment">// end-get_report_tags</span>
+<span id="L1190" class="ln">  1190  </span>
+<span id="L1191" class="ln">  1191  </span>			Expect(err).To(BeNil())
+<span id="L1192" class="ln">  1192  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L1193" class="ln">  1193  </span>			Expect(reportTags).ToNot(BeNil())
+<span id="L1194" class="ln">  1194  </span>		})
+<span id="L1195" class="ln">  1195  </span>		It(`GetReportViolationsDrift request example`, func() {
+<span id="L1196" class="ln">  1196  </span>			fmt.Println(&#34;\nGetReportViolationsDrift() result:&#34;)
+<span id="L1197" class="ln">  1197  </span>			<span class="comment">// begin-get_report_violations_drift</span>
+<span id="L1198" class="ln">  1198  </span>
+<span id="L1199" class="ln">  1199  </span>			getReportViolationsDriftOptions := securityAndComplianceCenterApiService.NewGetReportViolationsDriftOptions(
+<span id="L1200" class="ln">  1200  </span>				reportIdForReportLink,
+<span id="L1201" class="ln">  1201  </span>			)
+<span id="L1202" class="ln">  1202  </span>
+<span id="L1203" class="ln">  1203  </span>			reportViolationsDrift, response, err := securityAndComplianceCenterApiService.GetReportViolationsDrift(getReportViolationsDriftOptions)
+<span id="L1204" class="ln">  1204  </span>			if err != nil {
+<span id="L1205" class="ln">  1205  </span>				panic(err)
+<span id="L1206" class="ln">  1206  </span>			}
+<span id="L1207" class="ln">  1207  </span>			b, _ := json.MarshalIndent(reportViolationsDrift, &#34;&#34;, &#34;  &#34;)
+<span id="L1208" class="ln">  1208  </span>			fmt.Println(string(b))
+<span id="L1209" class="ln">  1209  </span>
+<span id="L1210" class="ln">  1210  </span>			<span class="comment">// end-get_report_violations_drift</span>
+<span id="L1211" class="ln">  1211  </span>
+<span id="L1212" class="ln">  1212  </span>			Expect(err).To(BeNil())
+<span id="L1213" class="ln">  1213  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L1214" class="ln">  1214  </span>			Expect(reportViolationsDrift).ToNot(BeNil())
+<span id="L1215" class="ln">  1215  </span>		})
+<span id="L1216" class="ln">  1216  </span>		It(`ListProviderTypes request example`, func() {
+<span id="L1217" class="ln">  1217  </span>			fmt.Println(&#34;\nListProviderTypes() result:&#34;)
+<span id="L1218" class="ln">  1218  </span>			<span class="comment">// begin-list_provider_types</span>
+<span id="L1219" class="ln">  1219  </span>
+<span id="L1220" class="ln">  1220  </span>			listProviderTypesOptions := securityAndComplianceCenterApiService.NewListProviderTypesOptions()
+<span id="L1221" class="ln">  1221  </span>
+<span id="L1222" class="ln">  1222  </span>			providerTypesCollection, response, err := securityAndComplianceCenterApiService.ListProviderTypes(listProviderTypesOptions)
+<span id="L1223" class="ln">  1223  </span>			if err != nil {
+<span id="L1224" class="ln">  1224  </span>				panic(err)
+<span id="L1225" class="ln">  1225  </span>			}
+<span id="L1226" class="ln">  1226  </span>			b, _ := json.MarshalIndent(providerTypesCollection, &#34;&#34;, &#34;  &#34;)
+<span id="L1227" class="ln">  1227  </span>			fmt.Println(string(b))
+<span id="L1228" class="ln">  1228  </span>
+<span id="L1229" class="ln">  1229  </span>			<span class="comment">// end-list_provider_types</span>
+<span id="L1230" class="ln">  1230  </span>
+<span id="L1231" class="ln">  1231  </span>			Expect(err).To(BeNil())
+<span id="L1232" class="ln">  1232  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L1233" class="ln">  1233  </span>			Expect(providerTypesCollection).ToNot(BeNil())
+<span id="L1234" class="ln">  1234  </span>
+<span id="L1235" class="ln">  1235  </span>			providerTypeIdLink = *providerTypesCollection.ProviderTypes[0].ID
+<span id="L1236" class="ln">  1236  </span>			fmt.Fprintf(GinkgoWriter, &#34;Saved providerTypeIdLink value: %v\n&#34;, providerTypeIdLink)
+<span id="L1237" class="ln">  1237  </span>		})
+<span id="L1238" class="ln">  1238  </span>		It(`GetProviderTypeByID request example`, func() {
+<span id="L1239" class="ln">  1239  </span>			fmt.Println(&#34;\nGetProviderTypeByID() result:&#34;)
+<span id="L1240" class="ln">  1240  </span>			<span class="comment">// begin-get_provider_type_by_id</span>
+<span id="L1241" class="ln">  1241  </span>
+<span id="L1242" class="ln">  1242  </span>			getProviderTypeByIdOptions := securityAndComplianceCenterApiService.NewGetProviderTypeByIdOptions(
+<span id="L1243" class="ln">  1243  </span>				providerTypeIdLink,
+<span id="L1244" class="ln">  1244  </span>			)
+<span id="L1245" class="ln">  1245  </span>
+<span id="L1246" class="ln">  1246  </span>			providerTypeItem, response, err := securityAndComplianceCenterApiService.GetProviderTypeByID(getProviderTypeByIdOptions)
+<span id="L1247" class="ln">  1247  </span>			if err != nil {
+<span id="L1248" class="ln">  1248  </span>				panic(err)
+<span id="L1249" class="ln">  1249  </span>			}
+<span id="L1250" class="ln">  1250  </span>			b, _ := json.MarshalIndent(providerTypeItem, &#34;&#34;, &#34;  &#34;)
+<span id="L1251" class="ln">  1251  </span>			fmt.Println(string(b))
+<span id="L1252" class="ln">  1252  </span>
+<span id="L1253" class="ln">  1253  </span>			<span class="comment">// end-get_provider_type_by_id</span>
+<span id="L1254" class="ln">  1254  </span>
+<span id="L1255" class="ln">  1255  </span>			Expect(err).To(BeNil())
+<span id="L1256" class="ln">  1256  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L1257" class="ln">  1257  </span>			Expect(providerTypeItem).ToNot(BeNil())
+<span id="L1258" class="ln">  1258  </span>		})
+<span id="L1259" class="ln">  1259  </span>		It(`ListProviderTypeInstances request example`, func() {
+<span id="L1260" class="ln">  1260  </span>			fmt.Println(&#34;\nListProviderTypeInstances() result:&#34;)
+<span id="L1261" class="ln">  1261  </span>			<span class="comment">// begin-list_provider_type_instances</span>
+<span id="L1262" class="ln">  1262  </span>
+<span id="L1263" class="ln">  1263  </span>			listProviderTypeInstancesOptions := securityAndComplianceCenterApiService.NewListProviderTypeInstancesOptions(
+<span id="L1264" class="ln">  1264  </span>				providerTypeIdLink,
+<span id="L1265" class="ln">  1265  </span>			)
+<span id="L1266" class="ln">  1266  </span>
+<span id="L1267" class="ln">  1267  </span>			providerTypeInstancesResponse, response, err := securityAndComplianceCenterApiService.ListProviderTypeInstances(listProviderTypeInstancesOptions)
+<span id="L1268" class="ln">  1268  </span>			if err != nil {
+<span id="L1269" class="ln">  1269  </span>				panic(err)
+<span id="L1270" class="ln">  1270  </span>			}
+<span id="L1271" class="ln">  1271  </span>			b, _ := json.MarshalIndent(providerTypeInstancesResponse, &#34;&#34;, &#34;  &#34;)
+<span id="L1272" class="ln">  1272  </span>			fmt.Println(string(b))
+<span id="L1273" class="ln">  1273  </span>
+<span id="L1274" class="ln">  1274  </span>			<span class="comment">// end-list_provider_type_instances</span>
+<span id="L1275" class="ln">  1275  </span>
+<span id="L1276" class="ln">  1276  </span>			Expect(err).To(BeNil())
+<span id="L1277" class="ln">  1277  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L1278" class="ln">  1278  </span>			Expect(providerTypeInstancesResponse).ToNot(BeNil())
+<span id="L1279" class="ln">  1279  </span>		})
+<span id="L1280" class="ln">  1280  </span>		It(`CreateProviderTypeInstance request example`, func() {
+<span id="L1281" class="ln">  1281  </span>			fmt.Println(&#34;\nCreateProviderTypeInstance() result:&#34;)
+<span id="L1282" class="ln">  1282  </span>			<span class="comment">// begin-create_provider_type_instance</span>
+<span id="L1283" class="ln">  1283  </span>
+<span id="L1284" class="ln">  1284  </span>			createProviderTypeInstanceOptions := &amp;securityandcompliancecenterapiv3.CreateProviderTypeInstanceOptions{
+<span id="L1285" class="ln">  1285  </span>				ProviderTypeID: &amp;providerTypeIdLink,
+<span id="L1286" class="ln">  1286  </span>				Name:           core.StringPtr(&#34;workload-protection-instance-1&#34;),
+<span id="L1287" class="ln">  1287  </span>				Attributes:     map[string]interface{}{&#34;wp_crn&#34;: &#34;crn:v1:staging:public:sysdig-secure:us-south:a/ff88f007f9ff4622aac4fbc0eda36255:0df4004c-fb74-483b-97be-dd9bd35af4d8::&#34;},
+<span id="L1288" class="ln">  1288  </span>				XCorrelationID: core.StringPtr(&#34;testString&#34;),
+<span id="L1289" class="ln">  1289  </span>				XRequestID:     core.StringPtr(&#34;testString&#34;),
+<span id="L1290" class="ln">  1290  </span>			}
+<span id="L1291" class="ln">  1291  </span>
+<span id="L1292" class="ln">  1292  </span>			providerTypeInstanceItem, response, err := securityAndComplianceCenterApiService.CreateProviderTypeInstance(createProviderTypeInstanceOptions)
+<span id="L1293" class="ln">  1293  </span>			if err != nil {
+<span id="L1294" class="ln">  1294  </span>				panic(err)
+<span id="L1295" class="ln">  1295  </span>			}
+<span id="L1296" class="ln">  1296  </span>			b, _ := json.MarshalIndent(providerTypeInstanceItem, &#34;&#34;, &#34;  &#34;)
+<span id="L1297" class="ln">  1297  </span>			fmt.Println(string(b))
+<span id="L1298" class="ln">  1298  </span>
+<span id="L1299" class="ln">  1299  </span>			<span class="comment">// end-create_provider_type_instance</span>
+<span id="L1300" class="ln">  1300  </span>
+<span id="L1301" class="ln">  1301  </span>			Expect(err).To(BeNil())
+<span id="L1302" class="ln">  1302  </span>			Expect(response.StatusCode).To(Equal(201))
+<span id="L1303" class="ln">  1303  </span>			Expect(providerTypeInstanceItem).ToNot(BeNil())
+<span id="L1304" class="ln">  1304  </span>
+<span id="L1305" class="ln">  1305  </span>			providerTypeInstanceIdLink = *providerTypeInstanceItem.ID
+<span id="L1306" class="ln">  1306  </span>			fmt.Fprintf(GinkgoWriter, &#34;Saved providerTypeInstanceIdLink value: %v\n&#34;, providerTypeInstanceIdLink)
+<span id="L1307" class="ln">  1307  </span>		})
+<span id="L1308" class="ln">  1308  </span>		It(`GetProviderTypeInstance request example`, func() {
+<span id="L1309" class="ln">  1309  </span>			fmt.Println(&#34;\nGetProviderTypeInstance() result:&#34;)
+<span id="L1310" class="ln">  1310  </span>			<span class="comment">// begin-get_provider_type_instance</span>
+<span id="L1311" class="ln">  1311  </span>
+<span id="L1312" class="ln">  1312  </span>			getProviderTypeInstanceOptions := securityAndComplianceCenterApiService.NewGetProviderTypeInstanceOptions(
+<span id="L1313" class="ln">  1313  </span>				providerTypeIdLink,
+<span id="L1314" class="ln">  1314  </span>				providerTypeInstanceIdLink,
+<span id="L1315" class="ln">  1315  </span>			)
+<span id="L1316" class="ln">  1316  </span>
+<span id="L1317" class="ln">  1317  </span>			providerTypeInstanceItem, response, err := securityAndComplianceCenterApiService.GetProviderTypeInstance(getProviderTypeInstanceOptions)
+<span id="L1318" class="ln">  1318  </span>			if err != nil {
+<span id="L1319" class="ln">  1319  </span>				panic(err)
+<span id="L1320" class="ln">  1320  </span>			}
+<span id="L1321" class="ln">  1321  </span>			b, _ := json.MarshalIndent(providerTypeInstanceItem, &#34;&#34;, &#34;  &#34;)
+<span id="L1322" class="ln">  1322  </span>			fmt.Println(string(b))
+<span id="L1323" class="ln">  1323  </span>
+<span id="L1324" class="ln">  1324  </span>			<span class="comment">// end-get_provider_type_instance</span>
+<span id="L1325" class="ln">  1325  </span>
+<span id="L1326" class="ln">  1326  </span>			Expect(err).To(BeNil())
+<span id="L1327" class="ln">  1327  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L1328" class="ln">  1328  </span>			Expect(providerTypeInstanceItem).ToNot(BeNil())
+<span id="L1329" class="ln">  1329  </span>		})
+<span id="L1330" class="ln">  1330  </span>		It(`UpdateProviderTypeInstance request example`, func() {
+<span id="L1331" class="ln">  1331  </span>			fmt.Println(&#34;\nUpdateProviderTypeInstance() result:&#34;)
+<span id="L1332" class="ln">  1332  </span>			<span class="comment">// begin-update_provider_type_instance</span>
+<span id="L1333" class="ln">  1333  </span>
+<span id="L1334" class="ln">  1334  </span>			updateProviderTypeInstanceOptions := &amp;securityandcompliancecenterapiv3.UpdateProviderTypeInstanceOptions{
+<span id="L1335" class="ln">  1335  </span>				ProviderTypeID:         &amp;providerTypeIdLink,
+<span id="L1336" class="ln">  1336  </span>				ProviderTypeInstanceID: &amp;providerTypeInstanceIdLink,
+<span id="L1337" class="ln">  1337  </span>				Name:                   core.StringPtr(&#34;workload-protection-instance-1&#34;),
+<span id="L1338" class="ln">  1338  </span>				Attributes:             map[string]interface{}{&#34;wp_crn&#34;: &#34;crn:v1:staging:public:sysdig-secure:us-south:a/ff88f007f9ff4622aac4fbc0eda36255:0df4004c-fb74-483b-97be-dd9bd35af4d8::&#34;},
+<span id="L1339" class="ln">  1339  </span>				XCorrelationID:         core.StringPtr(&#34;testString&#34;),
+<span id="L1340" class="ln">  1340  </span>				XRequestID:             core.StringPtr(&#34;testString&#34;),
+<span id="L1341" class="ln">  1341  </span>			}
+<span id="L1342" class="ln">  1342  </span>
+<span id="L1343" class="ln">  1343  </span>			providerTypeInstanceItem, response, err := securityAndComplianceCenterApiService.UpdateProviderTypeInstance(updateProviderTypeInstanceOptions)
+<span id="L1344" class="ln">  1344  </span>			if err != nil {
+<span id="L1345" class="ln">  1345  </span>				panic(err)
+<span id="L1346" class="ln">  1346  </span>			}
+<span id="L1347" class="ln">  1347  </span>			b, _ := json.MarshalIndent(providerTypeInstanceItem, &#34;&#34;, &#34;  &#34;)
+<span id="L1348" class="ln">  1348  </span>			fmt.Println(string(b))
+<span id="L1349" class="ln">  1349  </span>
+<span id="L1350" class="ln">  1350  </span>			<span class="comment">// end-update_provider_type_instance</span>
+<span id="L1351" class="ln">  1351  </span>
+<span id="L1352" class="ln">  1352  </span>			Expect(err).To(BeNil())
+<span id="L1353" class="ln">  1353  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L1354" class="ln">  1354  </span>			Expect(providerTypeInstanceItem).ToNot(BeNil())
+<span id="L1355" class="ln">  1355  </span>		})
+<span id="L1356" class="ln">  1356  </span>		It(`GetProviderTypesInstances request example`, func() {
+<span id="L1357" class="ln">  1357  </span>			fmt.Println(&#34;\nGetProviderTypesInstances() result:&#34;)
+<span id="L1358" class="ln">  1358  </span>			<span class="comment">// begin-get_provider_types_instances</span>
+<span id="L1359" class="ln">  1359  </span>
+<span id="L1360" class="ln">  1360  </span>			getProviderTypesInstancesOptions := securityAndComplianceCenterApiService.NewGetProviderTypesInstancesOptions()
+<span id="L1361" class="ln">  1361  </span>
+<span id="L1362" class="ln">  1362  </span>			providerTypesInstancesResponse, response, err := securityAndComplianceCenterApiService.GetProviderTypesInstances(getProviderTypesInstancesOptions)
+<span id="L1363" class="ln">  1363  </span>			if err != nil {
+<span id="L1364" class="ln">  1364  </span>				panic(err)
+<span id="L1365" class="ln">  1365  </span>			}
+<span id="L1366" class="ln">  1366  </span>			b, _ := json.MarshalIndent(providerTypesInstancesResponse, &#34;&#34;, &#34;  &#34;)
+<span id="L1367" class="ln">  1367  </span>			fmt.Println(string(b))
+<span id="L1368" class="ln">  1368  </span>
+<span id="L1369" class="ln">  1369  </span>			<span class="comment">// end-get_provider_types_instances</span>
+<span id="L1370" class="ln">  1370  </span>
+<span id="L1371" class="ln">  1371  </span>			Expect(err).To(BeNil())
+<span id="L1372" class="ln">  1372  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L1373" class="ln">  1373  </span>			Expect(providerTypesInstancesResponse).ToNot(BeNil())
+<span id="L1374" class="ln">  1374  </span>		})
+<span id="L1375" class="ln">  1375  </span>		It(`DeleteProfileAttachment request example`, func() {
+<span id="L1376" class="ln">  1376  </span>			fmt.Println(&#34;\nDeleteProfileAttachment() result:&#34;)
+<span id="L1377" class="ln">  1377  </span>			<span class="comment">// begin-delete_profile_attachment</span>
+<span id="L1378" class="ln">  1378  </span>
+<span id="L1379" class="ln">  1379  </span>			deleteProfileAttachmentOptions := securityAndComplianceCenterApiService.NewDeleteProfileAttachmentOptions(
+<span id="L1380" class="ln">  1380  </span>				attachmentIdLink,
+<span id="L1381" class="ln">  1381  </span>				profileIdLink,
+<span id="L1382" class="ln">  1382  </span>			)
+<span id="L1383" class="ln">  1383  </span>
+<span id="L1384" class="ln">  1384  </span>			attachmentItem, response, err := securityAndComplianceCenterApiService.DeleteProfileAttachment(deleteProfileAttachmentOptions)
+<span id="L1385" class="ln">  1385  </span>			if err != nil {
+<span id="L1386" class="ln">  1386  </span>				panic(err)
+<span id="L1387" class="ln">  1387  </span>			}
+<span id="L1388" class="ln">  1388  </span>			b, _ := json.MarshalIndent(attachmentItem, &#34;&#34;, &#34;  &#34;)
+<span id="L1389" class="ln">  1389  </span>			fmt.Println(string(b))
+<span id="L1390" class="ln">  1390  </span>
+<span id="L1391" class="ln">  1391  </span>			<span class="comment">// end-delete_profile_attachment</span>
+<span id="L1392" class="ln">  1392  </span>
+<span id="L1393" class="ln">  1393  </span>			Expect(err).To(BeNil())
+<span id="L1394" class="ln">  1394  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L1395" class="ln">  1395  </span>			Expect(attachmentItem).ToNot(BeNil())
+<span id="L1396" class="ln">  1396  </span>		})
+<span id="L1397" class="ln">  1397  </span>		It(`DeleteCustomProfile request example`, func() {
+<span id="L1398" class="ln">  1398  </span>			fmt.Println(&#34;\nDeleteCustomProfile() result:&#34;)
+<span id="L1399" class="ln">  1399  </span>			<span class="comment">// begin-delete_custom_profile</span>
+<span id="L1400" class="ln">  1400  </span>
+<span id="L1401" class="ln">  1401  </span>			deleteCustomProfileOptions := securityAndComplianceCenterApiService.NewDeleteCustomProfileOptions(
+<span id="L1402" class="ln">  1402  </span>				profileIdLink,
+<span id="L1403" class="ln">  1403  </span>			)
+<span id="L1404" class="ln">  1404  </span>
+<span id="L1405" class="ln">  1405  </span>			profile, response, err := securityAndComplianceCenterApiService.DeleteCustomProfile(deleteCustomProfileOptions)
+<span id="L1406" class="ln">  1406  </span>			if err != nil {
+<span id="L1407" class="ln">  1407  </span>				panic(err)
+<span id="L1408" class="ln">  1408  </span>			}
+<span id="L1409" class="ln">  1409  </span>			b, _ := json.MarshalIndent(profile, &#34;&#34;, &#34;  &#34;)
+<span id="L1410" class="ln">  1410  </span>			fmt.Println(string(b))
+<span id="L1411" class="ln">  1411  </span>
+<span id="L1412" class="ln">  1412  </span>			<span class="comment">// end-delete_custom_profile</span>
+<span id="L1413" class="ln">  1413  </span>
+<span id="L1414" class="ln">  1414  </span>			Expect(err).To(BeNil())
+<span id="L1415" class="ln">  1415  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L1416" class="ln">  1416  </span>			Expect(profile).ToNot(BeNil())
+<span id="L1417" class="ln">  1417  </span>		})
+<span id="L1418" class="ln">  1418  </span>		It(`DeleteCustomControlLibrary request example`, func() {
+<span id="L1419" class="ln">  1419  </span>			fmt.Println(&#34;\nDeleteCustomControlLibrary() result:&#34;)
+<span id="L1420" class="ln">  1420  </span>			<span class="comment">// begin-delete_custom_control_library</span>
+<span id="L1421" class="ln">  1421  </span>
+<span id="L1422" class="ln">  1422  </span>			deleteCustomControlLibraryOptions := securityAndComplianceCenterApiService.NewDeleteCustomControlLibraryOptions(
+<span id="L1423" class="ln">  1423  </span>				controlLibraryIdLink,
+<span id="L1424" class="ln">  1424  </span>			)
+<span id="L1425" class="ln">  1425  </span>
+<span id="L1426" class="ln">  1426  </span>			controlLibraryDelete, response, err := securityAndComplianceCenterApiService.DeleteCustomControlLibrary(deleteCustomControlLibraryOptions)
+<span id="L1427" class="ln">  1427  </span>			if err != nil {
+<span id="L1428" class="ln">  1428  </span>				panic(err)
+<span id="L1429" class="ln">  1429  </span>			}
+<span id="L1430" class="ln">  1430  </span>			b, _ := json.MarshalIndent(controlLibraryDelete, &#34;&#34;, &#34;  &#34;)
+<span id="L1431" class="ln">  1431  </span>			fmt.Println(string(b))
+<span id="L1432" class="ln">  1432  </span>
+<span id="L1433" class="ln">  1433  </span>			<span class="comment">// end-delete_custom_control_library</span>
+<span id="L1434" class="ln">  1434  </span>
+<span id="L1435" class="ln">  1435  </span>			Expect(err).To(BeNil())
+<span id="L1436" class="ln">  1436  </span>			Expect(response.StatusCode).To(Equal(200))
+<span id="L1437" class="ln">  1437  </span>			Expect(controlLibraryDelete).ToNot(BeNil())
+<span id="L1438" class="ln">  1438  </span>		})
+<span id="L1439" class="ln">  1439  </span>		It(`DeleteRule request example`, func() {
+<span id="L1440" class="ln">  1440  </span>			<span class="comment">// begin-delete_rule</span>
+<span id="L1441" class="ln">  1441  </span>
+<span id="L1442" class="ln">  1442  </span>			deleteRuleOptions := securityAndComplianceCenterApiService.NewDeleteRuleOptions(
+<span id="L1443" class="ln">  1443  </span>				ruleIdLink,
+<span id="L1444" class="ln">  1444  </span>			)
+<span id="L1445" class="ln">  1445  </span>
+<span id="L1446" class="ln">  1446  </span>			response, err := securityAndComplianceCenterApiService.DeleteRule(deleteRuleOptions)
+<span id="L1447" class="ln">  1447  </span>			if err != nil {
+<span id="L1448" class="ln">  1448  </span>				panic(err)
+<span id="L1449" class="ln">  1449  </span>			}
+<span id="L1450" class="ln">  1450  </span>			if response.StatusCode != 204 {
+<span id="L1451" class="ln">  1451  </span>				fmt.Printf(&#34;\nUnexpected response status code received from DeleteRule(): %d\n&#34;, response.StatusCode)
+<span id="L1452" class="ln">  1452  </span>			}
+<span id="L1453" class="ln">  1453  </span>
+<span id="L1454" class="ln">  1454  </span>			<span class="comment">// end-delete_rule</span>
+<span id="L1455" class="ln">  1455  </span>
+<span id="L1456" class="ln">  1456  </span>			Expect(err).To(BeNil())
+<span id="L1457" class="ln">  1457  </span>			Expect(response.StatusCode).To(Equal(204))
+<span id="L1458" class="ln">  1458  </span>		})
+<span id="L1459" class="ln">  1459  </span>		It(`DeleteProviderTypeInstance request example`, func() {
+<span id="L1460" class="ln">  1460  </span>			<span class="comment">// begin-delete_provider_type_instance</span>
+<span id="L1461" class="ln">  1461  </span>
+<span id="L1462" class="ln">  1462  </span>			deleteProviderTypeInstanceOptions := securityAndComplianceCenterApiService.NewDeleteProviderTypeInstanceOptions(
+<span id="L1463" class="ln">  1463  </span>				providerTypeIdLink,
+<span id="L1464" class="ln">  1464  </span>				providerTypeInstanceIdLink,
+<span id="L1465" class="ln">  1465  </span>			)
+<span id="L1466" class="ln">  1466  </span>
+<span id="L1467" class="ln">  1467  </span>			response, err := securityAndComplianceCenterApiService.DeleteProviderTypeInstance(deleteProviderTypeInstanceOptions)
+<span id="L1468" class="ln">  1468  </span>			if err != nil {
+<span id="L1469" class="ln">  1469  </span>				panic(err)
+<span id="L1470" class="ln">  1470  </span>			}
+<span id="L1471" class="ln">  1471  </span>			if response.StatusCode != 204 {
+<span id="L1472" class="ln">  1472  </span>				fmt.Printf(&#34;\nUnexpected response status code received from DeleteProviderTypeInstance(): %d\n&#34;, response.StatusCode)
+<span id="L1473" class="ln">  1473  </span>			}
+<span id="L1474" class="ln">  1474  </span>
+<span id="L1475" class="ln">  1475  </span>			<span class="comment">// end-delete_provider_type_instance</span>
+<span id="L1476" class="ln">  1476  </span>
+<span id="L1477" class="ln">  1477  </span>			Expect(err).To(BeNil())
+<span id="L1478" class="ln">  1478  </span>			Expect(response.StatusCode).To(Equal(204))
+<span id="L1479" class="ln">  1479  </span>		})
+<span id="L1480" class="ln">  1480  </span>	})
+<span id="L1481" class="ln">  1481  </span>})
+<span id="L1482" class="ln">  1482  </span>
+</pre><p></p>
+
+<div id="footer">
+Build version go1.20.4.<br/>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+
+</body></html>

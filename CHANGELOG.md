@@ -1,3 +1,11 @@
+## [4.0.3](https://github.com/IBM/scc-go-sdk/compare/v4.0.2...v4.0.3) (2023-08-09)
+
+
+### Bug Fixes
+
+* **Github Action:** release phase ([57bcb28](https://github.com/IBM/scc-go-sdk/commit/57bcb28f5e547a8ba9a3f18da019cc189e3e16d3))
+* using manual code to push gopages to gh-pages ([d4272be](https://github.com/IBM/scc-go-sdk/commit/d4272bec8773108ae6e49111ea0f34596128d48f))
+
 ## [4.0.2](https://github.com/IBM/scc-go-sdk/compare/v4.0.1...v4.0.2) (2022-11-16)
 
 

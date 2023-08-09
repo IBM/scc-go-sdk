@@ -1,3 +1,14 @@
+# [5.0.0](https://github.com/IBM/scc-go-sdk/compare/v4.0.3...v5.0.0) (2023-08-09)
+
+
+* Scc sdk v5 (#119) ([b4cb612](https://github.com/IBM/scc-go-sdk/commit/b4cb6123f2884ad74ef68876660a9e6b7f8a4ad0)), closes [#119](https://github.com/IBM/scc-go-sdk/issues/119)
+
+
+### BREAKING CHANGES
+
+* Migrating SDK to v5 accommodating whole SCC
+* Rectified CreateScan error when 2 scans run in parallel
+
 ## [4.0.3](https://github.com/IBM/scc-go-sdk/compare/v4.0.2...v4.0.3) (2023-08-09)
 
 

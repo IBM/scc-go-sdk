@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
@@ -1058,6 +1059,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			}
 
 			scan, response, err := securityAndComplianceCenterApiService.CreateScan(createScanOptions)
+			if err != nil && strings.Contains(err.Error(), "Another scan is currently in progress.") {
+				return
+			}
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(scan).ToNot(BeNil())

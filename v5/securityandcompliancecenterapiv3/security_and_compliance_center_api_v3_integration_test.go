@@ -1291,16 +1291,16 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 		})
 		It(`ListReportEvaluations(listReportEvaluationsOptions *ListReportEvaluationsOptions) with pagination`, func() {
 			listReportEvaluationsOptions := &securityandcompliancecenterapiv3.ListReportEvaluationsOptions{
-				ReportID: &reportIdForReportLink,
+				ReportID:       &reportIdForReportLink,
 				XCorrelationID: core.StringPtr("testString"),
-				XRequestID: core.StringPtr("testString"),
-				AssessmentID: core.StringPtr("testString"),
-				ComponentID: core.StringPtr("testString"),
-				TargetID: core.StringPtr("testString"),
-				TargetName: core.StringPtr("testString"),
-				Status: core.StringPtr("failure"),
-				Start: core.StringPtr("testString"),
-				Limit: core.Int64Ptr(int64(10)),
+				XRequestID:     core.StringPtr("testString"),
+				AssessmentID:   core.StringPtr("testString"),
+				ComponentID:    core.StringPtr("testString"),
+				TargetID:       core.StringPtr("testString"),
+				TargetName:     core.StringPtr("testString"),
+				Status:         core.StringPtr("failure"),
+				Start:          core.StringPtr("testString"),
+				Limit:          core.Int64Ptr(int64(10)),
 			}
 
 			listReportEvaluationsOptions.Start = nil
@@ -1325,11 +1325,11 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 		})
 		It(`ListReportEvaluations(listReportEvaluationsOptions *ListReportEvaluationsOptions) using ReportEvaluationsPager`, func() {
 			listReportEvaluationsOptions := &securityandcompliancecenterapiv3.ListReportEvaluationsOptions{
-				ReportID: &reportIdForReportLink,
+				ReportID:       &reportIdForReportLink,
 				XCorrelationID: core.StringPtr("testString"),
-				XRequestID: core.StringPtr("testString"),
-				Status: core.StringPtr("failure"),
-				Limit: core.Int64Ptr(int64(10)),
+				XRequestID:     core.StringPtr("testString"),
+				Status:         core.StringPtr("failure"),
+				Limit:          core.Int64Ptr(int64(10)),
 			}
 
 			// Test GetNext().
@@ -1364,17 +1364,17 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 		})
 		It(`ListReportResources(listReportResourcesOptions *ListReportResourcesOptions) with pagination`, func() {
 			listReportResourcesOptions := &securityandcompliancecenterapiv3.ListReportResourcesOptions{
-				ReportID: &reportIdForReportLink,
+				ReportID:       &reportIdForReportLink,
 				XCorrelationID: core.StringPtr("testString"),
-				XRequestID: core.StringPtr("testString"),
-				ID: core.StringPtr("testString"),
-				ResourceName: core.StringPtr("testString"),
-				AccountID: &accountIdForReportLink,
-				ComponentID: core.StringPtr("testString"),
-				Status: core.StringPtr("compliant"),
-				Sort: core.StringPtr("account_id"),
-				Start: core.StringPtr("testString"),
-				Limit: core.Int64Ptr(int64(10)),
+				XRequestID:     core.StringPtr("testString"),
+				ID:             core.StringPtr("testString"),
+				ResourceName:   core.StringPtr("testString"),
+				AccountID:      &accountIdForReportLink,
+				ComponentID:    core.StringPtr("testString"),
+				Status:         core.StringPtr("compliant"),
+				Sort:           core.StringPtr("account_id"),
+				Start:          core.StringPtr("testString"),
+				Limit:          core.Int64Ptr(int64(10)),
 			}
 
 			listReportResourcesOptions.Start = nil
@@ -1399,13 +1399,13 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 		})
 		It(`ListReportResources(listReportResourcesOptions *ListReportResourcesOptions) using ReportResourcesPager`, func() {
 			listReportResourcesOptions := &securityandcompliancecenterapiv3.ListReportResourcesOptions{
-				ReportID: &reportIdForReportLink,
+				ReportID:       &reportIdForReportLink,
 				XCorrelationID: core.StringPtr("testString"),
-				XRequestID: core.StringPtr("testString"),
-				AccountID: &accountIdForReportLink,
-				Status: core.StringPtr("compliant"),
-				Sort: core.StringPtr("account_id"),
-				Limit: core.Int64Ptr(int64(10)),
+				XRequestID:     core.StringPtr("testString"),
+				AccountID:      &accountIdForReportLink,
+				Status:         core.StringPtr("compliant"),
+				Sort:           core.StringPtr("account_id"),
+				Limit:          core.Int64Ptr(int64(10)),
 			}
 
 			// Test GetNext().

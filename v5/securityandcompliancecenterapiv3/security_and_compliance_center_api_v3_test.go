@@ -26,8 +26,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/IBM/scc-go-sdk/v5/securityandcompliancecenterapiv3"
 	"github.com/IBM/go-sdk-core/v5/core"
+	"github.com/IBM/scc-go-sdk/v5/securityandcompliancecenterapiv3"
 	"github.com/go-openapi/strfmt"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -66,14 +66,13 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"SECURITY_AND_COMPLIANCE_CENTER_API_URL": "https://securityandcompliancecenterapiv3/api",
+				"SECURITY_AND_COMPLIANCE_CENTER_API_URL":       "https://securityandcompliancecenterapiv3/api",
 				"SECURITY_AND_COMPLIANCE_CENTER_API_AUTH_TYPE": "noauth",
 			}
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3UsingExternalConfig(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
-				})
+				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3UsingExternalConfig(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{})
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
@@ -102,8 +101,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3UsingExternalConfig(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
-				})
+				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3UsingExternalConfig(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{})
 				err := securityAndComplianceCenterApiService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
@@ -121,13 +119,12 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"SECURITY_AND_COMPLIANCE_CENTER_API_URL": "https://securityandcompliancecenterapiv3/api",
+				"SECURITY_AND_COMPLIANCE_CENTER_API_URL":       "https://securityandcompliancecenterapiv3/api",
 				"SECURITY_AND_COMPLIANCE_CENTER_API_AUTH_TYPE": "someOtherAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3UsingExternalConfig(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
-			})
+			securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3UsingExternalConfig(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{})
 
 			It(`Instantiate service client with error`, func() {
 				Expect(securityAndComplianceCenterApiService).To(BeNil())
@@ -138,7 +135,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"SECURITY_AND_COMPLIANCE_CENTER_API_AUTH_TYPE":   "NOAuth",
+				"SECURITY_AND_COMPLIANCE_CENTER_API_AUTH_TYPE": "NOAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
@@ -1218,14 +1215,14 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				nextObject := new(securityandcompliancecenterapiv3.PaginatedCollectionNext)
 				nextObject.Start = core.StringPtr("abc-123")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextStart()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.StringPtr("abc-123")))
 			})
 			It(`Invoke GetNextStart without a "Next" property in the response`, func() {
 				responseObject := new(securityandcompliancecenterapiv3.ControlLibraryCollection)
-	
+
 				value, err := responseObject.GetNextStart()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -1263,9 +1260,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listControlLibrariesOptionsModel := &securityandcompliancecenterapiv3.ListControlLibrariesOptions{
-					XCorrelationID: core.StringPtr("testString"),
-					XRequestID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(50)),
+					XCorrelationID:     core.StringPtr("testString"),
+					XRequestID:         core.StringPtr("testString"),
+					Limit:              core.Int64Ptr(int64(50)),
 					ControlLibraryType: core.StringPtr("custom"),
 				}
 
@@ -1291,9 +1288,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listControlLibrariesOptionsModel := &securityandcompliancecenterapiv3.ListControlLibrariesOptions{
-					XCorrelationID: core.StringPtr("testString"),
-					XRequestID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(50)),
+					XCorrelationID:     core.StringPtr("testString"),
+					XRequestID:         core.StringPtr("testString"),
+					Limit:              core.Int64Ptr(int64(50)),
 					ControlLibraryType: core.StringPtr("custom"),
 				}
 
@@ -3124,14 +3121,14 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				nextObject := new(securityandcompliancecenterapiv3.PaginatedCollectionNext)
 				nextObject.Start = core.StringPtr("abc-123")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextStart()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.StringPtr("abc-123")))
 			})
 			It(`Invoke GetNextStart without a "Next" property in the response`, func() {
 				responseObject := new(securityandcompliancecenterapiv3.ProfileCollection)
-	
+
 				value, err := responseObject.GetNextStart()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -3170,9 +3167,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				listProfilesOptionsModel := &securityandcompliancecenterapiv3.ListProfilesOptions{
 					XCorrelationID: core.StringPtr("testString"),
-					XRequestID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					ProfileType: core.StringPtr("custom"),
+					XRequestID:     core.StringPtr("testString"),
+					Limit:          core.Int64Ptr(int64(10)),
+					ProfileType:    core.StringPtr("custom"),
 				}
 
 				pager, err := securityAndComplianceCenterApiService.NewProfilesPager(listProfilesOptionsModel)
@@ -3198,9 +3195,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				listProfilesOptionsModel := &securityandcompliancecenterapiv3.ListProfilesOptions{
 					XCorrelationID: core.StringPtr("testString"),
-					XRequestID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					ProfileType: core.StringPtr("custom"),
+					XRequestID:     core.StringPtr("testString"),
+					Limit:          core.Int64Ptr(int64(10)),
+					ProfileType:    core.StringPtr("custom"),
 				}
 
 				pager, err := securityAndComplianceCenterApiService.NewProfilesPager(listProfilesOptionsModel)
@@ -6178,14 +6175,14 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				nextObject := new(securityandcompliancecenterapiv3.PaginatedCollectionNext)
 				nextObject.Start = core.StringPtr("abc-123")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextStart()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.StringPtr("abc-123")))
 			})
 			It(`Invoke GetNextStart without a "Next" property in the response`, func() {
 				responseObject := new(securityandcompliancecenterapiv3.AttachmentCollection)
-	
+
 				value, err := responseObject.GetNextStart()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -6223,10 +6220,10 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listAttachmentsOptionsModel := &securityandcompliancecenterapiv3.ListAttachmentsOptions{
-					ProfilesID: core.StringPtr("testString"),
+					ProfilesID:     core.StringPtr("testString"),
 					XCorrelationID: core.StringPtr("testString"),
-					XRequestID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
+					XRequestID:     core.StringPtr("testString"),
+					Limit:          core.Int64Ptr(int64(10)),
 				}
 
 				pager, err := securityAndComplianceCenterApiService.NewAttachmentsPager(listAttachmentsOptionsModel)
@@ -6251,10 +6248,10 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listAttachmentsOptionsModel := &securityandcompliancecenterapiv3.ListAttachmentsOptions{
-					ProfilesID: core.StringPtr("testString"),
+					ProfilesID:     core.StringPtr("testString"),
 					XCorrelationID: core.StringPtr("testString"),
-					XRequestID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
+					XRequestID:     core.StringPtr("testString"),
+					Limit:          core.Int64Ptr(int64(10)),
 				}
 
 				pager, err := securityAndComplianceCenterApiService.NewAttachmentsPager(listAttachmentsOptionsModel)
@@ -8262,14 +8259,14 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				nextObject := new(securityandcompliancecenterapiv3.PaginatedCollectionNext)
 				nextObject.Start = core.StringPtr("abc-123")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextStart()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.StringPtr("abc-123")))
 			})
 			It(`Invoke GetNextStart without a "Next" property in the response`, func() {
 				responseObject := new(securityandcompliancecenterapiv3.AttachmentCollection)
-	
+
 				value, err := responseObject.GetNextStart()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -8308,8 +8305,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				listAttachmentsAccountOptionsModel := &securityandcompliancecenterapiv3.ListAttachmentsAccountOptions{
 					XCorrelationID: core.StringPtr("testString"),
-					XRequestID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
+					XRequestID:     core.StringPtr("testString"),
+					Limit:          core.Int64Ptr(int64(10)),
 				}
 
 				pager, err := securityAndComplianceCenterApiService.NewAttachmentsAccountPager(listAttachmentsAccountOptionsModel)
@@ -8335,8 +8332,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				listAttachmentsAccountOptionsModel := &securityandcompliancecenterapiv3.ListAttachmentsAccountOptions{
 					XCorrelationID: core.StringPtr("testString"),
-					XRequestID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
+					XRequestID:     core.StringPtr("testString"),
+					Limit:          core.Int64Ptr(int64(10)),
 				}
 
 				pager, err := securityAndComplianceCenterApiService.NewAttachmentsAccountPager(listAttachmentsAccountOptionsModel)
@@ -8863,14 +8860,14 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				nextObject := new(securityandcompliancecenterapiv3.PageHRef)
 				nextObject.Href = core.StringPtr("ibm.com?start=abc-123")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextStart()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.StringPtr("abc-123")))
 			})
 			It(`Invoke GetNextStart without a "Next" property in the response`, func() {
 				responseObject := new(securityandcompliancecenterapiv3.ReportPage)
-	
+
 				value, err := responseObject.GetNextStart()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -8880,7 +8877,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				nextObject := new(securityandcompliancecenterapiv3.PageHRef)
 				nextObject.Href = core.StringPtr("ibm.com")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextStart()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -8919,13 +8916,13 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				listReportsOptionsModel := &securityandcompliancecenterapiv3.ListReportsOptions{
 					XCorrelationID: core.StringPtr("testString"),
-					XRequestID: core.StringPtr("testString"),
-					AttachmentID: core.StringPtr("testString"),
-					GroupID: core.StringPtr("testString"),
-					ProfileID: core.StringPtr("testString"),
-					Type: core.StringPtr("scheduled"),
-					Limit: core.Int64Ptr(int64(10)),
-					Sort: core.StringPtr("profile_name"),
+					XRequestID:     core.StringPtr("testString"),
+					AttachmentID:   core.StringPtr("testString"),
+					GroupID:        core.StringPtr("testString"),
+					ProfileID:      core.StringPtr("testString"),
+					Type:           core.StringPtr("scheduled"),
+					Limit:          core.Int64Ptr(int64(10)),
+					Sort:           core.StringPtr("profile_name"),
 				}
 
 				pager, err := securityAndComplianceCenterApiService.NewReportsPager(listReportsOptionsModel)
@@ -8951,13 +8948,13 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				listReportsOptionsModel := &securityandcompliancecenterapiv3.ListReportsOptions{
 					XCorrelationID: core.StringPtr("testString"),
-					XRequestID: core.StringPtr("testString"),
-					AttachmentID: core.StringPtr("testString"),
-					GroupID: core.StringPtr("testString"),
-					ProfileID: core.StringPtr("testString"),
-					Type: core.StringPtr("scheduled"),
-					Limit: core.Int64Ptr(int64(10)),
-					Sort: core.StringPtr("profile_name"),
+					XRequestID:     core.StringPtr("testString"),
+					AttachmentID:   core.StringPtr("testString"),
+					GroupID:        core.StringPtr("testString"),
+					ProfileID:      core.StringPtr("testString"),
+					Type:           core.StringPtr("scheduled"),
+					Limit:          core.Int64Ptr(int64(10)),
+					Sort:           core.StringPtr("profile_name"),
 				}
 
 				pager, err := securityAndComplianceCenterApiService.NewReportsPager(listReportsOptionsModel)
@@ -9619,7 +9616,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				result, response, operationErr := securityAndComplianceCenterApiService.GetReportEvaluation(getReportEvaluationOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
-
 
 				// Verify empty byte buffer.
 				Expect(result).ToNot(BeNil())
@@ -10449,14 +10445,14 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				nextObject := new(securityandcompliancecenterapiv3.PageHRef)
 				nextObject.Href = core.StringPtr("ibm.com?start=abc-123")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextStart()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.StringPtr("abc-123")))
 			})
 			It(`Invoke GetNextStart without a "Next" property in the response`, func() {
 				responseObject := new(securityandcompliancecenterapiv3.EvaluationPage)
-	
+
 				value, err := responseObject.GetNextStart()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -10466,7 +10462,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				nextObject := new(securityandcompliancecenterapiv3.PageHRef)
 				nextObject.Href = core.StringPtr("ibm.com")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextStart()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -10504,15 +10500,15 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listReportEvaluationsOptionsModel := &securityandcompliancecenterapiv3.ListReportEvaluationsOptions{
-					ReportID: core.StringPtr("testString"),
+					ReportID:       core.StringPtr("testString"),
 					XCorrelationID: core.StringPtr("testString"),
-					XRequestID: core.StringPtr("testString"),
-					AssessmentID: core.StringPtr("testString"),
-					ComponentID: core.StringPtr("testString"),
-					TargetID: core.StringPtr("testString"),
-					TargetName: core.StringPtr("testString"),
-					Status: core.StringPtr("failure"),
-					Limit: core.Int64Ptr(int64(10)),
+					XRequestID:     core.StringPtr("testString"),
+					AssessmentID:   core.StringPtr("testString"),
+					ComponentID:    core.StringPtr("testString"),
+					TargetID:       core.StringPtr("testString"),
+					TargetName:     core.StringPtr("testString"),
+					Status:         core.StringPtr("failure"),
+					Limit:          core.Int64Ptr(int64(10)),
 				}
 
 				pager, err := securityAndComplianceCenterApiService.NewReportEvaluationsPager(listReportEvaluationsOptionsModel)
@@ -10537,15 +10533,15 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listReportEvaluationsOptionsModel := &securityandcompliancecenterapiv3.ListReportEvaluationsOptions{
-					ReportID: core.StringPtr("testString"),
+					ReportID:       core.StringPtr("testString"),
 					XCorrelationID: core.StringPtr("testString"),
-					XRequestID: core.StringPtr("testString"),
-					AssessmentID: core.StringPtr("testString"),
-					ComponentID: core.StringPtr("testString"),
-					TargetID: core.StringPtr("testString"),
-					TargetName: core.StringPtr("testString"),
-					Status: core.StringPtr("failure"),
-					Limit: core.Int64Ptr(int64(10)),
+					XRequestID:     core.StringPtr("testString"),
+					AssessmentID:   core.StringPtr("testString"),
+					ComponentID:    core.StringPtr("testString"),
+					TargetID:       core.StringPtr("testString"),
+					TargetName:     core.StringPtr("testString"),
+					Status:         core.StringPtr("failure"),
+					Limit:          core.Int64Ptr(int64(10)),
 				}
 
 				pager, err := securityAndComplianceCenterApiService.NewReportEvaluationsPager(listReportEvaluationsOptionsModel)
@@ -10862,14 +10858,14 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				nextObject := new(securityandcompliancecenterapiv3.PageHRef)
 				nextObject.Href = core.StringPtr("ibm.com?start=abc-123")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextStart()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.StringPtr("abc-123")))
 			})
 			It(`Invoke GetNextStart without a "Next" property in the response`, func() {
 				responseObject := new(securityandcompliancecenterapiv3.ResourcePage)
-	
+
 				value, err := responseObject.GetNextStart()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -10879,7 +10875,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				nextObject := new(securityandcompliancecenterapiv3.PageHRef)
 				nextObject.Href = core.StringPtr("ibm.com")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextStart()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -10917,16 +10913,16 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listReportResourcesOptionsModel := &securityandcompliancecenterapiv3.ListReportResourcesOptions{
-					ReportID: core.StringPtr("testString"),
+					ReportID:       core.StringPtr("testString"),
 					XCorrelationID: core.StringPtr("testString"),
-					XRequestID: core.StringPtr("testString"),
-					ID: core.StringPtr("testString"),
-					ResourceName: core.StringPtr("testString"),
-					AccountID: core.StringPtr("testString"),
-					ComponentID: core.StringPtr("testString"),
-					Status: core.StringPtr("compliant"),
-					Sort: core.StringPtr("account_id"),
-					Limit: core.Int64Ptr(int64(10)),
+					XRequestID:     core.StringPtr("testString"),
+					ID:             core.StringPtr("testString"),
+					ResourceName:   core.StringPtr("testString"),
+					AccountID:      core.StringPtr("testString"),
+					ComponentID:    core.StringPtr("testString"),
+					Status:         core.StringPtr("compliant"),
+					Sort:           core.StringPtr("account_id"),
+					Limit:          core.Int64Ptr(int64(10)),
 				}
 
 				pager, err := securityAndComplianceCenterApiService.NewReportResourcesPager(listReportResourcesOptionsModel)
@@ -10951,16 +10947,16 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listReportResourcesOptionsModel := &securityandcompliancecenterapiv3.ListReportResourcesOptions{
-					ReportID: core.StringPtr("testString"),
+					ReportID:       core.StringPtr("testString"),
 					XCorrelationID: core.StringPtr("testString"),
-					XRequestID: core.StringPtr("testString"),
-					ID: core.StringPtr("testString"),
-					ResourceName: core.StringPtr("testString"),
-					AccountID: core.StringPtr("testString"),
-					ComponentID: core.StringPtr("testString"),
-					Status: core.StringPtr("compliant"),
-					Sort: core.StringPtr("account_id"),
-					Limit: core.Int64Ptr(int64(10)),
+					XRequestID:     core.StringPtr("testString"),
+					ID:             core.StringPtr("testString"),
+					ResourceName:   core.StringPtr("testString"),
+					AccountID:      core.StringPtr("testString"),
+					ComponentID:    core.StringPtr("testString"),
+					Status:         core.StringPtr("compliant"),
+					Sort:           core.StringPtr("account_id"),
+					Limit:          core.Int64Ptr(int64(10)),
 				}
 
 				pager, err := securityAndComplianceCenterApiService.NewReportResourcesPager(listReportResourcesOptionsModel)

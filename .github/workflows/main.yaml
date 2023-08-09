@@ -42,12 +42,7 @@ jobs:
           build/publishCodeCoverage.sh
       - name: running integration tests
         env:
-          ACCOUNT_ID: ${{ secrets.ACCOUNT_ID }}
-          CONFIGURATION_GOVERNANCE_ENV: ${{ secrets.CONFIGURATION_GOVERNANCE_ENV }}
-          POSTURE_MANAGEMENT_ENV: ${{ secrets.POSTURE_MANAGEMENT_ENV }}
-          POSTURE_MANAGEMENT_V2_ENV: ${{ secrets.POSTURE_MANAGEMENT_V2_ENV }}
-          ADMIN_SERVICE_API_ENV: ${{ secrets.ADMIN_SERVICE_API_ENV }}
-          RESOURCE_GROUP_ID: ${{ secrets.RESOURCE_GROUP_ID }}
+          SCC_ENV: ${{ secrets.SCC_ENV }}
         run: build/testScript.sh
 
   release:
@@ -111,7 +106,7 @@ jobs:
           git add .
           git commit -m "Deploy to GitHub pages"
           git branch -m gh-pages
-          git remote add origin https://github.com/IBM/scc-go-sdk
+          git remote set-url origin git@github.com:IBM/scc-go-sdk.git
           git push -f origin gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_TOKEN }}

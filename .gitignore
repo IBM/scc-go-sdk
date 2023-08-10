@@ -3,3 +3,5 @@
 .env
 **/.DS_Store
 **/result.out
+**/package.json
+**/package-lock.json

@@ -1,3 +1,5 @@
 .openapi-generator
 *.env
 .env
+**/.DS_Store
+**/result.out

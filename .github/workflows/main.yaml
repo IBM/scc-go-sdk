@@ -72,10 +72,12 @@ jobs:
           GIT_COMMITTER_EMAIL: scccomm@in.ibm.com
         run: |
           pip install --user bumpversion
-          npm install @semantic-release/changelog
-          npm install @semantic-release/exec
-          npm install @semantic-release/git
-          npm install @semantic-release/github
+          npm install --global @semantic-release/changelog
+          npm install --global @semantic-release/exec
+          npm install --global @semantic-release/git
+          npm install --global @semantic-release/github
+          rm -rf package.json
+          rm -rf package-lock.json
           npx semantic-release
 
   documentation:
@@ -101,7 +103,7 @@ jobs:
           git config --global user.email "scccomm@in.ibm.com"
           git config --global user.name "sccdeveloper"
           git config --global user.password "${{ secrets.ADMIN_TOKEN }}"
-          cd v4/dist
+          cd v5/dist
           git init
           git add .
           git commit -m "Deploy to GitHub pages"

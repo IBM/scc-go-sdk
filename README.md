@@ -1,16 +1,16 @@
 [![CI/CD Pipeline](https://github.com/IBM/scc-go-sdk/actions/workflows/main.yaml/badge.svg)](https://github.com/IBM/scc-go-sdk/actions/workflows/main.yaml)
 [![Release](https://img.shields.io/github/v/release/IBM/scc-go-sdk)](https://img.shields.io/github/v/release/IBM/scc-go-sdk)
-[![Go Reference](https://pkg.go.dev/badge/github.com/IBM/scc-go-sdk/v4.svg)](https://pkg.go.dev/github.com/IBM/scc-go-sdk/v4)
-![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/IBM/scc-go-sdk?filename=v4%2Fgo.mod)
+[![Go Reference](https://pkg.go.dev/badge/github.com/IBM/scc-go-sdk/v5.svg)](https://pkg.go.dev/github.com/IBM/scc-go-sdk/v5)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/IBM/scc-go-sdk?filename=v5%2Fgo.mod)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/ad2d585c763ad627e0cb/test_coverage)](https://codeclimate.com/github/IBM/scc-go-sdk/test_coverage)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 
-# IBM Cloud Security & Compliance Center Go SDK Version v5.0.0
+# IBM Cloud Security and Compliance Center Go SDK Version v5.0.0
 
 Go client library to interact with various
-[IBM Cloud Security & Compliance Center APIs](https://cloud.ibm.com/docs?tab=api-docs&category=platform_services%2Csecurity).
+[IBM Cloud Security and Compliance Center APIs](https://cloud.ibm.com/apidocs/security-compliance).
 
 ## Table of Contents
 <!--
@@ -25,8 +25,7 @@ Go client library to interact with various
 
 <!-- toc -->
 
-- [IBM Cloud Security & Compliance Center Go SDK Version v5.0.0](#ibm-cloud-security--compliance-center-go-sdk-version-v120)
-  - [Table of Contents](#table-of-contents)
+- [IBM Cloud Security and Compliance Center Go SDK Version v5.0.0](#ibm-cloud-security--compliance-center-go-sdk-version-v500)
   - [Overview](#overview)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
@@ -43,16 +42,7 @@ Go client library to interact with various
 
 ## Overview
 
-The IBM Cloud Security & Compliance Center Go SDK allows developers to programmatically interact with the following IBM Cloud services:
-
-| Service Name                                                                         | Package name              |
-| ------------------------------------------------------------------------------------ | ------------------------- |
-| [Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config) | configurationgovernancev1 |
-| [Admin Service](https://cloud.ibm.com/apidocs/security-compliance/admin)             | adminserviceapiv1         |
-| [Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture-v1.0)      | posturemanagementv1       |
-| [Posture Management v2](https://cloud.ibm.com/apidocs/security-compliance/posture-v2.0)      | posturemanagementv2       |
-
-
+The IBM Cloud Security and Compliance Center Go SDK allows developers to programmatically interact with the following IBM Cloud Security and Compliance Center.
 
 ## Prerequisites
 
@@ -73,20 +63,20 @@ Here is an example:
 
 ```go
 import (
-	"github.com/IBM/scc-go-sdk/v4/adminserviceapiv1"
+	"github.com/IBM/scc-go-sdk/v5/securityandcompliancecenterapiv3"
 )
 ```
 Next, run `go build` or `go mod tidy` to download and install the new dependencies and update your application's
 `go.mod` file.  
 
-In the example above, the `adminserviceapiv1` part of the import path is the package name
+In the example above, the `securityandcompliancecenterapiv3` part of the import path is the package name
 associated with the Findings service.
 See the service table above to find the appropriate package name for the services used by your application.
 
 ### `go get` command  
 Alternatively, you can use the `go get` command to download and install the appropriate packages needed by your application:
 ```
-go get -u github.com/IBM/scc-go-sdk/v4
+go get -u github.com/IBM/scc-go-sdk/v5
 ```
 Be sure to use the appropriate package name from the service table above for the services used by your application.
 
@@ -113,5 +103,5 @@ See [CONTRIBUTING](CONTRIBUTING.md).
 
 ## License
 
-The IBM Cloud Security & Compliance Center Go SDK is released under the Apache 2.0 license.
+The IBM Cloud Security and Compliance Center Go SDK is released under the Apache 2.0 license.
 The license's full text can be found in [LICENSE](LICENSE).

@@ -4692,7 +4692,7 @@ type ControlSpecifications struct {
 	ComponentID *string `json:"component_id,omitempty"`
 
 	// The component name.
-	ComponenetName *string `json:"componenet_name,omitempty"`
+	ComponentName *string `json:"component_name,omitempty"`
 
 	// The control specifications environment.
 	Environment *string `json:"environment,omitempty"`
@@ -4728,7 +4728,7 @@ func UnmarshalControlSpecifications(m map[string]json.RawMessage, result interfa
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "componenet_name", &obj.ComponenetName)
+	err = core.UnmarshalPrimitive(m, "component_name", &obj.ComponentName)
 	if err != nil {
 		return
 	}

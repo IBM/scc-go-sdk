@@ -1490,7 +1490,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(providerTypesCollection).ToNot(BeNil())
 
-			providerTypeIdLink = *providerTypesCollection.ProviderTypes[0].ID
+			providerTypeIdLink = *providerTypesCollection.ProviderTypes[1].ID
 			fmt.Fprintf(GinkgoWriter, "Saved providerTypeIdLink value: %v\n", providerTypeIdLink)
 		})
 	})
@@ -1539,7 +1539,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			createProviderTypeInstanceOptions := &securityandcompliancecenterapiv3.CreateProviderTypeInstanceOptions{
 				ProviderTypeID: &providerTypeIdLink,
 				Name:           core.StringPtr("workload-protection-instance-1"),
-				Attributes:     map[string]interface{}{"crn": "crn:v1:staging:public:sysdig-secure:us-south:a/ff88f007f9ff4622aac4fbc0eda36255:0df4004c-fb74-483b-97be-dd9bd35af4d8::"},
+				Attributes:     map[string]interface{}{"wp_crn": "crn:v1:staging:public:sysdig-secure:us-south:a/ff88f007f9ff4622aac4fbc0eda36255:0df4004c-fb74-483b-97be-dd9bd35af4d8::"},
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
 			}

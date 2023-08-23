@@ -73,8 +73,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3UsingExternalConfig(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{})
-				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
+				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 				ClearTestEnvironment(testEnvironment)
 
 				clone := securityAndComplianceCenterApiService.Clone()
@@ -88,8 +88,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3UsingExternalConfig(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL: "https://testService/api",
 				})
-				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
+				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 				Expect(securityAndComplianceCenterApiService.Service.GetServiceURL()).To(Equal("https://testService/api"))
 				ClearTestEnvironment(testEnvironment)
 
@@ -102,10 +102,10 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3UsingExternalConfig(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{})
+				Expect(serviceErr).To(BeNil())
 				err := securityAndComplianceCenterApiService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
-				Expect(serviceErr).To(BeNil())
 				Expect(securityAndComplianceCenterApiService.Service.GetServiceURL()).To(Equal("https://testService/api"))
 				ClearTestEnvironment(testEnvironment)
 

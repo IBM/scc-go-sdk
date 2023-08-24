@@ -76,7 +76,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 		createScanAttachmentID                     string
 	)
 
-	var shouldSkipTest = func() {
+	shouldSkipTest := func() {
 		Skip("External configuration is not available, skipping tests...")
 	}
 
@@ -363,7 +363,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ControlSpecificationID:          core.StringPtr("5c7d6f88-a92f-4734-9b49-bd22b0900184"),
 				Responsibility:                  core.StringPtr("user"),
 				ComponentID:                     core.StringPtr("iam-identity"),
-				ComponenetName:                  core.StringPtr("testString"),
+				ComponentName:                   core.StringPtr("testString"),
 				Environment:                     core.StringPtr("ibm-cloud"),
 				ControlSpecificationDescription: core.StringPtr("IBM cloud"),
 				AssessmentsCount:                core.Int64Ptr(int64(38)),
@@ -521,7 +521,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ControlSpecificationID:          core.StringPtr("5c7d6f88-a92f-4734-9b49-bd22b0900184"),
 				Responsibility:                  core.StringPtr("user"),
 				ComponentID:                     core.StringPtr("iam-identity"),
-				ComponenetName:                  core.StringPtr("testString"),
+				ComponentName:                   core.StringPtr("testString"),
 				Environment:                     core.StringPtr("ibm-cloud"),
 				ControlSpecificationDescription: core.StringPtr("IBM cloud"),
 				AssessmentsCount:                core.Int64Ptr(int64(38)),
@@ -1490,8 +1490,14 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(providerTypesCollection).ToNot(BeNil())
 
-			providerTypeIdLink = *providerTypesCollection.ProviderTypes[0].ID
-			fmt.Fprintf(GinkgoWriter, "Saved providerTypeIdLink value: %v\n", providerTypeIdLink)
+			// Manual change: save the ID for the provider type "workload-protection"
+			for _, providerType := range providerTypesCollection.ProviderTypes {
+				if *providerType.Name == "workload-protection" {
+					providerTypeIdLink = *providerType.ID
+					fmt.Fprintf(GinkgoWriter, "Saved providerTypeIdLink value: %v\n", providerTypeIdLink)
+					break
+				}
+			}
 		})
 	})
 

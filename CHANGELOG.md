@@ -3,7 +3,7 @@
 
 ### Bug Fixes
 
-* attempt to bump version ([bc4212f](https://github.com/IBM/scc-go-sdk/commit/bc4212fa1bbbc8891713632befbd0932273ba725))
+* Changed ControlSpecification field Componenet to Component ([e90c75a](https://github.com/IBM/scc-go-sdk/commit/e90c75abf3386101fee3a912eb0907994ed9ff3a))
 
 # [5.0.0](https://github.com/IBM/scc-go-sdk/compare/v4.0.3...v5.0.0) (2023-08-09)
 

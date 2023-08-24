@@ -1491,7 +1491,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			Expect(providerTypesCollection).ToNot(BeNil())
 
 			// Manual change: save the ID for the provider type "workload-protection"
-			for _, providerType := range *providerTypesCollection.ProviderTypes {
+			for _, providerType := range providerTypesCollection.ProviderTypes {
 				if providerType.Name == "workload-protection" {
 					providerTypeIdLink = *providerType.ID
 					fmt.Fprintf(GinkgoWriter, "Saved providerTypeIdLink value: %v\n", providerTypeIdLink)

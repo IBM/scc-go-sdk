@@ -1492,7 +1492,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 
 			// Manual change: save the ID for the provider type "workload-protection"
 			for _, providerType := range providerTypesCollection.ProviderTypes {
-				if providerType.Name == "workload-protection" {
+				if *providerType.Name == "workload-protection" {
 					providerTypeIdLink = *providerType.ID
 					fmt.Fprintf(GinkgoWriter, "Saved providerTypeIdLink value: %v\n", providerTypeIdLink)
 					break

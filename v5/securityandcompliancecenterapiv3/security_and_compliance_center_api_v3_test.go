@@ -70,6 +70,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				"SECURITY_AND_COMPLIANCE_CENTER_API_AUTH_TYPE": "noauth",
 			}
 
+			// Figure out why these tests would fail sporadically
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3UsingExternalConfig(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{})

@@ -53,7 +53,6 @@ The IBM Cloud Security and Compliance Center Go SDK allows developers to program
 [here](https://cloud.ibm.com/iam/apikeys).
 * Go version 1.12 or above.
 
-
 ## Installation
 The current version of this SDK: v5.0.1
 

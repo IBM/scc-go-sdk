@@ -1,3 +1,10 @@
+## [5.0.1](https://github.com/IBM/scc-go-sdk/compare/v5.0.0...v5.0.1) (2023-08-24)
+
+
+### Bug Fixes
+
+* attempt to bump version ([bc4212f](https://github.com/IBM/scc-go-sdk/commit/bc4212fa1bbbc8891713632befbd0932273ba725))
+
 # [5.0.0](https://github.com/IBM/scc-go-sdk/compare/v4.0.3...v5.0.0) (2023-08-09)
 
 

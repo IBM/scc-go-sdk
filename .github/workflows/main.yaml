@@ -72,10 +72,10 @@ jobs:
           GIT_COMMITTER_EMAIL: scccomm@in.ibm.com
         run: |
           pip install --user bumpversion
-          npm install --global @semantic-release/changelog
-          npm install --global @semantic-release/exec
-          npm install --global @semantic-release/git
-          npm install --global @semantic-release/github
+          npm install @semantic-release/changelog
+          npm install @semantic-release/exec
+          npm install @semantic-release/git
+          npm install @semantic-release/github
           rm -rf package.json
           rm -rf package-lock.json
           npx semantic-release

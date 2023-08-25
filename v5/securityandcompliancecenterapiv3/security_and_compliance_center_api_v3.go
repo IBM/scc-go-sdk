@@ -5601,15 +5601,15 @@ type DeleteCustomProfileOptions struct {
 }
 
 // NewDeleteCustomProfileOptions : Instantiate DeleteCustomProfileOptions
-func (*SecurityAndComplianceCenterApiV3) NewDeleteCustomProfileOptions(profilesID string) *DeleteCustomProfileOptions {
+func (*SecurityAndComplianceCenterApiV3) NewDeleteCustomProfileOptions(profileID string) *DeleteCustomProfileOptions {
 	return &DeleteCustomProfileOptions{
-		ProfileID: core.StringPtr(profilesID),
+		ProfileID: core.StringPtr(profileID),
 	}
 }
 
 // SetProfileID : Allow user to set ProfileID
-func (_options *DeleteCustomProfileOptions) SetProfileID(profilesID string) *DeleteCustomProfileOptions {
-	_options.ProfileID = core.StringPtr(profilesID)
+func (_options *DeleteCustomProfileOptions) SetProfileID(profileID string) *DeleteCustomProfileOptions {
+	_options.ProfileID = core.StringPtr(profileID)
 	return _options
 }
 
@@ -5654,10 +5654,10 @@ type DeleteProfileAttachmentOptions struct {
 }
 
 // NewDeleteProfileAttachmentOptions : Instantiate DeleteProfileAttachmentOptions
-func (*SecurityAndComplianceCenterApiV3) NewDeleteProfileAttachmentOptions(attachmentID string, profilesID string) *DeleteProfileAttachmentOptions {
+func (*SecurityAndComplianceCenterApiV3) NewDeleteProfileAttachmentOptions(attachmentID string, profileID string) *DeleteProfileAttachmentOptions {
 	return &DeleteProfileAttachmentOptions{
 		AttachmentID: core.StringPtr(attachmentID),
-		ProfileID:    core.StringPtr(profilesID),
+		ProfileID:    core.StringPtr(profileID),
 	}
 }
 
@@ -5668,8 +5668,8 @@ func (_options *DeleteProfileAttachmentOptions) SetAttachmentID(attachmentID str
 }
 
 // SetProfileID : Allow user to set ProfileID
-func (_options *DeleteProfileAttachmentOptions) SetProfileID(profilesID string) *DeleteProfileAttachmentOptions {
-	_options.ProfileID = core.StringPtr(profilesID)
+func (_options *DeleteProfileAttachmentOptions) SetProfileID(profileID string) *DeleteProfileAttachmentOptions {
+	_options.ProfileID = core.StringPtr(profileID)
 	return _options
 }
 
@@ -6237,10 +6237,10 @@ type GetProfileAttachmentOptions struct {
 }
 
 // NewGetProfileAttachmentOptions : Instantiate GetProfileAttachmentOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetProfileAttachmentOptions(attachmentID string, profilesID string) *GetProfileAttachmentOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetProfileAttachmentOptions(attachmentID string, profileID string) *GetProfileAttachmentOptions {
 	return &GetProfileAttachmentOptions{
 		AttachmentID: core.StringPtr(attachmentID),
-		ProfileID:    core.StringPtr(profilesID),
+		ProfileID:    core.StringPtr(profileID),
 	}
 }
 
@@ -6251,8 +6251,8 @@ func (_options *GetProfileAttachmentOptions) SetAttachmentID(attachmentID string
 }
 
 // SetProfileID : Allow user to set ProfileID
-func (_options *GetProfileAttachmentOptions) SetProfileID(profilesID string) *GetProfileAttachmentOptions {
-	_options.ProfileID = core.StringPtr(profilesID)
+func (_options *GetProfileAttachmentOptions) SetProfileID(profileID string) *GetProfileAttachmentOptions {
+	_options.ProfileID = core.StringPtr(profileID)
 	return _options
 }
 
@@ -6294,15 +6294,15 @@ type GetProfileOptions struct {
 }
 
 // NewGetProfileOptions : Instantiate GetProfileOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetProfileOptions(profilesID string) *GetProfileOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetProfileOptions(profileID string) *GetProfileOptions {
 	return &GetProfileOptions{
-		ProfileID: core.StringPtr(profilesID),
+		ProfileID: core.StringPtr(profileID),
 	}
 }
 
 // SetProfileID : Allow user to set ProfileID
-func (_options *GetProfileOptions) SetProfileID(profilesID string) *GetProfileOptions {
-	_options.ProfileID = core.StringPtr(profilesID)
+func (_options *GetProfileOptions) SetProfileID(profileID string) *GetProfileOptions {
+	_options.ProfileID = core.StringPtr(profileID)
 	return _options
 }
 
@@ -7227,15 +7227,15 @@ type ListAttachmentsOptions struct {
 }
 
 // NewListAttachmentsOptions : Instantiate ListAttachmentsOptions
-func (*SecurityAndComplianceCenterApiV3) NewListAttachmentsOptions(profilesID string) *ListAttachmentsOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListAttachmentsOptions(profileID string) *ListAttachmentsOptions {
 	return &ListAttachmentsOptions{
-		ProfileID: core.StringPtr(profilesID),
+		ProfileID: core.StringPtr(profileID),
 	}
 }
 
 // SetProfileID : Allow user to set ProfileID
-func (_options *ListAttachmentsOptions) SetProfileID(profilesID string) *ListAttachmentsOptions {
-	_options.ProfileID = core.StringPtr(profilesID)
+func (_options *ListAttachmentsOptions) SetProfileID(profileID string) *ListAttachmentsOptions {
+	_options.ProfileID = core.StringPtr(profileID)
 	return _options
 }
 
@@ -9250,10 +9250,10 @@ const (
 )
 
 // NewReplaceProfileAttachmentOptions : Instantiate ReplaceProfileAttachmentOptions
-func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileAttachmentOptions(attachmentID string, profilesID string) *ReplaceProfileAttachmentOptions {
+func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileAttachmentOptions(attachmentID string, profileID string) *ReplaceProfileAttachmentOptions {
 	return &ReplaceProfileAttachmentOptions{
 		AttachmentID: core.StringPtr(attachmentID),
-		ProfileID:    core.StringPtr(profilesID),
+		ProfileID:    core.StringPtr(profileID),
 	}
 }
 
@@ -9264,8 +9264,8 @@ func (_options *ReplaceProfileAttachmentOptions) SetAttachmentID(attachmentID st
 }
 
 // SetProfileID : Allow user to set ProfileID
-func (_options *ReplaceProfileAttachmentOptions) SetProfileID(profilesID string) *ReplaceProfileAttachmentOptions {
-	_options.ProfileID = core.StringPtr(profilesID)
+func (_options *ReplaceProfileAttachmentOptions) SetProfileID(profileID string) *ReplaceProfileAttachmentOptions {
+	_options.ProfileID = core.StringPtr(profileID)
 	return _options
 }
 
@@ -9425,9 +9425,9 @@ const (
 )
 
 // NewReplaceProfileOptions : Instantiate ReplaceProfileOptions
-func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileOptions(profilesID string, profileName string, profileDescription string, profileType string, controls []ProfileControlsPrototype, defaultParameters []DefaultParametersPrototype) *ReplaceProfileOptions {
+func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileOptions(profileID string, profileName string, profileDescription string, profileType string, controls []ProfileControlsPrototype, defaultParameters []DefaultParametersPrototype) *ReplaceProfileOptions {
 	return &ReplaceProfileOptions{
-		ProfileID:          core.StringPtr(profilesID),
+		ProfileID:          core.StringPtr(profileID),
 		ProfileName:        core.StringPtr(profileName),
 		ProfileDescription: core.StringPtr(profileDescription),
 		ProfileType:        core.StringPtr(profileType),
@@ -9437,8 +9437,8 @@ func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileOptions(profilesID str
 }
 
 // SetProfileID : Allow user to set ProfileID
-func (_options *ReplaceProfileOptions) SetProfileID(profilesID string) *ReplaceProfileOptions {
-	_options.ProfileID = core.StringPtr(profilesID)
+func (_options *ReplaceProfileOptions) SetProfileID(profileID string) *ReplaceProfileOptions {
+	_options.ProfileID = core.StringPtr(profileID)
 	return _options
 }
 

@@ -13331,9 +13331,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(attachmentsPrototypeModel.AttachmentParameters).To(Equal([]securityandcompliancecenterapiv3.AttachmentParameterPrototype{*attachmentParameterPrototypeModel}))
 
 				// Construct an instance of the CreateAttachmentOptions model
-				profilesID := "testString"
+				profileID := "testString"
 				createAttachmentOptionsAttachments := []securityandcompliancecenterapiv3.AttachmentsPrototype{}
-				createAttachmentOptionsModel := securityAndComplianceCenterApiService.NewCreateAttachmentOptions(profilesID, createAttachmentOptionsAttachments)
+				createAttachmentOptionsModel := securityAndComplianceCenterApiService.NewCreateAttachmentOptions(profileID, createAttachmentOptionsAttachments)
 				createAttachmentOptionsModel.SetProfileID("testString")
 				createAttachmentOptionsModel.SetAttachments([]securityandcompliancecenterapiv3.AttachmentsPrototype{*attachmentsPrototypeModel})
 				createAttachmentOptionsModel.SetProfileID("testString")
@@ -13645,8 +13645,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewDeleteCustomProfileOptions successfully`, func() {
 				// Construct an instance of the DeleteCustomProfileOptions model
-				profilesID := "testString"
-				deleteCustomProfileOptionsModel := securityAndComplianceCenterApiService.NewDeleteCustomProfileOptions(profilesID)
+				profileID := "testString"
+				deleteCustomProfileOptionsModel := securityAndComplianceCenterApiService.NewDeleteCustomProfileOptions(profileID)
 				deleteCustomProfileOptionsModel.SetProfileID("testString")
 				deleteCustomProfileOptionsModel.SetXCorrelationID("testString")
 				deleteCustomProfileOptionsModel.SetXRequestID("testString")
@@ -13660,8 +13660,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			It(`Invoke NewDeleteProfileAttachmentOptions successfully`, func() {
 				// Construct an instance of the DeleteProfileAttachmentOptions model
 				attachmentID := "testString"
-				profilesID := "testString"
-				deleteProfileAttachmentOptionsModel := securityAndComplianceCenterApiService.NewDeleteProfileAttachmentOptions(attachmentID, profilesID)
+				profileID := "testString"
+				deleteProfileAttachmentOptionsModel := securityAndComplianceCenterApiService.NewDeleteProfileAttachmentOptions(attachmentID, profileID)
 				deleteProfileAttachmentOptionsModel.SetAttachmentID("testString")
 				deleteProfileAttachmentOptionsModel.SetProfileID("testString")
 				deleteProfileAttachmentOptionsModel.SetXCorrelationID("testString")
@@ -13735,8 +13735,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			It(`Invoke NewGetProfileAttachmentOptions successfully`, func() {
 				// Construct an instance of the GetProfileAttachmentOptions model
 				attachmentID := "testString"
-				profilesID := "testString"
-				getProfileAttachmentOptionsModel := securityAndComplianceCenterApiService.NewGetProfileAttachmentOptions(attachmentID, profilesID)
+				profileID := "testString"
+				getProfileAttachmentOptionsModel := securityAndComplianceCenterApiService.NewGetProfileAttachmentOptions(attachmentID, profileID)
 				getProfileAttachmentOptionsModel.SetAttachmentID("testString")
 				getProfileAttachmentOptionsModel.SetProfileID("testString")
 				getProfileAttachmentOptionsModel.SetXCorrelationID("testString")
@@ -13751,8 +13751,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewGetProfileOptions successfully`, func() {
 				// Construct an instance of the GetProfileOptions model
-				profilesID := "testString"
-				getProfileOptionsModel := securityAndComplianceCenterApiService.NewGetProfileOptions(profilesID)
+				profileID := "testString"
+				getProfileOptionsModel := securityAndComplianceCenterApiService.NewGetProfileOptions(profileID)
 				getProfileOptionsModel.SetProfileID("testString")
 				getProfileOptionsModel.SetXCorrelationID("testString")
 				getProfileOptionsModel.SetXRequestID("testString")
@@ -13964,8 +13964,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewListAttachmentsOptions successfully`, func() {
 				// Construct an instance of the ListAttachmentsOptions model
-				profilesID := "testString"
-				listAttachmentsOptionsModel := securityAndComplianceCenterApiService.NewListAttachmentsOptions(profilesID)
+				profileID := "testString"
+				listAttachmentsOptionsModel := securityAndComplianceCenterApiService.NewListAttachmentsOptions(profileID)
 				listAttachmentsOptionsModel.SetProfileID("testString")
 				listAttachmentsOptionsModel.SetXCorrelationID("testString")
 				listAttachmentsOptionsModel.SetXRequestID("testString")
@@ -14344,8 +14344,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceProfileAttachmentOptions model
 				attachmentID := "testString"
-				profilesID := "testString"
-				replaceProfileAttachmentOptionsModel := securityAndComplianceCenterApiService.NewReplaceProfileAttachmentOptions(attachmentID, profilesID)
+				profileID := "testString"
+				replaceProfileAttachmentOptionsModel := securityAndComplianceCenterApiService.NewReplaceProfileAttachmentOptions(attachmentID, profileID)
 				replaceProfileAttachmentOptionsModel.SetAttachmentID("testString")
 				replaceProfileAttachmentOptionsModel.SetProfileID("testString")
 				replaceProfileAttachmentOptionsModel.SetID("testString")
@@ -14418,13 +14418,13 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(defaultParametersPrototypeModel.ParameterType).To(Equal(core.StringPtr("numeric")))
 
 				// Construct an instance of the ReplaceProfileOptions model
-				profilesID := "testString"
+				profileID := "testString"
 				replaceProfileOptionsProfileName := "test_profile1"
 				replaceProfileOptionsProfileDescription := "test_description1"
 				replaceProfileOptionsProfileType := "custom"
 				replaceProfileOptionsControls := []securityandcompliancecenterapiv3.ProfileControlsPrototype{}
 				replaceProfileOptionsDefaultParameters := []securityandcompliancecenterapiv3.DefaultParametersPrototype{}
-				replaceProfileOptionsModel := securityAndComplianceCenterApiService.NewReplaceProfileOptions(profilesID, replaceProfileOptionsProfileName, replaceProfileOptionsProfileDescription, replaceProfileOptionsProfileType, replaceProfileOptionsControls, replaceProfileOptionsDefaultParameters)
+				replaceProfileOptionsModel := securityAndComplianceCenterApiService.NewReplaceProfileOptions(profileID, replaceProfileOptionsProfileName, replaceProfileOptionsProfileDescription, replaceProfileOptionsProfileType, replaceProfileOptionsControls, replaceProfileOptionsDefaultParameters)
 				replaceProfileOptionsModel.SetProfileID("testString")
 				replaceProfileOptionsModel.SetProfileName("test_profile1")
 				replaceProfileOptionsModel.SetProfileDescription("test_description1")

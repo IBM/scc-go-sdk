@@ -66,8 +66,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"SECURITY_AND_COMPLIANCE_CENTER_API_URL":       "https://securityandcompliancecenterapiv3/api",
-				"SECURITY_AND_COMPLIANCE_CENTER_API_AUTH_TYPE": "noauth",
+				"SECURITY_AND_COMPLIANCE_CENTER_API_URL":            "https://securityandcompliancecenterapiv3/api",
+				"SECURITY_AND_COMPLIANCE_CENTER_API_AUTH_TYPE":      "noauth",
+				"SECURITY_AND_COMPLIANCE_CENTER_API_IAM_PROFILE_ID": "IAM_PROFILE_ID",
 			}
 
 			// Figure out why these tests would fail sporadically

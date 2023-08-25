@@ -1754,7 +1754,7 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) DeletePr
 
 	pathParamsMap := map[string]string{
 		"attachment_id": *deleteProfileAttachmentOptions.AttachmentID,
-		"profile_id":   *deleteProfileAttachmentOptions.ProfileID,
+		"profile_id":    *deleteProfileAttachmentOptions.ProfileID,
 	}
 
 	builder := core.NewRequestBuilder(core.DELETE)
@@ -1823,7 +1823,7 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetProfi
 
 	pathParamsMap := map[string]string{
 		"attachment_id": *getProfileAttachmentOptions.AttachmentID,
-		"profile_id":   *getProfileAttachmentOptions.ProfileID,
+		"profile_id":    *getProfileAttachmentOptions.ProfileID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
@@ -1892,7 +1892,7 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ReplaceP
 
 	pathParamsMap := map[string]string{
 		"attachment_id": *replaceProfileAttachmentOptions.AttachmentID,
-		"profile_id":   *replaceProfileAttachmentOptions.ProfileID,
+		"profile_id":    *replaceProfileAttachmentOptions.ProfileID,
 	}
 
 	builder := core.NewRequestBuilder(core.PUT)
@@ -4981,7 +4981,7 @@ type CreateAttachmentOptions struct {
 // NewCreateAttachmentOptions : Instantiate CreateAttachmentOptions
 func (*SecurityAndComplianceCenterApiV3) NewCreateAttachmentOptions(profileID string, attachments []AttachmentsPrototype) *CreateAttachmentOptions {
 	return &CreateAttachmentOptions{
-		ProfileID:  core.StringPtr(profileID),
+		ProfileID:   core.StringPtr(profileID),
 		Attachments: attachments,
 	}
 }
@@ -5657,7 +5657,7 @@ type DeleteProfileAttachmentOptions struct {
 func (*SecurityAndComplianceCenterApiV3) NewDeleteProfileAttachmentOptions(attachmentID string, profilesID string) *DeleteProfileAttachmentOptions {
 	return &DeleteProfileAttachmentOptions{
 		AttachmentID: core.StringPtr(attachmentID),
-		ProfileID:   core.StringPtr(profilesID),
+		ProfileID:    core.StringPtr(profilesID),
 	}
 }
 
@@ -6240,7 +6240,7 @@ type GetProfileAttachmentOptions struct {
 func (*SecurityAndComplianceCenterApiV3) NewGetProfileAttachmentOptions(attachmentID string, profilesID string) *GetProfileAttachmentOptions {
 	return &GetProfileAttachmentOptions{
 		AttachmentID: core.StringPtr(attachmentID),
-		ProfileID:   core.StringPtr(profilesID),
+		ProfileID:    core.StringPtr(profilesID),
 	}
 }
 
@@ -9253,7 +9253,7 @@ const (
 func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileAttachmentOptions(attachmentID string, profilesID string) *ReplaceProfileAttachmentOptions {
 	return &ReplaceProfileAttachmentOptions{
 		AttachmentID: core.StringPtr(attachmentID),
-		ProfileID:   core.StringPtr(profilesID),
+		ProfileID:    core.StringPtr(profilesID),
 	}
 }
 
@@ -9427,7 +9427,7 @@ const (
 // NewReplaceProfileOptions : Instantiate ReplaceProfileOptions
 func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileOptions(profilesID string, profileName string, profileDescription string, profileType string, controls []ProfileControlsPrototype, defaultParameters []DefaultParametersPrototype) *ReplaceProfileOptions {
 	return &ReplaceProfileOptions{
-		ProfileID:         core.StringPtr(profilesID),
+		ProfileID:          core.StringPtr(profilesID),
 		ProfileName:        core.StringPtr(profileName),
 		ProfileDescription: core.StringPtr(profileDescription),
 		ProfileType:        core.StringPtr(profileType),

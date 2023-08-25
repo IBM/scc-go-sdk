@@ -6221,7 +6221,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listAttachmentsOptionsModel := &securityandcompliancecenterapiv3.ListAttachmentsOptions{
-					ProfileID:     core.StringPtr("testString"),
+					ProfileID:      core.StringPtr("testString"),
 					XCorrelationID: core.StringPtr("testString"),
 					XRequestID:     core.StringPtr("testString"),
 					Limit:          core.Int64Ptr(int64(10)),
@@ -6249,7 +6249,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listAttachmentsOptionsModel := &securityandcompliancecenterapiv3.ListAttachmentsOptions{
-					ProfileID:     core.StringPtr("testString"),
+					ProfileID:      core.StringPtr("testString"),
 					XCorrelationID: core.StringPtr("testString"),
 					XRequestID:     core.StringPtr("testString"),
 					Limit:          core.Int64Ptr(int64(10)),

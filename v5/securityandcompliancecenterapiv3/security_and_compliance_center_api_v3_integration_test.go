@@ -141,7 +141,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			Expect(securityAndComplianceCenterApiService.Service.Options.URL).To(Equal(serviceURL))
 
 			core.SetLogger(core.NewLogger(core.LevelDebug, log.New(GinkgoWriter, "", log.LstdFlags), log.New(GinkgoWriter, "", log.LstdFlags)))
-			securityAndComplianceCenterApiService.EnableRetries(4, 30*time.Second)
+			securityAndComplianceCenterApiService.EnableRetries(3, 5*time.Second)
 		})
 	})
 
@@ -687,7 +687,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 		})
 		It(`GetProfile(getProfileOptions *GetProfileOptions)`, func() {
 			getProfileOptions := &securityandcompliancecenterapiv3.GetProfileOptions{
-				ProfilesID:     &profileIdLink,
+				ProfileID:      &profileIdLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
 			}
@@ -719,7 +719,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			}
 
 			replaceProfileOptions := &securityandcompliancecenterapiv3.ReplaceProfileOptions{
-				ProfilesID:         &profileIdLink,
+				ProfileID:          &profileIdLink,
 				ProfileName:        core.StringPtr("test_profile1"),
 				ProfileDescription: core.StringPtr("test_description1"),
 				ProfileType:        core.StringPtr("custom"),
@@ -868,9 +868,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			}
 
 			createAttachmentOptions := &securityandcompliancecenterapiv3.CreateAttachmentOptions{
-				ProfilesID:     &profileIdLink,
-				Attachments:    []securityandcompliancecenterapiv3.AttachmentsPrototype{*attachmentsPrototypeModel},
 				ProfileID:      &profileIdLink,
+				Attachments:    []securityandcompliancecenterapiv3.AttachmentsPrototype{*attachmentsPrototypeModel},
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
 			}
@@ -891,7 +890,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 		})
 		It(`ListAttachments(listAttachmentsOptions *ListAttachmentsOptions) with pagination`, func() {
 			listAttachmentsOptions := &securityandcompliancecenterapiv3.ListAttachmentsOptions{
-				ProfilesID:     &profileIdLink,
+				ProfileID:      &profileIdLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
 				Limit:          core.Int64Ptr(int64(10)),
@@ -920,7 +919,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 		})
 		It(`ListAttachments(listAttachmentsOptions *ListAttachmentsOptions) using AttachmentsPager`, func() {
 			listAttachmentsOptions := &securityandcompliancecenterapiv3.ListAttachmentsOptions{
-				ProfilesID:     &profileIdLink,
+				ProfileID:      &profileIdLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
 				Limit:          core.Int64Ptr(int64(10)),
@@ -960,7 +959,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 		It(`GetProfileAttachment(getProfileAttachmentOptions *GetProfileAttachmentOptions)`, func() {
 			getProfileAttachmentOptions := &securityandcompliancecenterapiv3.GetProfileAttachmentOptions{
 				AttachmentID:   &attachmentIdLink,
-				ProfilesID:     &profileIdLink,
+				ProfileID:      &profileIdLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
 			}
@@ -1018,9 +1017,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 
 			replaceProfileAttachmentOptions := &securityandcompliancecenterapiv3.ReplaceProfileAttachmentOptions{
 				AttachmentID:         &attachmentIdLink,
-				ProfilesID:           &profileIdLink,
-				ID:                   core.StringPtr("testString"),
 				ProfileID:            &profileIdLink,
+				ID:                   core.StringPtr("testString"),
 				AccountID:            core.StringPtr(accountID),
 				InstanceID:           core.StringPtr(instanceID),
 				Scope:                []securityandcompliancecenterapiv3.MultiCloudScope{*multiCloudScopeModel},
@@ -1624,7 +1622,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 		It(`DeleteProfileAttachment(deleteProfileAttachmentOptions *DeleteProfileAttachmentOptions)`, func() {
 			deleteProfileAttachmentOptions := &securityandcompliancecenterapiv3.DeleteProfileAttachmentOptions{
 				AttachmentID:   &attachmentIdLink,
-				ProfilesID:     &profileIdLink,
+				ProfileID:      &profileIdLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
 			}
@@ -1642,7 +1640,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 		})
 		It(`DeleteCustomProfile(deleteCustomProfileOptions *DeleteCustomProfileOptions)`, func() {
 			deleteCustomProfileOptions := &securityandcompliancecenterapiv3.DeleteCustomProfileOptions{
-				ProfilesID:     &profileIdLink,
+				ProfileID:      &profileIdLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
 			}

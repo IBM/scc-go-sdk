@@ -3597,7 +3597,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteCustomProfileOptions model
 				deleteCustomProfileOptionsModel := new(securityandcompliancecenterapiv3.DeleteCustomProfileOptions)
-				deleteCustomProfileOptionsModel.ProfilesID = core.StringPtr("testString")
+				deleteCustomProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.XRequestID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3654,7 +3654,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteCustomProfileOptions model
 				deleteCustomProfileOptionsModel := new(securityandcompliancecenterapiv3.DeleteCustomProfileOptions)
-				deleteCustomProfileOptionsModel.ProfilesID = core.StringPtr("testString")
+				deleteCustomProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.XRequestID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3719,7 +3719,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteCustomProfileOptions model
 				deleteCustomProfileOptionsModel := new(securityandcompliancecenterapiv3.DeleteCustomProfileOptions)
-				deleteCustomProfileOptionsModel.ProfilesID = core.StringPtr("testString")
+				deleteCustomProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.XRequestID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3741,7 +3741,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteCustomProfileOptions model
 				deleteCustomProfileOptionsModel := new(securityandcompliancecenterapiv3.DeleteCustomProfileOptions)
-				deleteCustomProfileOptionsModel.ProfilesID = core.StringPtr("testString")
+				deleteCustomProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.XRequestID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3784,7 +3784,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteCustomProfileOptions model
 				deleteCustomProfileOptionsModel := new(securityandcompliancecenterapiv3.DeleteCustomProfileOptions)
-				deleteCustomProfileOptionsModel.ProfilesID = core.StringPtr("testString")
+				deleteCustomProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.XRequestID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3831,7 +3831,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProfileOptions model
 				getProfileOptionsModel := new(securityandcompliancecenterapiv3.GetProfileOptions)
-				getProfileOptionsModel.ProfilesID = core.StringPtr("testString")
+				getProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				getProfileOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProfileOptionsModel.XRequestID = core.StringPtr("testString")
 				getProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3888,7 +3888,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProfileOptions model
 				getProfileOptionsModel := new(securityandcompliancecenterapiv3.GetProfileOptions)
-				getProfileOptionsModel.ProfilesID = core.StringPtr("testString")
+				getProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				getProfileOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProfileOptionsModel.XRequestID = core.StringPtr("testString")
 				getProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3953,7 +3953,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProfileOptions model
 				getProfileOptionsModel := new(securityandcompliancecenterapiv3.GetProfileOptions)
-				getProfileOptionsModel.ProfilesID = core.StringPtr("testString")
+				getProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				getProfileOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProfileOptionsModel.XRequestID = core.StringPtr("testString")
 				getProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3975,7 +3975,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProfileOptions model
 				getProfileOptionsModel := new(securityandcompliancecenterapiv3.GetProfileOptions)
-				getProfileOptionsModel.ProfilesID = core.StringPtr("testString")
+				getProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				getProfileOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProfileOptionsModel.XRequestID = core.StringPtr("testString")
 				getProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -4018,7 +4018,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProfileOptions model
 				getProfileOptionsModel := new(securityandcompliancecenterapiv3.GetProfileOptions)
-				getProfileOptionsModel.ProfilesID = core.StringPtr("testString")
+				getProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				getProfileOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProfileOptionsModel.XRequestID = core.StringPtr("testString")
 				getProfileOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -4079,7 +4079,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceProfileOptions model
 				replaceProfileOptionsModel := new(securityandcompliancecenterapiv3.ReplaceProfileOptions)
-				replaceProfileOptionsModel.ProfilesID = core.StringPtr("testString")
+				replaceProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileOptionsModel.ProfileName = core.StringPtr("test_profile1")
 				replaceProfileOptionsModel.ProfileDescription = core.StringPtr("test_description1")
 				replaceProfileOptionsModel.ProfileType = core.StringPtr("custom")
@@ -4171,7 +4171,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceProfileOptions model
 				replaceProfileOptionsModel := new(securityandcompliancecenterapiv3.ReplaceProfileOptions)
-				replaceProfileOptionsModel.ProfilesID = core.StringPtr("testString")
+				replaceProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileOptionsModel.ProfileName = core.StringPtr("test_profile1")
 				replaceProfileOptionsModel.ProfileDescription = core.StringPtr("test_description1")
 				replaceProfileOptionsModel.ProfileType = core.StringPtr("custom")
@@ -4271,7 +4271,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceProfileOptions model
 				replaceProfileOptionsModel := new(securityandcompliancecenterapiv3.ReplaceProfileOptions)
-				replaceProfileOptionsModel.ProfilesID = core.StringPtr("testString")
+				replaceProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileOptionsModel.ProfileName = core.StringPtr("test_profile1")
 				replaceProfileOptionsModel.ProfileDescription = core.StringPtr("test_description1")
 				replaceProfileOptionsModel.ProfileType = core.StringPtr("custom")
@@ -4312,7 +4312,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceProfileOptions model
 				replaceProfileOptionsModel := new(securityandcompliancecenterapiv3.ReplaceProfileOptions)
-				replaceProfileOptionsModel.ProfilesID = core.StringPtr("testString")
+				replaceProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileOptionsModel.ProfileName = core.StringPtr("test_profile1")
 				replaceProfileOptionsModel.ProfileDescription = core.StringPtr("test_description1")
 				replaceProfileOptionsModel.ProfileType = core.StringPtr("custom")
@@ -4374,7 +4374,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceProfileOptions model
 				replaceProfileOptionsModel := new(securityandcompliancecenterapiv3.ReplaceProfileOptions)
-				replaceProfileOptionsModel.ProfilesID = core.StringPtr("testString")
+				replaceProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileOptionsModel.ProfileName = core.StringPtr("test_profile1")
 				replaceProfileOptionsModel.ProfileDescription = core.StringPtr("test_description1")
 				replaceProfileOptionsModel.ProfileType = core.StringPtr("custom")
@@ -5952,7 +5952,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListAttachmentsOptions model
 				listAttachmentsOptionsModel := new(securityandcompliancecenterapiv3.ListAttachmentsOptions)
-				listAttachmentsOptionsModel.ProfilesID = core.StringPtr("testString")
+				listAttachmentsOptionsModel.ProfileID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.XRequestID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.Limit = core.Int64Ptr(int64(10))
@@ -6013,7 +6013,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListAttachmentsOptions model
 				listAttachmentsOptionsModel := new(securityandcompliancecenterapiv3.ListAttachmentsOptions)
-				listAttachmentsOptionsModel.ProfilesID = core.StringPtr("testString")
+				listAttachmentsOptionsModel.ProfileID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.XRequestID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.Limit = core.Int64Ptr(int64(10))
@@ -6082,7 +6082,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListAttachmentsOptions model
 				listAttachmentsOptionsModel := new(securityandcompliancecenterapiv3.ListAttachmentsOptions)
-				listAttachmentsOptionsModel.ProfilesID = core.StringPtr("testString")
+				listAttachmentsOptionsModel.ProfileID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.XRequestID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.Limit = core.Int64Ptr(int64(10))
@@ -6106,7 +6106,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListAttachmentsOptions model
 				listAttachmentsOptionsModel := new(securityandcompliancecenterapiv3.ListAttachmentsOptions)
-				listAttachmentsOptionsModel.ProfilesID = core.StringPtr("testString")
+				listAttachmentsOptionsModel.ProfileID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.XRequestID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.Limit = core.Int64Ptr(int64(10))
@@ -6151,7 +6151,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListAttachmentsOptions model
 				listAttachmentsOptionsModel := new(securityandcompliancecenterapiv3.ListAttachmentsOptions)
-				listAttachmentsOptionsModel.ProfilesID = core.StringPtr("testString")
+				listAttachmentsOptionsModel.ProfileID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.XRequestID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.Limit = core.Int64Ptr(int64(10))
@@ -6221,7 +6221,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listAttachmentsOptionsModel := &securityandcompliancecenterapiv3.ListAttachmentsOptions{
-					ProfilesID:     core.StringPtr("testString"),
+					ProfileID:     core.StringPtr("testString"),
 					XCorrelationID: core.StringPtr("testString"),
 					XRequestID:     core.StringPtr("testString"),
 					Limit:          core.Int64Ptr(int64(10)),
@@ -6249,7 +6249,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listAttachmentsOptionsModel := &securityandcompliancecenterapiv3.ListAttachmentsOptions{
-					ProfilesID:     core.StringPtr("testString"),
+					ProfileID:     core.StringPtr("testString"),
 					XCorrelationID: core.StringPtr("testString"),
 					XRequestID:     core.StringPtr("testString"),
 					Limit:          core.Int64Ptr(int64(10)),
@@ -6335,7 +6335,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateAttachmentOptions model
 				createAttachmentOptionsModel := new(securityandcompliancecenterapiv3.CreateAttachmentOptions)
-				createAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
+				createAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				createAttachmentOptionsModel.Attachments = []securityandcompliancecenterapiv3.AttachmentsPrototype{*attachmentsPrototypeModel}
 				createAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				createAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -6450,7 +6450,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateAttachmentOptions model
 				createAttachmentOptionsModel := new(securityandcompliancecenterapiv3.CreateAttachmentOptions)
-				createAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
+				createAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				createAttachmentOptionsModel.Attachments = []securityandcompliancecenterapiv3.AttachmentsPrototype{*attachmentsPrototypeModel}
 				createAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				createAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -6573,7 +6573,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateAttachmentOptions model
 				createAttachmentOptionsModel := new(securityandcompliancecenterapiv3.CreateAttachmentOptions)
-				createAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
+				createAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				createAttachmentOptionsModel.Attachments = []securityandcompliancecenterapiv3.AttachmentsPrototype{*attachmentsPrototypeModel}
 				createAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				createAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -6637,7 +6637,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateAttachmentOptions model
 				createAttachmentOptionsModel := new(securityandcompliancecenterapiv3.CreateAttachmentOptions)
-				createAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
+				createAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				createAttachmentOptionsModel.Attachments = []securityandcompliancecenterapiv3.AttachmentsPrototype{*attachmentsPrototypeModel}
 				createAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				createAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -6722,7 +6722,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateAttachmentOptions model
 				createAttachmentOptionsModel := new(securityandcompliancecenterapiv3.CreateAttachmentOptions)
-				createAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
+				createAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				createAttachmentOptionsModel.Attachments = []securityandcompliancecenterapiv3.AttachmentsPrototype{*attachmentsPrototypeModel}
 				createAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				createAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -6772,7 +6772,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				// Construct an instance of the DeleteProfileAttachmentOptions model
 				deleteProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.DeleteProfileAttachmentOptions)
 				deleteProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
-				deleteProfileAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
+				deleteProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.XRequestID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -6830,7 +6830,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				// Construct an instance of the DeleteProfileAttachmentOptions model
 				deleteProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.DeleteProfileAttachmentOptions)
 				deleteProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
-				deleteProfileAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
+				deleteProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.XRequestID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -6896,7 +6896,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				// Construct an instance of the DeleteProfileAttachmentOptions model
 				deleteProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.DeleteProfileAttachmentOptions)
 				deleteProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
-				deleteProfileAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
+				deleteProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.XRequestID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -6919,7 +6919,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				// Construct an instance of the DeleteProfileAttachmentOptions model
 				deleteProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.DeleteProfileAttachmentOptions)
 				deleteProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
-				deleteProfileAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
+				deleteProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.XRequestID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -6963,7 +6963,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				// Construct an instance of the DeleteProfileAttachmentOptions model
 				deleteProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.DeleteProfileAttachmentOptions)
 				deleteProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
-				deleteProfileAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
+				deleteProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.XRequestID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -7011,7 +7011,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				// Construct an instance of the GetProfileAttachmentOptions model
 				getProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.GetProfileAttachmentOptions)
 				getProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
-				getProfileAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
+				getProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.XRequestID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -7069,7 +7069,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				// Construct an instance of the GetProfileAttachmentOptions model
 				getProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.GetProfileAttachmentOptions)
 				getProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
-				getProfileAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
+				getProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.XRequestID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -7135,7 +7135,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				// Construct an instance of the GetProfileAttachmentOptions model
 				getProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.GetProfileAttachmentOptions)
 				getProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
-				getProfileAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
+				getProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.XRequestID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -7158,7 +7158,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				// Construct an instance of the GetProfileAttachmentOptions model
 				getProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.GetProfileAttachmentOptions)
 				getProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
-				getProfileAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
+				getProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.XRequestID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -7202,7 +7202,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				// Construct an instance of the GetProfileAttachmentOptions model
 				getProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.GetProfileAttachmentOptions)
 				getProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
-				getProfileAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
+				getProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.XRequestID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -7285,7 +7285,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				// Construct an instance of the ReplaceProfileAttachmentOptions model
 				replaceProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.ReplaceProfileAttachmentOptions)
 				replaceProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
-				replaceProfileAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
+				replaceProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.AccountID = core.StringPtr("testString")
@@ -7411,7 +7411,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				// Construct an instance of the ReplaceProfileAttachmentOptions model
 				replaceProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.ReplaceProfileAttachmentOptions)
 				replaceProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
-				replaceProfileAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
+				replaceProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.AccountID = core.StringPtr("testString")
@@ -7545,7 +7545,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				// Construct an instance of the ReplaceProfileAttachmentOptions model
 				replaceProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.ReplaceProfileAttachmentOptions)
 				replaceProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
-				replaceProfileAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
+				replaceProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.AccountID = core.StringPtr("testString")
@@ -7620,7 +7620,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				// Construct an instance of the ReplaceProfileAttachmentOptions model
 				replaceProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.ReplaceProfileAttachmentOptions)
 				replaceProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
-				replaceProfileAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
+				replaceProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.AccountID = core.StringPtr("testString")
@@ -7716,7 +7716,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				// Construct an instance of the ReplaceProfileAttachmentOptions model
 				replaceProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.ReplaceProfileAttachmentOptions)
 				replaceProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
-				replaceProfileAttachmentOptionsModel.ProfilesID = core.StringPtr("testString")
+				replaceProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.AccountID = core.StringPtr("testString")
@@ -13334,14 +13334,14 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				profilesID := "testString"
 				createAttachmentOptionsAttachments := []securityandcompliancecenterapiv3.AttachmentsPrototype{}
 				createAttachmentOptionsModel := securityAndComplianceCenterApiService.NewCreateAttachmentOptions(profilesID, createAttachmentOptionsAttachments)
-				createAttachmentOptionsModel.SetProfilesID("testString")
+				createAttachmentOptionsModel.SetProfileID("testString")
 				createAttachmentOptionsModel.SetAttachments([]securityandcompliancecenterapiv3.AttachmentsPrototype{*attachmentsPrototypeModel})
 				createAttachmentOptionsModel.SetProfileID("testString")
 				createAttachmentOptionsModel.SetXCorrelationID("testString")
 				createAttachmentOptionsModel.SetXRequestID("testString")
 				createAttachmentOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(createAttachmentOptionsModel).ToNot(BeNil())
-				Expect(createAttachmentOptionsModel.ProfilesID).To(Equal(core.StringPtr("testString")))
+				Expect(createAttachmentOptionsModel.ProfileID).To(Equal(core.StringPtr("testString")))
 				Expect(createAttachmentOptionsModel.Attachments).To(Equal([]securityandcompliancecenterapiv3.AttachmentsPrototype{*attachmentsPrototypeModel}))
 				Expect(createAttachmentOptionsModel.ProfileID).To(Equal(core.StringPtr("testString")))
 				Expect(createAttachmentOptionsModel.XCorrelationID).To(Equal(core.StringPtr("testString")))
@@ -13647,12 +13647,12 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				// Construct an instance of the DeleteCustomProfileOptions model
 				profilesID := "testString"
 				deleteCustomProfileOptionsModel := securityAndComplianceCenterApiService.NewDeleteCustomProfileOptions(profilesID)
-				deleteCustomProfileOptionsModel.SetProfilesID("testString")
+				deleteCustomProfileOptionsModel.SetProfileID("testString")
 				deleteCustomProfileOptionsModel.SetXCorrelationID("testString")
 				deleteCustomProfileOptionsModel.SetXRequestID("testString")
 				deleteCustomProfileOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(deleteCustomProfileOptionsModel).ToNot(BeNil())
-				Expect(deleteCustomProfileOptionsModel.ProfilesID).To(Equal(core.StringPtr("testString")))
+				Expect(deleteCustomProfileOptionsModel.ProfileID).To(Equal(core.StringPtr("testString")))
 				Expect(deleteCustomProfileOptionsModel.XCorrelationID).To(Equal(core.StringPtr("testString")))
 				Expect(deleteCustomProfileOptionsModel.XRequestID).To(Equal(core.StringPtr("testString")))
 				Expect(deleteCustomProfileOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
@@ -13663,13 +13663,13 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				profilesID := "testString"
 				deleteProfileAttachmentOptionsModel := securityAndComplianceCenterApiService.NewDeleteProfileAttachmentOptions(attachmentID, profilesID)
 				deleteProfileAttachmentOptionsModel.SetAttachmentID("testString")
-				deleteProfileAttachmentOptionsModel.SetProfilesID("testString")
+				deleteProfileAttachmentOptionsModel.SetProfileID("testString")
 				deleteProfileAttachmentOptionsModel.SetXCorrelationID("testString")
 				deleteProfileAttachmentOptionsModel.SetXRequestID("testString")
 				deleteProfileAttachmentOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(deleteProfileAttachmentOptionsModel).ToNot(BeNil())
 				Expect(deleteProfileAttachmentOptionsModel.AttachmentID).To(Equal(core.StringPtr("testString")))
-				Expect(deleteProfileAttachmentOptionsModel.ProfilesID).To(Equal(core.StringPtr("testString")))
+				Expect(deleteProfileAttachmentOptionsModel.ProfileID).To(Equal(core.StringPtr("testString")))
 				Expect(deleteProfileAttachmentOptionsModel.XCorrelationID).To(Equal(core.StringPtr("testString")))
 				Expect(deleteProfileAttachmentOptionsModel.XRequestID).To(Equal(core.StringPtr("testString")))
 				Expect(deleteProfileAttachmentOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
@@ -13738,13 +13738,13 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				profilesID := "testString"
 				getProfileAttachmentOptionsModel := securityAndComplianceCenterApiService.NewGetProfileAttachmentOptions(attachmentID, profilesID)
 				getProfileAttachmentOptionsModel.SetAttachmentID("testString")
-				getProfileAttachmentOptionsModel.SetProfilesID("testString")
+				getProfileAttachmentOptionsModel.SetProfileID("testString")
 				getProfileAttachmentOptionsModel.SetXCorrelationID("testString")
 				getProfileAttachmentOptionsModel.SetXRequestID("testString")
 				getProfileAttachmentOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(getProfileAttachmentOptionsModel).ToNot(BeNil())
 				Expect(getProfileAttachmentOptionsModel.AttachmentID).To(Equal(core.StringPtr("testString")))
-				Expect(getProfileAttachmentOptionsModel.ProfilesID).To(Equal(core.StringPtr("testString")))
+				Expect(getProfileAttachmentOptionsModel.ProfileID).To(Equal(core.StringPtr("testString")))
 				Expect(getProfileAttachmentOptionsModel.XCorrelationID).To(Equal(core.StringPtr("testString")))
 				Expect(getProfileAttachmentOptionsModel.XRequestID).To(Equal(core.StringPtr("testString")))
 				Expect(getProfileAttachmentOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
@@ -13753,12 +13753,12 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				// Construct an instance of the GetProfileOptions model
 				profilesID := "testString"
 				getProfileOptionsModel := securityAndComplianceCenterApiService.NewGetProfileOptions(profilesID)
-				getProfileOptionsModel.SetProfilesID("testString")
+				getProfileOptionsModel.SetProfileID("testString")
 				getProfileOptionsModel.SetXCorrelationID("testString")
 				getProfileOptionsModel.SetXRequestID("testString")
 				getProfileOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(getProfileOptionsModel).ToNot(BeNil())
-				Expect(getProfileOptionsModel.ProfilesID).To(Equal(core.StringPtr("testString")))
+				Expect(getProfileOptionsModel.ProfileID).To(Equal(core.StringPtr("testString")))
 				Expect(getProfileOptionsModel.XCorrelationID).To(Equal(core.StringPtr("testString")))
 				Expect(getProfileOptionsModel.XRequestID).To(Equal(core.StringPtr("testString")))
 				Expect(getProfileOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
@@ -13966,14 +13966,14 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				// Construct an instance of the ListAttachmentsOptions model
 				profilesID := "testString"
 				listAttachmentsOptionsModel := securityAndComplianceCenterApiService.NewListAttachmentsOptions(profilesID)
-				listAttachmentsOptionsModel.SetProfilesID("testString")
+				listAttachmentsOptionsModel.SetProfileID("testString")
 				listAttachmentsOptionsModel.SetXCorrelationID("testString")
 				listAttachmentsOptionsModel.SetXRequestID("testString")
 				listAttachmentsOptionsModel.SetLimit(int64(10))
 				listAttachmentsOptionsModel.SetStart("testString")
 				listAttachmentsOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(listAttachmentsOptionsModel).ToNot(BeNil())
-				Expect(listAttachmentsOptionsModel.ProfilesID).To(Equal(core.StringPtr("testString")))
+				Expect(listAttachmentsOptionsModel.ProfileID).To(Equal(core.StringPtr("testString")))
 				Expect(listAttachmentsOptionsModel.XCorrelationID).To(Equal(core.StringPtr("testString")))
 				Expect(listAttachmentsOptionsModel.XRequestID).To(Equal(core.StringPtr("testString")))
 				Expect(listAttachmentsOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(10))))
@@ -14347,7 +14347,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				profilesID := "testString"
 				replaceProfileAttachmentOptionsModel := securityAndComplianceCenterApiService.NewReplaceProfileAttachmentOptions(attachmentID, profilesID)
 				replaceProfileAttachmentOptionsModel.SetAttachmentID("testString")
-				replaceProfileAttachmentOptionsModel.SetProfilesID("testString")
+				replaceProfileAttachmentOptionsModel.SetProfileID("testString")
 				replaceProfileAttachmentOptionsModel.SetID("testString")
 				replaceProfileAttachmentOptionsModel.SetProfileID("testString")
 				replaceProfileAttachmentOptionsModel.SetAccountID("testString")
@@ -14370,7 +14370,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				replaceProfileAttachmentOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(replaceProfileAttachmentOptionsModel).ToNot(BeNil())
 				Expect(replaceProfileAttachmentOptionsModel.AttachmentID).To(Equal(core.StringPtr("testString")))
-				Expect(replaceProfileAttachmentOptionsModel.ProfilesID).To(Equal(core.StringPtr("testString")))
+				Expect(replaceProfileAttachmentOptionsModel.ProfileID).To(Equal(core.StringPtr("testString")))
 				Expect(replaceProfileAttachmentOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(replaceProfileAttachmentOptionsModel.ProfileID).To(Equal(core.StringPtr("testString")))
 				Expect(replaceProfileAttachmentOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
@@ -14425,7 +14425,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				replaceProfileOptionsControls := []securityandcompliancecenterapiv3.ProfileControlsPrototype{}
 				replaceProfileOptionsDefaultParameters := []securityandcompliancecenterapiv3.DefaultParametersPrototype{}
 				replaceProfileOptionsModel := securityAndComplianceCenterApiService.NewReplaceProfileOptions(profilesID, replaceProfileOptionsProfileName, replaceProfileOptionsProfileDescription, replaceProfileOptionsProfileType, replaceProfileOptionsControls, replaceProfileOptionsDefaultParameters)
-				replaceProfileOptionsModel.SetProfilesID("testString")
+				replaceProfileOptionsModel.SetProfileID("testString")
 				replaceProfileOptionsModel.SetProfileName("test_profile1")
 				replaceProfileOptionsModel.SetProfileDescription("test_description1")
 				replaceProfileOptionsModel.SetProfileType("custom")
@@ -14435,7 +14435,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				replaceProfileOptionsModel.SetXRequestID("testString")
 				replaceProfileOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(replaceProfileOptionsModel).ToNot(BeNil())
-				Expect(replaceProfileOptionsModel.ProfilesID).To(Equal(core.StringPtr("testString")))
+				Expect(replaceProfileOptionsModel.ProfileID).To(Equal(core.StringPtr("testString")))
 				Expect(replaceProfileOptionsModel.ProfileName).To(Equal(core.StringPtr("test_profile1")))
 				Expect(replaceProfileOptionsModel.ProfileDescription).To(Equal(core.StringPtr("test_description1")))
 				Expect(replaceProfileOptionsModel.ProfileType).To(Equal(core.StringPtr("custom")))

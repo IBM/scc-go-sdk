@@ -826,7 +826,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			fmt.Println("\nListAttachments() result:")
 			// begin-list_attachments
 			listAttachmentsOptions := &securityandcompliancecenterapiv3.ListAttachmentsOptions{
-				ProfilesID:     &profileIdLink,
+				ProfileID:     &profileIdLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
 				Limit:          core.Int64Ptr(int64(10)),

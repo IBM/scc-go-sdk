@@ -47,6 +47,7 @@ jobs:
       - name: running integration tests
         env:
           SCC_ENV: ${{ secrets.SCC_ENV }}
+          SECURITY_AND_COMPLIANCE_CENTER_API_IAM_PROFILE_ID: ${{ secrets.SCC_IAM_PROFILE_ID }}
         run: build/testScript.sh
 
   release:

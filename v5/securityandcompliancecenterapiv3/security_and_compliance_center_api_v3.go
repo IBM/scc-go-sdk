@@ -986,13 +986,13 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) DeleteCu
 	}
 
 	pathParamsMap := map[string]string{
-		"profiles_id": *deleteCustomProfileOptions.ProfilesID,
+		"profile_id": *deleteCustomProfileOptions.ProfileID,
 	}
 
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profiles_id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1054,13 +1054,13 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetProfi
 	}
 
 	pathParamsMap := map[string]string{
-		"profiles_id": *getProfileOptions.ProfilesID,
+		"profile_id": *getProfileOptions.ProfileID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profiles_id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1123,13 +1123,13 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ReplaceP
 	}
 
 	pathParamsMap := map[string]string{
-		"profiles_id": *replaceProfileOptions.ProfilesID,
+		"profile_id": *replaceProfileOptions.ProfileID,
 	}
 
 	builder := core.NewRequestBuilder(core.PUT)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profiles_id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1597,13 +1597,13 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListAtta
 	}
 
 	pathParamsMap := map[string]string{
-		"profiles_id": *listAttachmentsOptions.ProfilesID,
+		"profile_id": *listAttachmentsOptions.ProfileID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profiles_id}/attachments`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}/attachments`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1672,13 +1672,13 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) CreateAt
 	}
 
 	pathParamsMap := map[string]string{
-		"profiles_id": *createAttachmentOptions.ProfilesID,
+		"profile_id": *createAttachmentOptions.ProfileID,
 	}
 
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profiles_id}/attachments`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}/attachments`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1754,13 +1754,13 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) DeletePr
 
 	pathParamsMap := map[string]string{
 		"attachment_id": *deleteProfileAttachmentOptions.AttachmentID,
-		"profiles_id":   *deleteProfileAttachmentOptions.ProfilesID,
+		"profile_id":    *deleteProfileAttachmentOptions.ProfileID,
 	}
 
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profiles_id}/attachments/{attachment_id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}/attachments/{attachment_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1823,13 +1823,13 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetProfi
 
 	pathParamsMap := map[string]string{
 		"attachment_id": *getProfileAttachmentOptions.AttachmentID,
-		"profiles_id":   *getProfileAttachmentOptions.ProfilesID,
+		"profile_id":    *getProfileAttachmentOptions.ProfileID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profiles_id}/attachments/{attachment_id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}/attachments/{attachment_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1892,13 +1892,13 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ReplaceP
 
 	pathParamsMap := map[string]string{
 		"attachment_id": *replaceProfileAttachmentOptions.AttachmentID,
-		"profiles_id":   *replaceProfileAttachmentOptions.ProfilesID,
+		"profile_id":    *replaceProfileAttachmentOptions.ProfileID,
 	}
 
 	builder := core.NewRequestBuilder(core.PUT)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profiles_id}/attachments/{attachment_id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}/attachments/{attachment_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -4959,13 +4959,10 @@ func UnmarshalControlsInControlLib(m map[string]json.RawMessage, result interfac
 // CreateAttachmentOptions : The CreateAttachment options.
 type CreateAttachmentOptions struct {
 	// The profile ID.
-	ProfilesID *string `json:"profiles_id" validate:"required,ne="`
+	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
 	// The array that displays all of the available attachments.
 	Attachments []AttachmentsPrototype `json:"attachments" validate:"required"`
-
-	// The ID of the profile that is specified in the attachment.
-	ProfileID *string `json:"profile_id,omitempty"`
 
 	// The supplied or generated value of this header is logged for a request and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
@@ -4982,28 +4979,22 @@ type CreateAttachmentOptions struct {
 }
 
 // NewCreateAttachmentOptions : Instantiate CreateAttachmentOptions
-func (*SecurityAndComplianceCenterApiV3) NewCreateAttachmentOptions(profilesID string, attachments []AttachmentsPrototype) *CreateAttachmentOptions {
+func (*SecurityAndComplianceCenterApiV3) NewCreateAttachmentOptions(profileID string, attachments []AttachmentsPrototype) *CreateAttachmentOptions {
 	return &CreateAttachmentOptions{
-		ProfilesID:  core.StringPtr(profilesID),
+		ProfileID:   core.StringPtr(profileID),
 		Attachments: attachments,
 	}
 }
 
-// SetProfilesID : Allow user to set ProfilesID
-func (_options *CreateAttachmentOptions) SetProfilesID(profilesID string) *CreateAttachmentOptions {
-	_options.ProfilesID = core.StringPtr(profilesID)
+// SetProfileID : Allow user to set ProfileID
+func (_options *CreateAttachmentOptions) SetProfileID(profileID string) *CreateAttachmentOptions {
+	_options.ProfileID = core.StringPtr(profileID)
 	return _options
 }
 
 // SetAttachments : Allow user to set Attachments
 func (_options *CreateAttachmentOptions) SetAttachments(attachments []AttachmentsPrototype) *CreateAttachmentOptions {
 	_options.Attachments = attachments
-	return _options
-}
-
-// SetProfileID : Allow user to set ProfileID
-func (_options *CreateAttachmentOptions) SetProfileID(profileID string) *CreateAttachmentOptions {
-	_options.ProfileID = core.StringPtr(profileID)
 	return _options
 }
 
@@ -5593,7 +5584,7 @@ func (options *DeleteCustomControlLibraryOptions) SetHeaders(param map[string]st
 // DeleteCustomProfileOptions : The DeleteCustomProfile options.
 type DeleteCustomProfileOptions struct {
 	// The profile ID.
-	ProfilesID *string `json:"profiles_id" validate:"required,ne="`
+	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
 	// The supplied or generated value of this header is logged for a request and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
@@ -5610,15 +5601,15 @@ type DeleteCustomProfileOptions struct {
 }
 
 // NewDeleteCustomProfileOptions : Instantiate DeleteCustomProfileOptions
-func (*SecurityAndComplianceCenterApiV3) NewDeleteCustomProfileOptions(profilesID string) *DeleteCustomProfileOptions {
+func (*SecurityAndComplianceCenterApiV3) NewDeleteCustomProfileOptions(profileID string) *DeleteCustomProfileOptions {
 	return &DeleteCustomProfileOptions{
-		ProfilesID: core.StringPtr(profilesID),
+		ProfileID: core.StringPtr(profileID),
 	}
 }
 
-// SetProfilesID : Allow user to set ProfilesID
-func (_options *DeleteCustomProfileOptions) SetProfilesID(profilesID string) *DeleteCustomProfileOptions {
-	_options.ProfilesID = core.StringPtr(profilesID)
+// SetProfileID : Allow user to set ProfileID
+func (_options *DeleteCustomProfileOptions) SetProfileID(profileID string) *DeleteCustomProfileOptions {
+	_options.ProfileID = core.StringPtr(profileID)
 	return _options
 }
 
@@ -5646,7 +5637,7 @@ type DeleteProfileAttachmentOptions struct {
 	AttachmentID *string `json:"attachment_id" validate:"required,ne="`
 
 	// The profile ID.
-	ProfilesID *string `json:"profiles_id" validate:"required,ne="`
+	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
 	// The supplied or generated value of this header is logged for a request and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
@@ -5663,10 +5654,10 @@ type DeleteProfileAttachmentOptions struct {
 }
 
 // NewDeleteProfileAttachmentOptions : Instantiate DeleteProfileAttachmentOptions
-func (*SecurityAndComplianceCenterApiV3) NewDeleteProfileAttachmentOptions(attachmentID string, profilesID string) *DeleteProfileAttachmentOptions {
+func (*SecurityAndComplianceCenterApiV3) NewDeleteProfileAttachmentOptions(attachmentID string, profileID string) *DeleteProfileAttachmentOptions {
 	return &DeleteProfileAttachmentOptions{
 		AttachmentID: core.StringPtr(attachmentID),
-		ProfilesID:   core.StringPtr(profilesID),
+		ProfileID:    core.StringPtr(profileID),
 	}
 }
 
@@ -5676,9 +5667,9 @@ func (_options *DeleteProfileAttachmentOptions) SetAttachmentID(attachmentID str
 	return _options
 }
 
-// SetProfilesID : Allow user to set ProfilesID
-func (_options *DeleteProfileAttachmentOptions) SetProfilesID(profilesID string) *DeleteProfileAttachmentOptions {
-	_options.ProfilesID = core.StringPtr(profilesID)
+// SetProfileID : Allow user to set ProfileID
+func (_options *DeleteProfileAttachmentOptions) SetProfileID(profileID string) *DeleteProfileAttachmentOptions {
+	_options.ProfileID = core.StringPtr(profileID)
 	return _options
 }
 
@@ -6229,7 +6220,7 @@ type GetProfileAttachmentOptions struct {
 	AttachmentID *string `json:"attachment_id" validate:"required,ne="`
 
 	// The profile ID.
-	ProfilesID *string `json:"profiles_id" validate:"required,ne="`
+	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
 	// The supplied or generated value of this header is logged for a request and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
@@ -6246,10 +6237,10 @@ type GetProfileAttachmentOptions struct {
 }
 
 // NewGetProfileAttachmentOptions : Instantiate GetProfileAttachmentOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetProfileAttachmentOptions(attachmentID string, profilesID string) *GetProfileAttachmentOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetProfileAttachmentOptions(attachmentID string, profileID string) *GetProfileAttachmentOptions {
 	return &GetProfileAttachmentOptions{
 		AttachmentID: core.StringPtr(attachmentID),
-		ProfilesID:   core.StringPtr(profilesID),
+		ProfileID:    core.StringPtr(profileID),
 	}
 }
 
@@ -6259,9 +6250,9 @@ func (_options *GetProfileAttachmentOptions) SetAttachmentID(attachmentID string
 	return _options
 }
 
-// SetProfilesID : Allow user to set ProfilesID
-func (_options *GetProfileAttachmentOptions) SetProfilesID(profilesID string) *GetProfileAttachmentOptions {
-	_options.ProfilesID = core.StringPtr(profilesID)
+// SetProfileID : Allow user to set ProfileID
+func (_options *GetProfileAttachmentOptions) SetProfileID(profileID string) *GetProfileAttachmentOptions {
+	_options.ProfileID = core.StringPtr(profileID)
 	return _options
 }
 
@@ -6286,7 +6277,7 @@ func (options *GetProfileAttachmentOptions) SetHeaders(param map[string]string) 
 // GetProfileOptions : The GetProfile options.
 type GetProfileOptions struct {
 	// The profile ID.
-	ProfilesID *string `json:"profiles_id" validate:"required,ne="`
+	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
 	// The supplied or generated value of this header is logged for a request and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
@@ -6303,15 +6294,15 @@ type GetProfileOptions struct {
 }
 
 // NewGetProfileOptions : Instantiate GetProfileOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetProfileOptions(profilesID string) *GetProfileOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetProfileOptions(profileID string) *GetProfileOptions {
 	return &GetProfileOptions{
-		ProfilesID: core.StringPtr(profilesID),
+		ProfileID: core.StringPtr(profileID),
 	}
 }
 
-// SetProfilesID : Allow user to set ProfilesID
-func (_options *GetProfileOptions) SetProfilesID(profilesID string) *GetProfileOptions {
-	_options.ProfilesID = core.StringPtr(profilesID)
+// SetProfileID : Allow user to set ProfileID
+func (_options *GetProfileOptions) SetProfileID(profileID string) *GetProfileOptions {
+	_options.ProfileID = core.StringPtr(profileID)
 	return _options
 }
 
@@ -7213,7 +7204,7 @@ func (options *ListAttachmentsAccountOptions) SetHeaders(param map[string]string
 // ListAttachmentsOptions : The ListAttachments options.
 type ListAttachmentsOptions struct {
 	// The profile ID.
-	ProfilesID *string `json:"profiles_id" validate:"required,ne="`
+	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
 	// The supplied or generated value of this header is logged for a request and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
@@ -7236,15 +7227,15 @@ type ListAttachmentsOptions struct {
 }
 
 // NewListAttachmentsOptions : Instantiate ListAttachmentsOptions
-func (*SecurityAndComplianceCenterApiV3) NewListAttachmentsOptions(profilesID string) *ListAttachmentsOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListAttachmentsOptions(profileID string) *ListAttachmentsOptions {
 	return &ListAttachmentsOptions{
-		ProfilesID: core.StringPtr(profilesID),
+		ProfileID: core.StringPtr(profileID),
 	}
 }
 
-// SetProfilesID : Allow user to set ProfilesID
-func (_options *ListAttachmentsOptions) SetProfilesID(profilesID string) *ListAttachmentsOptions {
-	_options.ProfilesID = core.StringPtr(profilesID)
+// SetProfileID : Allow user to set ProfileID
+func (_options *ListAttachmentsOptions) SetProfileID(profileID string) *ListAttachmentsOptions {
+	_options.ProfileID = core.StringPtr(profileID)
 	return _options
 }
 
@@ -9179,13 +9170,10 @@ type ReplaceProfileAttachmentOptions struct {
 	AttachmentID *string `json:"attachment_id" validate:"required,ne="`
 
 	// The profile ID.
-	ProfilesID *string `json:"profiles_id" validate:"required,ne="`
+	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
 	// The ID of the attachment.
 	ID *string `json:"id,omitempty"`
-
-	// The ID of the profile that is specified in the attachment.
-	ProfileID *string `json:"profile_id,omitempty"`
 
 	// The account ID that is associated to the attachment.
 	AccountID *string `json:"account_id,omitempty"`
@@ -9262,10 +9250,10 @@ const (
 )
 
 // NewReplaceProfileAttachmentOptions : Instantiate ReplaceProfileAttachmentOptions
-func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileAttachmentOptions(attachmentID string, profilesID string) *ReplaceProfileAttachmentOptions {
+func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileAttachmentOptions(attachmentID string, profileID string) *ReplaceProfileAttachmentOptions {
 	return &ReplaceProfileAttachmentOptions{
 		AttachmentID: core.StringPtr(attachmentID),
-		ProfilesID:   core.StringPtr(profilesID),
+		ProfileID:    core.StringPtr(profileID),
 	}
 }
 
@@ -9275,21 +9263,15 @@ func (_options *ReplaceProfileAttachmentOptions) SetAttachmentID(attachmentID st
 	return _options
 }
 
-// SetProfilesID : Allow user to set ProfilesID
-func (_options *ReplaceProfileAttachmentOptions) SetProfilesID(profilesID string) *ReplaceProfileAttachmentOptions {
-	_options.ProfilesID = core.StringPtr(profilesID)
+// SetProfileID : Allow user to set ProfileID
+func (_options *ReplaceProfileAttachmentOptions) SetProfileID(profileID string) *ReplaceProfileAttachmentOptions {
+	_options.ProfileID = core.StringPtr(profileID)
 	return _options
 }
 
 // SetID : Allow user to set ID
 func (_options *ReplaceProfileAttachmentOptions) SetID(id string) *ReplaceProfileAttachmentOptions {
 	_options.ID = core.StringPtr(id)
-	return _options
-}
-
-// SetProfileID : Allow user to set ProfileID
-func (_options *ReplaceProfileAttachmentOptions) SetProfileID(profileID string) *ReplaceProfileAttachmentOptions {
-	_options.ProfileID = core.StringPtr(profileID)
 	return _options
 }
 
@@ -9404,7 +9386,7 @@ func (options *ReplaceProfileAttachmentOptions) SetHeaders(param map[string]stri
 // ReplaceProfileOptions : The ReplaceProfile options.
 type ReplaceProfileOptions struct {
 	// The profile ID.
-	ProfilesID *string `json:"profiles_id" validate:"required,ne="`
+	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
 	// The name of the profile.
 	ProfileName *string `json:"profile_name" validate:"required"`
@@ -9443,9 +9425,9 @@ const (
 )
 
 // NewReplaceProfileOptions : Instantiate ReplaceProfileOptions
-func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileOptions(profilesID string, profileName string, profileDescription string, profileType string, controls []ProfileControlsPrototype, defaultParameters []DefaultParametersPrototype) *ReplaceProfileOptions {
+func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileOptions(profileID string, profileName string, profileDescription string, profileType string, controls []ProfileControlsPrototype, defaultParameters []DefaultParametersPrototype) *ReplaceProfileOptions {
 	return &ReplaceProfileOptions{
-		ProfilesID:         core.StringPtr(profilesID),
+		ProfileID:          core.StringPtr(profileID),
 		ProfileName:        core.StringPtr(profileName),
 		ProfileDescription: core.StringPtr(profileDescription),
 		ProfileType:        core.StringPtr(profileType),
@@ -9454,9 +9436,9 @@ func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileOptions(profilesID str
 	}
 }
 
-// SetProfilesID : Allow user to set ProfilesID
-func (_options *ReplaceProfileOptions) SetProfilesID(profilesID string) *ReplaceProfileOptions {
-	_options.ProfilesID = core.StringPtr(profilesID)
+// SetProfileID : Allow user to set ProfileID
+func (_options *ReplaceProfileOptions) SetProfileID(profileID string) *ReplaceProfileOptions {
+	_options.ProfileID = core.StringPtr(profileID)
 	return _options
 }
 
@@ -11605,7 +11587,7 @@ func (pager *ControlLibrariesPager) GetAll() (allItems []ControlLibraryItem, err
 	return pager.GetAllWithContext(context.Background())
 }
 
-// ProfilesPager can be used to simplify the use of the "ListProfiles" method.
+// ProfilePager can be used to simplify the use of the "ListProfile" method.
 type ProfilesPager struct {
 	hasNext     bool
 	options     *ListProfilesOptions

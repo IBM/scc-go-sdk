@@ -1,3 +1,10 @@
+## [5.0.2](https://github.com/IBM/scc-go-sdk/compare/v5.0.1...v5.0.2) (2023-08-25)
+
+
+### Bug Fixes
+
+* Consolidating ProfilesID and ProfilesID into one entity ([#125](https://github.com/IBM/scc-go-sdk/issues/125)) ([193157d](https://github.com/IBM/scc-go-sdk/commit/193157d477e19ac864fb5cbf0c710da50fffc4a6))
+
 ## [5.0.1](https://github.com/IBM/scc-go-sdk/compare/v5.0.0...v5.0.1) (2023-08-24)
 
 

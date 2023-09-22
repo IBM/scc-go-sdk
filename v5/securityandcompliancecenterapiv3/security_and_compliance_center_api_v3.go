@@ -1461,7 +1461,7 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetRuleW
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
 	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getRuleOptions.InstanceID)
-	_, err = builder.ResolveRequestURL(getRuleOptions, `/rules/{rule_id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(instanceURL, `/rules/{rule_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -5008,6 +5008,9 @@ func UnmarshalControlsInControlLib(m map[string]json.RawMessage, result interfac
 
 // CreateAttachmentOptions : The CreateAttachment options.
 type CreateAttachmentOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The profile ID.
 	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
@@ -5104,6 +5107,9 @@ type CreateCustomControlLibraryOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
+
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // Constants associated with the CreateCustomControlLibraryOptions.ControlLibraryType property.
@@ -5218,6 +5224,9 @@ type CreateProfileOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
+
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // Constants associated with the CreateProfileOptions.ProfileType property.
@@ -5288,6 +5297,9 @@ func (options *CreateProfileOptions) SetHeaders(param map[string]string) *Create
 
 // CreateProviderTypeInstanceOptions : The CreateProviderTypeInstance options.
 type CreateProviderTypeInstanceOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The provider type ID.
 	ProviderTypeID *string `json:"provider_type_id" validate:"required,ne="`
 
@@ -5356,6 +5368,9 @@ func (options *CreateProviderTypeInstanceOptions) SetHeaders(param map[string]st
 
 // CreateRuleOptions : The CreateRule options.
 type CreateRuleOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The rule description.
 	Description *string `json:"description" validate:"required"`
 
@@ -5469,6 +5484,9 @@ func (options *CreateRuleOptions) SetHeaders(param map[string]string) *CreateRul
 
 // CreateScanOptions : The CreateScan options.
 type CreateScanOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The attachment ID of a profile.
 	AttachmentID *string `json:"attachment_id" validate:"required"`
 
@@ -5598,6 +5616,9 @@ type DeleteCustomControlLibraryOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
+
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // NewDeleteCustomControlLibraryOptions : Instantiate DeleteCustomControlLibraryOptions
@@ -5648,6 +5669,9 @@ type DeleteCustomProfileOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
+
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // NewDeleteCustomProfileOptions : Instantiate DeleteCustomProfileOptions
@@ -5683,6 +5707,9 @@ func (options *DeleteCustomProfileOptions) SetHeaders(param map[string]string) *
 
 // DeleteProfileAttachmentOptions : The DeleteProfileAttachment options.
 type DeleteProfileAttachmentOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The attachment ID.
 	AttachmentID *string `json:"attachment_id" validate:"required,ne="`
 
@@ -5743,6 +5770,9 @@ func (options *DeleteProfileAttachmentOptions) SetHeaders(param map[string]strin
 
 // DeleteProviderTypeInstanceOptions : The DeleteProviderTypeInstance options.
 type DeleteProviderTypeInstanceOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The provider type ID.
 	ProviderTypeID *string `json:"provider_type_id" validate:"required,ne="`
 
@@ -5803,6 +5833,9 @@ func (options *DeleteProviderTypeInstanceOptions) SetHeaders(param map[string]st
 
 // DeleteRuleOptions : The DeleteRule options.
 type DeleteRuleOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the corresponding rule.
 	RuleID *string `json:"rule_id" validate:"required,ne="`
 
@@ -6182,6 +6215,9 @@ type GetControlLibraryOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
+
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // NewGetControlLibraryOptions : Instantiate GetControlLibraryOptions
@@ -6217,6 +6253,9 @@ func (options *GetControlLibraryOptions) SetHeaders(param map[string]string) *Ge
 
 // GetLatestReportsOptions : The GetLatestReports options.
 type GetLatestReportsOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The supplied or generated value of this header is logged for a request and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
 	// this header is not supplied in a request, the service generates a random (version 4) UUID.
@@ -6266,6 +6305,9 @@ func (options *GetLatestReportsOptions) SetHeaders(param map[string]string) *Get
 
 // GetProfileAttachmentOptions : The GetProfileAttachment options.
 type GetProfileAttachmentOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The attachment ID.
 	AttachmentID *string `json:"attachment_id" validate:"required,ne="`
 
@@ -6326,6 +6368,9 @@ func (options *GetProfileAttachmentOptions) SetHeaders(param map[string]string) 
 
 // GetProfileOptions : The GetProfile options.
 type GetProfileOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The profile ID.
 	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
@@ -6376,6 +6421,9 @@ func (options *GetProfileOptions) SetHeaders(param map[string]string) *GetProfil
 
 // GetProviderTypeByIdOptions : The GetProviderTypeByID options.
 type GetProviderTypeByIdOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The provider type ID.
 	ProviderTypeID *string `json:"provider_type_id" validate:"required,ne="`
 
@@ -6426,6 +6474,9 @@ func (options *GetProviderTypeByIdOptions) SetHeaders(param map[string]string) *
 
 // GetProviderTypeInstanceOptions : The GetProviderTypeInstance options.
 type GetProviderTypeInstanceOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The provider type ID.
 	ProviderTypeID *string `json:"provider_type_id" validate:"required,ne="`
 
@@ -6525,6 +6576,9 @@ func (options *GetProviderTypesInstancesOptions) SetHeaders(param map[string]str
 
 // GetReportControlsOptions : The GetReportControls options.
 type GetReportControlsOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the scan that is associated with a report.
 	ReportID *string `json:"report_id" validate:"required,ne="`
 
@@ -6648,6 +6702,9 @@ func (options *GetReportControlsOptions) SetHeaders(param map[string]string) *Ge
 
 // GetReportEvaluationOptions : The GetReportEvaluation options.
 type GetReportEvaluationOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the scan that is associated with a report.
 	ReportID *string `json:"report_id" validate:"required,ne="`
 
@@ -6707,6 +6764,9 @@ func (options *GetReportEvaluationOptions) SetHeaders(param map[string]string) *
 
 // GetReportOptions : The GetReport options.
 type GetReportOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the scan that is associated with a report.
 	ReportID *string `json:"report_id" validate:"required,ne="`
 
@@ -6757,6 +6817,9 @@ func (options *GetReportOptions) SetHeaders(param map[string]string) *GetReportO
 
 // GetReportRuleOptions : The GetReportRule options.
 type GetReportRuleOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the scan that is associated with a report.
 	ReportID *string `json:"report_id" validate:"required,ne="`
 
@@ -6817,6 +6880,9 @@ func (options *GetReportRuleOptions) SetHeaders(param map[string]string) *GetRep
 
 // GetReportSummaryOptions : The GetReportSummary options.
 type GetReportSummaryOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the scan that is associated with a report.
 	ReportID *string `json:"report_id" validate:"required,ne="`
 
@@ -6867,6 +6933,9 @@ func (options *GetReportSummaryOptions) SetHeaders(param map[string]string) *Get
 
 // GetReportTagsOptions : The GetReportTags options.
 type GetReportTagsOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the scan that is associated with a report.
 	ReportID *string `json:"report_id" validate:"required,ne="`
 
@@ -6917,6 +6986,9 @@ func (options *GetReportTagsOptions) SetHeaders(param map[string]string) *GetRep
 
 // GetReportViolationsDriftOptions : The GetReportViolationsDrift options.
 type GetReportViolationsDriftOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the scan that is associated with a report.
 	ReportID *string `json:"report_id" validate:"required,ne="`
 
@@ -6976,6 +7048,9 @@ func (options *GetReportViolationsDriftOptions) SetHeaders(param map[string]stri
 
 // GetRuleOptions : The GetRule options.
 type GetRuleOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the corresponding rule.
 	RuleID *string `json:"rule_id" validate:"required,ne="`
 
@@ -7038,6 +7113,9 @@ type GetSettingsOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
+
+	// The ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // NewGetSettingsOptions : Instantiate GetSettingsOptions
@@ -7196,6 +7274,9 @@ func UnmarshalLastScan(m map[string]json.RawMessage, result interface{}) (err er
 
 // ListAttachmentsAccountOptions : The ListAttachmentsAccount options.
 type ListAttachmentsAccountOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The supplied or generated value of this header is logged for a request and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
 	// this header is not supplied in a request, the service generates a random (version 4) UUID.
@@ -7253,6 +7334,9 @@ func (options *ListAttachmentsAccountOptions) SetHeaders(param map[string]string
 
 // ListAttachmentsOptions : The ListAttachments options.
 type ListAttachmentsOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The profile ID.
 	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
@@ -7342,6 +7426,9 @@ type ListControlLibrariesOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
+
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // NewListControlLibrariesOptions : Instantiate ListControlLibrariesOptions
@@ -7408,6 +7495,9 @@ type ListProfilesOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
+
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // NewListProfilesOptions : Instantiate ListProfilesOptions
@@ -7453,6 +7543,9 @@ func (options *ListProfilesOptions) SetHeaders(param map[string]string) *ListPro
 
 // ListProviderTypeInstancesOptions : The ListProviderTypeInstances options.
 type ListProviderTypeInstancesOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The provider type ID.
 	ProviderTypeID *string `json:"provider_type_id" validate:"required,ne="`
 
@@ -7503,6 +7596,9 @@ func (options *ListProviderTypeInstancesOptions) SetHeaders(param map[string]str
 
 // ListProviderTypesOptions : The ListProviderTypes options.
 type ListProviderTypesOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The supplied or generated value of this header is logged for a request and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
 	// this headers is not supplied in a request, the service generates a random (version 4) UUID.
@@ -7542,6 +7638,9 @@ func (options *ListProviderTypesOptions) SetHeaders(param map[string]string) *Li
 
 // ListReportEvaluationsOptions : The ListReportEvaluations options.
 type ListReportEvaluationsOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the scan that is associated with a report.
 	ReportID *string `json:"report_id" validate:"required,ne="`
 
@@ -7664,6 +7763,9 @@ func (options *ListReportEvaluationsOptions) SetHeaders(param map[string]string)
 
 // ListReportResourcesOptions : The ListReportResources options.
 type ListReportResourcesOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the scan that is associated with a report.
 	ReportID *string `json:"report_id" validate:"required,ne="`
 
@@ -7806,6 +7908,9 @@ func (options *ListReportResourcesOptions) SetHeaders(param map[string]string) *
 
 // ListReportsOptions : The ListReports options.
 type ListReportsOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The supplied or generated value of this header is logged for a request and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
 	// this header is not supplied in a request, the service generates a random (version 4) UUID.
@@ -7916,6 +8021,9 @@ func (options *ListReportsOptions) SetHeaders(param map[string]string) *ListRepo
 
 // ListRulesOptions : The ListRules options.
 type ListRulesOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The supplied or generated value of this header is logged for a request and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
 	// this header is not supplied in a request, the service generates a random (version 4) UUID.
@@ -8272,6 +8380,9 @@ type PostTestEventOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
+
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // NewPostTestEventOptions : Instantiate PostTestEventOptions
@@ -9078,6 +9189,9 @@ type ReplaceCustomControlLibraryOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
+
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // Constants associated with the ReplaceCustomControlLibraryOptions.ControlLibraryType property.
@@ -9228,8 +9342,8 @@ type ReplaceProfileAttachmentOptions struct {
 	// The account ID that is associated to the attachment.
 	AccountID *string `json:"account_id,omitempty"`
 
-	// The instance ID of the account that is associated to the attachment.
-	InstanceID *string `json:"instance_id,omitempty"`
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
 
 	// The scope payload for the multi cloud feature.
 	Scope []MultiCloudScope `json:"scope,omitempty"`
@@ -9435,6 +9549,9 @@ func (options *ReplaceProfileAttachmentOptions) SetHeaders(param map[string]stri
 
 // ReplaceProfileOptions : The ReplaceProfile options.
 type ReplaceProfileOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The profile ID.
 	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
@@ -9542,6 +9659,9 @@ func (options *ReplaceProfileOptions) SetHeaders(param map[string]string) *Repla
 
 // ReplaceRuleOptions : The ReplaceRule options.
 type ReplaceRuleOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the corresponding rule.
 	RuleID *string `json:"rule_id" validate:"required,ne="`
 
@@ -11147,6 +11267,9 @@ func UnmarshalTestEvent(m map[string]json.RawMessage, result interface{}) (err e
 
 // UpdateProviderTypeInstanceOptions : The UpdateProviderTypeInstance options.
 type UpdateProviderTypeInstanceOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The provider type ID.
 	ProviderTypeID *string `json:"provider_type_id" validate:"required,ne="`
 
@@ -11243,6 +11366,9 @@ type UpdateSettingsOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
+
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // NewUpdateSettingsOptions : Instantiate UpdateSettingsOptions

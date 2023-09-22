@@ -48,11 +48,11 @@ const DefaultServiceURL = "https://us-south.compliance.cloud.ibm.com/instances/i
 // DefaultServiceName is the default key used to find external configuration information.
 const DefaultServiceName = "security_and_compliance_center_api"
 
-const ParameterizedServiceURL = "https://{region}.cloud.ibm.com/instances/{instance_id}/v3"
+// const ParameterizedServiceURL = "https://{region}.cloud.ibm.com/instances/{instance_id}/v3"
+const ParameterizedServiceURL = "https://{region}.compliance.cloud.ibm.com/"
 
 var defaultUrlVariables = map[string]string{
-	"region":      "us-south.compliance",
-	"instance_id": "instance_id",
+	"region": "us-south",
 }
 
 // SecurityAndComplianceCenterApiV3Options : Service options
@@ -119,7 +119,18 @@ func NewSecurityAndComplianceCenterApiV3(options *SecurityAndComplianceCenterApi
 
 // GetServiceURLForRegion returns the service URL to be used for the specified region
 func GetServiceURLForRegion(region string) (string, error) {
-	return "", fmt.Errorf("service does not support regional URLs")
+	endpoints := map[string]string{
+		"au-syd":   "https://au-syd.compliance.cloud.ibm.com",   // The API endpoint in the au-syd region
+		"ca-tor":   "https://ca-tor.compliance.cloud.ibm.com",   // The API endpoint in the ca-tor region
+		"eu-de":    "https://eu-de.compliance.cloud.ibm.com",    // The API endpoint in the eu-de region
+		"eu-fr2":   "https://eu-fr2.compliance.cloud.ibm.com",   // The API endpoint in the eu-fr2 region
+		"us-south": "https://us-south.compliance.cloud.ibm.com", // The API endpoint in the us-south region
+	}
+
+	if url, ok := endpoints[region]; ok {
+		return url, nil
+	}
+	return "", fmt.Errorf("service URL for region '%s' not found", region)
 }
 
 // Clone makes a copy of "securityAndComplianceCenterApi" suitable for processing requests.
@@ -189,7 +200,10 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetSetti
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/settings`, nil)
+	pathParamsMap := map[string]string{
+		"instance_id": *getSettingsOptions.InstanceID,
+	}
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `{instance_id}/settings`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -248,10 +262,13 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) UpdateSe
 		return
 	}
 
+	pathParamsMap := map[string]string{
+		"instance_id": *updateSettingsOptions.InstanceID,
+	}
 	builder := core.NewRequestBuilder(core.PATCH)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/settings`, nil)
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `{instance_id}/settings`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -321,10 +338,13 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) PostTest
 		return
 	}
 
+	pathParamsMap := map[string]string{
+		"instance_id": *postTestEventOptions.InstanceID,
+	}
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/test_event`, nil)
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `{instance_id}/test_event`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -386,10 +406,13 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListCont
 		return
 	}
 
+	pathParamsMap := map[string]string{
+		"instance_id": *listControlLibrariesOptions.InstanceID,
+	}
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/control_libraries`, nil)
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `{instance_id}/control_libraries`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -465,10 +488,13 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) CreateCu
 		return
 	}
 
+	pathParamsMap := map[string]string{
+		"instance_id": *createCustomControlLibraryOptions.InstanceID,
+	}
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/control_libraries`, nil)
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `{instance_id}/control_libraries`, nil)
 	if err != nil {
 		return
 	}
@@ -5054,6 +5080,9 @@ type CreateCustomControlLibraryOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
+
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // Constants associated with the CreateCustomControlLibraryOptions.ControlLibraryType property.
@@ -5136,6 +5165,12 @@ func (_options *CreateCustomControlLibraryOptions) SetXRequestID(xRequestID stri
 // SetHeaders : Allow user to set Headers
 func (options *CreateCustomControlLibraryOptions) SetHeaders(param map[string]string) *CreateCustomControlLibraryOptions {
 	options.Headers = param
+	return options
+}
+
+// SetInstanceID : Allow user to set the InstanceID
+func (options *CreateCustomControlLibraryOptions) SetInstanceID(instanceID string) *CreateCustomControlLibraryOptions {
+	options.InstanceID = core.StringPtr(instanceID)
 	return options
 }
 
@@ -6988,6 +7023,9 @@ type GetSettingsOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
+
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // NewGetSettingsOptions : Instantiate GetSettingsOptions
@@ -7010,6 +7048,12 @@ func (_options *GetSettingsOptions) SetXRequestID(xRequestID string) *GetSetting
 // SetHeaders : Allow user to set Headers
 func (options *GetSettingsOptions) SetHeaders(param map[string]string) *GetSettingsOptions {
 	options.Headers = param
+	return options
+}
+
+// SetInstanceID: Allow user to set InstanceID
+func (options *GetSettingsOptions) SetInstanceID(instanceID string) *GetSettingsOptions {
+	options.InstanceID = core.StringPtr(instanceID)
 	return options
 }
 
@@ -7292,6 +7336,9 @@ type ListControlLibrariesOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
+
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // NewListControlLibrariesOptions : Instantiate ListControlLibrariesOptions
@@ -8222,6 +8269,9 @@ type PostTestEventOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
+
+	// ID of the Instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // NewPostTestEventOptions : Instantiate PostTestEventOptions
@@ -8245,6 +8295,12 @@ func (_options *PostTestEventOptions) SetXRequestID(xRequestID string) *PostTest
 func (options *PostTestEventOptions) SetHeaders(param map[string]string) *PostTestEventOptions {
 	options.Headers = param
 	return options
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *PostTestEventOptions) SetInstanceID(instanceID string) *PostTestEventOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // Profile : The response body of the profile.
@@ -11193,6 +11249,9 @@ type UpdateSettingsOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
+
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // NewUpdateSettingsOptions : Instantiate UpdateSettingsOptions
@@ -11227,6 +11286,12 @@ func (_options *UpdateSettingsOptions) SetXRequestID(xRequestID string) *UpdateS
 // SetHeaders : Allow user to set Headers
 func (options *UpdateSettingsOptions) SetHeaders(param map[string]string) *UpdateSettingsOptions {
 	options.Headers = param
+	return options
+}
+
+// SetInstanceID : Allow user to set the InstanceID
+func (options *UpdateSettingsOptions) SetInstanceID(instanceID string) *UpdateSettingsOptions {
+	options.InstanceID = core.StringPtr(instanceID)
 	return options
 }
 

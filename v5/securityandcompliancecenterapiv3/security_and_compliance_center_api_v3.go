@@ -51,7 +51,7 @@ const DefaultServiceName = "security_and_compliance_center_api"
 const ParameterizedServiceURL = "https://{region}.compliance.cloud.ibm.com"
 
 var defaultUrlVariables = map[string]string{
-	"region":      "us-south",
+	"region": "us-south",
 }
 
 // SecurityAndComplianceCenterApiV3Options : Service options
@@ -921,11 +921,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) CreatePr
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles`, nil)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *createProfileOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/profiles`, nil)
 	if err != nil {
 		return
 	}
-
 	for headerName, headerValue := range createProfileOptions.Headers {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -1011,7 +1011,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) DeleteCu
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *deleteCustomProfileOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/profiles/{profile_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1079,7 +1080,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetProfi
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getProfileOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/profiles/{profile_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1148,7 +1150,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ReplaceP
 	builder := core.NewRequestBuilder(core.PUT)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *replaceProfileOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/profiles/{profile_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1230,7 +1233,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListRule
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/rules`, nil)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *listRulesOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/rules`, nil)
 	if err != nil {
 		return
 	}
@@ -1304,7 +1308,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) CreateRu
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/rules`, nil)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *createRuleOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/rules`, nil)
 	if err != nil {
 		return
 	}
@@ -1399,7 +1404,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) DeleteRu
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/rules/{rule_id}`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *deleteRuleOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/rules/{rule_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1454,7 +1460,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetRuleW
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/rules/{rule_id}`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getRuleOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(getRuleOptions, `/rules/{rule_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1522,7 +1529,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ReplaceR
 	builder := core.NewRequestBuilder(core.PUT)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/rules/{rule_id}`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *replaceRuleOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/rules/{rule_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1622,7 +1630,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListAtta
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}/attachments`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *listAttachmentsOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/profiles/{profile_id}/attachments`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1697,7 +1706,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) CreateAt
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}/attachments`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *createAttachmentOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/profiles/{profile_id}/attachments`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1779,7 +1789,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) DeletePr
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}/attachments/{attachment_id}`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *deleteProfileAttachmentOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/profiles/{profile_id}/attachments/{attachment_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1848,7 +1859,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetProfi
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}/attachments/{attachment_id}`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getProfileAttachmentOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/profiles/{profile_id}/attachments/{attachment_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1917,7 +1929,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ReplaceP
 	builder := core.NewRequestBuilder(core.PUT)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}/attachments/{attachment_id}`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *replaceProfileAttachmentOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/profiles/{profile_id}/attachments/{attachment_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2037,7 +2050,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) CreateSc
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/scans`, nil)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *createScanOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/scans`, nil)
 	if err != nil {
 		return
 	}
@@ -2108,7 +2122,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListAtta
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/attachments`, nil)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *listAttachmentsAccountOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/attachments`, nil)
 	if err != nil {
 		return
 	}
@@ -2174,7 +2189,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetLates
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports/latest`, nil)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getLatestReportsOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports/latest`, nil)
 	if err != nil {
 		return
 	}
@@ -2237,7 +2253,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListRepo
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports`, nil)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *listReportsOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports`, nil)
 	if err != nil {
 		return
 	}
@@ -2326,7 +2343,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetRepor
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports/{report_id}`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getReportOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports/{report_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2393,7 +2411,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetRepor
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports/{report_id}/summary`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getReportSummaryOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports/{report_id}/summary`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2460,7 +2479,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetRepor
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports/{report_id}/download`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getReportEvaluationOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports/{report_id}/download`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2520,7 +2540,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetRepor
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports/{report_id}/controls`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getReportControlsOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports/{report_id}/controls`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2607,7 +2628,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetRepor
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports/{report_id}/rules/{rule_id}`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getReportRuleOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports/{report_id}/rules/{rule_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2674,7 +2696,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListRepo
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports/{report_id}/evaluations`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *listReportEvaluationsOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports/{report_id}/evaluations`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2763,7 +2786,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListRepo
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports/{report_id}/resources`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *listReportResourcesOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports/{report_id}/resources`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2855,7 +2879,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetRepor
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports/{report_id}/tags`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getReportTagsOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports/{report_id}/tags`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2922,7 +2947,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetRepor
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports/{report_id}/violations_drift`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getReportViolationsDriftOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports/{report_id}/violations_drift`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2986,7 +3012,7 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListProv
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/provider_types`, nil)
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/v3/provider_types`, nil)
 	if err != nil {
 		return
 	}
@@ -3053,7 +3079,7 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetProvi
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/provider_types/{provider_type_id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/v3/provider_types/{provider_type_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -3120,7 +3146,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListProv
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/provider_types/{provider_type_id}/provider_type_instances`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *listProviderTypeInstancesOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/provider_types/{provider_type_id}/provider_type_instances`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -3187,7 +3214,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) CreatePr
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/provider_types/{provider_type_id}/provider_type_instances`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *createProviderTypeInstanceOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/provider_types/{provider_type_id}/provider_type_instances`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -3267,7 +3295,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) DeletePr
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/provider_types/{provider_type_id}/provider_type_instances/{provider_type_instance_id}`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *deleteProviderTypeInstanceOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/provider_types/{provider_type_id}/provider_type_instances/{provider_type_instance_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -3324,7 +3353,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetProvi
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/provider_types/{provider_type_id}/provider_type_instances/{provider_type_instance_id}`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getProviderTypeInstanceOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/provider_types/{provider_type_id}/provider_type_instances/{provider_type_instance_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -3391,7 +3421,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) UpdatePr
 	builder := core.NewRequestBuilder(core.PATCH)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/provider_types/{provider_type_id}/provider_type_instances/{provider_type_instance_id}`, pathParamsMap)
+	instanceURL := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *updateProviderTypeInstanceOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/provider_types/{provider_type_id}/provider_type_instances/{provider_type_instance_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -3462,7 +3493,7 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetProvi
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/provider_types_instances`, nil)
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/v3/provider_types_instances`, nil)
 	if err != nil {
 		return
 	}

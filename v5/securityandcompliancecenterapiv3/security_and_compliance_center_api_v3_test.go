@@ -65,7 +65,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 	Describe(`Service constructor tests using external config`, func() {
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
-			var testEnvironment = map[string]string{
+			testEnvironment := map[string]string{
 				"SECURITY_AND_COMPLIANCE_CENTER_API_URL":       "https://securityandcompliancecenterapiv3/api",
 				"SECURITY_AND_COMPLIANCE_CENTER_API_AUTH_TYPE": "noauth",
 			}
@@ -119,7 +119,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
 			// Map containing environment variables used in testing.
-			var testEnvironment = map[string]string{
+			testEnvironment := map[string]string{
 				"SECURITY_AND_COMPLIANCE_CENTER_API_URL":       "https://securityandcompliancecenterapiv3/api",
 				"SECURITY_AND_COMPLIANCE_CENTER_API_AUTH_TYPE": "someOtherAuth",
 			}
@@ -135,7 +135,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
 			// Map containing environment variables used in testing.
-			var testEnvironment = map[string]string{
+			testEnvironment := map[string]string{
 				"SECURITY_AND_COMPLIANCE_CENTER_API_AUTH_TYPE": "NOAuth",
 			}
 
@@ -164,12 +164,12 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 	Describe(`Parameterized URL tests`, func() {
 		It(`Format parameterized URL with all default values`, func() {
 			constructedURL, err := securityandcompliancecenterapiv3.ConstructServiceURL(nil)
-			Expect(constructedURL).To(Equal("https://us-south.compliance.cloud.ibm.com/instances/instance_id/v3"))
 			Expect(constructedURL).ToNot(BeNil())
+			Expect(constructedURL).To(Equal("https://us-south.compliance.cloud.ibm.com"))
 			Expect(err).To(BeNil())
 		})
 		It(`Return an error if a provided variable name is invalid`, func() {
-			var providedUrlVariables = map[string]string{
+			providedUrlVariables := map[string]string{
 				"invalid_variable_name": "value",
 			}
 			constructedURL, err := securityandcompliancecenterapiv3.ConstructServiceURL(providedUrlVariables)
@@ -178,7 +178,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetSettings(getSettingsOptions *GetSettingsOptions) - Operation response error`, func() {
-		getSettingsPath := "/settings"
+		getSettingsPath := "/instances/testInstance/v3/settings"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -206,6 +206,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetSettingsOptions model
 				getSettingsOptionsModel := new(securityandcompliancecenterapiv3.GetSettingsOptions)
+				getSettingsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getSettingsOptionsModel.XCorrelationID = core.StringPtr("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
 				getSettingsOptionsModel.XRequestID = core.StringPtr("testString")
 				getSettingsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -228,7 +229,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetSettings(getSettingsOptions *GetSettingsOptions)`, func() {
-		getSettingsPath := "/settings"
+		getSettingsPath := "/instances/testInstance/v3/settings"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -262,6 +263,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetSettingsOptions model
 				getSettingsOptionsModel := new(securityandcompliancecenterapiv3.GetSettingsOptions)
+				getSettingsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getSettingsOptionsModel.XCorrelationID = core.StringPtr("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
 				getSettingsOptionsModel.XRequestID = core.StringPtr("testString")
 				getSettingsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -326,6 +328,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetSettingsOptions model
 				getSettingsOptionsModel := new(securityandcompliancecenterapiv3.GetSettingsOptions)
+				getSettingsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getSettingsOptionsModel.XCorrelationID = core.StringPtr("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
 				getSettingsOptionsModel.XRequestID = core.StringPtr("testString")
 				getSettingsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -335,7 +338,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke GetSettings with error: Operation request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -347,6 +349,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetSettingsOptions model
 				getSettingsOptionsModel := new(securityandcompliancecenterapiv3.GetSettingsOptions)
+				getSettingsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getSettingsOptionsModel.XCorrelationID = core.StringPtr("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
 				getSettingsOptionsModel.XRequestID = core.StringPtr("testString")
 				getSettingsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -382,6 +385,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetSettingsOptions model
 				getSettingsOptionsModel := new(securityandcompliancecenterapiv3.GetSettingsOptions)
+				getSettingsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getSettingsOptionsModel.XCorrelationID = core.StringPtr("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
 				getSettingsOptionsModel.XRequestID = core.StringPtr("testString")
 				getSettingsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -400,7 +404,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`UpdateSettings(updateSettingsOptions *UpdateSettingsOptions) - Operation response error`, func() {
-		updateSettingsPath := "/settings"
+		updateSettingsPath := "/instances/testInstance/v3/settings"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -444,6 +448,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the UpdateSettingsOptions model
 				updateSettingsOptionsModel := new(securityandcompliancecenterapiv3.UpdateSettingsOptions)
+				updateSettingsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				updateSettingsOptionsModel.EventNotifications = eventNotificationsModel
 				updateSettingsOptionsModel.ObjectStorage = objectStorageModel
 				updateSettingsOptionsModel.XCorrelationID = core.StringPtr("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
@@ -468,7 +473,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`UpdateSettings(updateSettingsOptions *UpdateSettingsOptions)`, func() {
-		updateSettingsPath := "/settings"
+		updateSettingsPath := "/instances/testInstance/v3/settings"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -534,6 +539,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the UpdateSettingsOptions model
 				updateSettingsOptionsModel := new(securityandcompliancecenterapiv3.UpdateSettingsOptions)
+				updateSettingsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				updateSettingsOptionsModel.EventNotifications = eventNotificationsModel
 				updateSettingsOptionsModel.ObjectStorage = objectStorageModel
 				updateSettingsOptionsModel.XCorrelationID = core.StringPtr("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
@@ -632,6 +638,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the UpdateSettingsOptions model
 				updateSettingsOptionsModel := new(securityandcompliancecenterapiv3.UpdateSettingsOptions)
+				updateSettingsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				updateSettingsOptionsModel.EventNotifications = eventNotificationsModel
 				updateSettingsOptionsModel.ObjectStorage = objectStorageModel
 				updateSettingsOptionsModel.XCorrelationID = core.StringPtr("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
@@ -643,7 +650,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke UpdateSettings with error: Operation request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -671,6 +677,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the UpdateSettingsOptions model
 				updateSettingsOptionsModel := new(securityandcompliancecenterapiv3.UpdateSettingsOptions)
+				updateSettingsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				updateSettingsOptionsModel.EventNotifications = eventNotificationsModel
 				updateSettingsOptionsModel.ObjectStorage = objectStorageModel
 				updateSettingsOptionsModel.XCorrelationID = core.StringPtr("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
@@ -724,6 +731,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the UpdateSettingsOptions model
 				updateSettingsOptionsModel := new(securityandcompliancecenterapiv3.UpdateSettingsOptions)
+				updateSettingsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				updateSettingsOptionsModel.EventNotifications = eventNotificationsModel
 				updateSettingsOptionsModel.ObjectStorage = objectStorageModel
 				updateSettingsOptionsModel.XCorrelationID = core.StringPtr("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
@@ -744,7 +752,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`PostTestEvent(postTestEventOptions *PostTestEventOptions) - Operation response error`, func() {
-		postTestEventPath := "/test_event"
+		postTestEventPath := "/instances/testInstance/v3/test_event"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -772,6 +780,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the PostTestEventOptions model
 				postTestEventOptionsModel := new(securityandcompliancecenterapiv3.PostTestEventOptions)
+				postTestEventOptionsModel.InstanceID = core.StringPtr("testInstance")
 				postTestEventOptionsModel.XCorrelationID = core.StringPtr("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
 				postTestEventOptionsModel.XRequestID = core.StringPtr("testString")
 				postTestEventOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -794,7 +803,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`PostTestEvent(postTestEventOptions *PostTestEventOptions)`, func() {
-		postTestEventPath := "/test_event"
+		postTestEventPath := "/instances/testInstance/v3/test_event"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -828,6 +837,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the PostTestEventOptions model
 				postTestEventOptionsModel := new(securityandcompliancecenterapiv3.PostTestEventOptions)
+				postTestEventOptionsModel.InstanceID = core.StringPtr("testInstance")
 				postTestEventOptionsModel.XCorrelationID = core.StringPtr("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
 				postTestEventOptionsModel.XRequestID = core.StringPtr("testString")
 				postTestEventOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -892,6 +902,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the PostTestEventOptions model
 				postTestEventOptionsModel := new(securityandcompliancecenterapiv3.PostTestEventOptions)
+				postTestEventOptionsModel.InstanceID = core.StringPtr("testInstance")
 				postTestEventOptionsModel.XCorrelationID = core.StringPtr("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
 				postTestEventOptionsModel.XRequestID = core.StringPtr("testString")
 				postTestEventOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -901,7 +912,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke PostTestEvent with error: Operation request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -913,6 +923,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the PostTestEventOptions model
 				postTestEventOptionsModel := new(securityandcompliancecenterapiv3.PostTestEventOptions)
+				postTestEventOptionsModel.InstanceID = core.StringPtr("testInstance")
 				postTestEventOptionsModel.XCorrelationID = core.StringPtr("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
 				postTestEventOptionsModel.XRequestID = core.StringPtr("testString")
 				postTestEventOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -948,6 +959,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the PostTestEventOptions model
 				postTestEventOptionsModel := new(securityandcompliancecenterapiv3.PostTestEventOptions)
+				postTestEventOptionsModel.InstanceID = core.StringPtr("testInstance")
 				postTestEventOptionsModel.XCorrelationID = core.StringPtr("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
 				postTestEventOptionsModel.XRequestID = core.StringPtr("testString")
 				postTestEventOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -966,7 +978,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListControlLibraries(listControlLibrariesOptions *ListControlLibrariesOptions) - Operation response error`, func() {
-		listControlLibrariesPath := "/control_libraries"
+		listControlLibrariesPath := "/instances/testInstance/v3/control_libraries"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -997,6 +1009,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListControlLibrariesOptions model
 				listControlLibrariesOptionsModel := new(securityandcompliancecenterapiv3.ListControlLibrariesOptions)
+				listControlLibrariesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listControlLibrariesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listControlLibrariesOptionsModel.XRequestID = core.StringPtr("testString")
 				listControlLibrariesOptionsModel.Limit = core.Int64Ptr(int64(50))
@@ -1022,7 +1035,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListControlLibraries(listControlLibrariesOptions *ListControlLibrariesOptions)`, func() {
-		listControlLibrariesPath := "/control_libraries"
+		listControlLibrariesPath := "/instances/testInstance/v3/control_libraries"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -1059,6 +1072,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListControlLibrariesOptions model
 				listControlLibrariesOptionsModel := new(securityandcompliancecenterapiv3.ListControlLibrariesOptions)
+				listControlLibrariesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listControlLibrariesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listControlLibrariesOptionsModel.XRequestID = core.StringPtr("testString")
 				listControlLibrariesOptionsModel.Limit = core.Int64Ptr(int64(50))
@@ -1129,6 +1143,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListControlLibrariesOptions model
 				listControlLibrariesOptionsModel := new(securityandcompliancecenterapiv3.ListControlLibrariesOptions)
+				listControlLibrariesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listControlLibrariesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listControlLibrariesOptionsModel.XRequestID = core.StringPtr("testString")
 				listControlLibrariesOptionsModel.Limit = core.Int64Ptr(int64(50))
@@ -1141,7 +1156,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke ListControlLibraries with error: Operation request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -1153,6 +1167,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListControlLibrariesOptions model
 				listControlLibrariesOptionsModel := new(securityandcompliancecenterapiv3.ListControlLibrariesOptions)
+				listControlLibrariesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listControlLibrariesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listControlLibrariesOptionsModel.XRequestID = core.StringPtr("testString")
 				listControlLibrariesOptionsModel.Limit = core.Int64Ptr(int64(50))
@@ -1191,6 +1206,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListControlLibrariesOptions model
 				listControlLibrariesOptionsModel := new(securityandcompliancecenterapiv3.ListControlLibrariesOptions)
+				listControlLibrariesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listControlLibrariesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listControlLibrariesOptionsModel.XRequestID = core.StringPtr("testString")
 				listControlLibrariesOptionsModel.Limit = core.Int64Ptr(int64(50))
@@ -1261,6 +1277,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listControlLibrariesOptionsModel := &securityandcompliancecenterapiv3.ListControlLibrariesOptions{
+					InstanceID:         core.StringPtr("testInstance"),
 					XCorrelationID:     core.StringPtr("testString"),
 					XRequestID:         core.StringPtr("testString"),
 					Limit:              core.Int64Ptr(int64(50)),
@@ -1289,6 +1306,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listControlLibrariesOptionsModel := &securityandcompliancecenterapiv3.ListControlLibrariesOptions{
+					InstanceID:         core.StringPtr("testInstance"),
 					XCorrelationID:     core.StringPtr("testString"),
 					XRequestID:         core.StringPtr("testString"),
 					Limit:              core.Int64Ptr(int64(50)),
@@ -1307,7 +1325,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`CreateCustomControlLibrary(createCustomControlLibraryOptions *CreateCustomControlLibraryOptions) - Operation response error`, func() {
-		createCustomControlLibraryPath := "/control_libraries"
+		createCustomControlLibraryPath := "/instances/testInstance/v3/control_libraries"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -1380,6 +1398,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateCustomControlLibraryOptions model
 				createCustomControlLibraryOptionsModel := new(securityandcompliancecenterapiv3.CreateCustomControlLibraryOptions)
+				createCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createCustomControlLibraryOptionsModel.ControlLibraryName = core.StringPtr("IBM Cloud for Financial Services")
 				createCustomControlLibraryOptionsModel.ControlLibraryDescription = core.StringPtr("IBM Cloud for Financial Services")
 				createCustomControlLibraryOptionsModel.ControlLibraryType = core.StringPtr("custom")
@@ -1410,7 +1429,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`CreateCustomControlLibrary(createCustomControlLibraryOptions *CreateCustomControlLibraryOptions)`, func() {
-		createCustomControlLibraryPath := "/control_libraries"
+		createCustomControlLibraryPath := "/instances/testInstance/v3/control_libraries"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -1505,6 +1524,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateCustomControlLibraryOptions model
 				createCustomControlLibraryOptionsModel := new(securityandcompliancecenterapiv3.CreateCustomControlLibraryOptions)
+				createCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createCustomControlLibraryOptionsModel.ControlLibraryName = core.StringPtr("IBM Cloud for Financial Services")
 				createCustomControlLibraryOptionsModel.ControlLibraryDescription = core.StringPtr("IBM Cloud for Financial Services")
 				createCustomControlLibraryOptionsModel.ControlLibraryType = core.StringPtr("custom")
@@ -1638,6 +1658,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateCustomControlLibraryOptions model
 				createCustomControlLibraryOptionsModel := new(securityandcompliancecenterapiv3.CreateCustomControlLibraryOptions)
+				createCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createCustomControlLibraryOptionsModel.ControlLibraryName = core.StringPtr("IBM Cloud for Financial Services")
 				createCustomControlLibraryOptionsModel.ControlLibraryDescription = core.StringPtr("IBM Cloud for Financial Services")
 				createCustomControlLibraryOptionsModel.ControlLibraryType = core.StringPtr("custom")
@@ -1655,7 +1676,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke CreateCustomControlLibrary with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -1712,6 +1732,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateCustomControlLibraryOptions model
 				createCustomControlLibraryOptionsModel := new(securityandcompliancecenterapiv3.CreateCustomControlLibraryOptions)
+				createCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createCustomControlLibraryOptionsModel.ControlLibraryName = core.StringPtr("IBM Cloud for Financial Services")
 				createCustomControlLibraryOptionsModel.ControlLibraryDescription = core.StringPtr("IBM Cloud for Financial Services")
 				createCustomControlLibraryOptionsModel.ControlLibraryType = core.StringPtr("custom")
@@ -1807,6 +1828,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateCustomControlLibraryOptions model
 				createCustomControlLibraryOptionsModel := new(securityandcompliancecenterapiv3.CreateCustomControlLibraryOptions)
+				createCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createCustomControlLibraryOptionsModel.ControlLibraryName = core.StringPtr("IBM Cloud for Financial Services")
 				createCustomControlLibraryOptionsModel.ControlLibraryDescription = core.StringPtr("IBM Cloud for Financial Services")
 				createCustomControlLibraryOptionsModel.ControlLibraryType = core.StringPtr("custom")
@@ -1833,7 +1855,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`DeleteCustomControlLibrary(deleteCustomControlLibraryOptions *DeleteCustomControlLibraryOptions) - Operation response error`, func() {
-		deleteCustomControlLibraryPath := "/control_libraries/testString"
+		deleteCustomControlLibraryPath := "/instances/testInstance/v3/control_libraries/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -1861,6 +1883,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteCustomControlLibraryOptions model
 				deleteCustomControlLibraryOptionsModel := new(securityandcompliancecenterapiv3.DeleteCustomControlLibraryOptions)
+				deleteCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				deleteCustomControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				deleteCustomControlLibraryOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteCustomControlLibraryOptionsModel.XRequestID = core.StringPtr("testString")
@@ -1884,7 +1907,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`DeleteCustomControlLibrary(deleteCustomControlLibraryOptions *DeleteCustomControlLibraryOptions)`, func() {
-		deleteCustomControlLibraryPath := "/control_libraries/testString"
+		deleteCustomControlLibraryPath := "/instances/testInstance/v3/control_libraries/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -1918,6 +1941,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteCustomControlLibraryOptions model
 				deleteCustomControlLibraryOptionsModel := new(securityandcompliancecenterapiv3.DeleteCustomControlLibraryOptions)
+				deleteCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				deleteCustomControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				deleteCustomControlLibraryOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteCustomControlLibraryOptionsModel.XRequestID = core.StringPtr("testString")
@@ -1983,6 +2007,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteCustomControlLibraryOptions model
 				deleteCustomControlLibraryOptionsModel := new(securityandcompliancecenterapiv3.DeleteCustomControlLibraryOptions)
+				deleteCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				deleteCustomControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				deleteCustomControlLibraryOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteCustomControlLibraryOptionsModel.XRequestID = core.StringPtr("testString")
@@ -1993,7 +2018,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke DeleteCustomControlLibrary with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -2005,6 +2029,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteCustomControlLibraryOptions model
 				deleteCustomControlLibraryOptionsModel := new(securityandcompliancecenterapiv3.DeleteCustomControlLibraryOptions)
+				deleteCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				deleteCustomControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				deleteCustomControlLibraryOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteCustomControlLibraryOptionsModel.XRequestID = core.StringPtr("testString")
@@ -2048,6 +2073,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteCustomControlLibraryOptions model
 				deleteCustomControlLibraryOptionsModel := new(securityandcompliancecenterapiv3.DeleteCustomControlLibraryOptions)
+				deleteCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				deleteCustomControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				deleteCustomControlLibraryOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteCustomControlLibraryOptionsModel.XRequestID = core.StringPtr("testString")
@@ -2067,7 +2093,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetControlLibrary(getControlLibraryOptions *GetControlLibraryOptions) - Operation response error`, func() {
-		getControlLibraryPath := "/control_libraries/testString"
+		getControlLibraryPath := "/instances/testInstance/v3/control_libraries/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -2095,6 +2121,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetControlLibraryOptions model
 				getControlLibraryOptionsModel := new(securityandcompliancecenterapiv3.GetControlLibraryOptions)
+				getControlLibraryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				getControlLibraryOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getControlLibraryOptionsModel.XRequestID = core.StringPtr("testString")
@@ -2118,7 +2145,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetControlLibrary(getControlLibraryOptions *GetControlLibraryOptions)`, func() {
-		getControlLibraryPath := "/control_libraries/testString"
+		getControlLibraryPath := "/instances/testInstance/v3/control_libraries/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -2152,6 +2179,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetControlLibraryOptions model
 				getControlLibraryOptionsModel := new(securityandcompliancecenterapiv3.GetControlLibraryOptions)
+				getControlLibraryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				getControlLibraryOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getControlLibraryOptionsModel.XRequestID = core.StringPtr("testString")
@@ -2217,6 +2245,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetControlLibraryOptions model
 				getControlLibraryOptionsModel := new(securityandcompliancecenterapiv3.GetControlLibraryOptions)
+				getControlLibraryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				getControlLibraryOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getControlLibraryOptionsModel.XRequestID = core.StringPtr("testString")
@@ -2227,7 +2256,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke GetControlLibrary with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -2239,6 +2267,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetControlLibraryOptions model
 				getControlLibraryOptionsModel := new(securityandcompliancecenterapiv3.GetControlLibraryOptions)
+				getControlLibraryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				getControlLibraryOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getControlLibraryOptionsModel.XRequestID = core.StringPtr("testString")
@@ -2282,6 +2311,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetControlLibraryOptions model
 				getControlLibraryOptionsModel := new(securityandcompliancecenterapiv3.GetControlLibraryOptions)
+				getControlLibraryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				getControlLibraryOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getControlLibraryOptionsModel.XRequestID = core.StringPtr("testString")
@@ -2301,7 +2331,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ReplaceCustomControlLibrary(replaceCustomControlLibraryOptions *ReplaceCustomControlLibraryOptions) - Operation response error`, func() {
-		replaceCustomControlLibraryPath := "/control_libraries/testString"
+		replaceCustomControlLibraryPath := "/instances/testInstance/v3/control_libraries/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -2374,6 +2404,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceCustomControlLibraryOptions model
 				replaceCustomControlLibraryOptionsModel := new(securityandcompliancecenterapiv3.ReplaceCustomControlLibraryOptions)
+				replaceCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				replaceCustomControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.ID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.AccountID = core.StringPtr("testString")
@@ -2413,7 +2444,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ReplaceCustomControlLibrary(replaceCustomControlLibraryOptions *ReplaceCustomControlLibraryOptions)`, func() {
-		replaceCustomControlLibraryPath := "/control_libraries/testString"
+		replaceCustomControlLibraryPath := "/instances/testInstance/v3/control_libraries/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -2508,6 +2539,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceCustomControlLibraryOptions model
 				replaceCustomControlLibraryOptionsModel := new(securityandcompliancecenterapiv3.ReplaceCustomControlLibraryOptions)
+				replaceCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				replaceCustomControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.ID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.AccountID = core.StringPtr("testString")
@@ -2650,6 +2682,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceCustomControlLibraryOptions model
 				replaceCustomControlLibraryOptionsModel := new(securityandcompliancecenterapiv3.ReplaceCustomControlLibraryOptions)
+				replaceCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				replaceCustomControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.ID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.AccountID = core.StringPtr("testString")
@@ -2676,7 +2709,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke ReplaceCustomControlLibrary with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -2733,6 +2765,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceCustomControlLibraryOptions model
 				replaceCustomControlLibraryOptionsModel := new(securityandcompliancecenterapiv3.ReplaceCustomControlLibraryOptions)
+				replaceCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				replaceCustomControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.ID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.AccountID = core.StringPtr("testString")
@@ -2837,6 +2870,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceCustomControlLibraryOptions model
 				replaceCustomControlLibraryOptionsModel := new(securityandcompliancecenterapiv3.ReplaceCustomControlLibraryOptions)
+				replaceCustomControlLibraryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				replaceCustomControlLibraryOptionsModel.ControlLibrariesID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.ID = core.StringPtr("testString")
 				replaceCustomControlLibraryOptionsModel.AccountID = core.StringPtr("testString")
@@ -2872,7 +2906,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListProfiles(listProfilesOptions *ListProfilesOptions) - Operation response error`, func() {
-		listProfilesPath := "/profiles"
+		listProfilesPath := "/instances/testInstance/v3/profiles"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -2903,6 +2937,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListProfilesOptions model
 				listProfilesOptionsModel := new(securityandcompliancecenterapiv3.ListProfilesOptions)
+				listProfilesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listProfilesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listProfilesOptionsModel.XRequestID = core.StringPtr("testString")
 				listProfilesOptionsModel.Limit = core.Int64Ptr(int64(10))
@@ -2928,7 +2963,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListProfiles(listProfilesOptions *ListProfilesOptions)`, func() {
-		listProfilesPath := "/profiles"
+		listProfilesPath := "/instances/testInstance/v3/profiles"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -2965,6 +3000,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListProfilesOptions model
 				listProfilesOptionsModel := new(securityandcompliancecenterapiv3.ListProfilesOptions)
+				listProfilesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listProfilesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listProfilesOptionsModel.XRequestID = core.StringPtr("testString")
 				listProfilesOptionsModel.Limit = core.Int64Ptr(int64(10))
@@ -3035,6 +3071,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListProfilesOptions model
 				listProfilesOptionsModel := new(securityandcompliancecenterapiv3.ListProfilesOptions)
+				listProfilesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listProfilesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listProfilesOptionsModel.XRequestID = core.StringPtr("testString")
 				listProfilesOptionsModel.Limit = core.Int64Ptr(int64(10))
@@ -3047,7 +3084,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke ListProfiles with error: Operation request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -3059,6 +3095,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListProfilesOptions model
 				listProfilesOptionsModel := new(securityandcompliancecenterapiv3.ListProfilesOptions)
+				listProfilesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listProfilesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listProfilesOptionsModel.XRequestID = core.StringPtr("testString")
 				listProfilesOptionsModel.Limit = core.Int64Ptr(int64(10))
@@ -3097,6 +3134,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListProfilesOptions model
 				listProfilesOptionsModel := new(securityandcompliancecenterapiv3.ListProfilesOptions)
+				listProfilesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listProfilesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listProfilesOptionsModel.XRequestID = core.StringPtr("testString")
 				listProfilesOptionsModel.Limit = core.Int64Ptr(int64(10))
@@ -3167,6 +3205,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listProfilesOptionsModel := &securityandcompliancecenterapiv3.ListProfilesOptions{
+					InstanceID:     core.StringPtr("testInstance"),
 					XCorrelationID: core.StringPtr("testString"),
 					XRequestID:     core.StringPtr("testString"),
 					Limit:          core.Int64Ptr(int64(10)),
@@ -3195,6 +3234,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listProfilesOptionsModel := &securityandcompliancecenterapiv3.ListProfilesOptions{
+					InstanceID:     core.StringPtr("testInstance"),
 					XCorrelationID: core.StringPtr("testString"),
 					XRequestID:     core.StringPtr("testString"),
 					Limit:          core.Int64Ptr(int64(10)),
@@ -3213,7 +3253,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`CreateProfile(createProfileOptions *CreateProfileOptions) - Operation response error`, func() {
-		createProfilePath := "/profiles"
+		createProfilePath := "/instances/testInstance/v3/profiles"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -3255,6 +3295,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateProfileOptions model
 				createProfileOptionsModel := new(securityandcompliancecenterapiv3.CreateProfileOptions)
+				createProfileOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createProfileOptionsModel.ProfileName = core.StringPtr("test_profile1")
 				createProfileOptionsModel.ProfileDescription = core.StringPtr("test_description1")
 				createProfileOptionsModel.ProfileType = core.StringPtr("custom")
@@ -3282,7 +3323,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`CreateProfile(createProfileOptions *CreateProfileOptions)`, func() {
-		createProfilePath := "/profiles"
+		createProfilePath := "/instances/testInstance/v3/profiles"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -3346,6 +3387,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateProfileOptions model
 				createProfileOptionsModel := new(securityandcompliancecenterapiv3.CreateProfileOptions)
+				createProfileOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createProfileOptionsModel.ProfileName = core.StringPtr("test_profile1")
 				createProfileOptionsModel.ProfileDescription = core.StringPtr("test_description1")
 				createProfileOptionsModel.ProfileType = core.StringPtr("custom")
@@ -3445,6 +3487,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateProfileOptions model
 				createProfileOptionsModel := new(securityandcompliancecenterapiv3.CreateProfileOptions)
+				createProfileOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createProfileOptionsModel.ProfileName = core.StringPtr("test_profile1")
 				createProfileOptionsModel.ProfileDescription = core.StringPtr("test_description1")
 				createProfileOptionsModel.ProfileType = core.StringPtr("custom")
@@ -3459,7 +3502,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke CreateProfile with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -3485,6 +3527,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateProfileOptions model
 				createProfileOptionsModel := new(securityandcompliancecenterapiv3.CreateProfileOptions)
+				createProfileOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createProfileOptionsModel.ProfileName = core.StringPtr("test_profile1")
 				createProfileOptionsModel.ProfileDescription = core.StringPtr("test_description1")
 				createProfileOptionsModel.ProfileType = core.StringPtr("custom")
@@ -3546,6 +3589,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateProfileOptions model
 				createProfileOptionsModel := new(securityandcompliancecenterapiv3.CreateProfileOptions)
+				createProfileOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createProfileOptionsModel.ProfileName = core.StringPtr("test_profile1")
 				createProfileOptionsModel.ProfileDescription = core.StringPtr("test_description1")
 				createProfileOptionsModel.ProfileType = core.StringPtr("custom")
@@ -3569,7 +3613,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`DeleteCustomProfile(deleteCustomProfileOptions *DeleteCustomProfileOptions) - Operation response error`, func() {
-		deleteCustomProfilePath := "/profiles/testString"
+		deleteCustomProfilePath := "/instances/testInstance/v3/profiles/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -3597,6 +3641,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteCustomProfileOptions model
 				deleteCustomProfileOptionsModel := new(securityandcompliancecenterapiv3.DeleteCustomProfileOptions)
+				deleteCustomProfileOptionsModel.InstanceID = core.StringPtr("testInstance")
 				deleteCustomProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.XRequestID = core.StringPtr("testString")
@@ -3620,7 +3665,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`DeleteCustomProfile(deleteCustomProfileOptions *DeleteCustomProfileOptions)`, func() {
-		deleteCustomProfilePath := "/profiles/testString"
+		deleteCustomProfilePath := "/instances/testInstance/v3/profiles/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -3654,6 +3699,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteCustomProfileOptions model
 				deleteCustomProfileOptionsModel := new(securityandcompliancecenterapiv3.DeleteCustomProfileOptions)
+				deleteCustomProfileOptionsModel.InstanceID = core.StringPtr("testInstance")
 				deleteCustomProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.XRequestID = core.StringPtr("testString")
@@ -3719,6 +3765,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteCustomProfileOptions model
 				deleteCustomProfileOptionsModel := new(securityandcompliancecenterapiv3.DeleteCustomProfileOptions)
+				deleteCustomProfileOptionsModel.InstanceID = core.StringPtr("testInstance")
 				deleteCustomProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.XRequestID = core.StringPtr("testString")
@@ -3729,7 +3776,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke DeleteCustomProfile with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -3741,6 +3787,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteCustomProfileOptions model
 				deleteCustomProfileOptionsModel := new(securityandcompliancecenterapiv3.DeleteCustomProfileOptions)
+				deleteCustomProfileOptionsModel.InstanceID = core.StringPtr("testInstance")
 				deleteCustomProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.XRequestID = core.StringPtr("testString")
@@ -3784,6 +3831,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteCustomProfileOptions model
 				deleteCustomProfileOptionsModel := new(securityandcompliancecenterapiv3.DeleteCustomProfileOptions)
+				deleteCustomProfileOptionsModel.InstanceID = core.StringPtr("testInstance")
 				deleteCustomProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteCustomProfileOptionsModel.XRequestID = core.StringPtr("testString")
@@ -3803,7 +3851,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetProfile(getProfileOptions *GetProfileOptions) - Operation response error`, func() {
-		getProfilePath := "/profiles/testString"
+		getProfilePath := "/instances/testInstance/v3/profiles/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -3831,6 +3879,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProfileOptions model
 				getProfileOptionsModel := new(securityandcompliancecenterapiv3.GetProfileOptions)
+				getProfileOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				getProfileOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProfileOptionsModel.XRequestID = core.StringPtr("testString")
@@ -3854,7 +3903,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetProfile(getProfileOptions *GetProfileOptions)`, func() {
-		getProfilePath := "/profiles/testString"
+		getProfilePath := "/instances/testInstance/v3/profiles/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -3888,6 +3937,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProfileOptions model
 				getProfileOptionsModel := new(securityandcompliancecenterapiv3.GetProfileOptions)
+				getProfileOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				getProfileOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProfileOptionsModel.XRequestID = core.StringPtr("testString")
@@ -3953,6 +4003,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProfileOptions model
 				getProfileOptionsModel := new(securityandcompliancecenterapiv3.GetProfileOptions)
+				getProfileOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				getProfileOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProfileOptionsModel.XRequestID = core.StringPtr("testString")
@@ -3963,7 +4014,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke GetProfile with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -3975,6 +4025,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProfileOptions model
 				getProfileOptionsModel := new(securityandcompliancecenterapiv3.GetProfileOptions)
+				getProfileOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				getProfileOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProfileOptionsModel.XRequestID = core.StringPtr("testString")
@@ -4018,6 +4069,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProfileOptions model
 				getProfileOptionsModel := new(securityandcompliancecenterapiv3.GetProfileOptions)
+				getProfileOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				getProfileOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProfileOptionsModel.XRequestID = core.StringPtr("testString")
@@ -4037,7 +4089,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ReplaceProfile(replaceProfileOptions *ReplaceProfileOptions) - Operation response error`, func() {
-		replaceProfilePath := "/profiles/testString"
+		replaceProfilePath := "/instances/testInstance/v3/profiles/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -4079,6 +4131,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceProfileOptions model
 				replaceProfileOptionsModel := new(securityandcompliancecenterapiv3.ReplaceProfileOptions)
+				replaceProfileOptionsModel.InstanceID = core.StringPtr("testInstance")
 				replaceProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileOptionsModel.ProfileName = core.StringPtr("test_profile1")
 				replaceProfileOptionsModel.ProfileDescription = core.StringPtr("test_description1")
@@ -4107,7 +4160,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ReplaceProfile(replaceProfileOptions *ReplaceProfileOptions)`, func() {
-		replaceProfilePath := "/profiles/testString"
+		replaceProfilePath := "/instances/testInstance/v3/profiles/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -4171,6 +4224,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceProfileOptions model
 				replaceProfileOptionsModel := new(securityandcompliancecenterapiv3.ReplaceProfileOptions)
+				replaceProfileOptionsModel.InstanceID = core.StringPtr("testInstance")
 				replaceProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileOptionsModel.ProfileName = core.StringPtr("test_profile1")
 				replaceProfileOptionsModel.ProfileDescription = core.StringPtr("test_description1")
@@ -4271,6 +4325,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceProfileOptions model
 				replaceProfileOptionsModel := new(securityandcompliancecenterapiv3.ReplaceProfileOptions)
+				replaceProfileOptionsModel.InstanceID = core.StringPtr("testInstance")
 				replaceProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileOptionsModel.ProfileName = core.StringPtr("test_profile1")
 				replaceProfileOptionsModel.ProfileDescription = core.StringPtr("test_description1")
@@ -4286,7 +4341,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke ReplaceProfile with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -4312,6 +4366,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceProfileOptions model
 				replaceProfileOptionsModel := new(securityandcompliancecenterapiv3.ReplaceProfileOptions)
+				replaceProfileOptionsModel.InstanceID = core.StringPtr("testInstance")
 				replaceProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileOptionsModel.ProfileName = core.StringPtr("test_profile1")
 				replaceProfileOptionsModel.ProfileDescription = core.StringPtr("test_description1")
@@ -4374,6 +4429,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceProfileOptions model
 				replaceProfileOptionsModel := new(securityandcompliancecenterapiv3.ReplaceProfileOptions)
+				replaceProfileOptionsModel.InstanceID = core.StringPtr("testInstance")
 				replaceProfileOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileOptionsModel.ProfileName = core.StringPtr("test_profile1")
 				replaceProfileOptionsModel.ProfileDescription = core.StringPtr("test_description1")
@@ -4398,7 +4454,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListRules(listRulesOptions *ListRulesOptions) - Operation response error`, func() {
-		listRulesPath := "/rules"
+		listRulesPath := "/instances/testInstance/v3/rules"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -4429,6 +4485,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListRulesOptions model
 				listRulesOptionsModel := new(securityandcompliancecenterapiv3.ListRulesOptions)
+				listRulesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listRulesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listRulesOptionsModel.XRequestID = core.StringPtr("testString")
 				listRulesOptionsModel.Type = core.StringPtr("system_defined")
@@ -4454,7 +4511,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListRules(listRulesOptions *ListRulesOptions)`, func() {
-		listRulesPath := "/rules"
+		listRulesPath := "/instances/testInstance/v3/rules"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -4491,6 +4548,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListRulesOptions model
 				listRulesOptionsModel := new(securityandcompliancecenterapiv3.ListRulesOptions)
+				listRulesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listRulesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listRulesOptionsModel.XRequestID = core.StringPtr("testString")
 				listRulesOptionsModel.Type = core.StringPtr("system_defined")
@@ -4561,6 +4619,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListRulesOptions model
 				listRulesOptionsModel := new(securityandcompliancecenterapiv3.ListRulesOptions)
+				listRulesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listRulesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listRulesOptionsModel.XRequestID = core.StringPtr("testString")
 				listRulesOptionsModel.Type = core.StringPtr("system_defined")
@@ -4573,7 +4632,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke ListRules with error: Operation request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -4585,6 +4643,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListRulesOptions model
 				listRulesOptionsModel := new(securityandcompliancecenterapiv3.ListRulesOptions)
+				listRulesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listRulesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listRulesOptionsModel.XRequestID = core.StringPtr("testString")
 				listRulesOptionsModel.Type = core.StringPtr("system_defined")
@@ -4623,6 +4682,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListRulesOptions model
 				listRulesOptionsModel := new(securityandcompliancecenterapiv3.ListRulesOptions)
+				listRulesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listRulesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listRulesOptionsModel.XRequestID = core.StringPtr("testString")
 				listRulesOptionsModel.Type = core.StringPtr("system_defined")
@@ -4644,7 +4704,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`CreateRule(createRuleOptions *CreateRuleOptions) - Operation response error`, func() {
-		createRulePath := "/rules"
+		createRulePath := "/instances/testInstance/v3/rules"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -4708,6 +4768,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateRuleOptions model
 				createRuleOptionsModel := new(securityandcompliancecenterapiv3.CreateRuleOptions)
+				createRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createRuleOptionsModel.Description = core.StringPtr("Example rule")
 				createRuleOptionsModel.Target = targetModel
 				createRuleOptionsModel.RequiredConfig = requiredConfigModel
@@ -4737,7 +4798,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`CreateRule(createRuleOptions *CreateRuleOptions)`, func() {
-		createRulePath := "/rules"
+		createRulePath := "/instances/testInstance/v3/rules"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -4823,6 +4884,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateRuleOptions model
 				createRuleOptionsModel := new(securityandcompliancecenterapiv3.CreateRuleOptions)
+				createRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createRuleOptionsModel.Description = core.StringPtr("Example rule")
 				createRuleOptionsModel.Target = targetModel
 				createRuleOptionsModel.RequiredConfig = requiredConfigModel
@@ -4946,6 +5008,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateRuleOptions model
 				createRuleOptionsModel := new(securityandcompliancecenterapiv3.CreateRuleOptions)
+				createRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createRuleOptionsModel.Description = core.StringPtr("Example rule")
 				createRuleOptionsModel.Target = targetModel
 				createRuleOptionsModel.RequiredConfig = requiredConfigModel
@@ -4962,7 +5025,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke CreateRule with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -5010,6 +5072,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateRuleOptions model
 				createRuleOptionsModel := new(securityandcompliancecenterapiv3.CreateRuleOptions)
+				createRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createRuleOptionsModel.Description = core.StringPtr("Example rule")
 				createRuleOptionsModel.Target = targetModel
 				createRuleOptionsModel.RequiredConfig = requiredConfigModel
@@ -5095,6 +5158,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateRuleOptions model
 				createRuleOptionsModel := new(securityandcompliancecenterapiv3.CreateRuleOptions)
+				createRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createRuleOptionsModel.Description = core.StringPtr("Example rule")
 				createRuleOptionsModel.Target = targetModel
 				createRuleOptionsModel.RequiredConfig = requiredConfigModel
@@ -5120,7 +5184,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`DeleteRule(deleteRuleOptions *DeleteRuleOptions)`, func() {
-		deleteRulePath := "/rules/testString"
+		deleteRulePath := "/instances/testInstance/v3/rules/testString"
 		Context(`Using mock server endpoint`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -5152,6 +5216,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteRuleOptions model
 				deleteRuleOptionsModel := new(securityandcompliancecenterapiv3.DeleteRuleOptions)
+				deleteRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				deleteRuleOptionsModel.RuleID = core.StringPtr("testString")
 				deleteRuleOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteRuleOptionsModel.XRequestID = core.StringPtr("testString")
@@ -5172,6 +5237,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteRuleOptions model
 				deleteRuleOptionsModel := new(securityandcompliancecenterapiv3.DeleteRuleOptions)
+				deleteRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				deleteRuleOptionsModel.RuleID = core.StringPtr("testString")
 				deleteRuleOptionsModel.XCorrelationID = core.StringPtr("testString")
 				deleteRuleOptionsModel.XRequestID = core.StringPtr("testString")
@@ -5196,7 +5262,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetRule(getRuleOptions *GetRuleOptions) - Operation response error`, func() {
-		getRulePath := "/rules/testString"
+		getRulePath := "/instances/testInstance/v3/rules/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -5224,6 +5290,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetRuleOptions model
 				getRuleOptionsModel := new(securityandcompliancecenterapiv3.GetRuleOptions)
+				getRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getRuleOptionsModel.RuleID = core.StringPtr("testString")
 				getRuleOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getRuleOptionsModel.XRequestID = core.StringPtr("testString")
@@ -5247,7 +5314,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetRule(getRuleOptions *GetRuleOptions)`, func() {
-		getRulePath := "/rules/testString"
+		getRulePath := "/instances/testInstance/v3/rules/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -5281,6 +5348,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetRuleOptions model
 				getRuleOptionsModel := new(securityandcompliancecenterapiv3.GetRuleOptions)
+				getRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getRuleOptionsModel.RuleID = core.StringPtr("testString")
 				getRuleOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getRuleOptionsModel.XRequestID = core.StringPtr("testString")
@@ -5346,6 +5414,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetRuleOptions model
 				getRuleOptionsModel := new(securityandcompliancecenterapiv3.GetRuleOptions)
+				getRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getRuleOptionsModel.RuleID = core.StringPtr("testString")
 				getRuleOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getRuleOptionsModel.XRequestID = core.StringPtr("testString")
@@ -5356,7 +5425,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke GetRule with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -5368,6 +5436,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetRuleOptions model
 				getRuleOptionsModel := new(securityandcompliancecenterapiv3.GetRuleOptions)
+				getRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getRuleOptionsModel.RuleID = core.StringPtr("testString")
 				getRuleOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getRuleOptionsModel.XRequestID = core.StringPtr("testString")
@@ -5411,6 +5480,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetRuleOptions model
 				getRuleOptionsModel := new(securityandcompliancecenterapiv3.GetRuleOptions)
+				getRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getRuleOptionsModel.RuleID = core.StringPtr("testString")
 				getRuleOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getRuleOptionsModel.XRequestID = core.StringPtr("testString")
@@ -5430,7 +5500,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ReplaceRule(replaceRuleOptions *ReplaceRuleOptions) - Operation response error`, func() {
-		replaceRulePath := "/rules/testString"
+		replaceRulePath := "/instances/testInstance/v3/rules/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -5496,6 +5566,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceRuleOptions model
 				replaceRuleOptionsModel := new(securityandcompliancecenterapiv3.ReplaceRuleOptions)
+				replaceRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				replaceRuleOptionsModel.RuleID = core.StringPtr("testString")
 				replaceRuleOptionsModel.IfMatch = core.StringPtr("testString")
 				replaceRuleOptionsModel.Description = core.StringPtr("Example rule")
@@ -5527,7 +5598,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ReplaceRule(replaceRuleOptions *ReplaceRuleOptions)`, func() {
-		replaceRulePath := "/rules/testString"
+		replaceRulePath := "/instances/testInstance/v3/rules/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -5615,6 +5686,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceRuleOptions model
 				replaceRuleOptionsModel := new(securityandcompliancecenterapiv3.ReplaceRuleOptions)
+				replaceRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				replaceRuleOptionsModel.RuleID = core.StringPtr("testString")
 				replaceRuleOptionsModel.IfMatch = core.StringPtr("testString")
 				replaceRuleOptionsModel.Description = core.StringPtr("Example rule")
@@ -5742,6 +5814,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceRuleOptions model
 				replaceRuleOptionsModel := new(securityandcompliancecenterapiv3.ReplaceRuleOptions)
+				replaceRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				replaceRuleOptionsModel.RuleID = core.StringPtr("testString")
 				replaceRuleOptionsModel.IfMatch = core.StringPtr("testString")
 				replaceRuleOptionsModel.Description = core.StringPtr("Example rule")
@@ -5760,7 +5833,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke ReplaceRule with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -5808,6 +5880,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceRuleOptions model
 				replaceRuleOptionsModel := new(securityandcompliancecenterapiv3.ReplaceRuleOptions)
+				replaceRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				replaceRuleOptionsModel.RuleID = core.StringPtr("testString")
 				replaceRuleOptionsModel.IfMatch = core.StringPtr("testString")
 				replaceRuleOptionsModel.Description = core.StringPtr("Example rule")
@@ -5895,6 +5968,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceRuleOptions model
 				replaceRuleOptionsModel := new(securityandcompliancecenterapiv3.ReplaceRuleOptions)
+				replaceRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				replaceRuleOptionsModel.RuleID = core.StringPtr("testString")
 				replaceRuleOptionsModel.IfMatch = core.StringPtr("testString")
 				replaceRuleOptionsModel.Description = core.StringPtr("Example rule")
@@ -5922,7 +5996,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListAttachments(listAttachmentsOptions *ListAttachmentsOptions) - Operation response error`, func() {
-		listAttachmentsPath := "/profiles/testString/attachments"
+		listAttachmentsPath := "/instances/testInstance/v3/profiles/testString/attachments"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -5952,6 +6026,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListAttachmentsOptions model
 				listAttachmentsOptionsModel := new(securityandcompliancecenterapiv3.ListAttachmentsOptions)
+				listAttachmentsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listAttachmentsOptionsModel.ProfileID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.XRequestID = core.StringPtr("testString")
@@ -5977,7 +6052,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListAttachments(listAttachmentsOptions *ListAttachmentsOptions)`, func() {
-		listAttachmentsPath := "/profiles/testString/attachments"
+		listAttachmentsPath := "/instances/testInstance/v3/profiles/testString/attachments"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -6013,6 +6088,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListAttachmentsOptions model
 				listAttachmentsOptionsModel := new(securityandcompliancecenterapiv3.ListAttachmentsOptions)
+				listAttachmentsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listAttachmentsOptionsModel.ProfileID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.XRequestID = core.StringPtr("testString")
@@ -6082,6 +6158,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListAttachmentsOptions model
 				listAttachmentsOptionsModel := new(securityandcompliancecenterapiv3.ListAttachmentsOptions)
+				listAttachmentsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listAttachmentsOptionsModel.ProfileID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.XRequestID = core.StringPtr("testString")
@@ -6094,7 +6171,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke ListAttachments with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -6106,6 +6182,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListAttachmentsOptions model
 				listAttachmentsOptionsModel := new(securityandcompliancecenterapiv3.ListAttachmentsOptions)
+				listAttachmentsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listAttachmentsOptionsModel.ProfileID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.XRequestID = core.StringPtr("testString")
@@ -6151,6 +6228,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListAttachmentsOptions model
 				listAttachmentsOptionsModel := new(securityandcompliancecenterapiv3.ListAttachmentsOptions)
+				listAttachmentsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listAttachmentsOptionsModel.ProfileID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listAttachmentsOptionsModel.XRequestID = core.StringPtr("testString")
@@ -6221,6 +6299,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listAttachmentsOptionsModel := &securityandcompliancecenterapiv3.ListAttachmentsOptions{
+					InstanceID:     core.StringPtr("testInstance"),
 					ProfileID:      core.StringPtr("testString"),
 					XCorrelationID: core.StringPtr("testString"),
 					XRequestID:     core.StringPtr("testString"),
@@ -6249,6 +6328,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listAttachmentsOptionsModel := &securityandcompliancecenterapiv3.ListAttachmentsOptions{
+					InstanceID:     core.StringPtr("testInstance"),
 					ProfileID:      core.StringPtr("testString"),
 					XCorrelationID: core.StringPtr("testString"),
 					XRequestID:     core.StringPtr("testString"),
@@ -6267,7 +6347,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`CreateAttachment(createAttachmentOptions *CreateAttachmentOptions) - Operation response error`, func() {
-		createAttachmentPath := "/profiles/testString/attachments"
+		createAttachmentPath := "/instances/testInstance/v3/profiles/testString/attachments"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -6335,6 +6415,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateAttachmentOptions model
 				createAttachmentOptionsModel := new(securityandcompliancecenterapiv3.CreateAttachmentOptions)
+				createAttachmentOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				createAttachmentOptionsModel.Attachments = []securityandcompliancecenterapiv3.AttachmentsPrototype{*attachmentsPrototypeModel}
 				createAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
@@ -6360,7 +6441,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`CreateAttachment(createAttachmentOptions *CreateAttachmentOptions)`, func() {
-		createAttachmentPath := "/profiles/testString/attachments"
+		createAttachmentPath := "/instances/testInstance/v3/profiles/testString/attachments"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -6450,6 +6531,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateAttachmentOptions model
 				createAttachmentOptionsModel := new(securityandcompliancecenterapiv3.CreateAttachmentOptions)
+				createAttachmentOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				createAttachmentOptionsModel.Attachments = []securityandcompliancecenterapiv3.AttachmentsPrototype{*attachmentsPrototypeModel}
 				createAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
@@ -6573,6 +6655,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateAttachmentOptions model
 				createAttachmentOptionsModel := new(securityandcompliancecenterapiv3.CreateAttachmentOptions)
+				createAttachmentOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				createAttachmentOptionsModel.Attachments = []securityandcompliancecenterapiv3.AttachmentsPrototype{*attachmentsPrototypeModel}
 				createAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
@@ -6585,7 +6668,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke CreateAttachment with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -6637,6 +6719,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateAttachmentOptions model
 				createAttachmentOptionsModel := new(securityandcompliancecenterapiv3.CreateAttachmentOptions)
+				createAttachmentOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				createAttachmentOptionsModel.Attachments = []securityandcompliancecenterapiv3.AttachmentsPrototype{*attachmentsPrototypeModel}
 				createAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
@@ -6722,6 +6805,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateAttachmentOptions model
 				createAttachmentOptionsModel := new(securityandcompliancecenterapiv3.CreateAttachmentOptions)
+				createAttachmentOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				createAttachmentOptionsModel.Attachments = []securityandcompliancecenterapiv3.AttachmentsPrototype{*attachmentsPrototypeModel}
 				createAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
@@ -6743,7 +6827,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`DeleteProfileAttachment(deleteProfileAttachmentOptions *DeleteProfileAttachmentOptions) - Operation response error`, func() {
-		deleteProfileAttachmentPath := "/profiles/testString/attachments/testString"
+		deleteProfileAttachmentPath := "/instances/testInstance/v3/profiles/testString/attachments/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -6771,6 +6855,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteProfileAttachmentOptions model
 				deleteProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.DeleteProfileAttachmentOptions)
+				deleteProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testInstance")
 				deleteProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -6795,7 +6880,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`DeleteProfileAttachment(deleteProfileAttachmentOptions *DeleteProfileAttachmentOptions)`, func() {
-		deleteProfileAttachmentPath := "/profiles/testString/attachments/testString"
+		deleteProfileAttachmentPath := "/instances/testInstance/v3/profiles/testString/attachments/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -6829,6 +6914,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteProfileAttachmentOptions model
 				deleteProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.DeleteProfileAttachmentOptions)
+				deleteProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testInstance")
 				deleteProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -6895,6 +6981,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteProfileAttachmentOptions model
 				deleteProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.DeleteProfileAttachmentOptions)
+				deleteProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testInstance")
 				deleteProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -6906,7 +6993,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke DeleteProfileAttachment with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -6918,6 +7004,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteProfileAttachmentOptions model
 				deleteProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.DeleteProfileAttachmentOptions)
+				deleteProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testInstance")
 				deleteProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -6962,6 +7049,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteProfileAttachmentOptions model
 				deleteProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.DeleteProfileAttachmentOptions)
+				deleteProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testInstance")
 				deleteProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				deleteProfileAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -6982,7 +7070,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetProfileAttachment(getProfileAttachmentOptions *GetProfileAttachmentOptions) - Operation response error`, func() {
-		getProfileAttachmentPath := "/profiles/testString/attachments/testString"
+		getProfileAttachmentPath := "/instances/testInstance/v3/profiles/testString/attachments/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -7010,6 +7098,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProfileAttachmentOptions model
 				getProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.GetProfileAttachmentOptions)
+				getProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -7034,7 +7123,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetProfileAttachment(getProfileAttachmentOptions *GetProfileAttachmentOptions)`, func() {
-		getProfileAttachmentPath := "/profiles/testString/attachments/testString"
+		getProfileAttachmentPath := "/instances/testInstance/v3/profiles/testString/attachments/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -7068,6 +7157,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProfileAttachmentOptions model
 				getProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.GetProfileAttachmentOptions)
+				getProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -7134,6 +7224,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProfileAttachmentOptions model
 				getProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.GetProfileAttachmentOptions)
+				getProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -7145,7 +7236,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke GetProfileAttachment with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -7157,6 +7247,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProfileAttachmentOptions model
 				getProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.GetProfileAttachmentOptions)
+				getProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -7201,6 +7292,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProfileAttachmentOptions model
 				getProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.GetProfileAttachmentOptions)
+				getProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				getProfileAttachmentOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -7221,7 +7313,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ReplaceProfileAttachment(replaceProfileAttachmentOptions *ReplaceProfileAttachmentOptions) - Operation response error`, func() {
-		replaceProfileAttachmentPath := "/profiles/testString/attachments/testString"
+		replaceProfileAttachmentPath := "/instances/testInstance/v3/profiles/testString/attachments/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -7284,12 +7376,12 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceProfileAttachmentOptions model
 				replaceProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.ReplaceProfileAttachmentOptions)
+				replaceProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testInstance")
 				replaceProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.AccountID = core.StringPtr("testString")
-				replaceProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.Scope = []securityandcompliancecenterapiv3.MultiCloudScope{*multiCloudScopeModel}
 				replaceProfileAttachmentOptionsModel.CreatedOn = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				replaceProfileAttachmentOptionsModel.CreatedBy = core.StringPtr("testString")
@@ -7325,7 +7417,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ReplaceProfileAttachment(replaceProfileAttachmentOptions *ReplaceProfileAttachmentOptions)`, func() {
-		replaceProfileAttachmentPath := "/profiles/testString/attachments/testString"
+		replaceProfileAttachmentPath := "/instances/testInstance/v3/profiles/testString/attachments/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -7410,12 +7502,12 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ReplaceProfileAttachmentOptions model
 				replaceProfileAttachmentOptionsModel := new(securityandcompliancecenterapiv3.ReplaceProfileAttachmentOptions)
+				replaceProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testInstance")
 				replaceProfileAttachmentOptionsModel.AttachmentID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.AccountID = core.StringPtr("testString")
-				replaceProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.Scope = []securityandcompliancecenterapiv3.MultiCloudScope{*multiCloudScopeModel}
 				replaceProfileAttachmentOptionsModel.CreatedOn = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				replaceProfileAttachmentOptionsModel.CreatedBy = core.StringPtr("testString")
@@ -7549,7 +7641,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				replaceProfileAttachmentOptionsModel.ID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.AccountID = core.StringPtr("testString")
-				replaceProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testString")
+				replaceProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testInstance")
 				replaceProfileAttachmentOptionsModel.Scope = []securityandcompliancecenterapiv3.MultiCloudScope{*multiCloudScopeModel}
 				replaceProfileAttachmentOptionsModel.CreatedOn = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				replaceProfileAttachmentOptionsModel.CreatedBy = core.StringPtr("testString")
@@ -7572,7 +7664,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke ReplaceProfileAttachment with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -7624,7 +7715,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				replaceProfileAttachmentOptionsModel.ID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.AccountID = core.StringPtr("testString")
-				replaceProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testString")
+				replaceProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testInstance")
 				replaceProfileAttachmentOptionsModel.Scope = []securityandcompliancecenterapiv3.MultiCloudScope{*multiCloudScopeModel}
 				replaceProfileAttachmentOptionsModel.CreatedOn = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				replaceProfileAttachmentOptionsModel.CreatedBy = core.StringPtr("testString")
@@ -7720,7 +7811,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				replaceProfileAttachmentOptionsModel.ID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.ProfileID = core.StringPtr("testString")
 				replaceProfileAttachmentOptionsModel.AccountID = core.StringPtr("testString")
-				replaceProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testString")
+				replaceProfileAttachmentOptionsModel.InstanceID = core.StringPtr("testInstance")
 				replaceProfileAttachmentOptionsModel.Scope = []securityandcompliancecenterapiv3.MultiCloudScope{*multiCloudScopeModel}
 				replaceProfileAttachmentOptionsModel.CreatedOn = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				replaceProfileAttachmentOptionsModel.CreatedBy = core.StringPtr("testString")
@@ -7752,7 +7843,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`CreateScan(createScanOptions *CreateScanOptions) - Operation response error`, func() {
-		createScanPath := "/scans"
+		createScanPath := "/instances/testInstance/v3/scans"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -7780,6 +7871,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateScanOptions model
 				createScanOptionsModel := new(securityandcompliancecenterapiv3.CreateScanOptions)
+				createScanOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createScanOptionsModel.AttachmentID = core.StringPtr("testString")
 				createScanOptionsModel.XCorrelationID = core.StringPtr("testString")
 				createScanOptionsModel.XRequestID = core.StringPtr("testString")
@@ -7803,7 +7895,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`CreateScan(createScanOptions *CreateScanOptions)`, func() {
-		createScanPath := "/scans"
+		createScanPath := "/instances/testInstance/v3/scans"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -7853,6 +7945,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateScanOptions model
 				createScanOptionsModel := new(securityandcompliancecenterapiv3.CreateScanOptions)
+				createScanOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createScanOptionsModel.AttachmentID = core.StringPtr("testString")
 				createScanOptionsModel.XCorrelationID = core.StringPtr("testString")
 				createScanOptionsModel.XRequestID = core.StringPtr("testString")
@@ -7934,6 +8027,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateScanOptions model
 				createScanOptionsModel := new(securityandcompliancecenterapiv3.CreateScanOptions)
+				createScanOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createScanOptionsModel.AttachmentID = core.StringPtr("testString")
 				createScanOptionsModel.XCorrelationID = core.StringPtr("testString")
 				createScanOptionsModel.XRequestID = core.StringPtr("testString")
@@ -7944,7 +8038,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke CreateScan with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -7956,6 +8049,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateScanOptions model
 				createScanOptionsModel := new(securityandcompliancecenterapiv3.CreateScanOptions)
+				createScanOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createScanOptionsModel.AttachmentID = core.StringPtr("testString")
 				createScanOptionsModel.XCorrelationID = core.StringPtr("testString")
 				createScanOptionsModel.XRequestID = core.StringPtr("testString")
@@ -7999,6 +8093,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateScanOptions model
 				createScanOptionsModel := new(securityandcompliancecenterapiv3.CreateScanOptions)
+				createScanOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createScanOptionsModel.AttachmentID = core.StringPtr("testString")
 				createScanOptionsModel.XCorrelationID = core.StringPtr("testString")
 				createScanOptionsModel.XRequestID = core.StringPtr("testString")
@@ -8018,7 +8113,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListAttachmentsAccount(listAttachmentsAccountOptions *ListAttachmentsAccountOptions) - Operation response error`, func() {
-		listAttachmentsAccountPath := "/attachments"
+		listAttachmentsAccountPath := "/instances/testInstance/v3/attachments"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -8048,6 +8143,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListAttachmentsAccountOptions model
 				listAttachmentsAccountOptionsModel := new(securityandcompliancecenterapiv3.ListAttachmentsAccountOptions)
+				listAttachmentsAccountOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listAttachmentsAccountOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listAttachmentsAccountOptionsModel.XRequestID = core.StringPtr("testString")
 				listAttachmentsAccountOptionsModel.Limit = core.Int64Ptr(int64(10))
@@ -8072,7 +8168,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListAttachmentsAccount(listAttachmentsAccountOptions *ListAttachmentsAccountOptions)`, func() {
-		listAttachmentsAccountPath := "/attachments"
+		listAttachmentsAccountPath := "/instances/testInstance/v3/attachments"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -8108,6 +8204,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListAttachmentsAccountOptions model
 				listAttachmentsAccountOptionsModel := new(securityandcompliancecenterapiv3.ListAttachmentsAccountOptions)
+				listAttachmentsAccountOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listAttachmentsAccountOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listAttachmentsAccountOptionsModel.XRequestID = core.StringPtr("testString")
 				listAttachmentsAccountOptionsModel.Limit = core.Int64Ptr(int64(10))
@@ -8176,6 +8273,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListAttachmentsAccountOptions model
 				listAttachmentsAccountOptionsModel := new(securityandcompliancecenterapiv3.ListAttachmentsAccountOptions)
+				listAttachmentsAccountOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listAttachmentsAccountOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listAttachmentsAccountOptionsModel.XRequestID = core.StringPtr("testString")
 				listAttachmentsAccountOptionsModel.Limit = core.Int64Ptr(int64(10))
@@ -8187,7 +8285,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke ListAttachmentsAccount with error: Operation request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -8199,6 +8296,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListAttachmentsAccountOptions model
 				listAttachmentsAccountOptionsModel := new(securityandcompliancecenterapiv3.ListAttachmentsAccountOptions)
+				listAttachmentsAccountOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listAttachmentsAccountOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listAttachmentsAccountOptionsModel.XRequestID = core.StringPtr("testString")
 				listAttachmentsAccountOptionsModel.Limit = core.Int64Ptr(int64(10))
@@ -8236,6 +8334,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListAttachmentsAccountOptions model
 				listAttachmentsAccountOptionsModel := new(securityandcompliancecenterapiv3.ListAttachmentsAccountOptions)
+				listAttachmentsAccountOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listAttachmentsAccountOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listAttachmentsAccountOptionsModel.XRequestID = core.StringPtr("testString")
 				listAttachmentsAccountOptionsModel.Limit = core.Int64Ptr(int64(10))
@@ -8305,6 +8404,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listAttachmentsAccountOptionsModel := &securityandcompliancecenterapiv3.ListAttachmentsAccountOptions{
+					InstanceID:     core.StringPtr("testInstance"),
 					XCorrelationID: core.StringPtr("testString"),
 					XRequestID:     core.StringPtr("testString"),
 					Limit:          core.Int64Ptr(int64(10)),
@@ -8332,6 +8432,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listAttachmentsAccountOptionsModel := &securityandcompliancecenterapiv3.ListAttachmentsAccountOptions{
+					InstanceID:     core.StringPtr("testInstance"),
 					XCorrelationID: core.StringPtr("testString"),
 					XRequestID:     core.StringPtr("testString"),
 					Limit:          core.Int64Ptr(int64(10)),
@@ -8349,7 +8450,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetLatestReports(getLatestReportsOptions *GetLatestReportsOptions) - Operation response error`, func() {
-		getLatestReportsPath := "/reports/latest"
+		getLatestReportsPath := "/instances/testInstance/v3/reports/latest"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -8378,6 +8479,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetLatestReportsOptions model
 				getLatestReportsOptionsModel := new(securityandcompliancecenterapiv3.GetLatestReportsOptions)
+				getLatestReportsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getLatestReportsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getLatestReportsOptionsModel.XRequestID = core.StringPtr("testString")
 				getLatestReportsOptionsModel.Sort = core.StringPtr("profile_name")
@@ -8401,7 +8503,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetLatestReports(getLatestReportsOptions *GetLatestReportsOptions)`, func() {
-		getLatestReportsPath := "/reports/latest"
+		getLatestReportsPath := "/instances/testInstance/v3/reports/latest"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -8436,6 +8538,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetLatestReportsOptions model
 				getLatestReportsOptionsModel := new(securityandcompliancecenterapiv3.GetLatestReportsOptions)
+				getLatestReportsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getLatestReportsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getLatestReportsOptionsModel.XRequestID = core.StringPtr("testString")
 				getLatestReportsOptionsModel.Sort = core.StringPtr("profile_name")
@@ -8502,6 +8605,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetLatestReportsOptions model
 				getLatestReportsOptionsModel := new(securityandcompliancecenterapiv3.GetLatestReportsOptions)
+				getLatestReportsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getLatestReportsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getLatestReportsOptionsModel.XRequestID = core.StringPtr("testString")
 				getLatestReportsOptionsModel.Sort = core.StringPtr("profile_name")
@@ -8512,7 +8616,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke GetLatestReports with error: Operation request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -8524,6 +8627,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetLatestReportsOptions model
 				getLatestReportsOptionsModel := new(securityandcompliancecenterapiv3.GetLatestReportsOptions)
+				getLatestReportsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getLatestReportsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getLatestReportsOptionsModel.XRequestID = core.StringPtr("testString")
 				getLatestReportsOptionsModel.Sort = core.StringPtr("profile_name")
@@ -8560,6 +8664,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetLatestReportsOptions model
 				getLatestReportsOptionsModel := new(securityandcompliancecenterapiv3.GetLatestReportsOptions)
+				getLatestReportsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getLatestReportsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getLatestReportsOptionsModel.XRequestID = core.StringPtr("testString")
 				getLatestReportsOptionsModel.Sort = core.StringPtr("profile_name")
@@ -8579,7 +8684,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListReports(listReportsOptions *ListReportsOptions) - Operation response error`, func() {
-		listReportsPath := "/reports"
+		listReportsPath := "/instances/testInstance/v3/reports"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -8614,6 +8719,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListReportsOptions model
 				listReportsOptionsModel := new(securityandcompliancecenterapiv3.ListReportsOptions)
+				listReportsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listReportsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listReportsOptionsModel.XRequestID = core.StringPtr("testString")
 				listReportsOptionsModel.AttachmentID = core.StringPtr("testString")
@@ -8643,7 +8749,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListReports(listReportsOptions *ListReportsOptions)`, func() {
-		listReportsPath := "/reports"
+		listReportsPath := "/instances/testInstance/v3/reports"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -8684,6 +8790,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListReportsOptions model
 				listReportsOptionsModel := new(securityandcompliancecenterapiv3.ListReportsOptions)
+				listReportsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listReportsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listReportsOptionsModel.XRequestID = core.StringPtr("testString")
 				listReportsOptionsModel.AttachmentID = core.StringPtr("testString")
@@ -8762,6 +8869,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListReportsOptions model
 				listReportsOptionsModel := new(securityandcompliancecenterapiv3.ListReportsOptions)
+				listReportsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listReportsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listReportsOptionsModel.XRequestID = core.StringPtr("testString")
 				listReportsOptionsModel.AttachmentID = core.StringPtr("testString")
@@ -8778,7 +8886,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke ListReports with error: Operation request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -8790,6 +8897,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListReportsOptions model
 				listReportsOptionsModel := new(securityandcompliancecenterapiv3.ListReportsOptions)
+				listReportsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listReportsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listReportsOptionsModel.XRequestID = core.StringPtr("testString")
 				listReportsOptionsModel.AttachmentID = core.StringPtr("testString")
@@ -8832,6 +8940,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListReportsOptions model
 				listReportsOptionsModel := new(securityandcompliancecenterapiv3.ListReportsOptions)
+				listReportsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listReportsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listReportsOptionsModel.XRequestID = core.StringPtr("testString")
 				listReportsOptionsModel.AttachmentID = core.StringPtr("testString")
@@ -8916,6 +9025,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listReportsOptionsModel := &securityandcompliancecenterapiv3.ListReportsOptions{
+					InstanceID:     core.StringPtr("testInstance"),
 					XCorrelationID: core.StringPtr("testString"),
 					XRequestID:     core.StringPtr("testString"),
 					AttachmentID:   core.StringPtr("testString"),
@@ -8948,6 +9058,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listReportsOptionsModel := &securityandcompliancecenterapiv3.ListReportsOptions{
+					InstanceID:     core.StringPtr("testInstance"),
 					XCorrelationID: core.StringPtr("testString"),
 					XRequestID:     core.StringPtr("testString"),
 					AttachmentID:   core.StringPtr("testString"),
@@ -8970,7 +9081,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetReport(getReportOptions *GetReportOptions) - Operation response error`, func() {
-		getReportPath := "/reports/testString"
+		getReportPath := "/instances/testInstance/v3/reports/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -8998,6 +9109,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportOptions model
 				getReportOptionsModel := new(securityandcompliancecenterapiv3.GetReportOptions)
+				getReportOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportOptionsModel.ReportID = core.StringPtr("testString")
 				getReportOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportOptionsModel.XRequestID = core.StringPtr("testString")
@@ -9021,7 +9133,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetReport(getReportOptions *GetReportOptions)`, func() {
-		getReportPath := "/reports/testString"
+		getReportPath := "/instances/testInstance/v3/reports/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -9055,6 +9167,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportOptions model
 				getReportOptionsModel := new(securityandcompliancecenterapiv3.GetReportOptions)
+				getReportOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportOptionsModel.ReportID = core.StringPtr("testString")
 				getReportOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportOptionsModel.XRequestID = core.StringPtr("testString")
@@ -9120,6 +9233,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportOptions model
 				getReportOptionsModel := new(securityandcompliancecenterapiv3.GetReportOptions)
+				getReportOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportOptionsModel.ReportID = core.StringPtr("testString")
 				getReportOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportOptionsModel.XRequestID = core.StringPtr("testString")
@@ -9130,7 +9244,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke GetReport with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -9142,6 +9255,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportOptions model
 				getReportOptionsModel := new(securityandcompliancecenterapiv3.GetReportOptions)
+				getReportOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportOptionsModel.ReportID = core.StringPtr("testString")
 				getReportOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportOptionsModel.XRequestID = core.StringPtr("testString")
@@ -9185,6 +9299,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportOptions model
 				getReportOptionsModel := new(securityandcompliancecenterapiv3.GetReportOptions)
+				getReportOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportOptionsModel.ReportID = core.StringPtr("testString")
 				getReportOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportOptionsModel.XRequestID = core.StringPtr("testString")
@@ -9204,7 +9319,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetReportSummary(getReportSummaryOptions *GetReportSummaryOptions) - Operation response error`, func() {
-		getReportSummaryPath := "/reports/testString/summary"
+		getReportSummaryPath := "/instances/testInstance/v3/reports/testString/summary"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -9232,6 +9347,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportSummaryOptions model
 				getReportSummaryOptionsModel := new(securityandcompliancecenterapiv3.GetReportSummaryOptions)
+				getReportSummaryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportSummaryOptionsModel.ReportID = core.StringPtr("testString")
 				getReportSummaryOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportSummaryOptionsModel.XRequestID = core.StringPtr("testString")
@@ -9255,7 +9371,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetReportSummary(getReportSummaryOptions *GetReportSummaryOptions)`, func() {
-		getReportSummaryPath := "/reports/testString/summary"
+		getReportSummaryPath := "/instances/testInstance/v3/reports/testString/summary"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -9289,6 +9405,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportSummaryOptions model
 				getReportSummaryOptionsModel := new(securityandcompliancecenterapiv3.GetReportSummaryOptions)
+				getReportSummaryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportSummaryOptionsModel.ReportID = core.StringPtr("testString")
 				getReportSummaryOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportSummaryOptionsModel.XRequestID = core.StringPtr("testString")
@@ -9354,6 +9471,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportSummaryOptions model
 				getReportSummaryOptionsModel := new(securityandcompliancecenterapiv3.GetReportSummaryOptions)
+				getReportSummaryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportSummaryOptionsModel.ReportID = core.StringPtr("testString")
 				getReportSummaryOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportSummaryOptionsModel.XRequestID = core.StringPtr("testString")
@@ -9364,7 +9482,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke GetReportSummary with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -9376,6 +9493,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportSummaryOptions model
 				getReportSummaryOptionsModel := new(securityandcompliancecenterapiv3.GetReportSummaryOptions)
+				getReportSummaryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportSummaryOptionsModel.ReportID = core.StringPtr("testString")
 				getReportSummaryOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportSummaryOptionsModel.XRequestID = core.StringPtr("testString")
@@ -9419,6 +9537,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportSummaryOptions model
 				getReportSummaryOptionsModel := new(securityandcompliancecenterapiv3.GetReportSummaryOptions)
+				getReportSummaryOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportSummaryOptionsModel.ReportID = core.StringPtr("testString")
 				getReportSummaryOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportSummaryOptionsModel.XRequestID = core.StringPtr("testString")
@@ -9438,7 +9557,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetReportEvaluation(getReportEvaluationOptions *GetReportEvaluationOptions)`, func() {
-		getReportEvaluationPath := "/reports/testString/download"
+		getReportEvaluationPath := "/instances/testInstance/v3/reports/testString/download"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -9473,6 +9592,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportEvaluationOptions model
 				getReportEvaluationOptionsModel := new(securityandcompliancecenterapiv3.GetReportEvaluationOptions)
+				getReportEvaluationOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportEvaluationOptionsModel.ReportID = core.StringPtr("testString")
 				getReportEvaluationOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportEvaluationOptionsModel.XRequestID = core.StringPtr("testString")
@@ -9540,6 +9660,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportEvaluationOptions model
 				getReportEvaluationOptionsModel := new(securityandcompliancecenterapiv3.GetReportEvaluationOptions)
+				getReportEvaluationOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportEvaluationOptionsModel.ReportID = core.StringPtr("testString")
 				getReportEvaluationOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportEvaluationOptionsModel.XRequestID = core.StringPtr("testString")
@@ -9551,7 +9672,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke GetReportEvaluation with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -9563,6 +9683,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportEvaluationOptions model
 				getReportEvaluationOptionsModel := new(securityandcompliancecenterapiv3.GetReportEvaluationOptions)
+				getReportEvaluationOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportEvaluationOptionsModel.ReportID = core.StringPtr("testString")
 				getReportEvaluationOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportEvaluationOptionsModel.XRequestID = core.StringPtr("testString")
@@ -9607,6 +9728,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportEvaluationOptions model
 				getReportEvaluationOptionsModel := new(securityandcompliancecenterapiv3.GetReportEvaluationOptions)
+				getReportEvaluationOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportEvaluationOptionsModel.ReportID = core.StringPtr("testString")
 				getReportEvaluationOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportEvaluationOptionsModel.XRequestID = core.StringPtr("testString")
@@ -9631,7 +9753,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetReportControls(getReportControlsOptions *GetReportControlsOptions) - Operation response error`, func() {
-		getReportControlsPath := "/reports/testString/controls"
+		getReportControlsPath := "/instances/testInstance/v3/reports/testString/controls"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -9665,6 +9787,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportControlsOptions model
 				getReportControlsOptionsModel := new(securityandcompliancecenterapiv3.GetReportControlsOptions)
+				getReportControlsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportControlsOptionsModel.ReportID = core.StringPtr("testString")
 				getReportControlsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportControlsOptionsModel.XRequestID = core.StringPtr("testString")
@@ -9694,7 +9817,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetReportControls(getReportControlsOptions *GetReportControlsOptions)`, func() {
-		getReportControlsPath := "/reports/testString/controls"
+		getReportControlsPath := "/instances/testInstance/v3/reports/testString/controls"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -9734,6 +9857,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportControlsOptions model
 				getReportControlsOptionsModel := new(securityandcompliancecenterapiv3.GetReportControlsOptions)
+				getReportControlsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportControlsOptionsModel.ReportID = core.StringPtr("testString")
 				getReportControlsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportControlsOptionsModel.XRequestID = core.StringPtr("testString")
@@ -9811,6 +9935,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportControlsOptions model
 				getReportControlsOptionsModel := new(securityandcompliancecenterapiv3.GetReportControlsOptions)
+				getReportControlsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportControlsOptionsModel.ReportID = core.StringPtr("testString")
 				getReportControlsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportControlsOptionsModel.XRequestID = core.StringPtr("testString")
@@ -9827,7 +9952,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke GetReportControls with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -9839,6 +9963,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportControlsOptions model
 				getReportControlsOptionsModel := new(securityandcompliancecenterapiv3.GetReportControlsOptions)
+				getReportControlsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportControlsOptionsModel.ReportID = core.StringPtr("testString")
 				getReportControlsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportControlsOptionsModel.XRequestID = core.StringPtr("testString")
@@ -9888,6 +10013,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportControlsOptions model
 				getReportControlsOptionsModel := new(securityandcompliancecenterapiv3.GetReportControlsOptions)
+				getReportControlsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportControlsOptionsModel.ReportID = core.StringPtr("testString")
 				getReportControlsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportControlsOptionsModel.XRequestID = core.StringPtr("testString")
@@ -9913,7 +10039,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetReportRule(getReportRuleOptions *GetReportRuleOptions) - Operation response error`, func() {
-		getReportRulePath := "/reports/testString/rules/rule-8d444f8c-fd1d-48de-bcaa-f43732568761"
+		getReportRulePath := "/instances/testInstance/v3/reports/testString/rules/rule-8d444f8c-fd1d-48de-bcaa-f43732568761"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -9941,6 +10067,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportRuleOptions model
 				getReportRuleOptionsModel := new(securityandcompliancecenterapiv3.GetReportRuleOptions)
+				getReportRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportRuleOptionsModel.ReportID = core.StringPtr("testString")
 				getReportRuleOptionsModel.RuleID = core.StringPtr("rule-8d444f8c-fd1d-48de-bcaa-f43732568761")
 				getReportRuleOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -9965,7 +10092,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetReportRule(getReportRuleOptions *GetReportRuleOptions)`, func() {
-		getReportRulePath := "/reports/testString/rules/rule-8d444f8c-fd1d-48de-bcaa-f43732568761"
+		getReportRulePath := "/instances/testInstance/v3/reports/testString/rules/rule-8d444f8c-fd1d-48de-bcaa-f43732568761"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -9999,6 +10126,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportRuleOptions model
 				getReportRuleOptionsModel := new(securityandcompliancecenterapiv3.GetReportRuleOptions)
+				getReportRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportRuleOptionsModel.ReportID = core.StringPtr("testString")
 				getReportRuleOptionsModel.RuleID = core.StringPtr("rule-8d444f8c-fd1d-48de-bcaa-f43732568761")
 				getReportRuleOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -10065,6 +10193,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportRuleOptions model
 				getReportRuleOptionsModel := new(securityandcompliancecenterapiv3.GetReportRuleOptions)
+				getReportRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportRuleOptionsModel.ReportID = core.StringPtr("testString")
 				getReportRuleOptionsModel.RuleID = core.StringPtr("rule-8d444f8c-fd1d-48de-bcaa-f43732568761")
 				getReportRuleOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -10076,7 +10205,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke GetReportRule with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -10088,6 +10216,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportRuleOptions model
 				getReportRuleOptionsModel := new(securityandcompliancecenterapiv3.GetReportRuleOptions)
+				getReportRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportRuleOptionsModel.ReportID = core.StringPtr("testString")
 				getReportRuleOptionsModel.RuleID = core.StringPtr("rule-8d444f8c-fd1d-48de-bcaa-f43732568761")
 				getReportRuleOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -10132,6 +10261,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportRuleOptions model
 				getReportRuleOptionsModel := new(securityandcompliancecenterapiv3.GetReportRuleOptions)
+				getReportRuleOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportRuleOptionsModel.ReportID = core.StringPtr("testString")
 				getReportRuleOptionsModel.RuleID = core.StringPtr("rule-8d444f8c-fd1d-48de-bcaa-f43732568761")
 				getReportRuleOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -10152,7 +10282,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListReportEvaluations(listReportEvaluationsOptions *ListReportEvaluationsOptions) - Operation response error`, func() {
-		listReportEvaluationsPath := "/reports/testString/evaluations"
+		listReportEvaluationsPath := "/instances/testInstance/v3/reports/testString/evaluations"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -10187,6 +10317,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListReportEvaluationsOptions model
 				listReportEvaluationsOptionsModel := new(securityandcompliancecenterapiv3.ListReportEvaluationsOptions)
+				listReportEvaluationsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listReportEvaluationsOptionsModel.ReportID = core.StringPtr("testString")
 				listReportEvaluationsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listReportEvaluationsOptionsModel.XRequestID = core.StringPtr("testString")
@@ -10217,7 +10348,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListReportEvaluations(listReportEvaluationsOptions *ListReportEvaluationsOptions)`, func() {
-		listReportEvaluationsPath := "/reports/testString/evaluations"
+		listReportEvaluationsPath := "/instances/testInstance/v3/reports/testString/evaluations"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -10258,6 +10389,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListReportEvaluationsOptions model
 				listReportEvaluationsOptionsModel := new(securityandcompliancecenterapiv3.ListReportEvaluationsOptions)
+				listReportEvaluationsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listReportEvaluationsOptionsModel.ReportID = core.StringPtr("testString")
 				listReportEvaluationsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listReportEvaluationsOptionsModel.XRequestID = core.StringPtr("testString")
@@ -10337,6 +10469,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListReportEvaluationsOptions model
 				listReportEvaluationsOptionsModel := new(securityandcompliancecenterapiv3.ListReportEvaluationsOptions)
+				listReportEvaluationsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listReportEvaluationsOptionsModel.ReportID = core.StringPtr("testString")
 				listReportEvaluationsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listReportEvaluationsOptionsModel.XRequestID = core.StringPtr("testString")
@@ -10354,7 +10487,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke ListReportEvaluations with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -10366,6 +10498,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListReportEvaluationsOptions model
 				listReportEvaluationsOptionsModel := new(securityandcompliancecenterapiv3.ListReportEvaluationsOptions)
+				listReportEvaluationsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listReportEvaluationsOptionsModel.ReportID = core.StringPtr("testString")
 				listReportEvaluationsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listReportEvaluationsOptionsModel.XRequestID = core.StringPtr("testString")
@@ -10416,6 +10549,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListReportEvaluationsOptions model
 				listReportEvaluationsOptionsModel := new(securityandcompliancecenterapiv3.ListReportEvaluationsOptions)
+				listReportEvaluationsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listReportEvaluationsOptionsModel.ReportID = core.StringPtr("testString")
 				listReportEvaluationsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listReportEvaluationsOptionsModel.XRequestID = core.StringPtr("testString")
@@ -10501,6 +10635,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listReportEvaluationsOptionsModel := &securityandcompliancecenterapiv3.ListReportEvaluationsOptions{
+					InstanceID:     core.StringPtr("testInstance"),
 					ReportID:       core.StringPtr("testString"),
 					XCorrelationID: core.StringPtr("testString"),
 					XRequestID:     core.StringPtr("testString"),
@@ -10534,6 +10669,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listReportEvaluationsOptionsModel := &securityandcompliancecenterapiv3.ListReportEvaluationsOptions{
+					InstanceID:     core.StringPtr("testInstance"),
 					ReportID:       core.StringPtr("testString"),
 					XCorrelationID: core.StringPtr("testString"),
 					XRequestID:     core.StringPtr("testString"),
@@ -10557,7 +10693,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListReportResources(listReportResourcesOptions *ListReportResourcesOptions) - Operation response error`, func() {
-		listReportResourcesPath := "/reports/testString/resources"
+		listReportResourcesPath := "/instances/testInstance/v3/reports/testString/resources"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -10593,6 +10729,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListReportResourcesOptions model
 				listReportResourcesOptionsModel := new(securityandcompliancecenterapiv3.ListReportResourcesOptions)
+				listReportResourcesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listReportResourcesOptionsModel.ReportID = core.StringPtr("testString")
 				listReportResourcesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listReportResourcesOptionsModel.XRequestID = core.StringPtr("testString")
@@ -10624,7 +10761,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListReportResources(listReportResourcesOptions *ListReportResourcesOptions)`, func() {
-		listReportResourcesPath := "/reports/testString/resources"
+		listReportResourcesPath := "/instances/testInstance/v3/reports/testString/resources"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -10666,6 +10803,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListReportResourcesOptions model
 				listReportResourcesOptionsModel := new(securityandcompliancecenterapiv3.ListReportResourcesOptions)
+				listReportResourcesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listReportResourcesOptionsModel.ReportID = core.StringPtr("testString")
 				listReportResourcesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listReportResourcesOptionsModel.XRequestID = core.StringPtr("testString")
@@ -10747,6 +10885,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListReportResourcesOptions model
 				listReportResourcesOptionsModel := new(securityandcompliancecenterapiv3.ListReportResourcesOptions)
+				listReportResourcesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listReportResourcesOptionsModel.ReportID = core.StringPtr("testString")
 				listReportResourcesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listReportResourcesOptionsModel.XRequestID = core.StringPtr("testString")
@@ -10765,7 +10904,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke ListReportResources with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -10777,6 +10915,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListReportResourcesOptions model
 				listReportResourcesOptionsModel := new(securityandcompliancecenterapiv3.ListReportResourcesOptions)
+				listReportResourcesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listReportResourcesOptionsModel.ReportID = core.StringPtr("testString")
 				listReportResourcesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listReportResourcesOptionsModel.XRequestID = core.StringPtr("testString")
@@ -10828,6 +10967,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListReportResourcesOptions model
 				listReportResourcesOptionsModel := new(securityandcompliancecenterapiv3.ListReportResourcesOptions)
+				listReportResourcesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listReportResourcesOptionsModel.ReportID = core.StringPtr("testString")
 				listReportResourcesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listReportResourcesOptionsModel.XRequestID = core.StringPtr("testString")
@@ -10914,6 +11054,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listReportResourcesOptionsModel := &securityandcompliancecenterapiv3.ListReportResourcesOptions{
+					InstanceID:     core.StringPtr("testInstance"),
 					ReportID:       core.StringPtr("testString"),
 					XCorrelationID: core.StringPtr("testString"),
 					XRequestID:     core.StringPtr("testString"),
@@ -10948,6 +11089,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
 
 				listReportResourcesOptionsModel := &securityandcompliancecenterapiv3.ListReportResourcesOptions{
+					InstanceID:     core.StringPtr("testInstance"),
 					ReportID:       core.StringPtr("testString"),
 					XCorrelationID: core.StringPtr("testString"),
 					XRequestID:     core.StringPtr("testString"),
@@ -10972,7 +11114,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetReportTags(getReportTagsOptions *GetReportTagsOptions) - Operation response error`, func() {
-		getReportTagsPath := "/reports/testString/tags"
+		getReportTagsPath := "/instances/testInstance/v3/reports/testString/tags"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -11000,6 +11142,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportTagsOptions model
 				getReportTagsOptionsModel := new(securityandcompliancecenterapiv3.GetReportTagsOptions)
+				getReportTagsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportTagsOptionsModel.ReportID = core.StringPtr("testString")
 				getReportTagsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportTagsOptionsModel.XRequestID = core.StringPtr("testString")
@@ -11023,7 +11166,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetReportTags(getReportTagsOptions *GetReportTagsOptions)`, func() {
-		getReportTagsPath := "/reports/testString/tags"
+		getReportTagsPath := "/instances/testInstance/v3/reports/testString/tags"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -11057,6 +11200,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportTagsOptions model
 				getReportTagsOptionsModel := new(securityandcompliancecenterapiv3.GetReportTagsOptions)
+				getReportTagsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportTagsOptionsModel.ReportID = core.StringPtr("testString")
 				getReportTagsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportTagsOptionsModel.XRequestID = core.StringPtr("testString")
@@ -11122,6 +11266,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportTagsOptions model
 				getReportTagsOptionsModel := new(securityandcompliancecenterapiv3.GetReportTagsOptions)
+				getReportTagsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportTagsOptionsModel.ReportID = core.StringPtr("testString")
 				getReportTagsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportTagsOptionsModel.XRequestID = core.StringPtr("testString")
@@ -11132,7 +11277,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke GetReportTags with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -11144,6 +11288,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportTagsOptions model
 				getReportTagsOptionsModel := new(securityandcompliancecenterapiv3.GetReportTagsOptions)
+				getReportTagsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportTagsOptionsModel.ReportID = core.StringPtr("testString")
 				getReportTagsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportTagsOptionsModel.XRequestID = core.StringPtr("testString")
@@ -11187,6 +11332,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportTagsOptions model
 				getReportTagsOptionsModel := new(securityandcompliancecenterapiv3.GetReportTagsOptions)
+				getReportTagsOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportTagsOptionsModel.ReportID = core.StringPtr("testString")
 				getReportTagsOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportTagsOptionsModel.XRequestID = core.StringPtr("testString")
@@ -11206,7 +11352,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetReportViolationsDrift(getReportViolationsDriftOptions *GetReportViolationsDriftOptions) - Operation response error`, func() {
-		getReportViolationsDriftPath := "/reports/testString/violations_drift"
+		getReportViolationsDriftPath := "/instances/testInstance/v3/reports/testString/violations_drift"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -11235,6 +11381,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportViolationsDriftOptions model
 				getReportViolationsDriftOptionsModel := new(securityandcompliancecenterapiv3.GetReportViolationsDriftOptions)
+				getReportViolationsDriftOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportViolationsDriftOptionsModel.ReportID = core.StringPtr("testString")
 				getReportViolationsDriftOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportViolationsDriftOptionsModel.XRequestID = core.StringPtr("testString")
@@ -11259,7 +11406,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetReportViolationsDrift(getReportViolationsDriftOptions *GetReportViolationsDriftOptions)`, func() {
-		getReportViolationsDriftPath := "/reports/testString/violations_drift"
+		getReportViolationsDriftPath := "/instances/testInstance/v3/reports/testString/violations_drift"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -11294,6 +11441,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportViolationsDriftOptions model
 				getReportViolationsDriftOptionsModel := new(securityandcompliancecenterapiv3.GetReportViolationsDriftOptions)
+				getReportViolationsDriftOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportViolationsDriftOptionsModel.ReportID = core.StringPtr("testString")
 				getReportViolationsDriftOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportViolationsDriftOptionsModel.XRequestID = core.StringPtr("testString")
@@ -11361,6 +11509,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportViolationsDriftOptions model
 				getReportViolationsDriftOptionsModel := new(securityandcompliancecenterapiv3.GetReportViolationsDriftOptions)
+				getReportViolationsDriftOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportViolationsDriftOptionsModel.ReportID = core.StringPtr("testString")
 				getReportViolationsDriftOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportViolationsDriftOptionsModel.XRequestID = core.StringPtr("testString")
@@ -11372,7 +11521,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke GetReportViolationsDrift with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -11384,6 +11532,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportViolationsDriftOptions model
 				getReportViolationsDriftOptionsModel := new(securityandcompliancecenterapiv3.GetReportViolationsDriftOptions)
+				getReportViolationsDriftOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportViolationsDriftOptionsModel.ReportID = core.StringPtr("testString")
 				getReportViolationsDriftOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportViolationsDriftOptionsModel.XRequestID = core.StringPtr("testString")
@@ -11428,6 +11577,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetReportViolationsDriftOptions model
 				getReportViolationsDriftOptionsModel := new(securityandcompliancecenterapiv3.GetReportViolationsDriftOptions)
+				getReportViolationsDriftOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getReportViolationsDriftOptionsModel.ReportID = core.StringPtr("testString")
 				getReportViolationsDriftOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getReportViolationsDriftOptionsModel.XRequestID = core.StringPtr("testString")
@@ -11448,7 +11598,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListProviderTypes(listProviderTypesOptions *ListProviderTypesOptions) - Operation response error`, func() {
-		listProviderTypesPath := "/provider_types"
+		listProviderTypesPath := "/v3/provider_types"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -11498,7 +11648,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListProviderTypes(listProviderTypesOptions *ListProviderTypesOptions)`, func() {
-		listProviderTypesPath := "/provider_types"
+		listProviderTypesPath := "/v3/provider_types"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -11605,7 +11755,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke ListProviderTypes with error: Operation request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -11670,7 +11819,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetProviderTypeByID(getProviderTypeByIdOptions *GetProviderTypeByIdOptions) - Operation response error`, func() {
-		getProviderTypeByIDPath := "/provider_types/testString"
+		getProviderTypeByIDPath := "/v3/provider_types/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -11721,7 +11870,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetProviderTypeByID(getProviderTypeByIdOptions *GetProviderTypeByIdOptions)`, func() {
-		getProviderTypeByIDPath := "/provider_types/testString"
+		getProviderTypeByIDPath := "/v3/provider_types/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -11830,7 +11979,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke GetProviderTypeByID with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -11904,7 +12052,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListProviderTypeInstances(listProviderTypeInstancesOptions *ListProviderTypeInstancesOptions) - Operation response error`, func() {
-		listProviderTypeInstancesPath := "/provider_types/testString/provider_type_instances"
+		listProviderTypeInstancesPath := "/instances/testInstance/v3/provider_types/testString/provider_type_instances"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -11932,6 +12080,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListProviderTypeInstancesOptions model
 				listProviderTypeInstancesOptionsModel := new(securityandcompliancecenterapiv3.ListProviderTypeInstancesOptions)
+				listProviderTypeInstancesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listProviderTypeInstancesOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				listProviderTypeInstancesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listProviderTypeInstancesOptionsModel.XRequestID = core.StringPtr("testString")
@@ -11955,7 +12104,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListProviderTypeInstances(listProviderTypeInstancesOptions *ListProviderTypeInstancesOptions)`, func() {
-		listProviderTypeInstancesPath := "/provider_types/testString/provider_type_instances"
+		listProviderTypeInstancesPath := "/instances/testInstance/v3/provider_types/testString/provider_type_instances"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -11989,6 +12138,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListProviderTypeInstancesOptions model
 				listProviderTypeInstancesOptionsModel := new(securityandcompliancecenterapiv3.ListProviderTypeInstancesOptions)
+				listProviderTypeInstancesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listProviderTypeInstancesOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				listProviderTypeInstancesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listProviderTypeInstancesOptionsModel.XRequestID = core.StringPtr("testString")
@@ -12054,6 +12204,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListProviderTypeInstancesOptions model
 				listProviderTypeInstancesOptionsModel := new(securityandcompliancecenterapiv3.ListProviderTypeInstancesOptions)
+				listProviderTypeInstancesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listProviderTypeInstancesOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				listProviderTypeInstancesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listProviderTypeInstancesOptionsModel.XRequestID = core.StringPtr("testString")
@@ -12064,7 +12215,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke ListProviderTypeInstances with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -12076,6 +12226,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListProviderTypeInstancesOptions model
 				listProviderTypeInstancesOptionsModel := new(securityandcompliancecenterapiv3.ListProviderTypeInstancesOptions)
+				listProviderTypeInstancesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listProviderTypeInstancesOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				listProviderTypeInstancesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listProviderTypeInstancesOptionsModel.XRequestID = core.StringPtr("testString")
@@ -12119,6 +12270,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListProviderTypeInstancesOptions model
 				listProviderTypeInstancesOptionsModel := new(securityandcompliancecenterapiv3.ListProviderTypeInstancesOptions)
+				listProviderTypeInstancesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listProviderTypeInstancesOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				listProviderTypeInstancesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listProviderTypeInstancesOptionsModel.XRequestID = core.StringPtr("testString")
@@ -12138,7 +12290,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`CreateProviderTypeInstance(createProviderTypeInstanceOptions *CreateProviderTypeInstanceOptions) - Operation response error`, func() {
-		createProviderTypeInstancePath := "/provider_types/testString/provider_type_instances"
+		createProviderTypeInstancePath := "/instances/testInstance/v3/provider_types/testString/provider_type_instances"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -12166,6 +12318,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateProviderTypeInstanceOptions model
 				createProviderTypeInstanceOptionsModel := new(securityandcompliancecenterapiv3.CreateProviderTypeInstanceOptions)
+				createProviderTypeInstanceOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createProviderTypeInstanceOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				createProviderTypeInstanceOptionsModel.Name = core.StringPtr("workload-protection-instance-1")
 				createProviderTypeInstanceOptionsModel.Attributes = map[string]interface{}{"anyKey": "anyValue"}
@@ -12191,7 +12344,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`CreateProviderTypeInstance(createProviderTypeInstanceOptions *CreateProviderTypeInstanceOptions)`, func() {
-		createProviderTypeInstancePath := "/provider_types/testString/provider_type_instances"
+		createProviderTypeInstancePath := "/instances/testInstance/v3/provider_types/testString/provider_type_instances"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -12241,6 +12394,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateProviderTypeInstanceOptions model
 				createProviderTypeInstanceOptionsModel := new(securityandcompliancecenterapiv3.CreateProviderTypeInstanceOptions)
+				createProviderTypeInstanceOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createProviderTypeInstanceOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				createProviderTypeInstanceOptionsModel.Name = core.StringPtr("workload-protection-instance-1")
 				createProviderTypeInstanceOptionsModel.Attributes = map[string]interface{}{"anyKey": "anyValue"}
@@ -12324,6 +12478,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateProviderTypeInstanceOptions model
 				createProviderTypeInstanceOptionsModel := new(securityandcompliancecenterapiv3.CreateProviderTypeInstanceOptions)
+				createProviderTypeInstanceOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createProviderTypeInstanceOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				createProviderTypeInstanceOptionsModel.Name = core.StringPtr("workload-protection-instance-1")
 				createProviderTypeInstanceOptionsModel.Attributes = map[string]interface{}{"anyKey": "anyValue"}
@@ -12336,7 +12491,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke CreateProviderTypeInstance with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -12348,6 +12502,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateProviderTypeInstanceOptions model
 				createProviderTypeInstanceOptionsModel := new(securityandcompliancecenterapiv3.CreateProviderTypeInstanceOptions)
+				createProviderTypeInstanceOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createProviderTypeInstanceOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				createProviderTypeInstanceOptionsModel.Name = core.StringPtr("workload-protection-instance-1")
 				createProviderTypeInstanceOptionsModel.Attributes = map[string]interface{}{"anyKey": "anyValue"}
@@ -12393,6 +12548,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateProviderTypeInstanceOptions model
 				createProviderTypeInstanceOptionsModel := new(securityandcompliancecenterapiv3.CreateProviderTypeInstanceOptions)
+				createProviderTypeInstanceOptionsModel.InstanceID = core.StringPtr("testInstance")
 				createProviderTypeInstanceOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				createProviderTypeInstanceOptionsModel.Name = core.StringPtr("workload-protection-instance-1")
 				createProviderTypeInstanceOptionsModel.Attributes = map[string]interface{}{"anyKey": "anyValue"}
@@ -12414,7 +12570,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`DeleteProviderTypeInstance(deleteProviderTypeInstanceOptions *DeleteProviderTypeInstanceOptions)`, func() {
-		deleteProviderTypeInstancePath := "/provider_types/testString/provider_type_instances/testString"
+		deleteProviderTypeInstancePath := "/instances/testInstance/v3/provider_types/testString/provider_type_instances/testString"
 		Context(`Using mock server endpoint`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -12446,6 +12602,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteProviderTypeInstanceOptions model
 				deleteProviderTypeInstanceOptionsModel := new(securityandcompliancecenterapiv3.DeleteProviderTypeInstanceOptions)
+				deleteProviderTypeInstanceOptionsModel.InstanceID = core.StringPtr("testInstance")
 				deleteProviderTypeInstanceOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				deleteProviderTypeInstanceOptionsModel.ProviderTypeInstanceID = core.StringPtr("testString")
 				deleteProviderTypeInstanceOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -12467,6 +12624,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the DeleteProviderTypeInstanceOptions model
 				deleteProviderTypeInstanceOptionsModel := new(securityandcompliancecenterapiv3.DeleteProviderTypeInstanceOptions)
+				deleteProviderTypeInstanceOptionsModel.InstanceID = core.StringPtr("testInstance")
 				deleteProviderTypeInstanceOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				deleteProviderTypeInstanceOptionsModel.ProviderTypeInstanceID = core.StringPtr("testString")
 				deleteProviderTypeInstanceOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -12492,7 +12650,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetProviderTypeInstance(getProviderTypeInstanceOptions *GetProviderTypeInstanceOptions) - Operation response error`, func() {
-		getProviderTypeInstancePath := "/provider_types/testString/provider_type_instances/testString"
+		getProviderTypeInstancePath := "/instances/testInstance/v3/provider_types/testString/provider_type_instances/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -12520,6 +12678,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProviderTypeInstanceOptions model
 				getProviderTypeInstanceOptionsModel := new(securityandcompliancecenterapiv3.GetProviderTypeInstanceOptions)
+				getProviderTypeInstanceOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProviderTypeInstanceOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				getProviderTypeInstanceOptionsModel.ProviderTypeInstanceID = core.StringPtr("testString")
 				getProviderTypeInstanceOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -12544,7 +12703,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetProviderTypeInstance(getProviderTypeInstanceOptions *GetProviderTypeInstanceOptions)`, func() {
-		getProviderTypeInstancePath := "/provider_types/testString/provider_type_instances/testString"
+		getProviderTypeInstancePath := "/instances/testInstance/v3/provider_types/testString/provider_type_instances/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -12578,6 +12737,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProviderTypeInstanceOptions model
 				getProviderTypeInstanceOptionsModel := new(securityandcompliancecenterapiv3.GetProviderTypeInstanceOptions)
+				getProviderTypeInstanceOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProviderTypeInstanceOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				getProviderTypeInstanceOptionsModel.ProviderTypeInstanceID = core.StringPtr("testString")
 				getProviderTypeInstanceOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -12644,6 +12804,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProviderTypeInstanceOptions model
 				getProviderTypeInstanceOptionsModel := new(securityandcompliancecenterapiv3.GetProviderTypeInstanceOptions)
+				getProviderTypeInstanceOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProviderTypeInstanceOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				getProviderTypeInstanceOptionsModel.ProviderTypeInstanceID = core.StringPtr("testString")
 				getProviderTypeInstanceOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -12655,7 +12816,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke GetProviderTypeInstance with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -12667,6 +12827,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProviderTypeInstanceOptions model
 				getProviderTypeInstanceOptionsModel := new(securityandcompliancecenterapiv3.GetProviderTypeInstanceOptions)
+				getProviderTypeInstanceOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProviderTypeInstanceOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				getProviderTypeInstanceOptionsModel.ProviderTypeInstanceID = core.StringPtr("testString")
 				getProviderTypeInstanceOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -12711,6 +12872,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProviderTypeInstanceOptions model
 				getProviderTypeInstanceOptionsModel := new(securityandcompliancecenterapiv3.GetProviderTypeInstanceOptions)
+				getProviderTypeInstanceOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProviderTypeInstanceOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				getProviderTypeInstanceOptionsModel.ProviderTypeInstanceID = core.StringPtr("testString")
 				getProviderTypeInstanceOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -12731,7 +12893,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`UpdateProviderTypeInstance(updateProviderTypeInstanceOptions *UpdateProviderTypeInstanceOptions) - Operation response error`, func() {
-		updateProviderTypeInstancePath := "/provider_types/testString/provider_type_instances/testString"
+		updateProviderTypeInstancePath := "/instances/testInstance/v3/provider_types/testString/provider_type_instances/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -12759,6 +12921,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the UpdateProviderTypeInstanceOptions model
 				updateProviderTypeInstanceOptionsModel := new(securityandcompliancecenterapiv3.UpdateProviderTypeInstanceOptions)
+				updateProviderTypeInstanceOptionsModel.InstanceID = core.StringPtr("testInstance")
 				updateProviderTypeInstanceOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				updateProviderTypeInstanceOptionsModel.ProviderTypeInstanceID = core.StringPtr("testString")
 				updateProviderTypeInstanceOptionsModel.Name = core.StringPtr("workload-protection-instance-1")
@@ -12785,7 +12948,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`UpdateProviderTypeInstance(updateProviderTypeInstanceOptions *UpdateProviderTypeInstanceOptions)`, func() {
-		updateProviderTypeInstancePath := "/provider_types/testString/provider_type_instances/testString"
+		updateProviderTypeInstancePath := "/instances/testInstance/v3/provider_types/testString/provider_type_instances/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -12835,6 +12998,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the UpdateProviderTypeInstanceOptions model
 				updateProviderTypeInstanceOptionsModel := new(securityandcompliancecenterapiv3.UpdateProviderTypeInstanceOptions)
+				updateProviderTypeInstanceOptionsModel.InstanceID = core.StringPtr("testInstance")
 				updateProviderTypeInstanceOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				updateProviderTypeInstanceOptionsModel.ProviderTypeInstanceID = core.StringPtr("testString")
 				updateProviderTypeInstanceOptionsModel.Name = core.StringPtr("workload-protection-instance-1")
@@ -12919,6 +13083,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the UpdateProviderTypeInstanceOptions model
 				updateProviderTypeInstanceOptionsModel := new(securityandcompliancecenterapiv3.UpdateProviderTypeInstanceOptions)
+				updateProviderTypeInstanceOptionsModel.InstanceID = core.StringPtr("testInstance")
 				updateProviderTypeInstanceOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				updateProviderTypeInstanceOptionsModel.ProviderTypeInstanceID = core.StringPtr("testString")
 				updateProviderTypeInstanceOptionsModel.Name = core.StringPtr("workload-protection-instance-1")
@@ -12932,7 +13097,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke UpdateProviderTypeInstance with error: Operation validation and request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -12944,6 +13108,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the UpdateProviderTypeInstanceOptions model
 				updateProviderTypeInstanceOptionsModel := new(securityandcompliancecenterapiv3.UpdateProviderTypeInstanceOptions)
+				updateProviderTypeInstanceOptionsModel.InstanceID = core.StringPtr("testInstance")
 				updateProviderTypeInstanceOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				updateProviderTypeInstanceOptionsModel.ProviderTypeInstanceID = core.StringPtr("testString")
 				updateProviderTypeInstanceOptionsModel.Name = core.StringPtr("workload-protection-instance-1")
@@ -12990,6 +13155,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the UpdateProviderTypeInstanceOptions model
 				updateProviderTypeInstanceOptionsModel := new(securityandcompliancecenterapiv3.UpdateProviderTypeInstanceOptions)
+				updateProviderTypeInstanceOptionsModel.InstanceID = core.StringPtr("testInstance")
 				updateProviderTypeInstanceOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				updateProviderTypeInstanceOptionsModel.ProviderTypeInstanceID = core.StringPtr("testString")
 				updateProviderTypeInstanceOptionsModel.Name = core.StringPtr("workload-protection-instance-1")
@@ -13012,7 +13178,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetProviderTypesInstances(getProviderTypesInstancesOptions *GetProviderTypesInstancesOptions) - Operation response error`, func() {
-		getProviderTypesInstancesPath := "/provider_types_instances"
+		getProviderTypesInstancesPath := "/v3/provider_types_instances"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -13062,7 +13228,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetProviderTypesInstances(getProviderTypesInstancesOptions *GetProviderTypesInstancesOptions)`, func() {
-		getProviderTypesInstancesPath := "/provider_types_instances"
+		getProviderTypesInstancesPath := "/v3/provider_types_instances"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -13169,7 +13335,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
-
 			})
 			It(`Invoke GetProviderTypesInstances with error: Operation request error`, func() {
 				securityAndComplianceCenterApiService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
@@ -13331,9 +13496,10 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(attachmentsPrototypeModel.AttachmentParameters).To(Equal([]securityandcompliancecenterapiv3.AttachmentParameterPrototype{*attachmentParameterPrototypeModel}))
 
 				// Construct an instance of the CreateAttachmentOptions model
+				instanceID := "testInstance"
 				profileID := "testString"
 				createAttachmentOptionsAttachments := []securityandcompliancecenterapiv3.AttachmentsPrototype{}
-				createAttachmentOptionsModel := securityAndComplianceCenterApiService.NewCreateAttachmentOptions(profileID, createAttachmentOptionsAttachments)
+				createAttachmentOptionsModel := securityAndComplianceCenterApiService.NewCreateAttachmentOptions(instanceID, profileID, createAttachmentOptionsAttachments)
 				createAttachmentOptionsModel.SetProfileID("testString")
 				createAttachmentOptionsModel.SetAttachments([]securityandcompliancecenterapiv3.AttachmentsPrototype{*attachmentsPrototypeModel})
 				createAttachmentOptionsModel.SetProfileID("testString")
@@ -13430,11 +13596,12 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(controlsInControlLibModel.Status).To(Equal(core.StringPtr("enabled")))
 
 				// Construct an instance of the CreateCustomControlLibraryOptions model
+				instanceID := "testInstance"
 				createCustomControlLibraryOptionsControlLibraryName := "IBM Cloud for Financial Services"
 				createCustomControlLibraryOptionsControlLibraryDescription := "IBM Cloud for Financial Services"
 				createCustomControlLibraryOptionsControlLibraryType := "custom"
 				createCustomControlLibraryOptionsControls := []securityandcompliancecenterapiv3.ControlsInControlLib{}
-				createCustomControlLibraryOptionsModel := securityAndComplianceCenterApiService.NewCreateCustomControlLibraryOptions(createCustomControlLibraryOptionsControlLibraryName, createCustomControlLibraryOptionsControlLibraryDescription, createCustomControlLibraryOptionsControlLibraryType, createCustomControlLibraryOptionsControls)
+				createCustomControlLibraryOptionsModel := securityAndComplianceCenterApiService.NewCreateCustomControlLibraryOptions(instanceID, createCustomControlLibraryOptionsControlLibraryName, createCustomControlLibraryOptionsControlLibraryDescription, createCustomControlLibraryOptionsControlLibraryType, createCustomControlLibraryOptionsControls)
 				createCustomControlLibraryOptionsModel.SetControlLibraryName("IBM Cloud for Financial Services")
 				createCustomControlLibraryOptionsModel.SetControlLibraryDescription("IBM Cloud for Financial Services")
 				createCustomControlLibraryOptionsModel.SetControlLibraryType("custom")
@@ -13485,12 +13652,13 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(defaultParametersPrototypeModel.ParameterType).To(Equal(core.StringPtr("numeric")))
 
 				// Construct an instance of the CreateProfileOptions model
+				instanceID := "testInstance"
 				createProfileOptionsProfileName := "test_profile1"
 				createProfileOptionsProfileDescription := "test_description1"
 				createProfileOptionsProfileType := "custom"
 				createProfileOptionsControls := []securityandcompliancecenterapiv3.ProfileControlsPrototype{}
 				createProfileOptionsDefaultParameters := []securityandcompliancecenterapiv3.DefaultParametersPrototype{}
-				createProfileOptionsModel := securityAndComplianceCenterApiService.NewCreateProfileOptions(createProfileOptionsProfileName, createProfileOptionsProfileDescription, createProfileOptionsProfileType, createProfileOptionsControls, createProfileOptionsDefaultParameters)
+				createProfileOptionsModel := securityAndComplianceCenterApiService.NewCreateProfileOptions(instanceID, createProfileOptionsProfileName, createProfileOptionsProfileDescription, createProfileOptionsProfileType, createProfileOptionsControls, createProfileOptionsDefaultParameters)
 				createProfileOptionsModel.SetProfileName("test_profile1")
 				createProfileOptionsModel.SetProfileDescription("test_description1")
 				createProfileOptionsModel.SetProfileType("custom")
@@ -13512,7 +13680,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			It(`Invoke NewCreateProviderTypeInstanceOptions successfully`, func() {
 				// Construct an instance of the CreateProviderTypeInstanceOptions model
 				providerTypeID := "testString"
-				createProviderTypeInstanceOptionsModel := securityAndComplianceCenterApiService.NewCreateProviderTypeInstanceOptions(providerTypeID)
+				instanceID := "testInstance"
+				createProviderTypeInstanceOptionsModel := securityAndComplianceCenterApiService.NewCreateProviderTypeInstanceOptions(instanceID, providerTypeID)
 				createProviderTypeInstanceOptionsModel.SetProviderTypeID("testString")
 				createProviderTypeInstanceOptionsModel.SetName("workload-protection-instance-1")
 				createProviderTypeInstanceOptionsModel.SetAttributes(map[string]interface{}{"anyKey": "anyValue"})
@@ -13590,9 +13759,10 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the CreateRuleOptions model
 				createRuleOptionsDescription := "Example rule"
+				instanceID := "testInstance"
 				var createRuleOptionsTarget *securityandcompliancecenterapiv3.Target = nil
 				var createRuleOptionsRequiredConfig securityandcompliancecenterapiv3.RequiredConfigIntf = nil
-				createRuleOptionsModel := securityAndComplianceCenterApiService.NewCreateRuleOptions(createRuleOptionsDescription, createRuleOptionsTarget, createRuleOptionsRequiredConfig)
+				createRuleOptionsModel := securityAndComplianceCenterApiService.NewCreateRuleOptions(instanceID, createRuleOptionsDescription, createRuleOptionsTarget, createRuleOptionsRequiredConfig)
 				createRuleOptionsModel.SetDescription("Example rule")
 				createRuleOptionsModel.SetTarget(targetModel)
 				createRuleOptionsModel.SetRequiredConfig(requiredConfigModel)
@@ -13617,8 +13787,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewCreateScanOptions successfully`, func() {
 				// Construct an instance of the CreateScanOptions model
+				instanceID := "testInstance"
 				createScanOptionsAttachmentID := "testString"
-				createScanOptionsModel := securityAndComplianceCenterApiService.NewCreateScanOptions(createScanOptionsAttachmentID)
+				createScanOptionsModel := securityAndComplianceCenterApiService.NewCreateScanOptions(instanceID, createScanOptionsAttachmentID)
 				createScanOptionsModel.SetAttachmentID("testString")
 				createScanOptionsModel.SetXCorrelationID("testString")
 				createScanOptionsModel.SetXRequestID("testString")
@@ -13631,8 +13802,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewDeleteCustomControlLibraryOptions successfully`, func() {
 				// Construct an instance of the DeleteCustomControlLibraryOptions model
+				instanceID := "testInstance"
 				controlLibrariesID := "testString"
-				deleteCustomControlLibraryOptionsModel := securityAndComplianceCenterApiService.NewDeleteCustomControlLibraryOptions(controlLibrariesID)
+				deleteCustomControlLibraryOptionsModel := securityAndComplianceCenterApiService.NewDeleteCustomControlLibraryOptions(instanceID, controlLibrariesID)
 				deleteCustomControlLibraryOptionsModel.SetControlLibrariesID("testString")
 				deleteCustomControlLibraryOptionsModel.SetXCorrelationID("testString")
 				deleteCustomControlLibraryOptionsModel.SetXRequestID("testString")
@@ -13645,8 +13817,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewDeleteCustomProfileOptions successfully`, func() {
 				// Construct an instance of the DeleteCustomProfileOptions model
+				instanceID := "testInstance"
 				profileID := "testString"
-				deleteCustomProfileOptionsModel := securityAndComplianceCenterApiService.NewDeleteCustomProfileOptions(profileID)
+				deleteCustomProfileOptionsModel := securityAndComplianceCenterApiService.NewDeleteCustomProfileOptions(instanceID, profileID)
 				deleteCustomProfileOptionsModel.SetProfileID("testString")
 				deleteCustomProfileOptionsModel.SetXCorrelationID("testString")
 				deleteCustomProfileOptionsModel.SetXRequestID("testString")
@@ -13659,9 +13832,10 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewDeleteProfileAttachmentOptions successfully`, func() {
 				// Construct an instance of the DeleteProfileAttachmentOptions model
+				instanceID := "testInstance"
 				attachmentID := "testString"
 				profileID := "testString"
-				deleteProfileAttachmentOptionsModel := securityAndComplianceCenterApiService.NewDeleteProfileAttachmentOptions(attachmentID, profileID)
+				deleteProfileAttachmentOptionsModel := securityAndComplianceCenterApiService.NewDeleteProfileAttachmentOptions(instanceID, attachmentID, profileID)
 				deleteProfileAttachmentOptionsModel.SetAttachmentID("testString")
 				deleteProfileAttachmentOptionsModel.SetProfileID("testString")
 				deleteProfileAttachmentOptionsModel.SetXCorrelationID("testString")
@@ -13676,9 +13850,10 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewDeleteProviderTypeInstanceOptions successfully`, func() {
 				// Construct an instance of the DeleteProviderTypeInstanceOptions model
+				instanceID := "testInstance"
 				providerTypeID := "testString"
 				providerTypeInstanceID := "testString"
-				deleteProviderTypeInstanceOptionsModel := securityAndComplianceCenterApiService.NewDeleteProviderTypeInstanceOptions(providerTypeID, providerTypeInstanceID)
+				deleteProviderTypeInstanceOptionsModel := securityAndComplianceCenterApiService.NewDeleteProviderTypeInstanceOptions(instanceID, providerTypeID, providerTypeInstanceID)
 				deleteProviderTypeInstanceOptionsModel.SetProviderTypeID("testString")
 				deleteProviderTypeInstanceOptionsModel.SetProviderTypeInstanceID("testString")
 				deleteProviderTypeInstanceOptionsModel.SetXCorrelationID("testString")
@@ -13693,8 +13868,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewDeleteRuleOptions successfully`, func() {
 				// Construct an instance of the DeleteRuleOptions model
+				instanceID := "testInstance"
 				ruleID := "testString"
-				deleteRuleOptionsModel := securityAndComplianceCenterApiService.NewDeleteRuleOptions(ruleID)
+				deleteRuleOptionsModel := securityAndComplianceCenterApiService.NewDeleteRuleOptions(instanceID, ruleID)
 				deleteRuleOptionsModel.SetRuleID("testString")
 				deleteRuleOptionsModel.SetXCorrelationID("testString")
 				deleteRuleOptionsModel.SetXRequestID("testString")
@@ -13707,8 +13883,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewGetControlLibraryOptions successfully`, func() {
 				// Construct an instance of the GetControlLibraryOptions model
+				instanceID := "testInstance"
 				controlLibrariesID := "testString"
-				getControlLibraryOptionsModel := securityAndComplianceCenterApiService.NewGetControlLibraryOptions(controlLibrariesID)
+				getControlLibraryOptionsModel := securityAndComplianceCenterApiService.NewGetControlLibraryOptions(instanceID, controlLibrariesID)
 				getControlLibraryOptionsModel.SetControlLibrariesID("testString")
 				getControlLibraryOptionsModel.SetXCorrelationID("testString")
 				getControlLibraryOptionsModel.SetXRequestID("testString")
@@ -13721,7 +13898,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewGetLatestReportsOptions successfully`, func() {
 				// Construct an instance of the GetLatestReportsOptions model
-				getLatestReportsOptionsModel := securityAndComplianceCenterApiService.NewGetLatestReportsOptions()
+				instanceID := "testInstance"
+				getLatestReportsOptionsModel := securityAndComplianceCenterApiService.NewGetLatestReportsOptions(instanceID)
 				getLatestReportsOptionsModel.SetXCorrelationID("testString")
 				getLatestReportsOptionsModel.SetXRequestID("testString")
 				getLatestReportsOptionsModel.SetSort("profile_name")
@@ -13734,9 +13912,10 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewGetProfileAttachmentOptions successfully`, func() {
 				// Construct an instance of the GetProfileAttachmentOptions model
+				instanceID := "testInstance"
 				attachmentID := "testString"
 				profileID := "testString"
-				getProfileAttachmentOptionsModel := securityAndComplianceCenterApiService.NewGetProfileAttachmentOptions(attachmentID, profileID)
+				getProfileAttachmentOptionsModel := securityAndComplianceCenterApiService.NewGetProfileAttachmentOptions(instanceID, attachmentID, profileID)
 				getProfileAttachmentOptionsModel.SetAttachmentID("testString")
 				getProfileAttachmentOptionsModel.SetProfileID("testString")
 				getProfileAttachmentOptionsModel.SetXCorrelationID("testString")
@@ -13751,8 +13930,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewGetProfileOptions successfully`, func() {
 				// Construct an instance of the GetProfileOptions model
+				instanceID := "testInstance"
 				profileID := "testString"
-				getProfileOptionsModel := securityAndComplianceCenterApiService.NewGetProfileOptions(profileID)
+				getProfileOptionsModel := securityAndComplianceCenterApiService.NewGetProfileOptions(instanceID, profileID)
 				getProfileOptionsModel.SetProfileID("testString")
 				getProfileOptionsModel.SetXCorrelationID("testString")
 				getProfileOptionsModel.SetXRequestID("testString")
@@ -13779,9 +13959,10 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewGetProviderTypeInstanceOptions successfully`, func() {
 				// Construct an instance of the GetProviderTypeInstanceOptions model
+				instanceID := "testInstance"
 				providerTypeID := "testString"
 				providerTypeInstanceID := "testString"
-				getProviderTypeInstanceOptionsModel := securityAndComplianceCenterApiService.NewGetProviderTypeInstanceOptions(providerTypeID, providerTypeInstanceID)
+				getProviderTypeInstanceOptionsModel := securityAndComplianceCenterApiService.NewGetProviderTypeInstanceOptions(instanceID, providerTypeID, providerTypeInstanceID)
 				getProviderTypeInstanceOptionsModel.SetProviderTypeID("testString")
 				getProviderTypeInstanceOptionsModel.SetProviderTypeInstanceID("testString")
 				getProviderTypeInstanceOptionsModel.SetXCorrelationID("testString")
@@ -13807,8 +13988,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewGetReportControlsOptions successfully`, func() {
 				// Construct an instance of the GetReportControlsOptions model
+				instanceID := "testInstance"
 				reportID := "testString"
-				getReportControlsOptionsModel := securityAndComplianceCenterApiService.NewGetReportControlsOptions(reportID)
+				getReportControlsOptionsModel := securityAndComplianceCenterApiService.NewGetReportControlsOptions(instanceID, reportID)
 				getReportControlsOptionsModel.SetReportID("testString")
 				getReportControlsOptionsModel.SetXCorrelationID("testString")
 				getReportControlsOptionsModel.SetXRequestID("testString")
@@ -13833,8 +14015,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewGetReportEvaluationOptions successfully`, func() {
 				// Construct an instance of the GetReportEvaluationOptions model
+				instanceID := "testInstance"
 				reportID := "testString"
-				getReportEvaluationOptionsModel := securityAndComplianceCenterApiService.NewGetReportEvaluationOptions(reportID)
+				getReportEvaluationOptionsModel := securityAndComplianceCenterApiService.NewGetReportEvaluationOptions(instanceID, reportID)
 				getReportEvaluationOptionsModel.SetReportID("testString")
 				getReportEvaluationOptionsModel.SetXCorrelationID("testString")
 				getReportEvaluationOptionsModel.SetXRequestID("testString")
@@ -13849,8 +14032,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewGetReportOptions successfully`, func() {
 				// Construct an instance of the GetReportOptions model
+				instanceID := "testInstance"
 				reportID := "testString"
-				getReportOptionsModel := securityAndComplianceCenterApiService.NewGetReportOptions(reportID)
+				getReportOptionsModel := securityAndComplianceCenterApiService.NewGetReportOptions(instanceID, reportID)
 				getReportOptionsModel.SetReportID("testString")
 				getReportOptionsModel.SetXCorrelationID("testString")
 				getReportOptionsModel.SetXRequestID("testString")
@@ -13863,9 +14047,10 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewGetReportRuleOptions successfully`, func() {
 				// Construct an instance of the GetReportRuleOptions model
+				instanceID := "testInstance"
 				reportID := "testString"
 				ruleID := "rule-8d444f8c-fd1d-48de-bcaa-f43732568761"
-				getReportRuleOptionsModel := securityAndComplianceCenterApiService.NewGetReportRuleOptions(reportID, ruleID)
+				getReportRuleOptionsModel := securityAndComplianceCenterApiService.NewGetReportRuleOptions(instanceID, reportID, ruleID)
 				getReportRuleOptionsModel.SetReportID("testString")
 				getReportRuleOptionsModel.SetRuleID("rule-8d444f8c-fd1d-48de-bcaa-f43732568761")
 				getReportRuleOptionsModel.SetXCorrelationID("testString")
@@ -13880,8 +14065,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewGetReportSummaryOptions successfully`, func() {
 				// Construct an instance of the GetReportSummaryOptions model
+				instanceID := "testInstance"
 				reportID := "testString"
-				getReportSummaryOptionsModel := securityAndComplianceCenterApiService.NewGetReportSummaryOptions(reportID)
+				getReportSummaryOptionsModel := securityAndComplianceCenterApiService.NewGetReportSummaryOptions(instanceID, reportID)
 				getReportSummaryOptionsModel.SetReportID("testString")
 				getReportSummaryOptionsModel.SetXCorrelationID("testString")
 				getReportSummaryOptionsModel.SetXRequestID("testString")
@@ -13894,8 +14080,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewGetReportTagsOptions successfully`, func() {
 				// Construct an instance of the GetReportTagsOptions model
+				instanceID := "testInstance"
 				reportID := "testString"
-				getReportTagsOptionsModel := securityAndComplianceCenterApiService.NewGetReportTagsOptions(reportID)
+				getReportTagsOptionsModel := securityAndComplianceCenterApiService.NewGetReportTagsOptions(instanceID, reportID)
 				getReportTagsOptionsModel.SetReportID("testString")
 				getReportTagsOptionsModel.SetXCorrelationID("testString")
 				getReportTagsOptionsModel.SetXRequestID("testString")
@@ -13908,8 +14095,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewGetReportViolationsDriftOptions successfully`, func() {
 				// Construct an instance of the GetReportViolationsDriftOptions model
+				instanceID := "testInstance"
 				reportID := "testString"
-				getReportViolationsDriftOptionsModel := securityAndComplianceCenterApiService.NewGetReportViolationsDriftOptions(reportID)
+				getReportViolationsDriftOptionsModel := securityAndComplianceCenterApiService.NewGetReportViolationsDriftOptions(instanceID, reportID)
 				getReportViolationsDriftOptionsModel.SetReportID("testString")
 				getReportViolationsDriftOptionsModel.SetXCorrelationID("testString")
 				getReportViolationsDriftOptionsModel.SetXRequestID("testString")
@@ -13924,8 +14112,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewGetRuleOptions successfully`, func() {
 				// Construct an instance of the GetRuleOptions model
+				instanceID := "testInstance"
 				ruleID := "testString"
-				getRuleOptionsModel := securityAndComplianceCenterApiService.NewGetRuleOptions(ruleID)
+				getRuleOptionsModel := securityAndComplianceCenterApiService.NewGetRuleOptions(instanceID, ruleID)
 				getRuleOptionsModel.SetRuleID("testString")
 				getRuleOptionsModel.SetXCorrelationID("testString")
 				getRuleOptionsModel.SetXRequestID("testString")
@@ -13938,7 +14127,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewGetSettingsOptions successfully`, func() {
 				// Construct an instance of the GetSettingsOptions model
-				getSettingsOptionsModel := securityAndComplianceCenterApiService.NewGetSettingsOptions()
+				instanceID := "testInstance"
+				getSettingsOptionsModel := securityAndComplianceCenterApiService.NewGetSettingsOptions(instanceID)
 				getSettingsOptionsModel.SetXCorrelationID("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
 				getSettingsOptionsModel.SetXRequestID("testString")
 				getSettingsOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
@@ -13949,7 +14139,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewListAttachmentsAccountOptions successfully`, func() {
 				// Construct an instance of the ListAttachmentsAccountOptions model
-				listAttachmentsAccountOptionsModel := securityAndComplianceCenterApiService.NewListAttachmentsAccountOptions()
+				instanceID := "testInstance"
+				listAttachmentsAccountOptionsModel := securityAndComplianceCenterApiService.NewListAttachmentsAccountOptions(instanceID)
 				listAttachmentsAccountOptionsModel.SetXCorrelationID("testString")
 				listAttachmentsAccountOptionsModel.SetXRequestID("testString")
 				listAttachmentsAccountOptionsModel.SetLimit(int64(10))
@@ -13982,7 +14173,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewListControlLibrariesOptions successfully`, func() {
 				// Construct an instance of the ListControlLibrariesOptions model
-				listControlLibrariesOptionsModel := securityAndComplianceCenterApiService.NewListControlLibrariesOptions()
+				instanceID := "testInstance"
+				listControlLibrariesOptionsModel := securityAndComplianceCenterApiService.NewListControlLibrariesOptions(instanceID)
 				listControlLibrariesOptionsModel.SetXCorrelationID("testString")
 				listControlLibrariesOptionsModel.SetXRequestID("testString")
 				listControlLibrariesOptionsModel.SetLimit(int64(50))
@@ -13999,7 +14191,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewListProfilesOptions successfully`, func() {
 				// Construct an instance of the ListProfilesOptions model
-				listProfilesOptionsModel := securityAndComplianceCenterApiService.NewListProfilesOptions()
+				instanceID := "testInstance"
+				listProfilesOptionsModel := securityAndComplianceCenterApiService.NewListProfilesOptions(instanceID)
 				listProfilesOptionsModel.SetXCorrelationID("testString")
 				listProfilesOptionsModel.SetXRequestID("testString")
 				listProfilesOptionsModel.SetLimit(int64(10))
@@ -14016,8 +14209,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewListProviderTypeInstancesOptions successfully`, func() {
 				// Construct an instance of the ListProviderTypeInstancesOptions model
+				instanceID := "testInstance"
 				providerTypeID := "testString"
-				listProviderTypeInstancesOptionsModel := securityAndComplianceCenterApiService.NewListProviderTypeInstancesOptions(providerTypeID)
+				listProviderTypeInstancesOptionsModel := securityAndComplianceCenterApiService.NewListProviderTypeInstancesOptions(instanceID, providerTypeID)
 				listProviderTypeInstancesOptionsModel.SetProviderTypeID("testString")
 				listProviderTypeInstancesOptionsModel.SetXCorrelationID("testString")
 				listProviderTypeInstancesOptionsModel.SetXRequestID("testString")
@@ -14030,7 +14224,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewListProviderTypesOptions successfully`, func() {
 				// Construct an instance of the ListProviderTypesOptions model
-				listProviderTypesOptionsModel := securityAndComplianceCenterApiService.NewListProviderTypesOptions()
+				instanceID := "testInstance"
+				listProviderTypesOptionsModel := securityAndComplianceCenterApiService.NewListProviderTypesOptions(instanceID)
 				listProviderTypesOptionsModel.SetXCorrelationID("testString")
 				listProviderTypesOptionsModel.SetXRequestID("testString")
 				listProviderTypesOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
@@ -14041,8 +14236,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewListReportEvaluationsOptions successfully`, func() {
 				// Construct an instance of the ListReportEvaluationsOptions model
+				instanceID := "testInstance"
 				reportID := "testString"
-				listReportEvaluationsOptionsModel := securityAndComplianceCenterApiService.NewListReportEvaluationsOptions(reportID)
+				listReportEvaluationsOptionsModel := securityAndComplianceCenterApiService.NewListReportEvaluationsOptions(instanceID, reportID)
 				listReportEvaluationsOptionsModel.SetReportID("testString")
 				listReportEvaluationsOptionsModel.SetXCorrelationID("testString")
 				listReportEvaluationsOptionsModel.SetXRequestID("testString")
@@ -14069,8 +14265,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewListReportResourcesOptions successfully`, func() {
 				// Construct an instance of the ListReportResourcesOptions model
+				instanceID := "testInstance"
 				reportID := "testString"
-				listReportResourcesOptionsModel := securityAndComplianceCenterApiService.NewListReportResourcesOptions(reportID)
+				listReportResourcesOptionsModel := securityAndComplianceCenterApiService.NewListReportResourcesOptions(instanceID, reportID)
 				listReportResourcesOptionsModel.SetReportID("testString")
 				listReportResourcesOptionsModel.SetXCorrelationID("testString")
 				listReportResourcesOptionsModel.SetXRequestID("testString")
@@ -14099,7 +14296,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewListReportsOptions successfully`, func() {
 				// Construct an instance of the ListReportsOptions model
-				listReportsOptionsModel := securityAndComplianceCenterApiService.NewListReportsOptions()
+				instanceID := "testInstance"
+				listReportsOptionsModel := securityAndComplianceCenterApiService.NewListReportsOptions(instanceID)
 				listReportsOptionsModel.SetXCorrelationID("testString")
 				listReportsOptionsModel.SetXRequestID("testString")
 				listReportsOptionsModel.SetAttachmentID("testString")
@@ -14148,7 +14346,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewPostTestEventOptions successfully`, func() {
 				// Construct an instance of the PostTestEventOptions model
-				postTestEventOptionsModel := securityAndComplianceCenterApiService.NewPostTestEventOptions()
+				instanceID := "testInstance"
+				postTestEventOptionsModel := securityAndComplianceCenterApiService.NewPostTestEventOptions(instanceID)
 				postTestEventOptionsModel.SetXCorrelationID("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
 				postTestEventOptionsModel.SetXRequestID("testString")
 				postTestEventOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
@@ -14239,8 +14438,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(controlsInControlLibModel.Status).To(Equal(core.StringPtr("enabled")))
 
 				// Construct an instance of the ReplaceCustomControlLibraryOptions model
+				instanceID := "testInstance"
 				controlLibrariesID := "testString"
-				replaceCustomControlLibraryOptionsModel := securityAndComplianceCenterApiService.NewReplaceCustomControlLibraryOptions(controlLibrariesID)
+				replaceCustomControlLibraryOptionsModel := securityAndComplianceCenterApiService.NewReplaceCustomControlLibraryOptions(instanceID, controlLibrariesID)
 				replaceCustomControlLibraryOptionsModel.SetControlLibrariesID("testString")
 				replaceCustomControlLibraryOptionsModel.SetID("testString")
 				replaceCustomControlLibraryOptionsModel.SetAccountID("testString")
@@ -14343,9 +14543,10 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(lastScanModel.Time).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
 
 				// Construct an instance of the ReplaceProfileAttachmentOptions model
+				instanceID := "testInstance"
 				attachmentID := "testString"
 				profileID := "testString"
-				replaceProfileAttachmentOptionsModel := securityAndComplianceCenterApiService.NewReplaceProfileAttachmentOptions(attachmentID, profileID)
+				replaceProfileAttachmentOptionsModel := securityAndComplianceCenterApiService.NewReplaceProfileAttachmentOptions(instanceID, attachmentID, profileID)
 				replaceProfileAttachmentOptionsModel.SetAttachmentID("testString")
 				replaceProfileAttachmentOptionsModel.SetProfileID("testString")
 				replaceProfileAttachmentOptionsModel.SetID("testString")
@@ -14418,13 +14619,14 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(defaultParametersPrototypeModel.ParameterType).To(Equal(core.StringPtr("numeric")))
 
 				// Construct an instance of the ReplaceProfileOptions model
+				instanceID := "testInstance"
 				profileID := "testString"
 				replaceProfileOptionsProfileName := "test_profile1"
 				replaceProfileOptionsProfileDescription := "test_description1"
 				replaceProfileOptionsProfileType := "custom"
 				replaceProfileOptionsControls := []securityandcompliancecenterapiv3.ProfileControlsPrototype{}
 				replaceProfileOptionsDefaultParameters := []securityandcompliancecenterapiv3.DefaultParametersPrototype{}
-				replaceProfileOptionsModel := securityAndComplianceCenterApiService.NewReplaceProfileOptions(profileID, replaceProfileOptionsProfileName, replaceProfileOptionsProfileDescription, replaceProfileOptionsProfileType, replaceProfileOptionsControls, replaceProfileOptionsDefaultParameters)
+				replaceProfileOptionsModel := securityAndComplianceCenterApiService.NewReplaceProfileOptions(instanceID, profileID, replaceProfileOptionsProfileName, replaceProfileOptionsProfileDescription, replaceProfileOptionsProfileType, replaceProfileOptionsControls, replaceProfileOptionsDefaultParameters)
 				replaceProfileOptionsModel.SetProfileID("testString")
 				replaceProfileOptionsModel.SetProfileName("test_profile1")
 				replaceProfileOptionsModel.SetProfileDescription("test_description1")
@@ -14507,12 +14709,13 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(importModel.Parameters).To(Equal([]securityandcompliancecenterapiv3.Parameter{*parameterModel}))
 
 				// Construct an instance of the ReplaceRuleOptions model
+				instanceID := "testInstance"
 				ruleID := "testString"
 				ifMatch := "testString"
 				replaceRuleOptionsDescription := "Example rule"
 				var replaceRuleOptionsTarget *securityandcompliancecenterapiv3.Target = nil
 				var replaceRuleOptionsRequiredConfig securityandcompliancecenterapiv3.RequiredConfigIntf = nil
-				replaceRuleOptionsModel := securityAndComplianceCenterApiService.NewReplaceRuleOptions(ruleID, ifMatch, replaceRuleOptionsDescription, replaceRuleOptionsTarget, replaceRuleOptionsRequiredConfig)
+				replaceRuleOptionsModel := securityAndComplianceCenterApiService.NewReplaceRuleOptions(instanceID, ruleID, ifMatch, replaceRuleOptionsDescription, replaceRuleOptionsTarget, replaceRuleOptionsRequiredConfig)
 				replaceRuleOptionsModel.SetRuleID("testString")
 				replaceRuleOptionsModel.SetIfMatch("testString")
 				replaceRuleOptionsModel.SetDescription("Example rule")
@@ -14548,9 +14751,10 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewUpdateProviderTypeInstanceOptions successfully`, func() {
 				// Construct an instance of the UpdateProviderTypeInstanceOptions model
+				instanceID := "testInstance"
 				providerTypeID := "testString"
 				providerTypeInstanceID := "testString"
-				updateProviderTypeInstanceOptionsModel := securityAndComplianceCenterApiService.NewUpdateProviderTypeInstanceOptions(providerTypeID, providerTypeInstanceID)
+				updateProviderTypeInstanceOptionsModel := securityAndComplianceCenterApiService.NewUpdateProviderTypeInstanceOptions(instanceID, providerTypeID, providerTypeInstanceID)
 				updateProviderTypeInstanceOptionsModel.SetProviderTypeID("testString")
 				updateProviderTypeInstanceOptionsModel.SetProviderTypeInstanceID("testString")
 				updateProviderTypeInstanceOptionsModel.SetName("workload-protection-instance-1")
@@ -14597,7 +14801,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(objectStorageModel.UpdatedOn).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
 
 				// Construct an instance of the UpdateSettingsOptions model
-				updateSettingsOptionsModel := securityAndComplianceCenterApiService.NewUpdateSettingsOptions()
+				instanceID := "testInstance"
+				updateSettingsOptionsModel := securityAndComplianceCenterApiService.NewUpdateSettingsOptions(instanceID)
 				updateSettingsOptionsModel.SetEventNotifications(eventNotificationsModel)
 				updateSettingsOptionsModel.SetObjectStorage(objectStorageModel)
 				updateSettingsOptionsModel.SetXCorrelationID("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")

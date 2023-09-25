@@ -5039,6 +5039,12 @@ func (*SecurityAndComplianceCenterApiV3) NewCreateAttachmentOptions(profileID st
 	}
 }
 
+// SetInstanceID : Allow user to set InstanceID
+func (_options *CreateAttachmentOptions) SetInstanceID(instanceID string) *CreateAttachmentOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
 // SetProfileID : Allow user to set ProfileID
 func (_options *CreateAttachmentOptions) SetProfileID(profileID string) *CreateAttachmentOptions {
 	_options.ProfileID = core.StringPtr(profileID)
@@ -5071,6 +5077,9 @@ func (options *CreateAttachmentOptions) SetHeaders(param map[string]string) *Cre
 
 // CreateCustomControlLibraryOptions : The CreateCustomControlLibrary options.
 type CreateCustomControlLibraryOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The control library name.
 	ControlLibraryName *string `json:"control_library_name" validate:"required"`
 
@@ -5107,9 +5116,6 @@ type CreateCustomControlLibraryOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
-
-	// ID of the instance
-	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // Constants associated with the CreateCustomControlLibraryOptions.ControlLibraryType property.
@@ -5127,6 +5133,12 @@ func (*SecurityAndComplianceCenterApiV3) NewCreateCustomControlLibraryOptions(co
 		ControlLibraryType:        core.StringPtr(controlLibraryType),
 		Controls:                  controls,
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *CreateCustomControlLibraryOptions) SetInstanceID(instanceID string) *CreateCustomControlLibraryOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetControlLibraryName : Allow user to set ControlLibraryName
@@ -5197,6 +5209,9 @@ func (options *CreateCustomControlLibraryOptions) SetHeaders(param map[string]st
 
 // CreateProfileOptions : The CreateProfile options.
 type CreateProfileOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The name of the profile.
 	ProfileName *string `json:"profile_name" validate:"required"`
 
@@ -5224,9 +5239,6 @@ type CreateProfileOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
-
-	// ID of the instance
-	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // Constants associated with the CreateProfileOptions.ProfileType property.
@@ -5245,6 +5257,12 @@ func (*SecurityAndComplianceCenterApiV3) NewCreateProfileOptions(profileName str
 		Controls:           controls,
 		DefaultParameters:  defaultParameters,
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *CreateProfileOptions) SetInstanceID(instanceID string) *CreateProfileOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetProfileName : Allow user to set ProfileName
@@ -5328,6 +5346,12 @@ func (*SecurityAndComplianceCenterApiV3) NewCreateProviderTypeInstanceOptions(pr
 	return &CreateProviderTypeInstanceOptions{
 		ProviderTypeID: core.StringPtr(providerTypeID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *CreateProviderTypeInstanceOptions) SetInstanceID(instanceID string) *CreateProviderTypeInstanceOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetProviderTypeID : Allow user to set ProviderTypeID
@@ -5422,6 +5446,12 @@ func (*SecurityAndComplianceCenterApiV3) NewCreateRuleOptions(description string
 	}
 }
 
+// SetInstanceID : Allow user to set InstanceID
+func (_options *CreateRuleOptions) SetInstanceID(instanceID string) *CreateRuleOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
 // SetDescription : Allow user to set Description
 func (_options *CreateRuleOptions) SetDescription(description string) *CreateRuleOptions {
 	_options.Description = core.StringPtr(description)
@@ -5509,6 +5539,12 @@ func (*SecurityAndComplianceCenterApiV3) NewCreateScanOptions(attachmentID strin
 	return &CreateScanOptions{
 		AttachmentID: core.StringPtr(attachmentID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *CreateScanOptions) SetInstanceID(instanceID string) *CreateScanOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetAttachmentID : Allow user to set AttachmentID
@@ -5601,6 +5637,9 @@ func UnmarshalDefaultParametersPrototype(m map[string]json.RawMessage, result in
 
 // DeleteCustomControlLibraryOptions : The DeleteCustomControlLibrary options.
 type DeleteCustomControlLibraryOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The control library ID.
 	ControlLibrariesID *string `json:"control_libraries_id" validate:"required,ne="`
 
@@ -5616,9 +5655,6 @@ type DeleteCustomControlLibraryOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
-
-	// ID of the instance
-	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // NewDeleteCustomControlLibraryOptions : Instantiate DeleteCustomControlLibraryOptions
@@ -5627,6 +5663,13 @@ func (*SecurityAndComplianceCenterApiV3) NewDeleteCustomControlLibraryOptions(co
 		ControlLibrariesID: core.StringPtr(controlLibrariesID),
 	}
 }
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *DeleteCustomControlLibraryOptions) SetInstanceID(instanceID string) *DeleteCustomControlLibraryOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
 
 // SetControlLibrariesID : Allow user to set ControlLibrariesID
 func (_options *DeleteCustomControlLibraryOptions) SetControlLibrariesID(controlLibrariesID string) *DeleteCustomControlLibraryOptions {
@@ -5654,6 +5697,9 @@ func (options *DeleteCustomControlLibraryOptions) SetHeaders(param map[string]st
 
 // DeleteCustomProfileOptions : The DeleteCustomProfile options.
 type DeleteCustomProfileOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The profile ID.
 	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
@@ -5669,9 +5715,6 @@ type DeleteCustomProfileOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
-
-	// ID of the instance
-	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // NewDeleteCustomProfileOptions : Instantiate DeleteCustomProfileOptions
@@ -5679,6 +5722,12 @@ func (*SecurityAndComplianceCenterApiV3) NewDeleteCustomProfileOptions(profileID
 	return &DeleteCustomProfileOptions{
 		ProfileID: core.StringPtr(profileID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *DeleteCustomProfileOptions) SetInstanceID(instanceID string) *DeleteCustomProfileOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetProfileID : Allow user to set ProfileID
@@ -5737,6 +5786,13 @@ func (*SecurityAndComplianceCenterApiV3) NewDeleteProfileAttachmentOptions(attac
 		ProfileID:    core.StringPtr(profileID),
 	}
 }
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *DeleteProfileAttachmentOptions) SetInstanceID(instanceID string) *DeleteProfileAttachmentOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
 
 // SetAttachmentID : Allow user to set AttachmentID
 func (_options *DeleteProfileAttachmentOptions) SetAttachmentID(attachmentID string) *DeleteProfileAttachmentOptions {
@@ -5801,6 +5857,12 @@ func (*SecurityAndComplianceCenterApiV3) NewDeleteProviderTypeInstanceOptions(pr
 	}
 }
 
+// // SetInstanceID : Allow user to set InstanceID
+func (_options *DeleteProviderTypeInstanceOptions) SetInstanceID(instanceID string) *DeleteProviderTypeInstanceOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
 // SetProviderTypeID : Allow user to set ProviderTypeID
 func (_options *DeleteProviderTypeInstanceOptions) SetProviderTypeID(providerTypeID string) *DeleteProviderTypeInstanceOptions {
 	_options.ProviderTypeID = core.StringPtr(providerTypeID)
@@ -5858,6 +5920,12 @@ func (*SecurityAndComplianceCenterApiV3) NewDeleteRuleOptions(ruleID string) *De
 	return &DeleteRuleOptions{
 		RuleID: core.StringPtr(ruleID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *DeleteRuleOptions) SetInstanceID(instanceID string) *DeleteRuleOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetRuleID : Allow user to set RuleID
@@ -6200,6 +6268,9 @@ func UnmarshalFailedControls(m map[string]json.RawMessage, result interface{}) (
 
 // GetControlLibraryOptions : The GetControlLibrary options.
 type GetControlLibraryOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The control library ID.
 	ControlLibrariesID *string `json:"control_libraries_id" validate:"required,ne="`
 
@@ -6215,9 +6286,6 @@ type GetControlLibraryOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
-
-	// ID of the instance
-	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // NewGetControlLibraryOptions : Instantiate GetControlLibraryOptions
@@ -6225,6 +6293,12 @@ func (*SecurityAndComplianceCenterApiV3) NewGetControlLibraryOptions(controlLibr
 	return &GetControlLibraryOptions{
 		ControlLibrariesID: core.StringPtr(controlLibrariesID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetControlLibraryOptions) SetInstanceID(instanceID string) *GetControlLibraryOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetControlLibrariesID : Allow user to set ControlLibrariesID
@@ -6277,6 +6351,12 @@ type GetLatestReportsOptions struct {
 // NewGetLatestReportsOptions : Instantiate GetLatestReportsOptions
 func (*SecurityAndComplianceCenterApiV3) NewGetLatestReportsOptions() *GetLatestReportsOptions {
 	return &GetLatestReportsOptions{}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetLatestReportsOptions) SetInstanceID(instanceID string) *GetLatestReportsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetXCorrelationID : Allow user to set XCorrelationID
@@ -6334,6 +6414,12 @@ func (*SecurityAndComplianceCenterApiV3) NewGetProfileAttachmentOptions(attachme
 		AttachmentID: core.StringPtr(attachmentID),
 		ProfileID:    core.StringPtr(profileID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetProfileAttachmentOptions) SetInstanceID(instanceID string) *GetProfileAttachmentOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetAttachmentID : Allow user to set AttachmentID
@@ -6395,6 +6481,12 @@ func (*SecurityAndComplianceCenterApiV3) NewGetProfileOptions(profileID string) 
 	}
 }
 
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetProfileOptions) SetInstanceID(instanceID string) *GetProfileOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
 // SetProfileID : Allow user to set ProfileID
 func (_options *GetProfileOptions) SetProfileID(profileID string) *GetProfileOptions {
 	_options.ProfileID = core.StringPtr(profileID)
@@ -6446,6 +6538,12 @@ func (*SecurityAndComplianceCenterApiV3) NewGetProviderTypeByIdOptions(providerT
 	return &GetProviderTypeByIdOptions{
 		ProviderTypeID: core.StringPtr(providerTypeID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetProviderTypeByIdOptions) SetInstanceID(instanceID string) *GetProviderTypeByIdOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetProviderTypeID : Allow user to set ProviderTypeID
@@ -6503,6 +6601,12 @@ func (*SecurityAndComplianceCenterApiV3) NewGetProviderTypeInstanceOptions(provi
 		ProviderTypeID:         core.StringPtr(providerTypeID),
 		ProviderTypeInstanceID: core.StringPtr(providerTypeInstanceID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetProviderTypeInstanceOptions) SetInstanceID(instanceID string) *GetProviderTypeInstanceOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetProviderTypeID : Allow user to set ProviderTypeID
@@ -6640,6 +6744,12 @@ func (*SecurityAndComplianceCenterApiV3) NewGetReportControlsOptions(reportID st
 	}
 }
 
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetReportControlsOptions) SetInstanceID(instanceID string) *GetReportControlsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
 // SetReportID : Allow user to set ReportID
 func (_options *GetReportControlsOptions) SetReportID(reportID string) *GetReportControlsOptions {
 	_options.ReportID = core.StringPtr(reportID)
@@ -6732,6 +6842,12 @@ func (*SecurityAndComplianceCenterApiV3) NewGetReportEvaluationOptions(reportID 
 	}
 }
 
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetReportEvaluationOptions) SetInstanceID(instanceID string) *GetReportEvaluationOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
 // SetReportID : Allow user to set ReportID
 func (_options *GetReportEvaluationOptions) SetReportID(reportID string) *GetReportEvaluationOptions {
 	_options.ReportID = core.StringPtr(reportID)
@@ -6791,6 +6907,12 @@ func (*SecurityAndComplianceCenterApiV3) NewGetReportOptions(reportID string) *G
 	}
 }
 
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetReportOptions) SetInstanceID(instanceID string) *GetReportOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
 // SetReportID : Allow user to set ReportID
 func (_options *GetReportOptions) SetReportID(reportID string) *GetReportOptions {
 	_options.ReportID = core.StringPtr(reportID)
@@ -6846,6 +6968,12 @@ func (*SecurityAndComplianceCenterApiV3) NewGetReportRuleOptions(reportID string
 		ReportID: core.StringPtr(reportID),
 		RuleID:   core.StringPtr(ruleID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetReportRuleOptions) SetInstanceID(instanceID string) *GetReportRuleOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetReportID : Allow user to set ReportID
@@ -6908,6 +7036,12 @@ func (*SecurityAndComplianceCenterApiV3) NewGetReportSummaryOptions(reportID str
 }
 
 // SetReportID : Allow user to set ReportID
+func (_options *GetReportSummaryOptions) SetInstanceID(instanceID string) *GetReportSummaryOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetReportID : Allow user to set ReportID
 func (_options *GetReportSummaryOptions) SetReportID(reportID string) *GetReportSummaryOptions {
 	_options.ReportID = core.StringPtr(reportID)
 	return _options
@@ -6958,6 +7092,12 @@ func (*SecurityAndComplianceCenterApiV3) NewGetReportTagsOptions(reportID string
 	return &GetReportTagsOptions{
 		ReportID: core.StringPtr(reportID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetReportTagsOptions) SetInstanceID(instanceID string) *GetReportTagsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetReportID : Allow user to set ReportID
@@ -7014,6 +7154,12 @@ func (*SecurityAndComplianceCenterApiV3) NewGetReportViolationsDriftOptions(repo
 	return &GetReportViolationsDriftOptions{
 		ReportID: core.StringPtr(reportID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetReportViolationsDriftOptions) SetInstanceID(instanceID string) *GetReportViolationsDriftOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetReportID : Allow user to set ReportID
@@ -7075,6 +7221,12 @@ func (*SecurityAndComplianceCenterApiV3) NewGetRuleOptions(ruleID string) *GetRu
 	}
 }
 
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetRuleOptions) SetInstanceID(instanceID string) *GetRuleOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
 // SetRuleID : Allow user to set RuleID
 func (_options *GetRuleOptions) SetRuleID(ruleID string) *GetRuleOptions {
 	_options.RuleID = core.StringPtr(ruleID)
@@ -7101,6 +7253,9 @@ func (options *GetRuleOptions) SetHeaders(param map[string]string) *GetRuleOptio
 
 // GetSettingsOptions : The GetSettings options.
 type GetSettingsOptions struct {
+	// The ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The supplied or generated value of this header is logged for a request, and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
 	// this header is not supplied in a request, the service generates a random (version 4) UUID.
@@ -7113,14 +7268,17 @@ type GetSettingsOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
-
-	// The ID of the instance
-	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // NewGetSettingsOptions : Instantiate GetSettingsOptions
 func (*SecurityAndComplianceCenterApiV3) NewGetSettingsOptions() *GetSettingsOptions {
 	return &GetSettingsOptions{}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetSettingsOptions) SetInstanceID(instanceID string) *GetSettingsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetXCorrelationID : Allow user to set XCorrelationID
@@ -7367,6 +7525,12 @@ func (*SecurityAndComplianceCenterApiV3) NewListAttachmentsOptions(profileID str
 	}
 }
 
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ListAttachmentsOptions) SetInstanceID(instanceID string) *ListAttachmentsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
 // SetProfileID : Allow user to set ProfileID
 func (_options *ListAttachmentsOptions) SetProfileID(profileID string) *ListAttachmentsOptions {
 	_options.ProfileID = core.StringPtr(profileID)
@@ -7405,6 +7569,9 @@ func (options *ListAttachmentsOptions) SetHeaders(param map[string]string) *List
 
 // ListControlLibrariesOptions : The ListControlLibraries options.
 type ListControlLibrariesOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The supplied or generated value of this header is logged for a request and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
 	// this header is not supplied in a request, the service generates a random (version 4) UUID.
@@ -7426,14 +7593,17 @@ type ListControlLibrariesOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
-
-	// ID of the instance
-	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // NewListControlLibrariesOptions : Instantiate ListControlLibrariesOptions
 func (*SecurityAndComplianceCenterApiV3) NewListControlLibrariesOptions() *ListControlLibrariesOptions {
 	return &ListControlLibrariesOptions{}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ListControlLibrariesOptions) SetInstanceID(instanceID string) *ListControlLibrariesOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetXCorrelationID : Allow user to set XCorrelationID
@@ -7474,6 +7644,9 @@ func (options *ListControlLibrariesOptions) SetHeaders(param map[string]string) 
 
 // ListProfilesOptions : The ListProfiles options.
 type ListProfilesOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The supplied or generated value of this header is logged for a request, and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests, and retries of those requests. If a value of
 	// this header is not supplied in a request, the service generates a random (version 4) UUID.
@@ -7495,14 +7668,17 @@ type ListProfilesOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
-
-	// ID of the instance
-	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // NewListProfilesOptions : Instantiate ListProfilesOptions
 func (*SecurityAndComplianceCenterApiV3) NewListProfilesOptions() *ListProfilesOptions {
 	return &ListProfilesOptions{}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ListProfilesOptions) SetInstanceID(instanceID string) *ListProfilesOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetXCorrelationID : Allow user to set XCorrelationID
@@ -7618,6 +7794,12 @@ func (*SecurityAndComplianceCenterApiV3) NewListProviderTypesOptions() *ListProv
 	return &ListProviderTypesOptions{}
 }
 
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ListProviderTypesOptions) SetInstanceID(instanceID string) *ListProviderTypesOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
 // SetXCorrelationID : Allow user to set XCorrelationID
 func (_options *ListProviderTypesOptions) SetXCorrelationID(xCorrelationID string) *ListProviderTypesOptions {
 	_options.XCorrelationID = core.StringPtr(xCorrelationID)
@@ -7693,6 +7875,12 @@ func (*SecurityAndComplianceCenterApiV3) NewListReportEvaluationsOptions(reportI
 	return &ListReportEvaluationsOptions{
 		ReportID: core.StringPtr(reportID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ListReportEvaluationsOptions) SetInstanceID(instanceID string) *ListReportEvaluationsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetReportID : Allow user to set ReportID
@@ -7834,6 +8022,12 @@ func (*SecurityAndComplianceCenterApiV3) NewListReportResourcesOptions(reportID 
 	}
 }
 
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ListReportResourcesOptions) SetInstanceID(instanceID string) *ListReportResourcesOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
 // SetReportID : Allow user to set ReportID
 func (_options *ListReportResourcesOptions) SetReportID(reportID string) *ListReportResourcesOptions {
 	_options.ReportID = core.StringPtr(reportID)
@@ -7959,6 +8153,12 @@ func (*SecurityAndComplianceCenterApiV3) NewListReportsOptions() *ListReportsOpt
 	return &ListReportsOptions{}
 }
 
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ListReportsOptions) SetInstanceID(instanceID string) *ListReportsOptions {
+	_options.XCorrelationID = core.StringPtr(instanceID)
+	return _options
+}
+
 // SetXCorrelationID : Allow user to set XCorrelationID
 func (_options *ListReportsOptions) SetXCorrelationID(xCorrelationID string) *ListReportsOptions {
 	_options.XCorrelationID = core.StringPtr(xCorrelationID)
@@ -8050,6 +8250,12 @@ type ListRulesOptions struct {
 // NewListRulesOptions : Instantiate ListRulesOptions
 func (*SecurityAndComplianceCenterApiV3) NewListRulesOptions() *ListRulesOptions {
 	return &ListRulesOptions{}
+}
+
+// SetXCorrelationID : Allow user to set XCorrelationID
+func (_options *ListRulesOptions) SetInstanceID(instanceID string) *ListRulesOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetXCorrelationID : Allow user to set XCorrelationID
@@ -8368,6 +8574,9 @@ func UnmarshalParameterInfo(m map[string]json.RawMessage, result interface{}) (e
 
 // PostTestEventOptions : The PostTestEvent options.
 type PostTestEventOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The supplied or generated value of this header is logged for a request, and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
 	// this header is not supplied in a request, the service generates a random (version 4) UUID.
@@ -8380,14 +8589,17 @@ type PostTestEventOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
-
-	// ID of the instance
-	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // NewPostTestEventOptions : Instantiate PostTestEventOptions
 func (*SecurityAndComplianceCenterApiV3) NewPostTestEventOptions() *PostTestEventOptions {
 	return &PostTestEventOptions{}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *PostTestEventOptions) SetInstanceID(instanceID string) *PostTestEventOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetXCorrelationID : Allow user to set XCorrelationID

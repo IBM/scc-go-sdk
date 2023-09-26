@@ -32,6 +32,7 @@ Go client library to interact with various
     - [Go modules](#go-modules)
     - [`go get` command](#go-get-command)
   - [Using the SDK](#using-the-sdk)
+  - [Testing and Development](#testing-and-development)
   - [Questions](#questions)
   - [Issues](#issues)
   - [Open source @ IBM](#open-source--ibm)
@@ -83,6 +84,21 @@ Be sure to use the appropriate package name from the service table above for the
 ## Using the SDK
 For general SDK usage information, please see
 [this link](https://github.com/IBM/ibm-cloud-sdk-common/blob/main/README.md)
+
+## Testing and Development
+To test out any changes to SDK locally, `security_and_compliance_center_api_v3.env` should be in the base directory of the current version.
+
+```
+SECURITY_AND_COMPLIANCE_CENTER_API_URL=https://us-south.compliance.cloud.ibm.com
+SECURITY_AND_COMPLIANCE_CENTER_API_IAM_APIKEY_URL=https://iam.cloud.ibm.com/identity/token
+SECURITY_AND_COMPLIANCE_CENTER_API_IAM=<INSERT_SECRET_API_KEY>
+SECURITY_AND_COMPLIANCE_CENTER_API_SERVICENAME=SECURITY AND COMPLIANCE CENTER
+SECURITY_AND_COMPLIANCE_CENTER_API_ACCOUNTID=<INSERT_IBM_ACCOUNT_ID>
+SECURITY_AND_COMPLIANCE_CENTER_API_INSTANCEID=<INSERT_SCC_INSTANCE_ID>
+SECURITY_AND_COMPLIANCE_CENTER_API_ATTACHMENTID=<INSERT_SCC_PROFILE_ATTACHMENT_ID>
+SECURITY_AND_COMPLIANCE_CENTER_API_PROFILEID=<INSERT_SCC_PROFILE_ID
+SECURITY_AND_COMPLIANCE_CENTER_API_AUTHTYPE=noauth
+```
 
 ## Questions
 

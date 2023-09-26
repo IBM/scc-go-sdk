@@ -13982,7 +13982,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewGetProviderTypesInstancesOptions successfully`, func() {
 				// Construct an instance of the GetProviderTypesInstancesOptions model
-				getProviderTypesInstancesOptionsModel := securityAndComplianceCenterApiService.NewGetProviderTypesInstancesOptions()
+				instanceID := "testInstance"
+				getProviderTypesInstancesOptionsModel := securityAndComplianceCenterApiService.NewGetProviderTypesInstancesOptions(instanceID)
 				getProviderTypesInstancesOptionsModel.SetXCorrelationID("testString")
 				getProviderTypesInstancesOptionsModel.SetXRequestID("testString")
 				getProviderTypesInstancesOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
@@ -14160,8 +14161,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewListAttachmentsOptions successfully`, func() {
 				// Construct an instance of the ListAttachmentsOptions model
+				instanceID := "testInstance"
 				profileID := "testString"
-				listAttachmentsOptionsModel := securityAndComplianceCenterApiService.NewListAttachmentsOptions(profileID)
+				listAttachmentsOptionsModel := securityAndComplianceCenterApiService.NewListAttachmentsOptions(instanceID, profileID)
 				listAttachmentsOptionsModel.SetProfileID("testString")
 				listAttachmentsOptionsModel.SetXCorrelationID("testString")
 				listAttachmentsOptionsModel.SetXRequestID("testString")
@@ -14229,8 +14231,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewListProviderTypesOptions successfully`, func() {
 				// Construct an instance of the ListProviderTypesOptions model
-				instanceID := "testInstance"
-				listProviderTypesOptionsModel := securityAndComplianceCenterApiService.NewListProviderTypesOptions(instanceID)
+				listProviderTypesOptionsModel := securityAndComplianceCenterApiService.NewListProviderTypesOptions()
 				listProviderTypesOptionsModel.SetXCorrelationID("testString")
 				listProviderTypesOptionsModel.SetXRequestID("testString")
 				listProviderTypesOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
@@ -14327,7 +14328,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			})
 			It(`Invoke NewListRulesOptions successfully`, func() {
 				// Construct an instance of the ListRulesOptions model
-				listRulesOptionsModel := securityAndComplianceCenterApiService.NewListRulesOptions()
+				instanceID := "testInstance"
+				listRulesOptionsModel := securityAndComplianceCenterApiService.NewListRulesOptions(instanceID)
 				listRulesOptionsModel.SetXCorrelationID("testString")
 				listRulesOptionsModel.SetXRequestID("testString")
 				listRulesOptionsModel.SetType("system_defined")

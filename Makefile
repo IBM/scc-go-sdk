@@ -16,8 +16,17 @@ test-cov:
 test-int:
 	cd ${VDIR} && go test `go list ./...` -tags=integration
 
+test-int-verbose:
+	cd ${VDIR} && go test -v `go list ./...` -tags=integration
+
 test-int-cov:
 	cd ${VDIR} && go test `go list ./...` -tags=integration ${COVERAGE}
+
+test-examples:
+	cd ${VDIR} && go test -failfast `go list ./...` -tags=examples
+
+test-examples-verbose:
+	cd ${VDIR} && go test -v -failfast `go list ./...` -tags=examples
 
 lint:
 	diff -u <(echo -n) <(gofmt -d -s .)

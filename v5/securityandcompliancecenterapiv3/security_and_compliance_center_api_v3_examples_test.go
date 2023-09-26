@@ -161,7 +161,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			fmt.Println("\nGetSettings() result:")
 			// begin-get_settings
 
-			getSettingsOptions := securityAndComplianceCenterApiService.NewGetSettingsOptions()
+			getSettingsOptions := securityAndComplianceCenterApiService.NewGetSettingsOptions(instanceID)
 			getSettingsOptions.SetXCorrelationID("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
 
 			settings, response, err := securityAndComplianceCenterApiService.GetSettings(getSettingsOptions)
@@ -225,7 +225,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			}
 
 			createRuleOptions := securityAndComplianceCenterApiService.NewCreateRuleOptions(
-				"Example rule",
+				instanceID,
+				"scc-go-sdk example rule",
 				targetModel,
 				requiredConfigModel,
 			)
@@ -254,6 +255,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// begin-get_rule
 
 			getRuleOptions := securityAndComplianceCenterApiService.NewGetRuleOptions(
+				instanceID,
 				ruleIdLink,
 			)
 
@@ -277,7 +279,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			fmt.Println("\nGetLatestReports() result:")
 			// begin-get_latest_reports
 
-			getLatestReportsOptions := securityAndComplianceCenterApiService.NewGetLatestReportsOptions()
+			getLatestReportsOptions := securityAndComplianceCenterApiService.NewGetLatestReportsOptions(instanceID)
 			getLatestReportsOptions.SetSort("profile_name")
 
 			reportLatest, response, err := securityAndComplianceCenterApiService.GetLatestReports(getLatestReportsOptions)
@@ -322,7 +324,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 				BucketLocation: &objectStorageLocationForUpdateSettingsLink,
 			}
 
-			updateSettingsOptions := securityAndComplianceCenterApiService.NewUpdateSettingsOptions()
+			updateSettingsOptions := securityAndComplianceCenterApiService.NewUpdateSettingsOptions(instanceID)
 			updateSettingsOptions.SetEventNotifications(eventNotificationsModel)
 			updateSettingsOptions.SetObjectStorage(objectStorageModel)
 			updateSettingsOptions.SetXCorrelationID("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
@@ -403,8 +405,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			}
 
 			createCustomControlLibraryOptions := securityAndComplianceCenterApiService.NewCreateCustomControlLibraryOptions(
-				"IBM Cloud for Financial Services",
-				"IBM Cloud for Financial Services",
+				instanceID,
+				"scc-go-sdk Control Library",
+				"This is a demo library for scc-go-sdk",
 				"custom",
 				[]securityandcompliancecenterapiv3.ControlsInControlLib{*controlsInControlLibModel},
 			)
@@ -421,7 +424,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// end-create_custom_control_library
 
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
+			Expect(response.StatusCode).To(Equal(201))
 			Expect(controlLibrary).ToNot(BeNil())
 
 			controlLibraryIdLink = *controlLibrary.ID
@@ -431,6 +434,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			fmt.Println("\nListControlLibraries() result:")
 			// begin-list_control_libraries
 			listControlLibrariesOptions := &securityandcompliancecenterapiv3.ListControlLibrariesOptions{
+				InstanceID:         &instanceID,
 				XCorrelationID:     core.StringPtr("testString"),
 				XRequestID:         core.StringPtr("testString"),
 				Limit:              core.Int64Ptr(int64(50)),
@@ -459,6 +463,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// begin-get_control_library
 
 			getControlLibraryOptions := securityAndComplianceCenterApiService.NewGetControlLibraryOptions(
+				instanceID,
 				controlLibraryIdLink,
 			)
 
@@ -519,6 +524,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			}
 
 			replaceCustomControlLibraryOptions := securityAndComplianceCenterApiService.NewReplaceCustomControlLibraryOptions(
+				instanceID,
 				controlLibraryIdLink,
 			)
 			replaceCustomControlLibraryOptions.SetControlLibraryName("IBM Cloud for Financial Services")
@@ -559,7 +565,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			}
 
 			createProfileOptions := securityAndComplianceCenterApiService.NewCreateProfileOptions(
-				"test_profile1",
+				instanceID,
+				"scc-go-sdk test_profile1",
 				"test_description1",
 				"custom",
 				[]securityandcompliancecenterapiv3.ProfileControlsPrototype{*profileControlsPrototypeModel},
@@ -576,7 +583,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// end-create_profile
 
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
+			Expect(response.StatusCode).To(Equal(201))
 			Expect(profile).ToNot(BeNil())
 
 			profileIdLink = *profile.ID
@@ -586,6 +593,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			fmt.Println("\nListProfiles() result:")
 			// begin-list_profiles
 			listProfilesOptions := &securityandcompliancecenterapiv3.ListProfilesOptions{
+				InstanceID:     &instanceID,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
 				Limit:          core.Int64Ptr(int64(10)),
@@ -614,6 +622,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// begin-get_profile
 
 			getProfileOptions := securityAndComplianceCenterApiService.NewGetProfileOptions(
+				instanceID,
 				profileIdLink,
 			)
 
@@ -649,6 +658,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			}
 
 			replaceProfileOptions := securityAndComplianceCenterApiService.NewReplaceProfileOptions(
+				instanceID,
 				profileIdLink,
 				"test_profile1",
 				"test_description1",
@@ -674,7 +684,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			fmt.Println("\nListRules() result:")
 			// begin-list_rules
 
-			listRulesOptions := securityAndComplianceCenterApiService.NewListRulesOptions()
+			listRulesOptions := securityAndComplianceCenterApiService.NewListRulesOptions(instanceID)
 			listRulesOptions.SetType("system_defined")
 
 			rulesPageBase, response, err := securityAndComplianceCenterApiService.ListRules(listRulesOptions)
@@ -730,6 +740,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			}
 
 			replaceRuleOptions := securityAndComplianceCenterApiService.NewReplaceRuleOptions(
+				instanceID,
 				ruleIdLink,
 				eTagLink,
 				"Example rule",
@@ -802,6 +813,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			}
 
 			createAttachmentOptions := securityAndComplianceCenterApiService.NewCreateAttachmentOptions(
+				instanceID,
 				profileIdLink,
 				[]securityandcompliancecenterapiv3.AttachmentsPrototype{*attachmentsPrototypeModel},
 			)
@@ -816,7 +828,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// end-create_attachment
 
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
+			Expect(response.StatusCode).To(Equal(201))
 			Expect(attachmentPrototype).ToNot(BeNil())
 
 			attachmentIdLink = *attachmentPrototype.Attachments[0].ID
@@ -826,6 +838,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			fmt.Println("\nListAttachments() result:")
 			// begin-list_attachments
 			listAttachmentsOptions := &securityandcompliancecenterapiv3.ListAttachmentsOptions{
+				InstanceID:     &instanceID,
 				ProfileID:      &profileIdLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
@@ -854,6 +867,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// begin-get_profile_attachment
 
 			getProfileAttachmentOptions := securityAndComplianceCenterApiService.NewGetProfileAttachmentOptions(
+				instanceID,
 				attachmentIdLink,
 				profileIdLink,
 			)
@@ -909,6 +923,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			}
 
 			replaceProfileAttachmentOptions := securityAndComplianceCenterApiService.NewReplaceProfileAttachmentOptions(
+				instanceID,
 				attachmentIdLink,
 				profileIdLink,
 			)
@@ -938,6 +953,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// begin-create_scan
 
 			createScanOptions := securityAndComplianceCenterApiService.NewCreateScanOptions(
+				instanceID,
 				createScanAttachmentID,
 			)
 
@@ -951,13 +967,14 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// end-create_scan
 
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
+			Expect(response.StatusCode).To(Equal(201))
 			Expect(scan).ToNot(BeNil())
 		})
 		It(`ListAttachmentsAccount request example`, func() {
 			fmt.Println("\nListAttachmentsAccount() result:")
 			// begin-list_attachments_account
 			listAttachmentsAccountOptions := &securityandcompliancecenterapiv3.ListAttachmentsAccountOptions{
+				InstanceID:     &instanceID,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
 				Limit:          core.Int64Ptr(int64(10)),
@@ -984,6 +1001,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			fmt.Println("\nListReports() result:")
 			// begin-list_reports
 			listReportsOptions := &securityandcompliancecenterapiv3.ListReportsOptions{
+				InstanceID:     &instanceID,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
 				AttachmentID:   &attachmentIdForReportLink,
@@ -1016,6 +1034,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// begin-get_report
 
 			getReportOptions := securityAndComplianceCenterApiService.NewGetReportOptions(
+				instanceID,
 				reportIdForReportLink,
 			)
 
@@ -1037,6 +1056,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// begin-get_report_summary
 
 			getReportSummaryOptions := securityAndComplianceCenterApiService.NewGetReportSummaryOptions(
+				instanceID,
 				reportIdForReportLink,
 			)
 
@@ -1058,6 +1078,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// begin-get_report_evaluation
 
 			getReportEvaluationOptions := securityAndComplianceCenterApiService.NewGetReportEvaluationOptions(
+				instanceID,
 				reportIdForReportLink,
 			)
 
@@ -1089,6 +1110,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// begin-get_report_controls
 
 			getReportControlsOptions := securityAndComplianceCenterApiService.NewGetReportControlsOptions(
+				instanceID,
 				reportIdForReportLink,
 			)
 			getReportControlsOptions.SetStatus("compliant")
@@ -1110,6 +1132,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			fmt.Println("\nListReportEvaluations() result:")
 			// begin-list_report_evaluations
 			listReportEvaluationsOptions := &securityandcompliancecenterapiv3.ListReportEvaluationsOptions{
+				InstanceID:     &instanceID,
 				ReportID:       &reportIdForReportLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
@@ -1142,6 +1165,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			fmt.Println("\nListReportResources() result:")
 			// begin-list_report_resources
 			listReportResourcesOptions := &securityandcompliancecenterapiv3.ListReportResourcesOptions{
+				InstanceID:     &instanceID,
 				ReportID:       &reportIdForReportLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
@@ -1176,6 +1200,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// begin-get_report_tags
 
 			getReportTagsOptions := securityAndComplianceCenterApiService.NewGetReportTagsOptions(
+				instanceID,
 				reportIdForReportLink,
 			)
 
@@ -1197,6 +1222,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// begin-get_report_violations_drift
 
 			getReportViolationsDriftOptions := securityAndComplianceCenterApiService.NewGetReportViolationsDriftOptions(
+				instanceID,
 				reportIdForReportLink,
 			)
 
@@ -1232,7 +1258,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(providerTypesCollection).ToNot(BeNil())
 
-			providerTypeIdLink = *providerTypesCollection.ProviderTypes[0].ID
+			// Manual Edit for workload-protection
+			providerTypeIdLink = *providerTypesCollection.ProviderTypes[1].ID
 			fmt.Fprintf(GinkgoWriter, "Saved providerTypeIdLink value: %v\n", providerTypeIdLink)
 		})
 		It(`GetProviderTypeByID request example`, func() {
@@ -1261,6 +1288,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// begin-list_provider_type_instances
 
 			listProviderTypeInstancesOptions := securityAndComplianceCenterApiService.NewListProviderTypeInstancesOptions(
+				instanceID,
 				providerTypeIdLink,
 			)
 
@@ -1282,6 +1310,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// begin-create_provider_type_instance
 
 			createProviderTypeInstanceOptions := &securityandcompliancecenterapiv3.CreateProviderTypeInstanceOptions{
+				InstanceID:     &instanceID,
 				ProviderTypeID: &providerTypeIdLink,
 				Name:           core.StringPtr("workload-protection-instance-1"),
 				Attributes:     map[string]interface{}{"wp_crn": "crn:v1:staging:public:sysdig-secure:us-south:a/ff88f007f9ff4622aac4fbc0eda36255:0df4004c-fb74-483b-97be-dd9bd35af4d8::"},
@@ -1310,6 +1339,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// begin-get_provider_type_instance
 
 			getProviderTypeInstanceOptions := securityAndComplianceCenterApiService.NewGetProviderTypeInstanceOptions(
+				instanceID,
 				providerTypeIdLink,
 				providerTypeInstanceIdLink,
 			)
@@ -1332,6 +1362,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// begin-update_provider_type_instance
 
 			updateProviderTypeInstanceOptions := &securityandcompliancecenterapiv3.UpdateProviderTypeInstanceOptions{
+				InstanceID:             &instanceID,
 				ProviderTypeID:         &providerTypeIdLink,
 				ProviderTypeInstanceID: &providerTypeInstanceIdLink,
 				Name:                   core.StringPtr("workload-protection-instance-1"),
@@ -1357,7 +1388,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			fmt.Println("\nGetProviderTypesInstances() result:")
 			// begin-get_provider_types_instances
 
-			getProviderTypesInstancesOptions := securityAndComplianceCenterApiService.NewGetProviderTypesInstancesOptions()
+			getProviderTypesInstancesOptions := securityAndComplianceCenterApiService.NewGetProviderTypesInstancesOptions(instanceID)
 
 			providerTypesInstancesResponse, response, err := securityAndComplianceCenterApiService.GetProviderTypesInstances(getProviderTypesInstancesOptions)
 			if err != nil {
@@ -1377,6 +1408,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// begin-delete_profile_attachment
 
 			deleteProfileAttachmentOptions := securityAndComplianceCenterApiService.NewDeleteProfileAttachmentOptions(
+				instanceID,
 				attachmentIdLink,
 				profileIdLink,
 			)
@@ -1399,6 +1431,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// begin-delete_custom_profile
 
 			deleteCustomProfileOptions := securityAndComplianceCenterApiService.NewDeleteCustomProfileOptions(
+				instanceID,
 				profileIdLink,
 			)
 
@@ -1420,6 +1453,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// begin-delete_custom_control_library
 
 			deleteCustomControlLibraryOptions := securityAndComplianceCenterApiService.NewDeleteCustomControlLibraryOptions(
+				instanceID,
 				controlLibraryIdLink,
 			)
 
@@ -1440,6 +1474,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// begin-delete_rule
 
 			deleteRuleOptions := securityAndComplianceCenterApiService.NewDeleteRuleOptions(
+				instanceID,
 				ruleIdLink,
 			)
 
@@ -1460,6 +1495,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// begin-delete_provider_type_instance
 
 			deleteProviderTypeInstanceOptions := securityAndComplianceCenterApiService.NewDeleteProviderTypeInstanceOptions(
+				instanceID,
 				providerTypeIdLink,
 				providerTypeInstanceIdLink,
 			)

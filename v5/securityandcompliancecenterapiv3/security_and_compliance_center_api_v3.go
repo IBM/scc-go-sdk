@@ -6423,6 +6423,7 @@ type GetControlLibraryOptions struct {
 // NewGetControlLibraryOptions : Instantiate GetControlLibraryOptions
 func (*SecurityAndComplianceCenterApiV3) NewGetControlLibraryOptions(instanceID string, controlLibrariesID string) *GetControlLibraryOptions {
 	return &GetControlLibraryOptions{
+		InstanceID:         core.StringPtr(instanceID),
 		ControlLibrariesID: core.StringPtr(controlLibrariesID),
 	}
 }
@@ -6786,8 +6787,10 @@ type GetProviderTypesInstancesOptions struct {
 }
 
 // NewGetProviderTypesInstancesOptions : Instantiate GetProviderTypesInstancesOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetProviderTypesInstancesOptions() *GetProviderTypesInstancesOptions {
-	return &GetProviderTypesInstancesOptions{}
+func (*SecurityAndComplianceCenterApiV3) NewGetProviderTypesInstancesOptions(instanceID string) *GetProviderTypesInstancesOptions {
+	return &GetProviderTypesInstancesOptions{
+		InstanceID: core.StringPtr(instanceID),
+	}
 }
 
 // SetInstance : Allow user to set Instantiate
@@ -7667,8 +7670,9 @@ type ListAttachmentsOptions struct {
 }
 
 // NewListAttachmentsOptions : Instantiate ListAttachmentsOptions
-func (*SecurityAndComplianceCenterApiV3) NewListAttachmentsOptions(profileID string) *ListAttachmentsOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListAttachmentsOptions(instanceID string, profileID string) *ListAttachmentsOptions {
 	return &ListAttachmentsOptions{
+		InstanceID: core.StringPtr(instanceID),
 		ProfileID: core.StringPtr(profileID),
 	}
 }
@@ -7940,7 +7944,7 @@ type ListProviderTypesOptions struct {
 }
 
 // NewListProviderTypesOptions : Instantiate ListProviderTypesOptions
-func (*SecurityAndComplianceCenterApiV3) NewListProviderTypesOptions(instanceID string) *ListProviderTypesOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListProviderTypesOptions() *ListProviderTypesOptions {
 	return &ListProviderTypesOptions{}
 }
 
@@ -8396,8 +8400,10 @@ type ListRulesOptions struct {
 }
 
 // NewListRulesOptions : Instantiate ListRulesOptions
-func (*SecurityAndComplianceCenterApiV3) NewListRulesOptions() *ListRulesOptions {
-	return &ListRulesOptions{}
+func (*SecurityAndComplianceCenterApiV3) NewListRulesOptions(instanceID string) *ListRulesOptions {
+	return &ListRulesOptions{
+		InstanceID: core.StringPtr(instanceID),
+	}
 }
 
 // SetInstanceID : Allow user to set InstanceID

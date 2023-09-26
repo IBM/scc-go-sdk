@@ -218,7 +218,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 
 			createRuleOptions := &securityandcompliancecenterapiv3.CreateRuleOptions{
 				InstanceID:     core.StringPtr(instanceID),
-				Description:    core.StringPtr("Example rule"),
+				Description:    core.StringPtr("scc-go-sdk example rule"),
 				Target:         targetModel,
 				RequiredConfig: requiredConfigModel,
 				Type:           core.StringPtr("user_defined"),
@@ -398,8 +398,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 
 			createCustomControlLibraryOptions := &securityandcompliancecenterapiv3.CreateCustomControlLibraryOptions{
 				InstanceID:                core.StringPtr(instanceID),
-				ControlLibraryName:        core.StringPtr("IBM Cloud for Financial Services"),
-				ControlLibraryDescription: core.StringPtr("IBM Cloud for Financial Services"),
+				ControlLibraryName:        core.StringPtr("scc-go-sdk integrations control Library"),
+				ControlLibraryDescription: core.StringPtr("scc-go-sdk for Financial Services"),
 				ControlLibraryType:        core.StringPtr("custom"),
 				Controls:                  []securityandcompliancecenterapiv3.ControlsInControlLib{*controlsInControlLibModel},
 				ControlLibraryVersion:     core.StringPtr("1.0.0"),
@@ -563,7 +563,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ControlLibrariesID:        &controlLibraryIdLink,
 				ID:                        core.StringPtr("testString"),
 				AccountID:                 core.StringPtr(accountID),
-				ControlLibraryName:        core.StringPtr("IBM Cloud for Financial Services"),
+				ControlLibraryName:        core.StringPtr("scc-go-sdk control library"),
 				ControlLibraryDescription: core.StringPtr("IBM Cloud for Financial Services"),
 				ControlLibraryType:        core.StringPtr("custom"),
 				ControlLibraryVersion:     core.StringPtr("1.1.0"),
@@ -608,7 +608,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 
 			createProfileOptions := &securityandcompliancecenterapiv3.CreateProfileOptions{
 				InstanceID:         core.StringPtr(instanceID),
-				ProfileName:        core.StringPtr("test_profile1"),
+				ProfileName:        core.StringPtr("scc-go-sdk integration test_profile1"),
 				ProfileDescription: core.StringPtr("test_description1"),
 				ProfileType:        core.StringPtr("custom"),
 				Controls:           []securityandcompliancecenterapiv3.ProfileControlsPrototype{*profileControlsPrototypeModel},
@@ -738,7 +738,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			replaceProfileOptions := &securityandcompliancecenterapiv3.ReplaceProfileOptions{
 				InstanceID:         core.StringPtr(instanceID),
 				ProfileID:          &profileIdLink,
-				ProfileName:        core.StringPtr("test_profile1"),
+				ProfileName:        core.StringPtr("scc-go-sdk test_profile"),
 				ProfileDescription: core.StringPtr("test_description1"),
 				ProfileType:        core.StringPtr("custom"),
 				Controls:           []securityandcompliancecenterapiv3.ProfileControlsPrototype{*profileControlsPrototypeModel},
@@ -878,7 +878,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 
 			attachmentsPrototypeModel := &securityandcompliancecenterapiv3.AttachmentsPrototype{
 				ID:                   core.StringPtr("130003ea8bfa43c5aacea07a86da3000"),
-				Name:                 core.StringPtr("account-0d8c3805dfea40aa8ad02265a18eb12b"),
+				Name:                 core.StringPtr("scc-go-sdk integration attachment"),
 				Description:          core.StringPtr("Test description"),
 				Scope:                []securityandcompliancecenterapiv3.MultiCloudScope{*multiCloudScopeModel},
 				Status:               core.StringPtr("enabled"),
@@ -1056,7 +1056,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				AttachmentParameters: []securityandcompliancecenterapiv3.AttachmentParameterPrototype{*attachmentParameterPrototypeModel},
 				LastScan:             lastScanModel,
 				NextScanTime:         CreateMockDateTime("2019-01-01T12:00:00.000Z"),
-				Name:                 core.StringPtr("account-0d8c3805dfea40aa8ad02265a18eb12b"),
+				Name:                 core.StringPtr("scc-go-sdk test profile_attachment"),
 				Description:          core.StringPtr("Test description"),
 				XCorrelationID:       core.StringPtr("testString"),
 				XRequestID:           core.StringPtr("testString"),

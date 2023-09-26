@@ -1,3 +1,10 @@
+# [5.1.0](https://github.com/IBM/scc-go-sdk/compare/v5.0.2...v5.1.0) (2023-09-26)
+
+
+### Features
+
+* adding the ability to specific to instance_id to target ([44cefd9](https://github.com/IBM/scc-go-sdk/commit/44cefd925990b6a89e435afd12bd4f5718f7b6c9))
+
 ## [5.0.2](https://github.com/IBM/scc-go-sdk/compare/v5.0.1...v5.0.2) (2023-08-25)
 
 

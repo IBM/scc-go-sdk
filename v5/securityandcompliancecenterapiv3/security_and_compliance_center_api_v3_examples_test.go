@@ -24,6 +24,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 
 	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/IBM/scc-go-sdk/v5/securityandcompliancecenterapiv3"
@@ -958,7 +959,9 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			)
 
 			scan, response, err := securityAndComplianceCenterApiService.CreateScan(createScanOptions)
-			if err != nil {
+			if err != nil && strings.Contains(err.Error(), "Another scan is currently in progress.") {
+				return
+			} else if err != nil {
 				panic(err)
 			}
 			b, _ := json.MarshalIndent(scan, "", "  ")

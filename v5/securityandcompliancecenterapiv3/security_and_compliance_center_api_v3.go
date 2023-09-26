@@ -7673,7 +7673,7 @@ type ListAttachmentsOptions struct {
 func (*SecurityAndComplianceCenterApiV3) NewListAttachmentsOptions(instanceID string, profileID string) *ListAttachmentsOptions {
 	return &ListAttachmentsOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ProfileID: core.StringPtr(profileID),
+		ProfileID:  core.StringPtr(profileID),
 	}
 }
 

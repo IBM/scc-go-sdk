@@ -9577,6 +9577,12 @@ func (*SecurityAndComplianceCenterApiV3) NewReplaceCustomControlLibraryOptions(i
 	}
 }
 
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ReplaceCustomControlLibraryOptions) SetInstanceID(instanceID string) *ReplaceCustomControlLibraryOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
 // SetControlLibrariesID : Allow user to set ControlLibrariesID
 func (_options *ReplaceCustomControlLibraryOptions) SetControlLibrariesID(controlLibrariesID string) *ReplaceCustomControlLibraryOptions {
 	_options.ControlLibrariesID = core.StringPtr(controlLibrariesID)

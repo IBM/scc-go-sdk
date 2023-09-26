@@ -3612,7 +3612,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetProvi
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/v3/provider_types_instances`, nil)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getProviderTypesInstancesOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/provider_types_instances`, nil)
 	if err != nil {
 		return
 	}
@@ -6765,6 +6769,8 @@ func (options *GetProviderTypeInstanceOptions) SetHeaders(param map[string]strin
 
 // GetProviderTypesInstancesOptions : The GetProviderTypesInstances options.
 type GetProviderTypesInstancesOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
 	// The supplied or generated value of this header is logged for a request and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
 	// this headers is not supplied in a request, the service generates a random (version 4) UUID.
@@ -6782,6 +6788,12 @@ type GetProviderTypesInstancesOptions struct {
 // NewGetProviderTypesInstancesOptions : Instantiate GetProviderTypesInstancesOptions
 func (*SecurityAndComplianceCenterApiV3) NewGetProviderTypesInstancesOptions() *GetProviderTypesInstancesOptions {
 	return &GetProviderTypesInstancesOptions{}
+}
+
+// SetInstance : Allow user to set Instantiate
+func (_options *GetProviderTypesInstancesOptions) SetInstanceID(instanceID string) *GetProviderTypesInstancesOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetXCorrelationID : Allow user to set XCorrelationID

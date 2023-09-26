@@ -13178,7 +13178,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetProviderTypesInstances(getProviderTypesInstancesOptions *GetProviderTypesInstancesOptions) - Operation response error`, func() {
-		getProviderTypesInstancesPath := "/v3/provider_types_instances"
+		getProviderTypesInstancesPath := "/instances/testInstance/v3/provider_types_instances"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -13206,6 +13206,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProviderTypesInstancesOptions model
 				getProviderTypesInstancesOptionsModel := new(securityandcompliancecenterapiv3.GetProviderTypesInstancesOptions)
+				getProviderTypesInstancesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProviderTypesInstancesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProviderTypesInstancesOptionsModel.XRequestID = core.StringPtr("testString")
 				getProviderTypesInstancesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -13228,7 +13229,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetProviderTypesInstances(getProviderTypesInstancesOptions *GetProviderTypesInstancesOptions)`, func() {
-		getProviderTypesInstancesPath := "/v3/provider_types_instances"
+		getProviderTypesInstancesPath := "/instances/testInstance/v3/provider_types_instances"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -13262,6 +13263,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProviderTypesInstancesOptions model
 				getProviderTypesInstancesOptionsModel := new(securityandcompliancecenterapiv3.GetProviderTypesInstancesOptions)
+				getProviderTypesInstancesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProviderTypesInstancesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProviderTypesInstancesOptionsModel.XRequestID = core.StringPtr("testString")
 				getProviderTypesInstancesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -13326,6 +13328,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProviderTypesInstancesOptions model
 				getProviderTypesInstancesOptionsModel := new(securityandcompliancecenterapiv3.GetProviderTypesInstancesOptions)
+				getProviderTypesInstancesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProviderTypesInstancesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProviderTypesInstancesOptionsModel.XRequestID = core.StringPtr("testString")
 				getProviderTypesInstancesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -13346,6 +13349,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProviderTypesInstancesOptions model
 				getProviderTypesInstancesOptionsModel := new(securityandcompliancecenterapiv3.GetProviderTypesInstancesOptions)
+				getProviderTypesInstancesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProviderTypesInstancesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProviderTypesInstancesOptionsModel.XRequestID = core.StringPtr("testString")
 				getProviderTypesInstancesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -13381,6 +13385,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProviderTypesInstancesOptions model
 				getProviderTypesInstancesOptionsModel := new(securityandcompliancecenterapiv3.GetProviderTypesInstancesOptions)
+				getProviderTypesInstancesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProviderTypesInstancesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProviderTypesInstancesOptionsModel.XRequestID = core.StringPtr("testString")
 				getProviderTypesInstancesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}

@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -82,9 +83,11 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 
 	Describe(`External configuration`, func() {
 		It("Successfully load the configuration", func() {
-			_, err = os.Stat(externalConfigFile)
+			wDir, _ := os.Getwd()
+			cleanConfigFile := filepath.Clean(wDir + "/" + externalConfigFile)
+			_, err = os.Stat(cleanConfigFile)
 			if err != nil {
-				Skip("External configuration file not found, skipping tests: " + err.Error())
+				Skip("External configuration file " + externalConfigFile + " not found, skipping tests: " + err.Error())
 			}
 
 			os.Setenv("IBM_CREDENTIALS_FILE", externalConfigFile)
@@ -151,6 +154,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 		})
 		It(`GetSettings(getSettingsOptions *GetSettingsOptions)`, func() {
 			getSettingsOptions := &securityandcompliancecenterapiv3.GetSettingsOptions{
+				InstanceID:     core.StringPtr(instanceID),
 				XCorrelationID: core.StringPtr("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5"),
 				XRequestID:     core.StringPtr("testString"),
 			}
@@ -213,6 +217,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			}
 
 			createRuleOptions := &securityandcompliancecenterapiv3.CreateRuleOptions{
+				InstanceID:     core.StringPtr(instanceID),
 				Description:    core.StringPtr("Example rule"),
 				Target:         targetModel,
 				RequiredConfig: requiredConfigModel,
@@ -240,6 +245,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 		})
 		It(`GetRule(getRuleOptions *GetRuleOptions)`, func() {
 			getRuleOptions := &securityandcompliancecenterapiv3.GetRuleOptions{
+				InstanceID:     core.StringPtr(instanceID),
 				RuleID:         &ruleIdLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
@@ -261,6 +267,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 		})
 		It(`GetLatestReports(getLatestReportsOptions *GetLatestReportsOptions)`, func() {
 			getLatestReportsOptions := &securityandcompliancecenterapiv3.GetLatestReportsOptions{
+				InstanceID:     core.StringPtr(instanceID),
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
 				Sort:           core.StringPtr("profile_name"),
@@ -308,6 +315,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			}
 
 			updateSettingsOptions := &securityandcompliancecenterapiv3.UpdateSettingsOptions{
+				InstanceID:         core.StringPtr(instanceID),
 				EventNotifications: eventNotificationsModel,
 				ObjectStorage:      objectStorageModel,
 				XCorrelationID:     core.StringPtr("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5"),
@@ -389,6 +397,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			}
 
 			createCustomControlLibraryOptions := &securityandcompliancecenterapiv3.CreateCustomControlLibraryOptions{
+				InstanceID:                core.StringPtr(instanceID),
 				ControlLibraryName:        core.StringPtr("IBM Cloud for Financial Services"),
 				ControlLibraryDescription: core.StringPtr("IBM Cloud for Financial Services"),
 				ControlLibraryType:        core.StringPtr("custom"),
@@ -416,6 +425,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 		})
 		It(`ListControlLibraries(listControlLibrariesOptions *ListControlLibrariesOptions) with pagination`, func() {
 			listControlLibrariesOptions := &securityandcompliancecenterapiv3.ListControlLibrariesOptions{
+				InstanceID:         core.StringPtr(instanceID),
 				XCorrelationID:     core.StringPtr("testString"),
 				XRequestID:         core.StringPtr("testString"),
 				Limit:              core.Int64Ptr(int64(50)),
@@ -445,6 +455,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 		})
 		It(`ListControlLibraries(listControlLibrariesOptions *ListControlLibrariesOptions) using ControlLibrariesPager`, func() {
 			listControlLibrariesOptions := &securityandcompliancecenterapiv3.ListControlLibrariesOptions{
+				InstanceID:         core.StringPtr(instanceID),
 				XCorrelationID:     core.StringPtr("testString"),
 				XRequestID:         core.StringPtr("testString"),
 				Limit:              core.Int64Ptr(int64(50)),
@@ -487,6 +498,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ControlLibrariesID: &controlLibraryIdLink,
 				XCorrelationID:     core.StringPtr("testString"),
 				XRequestID:         core.StringPtr("testString"),
+				InstanceID:         core.StringPtr(instanceID),
 			}
 
 			controlLibrary, response, err := securityAndComplianceCenterApiService.GetControlLibrary(getControlLibraryOptions)
@@ -547,6 +559,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			}
 
 			replaceCustomControlLibraryOptions := &securityandcompliancecenterapiv3.ReplaceCustomControlLibraryOptions{
+				InstanceID:                core.StringPtr(instanceID),
 				ControlLibrariesID:        &controlLibraryIdLink,
 				ID:                        core.StringPtr("testString"),
 				AccountID:                 core.StringPtr(accountID),
@@ -594,6 +607,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			}
 
 			createProfileOptions := &securityandcompliancecenterapiv3.CreateProfileOptions{
+				InstanceID:         core.StringPtr(instanceID),
 				ProfileName:        core.StringPtr("test_profile1"),
 				ProfileDescription: core.StringPtr("test_description1"),
 				ProfileType:        core.StringPtr("custom"),
@@ -621,6 +635,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			listProfilesOptions := &securityandcompliancecenterapiv3.ListProfilesOptions{
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 				Limit:          core.Int64Ptr(int64(10)),
 				ProfileType:    core.StringPtr("custom"),
 				Start:          core.StringPtr("testString"),
@@ -650,6 +665,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			listProfilesOptions := &securityandcompliancecenterapiv3.ListProfilesOptions{
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 				Limit:          core.Int64Ptr(int64(10)),
 				ProfileType:    core.StringPtr("custom"),
 			}
@@ -687,6 +703,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 		})
 		It(`GetProfile(getProfileOptions *GetProfileOptions)`, func() {
 			getProfileOptions := &securityandcompliancecenterapiv3.GetProfileOptions{
+				InstanceID:     core.StringPtr(instanceID),
 				ProfileID:      &profileIdLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
@@ -719,6 +736,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			}
 
 			replaceProfileOptions := &securityandcompliancecenterapiv3.ReplaceProfileOptions{
+				InstanceID:         core.StringPtr(instanceID),
 				ProfileID:          &profileIdLink,
 				ProfileName:        core.StringPtr("test_profile1"),
 				ProfileDescription: core.StringPtr("test_description1"),
@@ -742,6 +760,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 		})
 		It(`ListRules(listRulesOptions *ListRulesOptions)`, func() {
 			listRulesOptions := &securityandcompliancecenterapiv3.ListRulesOptions{
+				InstanceID:     core.StringPtr(instanceID),
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
 				Type:           core.StringPtr("system_defined"),
@@ -798,6 +817,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			}
 
 			replaceRuleOptions := &securityandcompliancecenterapiv3.ReplaceRuleOptions{
+				InstanceID:     core.StringPtr(instanceID),
 				RuleID:         &ruleIdLink,
 				IfMatch:        &eTagLink,
 				Description:    core.StringPtr("Example rule"),
@@ -868,6 +888,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			}
 
 			createAttachmentOptions := &securityandcompliancecenterapiv3.CreateAttachmentOptions{
+				InstanceID:     core.StringPtr(instanceID),
 				ProfileID:      &profileIdLink,
 				Attachments:    []securityandcompliancecenterapiv3.AttachmentsPrototype{*attachmentsPrototypeModel},
 				XCorrelationID: core.StringPtr("testString"),
@@ -893,6 +914,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ProfileID:      &profileIdLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 				Limit:          core.Int64Ptr(int64(10)),
 				Start:          core.StringPtr("testString"),
 			}
@@ -922,6 +944,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ProfileID:      &profileIdLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 				Limit:          core.Int64Ptr(int64(10)),
 			}
 
@@ -962,6 +985,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ProfileID:      &profileIdLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 			}
 
 			attachmentItem, response, err := securityAndComplianceCenterApiService.GetProfileAttachment(getProfileAttachmentOptions)
@@ -1054,6 +1078,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				AttachmentID:   &createScanAttachmentID,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 			}
 
 			scan, response, err := securityAndComplianceCenterApiService.CreateScan(createScanOptions)
@@ -1074,6 +1099,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			listAttachmentsAccountOptions := &securityandcompliancecenterapiv3.ListAttachmentsAccountOptions{
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 				Limit:          core.Int64Ptr(int64(10)),
 				Start:          core.StringPtr("testString"),
 			}
@@ -1102,6 +1128,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			listAttachmentsAccountOptions := &securityandcompliancecenterapiv3.ListAttachmentsAccountOptions{
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 				Limit:          core.Int64Ptr(int64(10)),
 			}
 
@@ -1140,6 +1167,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			listReportsOptions := &securityandcompliancecenterapiv3.ListReportsOptions{
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 				AttachmentID:   &attachmentIdForReportLink,
 				GroupID:        &groupIdForReportLink,
 				ProfileID:      &profileIdForReportLink,
@@ -1173,6 +1201,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			listReportsOptions := &securityandcompliancecenterapiv3.ListReportsOptions{
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 				AttachmentID:   &attachmentIdForReportLink,
 				GroupID:        &groupIdForReportLink,
 				ProfileID:      &profileIdForReportLink,
@@ -1217,6 +1246,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ReportID:       &reportIdForReportLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 			}
 
 			report, response, err := securityAndComplianceCenterApiService.GetReport(getReportOptions)
@@ -1235,6 +1265,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ReportID:       &reportIdForReportLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 			}
 
 			reportSummary, response, err := securityAndComplianceCenterApiService.GetReportSummary(getReportSummaryOptions)
@@ -1253,6 +1284,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ReportID:       &reportIdForReportLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 				ExcludeSummary: core.BoolPtr(true),
 			}
 
@@ -1272,6 +1304,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ReportID:           &reportIdForReportLink,
 				XCorrelationID:     core.StringPtr("testString"),
 				XRequestID:         core.StringPtr("testString"),
+				InstanceID:         core.StringPtr(instanceID),
 				ControlID:          core.StringPtr("testString"),
 				ControlName:        core.StringPtr("testString"),
 				ControlDescription: core.StringPtr("testString"),
@@ -1296,6 +1329,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ReportID:       &reportIdForReportLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 				AssessmentID:   core.StringPtr("testString"),
 				ComponentID:    core.StringPtr("testString"),
 				TargetID:       core.StringPtr("testString"),
@@ -1330,6 +1364,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ReportID:       &reportIdForReportLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 				Status:         core.StringPtr("failure"),
 				Limit:          core.Int64Ptr(int64(10)),
 			}
@@ -1369,6 +1404,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ReportID:       &reportIdForReportLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 				ID:             core.StringPtr("testString"),
 				ResourceName:   core.StringPtr("testString"),
 				AccountID:      &accountIdForReportLink,
@@ -1404,6 +1440,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ReportID:       &reportIdForReportLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 				AccountID:      &accountIdForReportLink,
 				Status:         core.StringPtr("compliant"),
 				Sort:           core.StringPtr("account_id"),
@@ -1445,6 +1482,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ReportID:       &reportIdForReportLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 			}
 
 			reportTags, response, err := securityAndComplianceCenterApiService.GetReportTags(getReportTagsOptions)
@@ -1463,6 +1501,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ReportID:         &reportIdForReportLink,
 				XCorrelationID:   core.StringPtr("testString"),
 				XRequestID:       core.StringPtr("testString"),
+				InstanceID:       core.StringPtr(instanceID),
 				ScanTimeDuration: core.Int64Ptr(int64(0)),
 			}
 
@@ -1526,6 +1565,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ProviderTypeID: &providerTypeIdLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 			}
 
 			providerTypeInstancesResponse, response, err := securityAndComplianceCenterApiService.ListProviderTypeInstances(listProviderTypeInstancesOptions)
@@ -1546,6 +1586,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				Attributes:     map[string]interface{}{"wp_crn": "crn:v1:staging:public:sysdig-secure:us-south:a/ff88f007f9ff4622aac4fbc0eda36255:0df4004c-fb74-483b-97be-dd9bd35af4d8::"},
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 			}
 
 			providerTypeInstanceItem, response, err := securityAndComplianceCenterApiService.CreateProviderTypeInstance(createProviderTypeInstanceOptions)
@@ -1568,6 +1609,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ProviderTypeInstanceID: &providerTypeInstanceIdLink,
 				XCorrelationID:         core.StringPtr("testString"),
 				XRequestID:             core.StringPtr("testString"),
+				InstanceID:             core.StringPtr(instanceID),
 			}
 
 			providerTypeInstanceItem, response, err := securityAndComplianceCenterApiService.GetProviderTypeInstance(getProviderTypeInstanceOptions)
@@ -1589,6 +1631,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				Attributes:             map[string]interface{}{"wp_crn": "crn:v1:staging:public:sysdig-secure:us-south:a/ff88f007f9ff4622aac4fbc0eda36255:0df4004c-fb74-483b-97be-dd9bd35af4d8::"},
 				XCorrelationID:         core.StringPtr("testString"),
 				XRequestID:             core.StringPtr("testString"),
+				InstanceID:             core.StringPtr(instanceID),
 			}
 
 			providerTypeInstanceItem, response, err := securityAndComplianceCenterApiService.UpdateProviderTypeInstance(updateProviderTypeInstanceOptions)
@@ -1606,6 +1649,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			getProviderTypesInstancesOptions := &securityandcompliancecenterapiv3.GetProviderTypesInstancesOptions{
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 			}
 
 			providerTypesInstancesResponse, response, err := securityAndComplianceCenterApiService.GetProviderTypesInstances(getProviderTypesInstancesOptions)
@@ -1625,6 +1669,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ProfileID:      &profileIdLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 			}
 
 			attachmentItem, response, err := securityAndComplianceCenterApiService.DeleteProfileAttachment(deleteProfileAttachmentOptions)
@@ -1640,6 +1685,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 		})
 		It(`DeleteCustomProfile(deleteCustomProfileOptions *DeleteCustomProfileOptions)`, func() {
 			deleteCustomProfileOptions := &securityandcompliancecenterapiv3.DeleteCustomProfileOptions{
+				InstanceID:     core.StringPtr(instanceID),
 				ProfileID:      &profileIdLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
@@ -1661,6 +1707,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ControlLibrariesID: &controlLibraryIdLink,
 				XCorrelationID:     core.StringPtr("testString"),
 				XRequestID:         core.StringPtr("testString"),
+				InstanceID:         core.StringPtr(instanceID),
 			}
 
 			controlLibraryDelete, response, err := securityAndComplianceCenterApiService.DeleteCustomControlLibrary(deleteCustomControlLibraryOptions)
@@ -1679,6 +1726,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				RuleID:         &ruleIdLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 			}
 
 			response, err := securityAndComplianceCenterApiService.DeleteRule(deleteRuleOptions)
@@ -1697,6 +1745,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ProviderTypeInstanceID: &providerTypeInstanceIdLink,
 				XCorrelationID:         core.StringPtr("testString"),
 				XRequestID:             core.StringPtr("testString"),
+				InstanceID:             core.StringPtr(instanceID),
 			}
 
 			response, err := securityAndComplianceCenterApiService.DeleteProviderTypeInstance(deleteProviderTypeInstanceOptions)

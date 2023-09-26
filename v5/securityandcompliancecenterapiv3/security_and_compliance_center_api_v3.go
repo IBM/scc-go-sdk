@@ -43,16 +43,15 @@ type SecurityAndComplianceCenterApiV3 struct {
 }
 
 // DefaultServiceURL is the default URL to make service requests to.
-const DefaultServiceURL = "https://us-south.compliance.cloud.ibm.com/instances/instance_id/v3"
+const DefaultServiceURL = "https://us-south.compliance.cloud.ibm.com"
 
 // DefaultServiceName is the default key used to find external configuration information.
 const DefaultServiceName = "security_and_compliance_center_api"
 
-const ParameterizedServiceURL = "https://{region}.cloud.ibm.com/instances/{instance_id}/v3"
+const ParameterizedServiceURL = "https://{region}.compliance.cloud.ibm.com"
 
 var defaultUrlVariables = map[string]string{
-	"region":      "us-south.compliance",
-	"instance_id": "instance_id",
+	"region": "us-south",
 }
 
 // SecurityAndComplianceCenterApiV3Options : Service options
@@ -119,7 +118,18 @@ func NewSecurityAndComplianceCenterApiV3(options *SecurityAndComplianceCenterApi
 
 // GetServiceURLForRegion returns the service URL to be used for the specified region
 func GetServiceURLForRegion(region string) (string, error) {
-	return "", fmt.Errorf("service does not support regional URLs")
+	endpoints := map[string]string{
+		"au-syd":   "https://au-syd.compliance.cloud.ibm.com",   // The API endpoint in the au-syd region
+		"ca-tor":   "https://ca-tor.compliance.cloud.ibm.com",   // The API endpoint in the ca-tor region
+		"eu-de":    "https://eu-de.compliance.cloud.ibm.com",    // The API endpoint in the eu-de region
+		"eu-fr2":   "https://eu-fr2.compliance.cloud.ibm.com",   // The API endpoint in the eu-fr2 region
+		"us-south": "https://us-south.compliance.cloud.ibm.com", // The API endpoint in the us-south region
+	}
+
+	if url, ok := endpoints[region]; ok {
+		return url, nil
+	}
+	return "", fmt.Errorf("service URL for region '%s' not found", region)
 }
 
 // Clone makes a copy of "securityAndComplianceCenterApi" suitable for processing requests.
@@ -189,7 +199,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetSetti
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/settings`, nil)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getSettingsOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/settings`, nil)
 	if err != nil {
 		return
 	}
@@ -251,7 +265,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) UpdateSe
 	builder := core.NewRequestBuilder(core.PATCH)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/settings`, nil)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *updateSettingsOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/settings`, nil)
 	if err != nil {
 		return
 	}
@@ -324,7 +342,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) PostTest
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/test_event`, nil)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *postTestEventOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/test_event`, nil)
 	if err != nil {
 		return
 	}
@@ -389,7 +411,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListCont
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/control_libraries`, nil)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *listControlLibrariesOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/control_libraries`, nil)
 	if err != nil {
 		return
 	}
@@ -468,7 +494,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) CreateCu
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/control_libraries`, nil)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *createCustomControlLibraryOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/control_libraries`, nil)
 	if err != nil {
 		return
 	}
@@ -570,7 +600,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) DeleteCu
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/control_libraries/{control_libraries_id}`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *deleteCustomControlLibraryOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/control_libraries/{control_libraries_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -643,7 +677,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetContr
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/control_libraries/{control_libraries_id}`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getControlLibraryOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/control_libraries/{control_libraries_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -715,7 +753,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ReplaceC
 	builder := core.NewRequestBuilder(core.PUT)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/control_libraries/{control_libraries_id}`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *replaceCustomControlLibraryOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/control_libraries/{control_libraries_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -828,7 +870,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListProf
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles`, nil)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *listProfilesOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/profiles`, nil)
 	if err != nil {
 		return
 	}
@@ -902,11 +948,14 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) CreatePr
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles`, nil)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *createProfileOptions.InstanceID)
 	if err != nil {
 		return
 	}
-
+	_, err = builder.ResolveRequestURL(instanceURL, `/profiles`, nil)
+	if err != nil {
+		return
+	}
 	for headerName, headerValue := range createProfileOptions.Headers {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -992,7 +1041,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) DeleteCu
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *deleteCustomProfileOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/profiles/{profile_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1060,7 +1113,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetProfi
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getProfileOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/profiles/{profile_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1129,7 +1186,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ReplaceP
 	builder := core.NewRequestBuilder(core.PUT)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *replaceProfileOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/profiles/{profile_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1211,7 +1272,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListRule
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/rules`, nil)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *listRulesOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/rules`, nil)
 	if err != nil {
 		return
 	}
@@ -1285,7 +1350,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) CreateRu
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/rules`, nil)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *createRuleOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/rules`, nil)
 	if err != nil {
 		return
 	}
@@ -1380,7 +1449,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) DeleteRu
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/rules/{rule_id}`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *deleteRuleOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/rules/{rule_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1435,7 +1508,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetRuleW
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/rules/{rule_id}`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getRuleOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/rules/{rule_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1503,7 +1580,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ReplaceR
 	builder := core.NewRequestBuilder(core.PUT)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/rules/{rule_id}`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *replaceRuleOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/rules/{rule_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1603,7 +1684,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListAtta
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}/attachments`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *listAttachmentsOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/profiles/{profile_id}/attachments`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1678,7 +1763,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) CreateAt
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}/attachments`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *createAttachmentOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/profiles/{profile_id}/attachments`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1760,7 +1849,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) DeletePr
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}/attachments/{attachment_id}`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *deleteProfileAttachmentOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/profiles/{profile_id}/attachments/{attachment_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1829,7 +1922,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetProfi
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}/attachments/{attachment_id}`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getProfileAttachmentOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/profiles/{profile_id}/attachments/{attachment_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -1898,7 +1995,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ReplaceP
 	builder := core.NewRequestBuilder(core.PUT)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/profiles/{profile_id}/attachments/{attachment_id}`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *replaceProfileAttachmentOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/profiles/{profile_id}/attachments/{attachment_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2018,7 +2119,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) CreateSc
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/scans`, nil)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *createScanOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/scans`, nil)
 	if err != nil {
 		return
 	}
@@ -2089,7 +2194,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListAtta
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/attachments`, nil)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *listAttachmentsAccountOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/attachments`, nil)
 	if err != nil {
 		return
 	}
@@ -2155,7 +2264,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetLates
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports/latest`, nil)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getLatestReportsOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports/latest`, nil)
 	if err != nil {
 		return
 	}
@@ -2218,7 +2331,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListRepo
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports`, nil)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *listReportsOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports`, nil)
 	if err != nil {
 		return
 	}
@@ -2307,7 +2424,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetRepor
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports/{report_id}`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getReportOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports/{report_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2374,7 +2495,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetRepor
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports/{report_id}/summary`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getReportSummaryOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports/{report_id}/summary`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2441,7 +2566,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetRepor
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports/{report_id}/download`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getReportEvaluationOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports/{report_id}/download`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2501,7 +2630,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetRepor
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports/{report_id}/controls`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getReportControlsOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports/{report_id}/controls`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2588,7 +2721,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetRepor
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports/{report_id}/rules/{rule_id}`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getReportRuleOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports/{report_id}/rules/{rule_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2655,7 +2792,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListRepo
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports/{report_id}/evaluations`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *listReportEvaluationsOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports/{report_id}/evaluations`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2744,7 +2885,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListRepo
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports/{report_id}/resources`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *listReportResourcesOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports/{report_id}/resources`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2836,7 +2981,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetRepor
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports/{report_id}/tags`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getReportTagsOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports/{report_id}/tags`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2903,7 +3049,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetRepor
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/reports/{report_id}/violations_drift`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getReportViolationsDriftOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/reports/{report_id}/violations_drift`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -2967,7 +3117,7 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListProv
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/provider_types`, nil)
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/v3/provider_types`, nil)
 	if err != nil {
 		return
 	}
@@ -3034,7 +3184,7 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetProvi
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/provider_types/{provider_type_id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/v3/provider_types/{provider_type_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -3101,7 +3251,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListProv
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/provider_types/{provider_type_id}/provider_type_instances`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *listProviderTypeInstancesOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/provider_types/{provider_type_id}/provider_type_instances`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -3168,7 +3322,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) CreatePr
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/provider_types/{provider_type_id}/provider_type_instances`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *createProviderTypeInstanceOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/provider_types/{provider_type_id}/provider_type_instances`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -3248,7 +3406,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) DeletePr
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/provider_types/{provider_type_id}/provider_type_instances/{provider_type_instance_id}`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *deleteProviderTypeInstanceOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/provider_types/{provider_type_id}/provider_type_instances/{provider_type_instance_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -3305,7 +3467,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetProvi
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/provider_types/{provider_type_id}/provider_type_instances/{provider_type_instance_id}`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getProviderTypeInstanceOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/provider_types/{provider_type_id}/provider_type_instances/{provider_type_instance_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -3372,7 +3538,10 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) UpdatePr
 	builder := core.NewRequestBuilder(core.PATCH)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/provider_types/{provider_type_id}/provider_type_instances/{provider_type_instance_id}`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *updateProviderTypeInstanceOptions.InstanceID)
+	if err != nil {
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/provider_types/{provider_type_id}/provider_type_instances/{provider_type_instance_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -3443,7 +3612,11 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetProvi
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/provider_types_instances`, nil)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getProviderTypesInstancesOptions.InstanceID)
+	if err != nil {
+		return
+	}
+	_, err = builder.ResolveRequestURL(instanceURL, `/provider_types_instances`, nil)
 	if err != nil {
 		return
 	}
@@ -4958,6 +5131,9 @@ func UnmarshalControlsInControlLib(m map[string]json.RawMessage, result interfac
 
 // CreateAttachmentOptions : The CreateAttachment options.
 type CreateAttachmentOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The profile ID.
 	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
@@ -4979,11 +5155,18 @@ type CreateAttachmentOptions struct {
 }
 
 // NewCreateAttachmentOptions : Instantiate CreateAttachmentOptions
-func (*SecurityAndComplianceCenterApiV3) NewCreateAttachmentOptions(profileID string, attachments []AttachmentsPrototype) *CreateAttachmentOptions {
+func (*SecurityAndComplianceCenterApiV3) NewCreateAttachmentOptions(instanceID string, profileID string, attachments []AttachmentsPrototype) *CreateAttachmentOptions {
 	return &CreateAttachmentOptions{
+		InstanceID:  core.StringPtr(instanceID),
 		ProfileID:   core.StringPtr(profileID),
 		Attachments: attachments,
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *CreateAttachmentOptions) SetInstanceID(instanceID string) *CreateAttachmentOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetProfileID : Allow user to set ProfileID
@@ -5018,6 +5201,9 @@ func (options *CreateAttachmentOptions) SetHeaders(param map[string]string) *Cre
 
 // CreateCustomControlLibraryOptions : The CreateCustomControlLibrary options.
 type CreateCustomControlLibraryOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The control library name.
 	ControlLibraryName *string `json:"control_library_name" validate:"required"`
 
@@ -5064,13 +5250,20 @@ const (
 )
 
 // NewCreateCustomControlLibraryOptions : Instantiate CreateCustomControlLibraryOptions
-func (*SecurityAndComplianceCenterApiV3) NewCreateCustomControlLibraryOptions(controlLibraryName string, controlLibraryDescription string, controlLibraryType string, controls []ControlsInControlLib) *CreateCustomControlLibraryOptions {
+func (*SecurityAndComplianceCenterApiV3) NewCreateCustomControlLibraryOptions(instanceID string, controlLibraryName string, controlLibraryDescription string, controlLibraryType string, controls []ControlsInControlLib) *CreateCustomControlLibraryOptions {
 	return &CreateCustomControlLibraryOptions{
 		ControlLibraryName:        core.StringPtr(controlLibraryName),
 		ControlLibraryDescription: core.StringPtr(controlLibraryDescription),
 		ControlLibraryType:        core.StringPtr(controlLibraryType),
 		Controls:                  controls,
+		InstanceID:                core.StringPtr(instanceID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *CreateCustomControlLibraryOptions) SetInstanceID(instanceID string) *CreateCustomControlLibraryOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetControlLibraryName : Allow user to set ControlLibraryName
@@ -5141,6 +5334,9 @@ func (options *CreateCustomControlLibraryOptions) SetHeaders(param map[string]st
 
 // CreateProfileOptions : The CreateProfile options.
 type CreateProfileOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The name of the profile.
 	ProfileName *string `json:"profile_name" validate:"required"`
 
@@ -5178,14 +5374,21 @@ const (
 )
 
 // NewCreateProfileOptions : Instantiate CreateProfileOptions
-func (*SecurityAndComplianceCenterApiV3) NewCreateProfileOptions(profileName string, profileDescription string, profileType string, controls []ProfileControlsPrototype, defaultParameters []DefaultParametersPrototype) *CreateProfileOptions {
+func (*SecurityAndComplianceCenterApiV3) NewCreateProfileOptions(instanceID string, profileName string, profileDescription string, profileType string, controls []ProfileControlsPrototype, defaultParameters []DefaultParametersPrototype) *CreateProfileOptions {
 	return &CreateProfileOptions{
 		ProfileName:        core.StringPtr(profileName),
 		ProfileDescription: core.StringPtr(profileDescription),
 		ProfileType:        core.StringPtr(profileType),
+		InstanceID:         core.StringPtr(instanceID),
 		Controls:           controls,
 		DefaultParameters:  defaultParameters,
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *CreateProfileOptions) SetInstanceID(instanceID string) *CreateProfileOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetProfileName : Allow user to set ProfileName
@@ -5238,6 +5441,9 @@ func (options *CreateProfileOptions) SetHeaders(param map[string]string) *Create
 
 // CreateProviderTypeInstanceOptions : The CreateProviderTypeInstance options.
 type CreateProviderTypeInstanceOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The provider type ID.
 	ProviderTypeID *string `json:"provider_type_id" validate:"required,ne="`
 
@@ -5262,10 +5468,17 @@ type CreateProviderTypeInstanceOptions struct {
 }
 
 // NewCreateProviderTypeInstanceOptions : Instantiate CreateProviderTypeInstanceOptions
-func (*SecurityAndComplianceCenterApiV3) NewCreateProviderTypeInstanceOptions(providerTypeID string) *CreateProviderTypeInstanceOptions {
+func (*SecurityAndComplianceCenterApiV3) NewCreateProviderTypeInstanceOptions(instanceID string, providerTypeID string) *CreateProviderTypeInstanceOptions {
 	return &CreateProviderTypeInstanceOptions{
+		InstanceID:     core.StringPtr(instanceID),
 		ProviderTypeID: core.StringPtr(providerTypeID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *CreateProviderTypeInstanceOptions) SetInstanceID(instanceID string) *CreateProviderTypeInstanceOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetProviderTypeID : Allow user to set ProviderTypeID
@@ -5306,6 +5519,9 @@ func (options *CreateProviderTypeInstanceOptions) SetHeaders(param map[string]st
 
 // CreateRuleOptions : The CreateRule options.
 type CreateRuleOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The rule description.
 	Description *string `json:"description" validate:"required"`
 
@@ -5349,12 +5565,19 @@ const (
 )
 
 // NewCreateRuleOptions : Instantiate CreateRuleOptions
-func (*SecurityAndComplianceCenterApiV3) NewCreateRuleOptions(description string, target *Target, requiredConfig RequiredConfigIntf) *CreateRuleOptions {
+func (*SecurityAndComplianceCenterApiV3) NewCreateRuleOptions(instanceID string, description string, target *Target, requiredConfig RequiredConfigIntf) *CreateRuleOptions {
 	return &CreateRuleOptions{
+		InstanceID:     core.StringPtr(instanceID),
 		Description:    core.StringPtr(description),
 		Target:         target,
 		RequiredConfig: requiredConfig,
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *CreateRuleOptions) SetInstanceID(instanceID string) *CreateRuleOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetDescription : Allow user to set Description
@@ -5419,6 +5642,9 @@ func (options *CreateRuleOptions) SetHeaders(param map[string]string) *CreateRul
 
 // CreateScanOptions : The CreateScan options.
 type CreateScanOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The attachment ID of a profile.
 	AttachmentID *string `json:"attachment_id" validate:"required"`
 
@@ -5437,10 +5663,17 @@ type CreateScanOptions struct {
 }
 
 // NewCreateScanOptions : Instantiate CreateScanOptions
-func (*SecurityAndComplianceCenterApiV3) NewCreateScanOptions(attachmentID string) *CreateScanOptions {
+func (*SecurityAndComplianceCenterApiV3) NewCreateScanOptions(instanceID string, attachmentID string) *CreateScanOptions {
 	return &CreateScanOptions{
+		InstanceID:   core.StringPtr(instanceID),
 		AttachmentID: core.StringPtr(attachmentID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *CreateScanOptions) SetInstanceID(instanceID string) *CreateScanOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetAttachmentID : Allow user to set AttachmentID
@@ -5533,6 +5766,9 @@ func UnmarshalDefaultParametersPrototype(m map[string]json.RawMessage, result in
 
 // DeleteCustomControlLibraryOptions : The DeleteCustomControlLibrary options.
 type DeleteCustomControlLibraryOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The control library ID.
 	ControlLibrariesID *string `json:"control_libraries_id" validate:"required,ne="`
 
@@ -5551,10 +5787,17 @@ type DeleteCustomControlLibraryOptions struct {
 }
 
 // NewDeleteCustomControlLibraryOptions : Instantiate DeleteCustomControlLibraryOptions
-func (*SecurityAndComplianceCenterApiV3) NewDeleteCustomControlLibraryOptions(controlLibrariesID string) *DeleteCustomControlLibraryOptions {
+func (*SecurityAndComplianceCenterApiV3) NewDeleteCustomControlLibraryOptions(instanceID string, controlLibrariesID string) *DeleteCustomControlLibraryOptions {
 	return &DeleteCustomControlLibraryOptions{
+		InstanceID:         core.StringPtr(instanceID),
 		ControlLibrariesID: core.StringPtr(controlLibrariesID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *DeleteCustomControlLibraryOptions) SetInstanceID(instanceID string) *DeleteCustomControlLibraryOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetControlLibrariesID : Allow user to set ControlLibrariesID
@@ -5583,6 +5826,9 @@ func (options *DeleteCustomControlLibraryOptions) SetHeaders(param map[string]st
 
 // DeleteCustomProfileOptions : The DeleteCustomProfile options.
 type DeleteCustomProfileOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The profile ID.
 	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
@@ -5601,10 +5847,17 @@ type DeleteCustomProfileOptions struct {
 }
 
 // NewDeleteCustomProfileOptions : Instantiate DeleteCustomProfileOptions
-func (*SecurityAndComplianceCenterApiV3) NewDeleteCustomProfileOptions(profileID string) *DeleteCustomProfileOptions {
+func (*SecurityAndComplianceCenterApiV3) NewDeleteCustomProfileOptions(instanceID string, profileID string) *DeleteCustomProfileOptions {
 	return &DeleteCustomProfileOptions{
-		ProfileID: core.StringPtr(profileID),
+		InstanceID: core.StringPtr(instanceID),
+		ProfileID:  core.StringPtr(profileID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *DeleteCustomProfileOptions) SetInstanceID(instanceID string) *DeleteCustomProfileOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetProfileID : Allow user to set ProfileID
@@ -5633,6 +5886,9 @@ func (options *DeleteCustomProfileOptions) SetHeaders(param map[string]string) *
 
 // DeleteProfileAttachmentOptions : The DeleteProfileAttachment options.
 type DeleteProfileAttachmentOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The attachment ID.
 	AttachmentID *string `json:"attachment_id" validate:"required,ne="`
 
@@ -5654,11 +5910,18 @@ type DeleteProfileAttachmentOptions struct {
 }
 
 // NewDeleteProfileAttachmentOptions : Instantiate DeleteProfileAttachmentOptions
-func (*SecurityAndComplianceCenterApiV3) NewDeleteProfileAttachmentOptions(attachmentID string, profileID string) *DeleteProfileAttachmentOptions {
+func (*SecurityAndComplianceCenterApiV3) NewDeleteProfileAttachmentOptions(instanceID string, attachmentID string, profileID string) *DeleteProfileAttachmentOptions {
 	return &DeleteProfileAttachmentOptions{
+		InstanceID:   core.StringPtr(instanceID),
 		AttachmentID: core.StringPtr(attachmentID),
 		ProfileID:    core.StringPtr(profileID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *DeleteProfileAttachmentOptions) SetInstanceID(instanceID string) *DeleteProfileAttachmentOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetAttachmentID : Allow user to set AttachmentID
@@ -5693,6 +5956,9 @@ func (options *DeleteProfileAttachmentOptions) SetHeaders(param map[string]strin
 
 // DeleteProviderTypeInstanceOptions : The DeleteProviderTypeInstance options.
 type DeleteProviderTypeInstanceOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The provider type ID.
 	ProviderTypeID *string `json:"provider_type_id" validate:"required,ne="`
 
@@ -5714,11 +5980,18 @@ type DeleteProviderTypeInstanceOptions struct {
 }
 
 // NewDeleteProviderTypeInstanceOptions : Instantiate DeleteProviderTypeInstanceOptions
-func (*SecurityAndComplianceCenterApiV3) NewDeleteProviderTypeInstanceOptions(providerTypeID string, providerTypeInstanceID string) *DeleteProviderTypeInstanceOptions {
+func (*SecurityAndComplianceCenterApiV3) NewDeleteProviderTypeInstanceOptions(instanceID string, providerTypeID string, providerTypeInstanceID string) *DeleteProviderTypeInstanceOptions {
 	return &DeleteProviderTypeInstanceOptions{
+		InstanceID:             core.StringPtr(instanceID),
 		ProviderTypeID:         core.StringPtr(providerTypeID),
 		ProviderTypeInstanceID: core.StringPtr(providerTypeInstanceID),
 	}
+}
+
+// // SetInstanceID : Allow user to set InstanceID
+func (_options *DeleteProviderTypeInstanceOptions) SetInstanceID(instanceID string) *DeleteProviderTypeInstanceOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetProviderTypeID : Allow user to set ProviderTypeID
@@ -5753,6 +6026,9 @@ func (options *DeleteProviderTypeInstanceOptions) SetHeaders(param map[string]st
 
 // DeleteRuleOptions : The DeleteRule options.
 type DeleteRuleOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the corresponding rule.
 	RuleID *string `json:"rule_id" validate:"required,ne="`
 
@@ -5771,10 +6047,17 @@ type DeleteRuleOptions struct {
 }
 
 // NewDeleteRuleOptions : Instantiate DeleteRuleOptions
-func (*SecurityAndComplianceCenterApiV3) NewDeleteRuleOptions(ruleID string) *DeleteRuleOptions {
+func (*SecurityAndComplianceCenterApiV3) NewDeleteRuleOptions(instanceID string, ruleID string) *DeleteRuleOptions {
 	return &DeleteRuleOptions{
-		RuleID: core.StringPtr(ruleID),
+		InstanceID: core.StringPtr(instanceID),
+		RuleID:     core.StringPtr(ruleID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *DeleteRuleOptions) SetInstanceID(instanceID string) *DeleteRuleOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetRuleID : Allow user to set RuleID
@@ -6117,6 +6400,9 @@ func UnmarshalFailedControls(m map[string]json.RawMessage, result interface{}) (
 
 // GetControlLibraryOptions : The GetControlLibrary options.
 type GetControlLibraryOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The control library ID.
 	ControlLibrariesID *string `json:"control_libraries_id" validate:"required,ne="`
 
@@ -6135,10 +6421,17 @@ type GetControlLibraryOptions struct {
 }
 
 // NewGetControlLibraryOptions : Instantiate GetControlLibraryOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetControlLibraryOptions(controlLibrariesID string) *GetControlLibraryOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetControlLibraryOptions(instanceID string, controlLibrariesID string) *GetControlLibraryOptions {
 	return &GetControlLibraryOptions{
+		InstanceID:         core.StringPtr(instanceID),
 		ControlLibrariesID: core.StringPtr(controlLibrariesID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetControlLibraryOptions) SetInstanceID(instanceID string) *GetControlLibraryOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetControlLibrariesID : Allow user to set ControlLibrariesID
@@ -6167,6 +6460,9 @@ func (options *GetControlLibraryOptions) SetHeaders(param map[string]string) *Ge
 
 // GetLatestReportsOptions : The GetLatestReports options.
 type GetLatestReportsOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The supplied or generated value of this header is logged for a request and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
 	// this header is not supplied in a request, the service generates a random (version 4) UUID.
@@ -6186,8 +6482,16 @@ type GetLatestReportsOptions struct {
 }
 
 // NewGetLatestReportsOptions : Instantiate GetLatestReportsOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetLatestReportsOptions() *GetLatestReportsOptions {
-	return &GetLatestReportsOptions{}
+func (*SecurityAndComplianceCenterApiV3) NewGetLatestReportsOptions(instanceID string) *GetLatestReportsOptions {
+	return &GetLatestReportsOptions{
+		InstanceID: core.StringPtr(instanceID),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetLatestReportsOptions) SetInstanceID(instanceID string) *GetLatestReportsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetXCorrelationID : Allow user to set XCorrelationID
@@ -6216,6 +6520,9 @@ func (options *GetLatestReportsOptions) SetHeaders(param map[string]string) *Get
 
 // GetProfileAttachmentOptions : The GetProfileAttachment options.
 type GetProfileAttachmentOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The attachment ID.
 	AttachmentID *string `json:"attachment_id" validate:"required,ne="`
 
@@ -6237,11 +6544,18 @@ type GetProfileAttachmentOptions struct {
 }
 
 // NewGetProfileAttachmentOptions : Instantiate GetProfileAttachmentOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetProfileAttachmentOptions(attachmentID string, profileID string) *GetProfileAttachmentOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetProfileAttachmentOptions(instanceID string, attachmentID string, profileID string) *GetProfileAttachmentOptions {
 	return &GetProfileAttachmentOptions{
+		InstanceID:   core.StringPtr(instanceID),
 		AttachmentID: core.StringPtr(attachmentID),
 		ProfileID:    core.StringPtr(profileID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetProfileAttachmentOptions) SetInstanceID(instanceID string) *GetProfileAttachmentOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetAttachmentID : Allow user to set AttachmentID
@@ -6276,6 +6590,9 @@ func (options *GetProfileAttachmentOptions) SetHeaders(param map[string]string) 
 
 // GetProfileOptions : The GetProfile options.
 type GetProfileOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The profile ID.
 	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
@@ -6294,10 +6611,17 @@ type GetProfileOptions struct {
 }
 
 // NewGetProfileOptions : Instantiate GetProfileOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetProfileOptions(profileID string) *GetProfileOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetProfileOptions(instanceID string, profileID string) *GetProfileOptions {
 	return &GetProfileOptions{
-		ProfileID: core.StringPtr(profileID),
+		InstanceID: core.StringPtr(instanceID),
+		ProfileID:  core.StringPtr(profileID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetProfileOptions) SetInstanceID(instanceID string) *GetProfileOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetProfileID : Allow user to set ProfileID
@@ -6376,6 +6700,9 @@ func (options *GetProviderTypeByIdOptions) SetHeaders(param map[string]string) *
 
 // GetProviderTypeInstanceOptions : The GetProviderTypeInstance options.
 type GetProviderTypeInstanceOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The provider type ID.
 	ProviderTypeID *string `json:"provider_type_id" validate:"required,ne="`
 
@@ -6397,11 +6724,18 @@ type GetProviderTypeInstanceOptions struct {
 }
 
 // NewGetProviderTypeInstanceOptions : Instantiate GetProviderTypeInstanceOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetProviderTypeInstanceOptions(providerTypeID string, providerTypeInstanceID string) *GetProviderTypeInstanceOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetProviderTypeInstanceOptions(instanceID string, providerTypeID string, providerTypeInstanceID string) *GetProviderTypeInstanceOptions {
 	return &GetProviderTypeInstanceOptions{
+		InstanceID:             core.StringPtr(instanceID),
 		ProviderTypeID:         core.StringPtr(providerTypeID),
 		ProviderTypeInstanceID: core.StringPtr(providerTypeInstanceID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetProviderTypeInstanceOptions) SetInstanceID(instanceID string) *GetProviderTypeInstanceOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetProviderTypeID : Allow user to set ProviderTypeID
@@ -6436,6 +6770,8 @@ func (options *GetProviderTypeInstanceOptions) SetHeaders(param map[string]strin
 
 // GetProviderTypesInstancesOptions : The GetProviderTypesInstances options.
 type GetProviderTypesInstancesOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
 	// The supplied or generated value of this header is logged for a request and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
 	// this headers is not supplied in a request, the service generates a random (version 4) UUID.
@@ -6451,8 +6787,16 @@ type GetProviderTypesInstancesOptions struct {
 }
 
 // NewGetProviderTypesInstancesOptions : Instantiate GetProviderTypesInstancesOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetProviderTypesInstancesOptions() *GetProviderTypesInstancesOptions {
-	return &GetProviderTypesInstancesOptions{}
+func (*SecurityAndComplianceCenterApiV3) NewGetProviderTypesInstancesOptions(instanceID string) *GetProviderTypesInstancesOptions {
+	return &GetProviderTypesInstancesOptions{
+		InstanceID: core.StringPtr(instanceID),
+	}
+}
+
+// SetInstance : Allow user to set Instantiate
+func (_options *GetProviderTypesInstancesOptions) SetInstanceID(instanceID string) *GetProviderTypesInstancesOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetXCorrelationID : Allow user to set XCorrelationID
@@ -6475,6 +6819,9 @@ func (options *GetProviderTypesInstancesOptions) SetHeaders(param map[string]str
 
 // GetReportControlsOptions : The GetReportControls options.
 type GetReportControlsOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the scan that is associated with a report.
 	ReportID *string `json:"report_id" validate:"required,ne="`
 
@@ -6530,10 +6877,17 @@ const (
 )
 
 // NewGetReportControlsOptions : Instantiate GetReportControlsOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetReportControlsOptions(reportID string) *GetReportControlsOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetReportControlsOptions(instanceID string, reportID string) *GetReportControlsOptions {
 	return &GetReportControlsOptions{
-		ReportID: core.StringPtr(reportID),
+		InstanceID: core.StringPtr(instanceID),
+		ReportID:   core.StringPtr(reportID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetReportControlsOptions) SetInstanceID(instanceID string) *GetReportControlsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetReportID : Allow user to set ReportID
@@ -6598,6 +6952,9 @@ func (options *GetReportControlsOptions) SetHeaders(param map[string]string) *Ge
 
 // GetReportEvaluationOptions : The GetReportEvaluation options.
 type GetReportEvaluationOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the scan that is associated with a report.
 	ReportID *string `json:"report_id" validate:"required,ne="`
 
@@ -6619,10 +6976,17 @@ type GetReportEvaluationOptions struct {
 }
 
 // NewGetReportEvaluationOptions : Instantiate GetReportEvaluationOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetReportEvaluationOptions(reportID string) *GetReportEvaluationOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetReportEvaluationOptions(instanceID string, reportID string) *GetReportEvaluationOptions {
 	return &GetReportEvaluationOptions{
-		ReportID: core.StringPtr(reportID),
+		InstanceID: core.StringPtr(instanceID),
+		ReportID:   core.StringPtr(reportID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetReportEvaluationOptions) SetInstanceID(instanceID string) *GetReportEvaluationOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetReportID : Allow user to set ReportID
@@ -6657,6 +7021,9 @@ func (options *GetReportEvaluationOptions) SetHeaders(param map[string]string) *
 
 // GetReportOptions : The GetReport options.
 type GetReportOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the scan that is associated with a report.
 	ReportID *string `json:"report_id" validate:"required,ne="`
 
@@ -6675,10 +7042,17 @@ type GetReportOptions struct {
 }
 
 // NewGetReportOptions : Instantiate GetReportOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetReportOptions(reportID string) *GetReportOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetReportOptions(instanceID string, reportID string) *GetReportOptions {
 	return &GetReportOptions{
-		ReportID: core.StringPtr(reportID),
+		InstanceID: core.StringPtr(instanceID),
+		ReportID:   core.StringPtr(reportID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetReportOptions) SetInstanceID(instanceID string) *GetReportOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetReportID : Allow user to set ReportID
@@ -6707,6 +7081,9 @@ func (options *GetReportOptions) SetHeaders(param map[string]string) *GetReportO
 
 // GetReportRuleOptions : The GetReportRule options.
 type GetReportRuleOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the scan that is associated with a report.
 	ReportID *string `json:"report_id" validate:"required,ne="`
 
@@ -6728,11 +7105,18 @@ type GetReportRuleOptions struct {
 }
 
 // NewGetReportRuleOptions : Instantiate GetReportRuleOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetReportRuleOptions(reportID string, ruleID string) *GetReportRuleOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetReportRuleOptions(instanceID string, reportID string, ruleID string) *GetReportRuleOptions {
 	return &GetReportRuleOptions{
-		ReportID: core.StringPtr(reportID),
-		RuleID:   core.StringPtr(ruleID),
+		InstanceID: core.StringPtr(instanceID),
+		ReportID:   core.StringPtr(reportID),
+		RuleID:     core.StringPtr(ruleID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetReportRuleOptions) SetInstanceID(instanceID string) *GetReportRuleOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetReportID : Allow user to set ReportID
@@ -6767,6 +7151,9 @@ func (options *GetReportRuleOptions) SetHeaders(param map[string]string) *GetRep
 
 // GetReportSummaryOptions : The GetReportSummary options.
 type GetReportSummaryOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the scan that is associated with a report.
 	ReportID *string `json:"report_id" validate:"required,ne="`
 
@@ -6785,10 +7172,17 @@ type GetReportSummaryOptions struct {
 }
 
 // NewGetReportSummaryOptions : Instantiate GetReportSummaryOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetReportSummaryOptions(reportID string) *GetReportSummaryOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetReportSummaryOptions(instanceID string, reportID string) *GetReportSummaryOptions {
 	return &GetReportSummaryOptions{
-		ReportID: core.StringPtr(reportID),
+		InstanceID: core.StringPtr(instanceID),
+		ReportID:   core.StringPtr(reportID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetReportSummaryOptions) SetInstanceID(instanceID string) *GetReportSummaryOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetReportID : Allow user to set ReportID
@@ -6817,6 +7211,9 @@ func (options *GetReportSummaryOptions) SetHeaders(param map[string]string) *Get
 
 // GetReportTagsOptions : The GetReportTags options.
 type GetReportTagsOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the scan that is associated with a report.
 	ReportID *string `json:"report_id" validate:"required,ne="`
 
@@ -6835,10 +7232,17 @@ type GetReportTagsOptions struct {
 }
 
 // NewGetReportTagsOptions : Instantiate GetReportTagsOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetReportTagsOptions(reportID string) *GetReportTagsOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetReportTagsOptions(instanceID string, reportID string) *GetReportTagsOptions {
 	return &GetReportTagsOptions{
-		ReportID: core.StringPtr(reportID),
+		InstanceID: core.StringPtr(instanceID),
+		ReportID:   core.StringPtr(reportID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetReportTagsOptions) SetInstanceID(instanceID string) *GetReportTagsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetReportID : Allow user to set ReportID
@@ -6867,6 +7271,9 @@ func (options *GetReportTagsOptions) SetHeaders(param map[string]string) *GetRep
 
 // GetReportViolationsDriftOptions : The GetReportViolationsDrift options.
 type GetReportViolationsDriftOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the scan that is associated with a report.
 	ReportID *string `json:"report_id" validate:"required,ne="`
 
@@ -6888,10 +7295,17 @@ type GetReportViolationsDriftOptions struct {
 }
 
 // NewGetReportViolationsDriftOptions : Instantiate GetReportViolationsDriftOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetReportViolationsDriftOptions(reportID string) *GetReportViolationsDriftOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetReportViolationsDriftOptions(instanceID string, reportID string) *GetReportViolationsDriftOptions {
 	return &GetReportViolationsDriftOptions{
-		ReportID: core.StringPtr(reportID),
+		InstanceID: core.StringPtr(instanceID),
+		ReportID:   core.StringPtr(reportID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetReportViolationsDriftOptions) SetInstanceID(instanceID string) *GetReportViolationsDriftOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetReportID : Allow user to set ReportID
@@ -6926,6 +7340,9 @@ func (options *GetReportViolationsDriftOptions) SetHeaders(param map[string]stri
 
 // GetRuleOptions : The GetRule options.
 type GetRuleOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the corresponding rule.
 	RuleID *string `json:"rule_id" validate:"required,ne="`
 
@@ -6944,10 +7361,17 @@ type GetRuleOptions struct {
 }
 
 // NewGetRuleOptions : Instantiate GetRuleOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetRuleOptions(ruleID string) *GetRuleOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetRuleOptions(instanceID string, ruleID string) *GetRuleOptions {
 	return &GetRuleOptions{
-		RuleID: core.StringPtr(ruleID),
+		InstanceID: core.StringPtr(instanceID),
+		RuleID:     core.StringPtr(ruleID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetRuleOptions) SetInstanceID(instanceID string) *GetRuleOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetRuleID : Allow user to set RuleID
@@ -6976,6 +7400,9 @@ func (options *GetRuleOptions) SetHeaders(param map[string]string) *GetRuleOptio
 
 // GetSettingsOptions : The GetSettings options.
 type GetSettingsOptions struct {
+	// The ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The supplied or generated value of this header is logged for a request, and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
 	// this header is not supplied in a request, the service generates a random (version 4) UUID.
@@ -6991,8 +7418,16 @@ type GetSettingsOptions struct {
 }
 
 // NewGetSettingsOptions : Instantiate GetSettingsOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetSettingsOptions() *GetSettingsOptions {
-	return &GetSettingsOptions{}
+func (*SecurityAndComplianceCenterApiV3) NewGetSettingsOptions(instanceID string) *GetSettingsOptions {
+	return &GetSettingsOptions{
+		InstanceID: core.StringPtr(instanceID),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetSettingsOptions) SetInstanceID(instanceID string) *GetSettingsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetXCorrelationID : Allow user to set XCorrelationID
@@ -7146,6 +7581,9 @@ func UnmarshalLastScan(m map[string]json.RawMessage, result interface{}) (err er
 
 // ListAttachmentsAccountOptions : The ListAttachmentsAccount options.
 type ListAttachmentsAccountOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The supplied or generated value of this header is logged for a request and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
 	// this header is not supplied in a request, the service generates a random (version 4) UUID.
@@ -7167,8 +7605,10 @@ type ListAttachmentsAccountOptions struct {
 }
 
 // NewListAttachmentsAccountOptions : Instantiate ListAttachmentsAccountOptions
-func (*SecurityAndComplianceCenterApiV3) NewListAttachmentsAccountOptions() *ListAttachmentsAccountOptions {
-	return &ListAttachmentsAccountOptions{}
+func (*SecurityAndComplianceCenterApiV3) NewListAttachmentsAccountOptions(instanceID string) *ListAttachmentsAccountOptions {
+	return &ListAttachmentsAccountOptions{
+		InstanceID: core.StringPtr(instanceID),
+	}
 }
 
 // SetXCorrelationID : Allow user to set XCorrelationID
@@ -7203,6 +7643,9 @@ func (options *ListAttachmentsAccountOptions) SetHeaders(param map[string]string
 
 // ListAttachmentsOptions : The ListAttachments options.
 type ListAttachmentsOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The profile ID.
 	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
@@ -7227,10 +7670,17 @@ type ListAttachmentsOptions struct {
 }
 
 // NewListAttachmentsOptions : Instantiate ListAttachmentsOptions
-func (*SecurityAndComplianceCenterApiV3) NewListAttachmentsOptions(profileID string) *ListAttachmentsOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListAttachmentsOptions(instanceID string, profileID string) *ListAttachmentsOptions {
 	return &ListAttachmentsOptions{
-		ProfileID: core.StringPtr(profileID),
+		InstanceID: core.StringPtr(instanceID),
+		ProfileID:  core.StringPtr(profileID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ListAttachmentsOptions) SetInstanceID(instanceID string) *ListAttachmentsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetProfileID : Allow user to set ProfileID
@@ -7271,6 +7721,9 @@ func (options *ListAttachmentsOptions) SetHeaders(param map[string]string) *List
 
 // ListControlLibrariesOptions : The ListControlLibraries options.
 type ListControlLibrariesOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The supplied or generated value of this header is logged for a request and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
 	// this header is not supplied in a request, the service generates a random (version 4) UUID.
@@ -7295,8 +7748,16 @@ type ListControlLibrariesOptions struct {
 }
 
 // NewListControlLibrariesOptions : Instantiate ListControlLibrariesOptions
-func (*SecurityAndComplianceCenterApiV3) NewListControlLibrariesOptions() *ListControlLibrariesOptions {
-	return &ListControlLibrariesOptions{}
+func (*SecurityAndComplianceCenterApiV3) NewListControlLibrariesOptions(instanceID string) *ListControlLibrariesOptions {
+	return &ListControlLibrariesOptions{
+		InstanceID: core.StringPtr(instanceID),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ListControlLibrariesOptions) SetInstanceID(instanceID string) *ListControlLibrariesOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetXCorrelationID : Allow user to set XCorrelationID
@@ -7337,6 +7798,9 @@ func (options *ListControlLibrariesOptions) SetHeaders(param map[string]string) 
 
 // ListProfilesOptions : The ListProfiles options.
 type ListProfilesOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The supplied or generated value of this header is logged for a request, and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests, and retries of those requests. If a value of
 	// this header is not supplied in a request, the service generates a random (version 4) UUID.
@@ -7361,8 +7825,16 @@ type ListProfilesOptions struct {
 }
 
 // NewListProfilesOptions : Instantiate ListProfilesOptions
-func (*SecurityAndComplianceCenterApiV3) NewListProfilesOptions() *ListProfilesOptions {
-	return &ListProfilesOptions{}
+func (*SecurityAndComplianceCenterApiV3) NewListProfilesOptions(instanceID string) *ListProfilesOptions {
+	return &ListProfilesOptions{
+		InstanceID: core.StringPtr(instanceID),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ListProfilesOptions) SetInstanceID(instanceID string) *ListProfilesOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetXCorrelationID : Allow user to set XCorrelationID
@@ -7403,6 +7875,9 @@ func (options *ListProfilesOptions) SetHeaders(param map[string]string) *ListPro
 
 // ListProviderTypeInstancesOptions : The ListProviderTypeInstances options.
 type ListProviderTypeInstancesOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The provider type ID.
 	ProviderTypeID *string `json:"provider_type_id" validate:"required,ne="`
 
@@ -7421,8 +7896,9 @@ type ListProviderTypeInstancesOptions struct {
 }
 
 // NewListProviderTypeInstancesOptions : Instantiate ListProviderTypeInstancesOptions
-func (*SecurityAndComplianceCenterApiV3) NewListProviderTypeInstancesOptions(providerTypeID string) *ListProviderTypeInstancesOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListProviderTypeInstancesOptions(instanceID string, providerTypeID string) *ListProviderTypeInstancesOptions {
 	return &ListProviderTypeInstancesOptions{
+		InstanceID:     core.StringPtr(instanceID),
 		ProviderTypeID: core.StringPtr(providerTypeID),
 	}
 }
@@ -7492,6 +7968,9 @@ func (options *ListProviderTypesOptions) SetHeaders(param map[string]string) *Li
 
 // ListReportEvaluationsOptions : The ListReportEvaluations options.
 type ListReportEvaluationsOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the scan that is associated with a report.
 	ReportID *string `json:"report_id" validate:"required,ne="`
 
@@ -7540,10 +8019,17 @@ const (
 )
 
 // NewListReportEvaluationsOptions : Instantiate ListReportEvaluationsOptions
-func (*SecurityAndComplianceCenterApiV3) NewListReportEvaluationsOptions(reportID string) *ListReportEvaluationsOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListReportEvaluationsOptions(instanceID string, reportID string) *ListReportEvaluationsOptions {
 	return &ListReportEvaluationsOptions{
-		ReportID: core.StringPtr(reportID),
+		InstanceID: core.StringPtr(instanceID),
+		ReportID:   core.StringPtr(reportID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ListReportEvaluationsOptions) SetInstanceID(instanceID string) *ListReportEvaluationsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetReportID : Allow user to set ReportID
@@ -7614,6 +8100,9 @@ func (options *ListReportEvaluationsOptions) SetHeaders(param map[string]string)
 
 // ListReportResourcesOptions : The ListReportResources options.
 type ListReportResourcesOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the scan that is associated with a report.
 	ReportID *string `json:"report_id" validate:"required,ne="`
 
@@ -7676,10 +8165,17 @@ const (
 )
 
 // NewListReportResourcesOptions : Instantiate ListReportResourcesOptions
-func (*SecurityAndComplianceCenterApiV3) NewListReportResourcesOptions(reportID string) *ListReportResourcesOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListReportResourcesOptions(instanceID string, reportID string) *ListReportResourcesOptions {
 	return &ListReportResourcesOptions{
-		ReportID: core.StringPtr(reportID),
+		InstanceID: core.StringPtr(instanceID),
+		ReportID:   core.StringPtr(reportID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ListReportResourcesOptions) SetInstanceID(instanceID string) *ListReportResourcesOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetReportID : Allow user to set ReportID
@@ -7756,6 +8252,9 @@ func (options *ListReportResourcesOptions) SetHeaders(param map[string]string) *
 
 // ListReportsOptions : The ListReports options.
 type ListReportsOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The supplied or generated value of this header is logged for a request and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
 	// this header is not supplied in a request, the service generates a random (version 4) UUID.
@@ -7800,8 +8299,16 @@ const (
 )
 
 // NewListReportsOptions : Instantiate ListReportsOptions
-func (*SecurityAndComplianceCenterApiV3) NewListReportsOptions() *ListReportsOptions {
-	return &ListReportsOptions{}
+func (*SecurityAndComplianceCenterApiV3) NewListReportsOptions(instanceID string) *ListReportsOptions {
+	return &ListReportsOptions{
+		InstanceID: core.StringPtr(instanceID),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ListReportsOptions) SetInstanceID(instanceID string) *ListReportsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetXCorrelationID : Allow user to set XCorrelationID
@@ -7866,6 +8373,9 @@ func (options *ListReportsOptions) SetHeaders(param map[string]string) *ListRepo
 
 // ListRulesOptions : The ListRules options.
 type ListRulesOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The supplied or generated value of this header is logged for a request and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
 	// this header is not supplied in a request, the service generates a random (version 4) UUID.
@@ -7890,8 +8400,16 @@ type ListRulesOptions struct {
 }
 
 // NewListRulesOptions : Instantiate ListRulesOptions
-func (*SecurityAndComplianceCenterApiV3) NewListRulesOptions() *ListRulesOptions {
-	return &ListRulesOptions{}
+func (*SecurityAndComplianceCenterApiV3) NewListRulesOptions(instanceID string) *ListRulesOptions {
+	return &ListRulesOptions{
+		InstanceID: core.StringPtr(instanceID),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ListRulesOptions) SetInstanceID(instanceID string) *ListRulesOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetXCorrelationID : Allow user to set XCorrelationID
@@ -8210,6 +8728,9 @@ func UnmarshalParameterInfo(m map[string]json.RawMessage, result interface{}) (e
 
 // PostTestEventOptions : The PostTestEvent options.
 type PostTestEventOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The supplied or generated value of this header is logged for a request, and repeated in a response header for the
 	// corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
 	// this header is not supplied in a request, the service generates a random (version 4) UUID.
@@ -8225,8 +8746,16 @@ type PostTestEventOptions struct {
 }
 
 // NewPostTestEventOptions : Instantiate PostTestEventOptions
-func (*SecurityAndComplianceCenterApiV3) NewPostTestEventOptions() *PostTestEventOptions {
-	return &PostTestEventOptions{}
+func (*SecurityAndComplianceCenterApiV3) NewPostTestEventOptions(instanceID string) *PostTestEventOptions {
+	return &PostTestEventOptions{
+		InstanceID: core.StringPtr(instanceID),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *PostTestEventOptions) SetInstanceID(instanceID string) *PostTestEventOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetXCorrelationID : Allow user to set XCorrelationID
@@ -9028,6 +9557,9 @@ type ReplaceCustomControlLibraryOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
+
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
 }
 
 // Constants associated with the ReplaceCustomControlLibraryOptions.ControlLibraryType property.
@@ -9038,8 +9570,9 @@ const (
 )
 
 // NewReplaceCustomControlLibraryOptions : Instantiate ReplaceCustomControlLibraryOptions
-func (*SecurityAndComplianceCenterApiV3) NewReplaceCustomControlLibraryOptions(controlLibrariesID string) *ReplaceCustomControlLibraryOptions {
+func (*SecurityAndComplianceCenterApiV3) NewReplaceCustomControlLibraryOptions(instanceID string, controlLibrariesID string) *ReplaceCustomControlLibraryOptions {
 	return &ReplaceCustomControlLibraryOptions{
+		InstanceID:         core.StringPtr(instanceID),
 		ControlLibrariesID: core.StringPtr(controlLibrariesID),
 	}
 }
@@ -9178,8 +9711,8 @@ type ReplaceProfileAttachmentOptions struct {
 	// The account ID that is associated to the attachment.
 	AccountID *string `json:"account_id,omitempty"`
 
-	// The instance ID of the account that is associated to the attachment.
-	InstanceID *string `json:"instance_id,omitempty"`
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
 
 	// The scope payload for the multi cloud feature.
 	Scope []MultiCloudScope `json:"scope,omitempty"`
@@ -9250,8 +9783,9 @@ const (
 )
 
 // NewReplaceProfileAttachmentOptions : Instantiate ReplaceProfileAttachmentOptions
-func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileAttachmentOptions(attachmentID string, profileID string) *ReplaceProfileAttachmentOptions {
+func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileAttachmentOptions(instanceID string, attachmentID string, profileID string) *ReplaceProfileAttachmentOptions {
 	return &ReplaceProfileAttachmentOptions{
+		InstanceID:   core.StringPtr(instanceID),
 		AttachmentID: core.StringPtr(attachmentID),
 		ProfileID:    core.StringPtr(profileID),
 	}
@@ -9385,6 +9919,9 @@ func (options *ReplaceProfileAttachmentOptions) SetHeaders(param map[string]stri
 
 // ReplaceProfileOptions : The ReplaceProfile options.
 type ReplaceProfileOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The profile ID.
 	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
@@ -9425,8 +9962,9 @@ const (
 )
 
 // NewReplaceProfileOptions : Instantiate ReplaceProfileOptions
-func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileOptions(profileID string, profileName string, profileDescription string, profileType string, controls []ProfileControlsPrototype, defaultParameters []DefaultParametersPrototype) *ReplaceProfileOptions {
+func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileOptions(instanceID string, profileID string, profileName string, profileDescription string, profileType string, controls []ProfileControlsPrototype, defaultParameters []DefaultParametersPrototype) *ReplaceProfileOptions {
 	return &ReplaceProfileOptions{
+		InstanceID:         core.StringPtr(instanceID),
 		ProfileID:          core.StringPtr(profileID),
 		ProfileName:        core.StringPtr(profileName),
 		ProfileDescription: core.StringPtr(profileDescription),
@@ -9492,6 +10030,9 @@ func (options *ReplaceProfileOptions) SetHeaders(param map[string]string) *Repla
 
 // ReplaceRuleOptions : The ReplaceRule options.
 type ReplaceRuleOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The ID of the corresponding rule.
 	RuleID *string `json:"rule_id" validate:"required,ne="`
 
@@ -9544,8 +10085,9 @@ const (
 )
 
 // NewReplaceRuleOptions : Instantiate ReplaceRuleOptions
-func (*SecurityAndComplianceCenterApiV3) NewReplaceRuleOptions(ruleID string, ifMatch string, description string, target *Target, requiredConfig RequiredConfigIntf) *ReplaceRuleOptions {
+func (*SecurityAndComplianceCenterApiV3) NewReplaceRuleOptions(instanceID string, ruleID string, ifMatch string, description string, target *Target, requiredConfig RequiredConfigIntf) *ReplaceRuleOptions {
 	return &ReplaceRuleOptions{
+		InstanceID:     core.StringPtr(instanceID),
 		RuleID:         core.StringPtr(ruleID),
 		IfMatch:        core.StringPtr(ifMatch),
 		Description:    core.StringPtr(description),
@@ -11097,6 +11639,9 @@ func UnmarshalTestEvent(m map[string]json.RawMessage, result interface{}) (err e
 
 // UpdateProviderTypeInstanceOptions : The UpdateProviderTypeInstance options.
 type UpdateProviderTypeInstanceOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The provider type ID.
 	ProviderTypeID *string `json:"provider_type_id" validate:"required,ne="`
 
@@ -11124,8 +11669,9 @@ type UpdateProviderTypeInstanceOptions struct {
 }
 
 // NewUpdateProviderTypeInstanceOptions : Instantiate UpdateProviderTypeInstanceOptions
-func (*SecurityAndComplianceCenterApiV3) NewUpdateProviderTypeInstanceOptions(providerTypeID string, providerTypeInstanceID string) *UpdateProviderTypeInstanceOptions {
+func (*SecurityAndComplianceCenterApiV3) NewUpdateProviderTypeInstanceOptions(instanceID string, providerTypeID string, providerTypeInstanceID string) *UpdateProviderTypeInstanceOptions {
 	return &UpdateProviderTypeInstanceOptions{
+		InstanceID:             core.StringPtr(instanceID),
 		ProviderTypeID:         core.StringPtr(providerTypeID),
 		ProviderTypeInstanceID: core.StringPtr(providerTypeInstanceID),
 	}
@@ -11175,6 +11721,9 @@ func (options *UpdateProviderTypeInstanceOptions) SetHeaders(param map[string]st
 
 // UpdateSettingsOptions : The UpdateSettings options.
 type UpdateSettingsOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The Event Notifications settings.
 	EventNotifications *EventNotifications `json:"event_notifications,omitempty"`
 
@@ -11196,8 +11745,10 @@ type UpdateSettingsOptions struct {
 }
 
 // NewUpdateSettingsOptions : Instantiate UpdateSettingsOptions
-func (*SecurityAndComplianceCenterApiV3) NewUpdateSettingsOptions() *UpdateSettingsOptions {
-	return &UpdateSettingsOptions{}
+func (*SecurityAndComplianceCenterApiV3) NewUpdateSettingsOptions(instanceID string) *UpdateSettingsOptions {
+	return &UpdateSettingsOptions{
+		InstanceID: core.StringPtr(instanceID),
+	}
 }
 
 // SetEventNotifications : Allow user to set EventNotifications
@@ -12077,4 +12628,12 @@ func (pager *ReportResourcesPager) GetNext() (page []Resource, err error) {
 // GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
 func (pager *ReportResourcesPager) GetAll() (allItems []Resource, err error) {
 	return pager.GetAllWithContext(context.Background())
+}
+
+// getInstanceBasedURL uses the baseURL and instanceID to return the correct endpoint URL
+func getInstanceBasedURL(baseURL, instanceID string) (string, error) {
+	if baseURL == "" {
+		return "", fmt.Errorf("service URL is empty")
+	}
+	return fmt.Sprintf("%s/instances/%s/v3", baseURL, instanceID), nil
 }

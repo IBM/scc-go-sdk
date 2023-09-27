@@ -1,3 +1,10 @@
+## [5.1.2](https://github.com/IBM/scc-go-sdk/compare/v5.1.1...v5.1.2) (2023-09-27)
+
+
+### Bug Fixes
+
+* Adding more SetInstanceID to the various objects ([#130](https://github.com/IBM/scc-go-sdk/issues/130)) ([b1674f7](https://github.com/IBM/scc-go-sdk/commit/b1674f7138acdb14efbb6b49eca7231959754676))
+
 ## [5.1.1](https://github.com/IBM/scc-go-sdk/compare/v5.1.0...v5.1.1) (2023-09-27)
 
 

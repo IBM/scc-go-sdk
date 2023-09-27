@@ -9577,6 +9577,12 @@ func (*SecurityAndComplianceCenterApiV3) NewReplaceCustomControlLibraryOptions(i
 	}
 }
 
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ReplaceCustomControlLibraryOptions) SetInstanceID(instanceID string) *ReplaceCustomControlLibraryOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
 // SetControlLibrariesID : Allow user to set ControlLibrariesID
 func (_options *ReplaceCustomControlLibraryOptions) SetControlLibrariesID(controlLibrariesID string) *ReplaceCustomControlLibraryOptions {
 	_options.ControlLibrariesID = core.StringPtr(controlLibrariesID)
@@ -9972,6 +9978,12 @@ func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileOptions(instanceID str
 		Controls:           controls,
 		DefaultParameters:  defaultParameters,
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ReplaceProfileOptions) SetInstanceID(instanceID string) *ReplaceProfileOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetProfileID : Allow user to set ProfileID
@@ -11749,6 +11761,12 @@ func (*SecurityAndComplianceCenterApiV3) NewUpdateSettingsOptions(instanceID str
 	return &UpdateSettingsOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *UpdateSettingsOptions) SetInstanceID(instanceID string) *UpdateSettingsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetEventNotifications : Allow user to set EventNotifications

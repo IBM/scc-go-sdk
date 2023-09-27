@@ -10108,6 +10108,12 @@ func (*SecurityAndComplianceCenterApiV3) NewReplaceRuleOptions(instanceID string
 	}
 }
 
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ReplaceRuleOptions) SetInstanceID(instanceID string) *ReplaceRuleOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
 // SetRuleID : Allow user to set RuleID
 func (_options *ReplaceRuleOptions) SetRuleID(ruleID string) *ReplaceRuleOptions {
 	_options.RuleID = core.StringPtr(ruleID)
@@ -11687,6 +11693,12 @@ func (*SecurityAndComplianceCenterApiV3) NewUpdateProviderTypeInstanceOptions(in
 		ProviderTypeID:         core.StringPtr(providerTypeID),
 		ProviderTypeInstanceID: core.StringPtr(providerTypeInstanceID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *UpdateProviderTypeInstanceOptions) SetInstanceID(instanceID string) *UpdateProviderTypeInstanceOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetProviderTypeID : Allow user to set ProviderTypeID

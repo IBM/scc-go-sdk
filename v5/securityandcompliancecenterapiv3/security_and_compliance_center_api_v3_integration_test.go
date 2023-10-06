@@ -741,6 +741,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				ProfileName:        core.StringPtr("scc-go-sdk test_profile"),
 				ProfileDescription: core.StringPtr("test_description1"),
 				ProfileType:        core.StringPtr("custom"),
+				ProfileVersion:     core.StringPtr("0.0.1"),
 				Controls:           []securityandcompliancecenterapiv3.ProfileControlsPrototype{*profileControlsPrototypeModel},
 				DefaultParameters:  []securityandcompliancecenterapiv3.DefaultParametersPrototype{*defaultParametersPrototypeModel},
 				XCorrelationID:     core.StringPtr("testString"),

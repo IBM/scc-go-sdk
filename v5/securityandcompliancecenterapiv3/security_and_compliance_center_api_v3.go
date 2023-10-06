@@ -9940,6 +9940,9 @@ type ReplaceProfileOptions struct {
 	// The profile type.
 	ProfileType *string `json:"profile_type" validate:"required"`
 
+	// The version status of the profile.
+	ProfileVersion *string `json:"profile_version,omitempty"`
+
 	// The controls that are in the profile.
 	Controls []ProfileControlsPrototype `json:"controls" validate:"required"`
 
@@ -10007,6 +10010,12 @@ func (_options *ReplaceProfileOptions) SetProfileDescription(profileDescription 
 // SetProfileType : Allow user to set ProfileType
 func (_options *ReplaceProfileOptions) SetProfileType(profileType string) *ReplaceProfileOptions {
 	_options.ProfileType = core.StringPtr(profileType)
+	return _options
+}
+
+// SetProfileVersion : Allow user to set ProfileType
+func (_options *ReplaceProfileOptions) SetProfileVersion(profileVersion string) *ReplaceProfileOptions {
+	_options.ProfileVersion = core.StringPtr(profileVersion)
 	return _options
 }
 

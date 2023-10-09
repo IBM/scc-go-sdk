@@ -1,3 +1,10 @@
+## [5.1.3](https://github.com/IBM/scc-go-sdk/compare/v5.1.2...v5.1.3) (2023-10-09)
+
+
+### Bug Fixes
+
+* Adding ProfileVersion to ReplaceProfileOptions ([#133](https://github.com/IBM/scc-go-sdk/issues/133)) ([d2394cd](https://github.com/IBM/scc-go-sdk/commit/d2394cdad6d4d1234e49b5d402740e22046dd643))
+
 ## [5.1.2](https://github.com/IBM/scc-go-sdk/compare/v5.1.1...v5.1.2) (2023-09-27)
 
 

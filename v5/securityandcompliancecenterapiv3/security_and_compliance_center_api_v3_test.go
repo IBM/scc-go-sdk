@@ -11598,7 +11598,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListProviderTypes(listProviderTypesOptions *ListProviderTypesOptions) - Operation response error`, func() {
-		listProviderTypesPath := "/v3/provider_types"
+		listProviderTypesPath := "/instances/testInstance/v3/provider_types"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -11626,6 +11626,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListProviderTypesOptions model
 				listProviderTypesOptionsModel := new(securityandcompliancecenterapiv3.ListProviderTypesOptions)
+				listProviderTypesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listProviderTypesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listProviderTypesOptionsModel.XRequestID = core.StringPtr("testString")
 				listProviderTypesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -11648,7 +11649,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`ListProviderTypes(listProviderTypesOptions *ListProviderTypesOptions)`, func() {
-		listProviderTypesPath := "/v3/provider_types"
+		listProviderTypesPath := "/instances/testInstance/v3/provider_types"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -11682,6 +11683,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListProviderTypesOptions model
 				listProviderTypesOptionsModel := new(securityandcompliancecenterapiv3.ListProviderTypesOptions)
+				listProviderTypesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listProviderTypesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listProviderTypesOptionsModel.XRequestID = core.StringPtr("testString")
 				listProviderTypesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -11746,6 +11748,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListProviderTypesOptions model
 				listProviderTypesOptionsModel := new(securityandcompliancecenterapiv3.ListProviderTypesOptions)
+				listProviderTypesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listProviderTypesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listProviderTypesOptionsModel.XRequestID = core.StringPtr("testString")
 				listProviderTypesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -11766,6 +11769,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListProviderTypesOptions model
 				listProviderTypesOptionsModel := new(securityandcompliancecenterapiv3.ListProviderTypesOptions)
+				listProviderTypesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listProviderTypesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listProviderTypesOptionsModel.XRequestID = core.StringPtr("testString")
 				listProviderTypesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -11801,6 +11805,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the ListProviderTypesOptions model
 				listProviderTypesOptionsModel := new(securityandcompliancecenterapiv3.ListProviderTypesOptions)
+				listProviderTypesOptionsModel.InstanceID = core.StringPtr("testInstance")
 				listProviderTypesOptionsModel.XCorrelationID = core.StringPtr("testString")
 				listProviderTypesOptionsModel.XRequestID = core.StringPtr("testString")
 				listProviderTypesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}

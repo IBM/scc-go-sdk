@@ -3121,7 +3121,7 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListProv
 	if err != nil {
 		return
 	}
-	_, err = builder.ResolveRequestURL(instanceURL, `/v3/provider_types`, nil)
+	_, err = builder.ResolveRequestURL(instanceURL, `/provider_types`, nil)
 	if err != nil {
 		return
 	}

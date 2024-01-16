@@ -11824,7 +11824,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetProviderTypeByID(getProviderTypeByIdOptions *GetProviderTypeByIdOptions) - Operation response error`, func() {
-		getProviderTypeByIDPath := "instances/testInstance/v3/provider_types/testString"
+		getProviderTypeByIDPath := "/instances/testInstance/v3/provider_types/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {

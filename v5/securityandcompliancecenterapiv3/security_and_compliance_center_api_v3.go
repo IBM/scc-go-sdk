@@ -3188,7 +3188,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetProvi
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/v3/provider_types/{provider_type_id}`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getProviderTypeByIdOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/provider_types/{provider_type_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
@@ -6654,6 +6655,9 @@ func (options *GetProfileOptions) SetHeaders(param map[string]string) *GetProfil
 
 // GetProviderTypeByIdOptions : The GetProviderTypeByID options.
 type GetProviderTypeByIdOptions struct {
+	// ID of the instance
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
 	// The provider type ID.
 	ProviderTypeID *string `json:"provider_type_id" validate:"required,ne="`
 
@@ -6672,10 +6676,17 @@ type GetProviderTypeByIdOptions struct {
 }
 
 // NewGetProviderTypeByIdOptions : Instantiate GetProviderTypeByIdOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetProviderTypeByIdOptions(providerTypeID string) *GetProviderTypeByIdOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetProviderTypeByIdOptions(instanceID, providerTypeID string) *GetProviderTypeByIdOptions {
 	return &GetProviderTypeByIdOptions{
+		InstanceID:     core.StringPtr(instanceID),
 		ProviderTypeID: core.StringPtr(providerTypeID),
 	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetProviderTypeByIdOptions) SetInstanceID(instanceID string) *GetProviderTypeByIdOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
 }
 
 // SetProviderTypeID : Allow user to set ProviderTypeID

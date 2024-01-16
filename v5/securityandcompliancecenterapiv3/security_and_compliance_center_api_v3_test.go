@@ -11824,7 +11824,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetProviderTypeByID(getProviderTypeByIdOptions *GetProviderTypeByIdOptions) - Operation response error`, func() {
-		getProviderTypeByIDPath := "/v3/provider_types/testString"
+		getProviderTypeByIDPath := "/instances/testInstance/v3/provider_types/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -11852,6 +11852,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProviderTypeByIdOptions model
 				getProviderTypeByIdOptionsModel := new(securityandcompliancecenterapiv3.GetProviderTypeByIdOptions)
+				getProviderTypeByIdOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProviderTypeByIdOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				getProviderTypeByIdOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProviderTypeByIdOptionsModel.XRequestID = core.StringPtr("testString")
@@ -11875,7 +11876,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 		})
 	})
 	Describe(`GetProviderTypeByID(getProviderTypeByIdOptions *GetProviderTypeByIdOptions)`, func() {
-		getProviderTypeByIDPath := "/v3/provider_types/testString"
+		getProviderTypeByIDPath := "/instances/testInstance/v3/provider_types/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -11909,6 +11910,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProviderTypeByIdOptions model
 				getProviderTypeByIdOptionsModel := new(securityandcompliancecenterapiv3.GetProviderTypeByIdOptions)
+				getProviderTypeByIdOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProviderTypeByIdOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				getProviderTypeByIdOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProviderTypeByIdOptionsModel.XRequestID = core.StringPtr("testString")
@@ -11974,6 +11976,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProviderTypeByIdOptions model
 				getProviderTypeByIdOptionsModel := new(securityandcompliancecenterapiv3.GetProviderTypeByIdOptions)
+				getProviderTypeByIdOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProviderTypeByIdOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				getProviderTypeByIdOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProviderTypeByIdOptionsModel.XRequestID = core.StringPtr("testString")
@@ -11995,6 +11998,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProviderTypeByIdOptions model
 				getProviderTypeByIdOptionsModel := new(securityandcompliancecenterapiv3.GetProviderTypeByIdOptions)
+				getProviderTypeByIdOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProviderTypeByIdOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				getProviderTypeByIdOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProviderTypeByIdOptionsModel.XRequestID = core.StringPtr("testString")
@@ -12038,6 +12042,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 
 				// Construct an instance of the GetProviderTypeByIdOptions model
 				getProviderTypeByIdOptionsModel := new(securityandcompliancecenterapiv3.GetProviderTypeByIdOptions)
+				getProviderTypeByIdOptionsModel.InstanceID = core.StringPtr("testInstance")
 				getProviderTypeByIdOptionsModel.ProviderTypeID = core.StringPtr("testString")
 				getProviderTypeByIdOptionsModel.XCorrelationID = core.StringPtr("testString")
 				getProviderTypeByIdOptionsModel.XRequestID = core.StringPtr("testString")
@@ -13956,7 +13961,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			It(`Invoke NewGetProviderTypeByIdOptions successfully`, func() {
 				// Construct an instance of the GetProviderTypeByIdOptions model
 				providerTypeID := "testString"
-				getProviderTypeByIdOptionsModel := securityAndComplianceCenterApiService.NewGetProviderTypeByIdOptions(providerTypeID)
+				instanceID := "testInstance"
+				getProviderTypeByIdOptionsModel := securityAndComplianceCenterApiService.NewGetProviderTypeByIdOptions(instanceID, providerTypeID)
 				getProviderTypeByIdOptionsModel.SetProviderTypeID("testString")
 				getProviderTypeByIdOptionsModel.SetXCorrelationID("testString")
 				getProviderTypeByIdOptionsModel.SetXRequestID("testString")

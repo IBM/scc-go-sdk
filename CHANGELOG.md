@@ -1,3 +1,10 @@
+## [5.1.4](https://github.com/IBM/scc-go-sdk/compare/v5.1.3...v5.1.4) (2024-01-16)
+
+
+### Bug Fixes
+
+* Add InstanceID to func GetProviderTypeByIdOptions ([#134](https://github.com/IBM/scc-go-sdk/issues/134)) ([b28b37d](https://github.com/IBM/scc-go-sdk/commit/b28b37d055692a64a2477a6ec4dfd4815921d63a))
+
 ## [5.1.3](https://github.com/IBM/scc-go-sdk/compare/v5.1.2...v5.1.3) (2023-10-09)
 
 

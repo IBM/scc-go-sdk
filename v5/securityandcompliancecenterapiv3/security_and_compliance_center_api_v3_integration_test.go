@@ -1631,11 +1631,12 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			updateProviderTypeInstanceOptions := &securityandcompliancecenterapiv3.UpdateProviderTypeInstanceOptions{
 				ProviderTypeID:         &providerTypeIdLink,
 				ProviderTypeInstanceID: &providerTypeInstanceIdLink,
-				Name:                   core.StringPtr("workload-protection-instance-1"),
-				Attributes:             map[string]interface{}{"wp_crn": "crn:v1:staging:public:sysdig-secure:us-south:a/ff88f007f9ff4622aac4fbc0eda36255:0df4004c-fb74-483b-97be-dd9bd35af4d8::"},
-				XCorrelationID:         core.StringPtr("testString"),
-				XRequestID:             core.StringPtr("testString"),
-				InstanceID:             core.StringPtr(instanceID),
+				Name:                   core.StringPtr("caveonix-instance-1"),
+				// Attributes:             map[string]interface{}{"wp_crn": "crn:v1:staging:public:sysdig-secure:us-south:a/ff88f007f9ff4622aac4fbc0eda36255:0df4004c-fb74-483b-97be-dd9bd35af4d8::"},
+				Attributes:     map[string]interface{}{},
+				XCorrelationID: core.StringPtr("testString"),
+				XRequestID:     core.StringPtr("testString"),
+				InstanceID:     core.StringPtr(instanceID),
 			}
 
 			providerTypeInstanceItem, response, err := securityAndComplianceCenterApiService.UpdateProviderTypeInstance(updateProviderTypeInstanceOptions)

@@ -3188,7 +3188,8 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) GetProvi
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/v3/provider_types/{provider_type_id}`, pathParamsMap)
+	instanceURL, err := getInstanceBasedURL(securityAndComplianceCenterApi.Service.Options.URL, *getProviderTypeByIdOptions.InstanceID)
+	_, err = builder.ResolveRequestURL(instanceURL, `/provider_types/{provider_type_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}

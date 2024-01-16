@@ -1546,6 +1546,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 		})
 		It(`GetProviderTypeByID(getProviderTypeByIdOptions *GetProviderTypeByIdOptions)`, func() {
 			getProviderTypeByIdOptions := &securityandcompliancecenterapiv3.GetProviderTypeByIdOptions{
+				InstanceID:     core.StringPtr(instanceID),
 				ProviderTypeID: &providerTypeIdLink,
 				XCorrelationID: core.StringPtr("testString"),
 				XRequestID:     core.StringPtr("testString"),

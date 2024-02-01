@@ -1,0 +1,21 @@
+name: CI Check
+on:
+  schedule:
+    - cron: "0 0 * * *"
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: setup extensions
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'
+
+      - name: run integration tests
+        env:
+          SCC_ENV: ${{ secrets.SCC_ENV }}
+          SECURITY_AND_COMPLIANCE_CENTER_API_IAM_PROFILE_ID: ${{ secrets.SCC_IAM_PROFILE_ID }}
+        run: build/testScript.sh

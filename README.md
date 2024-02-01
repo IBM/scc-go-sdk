@@ -1,5 +1,5 @@
 [![main](https://github.com/IBM/scc-go-sdk/actions/workflows/main.yaml/badge.svg)](https://github.com/IBM/scc-go-sdk/actions/workflows/main.yaml)
-[![CI](https://github.com/IBM/scc-go-sdk/actions/workflows/ci-check.yaml/badge.svg)](https://github.com/IBM/scc-go-sdk/actions/workflows/ci-check.yaml)
+[![CI Check](https://github.com/IBM/scc-go-sdk/actions/workflows/ci-check.yml/badge.svg?branch=main)](https://github.com/IBM/scc-go-sdk/actions/workflows/ci-check.yml)
 [![Release](https://img.shields.io/github/v/release/IBM/scc-go-sdk)](https://img.shields.io/github/v/release/IBM/scc-go-sdk)
 [![Go Reference](https://pkg.go.dev/badge/github.com/IBM/scc-go-sdk/v5.svg)](https://pkg.go.dev/github.com/IBM/scc-go-sdk/v5)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/IBM/scc-go-sdk?filename=v5%2Fgo.mod)

@@ -122,6 +122,7 @@ func GetServiceURLForRegion(region string) (string, error) {
 		"au-syd":   "https://au-syd.compliance.cloud.ibm.com",   // The API endpoint in the au-syd region
 		"ca-tor":   "https://ca-tor.compliance.cloud.ibm.com",   // The API endpoint in the ca-tor region
 		"eu-de":    "https://eu-de.compliance.cloud.ibm.com",    // The API endpoint in the eu-de region
+		"eu-es":    "https://eu-es.compliance.cloud.ibm.com",    // The API endpoint in the eu-es region
 		"eu-fr2":   "https://eu-fr2.compliance.cloud.ibm.com",   // The API endpoint in the eu-fr2 region
 		"us-south": "https://us-south.compliance.cloud.ibm.com", // The API endpoint in the us-south region
 	}

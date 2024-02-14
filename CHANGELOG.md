@@ -1,3 +1,10 @@
+## [5.1.5](https://github.com/IBM/scc-go-sdk/compare/v5.1.4...v5.1.5) (2024-02-14)
+
+
+### Bug Fixes
+
+* Add eu-es as a supported region ([#140](https://github.com/IBM/scc-go-sdk/issues/140)) ([90ad3c3](https://github.com/IBM/scc-go-sdk/commit/90ad3c35eefc706d399a20f5ffd344e2b842ab23))
+
 ## [5.1.4](https://github.com/IBM/scc-go-sdk/compare/v5.1.3...v5.1.4) (2024-01-16)
 
 

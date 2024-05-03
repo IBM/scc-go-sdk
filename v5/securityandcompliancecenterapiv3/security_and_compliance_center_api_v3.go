@@ -984,6 +984,9 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) CreatePr
 	if createProfileOptions.ProfileType != nil {
 		body["profile_type"] = createProfileOptions.ProfileType
 	}
+	if createProfileOptions.ProfileVersion != nil {
+		body["profile_version"] = createProfileOptions.ProfileVersion
+	}
 	if createProfileOptions.Controls != nil {
 		body["controls"] = createProfileOptions.Controls
 	}
@@ -5352,6 +5355,9 @@ type CreateProfileOptions struct {
 	// The profile type.
 	ProfileType *string `json:"profile_type" validate:"required"`
 
+  // The profile version.
+  ProfileVersion *string `json:"profile_version,omitempty"`  
+
 	// The controls that are in the profile.
 	Controls []ProfileControlsPrototype `json:"controls" validate:"required"`
 
@@ -5412,6 +5418,12 @@ func (_options *CreateProfileOptions) SetProfileDescription(profileDescription s
 // SetProfileType : Allow user to set ProfileType
 func (_options *CreateProfileOptions) SetProfileType(profileType string) *CreateProfileOptions {
 	_options.ProfileType = core.StringPtr(profileType)
+	return _options
+}
+
+// SetProfileType : Allow user to set ProfileType
+func (_options *CreateProfileOptions) SetProfileVersion(profileVersion string) *CreateProfileOptions {
+	_options.ProfileType = core.StringPtr(profileVersion)
 	return _options
 }
 

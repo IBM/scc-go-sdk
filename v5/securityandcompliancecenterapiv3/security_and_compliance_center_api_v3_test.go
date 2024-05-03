@@ -3391,6 +3391,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				createProfileOptionsModel.ProfileName = core.StringPtr("test_profile1")
 				createProfileOptionsModel.ProfileDescription = core.StringPtr("test_description1")
 				createProfileOptionsModel.ProfileType = core.StringPtr("custom")
+				createProfileOptionsModel.ProfileVersion = core.StringPtr("0.0.1")
 				createProfileOptionsModel.Controls = []securityandcompliancecenterapiv3.ProfileControlsPrototype{*profileControlsPrototypeModel}
 				createProfileOptionsModel.DefaultParameters = []securityandcompliancecenterapiv3.DefaultParametersPrototype{*defaultParametersPrototypeModel}
 				createProfileOptionsModel.XCorrelationID = core.StringPtr("testString")

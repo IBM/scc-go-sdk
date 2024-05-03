@@ -5355,8 +5355,8 @@ type CreateProfileOptions struct {
 	// The profile type.
 	ProfileType *string `json:"profile_type" validate:"required"`
 
-  // The profile version.
-  ProfileVersion *string `json:"profile_version,omitempty"`  
+	// The profile version.
+	ProfileVersion *string `json:"profile_version,omitempty"`
 
 	// The controls that are in the profile.
 	Controls []ProfileControlsPrototype `json:"controls" validate:"required"`

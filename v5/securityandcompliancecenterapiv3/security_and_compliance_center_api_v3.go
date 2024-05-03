@@ -5421,9 +5421,9 @@ func (_options *CreateProfileOptions) SetProfileType(profileType string) *Create
 	return _options
 }
 
-// SetProfileType : Allow user to set ProfileType
+// SetProfileVersion : Allow user to set ProfileVersion
 func (_options *CreateProfileOptions) SetProfileVersion(profileVersion string) *CreateProfileOptions {
-	_options.ProfileType = core.StringPtr(profileVersion)
+	_options.ProfileVersion = core.StringPtr(profileVersion)
 	return _options
 }
 

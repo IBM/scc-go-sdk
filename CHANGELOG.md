@@ -1,3 +1,10 @@
+## [5.1.6](https://github.com/IBM/scc-go-sdk/compare/v5.1.5...v5.1.6) (2024-05-03)
+
+
+### Bug Fixes
+
+* Include profile_version in createProfile ([#141](https://github.com/IBM/scc-go-sdk/issues/141)) ([b31f9ad](https://github.com/IBM/scc-go-sdk/commit/b31f9ad09795e3d3853e13f93cd04bb947b633b3))
+
 ## [5.1.5](https://github.com/IBM/scc-go-sdk/compare/v5.1.4...v5.1.5) (2024-02-14)
 
 

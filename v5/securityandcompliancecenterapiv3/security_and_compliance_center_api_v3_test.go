@@ -3391,6 +3391,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				createProfileOptionsModel.ProfileName = core.StringPtr("test_profile1")
 				createProfileOptionsModel.ProfileDescription = core.StringPtr("test_description1")
 				createProfileOptionsModel.ProfileType = core.StringPtr("custom")
+				createProfileOptionsModel.ProfileVersion = core.StringPtr("0.0.1")
 				createProfileOptionsModel.Controls = []securityandcompliancecenterapiv3.ProfileControlsPrototype{*profileControlsPrototypeModel}
 				createProfileOptionsModel.DefaultParameters = []securityandcompliancecenterapiv3.DefaultParametersPrototype{*defaultParametersPrototypeModel}
 				createProfileOptionsModel.XCorrelationID = core.StringPtr("testString")
@@ -13517,7 +13518,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				createAttachmentOptionsModel := securityAndComplianceCenterApiService.NewCreateAttachmentOptions(instanceID, profileID, createAttachmentOptionsAttachments)
 				createAttachmentOptionsModel.SetProfileID("testString")
 				createAttachmentOptionsModel.SetAttachments([]securityandcompliancecenterapiv3.AttachmentsPrototype{*attachmentsPrototypeModel})
-				createAttachmentOptionsModel.SetProfileID("testString")
 				createAttachmentOptionsModel.SetXCorrelationID("testString")
 				createAttachmentOptionsModel.SetXRequestID("testString")
 				createAttachmentOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
@@ -13677,6 +13677,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				createProfileOptionsModel.SetProfileName("test_profile1")
 				createProfileOptionsModel.SetProfileDescription("test_description1")
 				createProfileOptionsModel.SetProfileType("custom")
+				createProfileOptionsModel.SetProfileVersion("0.0.2")
 				createProfileOptionsModel.SetControls([]securityandcompliancecenterapiv3.ProfileControlsPrototype{*profileControlsPrototypeModel})
 				createProfileOptionsModel.SetDefaultParameters([]securityandcompliancecenterapiv3.DefaultParametersPrototype{*defaultParametersPrototypeModel})
 				createProfileOptionsModel.SetXCorrelationID("testString")
@@ -13686,6 +13687,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(createProfileOptionsModel.ProfileName).To(Equal(core.StringPtr("test_profile1")))
 				Expect(createProfileOptionsModel.ProfileDescription).To(Equal(core.StringPtr("test_description1")))
 				Expect(createProfileOptionsModel.ProfileType).To(Equal(core.StringPtr("custom")))
+				Expect(createProfileOptionsModel.ProfileVersion).To(Equal(core.StringPtr("0.0.2")))
 				Expect(createProfileOptionsModel.Controls).To(Equal([]securityandcompliancecenterapiv3.ProfileControlsPrototype{*profileControlsPrototypeModel}))
 				Expect(createProfileOptionsModel.DefaultParameters).To(Equal([]securityandcompliancecenterapiv3.DefaultParametersPrototype{*defaultParametersPrototypeModel}))
 				Expect(createProfileOptionsModel.XCorrelationID).To(Equal(core.StringPtr("testString")))

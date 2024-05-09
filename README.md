@@ -33,6 +33,7 @@ Go client library to interact with various
     - [Go modules](#go-modules)
     - [`go get` command](#go-get-command)
   - [Using the SDK](#using-the-sdk)
+    - [Example](#example)
   - [Testing and Development](#testing-and-development)
   - [Questions](#questions)
   - [Issues](#issues)
@@ -85,6 +86,37 @@ Be sure to use the appropriate package name from the service table above for the
 ## Using the SDK
 For general SDK usage information, please see
 [this link](https://github.com/IBM/ibm-cloud-sdk-common/blob/main/README.md)
+
+### Example
+```go
+package main
+
+import (
+  "github.com/IBM/go-sdk-core/v5/core"
+
+  scc "github.com/IBM/scc-go-sdk/v5/securityandcompliancecenterapiv3"
+)
+
+
+func main() {
+  // Initialize Client
+  apiClient, err := scc.NewSecurityAndComplianceCenterApiV3(
+    &scc.SecurityAndComplianceCenterApiV3Options{
+      URL: "https://{region}.compliance.cloud.ibm.com",
+      Authenticator: &core.IamAuthenticator{
+        ApiKey: "{ibmcloud_api_key}",
+      },
+    },
+  )
+  ...
+  // Example: Grab a list of profiles
+  lpo := scc.ListProfilesOptions{
+    InstanceID: "{instance_id}",
+  }
+  profiles, res, err := apiClient.ListProfiles(&lpo)
+  ...
+}
+```
 
 ## Testing and Development
 To test out any changes to SDK locally, `security_and_compliance_center_api_v3.env` should be in the base directory of the current version.

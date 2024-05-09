@@ -3743,7 +3743,7 @@ type AdditionalTargetAttribute struct {
 	Operator *string `json:"operator,omitempty"`
 
 	// The value.
-	Value *string `json:"value,omitempty"`
+	Value interface{} `json:"value,omitempty"`
 }
 
 // Constants associated with the AdditionalTargetAttribute.Operator property.

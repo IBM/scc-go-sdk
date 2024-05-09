@@ -1,3 +1,10 @@
+# [5.2.0](https://github.com/IBM/scc-go-sdk/compare/v5.1.6...v5.2.0) (2024-05-09)
+
+
+### Features
+
+* Change AdditionalTargetAttributes.Value from string type to interface type ([#143](https://github.com/IBM/scc-go-sdk/issues/143)) ([4aa2bf1](https://github.com/IBM/scc-go-sdk/commit/4aa2bf1e0c8aad728ddb49c25963698bd7e6d9c1)), closes [#142](https://github.com/IBM/scc-go-sdk/issues/142)
+
 ## [5.1.6](https://github.com/IBM/scc-go-sdk/compare/v5.1.5...v5.1.6) (2024-05-03)
 
 

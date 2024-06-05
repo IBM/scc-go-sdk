@@ -11231,6 +11231,9 @@ type Rule struct {
 
 	// The list of labels.
 	Labels []string `json:"labels" validate:"required"`
+
+	// The remediation associated with the rule
+	Remediation *Remediation `json:"remdiation,omitempty"`
 }
 
 // Constants associated with the Rule.Type property.
@@ -11604,6 +11607,22 @@ type Target struct {
 
 	// The list of targets supported properties.
 	AdditionalTargetAttributes []AdditionalTargetAttribute `json:"additional_target_attributes,omitempty"`
+}
+
+type Remediation struct {
+	// The url links associated with Remediation
+	Links []Link `json:"links,omitempty"`
+	// The description of the Remediation
+	Description string `json:"description,omitempty"`
+	// The text that provides guidelines for remediation in stringify HTML
+	GuidelineText string `json:"guideline_text,omitempty"`
+}
+
+type Link struct {
+	// The descriptive title of the hyperlink
+	Text string `json:"text,omitempty"`
+	// The reference URL for the entries.
+	Href string `json:"href,omitempty"`
 }
 
 // NewTarget : Instantiate Target (Generic Model Constructor)

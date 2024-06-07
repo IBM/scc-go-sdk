@@ -11231,6 +11231,9 @@ type Rule struct {
 
 	// The list of labels.
 	Labels []string `json:"labels" validate:"required"`
+
+	// The remediation associated with the rule
+	Remediation *Remediation `json:"remediation,omitempty"`
 }
 
 // Constants associated with the Rule.Type property.
@@ -11288,6 +11291,10 @@ func UnmarshalRule(m map[string]json.RawMessage, result interface{}) (err error)
 		return
 	}
 	err = core.UnmarshalModel(m, "required_config", &obj.RequiredConfig, UnmarshalRequiredConfig)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "remediation", &obj.Remediation, UnmarshalRemediation)
 	if err != nil {
 		return
 	}
@@ -11604,6 +11611,54 @@ type Target struct {
 
 	// The list of targets supported properties.
 	AdditionalTargetAttributes []AdditionalTargetAttribute `json:"additional_target_attributes,omitempty"`
+}
+
+type Remediation struct {
+	// The url links associated with Remediation
+	Links []Link `json:"links,omitempty"`
+	// The description of the Remediation
+	Description string `json:"description,omitempty"`
+	// The text that provides guidelines for remediation in stringify HTML
+	GuidelineText string `json:"guideline_text,omitempty"`
+}
+
+func UnmarshalRemediation(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(Remediation)
+	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "guideline_text", &obj.GuidelineText)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "links", &obj.Links, UnmarshalLink)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+type Link struct {
+	// The descriptive title of the hyperlink
+	Text string `json:"text,omitempty"`
+	// The reference URL for the entries.
+	Href string `json:"href,omitempty"`
+}
+
+func UnmarshalLink(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(Link)
+	err = core.UnmarshalPrimitive(m, "text", &obj.Text)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "href", &obj.Href)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
 }
 
 // NewTarget : Instantiate Target (Generic Model Constructor)

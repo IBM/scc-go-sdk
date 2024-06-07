@@ -261,6 +261,27 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 		})
 	})
 
+	// Manual integration test
+	Describe(`GetRule - Get a predefined rule with remediation`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`GetRule(getRuleOptions *GetRuleOptionsWithRemediation)`, func() {
+			ruleID := "rule-c2ab6167-63f6-45c6-9b94-d978d0032e67"
+			getRuleOptions := &securityandcompliancecenterapiv3.GetRuleOptions{
+				InstanceID: core.StringPtr(instanceID),
+				RuleID:     core.StringPtr(ruleID),
+			}
+
+			rule, response, err := securityAndComplianceCenterApiService.GetRule(getRuleOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(rule).ToNot(BeNil())
+			Expect(rule.Remediation).ToNot(BeNil())
+		})
+	})
+
 	Describe(`GetLatestReports - Get the latest reports`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()

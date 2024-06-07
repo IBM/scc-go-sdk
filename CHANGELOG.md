@@ -1,3 +1,10 @@
+# [5.3.0](https://github.com/IBM/scc-go-sdk/compare/v5.2.0...v5.3.0) (2024-06-07)
+
+
+### Features
+
+* **Rule:** Adding remediations to scc-go-sdk ([#145](https://github.com/IBM/scc-go-sdk/issues/145)) ([8aa25dc](https://github.com/IBM/scc-go-sdk/commit/8aa25dc73b6264718ba7e8a25e3866243a92c5fd))
+
 # [5.2.0](https://github.com/IBM/scc-go-sdk/compare/v5.1.6...v5.2.0) (2024-05-09)
 
 

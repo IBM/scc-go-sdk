@@ -2381,7 +2381,6 @@ func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) ListRepo
 	if listReportsOptions.Sort != nil {
 		builder.AddQuery("sort", fmt.Sprint(*listReportsOptions.Sort))
 	}
-	fmt.Printf("listReportOptions = %+v\n", listReportsOptions)
 
 	request, err := builder.Build()
 	if err != nil {
@@ -10664,10 +10663,6 @@ func UnmarshalReportViolationsDrift(m map[string]json.RawMessage, result interfa
 }
 
 // RequiredConfig : The required configurations.
-// Models which "extend" this model:
-// - RequiredConfigRequiredConfigAnd
-// - RequiredConfigRequiredConfigOr
-// - RequiredConfigRequiredConfigBase
 type RequiredConfig struct {
 	// The required config description.
 	Description *string `json:"description,omitempty"`
@@ -10786,40 +10781,8 @@ func UnmarshalRequiredConfig(m map[string]json.RawMessage, result interface{}) (
 // RequiredConfigItems : RequiredConfigItems struct
 type RequiredConfigItems []RequiredConfigIntf
 
-// Constants associated with the RequiredConfigItems.Operator property.
-// The operator.
-const (
-	RequiredConfigItems_Operator_DaysLessThan         = "days_less_than"
-	RequiredConfigItems_Operator_IpsEquals            = "ips_equals"
-	RequiredConfigItems_Operator_IpsInRange           = "ips_in_range"
-	RequiredConfigItems_Operator_IpsNotEquals         = "ips_not_equals"
-	RequiredConfigItems_Operator_IsEmpty              = "is_empty"
-	RequiredConfigItems_Operator_IsFalse              = "is_false"
-	RequiredConfigItems_Operator_IsNotEmpty           = "is_not_empty"
-	RequiredConfigItems_Operator_IsTrue               = "is_true"
-	RequiredConfigItems_Operator_NumEquals            = "num_equals"
-	RequiredConfigItems_Operator_NumGreaterThan       = "num_greater_than"
-	RequiredConfigItems_Operator_NumGreaterThanEquals = "num_greater_than_equals"
-	RequiredConfigItems_Operator_NumLessThan          = "num_less_than"
-	RequiredConfigItems_Operator_NumLessThanEquals    = "num_less_than_equals"
-	RequiredConfigItems_Operator_NumNotEquals         = "num_not_equals"
-	RequiredConfigItems_Operator_StringContains       = "string_contains"
-	RequiredConfigItems_Operator_StringEquals         = "string_equals"
-	RequiredConfigItems_Operator_StringMatch          = "string_match"
-	RequiredConfigItems_Operator_StringNotContains    = "string_not_contains"
-	RequiredConfigItems_Operator_StringNotEquals      = "string_not_equals"
-	RequiredConfigItems_Operator_StringNotMatch       = "string_not_match"
-	RequiredConfigItems_Operator_StringsAllowed       = "strings_allowed"
-	RequiredConfigItems_Operator_StringsInList        = "strings_in_list"
-	RequiredConfigItems_Operator_StringsRequired      = "strings_required"
-)
-
 func (*RequiredConfigItems) isaRequiredConfig() bool {
 	return true
-}
-
-type RequiredConfigItemsIntf interface {
-	isaRequiredConfigItems() bool
 }
 
 type RequiredConfigSubRule struct {

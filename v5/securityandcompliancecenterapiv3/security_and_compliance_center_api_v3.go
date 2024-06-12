@@ -10677,6 +10677,18 @@ type RequiredConfig struct {
 	// The `OR` required configurations.
 	Or []RequiredConfigItemsIntf `json:"or,omitempty"`
 
+	// The `Any` required configrations.
+	Any *RequiredConfigSubRule `json:"any,omitempty"`
+
+	// The `AnyIf` required configrations.
+	AnyIf *RequiredConfigSubRule `json:"any_ifexists,omitempty"`
+
+	// The `All` required configrations.
+	All *RequiredConfigSubRule `json:"all,omitempty"`
+
+	// The `AllIf` required configrations.
+	AllIf *RequiredConfigSubRule `json:"all_ifexists,omitempty"`
+
 	// The property.
 	Property *string `json:"property,omitempty"`
 
@@ -10738,6 +10750,22 @@ func UnmarshalRequiredConfig(m map[string]json.RawMessage, result interface{}) (
 	if err != nil {
 		return
 	}
+	err = core.UnmarshalModel(m, "any", &obj.Any, UnmarshalRequiredConfigSubRule)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "any_ifexists", &obj.AnyIf, UnmarshalRequiredConfigSubRule)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "all", &obj.All, UnmarshalRequiredConfigSubRule)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "all_ifexists", &obj.AllIf, UnmarshalRequiredConfigSubRule)
+	if err != nil {
+		return
+	}
 	err = core.UnmarshalPrimitive(m, "property", &obj.Property)
 	if err != nil {
 		return
@@ -10759,25 +10787,7 @@ func UnmarshalRequiredConfig(m map[string]json.RawMessage, result interface{}) (
 // - RequiredConfigItemsRequiredConfigOr
 // - RequiredConfigItemsRequiredConfigAnd
 // - RequiredConfigItemsRequiredConfigBase
-type RequiredConfigItems struct {
-	// The required config description.
-	Description *string `json:"description,omitempty"`
-
-	// The `OR` required configurations.
-	Or []RequiredConfigItemsIntf `json:"or,omitempty"`
-
-	// The `AND` required configurations.
-	And []RequiredConfigItemsIntf `json:"and,omitempty"`
-
-	// The property.
-	Property *string `json:"property,omitempty"`
-
-	// The operator.
-	Operator *string `json:"operator,omitempty"`
-
-	// Schema for any JSON type.
-	Value interface{} `json:"value,omitempty"`
-}
+type RequiredConfigItems []RequiredConfigIntf
 
 // Constants associated with the RequiredConfigItems.Operator property.
 // The operator.
@@ -10815,30 +10825,41 @@ type RequiredConfigItemsIntf interface {
 	isaRequiredConfigItems() bool
 }
 
+type RequiredConfigSubRule struct {
+	// The rule target.
+	Target *Target `json:"target" validate:"required"`
+
+	// The required configurations.
+	RequiredConfig RequiredConfigIntf `json:"required_config" validate:"required"`
+}
+
+func (*RequiredConfigSubRule) isaRequiredConfig() bool {
+	return true
+}
+
 // UnmarshalRequiredConfigItems unmarshals an instance of RequiredConfigItems from the specified map of raw messages.
 func UnmarshalRequiredConfigItems(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(RequiredConfigItems)
-	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
+	for _, s := range []map[string]json.RawMessage{m} {
+		var rc *RequiredConfig
+		err = UnmarshalRequiredConfig(s, &rc)
+		if err != nil {
+			return
+		}
+		*obj = append(*obj, rc)
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// UnmarshalRequiredConfigSubRule unmarshals an instance of RequiredConfigSubRule from the specified map of raw messages
+func UnmarshalRequiredConfigSubRule(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(RequiredConfigSubRule)
+	err = core.UnmarshalModel(m, "target", &obj.Target, UnmarshalTarget)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(m, "or", &obj.Or, UnmarshalRequiredConfigItems)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalModel(m, "and", &obj.And, UnmarshalRequiredConfigItems)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "property", &obj.Property)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "operator", &obj.Operator)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "value", &obj.Value)
+	err = core.UnmarshalModel(m, "required_config", &obj.RequiredConfig, UnmarshalRequiredConfig)
 	if err != nil {
 		return
 	}
@@ -11611,8 +11632,12 @@ type Target struct {
 
 	// The list of targets supported properties.
 	AdditionalTargetAttributes []AdditionalTargetAttribute `json:"additional_target_attributes,omitempty"`
+
+	// The reference name when used in the required config of a rule.
+	ReferenceName *string `json:"ref,omitempty"`
 }
 
+// Remediation : The guidelines to accomadate to the rule if provided.
 type Remediation struct {
 	// The url links associated with Remediation
 	Links []Link `json:"links,omitempty"`
@@ -11687,6 +11712,10 @@ func UnmarshalTarget(m map[string]json.RawMessage, result interface{}) (err erro
 		return
 	}
 	err = core.UnmarshalModel(m, "additional_target_attributes", &obj.AdditionalTargetAttributes, UnmarshalAdditionalTargetAttribute)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "ref", &obj.ReferenceName)
 	if err != nil {
 		return
 	}

@@ -193,16 +193,16 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				AdditionalTargetAttributes: []securityandcompliancecenterapiv3.AdditionalTargetAttribute{*additionalTargetAttributeModel},
 			}
 
-			requiredConfigItemsModel := &securityandcompliancecenterapiv3.RequiredConfigItemsRequiredConfigBase{
+			requiredConfigItemsModel := &securityandcompliancecenterapiv3.RequiredConfig{
 				Description: core.StringPtr("testString"),
 				Property:    core.StringPtr("hard_quota"),
 				Operator:    core.StringPtr("num_equals"),
 				Value:       core.StringPtr("${hard_quota}"),
 			}
 
-			requiredConfigModel := &securityandcompliancecenterapiv3.RequiredConfigRequiredConfigAnd{
+			requiredConfigModel := &securityandcompliancecenterapiv3.RequiredConfig{
 				Description: core.StringPtr("The Cloud Object Storage rule."),
-				And:         []securityandcompliancecenterapiv3.RequiredConfigItemsIntf{requiredConfigItemsModel},
+				And:         []securityandcompliancecenterapiv3.RequiredConfigIntf{requiredConfigItemsModel},
 			}
 
 			parameterModel := &securityandcompliancecenterapiv3.Parameter{
@@ -449,8 +449,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				InstanceID:         core.StringPtr(instanceID),
 				XCorrelationID:     core.StringPtr("testString"),
 				XRequestID:         core.StringPtr("testString"),
-				Limit:              core.Int64Ptr(int64(50)),
-				ControlLibraryType: core.StringPtr("custom"),
+				Limit:              core.Int64Ptr(int64(10)),
+				ControlLibraryType: core.StringPtr("predefined"),
 				Start:              core.StringPtr("testString"),
 			}
 
@@ -479,8 +479,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				InstanceID:         core.StringPtr(instanceID),
 				XCorrelationID:     core.StringPtr("testString"),
 				XRequestID:         core.StringPtr("testString"),
-				Limit:              core.Int64Ptr(int64(50)),
-				ControlLibraryType: core.StringPtr("custom"),
+				Limit:              core.Int64Ptr(int64(10)),
+				ControlLibraryType: core.StringPtr("predefined"),
 			}
 
 			// Test GetNext().
@@ -629,8 +629,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 
 			createProfileOptions := &securityandcompliancecenterapiv3.CreateProfileOptions{
 				InstanceID:         core.StringPtr(instanceID),
-				ProfileName:        core.StringPtr("scc-go-sdk integration test_profile1"),
-				ProfileDescription: core.StringPtr("test_description1"),
+				ProfileName:        core.StringPtr("Test Profile for scc-go-sdk"),
+				ProfileDescription: core.StringPtr("This profile is ran from integration testing"),
 				ProfileType:        core.StringPtr("custom"),
 				ProfileVersion:     core.StringPtr("0.0.1"),
 				Controls:           []securityandcompliancecenterapiv3.ProfileControlsPrototype{*profileControlsPrototypeModel},
@@ -760,8 +760,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 			replaceProfileOptions := &securityandcompliancecenterapiv3.ReplaceProfileOptions{
 				InstanceID:         core.StringPtr(instanceID),
 				ProfileID:          &profileIdLink,
-				ProfileName:        core.StringPtr("scc-go-sdk test_profile"),
-				ProfileDescription: core.StringPtr("test_description1"),
+				ProfileName:        core.StringPtr("Integration Test Profile for scc-go-sdk"),
+				ProfileDescription: core.StringPtr("This profile is created for integration testing"),
 				ProfileType:        core.StringPtr("custom"),
 				ProfileVersion:     core.StringPtr("0.0.1"),
 				Controls:           []securityandcompliancecenterapiv3.ProfileControlsPrototype{*profileControlsPrototypeModel},
@@ -816,16 +816,16 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				AdditionalTargetAttributes: []securityandcompliancecenterapiv3.AdditionalTargetAttribute{*additionalTargetAttributeModel},
 			}
 
-			requiredConfigItemsModel := &securityandcompliancecenterapiv3.RequiredConfigItemsRequiredConfigBase{
+			requiredConfigItemsModel := &securityandcompliancecenterapiv3.RequiredConfig{
 				Description: core.StringPtr("testString"),
 				Property:    core.StringPtr("hard_quota"),
 				Operator:    core.StringPtr("num_equals"),
 				Value:       core.StringPtr("${hard_quota}"),
 			}
 
-			requiredConfigModel := &securityandcompliancecenterapiv3.RequiredConfigRequiredConfigAnd{
+			requiredConfigModel := &securityandcompliancecenterapiv3.RequiredConfig{
 				Description: core.StringPtr("The Cloud Object Storage rule."),
-				And:         []securityandcompliancecenterapiv3.RequiredConfigItemsIntf{requiredConfigItemsModel},
+				And:         []securityandcompliancecenterapiv3.RequiredConfigIntf{requiredConfigItemsModel},
 			}
 
 			parameterModel := &securityandcompliancecenterapiv3.Parameter{
@@ -1195,13 +1195,11 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				GroupID:        &groupIdForReportLink,
 				ProfileID:      &profileIdForReportLink,
 				Type:           &typeForReportLink,
-				Start:          core.StringPtr("testString"),
 				Limit:          core.Int64Ptr(int64(10)),
 				Sort:           core.StringPtr("profile_name"),
 			}
 
-			listReportsOptions.Start = nil
-			listReportsOptions.Limit = core.Int64Ptr(1)
+			listReportsOptions.Limit = core.Int64Ptr(5)
 
 			var allResults []securityandcompliancecenterapiv3.Report
 			for {
@@ -1358,7 +1356,6 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Integration Tests`, func() {
 				TargetID:       core.StringPtr("testString"),
 				TargetName:     core.StringPtr("testString"),
 				Status:         core.StringPtr("failure"),
-				Start:          core.StringPtr("testString"),
 				Limit:          core.Int64Ptr(int64(10)),
 			}
 

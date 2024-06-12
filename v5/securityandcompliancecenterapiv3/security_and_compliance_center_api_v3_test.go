@@ -4745,16 +4745,16 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				targetModel.AdditionalTargetAttributes = []securityandcompliancecenterapiv3.AdditionalTargetAttribute{*additionalTargetAttributeModel}
 
 				// Construct an instance of the RequiredConfigItemsRequiredConfigBase model
-				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfigItemsRequiredConfigBase)
+				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				requiredConfigItemsModel.Description = core.StringPtr("testString")
 				requiredConfigItemsModel.Property = core.StringPtr("hard_quota")
 				requiredConfigItemsModel.Operator = core.StringPtr("num_equals")
 				requiredConfigItemsModel.Value = core.StringPtr("${hard_quota}")
 
 				// Construct an instance of the RequiredConfigRequiredConfigAnd model
-				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfigRequiredConfigAnd)
+				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				requiredConfigModel.Description = core.StringPtr("The Cloud Object Storage rule.")
-				requiredConfigModel.And = []securityandcompliancecenterapiv3.RequiredConfigItemsIntf{requiredConfigItemsModel}
+				requiredConfigModel.And = securityandcompliancecenterapiv3.RequiredConfigItems{requiredConfigItemsModel}
 
 				// Construct an instance of the Parameter model
 				parameterModel := new(securityandcompliancecenterapiv3.Parameter)
@@ -4861,16 +4861,15 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				targetModel.AdditionalTargetAttributes = []securityandcompliancecenterapiv3.AdditionalTargetAttribute{*additionalTargetAttributeModel}
 
 				// Construct an instance of the RequiredConfigItemsRequiredConfigBase model
-				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfigItemsRequiredConfigBase)
+				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				requiredConfigItemsModel.Description = core.StringPtr("testString")
 				requiredConfigItemsModel.Property = core.StringPtr("hard_quota")
 				requiredConfigItemsModel.Operator = core.StringPtr("num_equals")
 				requiredConfigItemsModel.Value = core.StringPtr("${hard_quota}")
 
 				// Construct an instance of the RequiredConfigRequiredConfigAnd model
-				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfigRequiredConfigAnd)
-				requiredConfigModel.Description = core.StringPtr("The Cloud Object Storage rule.")
-				requiredConfigModel.And = []securityandcompliancecenterapiv3.RequiredConfigItemsIntf{requiredConfigItemsModel}
+				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfig)
+				requiredConfigModel.And = securityandcompliancecenterapiv3.RequiredConfigItems{requiredConfigItemsModel}
 
 				// Construct an instance of the Parameter model
 				parameterModel := new(securityandcompliancecenterapiv3.Parameter)
@@ -4985,16 +4984,16 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				targetModel.AdditionalTargetAttributes = []securityandcompliancecenterapiv3.AdditionalTargetAttribute{*additionalTargetAttributeModel}
 
 				// Construct an instance of the RequiredConfigItemsRequiredConfigBase model
-				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfigItemsRequiredConfigBase)
+				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				requiredConfigItemsModel.Description = core.StringPtr("testString")
 				requiredConfigItemsModel.Property = core.StringPtr("hard_quota")
 				requiredConfigItemsModel.Operator = core.StringPtr("num_equals")
 				requiredConfigItemsModel.Value = core.StringPtr("${hard_quota}")
 
 				// Construct an instance of the RequiredConfigRequiredConfigAnd model
-				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfigRequiredConfigAnd)
+				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				requiredConfigModel.Description = core.StringPtr("The Cloud Object Storage rule.")
-				requiredConfigModel.And = []securityandcompliancecenterapiv3.RequiredConfigItemsIntf{requiredConfigItemsModel}
+				requiredConfigModel.And = securityandcompliancecenterapiv3.RequiredConfigItems{requiredConfigItemsModel}
 
 				// Construct an instance of the Parameter model
 				parameterModel := new(securityandcompliancecenterapiv3.Parameter)
@@ -5049,16 +5048,16 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				targetModel.AdditionalTargetAttributes = []securityandcompliancecenterapiv3.AdditionalTargetAttribute{*additionalTargetAttributeModel}
 
 				// Construct an instance of the RequiredConfigItemsRequiredConfigBase model
-				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfigItemsRequiredConfigBase)
+				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				requiredConfigItemsModel.Description = core.StringPtr("testString")
 				requiredConfigItemsModel.Property = core.StringPtr("hard_quota")
 				requiredConfigItemsModel.Operator = core.StringPtr("num_equals")
 				requiredConfigItemsModel.Value = core.StringPtr("${hard_quota}")
 
 				// Construct an instance of the RequiredConfigRequiredConfigAnd model
-				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfigRequiredConfigAnd)
+				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				requiredConfigModel.Description = core.StringPtr("The Cloud Object Storage rule.")
-				requiredConfigModel.And = []securityandcompliancecenterapiv3.RequiredConfigItemsIntf{requiredConfigItemsModel}
+				requiredConfigModel.And = []securityandcompliancecenterapiv3.RequiredConfigIntf{requiredConfigItemsModel}
 
 				// Construct an instance of the Parameter model
 				parameterModel := new(securityandcompliancecenterapiv3.Parameter)
@@ -5135,16 +5134,16 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				targetModel.AdditionalTargetAttributes = []securityandcompliancecenterapiv3.AdditionalTargetAttribute{*additionalTargetAttributeModel}
 
 				// Construct an instance of the RequiredConfigItemsRequiredConfigBase model
-				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfigItemsRequiredConfigBase)
+				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				requiredConfigItemsModel.Description = core.StringPtr("testString")
 				requiredConfigItemsModel.Property = core.StringPtr("hard_quota")
 				requiredConfigItemsModel.Operator = core.StringPtr("num_equals")
 				requiredConfigItemsModel.Value = core.StringPtr("${hard_quota}")
 
 				// Construct an instance of the RequiredConfigRequiredConfigAnd model
-				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfigRequiredConfigAnd)
+				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				requiredConfigModel.Description = core.StringPtr("The Cloud Object Storage rule.")
-				requiredConfigModel.And = []securityandcompliancecenterapiv3.RequiredConfigItemsIntf{requiredConfigItemsModel}
+				requiredConfigModel.And = []securityandcompliancecenterapiv3.RequiredConfigIntf{requiredConfigItemsModel}
 
 				// Construct an instance of the Parameter model
 				parameterModel := new(securityandcompliancecenterapiv3.Parameter)
@@ -5543,16 +5542,16 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				targetModel.AdditionalTargetAttributes = []securityandcompliancecenterapiv3.AdditionalTargetAttribute{*additionalTargetAttributeModel}
 
 				// Construct an instance of the RequiredConfigItemsRequiredConfigBase model
-				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfigItemsRequiredConfigBase)
+				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				requiredConfigItemsModel.Description = core.StringPtr("testString")
 				requiredConfigItemsModel.Property = core.StringPtr("hard_quota")
 				requiredConfigItemsModel.Operator = core.StringPtr("num_equals")
 				requiredConfigItemsModel.Value = core.StringPtr("${hard_quota}")
 
 				// Construct an instance of the RequiredConfigRequiredConfigAnd model
-				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfigRequiredConfigAnd)
+				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				requiredConfigModel.Description = core.StringPtr("The Cloud Object Storage rule.")
-				requiredConfigModel.And = []securityandcompliancecenterapiv3.RequiredConfigItemsIntf{requiredConfigItemsModel}
+				requiredConfigModel.And = []securityandcompliancecenterapiv3.RequiredConfigIntf{requiredConfigItemsModel}
 
 				// Construct an instance of the Parameter model
 				parameterModel := new(securityandcompliancecenterapiv3.Parameter)
@@ -5663,16 +5662,16 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				targetModel.AdditionalTargetAttributes = []securityandcompliancecenterapiv3.AdditionalTargetAttribute{*additionalTargetAttributeModel}
 
 				// Construct an instance of the RequiredConfigItemsRequiredConfigBase model
-				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfigItemsRequiredConfigBase)
+				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				requiredConfigItemsModel.Description = core.StringPtr("testString")
 				requiredConfigItemsModel.Property = core.StringPtr("hard_quota")
 				requiredConfigItemsModel.Operator = core.StringPtr("num_equals")
 				requiredConfigItemsModel.Value = core.StringPtr("${hard_quota}")
 
 				// Construct an instance of the RequiredConfigRequiredConfigAnd model
-				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfigRequiredConfigAnd)
+				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				requiredConfigModel.Description = core.StringPtr("The Cloud Object Storage rule.")
-				requiredConfigModel.And = []securityandcompliancecenterapiv3.RequiredConfigItemsIntf{requiredConfigItemsModel}
+				requiredConfigModel.And = []securityandcompliancecenterapiv3.RequiredConfigIntf{requiredConfigItemsModel}
 
 				// Construct an instance of the Parameter model
 				parameterModel := new(securityandcompliancecenterapiv3.Parameter)
@@ -5791,16 +5790,16 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				targetModel.AdditionalTargetAttributes = []securityandcompliancecenterapiv3.AdditionalTargetAttribute{*additionalTargetAttributeModel}
 
 				// Construct an instance of the RequiredConfigItemsRequiredConfigBase model
-				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfigItemsRequiredConfigBase)
+				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				requiredConfigItemsModel.Description = core.StringPtr("testString")
 				requiredConfigItemsModel.Property = core.StringPtr("hard_quota")
 				requiredConfigItemsModel.Operator = core.StringPtr("num_equals")
 				requiredConfigItemsModel.Value = core.StringPtr("${hard_quota}")
 
 				// Construct an instance of the RequiredConfigRequiredConfigAnd model
-				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfigRequiredConfigAnd)
+				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				requiredConfigModel.Description = core.StringPtr("The Cloud Object Storage rule.")
-				requiredConfigModel.And = []securityandcompliancecenterapiv3.RequiredConfigItemsIntf{requiredConfigItemsModel}
+				requiredConfigModel.And = []securityandcompliancecenterapiv3.RequiredConfigIntf{requiredConfigItemsModel}
 
 				// Construct an instance of the Parameter model
 				parameterModel := new(securityandcompliancecenterapiv3.Parameter)
@@ -5857,16 +5856,16 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				targetModel.AdditionalTargetAttributes = []securityandcompliancecenterapiv3.AdditionalTargetAttribute{*additionalTargetAttributeModel}
 
 				// Construct an instance of the RequiredConfigItemsRequiredConfigBase model
-				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfigItemsRequiredConfigBase)
+				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				requiredConfigItemsModel.Description = core.StringPtr("testString")
 				requiredConfigItemsModel.Property = core.StringPtr("hard_quota")
 				requiredConfigItemsModel.Operator = core.StringPtr("num_equals")
 				requiredConfigItemsModel.Value = core.StringPtr("${hard_quota}")
 
 				// Construct an instance of the RequiredConfigRequiredConfigAnd model
-				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfigRequiredConfigAnd)
+				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				requiredConfigModel.Description = core.StringPtr("The Cloud Object Storage rule.")
-				requiredConfigModel.And = []securityandcompliancecenterapiv3.RequiredConfigItemsIntf{requiredConfigItemsModel}
+				requiredConfigModel.And = []securityandcompliancecenterapiv3.RequiredConfigIntf{requiredConfigItemsModel}
 
 				// Construct an instance of the Parameter model
 				parameterModel := new(securityandcompliancecenterapiv3.Parameter)
@@ -5945,16 +5944,16 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				targetModel.AdditionalTargetAttributes = []securityandcompliancecenterapiv3.AdditionalTargetAttribute{*additionalTargetAttributeModel}
 
 				// Construct an instance of the RequiredConfigItemsRequiredConfigBase model
-				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfigItemsRequiredConfigBase)
+				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				requiredConfigItemsModel.Description = core.StringPtr("testString")
 				requiredConfigItemsModel.Property = core.StringPtr("hard_quota")
 				requiredConfigItemsModel.Operator = core.StringPtr("num_equals")
 				requiredConfigItemsModel.Value = core.StringPtr("${hard_quota}")
 
 				// Construct an instance of the RequiredConfigRequiredConfigAnd model
-				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfigRequiredConfigAnd)
+				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				requiredConfigModel.Description = core.StringPtr("The Cloud Object Storage rule.")
-				requiredConfigModel.And = []securityandcompliancecenterapiv3.RequiredConfigItemsIntf{requiredConfigItemsModel}
+				requiredConfigModel.And = []securityandcompliancecenterapiv3.RequiredConfigIntf{requiredConfigItemsModel}
 
 				// Construct an instance of the Parameter model
 				parameterModel := new(securityandcompliancecenterapiv3.Parameter)
@@ -13736,8 +13735,8 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(targetModel.ResourceKind).To(Equal(core.StringPtr("bucket")))
 				Expect(targetModel.AdditionalTargetAttributes).To(Equal([]securityandcompliancecenterapiv3.AdditionalTargetAttribute{*additionalTargetAttributeModel}))
 
-				// Construct an instance of the RequiredConfigItemsRequiredConfigBase model
-				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfigItemsRequiredConfigBase)
+				// Construct an instance of the RequiredConfigItems model
+				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				Expect(requiredConfigItemsModel).ToNot(BeNil())
 				requiredConfigItemsModel.Description = core.StringPtr("testString")
 				requiredConfigItemsModel.Property = core.StringPtr("hard_quota")
@@ -13749,12 +13748,12 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(requiredConfigItemsModel.Value).To(Equal(core.StringPtr("${hard_quota}")))
 
 				// Construct an instance of the RequiredConfigRequiredConfigAnd model
-				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfigRequiredConfigAnd)
+				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				Expect(requiredConfigModel).ToNot(BeNil())
 				requiredConfigModel.Description = core.StringPtr("The Cloud Object Storage rule.")
-				requiredConfigModel.And = []securityandcompliancecenterapiv3.RequiredConfigItemsIntf{requiredConfigItemsModel}
+				requiredConfigModel.And = []securityandcompliancecenterapiv3.RequiredConfigIntf{requiredConfigItemsModel}
 				Expect(requiredConfigModel.Description).To(Equal(core.StringPtr("The Cloud Object Storage rule.")))
-				Expect(requiredConfigModel.And).To(Equal([]securityandcompliancecenterapiv3.RequiredConfigItemsIntf{requiredConfigItemsModel}))
+				Expect(requiredConfigModel.And).To(Equal(securityandcompliancecenterapiv3.RequiredConfigItems{requiredConfigItemsModel}))
 
 				// Construct an instance of the Parameter model
 				parameterModel := new(securityandcompliancecenterapiv3.Parameter)
@@ -14691,7 +14690,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(targetModel.AdditionalTargetAttributes).To(Equal([]securityandcompliancecenterapiv3.AdditionalTargetAttribute{*additionalTargetAttributeModel}))
 
 				// Construct an instance of the RequiredConfigItemsRequiredConfigBase model
-				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfigItemsRequiredConfigBase)
+				requiredConfigItemsModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				Expect(requiredConfigItemsModel).ToNot(BeNil())
 				requiredConfigItemsModel.Description = core.StringPtr("testString")
 				requiredConfigItemsModel.Property = core.StringPtr("hard_quota")
@@ -14703,12 +14702,12 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 				Expect(requiredConfigItemsModel.Value).To(Equal(core.StringPtr("${hard_quota}")))
 
 				// Construct an instance of the RequiredConfigRequiredConfigAnd model
-				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfigRequiredConfigAnd)
+				requiredConfigModel := new(securityandcompliancecenterapiv3.RequiredConfig)
 				Expect(requiredConfigModel).ToNot(BeNil())
 				requiredConfigModel.Description = core.StringPtr("The Cloud Object Storage rule.")
-				requiredConfigModel.And = []securityandcompliancecenterapiv3.RequiredConfigItemsIntf{requiredConfigItemsModel}
+				requiredConfigModel.And = []securityandcompliancecenterapiv3.RequiredConfigIntf{requiredConfigItemsModel}
 				Expect(requiredConfigModel.Description).To(Equal(core.StringPtr("The Cloud Object Storage rule.")))
-				Expect(requiredConfigModel.And).To(Equal([]securityandcompliancecenterapiv3.RequiredConfigItemsIntf{requiredConfigItemsModel}))
+				Expect(requiredConfigModel.And).To(Equal(securityandcompliancecenterapiv3.RequiredConfigItems{requiredConfigItemsModel}))
 
 				// Construct an instance of the Parameter model
 				parameterModel := new(securityandcompliancecenterapiv3.Parameter)
@@ -14838,14 +14837,14 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3`, func() {
 			It(`Invoke NewRequiredConfigItemsRequiredConfigBase successfully`, func() {
 				property := "testString"
 				operator := "string_equals"
-				_model, err := securityAndComplianceCenterApiService.NewRequiredConfigItemsRequiredConfigBase(property, operator)
+				_model, err := securityAndComplianceCenterApiService.NewRequiredConfigBase(property, operator)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewRequiredConfigRequiredConfigBase successfully`, func() {
 				property := "testString"
 				operator := "string_equals"
-				_model, err := securityAndComplianceCenterApiService.NewRequiredConfigRequiredConfigBase(property, operator)
+				_model, err := securityAndComplianceCenterApiService.NewRequiredConfigBase(property, operator)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})

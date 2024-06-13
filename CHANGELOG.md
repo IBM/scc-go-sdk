@@ -1,3 +1,10 @@
+# [5.4.0](https://github.com/IBM/scc-go-sdk/compare/v5.3.0...v5.4.0) (2024-06-13)
+
+
+### Features
+
+* Adding SubRule as a new feature ([#147](https://github.com/IBM/scc-go-sdk/issues/147)) ([2ec340f](https://github.com/IBM/scc-go-sdk/commit/2ec340f5d1e050d53bb654043fe7c6e661b18096))
+
 # [5.3.0](https://github.com/IBM/scc-go-sdk/compare/v5.2.0...v5.3.0) (2024-06-07)
 
 

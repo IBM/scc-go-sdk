@@ -1,6 +1,7 @@
 .openapi-generator
 *.env
 .env
+.vscode
 **/.DS_Store
 **/result.out
 **/package.json

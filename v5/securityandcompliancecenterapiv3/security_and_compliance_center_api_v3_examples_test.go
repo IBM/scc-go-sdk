@@ -202,15 +202,15 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 				AdditionalTargetAttributes: []securityandcompliancecenterapiv3.AdditionalTargetAttribute{*additionalTargetAttributeModel},
 			}
 
-			requiredConfigItemsModel := &securityandcompliancecenterapiv3.RequiredConfigItemsRequiredConfigBase{
+			requiredConfigItemsModel := &securityandcompliancecenterapiv3.RequiredConfig{
 				Property: core.StringPtr("hard_quota"),
 				Operator: core.StringPtr("num_equals"),
 				Value:    core.StringPtr("${hard_quota}"),
 			}
 
-			requiredConfigModel := &securityandcompliancecenterapiv3.RequiredConfigRequiredConfigAnd{
+			requiredConfigModel := &securityandcompliancecenterapiv3.RequiredConfig{
 				Description: core.StringPtr("The Cloud Object Storage rule."),
-				And:         []securityandcompliancecenterapiv3.RequiredConfigItemsIntf{requiredConfigItemsModel},
+				And:         []securityandcompliancecenterapiv3.RequiredConfigIntf{requiredConfigItemsModel},
 			}
 
 			parameterModel := &securityandcompliancecenterapiv3.Parameter{
@@ -717,15 +717,15 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 				AdditionalTargetAttributes: []securityandcompliancecenterapiv3.AdditionalTargetAttribute{*additionalTargetAttributeModel},
 			}
 
-			requiredConfigItemsModel := &securityandcompliancecenterapiv3.RequiredConfigItemsRequiredConfigBase{
+			requiredConfigItemsModel := &securityandcompliancecenterapiv3.RequiredConfig{
 				Property: core.StringPtr("hard_quota"),
 				Operator: core.StringPtr("num_equals"),
 				Value:    core.StringPtr("${hard_quota}"),
 			}
 
-			requiredConfigModel := &securityandcompliancecenterapiv3.RequiredConfigRequiredConfigAnd{
+			requiredConfigModel := &securityandcompliancecenterapiv3.RequiredConfig{
 				Description: core.StringPtr("The Cloud Object Storage rule."),
-				And:         []securityandcompliancecenterapiv3.RequiredConfigItemsIntf{requiredConfigItemsModel},
+				And:         []securityandcompliancecenterapiv3.RequiredConfigIntf{requiredConfigItemsModel},
 			}
 
 			parameterModel := &securityandcompliancecenterapiv3.Parameter{
@@ -1267,6 +1267,7 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// begin-get_provider_type_by_id
 
 			getProviderTypeByIdOptions := securityAndComplianceCenterApiService.NewGetProviderTypeByIdOptions(
+				instanceID,
 				providerTypeIdLink,
 			)
 

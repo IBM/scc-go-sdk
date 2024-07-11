@@ -10734,11 +10734,11 @@ type RequiredConfigIntf interface {
 // UnmarshalRequiredConfig unmarshals an instance of RequiredConfig from the specified map of raw messages.
 func UnmarshalRequiredConfig(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(RequiredConfig)
-	err = core.UnmarshalModel(m, "and", &obj.And, UnmarshalRequiredConfigItems)
+	err = core.UnmarshalModel(m, "and", &obj.And, UnmarshalRequiredConfig)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(m, "or", &obj.Or, UnmarshalRequiredConfigItems)
+	err = core.UnmarshalModel(m, "or", &obj.Or, UnmarshalRequiredConfig)
 	if err != nil {
 		return
 	}
@@ -10795,21 +10795,6 @@ type RequiredConfigSubRule struct {
 
 func (*RequiredConfigSubRule) isaRequiredConfig() bool {
 	return true
-}
-
-// UnmarshalRequiredConfigItems unmarshals an instance of RequiredConfigItems from the specified map of raw messages.
-func UnmarshalRequiredConfigItems(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(RequiredConfigItems)
-	for _, s := range []map[string]json.RawMessage{m} {
-		var rc *RequiredConfig
-		err = UnmarshalRequiredConfig(s, &rc)
-		if err != nil {
-			return
-		}
-		*obj = append(*obj, rc)
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
 }
 
 // UnmarshalRequiredConfigSubRule unmarshals an instance of RequiredConfigSubRule from the specified map of raw messages

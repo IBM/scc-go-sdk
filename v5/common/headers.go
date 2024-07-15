@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"runtime"
 
-  "github.com/IBM/go-sdk-core/v5/core"
+	"github.com/IBM/go-sdk-core/v5/core"
 )
 
 const (
@@ -87,4 +87,3 @@ func GetComponentInfo() *core.ProblemComponent {
 	// This should match the module name in go.mod.
 	return core.NewProblemComponent("github.com/IBM/scc-go-sdk/v5", Version)
 }
-

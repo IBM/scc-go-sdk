@@ -1,3 +1,10 @@
+## [5.4.1](https://github.com/IBM/scc-go-sdk/compare/v5.4.0...v5.4.1) (2024-07-16)
+
+
+### Bug Fixes
+
+* Return the correct type in GetRule ([#148](https://github.com/IBM/scc-go-sdk/issues/148)) ([4f6cc5f](https://github.com/IBM/scc-go-sdk/commit/4f6cc5fbf02ff74a99d698758e4a149631a55029))
+
 # [5.4.0](https://github.com/IBM/scc-go-sdk/compare/v5.3.0...v5.4.0) (2024-06-13)
 
 

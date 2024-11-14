@@ -2,7 +2,7 @@
 // +build examples
 
 /**
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,59 +26,59 @@ import (
 	"os"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	"github.com/IBM/scc-go-sdk/v5/securityandcompliancecenterapiv3"
+	securityandcompliancecenterv3 "github.com/IBM/scc-go-sdk/v5/securityandcompliancecenterapiv3"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
 
-// This file provides an example of how to use the Security and Compliance Center API service.
+// This file provides an example of how to use the Security and Compliance Center service.
 //
 // The following configuration properties are assumed to be defined:
-// SECURITY_AND_COMPLIANCE_CENTER_API_URL=<service base url>
-// SECURITY_AND_COMPLIANCE_CENTER_API_AUTH_TYPE=iam
-// SECURITY_AND_COMPLIANCE_CENTER_API_APIKEY=<IAM apikey>
-// SECURITY_AND_COMPLIANCE_CENTER_API_AUTH_URL=<IAM token service base URL - omit this if using the production environment>
+// SECURITY_AND_COMPLIANCE_CENTER_URL=<service base url>
+// SECURITY_AND_COMPLIANCE_CENTER_AUTH_TYPE=iam
+// SECURITY_AND_COMPLIANCE_CENTER_APIKEY=<IAM apikey>
+// SECURITY_AND_COMPLIANCE_CENTER_AUTH_URL=<IAM token service base URL - omit this if using the production environment>
 //
 // These configuration properties can be exported as environment variables, or stored
 // in a configuration file and then:
 // export IBM_CREDENTIALS_FILE=<name of configuration file>
-var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
-
-	const externalConfigFile = "../security_and_compliance_center_api_v3.env"
+var _ = Describe(`SecurityAndComplianceCenterV3 Examples Tests`, func() {
+	const externalConfigFile = "../security_and_compliance_center_v3.env"
 
 	var (
-		securityAndComplianceCenterApiService *securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3
-		config                                map[string]string
-		serviceURL                            string
-		authenticator                         core.IamAuthenticator
-		authUrl                               string
-		apiKey                                string
-		serviceName                           string
+		securityAndComplianceCenterService *securityandcompliancecenterv3.SecurityAndComplianceCenterV3
+		config                             map[string]string
+		serviceURL                         string
 
 		// Variables to hold link values
-		accountIdForReportLink                     string
-		attachmentIdForReportLink                  string
-		attachmentIdLink                           string
-		controlLibraryIdLink                       string
+		accountIDForReportLink                     string
+		attachmentIDForReportLink                  string
+		attachmentIDLink                           string
+		controlLibraryIDLink                       string
 		eTagLink                                   string
-		eventNotificationsCrnForUpdateSettingsLink string
-		groupIdForReportLink                       string
+		eventNotificationsCRNForUpdateSettingsLink string
+		groupIDForReportLink                       string
+		instanceIDForLink                          string
 		objectStorageBucketForUpdateSettingsLink   string
-		objectStorageCrnForUpdateSettingsLink      string
+		objectStorageCRNForUpdateSettingsLink      string
 		objectStorageLocationForUpdateSettingsLink string
-		profileIdForReportLink                     string
-		profileIdLink                              string
-		providerTypeIdLink                         string
-		providerTypeInstanceIdLink                 string
-		reportIdForReportLink                      string
-		ruleIdLink                                 string
+		oldProfileIDForReportLink                  string
+		profileIDForReportLink                     string
+		profileIDLink                              string
+		providerTypeIDLink                         string
+		providerTypeInstanceIDLink                 string
+		reportIDForReportLink                      string
+		ruleIDLink                                 string
+		scanIDforReportLink                        string
+		scopeIDLink                                string
+		scopeIDforReportLink                       string
+		subScopeIDLink                             string
+		targetIDLink                               string
 		typeForReportLink                          string
-		accountID                                  string
-		instanceID                                 string
-		createScanAttachmentID                     string
+		workloadProtectionCRNLink                  string
 	)
 
-	var shouldSkipTest = func() {
+	shouldSkipTest := func() {
 		Skip("External configuration is not available, skipping examples...")
 	}
 
@@ -91,38 +91,67 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			}
 
 			os.Setenv("IBM_CREDENTIALS_FILE", externalConfigFile)
-			config, err = core.GetServiceProperties(securityandcompliancecenterapiv3.DefaultServiceName)
+			config, err = core.GetServiceProperties(securityandcompliancecenterv3.DefaultServiceName)
 			if err != nil {
-				Skip("Error loading service properties, skipping tests: " + err.Error())
+				Skip("Error loading service properties, skipping examples: " + err.Error())
+			} else if len(config) == 0 {
+				Skip("Unable to load service properties, skipping examples")
 			}
+
 			serviceURL = config["URL"]
 			if serviceURL == "" {
 				Skip("Unable to load service URL configuration property, skipping tests")
 			}
-			authUrl = config["IAM_APIKEY_URL"]
-			if authUrl == "" {
-				Skip("Unable to load auth service URL configuration property, skipping tests")
+			fmt.Fprintf(GinkgoWriter, "Service URL: %v\n", serviceURL)
+			shouldSkipTest = func() {}
+
+			// Manual: Adding the ability to customize identifiers using environmental variables
+			accountIDForReportLink = config["ACCOUNTID"]
+			if accountIDForReportLink == "" {
+				Skip("Unable to load accountIDForReportLink configuration property, skipping tests")
 			}
-			apiKey = config["IAM"]
-			if apiKey == "" {
-				Skip("Unable to load IAM configuration property, skipping tests")
+
+			scopeIDforReportLink = config["SCOPEID"]
+			if scopeIDforReportLink == "" {
+				Skip("Unable to load scopeIDforReportLink configuration property, skipping tests")
 			}
-			serviceName = config["SERVICENAME"]
-			if serviceName == "" {
-				Skip("Unable to load SERVICENAME configuration property, skipping tests")
+
+			scanIDforReportLink = config["SCANJOBID"]
+			if scanIDforReportLink == "" {
+				Skip("Unable to load scanreportID configuration property, skipping tests")
 			}
-			authenticator = core.IamAuthenticator{
-				ApiKey: apiKey,
-				URL:    authUrl,
+
+			reportIDForReportLink = config["REPORTID"]
+			if reportIDForReportLink == "" {
+				Skip("Unable to load reportID configuration property, skipping tests")
 			}
-			accountID = config["ACCOUNTID"]
-			instanceID = config["INSTANCEID"]
-			if instanceID == "" {
+
+			instanceIDForLink = config["INSTANCEID"]
+			if instanceIDForLink == "" {
 				Skip("Unable to load instanceID configuration property, skipping tests")
 			}
-			createScanAttachmentID = config["ATTACHMENTID"]
 
-			shouldSkipTest = func() {}
+			profileIDForReportLink = config["PROFILEID"]
+			if profileIDForReportLink == "" {
+				Skip("Unable to load profileID configuration property, skipping tests")
+			}
+
+			oldProfileIDForReportLink = config["OLDPROFILEID"]
+			if oldProfileIDForReportLink == "" {
+				Skip("Unable to load oldprofileID configuration property, skipping tests")
+			}
+
+			attachmentIDForReportLink = config["ATTACHMENTID"]
+			if attachmentIDForReportLink == "" {
+				Skip("Unable to load attachmentID configuration property, skipping tests")
+			} else {
+				attachmentIDLink = attachmentIDForReportLink
+			}
+
+			workloadProtectionCRNLink = config["WORKLOADPROTECTIONCRN"]
+			if workloadProtectionCRNLink == "" {
+				Skip("Unable to load workloadProtectCRNLInk configuration property, skipping tests")
+			}
 		})
 	})
 
@@ -135,25 +164,20 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 
 			// begin-common
 
-			securityAndComplianceCenterApiServiceOptions := &securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
-				URL:           serviceURL,
-				Authenticator: &authenticator,
-				ServiceName:   serviceName,
-			}
+			securityAndComplianceCenterServiceOptions := &securityandcompliancecenterv3.SecurityAndComplianceCenterV3Options{}
 
-			securityAndComplianceCenterApiService, err = securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterApiV3UsingExternalConfig(securityAndComplianceCenterApiServiceOptions)
-
+			securityAndComplianceCenterService, err = securityandcompliancecenterv3.NewSecurityAndComplianceCenterV3(securityAndComplianceCenterServiceOptions)
 			if err != nil {
 				panic(err)
 			}
 
 			// end-common
 
-			Expect(securityAndComplianceCenterApiService).ToNot(BeNil())
+			Expect(securityAndComplianceCenterService).ToNot(BeNil())
 		})
 	})
 
-	Describe(`SecurityAndComplianceCenterApiV3 request examples`, func() {
+	Describe(`SecurityAndComplianceCenterV3 request examples`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
@@ -161,10 +185,11 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			fmt.Println("\nGetSettings() result:")
 			// begin-get_settings
 
-			getSettingsOptions := securityAndComplianceCenterApiService.NewGetSettingsOptions(instanceID)
-			getSettingsOptions.SetXCorrelationID("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
+			getSettingsOptions := securityAndComplianceCenterService.NewGetSettingsOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+			)
 
-			settings, response, err := securityAndComplianceCenterApiService.GetSettings(getSettingsOptions)
+			settings, response, err := securityAndComplianceCenterService.GetSettings(getSettingsOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -177,64 +202,382 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(settings).ToNot(BeNil())
 
-			eventNotificationsCrnForUpdateSettingsLink = *settings.EventNotifications.InstanceCrn
-			fmt.Fprintf(GinkgoWriter, "Saved eventNotificationsCrnForUpdateSettingsLink value: %v\n", eventNotificationsCrnForUpdateSettingsLink)
-			objectStorageCrnForUpdateSettingsLink = *settings.ObjectStorage.InstanceCrn
-			fmt.Fprintf(GinkgoWriter, "Saved objectStorageCrnForUpdateSettingsLink value: %v\n", objectStorageCrnForUpdateSettingsLink)
+			eventNotificationsCRNForUpdateSettingsLink = *settings.EventNotifications.InstanceCRN
+			fmt.Fprintf(GinkgoWriter, "Saved eventNotificationsCRNForUpdateSettingsLink value: %v\n", eventNotificationsCRNForUpdateSettingsLink)
+			objectStorageCRNForUpdateSettingsLink = *settings.ObjectStorage.InstanceCRN
+			fmt.Fprintf(GinkgoWriter, "Saved objectStorageCRNForUpdateSettingsLink value: %v\n", objectStorageCRNForUpdateSettingsLink)
 			objectStorageBucketForUpdateSettingsLink = *settings.ObjectStorage.Bucket
 			fmt.Fprintf(GinkgoWriter, "Saved objectStorageBucketForUpdateSettingsLink value: %v\n", objectStorageBucketForUpdateSettingsLink)
 			objectStorageLocationForUpdateSettingsLink = *settings.ObjectStorage.BucketLocation
 			fmt.Fprintf(GinkgoWriter, "Saved objectStorageLocationForUpdateSettingsLink value: %v\n", objectStorageLocationForUpdateSettingsLink)
 		})
+		It(`CreateCustomControlLibrary request example`, func() {
+			fmt.Println("\nCreateCustomControlLibrary() result:")
+			// begin-create_custom_control_library
+
+			assessmentPrototypeModel := &securityandcompliancecenterv3.AssessmentPrototype{
+				AssessmentID:          core.StringPtr("rule-d1bd9f3f-bee1-46c5-9533-da8bba9eed4e"),
+				AssessmentDescription: core.StringPtr("This rule will check on regulation"),
+			}
+
+			controlSpecificationPrototypeModel := &securityandcompliancecenterv3.ControlSpecificationPrototype{
+				ComponentID:                     core.StringPtr("apprapp"),
+				Environment:                     core.StringPtr("ibm-cloud"),
+				ControlSpecificationDescription: core.StringPtr("This field is used to describe a control specification"),
+				Assessments:                     []securityandcompliancecenterv3.AssessmentPrototype{*assessmentPrototypeModel},
+			}
+
+			controlDocModel := &securityandcompliancecenterv3.ControlDoc{}
+
+			controlPrototypeModel := &securityandcompliancecenterv3.ControlPrototype{
+				ControlName:           core.StringPtr("security"),
+				ControlDescription:    core.StringPtr("This is a description of a control"),
+				ControlCategory:       core.StringPtr("test-control"),
+				ControlRequirement:    core.BoolPtr(true),
+				ControlSpecifications: []securityandcompliancecenterv3.ControlSpecificationPrototype{*controlSpecificationPrototypeModel},
+				ControlDocs:           controlDocModel,
+				Status:                core.StringPtr("disabled"),
+			}
+
+			createCustomControlLibraryOptions := securityAndComplianceCenterService.NewCreateCustomControlLibraryOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				"custom control library from SDK",
+				"This is a custom control library made from the SDK test framework",
+				"custom",
+				"0.0.1",
+				[]securityandcompliancecenterv3.ControlPrototype{*controlPrototypeModel},
+			)
+
+			controlLibrary, response, err := securityAndComplianceCenterService.CreateCustomControlLibrary(createCustomControlLibraryOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(controlLibrary, "", "  ")
+			fmt.Println(string(b))
+
+			// end-create_custom_control_library
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(controlLibrary).ToNot(BeNil())
+
+			controlLibraryIDLink = *controlLibrary.ID
+			fmt.Fprintf(GinkgoWriter, "Saved controlLibraryIDLink value: %v\n", controlLibraryIDLink)
+		})
+		It(`CreateProfile request example`, func() {
+			fmt.Println("\nCreateProfile() result:")
+			// begin-create_profile
+
+			profileControlsPrototypeModel := &securityandcompliancecenterv3.ProfileControlsPrototype{
+				ControlLibraryID: core.StringPtr("51ca566e-c559-412b-8d64-f05b57044c32"),
+				ControlID:        core.StringPtr("2ce21ba3-0548-49a3-88e2-1122632218f4"),
+			}
+
+			defaultParametersPrototypeModel := &securityandcompliancecenterv3.DefaultParametersPrototype{
+				AssessmentType:        core.StringPtr("automated"),
+				AssessmentID:          core.StringPtr("rule-e16fcfea-fe21-4d30-a721-423611481fea"),
+				ParameterName:         core.StringPtr("tls_version"),
+				ParameterDefaultValue: core.StringPtr(`["1.2","1.3"]`),
+				ParameterDisplayName:  core.StringPtr("IBM Cloud Internet Services TLS version"),
+				ParameterType:         core.StringPtr("string_list"),
+			}
+
+			createProfileOptions := securityAndComplianceCenterService.NewCreateProfileOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+			)
+			createProfileOptions.SetProfileName("Profile Example")
+			createProfileOptions.SetProfileDescription("This is a profile")
+			createProfileOptions.SetProfileVersion("1.0.0")
+			createProfileOptions.SetLatest(true)
+			createProfileOptions.SetControls([]securityandcompliancecenterv3.ProfileControlsPrototype{*profileControlsPrototypeModel})
+			createProfileOptions.SetDefaultParameters([]securityandcompliancecenterv3.DefaultParametersPrototype{*defaultParametersPrototypeModel})
+
+			profile, response, err := securityAndComplianceCenterService.CreateProfile(createProfileOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(profile, "", "  ")
+			fmt.Println(string(b))
+
+			// end-create_profile
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(profile).ToNot(BeNil())
+
+			profileIDLink = *profile.ID
+			fmt.Fprintf(GinkgoWriter, "Saved profileIDLink value: %v\n", profileIDLink)
+		})
+		It(`CreateProfileAttachment request example`, func() {
+			fmt.Println("\nCreateProfileAttachment() result:")
+			// begin-create_profile_attachment
+
+			parameterModel1 := &securityandcompliancecenterv3.Parameter{
+				AssessmentType:       core.StringPtr("automated"),
+				AssessmentID:         core.StringPtr("rule-e16fcfea-fe21-4d30-a721-423611481fea"),
+				ParameterName:        core.StringPtr("tls_version"),
+				ParameterDisplayName: core.StringPtr("IBM Cloud Internet Services TLS version"),
+				ParameterType:        core.StringPtr("string_list"),
+				ParameterValue:       core.StringPtr("['1.2', '1.3']"),
+			}
+			parameterModel2 := &securityandcompliancecenterv3.Parameter{
+				AssessmentType:       core.StringPtr("automated"),
+				AssessmentID:         core.StringPtr("rule-f9137be8-2490-4afb-8cd5-a201cb167eb2"),
+				ParameterName:        core.StringPtr("ssh_port"),
+				ParameterDisplayName: core.StringPtr("Network ACL rule for allowed IPs to SSH port"),
+				ParameterType:        core.StringPtr("numeric"),
+				ParameterValue:       core.StringPtr("22"),
+			}
+			parameterModel3 := &securityandcompliancecenterv3.Parameter{
+				AssessmentType:       core.StringPtr("automated"),
+				AssessmentID:         core.StringPtr("rule-9653d2c7-6290-4128-a5a3-65487ba40370"),
+				ParameterName:        core.StringPtr("rdp_port"),
+				ParameterValue:       core.StringPtr("3389"),
+				ParameterDisplayName: core.StringPtr("Security group rule RDP allow port number"),
+				ParameterType:        core.StringPtr("numeric"),
+			}
+			parameterModel4 := &securityandcompliancecenterv3.Parameter{
+				AssessmentType:       core.StringPtr("automated"),
+				AssessmentID:         core.StringPtr("rule-7c5f6385-67e4-4edf-bec8-c722558b2dec"),
+				ParameterName:        core.StringPtr("ssh_port"),
+				ParameterValue:       core.StringPtr("22"),
+				ParameterDisplayName: core.StringPtr("Security group rule SSH allow port number"),
+				ParameterType:        core.StringPtr("numeric"),
+			}
+			parameterModel5 := &securityandcompliancecenterv3.Parameter{
+				AssessmentType:       core.StringPtr("automated"),
+				AssessmentID:         core.StringPtr("rule-f1e80ee7-88d5-4bf2-b42f-c863bb24601c"),
+				ParameterName:        core.StringPtr("rdp_port"),
+				ParameterValue:       core.StringPtr("3389"),
+				ParameterDisplayName: core.StringPtr("Security group rule SSH allow port number"),
+				ParameterType:        core.StringPtr("numeric"),
+			}
+			parameterModel6 := &securityandcompliancecenterv3.Parameter{
+				AssessmentType:       core.StringPtr("automated"),
+				AssessmentID:         core.StringPtr("rule-96527f89-1867-4581-b923-1400e04661e0"),
+				ParameterName:        core.StringPtr("exclude_default_security_groups"),
+				ParameterValue:       core.StringPtr("['Update the parameter']"),
+				ParameterDisplayName: core.StringPtr("Exclude the default security groups"),
+				ParameterType:        core.StringPtr("string_list"),
+			}
+
+			attachmentParameters := []securityandcompliancecenterv3.Parameter{
+				*parameterModel1,
+				*parameterModel2,
+				*parameterModel3,
+				*parameterModel4,
+				*parameterModel5,
+				*parameterModel6,
+			}
+
+			attachmentNotificationsControlsModel := &securityandcompliancecenterv3.AttachmentNotificationsControls{
+				ThresholdLimit:   core.Int64Ptr(int64(15)),
+				FailedControlIds: []string{},
+			}
+
+			attachmentNotificationsModel := &securityandcompliancecenterv3.AttachmentNotifications{
+				Enabled:  core.BoolPtr(true),
+				Controls: attachmentNotificationsControlsModel,
+			}
+
+			multiCloudScopePayloadModel := &securityandcompliancecenterv3.MultiCloudScopePayload{
+				ID: core.StringPtr("8baad3b5-2e69-4027-9967-efac19508e1c"),
+			}
+
+			profileAttachmentBaseModel := &securityandcompliancecenterv3.ProfileAttachmentBase{
+				AttachmentParameters: attachmentParameters,
+				Description:          core.StringPtr("This is a profile attachment targeting IBM CIS Foundation using a SDK"),
+				Name:                 core.StringPtr("Profile Attachment for IBM CIS Foundation SDK test"),
+				Notifications:        attachmentNotificationsModel,
+				Schedule:             core.StringPtr("daily"),
+				Scope:                []securityandcompliancecenterv3.MultiCloudScopePayload{*multiCloudScopePayloadModel},
+				Status:               core.StringPtr("disabled"),
+			}
+
+			createProfileAttachmentOptions := securityAndComplianceCenterService.NewCreateProfileAttachmentOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				oldProfileIDForReportLink,
+			)
+			createProfileAttachmentOptions.SetAttachments([]securityandcompliancecenterv3.ProfileAttachmentBase{*profileAttachmentBaseModel})
+
+			profileAttachmentResponse, response, err := securityAndComplianceCenterService.CreateProfileAttachment(createProfileAttachmentOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(profileAttachmentResponse, "", "  ")
+			fmt.Println(string(b))
+
+			// end-create_profile_attachment
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(profileAttachmentResponse).ToNot(BeNil())
+
+			attachmentIDLink = *profileAttachmentResponse.Attachments[0].ID
+			fmt.Fprintf(GinkgoWriter, "Saved attachmentIDLink value: %v\n", attachmentIDLink)
+		})
+		It(`CreateScope request example`, func() {
+			fmt.Println("\nCreateScope() result:")
+			// begin-create_scope
+
+			scopeIDPropertyModel := &securityandcompliancecenterv3.ScopePropertyScopeID{
+				Name:  core.StringPtr("scope_id"),
+				Value: core.StringPtr("ff88f007f9ff4622aac4fbc0eda36255"),
+			}
+
+			scopeTypePropertyModel := &securityandcompliancecenterv3.ScopePropertyScopeType{
+				Name:  core.StringPtr("scope_type"),
+				Value: core.StringPtr("account"),
+			}
+
+			createScopeOptions := securityAndComplianceCenterService.NewCreateScopeOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+			)
+			createScopeOptions.SetName("Sample Scope")
+			createScopeOptions.SetDescription("The scope that is defined for IBM resources.")
+			createScopeOptions.SetEnvironment("ibm-cloud")
+			createScopeOptions.SetProperties([]securityandcompliancecenterv3.ScopePropertyIntf{scopeIDPropertyModel, scopeTypePropertyModel})
+
+			scope, response, err := securityAndComplianceCenterService.CreateScope(createScopeOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(scope, "", "  ")
+			fmt.Println(string(b))
+
+			// end-create_scope
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(scope).ToNot(BeNil())
+
+			scopeIDLink = *scope.ID
+			fmt.Fprintf(GinkgoWriter, "Saved scopeIDLink value: %v\n", scopeIDLink)
+		})
+		It(`CreateSubscope request example`, func() {
+			fmt.Println("\nCreateSubscope() result:")
+			// begin-create_subscope
+
+			scopeIDProperty := &securityandcompliancecenterv3.ScopePropertyScopeID{
+				Name:  core.StringPtr("scope_id"),
+				Value: core.StringPtr("1f689f08ec9b47b885c2659c17029581"),
+			}
+
+			scopeTypeProperty := &securityandcompliancecenterv3.ScopePropertyScopeType{
+				Name:  core.StringPtr("scope_type"),
+				Value: core.StringPtr("account.resource_group"),
+			}
+			scopePrototypeModel := &securityandcompliancecenterv3.ScopePrototype{
+				Name:        core.StringPtr("ibm subscope"),
+				Description: core.StringPtr("The subscope that is defined for IBM resources."),
+				Environment: core.StringPtr("ibm-cloud"),
+				Properties:  []securityandcompliancecenterv3.ScopePropertyIntf{scopeIDProperty, scopeTypeProperty},
+			}
+
+			createSubscopeOptions := securityAndComplianceCenterService.NewCreateSubscopeOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				scopeIDLink,
+			)
+			createSubscopeOptions.SetSubscopes([]securityandcompliancecenterv3.ScopePrototype{*scopePrototypeModel})
+
+			subScopeResponse, response, err := securityAndComplianceCenterService.CreateSubscope(createSubscopeOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(subScopeResponse, "", "  ")
+			fmt.Println(string(b))
+
+			// end-create_subscope
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subScopeResponse).ToNot(BeNil())
+
+			subScopeIDLink = *subScopeResponse.Subscopes[0].ID
+			fmt.Fprintf(GinkgoWriter, "Saved subScopeIDLink value: %v\n", subScopeIDLink)
+		})
+		It(`GetLatestReports request example`, func() {
+			fmt.Println("\nGetLatestReports() result:")
+			// begin-get_latest_reports
+
+			getLatestReportsOptions := securityAndComplianceCenterService.NewGetLatestReportsOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+			)
+			getLatestReportsOptions.SetSort("profile_name")
+
+			reportLatest, response, err := securityAndComplianceCenterService.GetLatestReports(getLatestReportsOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(reportLatest, "", "  ")
+			fmt.Println(string(b))
+
+			// end-get_latest_reports
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(reportLatest).ToNot(BeNil())
+
+			accountIDForReportLink = *reportLatest.Reports[0].Account.ID
+			fmt.Fprintf(GinkgoWriter, "Saved accountIDForReportLink value: %v\n", accountIDForReportLink)
+			attachmentIDForReportLink = *reportLatest.Reports[0].Attachment.ID
+			fmt.Fprintf(GinkgoWriter, "Saved attachmentIDForReportLink value: %v\n", attachmentIDForReportLink)
+			groupIDForReportLink = *reportLatest.Reports[0].GroupID
+			fmt.Fprintf(GinkgoWriter, "Saved groupIDForReportLink value: %v\n", groupIDForReportLink)
+			profileIDForReportLink = *reportLatest.Reports[0].Profile.ID
+			fmt.Fprintf(GinkgoWriter, "Saved profileIDForReportLink value: %v\n", profileIDForReportLink)
+			typeForReportLink = *reportLatest.Reports[0].Type
+			fmt.Fprintf(GinkgoWriter, "Saved typeForReportLink value: %v\n", typeForReportLink)
+		})
 		It(`CreateRule request example`, func() {
 			fmt.Println("\nCreateRule() result:")
 			// begin-create_rule
 
-			additionalTargetAttributeModel := &securityandcompliancecenterapiv3.AdditionalTargetAttribute{
+			additionalTargetAttributeModel := &securityandcompliancecenterv3.AdditionalTargetAttribute{
 				Name:     core.StringPtr("location"),
 				Operator: core.StringPtr("string_equals"),
 				Value:    core.StringPtr("us-east"),
 			}
 
-			targetModel := &securityandcompliancecenterapiv3.Target{
+			ruleTargetPrototypeModel := &securityandcompliancecenterv3.RuleTargetPrototype{
 				ServiceName:                core.StringPtr("cloud-object-storage"),
 				ResourceKind:               core.StringPtr("bucket"),
-				AdditionalTargetAttributes: []securityandcompliancecenterapiv3.AdditionalTargetAttribute{*additionalTargetAttributeModel},
+				AdditionalTargetAttributes: []securityandcompliancecenterv3.AdditionalTargetAttribute{*additionalTargetAttributeModel},
 			}
 
-			requiredConfigItemsModel := &securityandcompliancecenterapiv3.RequiredConfig{
+			conditionItemModel := &securityandcompliancecenterv3.ConditionItemConditionBase{
 				Property: core.StringPtr("hard_quota"),
 				Operator: core.StringPtr("num_equals"),
 				Value:    core.StringPtr("${hard_quota}"),
 			}
 
-			requiredConfigModel := &securityandcompliancecenterapiv3.RequiredConfig{
+			requiredConfigModel := &securityandcompliancecenterv3.RequiredConfigConditionListConditionListConditionAnd{
 				Description: core.StringPtr("The Cloud Object Storage rule."),
-				And:         []securityandcompliancecenterapiv3.RequiredConfigIntf{requiredConfigItemsModel},
+				And:         []securityandcompliancecenterv3.ConditionItemIntf{conditionItemModel},
 			}
 
-			parameterModel := &securityandcompliancecenterapiv3.Parameter{
+			ruleParameterModel := &securityandcompliancecenterv3.RuleParameter{
 				Name:        core.StringPtr("hard_quota"),
 				DisplayName: core.StringPtr("The Cloud Object Storage bucket quota."),
 				Description: core.StringPtr("The maximum bytes that are allocated to the Cloud Object Storage bucket."),
 				Type:        core.StringPtr("numeric"),
 			}
 
-			importModel := &securityandcompliancecenterapiv3.Import{
-				Parameters: []securityandcompliancecenterapiv3.Parameter{*parameterModel},
+			importModel := &securityandcompliancecenterv3.Import{
+				Parameters: []securityandcompliancecenterv3.RuleParameter{*ruleParameterModel},
 			}
 
-			createRuleOptions := securityAndComplianceCenterApiService.NewCreateRuleOptions(
-				instanceID,
-				"scc-go-sdk example rule",
-				targetModel,
+			createRuleOptions := securityAndComplianceCenterService.NewCreateRuleOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				"Example rule",
+				ruleTargetPrototypeModel,
 				requiredConfigModel,
 			)
 			createRuleOptions.SetVersion("1.0.0")
 			createRuleOptions.SetImport(importModel)
 			createRuleOptions.SetLabels([]string{})
 
-			rule, response, err := securityAndComplianceCenterApiService.CreateRule(createRuleOptions)
+			rule, response, err := securityAndComplianceCenterService.CreateRule(createRuleOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -247,19 +590,19 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(rule).ToNot(BeNil())
 
-			ruleIdLink = *rule.ID
-			fmt.Fprintf(GinkgoWriter, "Saved ruleIdLink value: %v\n", ruleIdLink)
+			ruleIDLink = *rule.ID
+			fmt.Fprintf(GinkgoWriter, "Saved ruleIDLink value: %v\n", ruleIDLink)
 		})
 		It(`GetRule request example`, func() {
 			fmt.Println("\nGetRule() result:")
 			// begin-get_rule
 
-			getRuleOptions := securityAndComplianceCenterApiService.NewGetRuleOptions(
-				instanceID,
-				ruleIdLink,
+			getRuleOptions := securityAndComplianceCenterService.NewGetRuleOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				ruleIDLink,
 			)
 
-			rule, response, err := securityAndComplianceCenterApiService.GetRule(getRuleOptions)
+			rule, response, err := securityAndComplianceCenterService.GetRule(getRuleOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -275,61 +618,94 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			eTagLink = response.Headers.Get("ETag")
 			fmt.Fprintf(GinkgoWriter, "Saved eTagLink value: %v\n", eTagLink)
 		})
-		It(`GetLatestReports request example`, func() {
-			fmt.Println("\nGetLatestReports() result:")
-			// begin-get_latest_reports
+		It(`ReplaceRule request example`, func() {
+			fmt.Println("\nReplaceRule() result:")
+			// begin-replace_rule
 
-			getLatestReportsOptions := securityAndComplianceCenterApiService.NewGetLatestReportsOptions(instanceID)
-			getLatestReportsOptions.SetSort("profile_name")
+			additionalTargetAttributeModel := &securityandcompliancecenterv3.AdditionalTargetAttribute{
+				Name:     core.StringPtr("location"),
+				Operator: core.StringPtr("string_equals"),
+				Value:    core.StringPtr("us-south"),
+			}
 
-			reportLatest, response, err := securityAndComplianceCenterApiService.GetLatestReports(getLatestReportsOptions)
+			ruleTargetPrototypeModel := &securityandcompliancecenterv3.RuleTargetPrototype{
+				ServiceName:                core.StringPtr("cloud-object-storage"),
+				ResourceKind:               core.StringPtr("bucket"),
+				AdditionalTargetAttributes: []securityandcompliancecenterv3.AdditionalTargetAttribute{*additionalTargetAttributeModel},
+			}
+
+			conditionItemModel := &securityandcompliancecenterv3.ConditionItemConditionBase{
+				Property: core.StringPtr("hard_quota"),
+				Operator: core.StringPtr("num_equals"),
+				Value:    core.StringPtr("${hard_quota}"),
+			}
+
+			requiredConfigModel := &securityandcompliancecenterv3.RequiredConfigConditionListConditionListConditionAnd{
+				Description: core.StringPtr("The Cloud Object Storage rule."),
+				And:         []securityandcompliancecenterv3.ConditionItemIntf{conditionItemModel},
+			}
+
+			ruleParameterModel := &securityandcompliancecenterv3.RuleParameter{
+				Name:        core.StringPtr("hard_quota"),
+				DisplayName: core.StringPtr("The Cloud Object Storage bucket quota."),
+				Description: core.StringPtr("The maximum bytes that are allocated to the Cloud Object Storage bucket."),
+				Type:        core.StringPtr("numeric"),
+			}
+
+			importModel := &securityandcompliancecenterv3.Import{
+				Parameters: []securityandcompliancecenterv3.RuleParameter{*ruleParameterModel},
+			}
+
+			replaceRuleOptions := securityAndComplianceCenterService.NewReplaceRuleOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				ruleIDLink,
+				eTagLink,
+				"Example rule from example SDK run",
+				ruleTargetPrototypeModel,
+				requiredConfigModel,
+			)
+			replaceRuleOptions.SetVersion("1.0.1")
+			replaceRuleOptions.SetImport(importModel)
+			replaceRuleOptions.SetLabels([]string{})
+
+			rule, response, err := securityAndComplianceCenterService.ReplaceRule(replaceRuleOptions)
 			if err != nil {
 				panic(err)
 			}
-			b, _ := json.MarshalIndent(reportLatest, "", "  ")
+			b, _ := json.MarshalIndent(rule, "", "  ")
 			fmt.Println(string(b))
 
-			// end-get_latest_reports
+			// end-replace_rule
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
-			Expect(reportLatest).ToNot(BeNil())
+			Expect(rule).ToNot(BeNil())
 
-			accountIdForReportLink = *reportLatest.Reports[0].Account.ID
-			fmt.Fprintf(GinkgoWriter, "Saved accountIdForReportLink value: %v\n", accountIdForReportLink)
-			reportIdForReportLink = *reportLatest.Reports[0].ID
-			fmt.Fprintf(GinkgoWriter, "Saved reportIdForReportLink value: %v\n", reportIdForReportLink)
-			attachmentIdForReportLink = *reportLatest.Reports[0].Attachment.ID
-			fmt.Fprintf(GinkgoWriter, "Saved attachmentIdForReportLink value: %v\n", attachmentIdForReportLink)
-			groupIdForReportLink = *reportLatest.Reports[0].GroupID
-			fmt.Fprintf(GinkgoWriter, "Saved groupIdForReportLink value: %v\n", groupIdForReportLink)
-			profileIdForReportLink = *reportLatest.Reports[0].Profile.ID
-			fmt.Fprintf(GinkgoWriter, "Saved profileIdForReportLink value: %v\n", profileIdForReportLink)
-			typeForReportLink = *reportLatest.Reports[0].Type
-			fmt.Fprintf(GinkgoWriter, "Saved typeForReportLink value: %v\n", typeForReportLink)
+			eTagLink = response.Headers.Get("ETag")
+			fmt.Fprintf(GinkgoWriter, "Saved eTagLink value: %v\n", eTagLink)
 		})
 		It(`UpdateSettings request example`, func() {
 			fmt.Println("\nUpdateSettings() result:")
 			// begin-update_settings
 
-			eventNotificationsModel := &securityandcompliancecenterapiv3.EventNotifications{
-				InstanceCrn:       &eventNotificationsCrnForUpdateSettingsLink,
+			objectStoragePrototypeModel := &securityandcompliancecenterv3.ObjectStoragePrototype{
+				Bucket:      core.StringPtr("px-scan-results"),
+				InstanceCRN: core.StringPtr("crn:v1:staging:public:cloud-object-storage:global:a/ff88f007f9ff4622aac4fbc0eda36255:7199ae60-a214-4dd8-9bf7-ce571de49d01::"),
+			}
+
+			eventNotificationsPrototypeModel := &securityandcompliancecenterv3.EventNotificationsPrototype{
+				InstanceCRN:       core.StringPtr("crn:v1:staging:public:event-notifications:us-south:a/ff88f007f9ff4622aac4fbc0eda36255:b8b07245-0bbe-4478-b11c-0dce523105fd::"),
 				SourceDescription: core.StringPtr("This source is used for integration with IBM Cloud Security and Compliance Center."),
-				SourceName:        core.StringPtr("compliance"),
+				SourceName:        core.StringPtr("scc-sdk-integration"),
 			}
 
-			objectStorageModel := &securityandcompliancecenterapiv3.ObjectStorage{
-				InstanceCrn:    &objectStorageCrnForUpdateSettingsLink,
-				Bucket:         &objectStorageBucketForUpdateSettingsLink,
-				BucketLocation: &objectStorageLocationForUpdateSettingsLink,
-			}
+			updateSettingsOptions := securityAndComplianceCenterService.NewUpdateSettingsOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+			)
+			updateSettingsOptions.SetObjectStorage(objectStoragePrototypeModel)
+			updateSettingsOptions.SetEventNotifications(eventNotificationsPrototypeModel)
 
-			updateSettingsOptions := securityAndComplianceCenterApiService.NewUpdateSettingsOptions(instanceID)
-			updateSettingsOptions.SetEventNotifications(eventNotificationsModel)
-			updateSettingsOptions.SetObjectStorage(objectStorageModel)
-			updateSettingsOptions.SetXCorrelationID("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
-
-			settings, response, err := securityAndComplianceCenterApiService.UpdateSettings(updateSettingsOptions)
+			settings, response, err := securityAndComplianceCenterService.UpdateSettings(updateSettingsOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -339,17 +715,24 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			// end-update_settings
 
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(204))
-			Expect(settings).To(BeNil())
+			Expect(response.StatusCode).To(Or(Equal(200), Equal(204)))
+
+			switch statusCode := response.StatusCode; statusCode {
+			case 200:
+				Expect(settings).ToNot(BeNil())
+			case 204:
+				Expect(settings).To(BeNil())
+			}
 		})
-		/*It(`PostTestEvent request example`, func() {
+		It(`PostTestEvent request example`, func() {
 			fmt.Println("\nPostTestEvent() result:")
 			// begin-post_test_event
 
-			postTestEventOptions := securityAndComplianceCenterApiService.NewPostTestEventOptions()
-			postTestEventOptions.SetXCorrelationID("1a2b3c4d-5e6f-4a7b-8c9d-e0f1a2b3c4d5")
+			postTestEventOptions := securityAndComplianceCenterService.NewPostTestEventOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+			)
 
-			testEvent, response, err := securityAndComplianceCenterApiService.PostTestEvent(postTestEventOptions)
+			testEvent, response, err := securityAndComplianceCenterService.PostTestEvent(postTestEventOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -361,92 +744,25 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(202))
 			Expect(testEvent).ToNot(BeNil())
-		})*/
-		It(`CreateCustomControlLibrary request example`, func() {
-			fmt.Println("\nCreateCustomControlLibrary() result:")
-			// begin-create_custom_control_library
-
-			parameterInfoModel := &securityandcompliancecenterapiv3.ParameterInfo{
-				ParameterName:        core.StringPtr("session_invalidation_in_seconds"),
-				ParameterDisplayName: core.StringPtr("Sign out due to inactivity in seconds"),
-				ParameterType:        core.StringPtr("numeric"),
-			}
-
-			implementationModel := &securityandcompliancecenterapiv3.Implementation{
-				AssessmentID:          core.StringPtr("rule-a637949b-7e51-46c4-afd4-b96619001bf1"),
-				AssessmentMethod:      core.StringPtr("ibm-cloud-rule"),
-				AssessmentType:        core.StringPtr("automated"),
-				AssessmentDescription: core.StringPtr("Check that there is an Activity Tracker event route defined to collect global events generated by IBM Cloud services"),
-				Parameters:            []securityandcompliancecenterapiv3.ParameterInfo{*parameterInfoModel},
-			}
-
-			controlSpecificationsModel := &securityandcompliancecenterapiv3.ControlSpecifications{
-				ControlSpecificationID:          core.StringPtr("5c7d6f88-a92f-4734-9b49-bd22b0900184"),
-				ComponentID:                     core.StringPtr("iam-identity"),
-				Environment:                     core.StringPtr("ibm-cloud"),
-				ControlSpecificationDescription: core.StringPtr("IBM cloud"),
-				Assessments:                     []securityandcompliancecenterapiv3.Implementation{*implementationModel},
-			}
-
-			controlDocsModel := &securityandcompliancecenterapiv3.ControlDocs{
-				ControlDocsID:   core.StringPtr("sc-7"),
-				ControlDocsType: core.StringPtr("ibm-cloud"),
-			}
-
-			controlsInControlLibModel := &securityandcompliancecenterapiv3.ControlsInControlLib{
-				ControlName:           core.StringPtr("SC-7"),
-				ControlID:             core.StringPtr("1fa45e17-9322-4e6c-bbd6-1c51db08e790"),
-				ControlDescription:    core.StringPtr("Boundary Protection"),
-				ControlCategory:       core.StringPtr("System and Communications Protection"),
-				ControlTags:           []string{"1fa45e17-9322-4e6c-bbd6-1c51db08e790"},
-				ControlSpecifications: []securityandcompliancecenterapiv3.ControlSpecifications{*controlSpecificationsModel},
-				ControlDocs:           controlDocsModel,
-				ControlRequirement:    core.BoolPtr(true),
-			}
-
-			createCustomControlLibraryOptions := securityAndComplianceCenterApiService.NewCreateCustomControlLibraryOptions(
-				instanceID,
-				"scc-go-sdk Control Library",
-				"This is a demo library for scc-go-sdk",
-				"custom",
-				[]securityandcompliancecenterapiv3.ControlsInControlLib{*controlsInControlLibModel},
-			)
-			createCustomControlLibraryOptions.SetVersionGroupLabel("")
-			createCustomControlLibraryOptions.SetControlLibraryVersion("1.0.0")
-
-			controlLibrary, response, err := securityAndComplianceCenterApiService.CreateCustomControlLibrary(createCustomControlLibraryOptions)
-			if err != nil {
-				panic(err)
-			}
-			b, _ := json.MarshalIndent(controlLibrary, "", "  ")
-			fmt.Println(string(b))
-
-			// end-create_custom_control_library
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(201))
-			Expect(controlLibrary).ToNot(BeNil())
-
-			controlLibraryIdLink = *controlLibrary.ID
-			fmt.Fprintf(GinkgoWriter, "Saved controlLibraryIdLink value: %v\n", controlLibraryIdLink)
 		})
-		It(`ListControlLibraries request example`, func() {
-			fmt.Println("\nListControlLibraries() result:")
-			// begin-list_control_libraries
-			listControlLibrariesOptions := &securityandcompliancecenterapiv3.ListControlLibrariesOptions{
-				InstanceID:         &instanceID,
-				XCorrelationID:     core.StringPtr("testString"),
-				XRequestID:         core.StringPtr("testString"),
-				Limit:              core.Int64Ptr(int64(50)),
-				ControlLibraryType: core.StringPtr("custom"),
+		It(`ListInstanceAttachments request example`, func() {
+			fmt.Println("\nListInstanceAttachments() result:")
+			// begin-list_instance_attachments
+			listInstanceAttachmentsOptions := &securityandcompliancecenterv3.ListInstanceAttachmentsOptions{
+				InstanceID:        core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
+				AccountID:         &accountIDForReportLink,
+				VersionGroupLabel: core.StringPtr("33fc7b80-0fa5-4f16-bbba-1f293f660f0d"),
+				Limit:             core.Int64Ptr(int64(10)),
+				Sort:              core.StringPtr("created_on"),
+				Direction:         core.StringPtr("desc"),
 			}
 
-			pager, err := securityAndComplianceCenterApiService.NewControlLibrariesPager(listControlLibrariesOptions)
+			pager, err := securityAndComplianceCenterService.NewInstanceAttachmentsPager(listInstanceAttachmentsOptions)
 			if err != nil {
 				panic(err)
 			}
 
-			var allResults []securityandcompliancecenterapiv3.ControlLibraryItem
+			var allResults []securityandcompliancecenterv3.ProfileAttachment
 			for pager.HasNext() {
 				nextPage, err := pager.GetNext()
 				if err != nil {
@@ -456,84 +772,297 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			}
 			b, _ := json.MarshalIndent(allResults, "", "  ")
 			fmt.Println(string(b))
-			// end-list_control_libraries
+			// end-list_instance_attachments
 		})
-		It(`GetControlLibrary request example`, func() {
-			fmt.Println("\nGetControlLibrary() result:")
-			// begin-get_control_library
+		It(`ListProfileAttachments request example`, func() {
+			fmt.Println("\nListProfileAttachments() result:")
+			// begin-list_profile_attachments
 
-			getControlLibraryOptions := securityAndComplianceCenterApiService.NewGetControlLibraryOptions(
-				instanceID,
-				controlLibraryIdLink,
+			listProfileAttachmentsOptions := securityAndComplianceCenterService.NewListProfileAttachmentsOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				oldProfileIDForReportLink,
 			)
 
-			controlLibrary, response, err := securityAndComplianceCenterApiService.GetControlLibrary(getControlLibraryOptions)
+			profileAttachmentCollection, response, err := securityAndComplianceCenterService.ListProfileAttachments(listProfileAttachmentsOptions)
 			if err != nil {
 				panic(err)
 			}
-			b, _ := json.MarshalIndent(controlLibrary, "", "  ")
+			b, _ := json.MarshalIndent(profileAttachmentCollection, "", "  ")
 			fmt.Println(string(b))
 
-			// end-get_control_library
+			// end-list_profile_attachments
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
-			Expect(controlLibrary).ToNot(BeNil())
+			Expect(profileAttachmentCollection).ToNot(BeNil())
+		})
+		It(`ReplaceProfileAttachment request example`, func() {
+			fmt.Println("\nReplaceProfileAttachment() result:")
+			// begin-replace_profile_attachment
+
+			parameterModel1 := &securityandcompliancecenterv3.Parameter{
+				AssessmentType:       core.StringPtr("automated"),
+				AssessmentID:         core.StringPtr("rule-e16fcfea-fe21-4d30-a721-423611481fea"),
+				ParameterName:        core.StringPtr("tls_version"),
+				ParameterDisplayName: core.StringPtr("IBM Cloud Internet Services TLS version"),
+				ParameterType:        core.StringPtr("string_list"),
+				ParameterValue:       core.StringPtr("['1.2', '1.3']"),
+			}
+			parameterModel2 := &securityandcompliancecenterv3.Parameter{
+				AssessmentType:       core.StringPtr("automated"),
+				AssessmentID:         core.StringPtr("rule-f9137be8-2490-4afb-8cd5-a201cb167eb2"),
+				ParameterName:        core.StringPtr("ssh_port"),
+				ParameterDisplayName: core.StringPtr("Network ACL rule for allowed IPs to SSH port"),
+				ParameterType:        core.StringPtr("numeric"),
+				ParameterValue:       core.StringPtr("23"),
+			}
+			parameterModel3 := &securityandcompliancecenterv3.Parameter{
+				AssessmentType:       core.StringPtr("automated"),
+				AssessmentID:         core.StringPtr("rule-9653d2c7-6290-4128-a5a3-65487ba40370"),
+				ParameterName:        core.StringPtr("rdp_port"),
+				ParameterValue:       core.StringPtr("3390"),
+				ParameterDisplayName: core.StringPtr("Security group rule RDP allow port number"),
+				ParameterType:        core.StringPtr("numeric"),
+			}
+			parameterModel4 := &securityandcompliancecenterv3.Parameter{
+				AssessmentType:       core.StringPtr("automated"),
+				AssessmentID:         core.StringPtr("rule-7c5f6385-67e4-4edf-bec8-c722558b2dec"),
+				ParameterName:        core.StringPtr("ssh_port"),
+				ParameterValue:       core.StringPtr("23"),
+				ParameterDisplayName: core.StringPtr("Security group rule SSH allow port number"),
+				ParameterType:        core.StringPtr("numeric"),
+			}
+			parameterModel5 := &securityandcompliancecenterv3.Parameter{
+				AssessmentType:       core.StringPtr("automated"),
+				AssessmentID:         core.StringPtr("rule-f1e80ee7-88d5-4bf2-b42f-c863bb24601c"),
+				ParameterName:        core.StringPtr("rdp_port"),
+				ParameterValue:       core.StringPtr("3340"),
+				ParameterDisplayName: core.StringPtr("Security group rule SSH allow port number"),
+				ParameterType:        core.StringPtr("numeric"),
+			}
+			parameterModel6 := &securityandcompliancecenterv3.Parameter{
+				AssessmentType:       core.StringPtr("automated"),
+				AssessmentID:         core.StringPtr("rule-96527f89-1867-4581-b923-1400e04661e0"),
+				ParameterName:        core.StringPtr("exclude_default_security_groups"),
+				ParameterValue:       core.StringPtr("['Update the parameter']"),
+				ParameterDisplayName: core.StringPtr("Exclude the default security groups"),
+				ParameterType:        core.StringPtr("string_list"),
+			}
+
+			attachmentParameters := []securityandcompliancecenterv3.Parameter{
+				*parameterModel1,
+				*parameterModel2,
+				*parameterModel3,
+				*parameterModel4,
+				*parameterModel5,
+				*parameterModel6,
+			}
+
+			AttachmentNotifications := &securityandcompliancecenterv3.AttachmentNotifications{
+				Enabled: core.BoolPtr(false),
+				Controls: &securityandcompliancecenterv3.AttachmentNotificationsControls{
+					ThresholdLimit:   core.Int64Ptr(int64(15)),
+					FailedControlIds: []string{},
+				},
+			}
+
+			multiCloudScopePayloadModel := []securityandcompliancecenterv3.MultiCloudScopePayload{
+				{
+					ID: core.StringPtr("a1c2a74e-508d-48b3-8e46-5ab4f4795a7b"),
+				},
+			}
+
+			replaceProfileAttachmentOptions := securityAndComplianceCenterService.NewReplaceProfileAttachmentOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				oldProfileIDForReportLink,
+				attachmentIDLink,
+				"This profile attachment can be deleted",
+				"Profile Attachment SDK replacement",
+				"daily",
+				"disabled",
+				AttachmentNotifications,
+				multiCloudScopePayloadModel,
+				attachmentParameters,
+			)
+			profileAttachment, response, err := securityAndComplianceCenterService.ReplaceProfileAttachment(replaceProfileAttachmentOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(profileAttachment, "", "  ")
+			fmt.Println(string(b))
+
+			// end-replace_profile_attachment
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(profileAttachment).ToNot(BeNil())
+		})
+		It(`GetProfileAttachment request example`, func() {
+			fmt.Println("\nGetProfileAttachment() result:")
+			// begin-get_profile_attachment
+
+			getProfileAttachmentOptions := securityAndComplianceCenterService.NewGetProfileAttachmentOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				oldProfileIDForReportLink,
+				attachmentIDLink,
+			)
+
+			profileAttachment, response, err := securityAndComplianceCenterService.GetProfileAttachment(getProfileAttachmentOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(profileAttachment, "", "  ")
+			fmt.Println(string(b))
+
+			// end-get_profile_attachment
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(profileAttachment).ToNot(BeNil())
+		})
+		It(`UpgradeAttachment request example`, func() {
+			fmt.Println("\nUpgradeAttachment() result:")
+			// begin-upgrade_attachment
+
+			parameterModel1 := &securityandcompliancecenterv3.Parameter{
+				AssessmentType:       core.StringPtr("automated"),
+				AssessmentID:         core.StringPtr("rule-e16fcfea-fe21-4d30-a721-423611481fea"),
+				ParameterName:        core.StringPtr("tls_version"),
+				ParameterDisplayName: core.StringPtr("IBM Cloud Internet Services TLS version"),
+				ParameterType:        core.StringPtr("string_list"),
+				ParameterValue:       core.StringPtr("['1.2', '1.3']"),
+			}
+			parameterModel2 := &securityandcompliancecenterv3.Parameter{
+				AssessmentType:       core.StringPtr("automated"),
+				AssessmentID:         core.StringPtr("rule-f9137be8-2490-4afb-8cd5-a201cb167eb2"),
+				ParameterName:        core.StringPtr("ssh_port"),
+				ParameterDisplayName: core.StringPtr("Network ACL rule for allowed IPs to SSH port"),
+				ParameterType:        core.StringPtr("numeric"),
+				ParameterValue:       core.StringPtr("23"),
+			}
+			parameterModel3 := &securityandcompliancecenterv3.Parameter{
+				AssessmentType:       core.StringPtr("automated"),
+				AssessmentID:         core.StringPtr("rule-9653d2c7-6290-4128-a5a3-65487ba40370"),
+				ParameterName:        core.StringPtr("rdp_port"),
+				ParameterValue:       core.StringPtr("3390"),
+				ParameterDisplayName: core.StringPtr("Security group rule RDP allow port number"),
+				ParameterType:        core.StringPtr("numeric"),
+			}
+			parameterModel4 := &securityandcompliancecenterv3.Parameter{
+				AssessmentType:       core.StringPtr("automated"),
+				AssessmentID:         core.StringPtr("rule-7c5f6385-67e4-4edf-bec8-c722558b2dec"),
+				ParameterName:        core.StringPtr("ssh_port"),
+				ParameterValue:       core.StringPtr("23"),
+				ParameterDisplayName: core.StringPtr("Security group rule SSH allow port number"),
+				ParameterType:        core.StringPtr("numeric"),
+			}
+			parameterModel5 := &securityandcompliancecenterv3.Parameter{
+				AssessmentType:       core.StringPtr("automated"),
+				AssessmentID:         core.StringPtr("rule-f1e80ee7-88d5-4bf2-b42f-c863bb24601c"),
+				ParameterName:        core.StringPtr("rdp_port"),
+				ParameterValue:       core.StringPtr("3340"),
+				ParameterDisplayName: core.StringPtr("Security group rule SSH allow port number"),
+				ParameterType:        core.StringPtr("numeric"),
+			}
+			parameterModel6 := &securityandcompliancecenterv3.Parameter{
+				AssessmentType:       core.StringPtr("automated"),
+				AssessmentID:         core.StringPtr("rule-96527f89-1867-4581-b923-1400e04661e0"),
+				ParameterName:        core.StringPtr("exclude_default_security_groups"),
+				ParameterValue:       core.StringPtr("['Viewer']"),
+				ParameterDisplayName: core.StringPtr("Exclude the default security groups"),
+				ParameterType:        core.StringPtr("string_list"),
+			}
+			attachmentParameters := []securityandcompliancecenterv3.Parameter{
+				*parameterModel1,
+				*parameterModel2,
+				*parameterModel3,
+				*parameterModel4,
+				*parameterModel5,
+				*parameterModel6,
+			}
+
+			upgradeAttachmentOptions := securityAndComplianceCenterService.NewUpgradeAttachmentOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				oldProfileIDForReportLink,
+				attachmentIDLink,
+			)
+			upgradeAttachmentOptions.SetAttachmentParameters(attachmentParameters)
+
+			profileAttachment, response, err := securityAndComplianceCenterService.UpgradeAttachment(upgradeAttachmentOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(profileAttachment, "", "  ")
+			fmt.Println(string(b))
+
+			// end-upgrade_attachment
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(profileAttachment).ToNot(BeNil())
+		})
+		It(`ListControlLibraries request example`, func() {
+			fmt.Println("\nListControlLibraries() result:")
+			// begin-list_control_libraries
+
+			listControlLibrariesOptions := securityAndComplianceCenterService.NewListControlLibrariesOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+			)
+
+			controlLibraryCollection, response, err := securityAndComplianceCenterService.ListControlLibraries(listControlLibrariesOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(controlLibraryCollection, "", "  ")
+			fmt.Println(string(b))
+
+			// end-list_control_libraries
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(controlLibraryCollection).ToNot(BeNil())
 		})
 		It(`ReplaceCustomControlLibrary request example`, func() {
 			fmt.Println("\nReplaceCustomControlLibrary() result:")
 			// begin-replace_custom_control_library
 
-			parameterInfoModel := &securityandcompliancecenterapiv3.ParameterInfo{
-				ParameterName:        core.StringPtr("session_invalidation_in_seconds"),
-				ParameterDisplayName: core.StringPtr("Sign out due to inactivity in seconds"),
-				ParameterType:        core.StringPtr("numeric"),
+			assessmentPrototypeModel := &securityandcompliancecenterv3.AssessmentPrototype{
+				// Manual Update
+				AssessmentID:          core.StringPtr("rule-5bdfc82b-5eed-4405-b116-fa76292ec003"),
+				AssessmentDescription: core.StringPtr("Ensure that IAM IDentity has cbr enabled"),
 			}
 
-			implementationModel := &securityandcompliancecenterapiv3.Implementation{
-				AssessmentID:          core.StringPtr("rule-a637949b-7e51-46c4-afd4-b96619001bf1"),
-				AssessmentMethod:      core.StringPtr("ibm-cloud-rule"),
-				AssessmentType:        core.StringPtr("automated"),
-				AssessmentDescription: core.StringPtr("Check that there is an Activity Tracker event route defined to collect global events generated by IBM Cloud services"),
-				Parameters:            []securityandcompliancecenterapiv3.ParameterInfo{*parameterInfoModel},
-			}
-
-			controlSpecificationsModel := &securityandcompliancecenterapiv3.ControlSpecifications{
-				ControlSpecificationID:          core.StringPtr("5c7d6f88-a92f-4734-9b49-bd22b0900184"),
-				Responsibility:                  core.StringPtr("user"),
+			controlSpecificationPrototypeModel := &securityandcompliancecenterv3.ControlSpecificationPrototype{
 				ComponentID:                     core.StringPtr("iam-identity"),
 				Environment:                     core.StringPtr("ibm-cloud"),
-				ControlSpecificationDescription: core.StringPtr("IBM cloud"),
-				Assessments:                     []securityandcompliancecenterapiv3.Implementation{*implementationModel},
+				ControlSpecificationDescription: core.StringPtr("CBR security policies"),
+				Assessments:                     []securityandcompliancecenterv3.AssessmentPrototype{*assessmentPrototypeModel},
 			}
 
-			controlDocsModel := &securityandcompliancecenterapiv3.ControlDocs{
-				ControlDocsID:   core.StringPtr("sc-7"),
-				ControlDocsType: core.StringPtr("ibm-cloud"),
-			}
+			controlDocModel := &securityandcompliancecenterv3.ControlDoc{}
 
-			controlsInControlLibModel := &securityandcompliancecenterapiv3.ControlsInControlLib{
-				ControlName:           core.StringPtr("SC-7"),
-				ControlID:             core.StringPtr("1fa45e17-9322-4e6c-bbd6-1c51db08e790"),
-				ControlDescription:    core.StringPtr("Boundary Protection"),
-				ControlCategory:       core.StringPtr("System and Communications Protection"),
-				ControlTags:           []string{"1fa45e17-9322-4e6c-bbd6-1c51db08e790"},
-				ControlSpecifications: []securityandcompliancecenterapiv3.ControlSpecifications{*controlSpecificationsModel},
-				ControlDocs:           controlDocsModel,
+			controlPrototypeModel := &securityandcompliancecenterv3.ControlPrototype{
+				ControlName:           core.StringPtr("security"),
+				ControlDescription:    core.StringPtr("Check whether IAM Identity has context-based restrictions enabled"),
+				ControlCategory:       core.StringPtr("cbr"),
 				ControlRequirement:    core.BoolPtr(true),
+				ControlParent:         core.StringPtr(""),
+				ControlSpecifications: []securityandcompliancecenterv3.ControlSpecificationPrototype{*controlSpecificationPrototypeModel},
+				ControlDocs:           controlDocModel,
+				Status:                core.StringPtr("enabled"),
 			}
 
-			replaceCustomControlLibraryOptions := securityAndComplianceCenterApiService.NewReplaceCustomControlLibraryOptions(
-				instanceID,
-				controlLibraryIdLink,
+			replaceCustomControlLibraryOptions := securityAndComplianceCenterService.NewReplaceCustomControlLibraryOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				controlLibraryIDLink,
+				"testString",
+				"testString",
+				"custom",
+				"0.0.1",
+				[]securityandcompliancecenterv3.ControlPrototype{*controlPrototypeModel},
 			)
-			replaceCustomControlLibraryOptions.SetControlLibraryName("IBM Cloud for Financial Services")
-			replaceCustomControlLibraryOptions.SetControlLibraryDescription("IBM Cloud for Financial Services")
-			replaceCustomControlLibraryOptions.SetControlLibraryType("custom")
-			replaceCustomControlLibraryOptions.SetControlLibraryVersion("1.1.0")
-			replaceCustomControlLibraryOptions.SetControls([]securityandcompliancecenterapiv3.ControlsInControlLib{*controlsInControlLibModel})
 
-			controlLibrary, response, err := securityAndComplianceCenterApiService.ReplaceCustomControlLibrary(replaceCustomControlLibraryOptions)
+			controlLibrary, response, err := securityAndComplianceCenterService.ReplaceCustomControlLibrary(replaceCustomControlLibraryOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -546,128 +1075,61 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(controlLibrary).ToNot(BeNil())
 		})
-		It(`CreateProfile request example`, func() {
-			fmt.Println("\nCreateProfile() result:")
-			// begin-create_profile
+		It(`GetControlLibrary request example`, func() {
+			fmt.Println("\nGetControlLibrary() result:")
+			// begin-get_control_library
 
-			profileControlsPrototypeModel := &securityandcompliancecenterapiv3.ProfileControlsPrototype{
-				ControlLibraryID: &controlLibraryIdLink,
-				ControlID:        core.StringPtr("1fa45e17-9322-4e6c-bbd6-1c51db08e790"),
-			}
-
-			defaultParametersPrototypeModel := &securityandcompliancecenterapiv3.DefaultParametersPrototype{
-				AssessmentType:        core.StringPtr("Automated"),
-				AssessmentID:          core.StringPtr("rule-a637949b-7e51-46c4-afd4-b96619001bf1"),
-				ParameterName:         core.StringPtr("session_invalidation_in_seconds"),
-				ParameterDefaultValue: core.StringPtr("120"),
-				ParameterDisplayName:  core.StringPtr("Sign out due to inactivity in seconds"),
-				ParameterType:         core.StringPtr("numeric"),
-			}
-
-			createProfileOptions := securityAndComplianceCenterApiService.NewCreateProfileOptions(
-				instanceID,
-				"scc-go-sdk test_profile1",
-				"test_description1",
-				"custom",
-				[]securityandcompliancecenterapiv3.ProfileControlsPrototype{*profileControlsPrototypeModel},
-				[]securityandcompliancecenterapiv3.DefaultParametersPrototype{*defaultParametersPrototypeModel},
+			getControlLibraryOptions := securityAndComplianceCenterService.NewGetControlLibraryOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				controlLibraryIDLink,
 			)
 
-			profile, response, err := securityAndComplianceCenterApiService.CreateProfile(createProfileOptions)
+			controlLibrary, response, err := securityAndComplianceCenterService.GetControlLibrary(getControlLibraryOptions)
 			if err != nil {
 				panic(err)
 			}
-			b, _ := json.MarshalIndent(profile, "", "  ")
+			b, _ := json.MarshalIndent(controlLibrary, "", "  ")
 			fmt.Println(string(b))
 
-			// end-create_profile
+			// end-get_control_library
 
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(201))
-			Expect(profile).ToNot(BeNil())
-
-			profileIdLink = *profile.ID
-			fmt.Fprintf(GinkgoWriter, "Saved profileIdLink value: %v\n", profileIdLink)
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(controlLibrary).ToNot(BeNil())
 		})
 		It(`ListProfiles request example`, func() {
 			fmt.Println("\nListProfiles() result:")
 			// begin-list_profiles
-			listProfilesOptions := &securityandcompliancecenterapiv3.ListProfilesOptions{
-				InstanceID:     &instanceID,
-				XCorrelationID: core.StringPtr("testString"),
-				XRequestID:     core.StringPtr("testString"),
-				Limit:          core.Int64Ptr(int64(10)),
-				ProfileType:    core.StringPtr("custom"),
-			}
 
-			pager, err := securityAndComplianceCenterApiService.NewProfilesPager(listProfilesOptions)
-			if err != nil {
-				panic(err)
-			}
-
-			var allResults []securityandcompliancecenterapiv3.ProfileItem
-			for pager.HasNext() {
-				nextPage, err := pager.GetNext()
-				if err != nil {
-					panic(err)
-				}
-				allResults = append(allResults, nextPage...)
-			}
-			b, _ := json.MarshalIndent(allResults, "", "  ")
-			fmt.Println(string(b))
-			// end-list_profiles
-		})
-		It(`GetProfile request example`, func() {
-			fmt.Println("\nGetProfile() result:")
-			// begin-get_profile
-
-			getProfileOptions := securityAndComplianceCenterApiService.NewGetProfileOptions(
-				instanceID,
-				profileIdLink,
+			listProfilesOptions := securityAndComplianceCenterService.NewListProfilesOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
 			)
 
-			profile, response, err := securityAndComplianceCenterApiService.GetProfile(getProfileOptions)
+			profileCollection, response, err := securityAndComplianceCenterService.ListProfiles(listProfilesOptions)
 			if err != nil {
 				panic(err)
 			}
-			b, _ := json.MarshalIndent(profile, "", "  ")
+			b, _ := json.MarshalIndent(profileCollection, "", "  ")
 			fmt.Println(string(b))
 
-			// end-get_profile
+			// end-list_profiles
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
-			Expect(profile).ToNot(BeNil())
+			Expect(profileCollection).ToNot(BeNil())
 		})
 		It(`ReplaceProfile request example`, func() {
 			fmt.Println("\nReplaceProfile() result:")
 			// begin-replace_profile
 
-			profileControlsPrototypeModel := &securityandcompliancecenterapiv3.ProfileControlsPrototype{
-				ControlLibraryID: &controlLibraryIdLink,
-				ControlID:        core.StringPtr("1fa45e17-9322-4e6c-bbd6-1c51db08e790"),
-			}
-
-			defaultParametersPrototypeModel := &securityandcompliancecenterapiv3.DefaultParametersPrototype{
-				AssessmentType:        core.StringPtr("Automated"),
-				AssessmentID:          core.StringPtr("rule-a637949b-7e51-46c4-afd4-b96619001bf1"),
-				ParameterName:         core.StringPtr("session_invalidation_in_seconds"),
-				ParameterDefaultValue: core.StringPtr("120"),
-				ParameterDisplayName:  core.StringPtr("Sign out due to inactivity in seconds"),
-				ParameterType:         core.StringPtr("numeric"),
-			}
-
-			replaceProfileOptions := securityAndComplianceCenterApiService.NewReplaceProfileOptions(
-				instanceID,
-				profileIdLink,
-				"test_profile1",
-				"test_description1",
-				"custom",
-				[]securityandcompliancecenterapiv3.ProfileControlsPrototype{*profileControlsPrototypeModel},
-				[]securityandcompliancecenterapiv3.DefaultParametersPrototype{*defaultParametersPrototypeModel},
+			replaceProfileOptions := securityAndComplianceCenterService.NewReplaceProfileOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				profileIDLink,
+				"SDK example test run",
+				"This profile can be deleted",
 			)
 
-			profile, response, err := securityAndComplianceCenterApiService.ReplaceProfile(replaceProfileOptions)
+			profile, response, err := securityAndComplianceCenterService.ReplaceProfile(replaceProfileOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -680,409 +1142,513 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(profile).ToNot(BeNil())
 		})
-		It(`ListRules request example`, func() {
-			fmt.Println("\nListRules() result:")
-			// begin-list_rules
+		It(`GetProfile request example`, func() {
+			fmt.Println("\nGetProfile() result:")
+			// begin-get_profile
 
-			listRulesOptions := securityAndComplianceCenterApiService.NewListRulesOptions(instanceID)
-			listRulesOptions.SetType("system_defined")
+			getProfileOptions := securityAndComplianceCenterService.NewGetProfileOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				profileIDLink,
+			)
 
-			rulesPageBase, response, err := securityAndComplianceCenterApiService.ListRules(listRulesOptions)
+			profile, response, err := securityAndComplianceCenterService.GetProfile(getProfileOptions)
 			if err != nil {
 				panic(err)
 			}
-			b, _ := json.MarshalIndent(rulesPageBase, "", "  ")
+			b, _ := json.MarshalIndent(profile, "", "  ")
 			fmt.Println(string(b))
 
-			// end-list_rules
+			// end-get_profile
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
-			Expect(rulesPageBase).ToNot(BeNil())
+			Expect(profile).ToNot(BeNil())
 		})
-		It(`ReplaceRule request example`, func() {
-			fmt.Println("\nReplaceRule() result:")
-			// begin-replace_rule
+		It(`ReplaceProfileParameters request example`, func() {
+			fmt.Println("\nReplaceProfileParameters() result:")
+			// begin-replace_profile_parameters
 
-			additionalTargetAttributeModel := &securityandcompliancecenterapiv3.AdditionalTargetAttribute{
-				Name:     core.StringPtr("location"),
-				Operator: core.StringPtr("string_equals"),
-				Value:    core.StringPtr("us-south"),
-			}
-
-			targetModel := &securityandcompliancecenterapiv3.Target{
-				ServiceName:                core.StringPtr("cloud-object-storage"),
-				ServiceDisplayName:         core.StringPtr("Cloud Object Storage"),
-				ResourceKind:               core.StringPtr("bucket"),
-				AdditionalTargetAttributes: []securityandcompliancecenterapiv3.AdditionalTargetAttribute{*additionalTargetAttributeModel},
-			}
-
-			requiredConfigItemsModel := &securityandcompliancecenterapiv3.RequiredConfig{
-				Property: core.StringPtr("hard_quota"),
-				Operator: core.StringPtr("num_equals"),
-				Value:    core.StringPtr("${hard_quota}"),
-			}
-
-			requiredConfigModel := &securityandcompliancecenterapiv3.RequiredConfig{
-				Description: core.StringPtr("The Cloud Object Storage rule."),
-				And:         []securityandcompliancecenterapiv3.RequiredConfigIntf{requiredConfigItemsModel},
-			}
-
-			parameterModel := &securityandcompliancecenterapiv3.Parameter{
-				Name:        core.StringPtr("hard_quota"),
-				DisplayName: core.StringPtr("The Cloud Object Storage bucket quota."),
-				Description: core.StringPtr("The maximum bytes that are allocated to the Cloud Object Storage bucket."),
-				Type:        core.StringPtr("numeric"),
-			}
-
-			importModel := &securityandcompliancecenterapiv3.Import{
-				Parameters: []securityandcompliancecenterapiv3.Parameter{*parameterModel},
-			}
-
-			replaceRuleOptions := securityAndComplianceCenterApiService.NewReplaceRuleOptions(
-				instanceID,
-				ruleIdLink,
-				eTagLink,
-				"Example rule",
-				targetModel,
-				requiredConfigModel,
+			replaceProfileParametersOptions := securityAndComplianceCenterService.NewReplaceProfileParametersOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				profileIDLink,
 			)
-			replaceRuleOptions.SetType("user_defined")
-			replaceRuleOptions.SetVersion("1.0.1")
-			replaceRuleOptions.SetImport(importModel)
-			replaceRuleOptions.SetLabels([]string{})
 
-			rule, response, err := securityAndComplianceCenterApiService.ReplaceRule(replaceRuleOptions)
+			profileDefaultParametersResponse, response, err := securityAndComplianceCenterService.ReplaceProfileParameters(replaceProfileParametersOptions)
 			if err != nil {
 				panic(err)
 			}
-			b, _ := json.MarshalIndent(rule, "", "  ")
+			b, _ := json.MarshalIndent(profileDefaultParametersResponse, "", "  ")
 			fmt.Println(string(b))
 
-			// end-replace_rule
+			// end-replace_profile_parameters
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
-			Expect(rule).ToNot(BeNil())
+			Expect(profileDefaultParametersResponse).ToNot(BeNil())
 		})
-		It(`CreateAttachment request example`, func() {
-			fmt.Println("\nCreateAttachment() result:")
-			// begin-create_attachment
+		It(`ListProfileParameters request example`, func() {
+			fmt.Println("\nListProfileParameters() result:")
+			// begin-list_profile_parameters
 
-			propertyScopeID := &securityandcompliancecenterapiv3.PropertyItem{
-				Name:  core.StringPtr("scope_id"),
-				Value: core.StringPtr(accountID),
-			}
-			propertyScopeType := &securityandcompliancecenterapiv3.PropertyItem{
-				Name:  core.StringPtr("scope_type"),
-				Value: core.StringPtr("account"),
-			}
-
-			multiCloudScopeModel := &securityandcompliancecenterapiv3.MultiCloudScope{
-				Environment: core.StringPtr("ibm-cloud"),
-				Properties:  []securityandcompliancecenterapiv3.PropertyItem{*propertyScopeID, *propertyScopeType},
-			}
-
-			failedControlsModel := &securityandcompliancecenterapiv3.FailedControls{
-				ThresholdLimit:   core.Int64Ptr(int64(15)),
-				FailedControlIds: []string{},
-			}
-
-			attachmentsNotificationsPrototypeModel := &securityandcompliancecenterapiv3.AttachmentsNotificationsPrototype{
-				Enabled:  core.BoolPtr(false),
-				Controls: failedControlsModel,
-			}
-
-			attachmentParameterPrototypeModel := &securityandcompliancecenterapiv3.AttachmentParameterPrototype{
-				AssessmentType:       core.StringPtr("Automated"),
-				AssessmentID:         core.StringPtr("rule-a637949b-7e51-46c4-afd4-b96619001bf1"),
-				ParameterName:        core.StringPtr("session_invalidation_in_seconds"),
-				ParameterValue:       core.StringPtr("120"),
-				ParameterDisplayName: core.StringPtr("Sign out due to inactivity in seconds"),
-				ParameterType:        core.StringPtr("numeric"),
-			}
-
-			attachmentsPrototypeModel := &securityandcompliancecenterapiv3.AttachmentsPrototype{
-				Name:                 core.StringPtr("account-0d8c3805dfea40aa8ad02265a18eb12b"),
-				Description:          core.StringPtr("Test description"),
-				Scope:                []securityandcompliancecenterapiv3.MultiCloudScope{*multiCloudScopeModel},
-				Status:               core.StringPtr("enabled"),
-				Schedule:             core.StringPtr("every_30_days"),
-				Notifications:        attachmentsNotificationsPrototypeModel,
-				AttachmentParameters: []securityandcompliancecenterapiv3.AttachmentParameterPrototype{*attachmentParameterPrototypeModel},
-			}
-
-			createAttachmentOptions := securityAndComplianceCenterApiService.NewCreateAttachmentOptions(
-				instanceID,
-				profileIdLink,
-				[]securityandcompliancecenterapiv3.AttachmentsPrototype{*attachmentsPrototypeModel},
+			listProfileParametersOptions := securityAndComplianceCenterService.NewListProfileParametersOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				profileIDLink,
 			)
 
-			attachmentPrototype, response, err := securityAndComplianceCenterApiService.CreateAttachment(createAttachmentOptions)
+			profileDefaultParametersResponse, response, err := securityAndComplianceCenterService.ListProfileParameters(listProfileParametersOptions)
 			if err != nil {
 				panic(err)
 			}
-			b, _ := json.MarshalIndent(attachmentPrototype, "", "  ")
+			b, _ := json.MarshalIndent(profileDefaultParametersResponse, "", "  ")
 			fmt.Println(string(b))
 
-			// end-create_attachment
+			// end-list_profile_parameters
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(profileDefaultParametersResponse).ToNot(BeNil())
+		})
+		It(`CompareProfiles request example`, func() {
+			fmt.Println("\nCompareProfiles() result:")
+			// begin-compare_profiles
+
+			compareProfilesOptions := securityAndComplianceCenterService.NewCompareProfilesOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				oldProfileIDForReportLink,
+			)
+
+			comparePredefinedProfilesResponse, response, err := securityAndComplianceCenterService.CompareProfiles(compareProfilesOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(comparePredefinedProfilesResponse, "", "  ")
+			fmt.Println(string(b))
+
+			// end-compare_profiles
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(comparePredefinedProfilesResponse).ToNot(BeNil())
+		})
+		It(`ListScopes request example`, func() {
+			fmt.Println("\nListScopes() result:")
+			// begin-list_scopes
+			listScopesOptions := &securityandcompliancecenterv3.ListScopesOptions{
+				InstanceID: core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
+				Limit:      core.Int64Ptr(int64(10)),
+			}
+
+			pager, err := securityAndComplianceCenterService.NewScopesPager(listScopesOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			var allResults []securityandcompliancecenterv3.Scope
+			for pager.HasNext() {
+				nextPage, err := pager.GetNext()
+				if err != nil {
+					panic(err)
+				}
+				allResults = append(allResults, nextPage...)
+			}
+			b, _ := json.MarshalIndent(allResults, "", "  ")
+			fmt.Println(string(b))
+			// end-list_scopes
+		})
+		It(`UpdateScope request example`, func() {
+			fmt.Println("\nUpdateScope() result:")
+			// begin-update_scope
+
+			updateScopeOptions := securityAndComplianceCenterService.NewUpdateScopeOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				scopeIDLink,
+			)
+			updateScopeOptions.SetName("updated name of scope")
+			updateScopeOptions.SetDescription("updated scope description")
+
+			scope, response, err := securityAndComplianceCenterService.UpdateScope(updateScopeOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(scope, "", "  ")
+			fmt.Println(string(b))
+
+			// end-update_scope
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(scope).ToNot(BeNil())
+		})
+		It(`GetScope request example`, func() {
+			fmt.Println("\nGetScope() result:")
+			// begin-get_scope
+
+			getScopeOptions := securityAndComplianceCenterService.NewGetScopeOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				scopeIDLink,
+			)
+
+			scope, response, err := securityAndComplianceCenterService.GetScope(getScopeOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(scope, "", "  ")
+			fmt.Println(string(b))
+
+			// end-get_scope
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(scope).ToNot(BeNil())
+		})
+		It(`ListSubscopes request example`, func() {
+			fmt.Println("\nListSubscopes() result:")
+			// begin-list_subscopes
+			listSubscopesOptions := &securityandcompliancecenterv3.ListSubscopesOptions{
+				InstanceID: core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
+				ScopeID:    &scopeIDLink,
+				Limit:      core.Int64Ptr(int64(10)),
+			}
+
+			pager, err := securityAndComplianceCenterService.NewSubscopesPager(listSubscopesOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			var allResults []securityandcompliancecenterv3.SubScope
+			for pager.HasNext() {
+				nextPage, err := pager.GetNext()
+				if err != nil {
+					panic(err)
+				}
+				allResults = append(allResults, nextPage...)
+			}
+			b, _ := json.MarshalIndent(allResults, "", "  ")
+			fmt.Println(string(b))
+			// end-list_subscopes
+		})
+		It(`GetSubscope request example`, func() {
+			fmt.Println("\nGetSubscope() result:")
+			// begin-get_subscope
+
+			getSubscopeOptions := securityAndComplianceCenterService.NewGetSubscopeOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				scopeIDLink,
+				subScopeIDLink,
+			)
+
+			subScope, response, err := securityAndComplianceCenterService.GetSubscope(getSubscopeOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(subScope, "", "  ")
+			fmt.Println(string(b))
+
+			// end-get_subscope
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subScope).ToNot(BeNil())
+		})
+		It(`UpdateSubscope request example`, func() {
+			fmt.Println("\nUpdateSubscope() result:")
+			// begin-update_subscope
+
+			updateSubscopeOptions := securityAndComplianceCenterService.NewUpdateSubscopeOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				scopeIDLink,
+				subScopeIDLink,
+			)
+			updateSubscopeOptions.SetName("SDK updated name of scope")
+			updateSubscopeOptions.SetDescription("updated scope description")
+
+			subScope, response, err := securityAndComplianceCenterService.UpdateSubscope(updateSubscopeOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(subScope, "", "  ")
+			fmt.Println(string(b))
+
+			// end-update_subscope
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subScope).ToNot(BeNil())
+		})
+		It(`CreateTarget request example`, func() {
+			fmt.Println("\nCreateTarget() result:")
+			// begin-create_target
+
+			createTargetOptions := securityAndComplianceCenterService.NewCreateTargetOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				"62ecf99b240144dea9125666249edfcb",
+				"Profile-cb2c1829-9a8d-4218-b9cd-9f83fc814e54",
+				"Sample Target from SDK run",
+			)
+
+			target, response, err := securityAndComplianceCenterService.CreateTarget(createTargetOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(target, "", "  ")
+			fmt.Println(string(b))
+
+			// end-create_target
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(201))
-			Expect(attachmentPrototype).ToNot(BeNil())
+			Expect(target).ToNot(BeNil())
 
-			attachmentIdLink = *attachmentPrototype.Attachments[0].ID
-			fmt.Fprintf(GinkgoWriter, "Saved attachmentIdLink value: %v\n", attachmentIdLink)
+			targetIDLink = *target.ID
 		})
-		It(`ListAttachments request example`, func() {
-			fmt.Println("\nListAttachments() result:")
-			// begin-list_attachments
-			listAttachmentsOptions := &securityandcompliancecenterapiv3.ListAttachmentsOptions{
-				InstanceID:     &instanceID,
-				ProfileID:      &profileIdLink,
-				XCorrelationID: core.StringPtr("testString"),
-				XRequestID:     core.StringPtr("testString"),
-				Limit:          core.Int64Ptr(int64(10)),
-			}
+		It(`ListTargets request example`, func() {
+			fmt.Println("\nListTargets() result:")
+			// begin-list_targets
 
-			pager, err := securityAndComplianceCenterApiService.NewAttachmentsPager(listAttachmentsOptions)
+			listTargetsOptions := securityAndComplianceCenterService.NewListTargetsOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+			)
+
+			targetCollection, response, err := securityAndComplianceCenterService.ListTargets(listTargetsOptions)
 			if err != nil {
 				panic(err)
 			}
+			b, _ := json.MarshalIndent(targetCollection, "", "  ")
+			fmt.Println(string(b))
 
-			var allResults []securityandcompliancecenterapiv3.AttachmentItem
-			for pager.HasNext() {
-				nextPage, err := pager.GetNext()
-				if err != nil {
-					panic(err)
+			// end-list_targets
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(targetCollection).ToNot(BeNil())
+		})
+		It(`GetTarget request example`, func() {
+			fmt.Println("\nGetTarget() result:")
+			// begin-get_target
+
+			getTargetOptions := securityAndComplianceCenterService.NewGetTargetOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				targetIDLink,
+			)
+
+			target, response, err := securityAndComplianceCenterService.GetTarget(getTargetOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(target, "", "  ")
+			fmt.Println(string(b))
+
+			// end-get_target
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(target).ToNot(BeNil())
+		})
+		It(`ReplaceTarget request example`, func() {
+			fmt.Println("\nReplaceTarget() result:")
+			// begin-replace_target
+
+			replaceTargetOptions := securityAndComplianceCenterService.NewReplaceTargetOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				targetIDLink,
+				"62ecf99b240144dea9125666249edfcb",
+				"Profile-cb2c1829-9a8d-4218-b9cd-9f83fc814e54",
+				"Sample Target from SDK run",
+			)
+
+			target, response, err := securityAndComplianceCenterService.ReplaceTarget(replaceTargetOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(target, "", "  ")
+			fmt.Println(string(b))
+
+			// end-replace_target
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(target).ToNot(BeNil())
+		})
+		It(`ListProviderTypes request example`, func() {
+			fmt.Println("\nListProviderTypes() result:")
+			// begin-list_provider_types
+
+			listProviderTypesOptions := securityAndComplianceCenterService.NewListProviderTypesOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+			)
+
+			providerTypeCollection, response, err := securityAndComplianceCenterService.ListProviderTypes(listProviderTypesOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(providerTypeCollection, "", "  ")
+			fmt.Println(string(b))
+
+			// end-list_provider_types
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(providerTypeCollection).ToNot(BeNil())
+
+			for _, providerType := range providerTypeCollection.ProviderTypes {
+				if *providerType.Name == "Caveonix" {
+					providerTypeIDLink = *providerType.ID
+					break
 				}
-				allResults = append(allResults, nextPage...)
 			}
-			b, _ := json.MarshalIndent(allResults, "", "  ")
-			fmt.Println(string(b))
-			// end-list_attachments
+			fmt.Fprintf(GinkgoWriter, "Saved providerTypeIDLink value: %v\n", providerTypeIDLink)
 		})
-		It(`GetProfileAttachment request example`, func() {
-			fmt.Println("\nGetProfileAttachment() result:")
-			// begin-get_profile_attachment
+		It(`CreateProviderTypeInstance request example`, func() {
+			fmt.Println("\nCreateProviderTypeInstance() result:")
+			// begin-create_provider_type_instance
 
-			getProfileAttachmentOptions := securityAndComplianceCenterApiService.NewGetProfileAttachmentOptions(
-				instanceID,
-				attachmentIdLink,
-				profileIdLink,
+			createProviderTypeInstanceOptions := securityAndComplianceCenterService.NewCreateProviderTypeInstanceOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				providerTypeIDLink,
+				"providerTypeFromSDK run",
 			)
 
-			attachmentItem, response, err := securityAndComplianceCenterApiService.GetProfileAttachment(getProfileAttachmentOptions)
+			providerTypeInstance, response, err := securityAndComplianceCenterService.CreateProviderTypeInstance(createProviderTypeInstanceOptions)
 			if err != nil {
 				panic(err)
 			}
-			b, _ := json.MarshalIndent(attachmentItem, "", "  ")
+			b, _ := json.MarshalIndent(providerTypeInstance, "", "  ")
 			fmt.Println(string(b))
 
-			// end-get_profile_attachment
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(attachmentItem).ToNot(BeNil())
-		})
-		It(`ReplaceProfileAttachment request example`, func() {
-			fmt.Println("\nReplaceProfileAttachment() result:")
-			// begin-replace_profile_attachment
-
-			propertyScopeID := &securityandcompliancecenterapiv3.PropertyItem{
-				Name:  core.StringPtr("scope_id"),
-				Value: core.StringPtr(accountID),
-			}
-			propertyScopeType := &securityandcompliancecenterapiv3.PropertyItem{
-				Name:  core.StringPtr("scope_type"),
-				Value: core.StringPtr("account"),
-			}
-
-			multiCloudScopeModel := &securityandcompliancecenterapiv3.MultiCloudScope{
-				Environment: core.StringPtr("ibm-cloud"),
-				Properties:  []securityandcompliancecenterapiv3.PropertyItem{*propertyScopeID, *propertyScopeType},
-			}
-
-			failedControlsModel := &securityandcompliancecenterapiv3.FailedControls{
-				ThresholdLimit:   core.Int64Ptr(int64(15)),
-				FailedControlIds: []string{},
-			}
-
-			attachmentsNotificationsPrototypeModel := &securityandcompliancecenterapiv3.AttachmentsNotificationsPrototype{
-				Enabled:  core.BoolPtr(false),
-				Controls: failedControlsModel,
-			}
-
-			attachmentParameterPrototypeModel := &securityandcompliancecenterapiv3.AttachmentParameterPrototype{
-				AssessmentType:       core.StringPtr("Automated"),
-				AssessmentID:         core.StringPtr("rule-a637949b-7e51-46c4-afd4-b96619001bf1"),
-				ParameterName:        core.StringPtr("session_invalidation_in_seconds"),
-				ParameterValue:       core.StringPtr("120"),
-				ParameterDisplayName: core.StringPtr("Sign out due to inactivity in seconds"),
-				ParameterType:        core.StringPtr("numeric"),
-			}
-
-			replaceProfileAttachmentOptions := securityAndComplianceCenterApiService.NewReplaceProfileAttachmentOptions(
-				instanceID,
-				attachmentIdLink,
-				profileIdLink,
-			)
-			replaceProfileAttachmentOptions.SetScope([]securityandcompliancecenterapiv3.MultiCloudScope{*multiCloudScopeModel})
-			replaceProfileAttachmentOptions.SetStatus("enabled")
-			replaceProfileAttachmentOptions.SetSchedule("every_30_days")
-			replaceProfileAttachmentOptions.SetNotifications(attachmentsNotificationsPrototypeModel)
-			replaceProfileAttachmentOptions.SetAttachmentParameters([]securityandcompliancecenterapiv3.AttachmentParameterPrototype{*attachmentParameterPrototypeModel})
-			replaceProfileAttachmentOptions.SetName("account-0d8c3805dfea40aa8ad02265a18eb12b")
-			replaceProfileAttachmentOptions.SetDescription("Test description")
-
-			attachmentItem, response, err := securityAndComplianceCenterApiService.ReplaceProfileAttachment(replaceProfileAttachmentOptions)
-			if err != nil {
-				panic(err)
-			}
-			b, _ := json.MarshalIndent(attachmentItem, "", "  ")
-			fmt.Println(string(b))
-
-			// end-replace_profile_attachment
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(attachmentItem).ToNot(BeNil())
-		})
-		It(`CreateScan request example`, func() {
-			fmt.Println("\nCreateScan() result:")
-			// begin-create_scan
-
-			createScanOptions := securityAndComplianceCenterApiService.NewCreateScanOptions(
-				instanceID,
-				createScanAttachmentID,
-			)
-
-			scan, response, err := securityAndComplianceCenterApiService.CreateScan(createScanOptions)
-			if err != nil {
-				panic(err)
-			}
-			b, _ := json.MarshalIndent(scan, "", "  ")
-			fmt.Println(string(b))
-
-			// end-create_scan
+			// end-create_provider_type_instance
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(201))
-			Expect(scan).ToNot(BeNil())
+			Expect(providerTypeInstance).ToNot(BeNil())
+
+			providerTypeInstanceIDLink = *providerTypeInstance.ID
+			fmt.Fprintf(GinkgoWriter, "Saved providerTypeInstanceIDLink value: %v\n", providerTypeInstanceIDLink)
 		})
-		It(`ListAttachmentsAccount request example`, func() {
-			fmt.Println("\nListAttachmentsAccount() result:")
-			// begin-list_attachments_account
-			listAttachmentsAccountOptions := &securityandcompliancecenterapiv3.ListAttachmentsAccountOptions{
-				InstanceID:     &instanceID,
-				XCorrelationID: core.StringPtr("testString"),
-				XRequestID:     core.StringPtr("testString"),
-				Limit:          core.Int64Ptr(int64(10)),
-			}
+		It(`ListProviderTypeInstances request example`, func() {
+			fmt.Println("\nListProviderTypeInstances() result:")
+			// begin-list_provider_type_instances
 
-			pager, err := securityAndComplianceCenterApiService.NewAttachmentsAccountPager(listAttachmentsAccountOptions)
-			if err != nil {
-				panic(err)
-			}
-
-			var allResults []securityandcompliancecenterapiv3.AttachmentItem
-			for pager.HasNext() {
-				nextPage, err := pager.GetNext()
-				if err != nil {
-					panic(err)
-				}
-				allResults = append(allResults, nextPage...)
-			}
-			b, _ := json.MarshalIndent(allResults, "", "  ")
-			fmt.Println(string(b))
-			// end-list_attachments_account
-		})
-		It(`ListReports request example`, func() {
-			fmt.Println("\nListReports() result:")
-			// begin-list_reports
-			listReportsOptions := &securityandcompliancecenterapiv3.ListReportsOptions{
-				InstanceID:     &instanceID,
-				XCorrelationID: core.StringPtr("testString"),
-				XRequestID:     core.StringPtr("testString"),
-				AttachmentID:   &attachmentIdForReportLink,
-				GroupID:        &groupIdForReportLink,
-				ProfileID:      &profileIdForReportLink,
-				Type:           &typeForReportLink,
-				Limit:          core.Int64Ptr(int64(10)),
-				Sort:           core.StringPtr("profile_name"),
-			}
-
-			pager, err := securityAndComplianceCenterApiService.NewReportsPager(listReportsOptions)
-			if err != nil {
-				panic(err)
-			}
-
-			var allResults []securityandcompliancecenterapiv3.Report
-			for pager.HasNext() {
-				nextPage, err := pager.GetNext()
-				if err != nil {
-					panic(err)
-				}
-				allResults = append(allResults, nextPage...)
-			}
-			b, _ := json.MarshalIndent(allResults, "", "  ")
-			fmt.Println(string(b))
-			// end-list_reports
-		})
-		It(`GetReport request example`, func() {
-			fmt.Println("\nGetReport() result:")
-			// begin-get_report
-
-			getReportOptions := securityAndComplianceCenterApiService.NewGetReportOptions(
-				instanceID,
-				reportIdForReportLink,
+			listProviderTypeInstancesOptions := securityAndComplianceCenterService.NewListProviderTypeInstancesOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				providerTypeIDLink,
 			)
 
-			report, response, err := securityAndComplianceCenterApiService.GetReport(getReportOptions)
+			providerTypeInstanceCollection, response, err := securityAndComplianceCenterService.ListProviderTypeInstances(listProviderTypeInstancesOptions)
 			if err != nil {
 				panic(err)
 			}
-			b, _ := json.MarshalIndent(report, "", "  ")
+			b, _ := json.MarshalIndent(providerTypeInstanceCollection, "", "  ")
 			fmt.Println(string(b))
 
-			// end-get_report
+			// end-list_provider_type_instances
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
-			Expect(report).ToNot(BeNil())
+			Expect(providerTypeInstanceCollection).ToNot(BeNil())
 		})
-		It(`GetReportSummary request example`, func() {
-			fmt.Println("\nGetReportSummary() result:")
-			// begin-get_report_summary
+		It(`GetProviderTypeInstance request example`, func() {
+			fmt.Println("\nGetProviderTypeInstance() result:")
+			// begin-get_provider_type_instance
 
-			getReportSummaryOptions := securityAndComplianceCenterApiService.NewGetReportSummaryOptions(
-				instanceID,
-				reportIdForReportLink,
+			getProviderTypeInstanceOptions := securityAndComplianceCenterService.NewGetProviderTypeInstanceOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				providerTypeIDLink,
+				providerTypeInstanceIDLink,
 			)
 
-			reportSummary, response, err := securityAndComplianceCenterApiService.GetReportSummary(getReportSummaryOptions)
+			providerTypeInstance, response, err := securityAndComplianceCenterService.GetProviderTypeInstance(getProviderTypeInstanceOptions)
 			if err != nil {
 				panic(err)
 			}
-			b, _ := json.MarshalIndent(reportSummary, "", "  ")
+			b, _ := json.MarshalIndent(providerTypeInstance, "", "  ")
 			fmt.Println(string(b))
 
-			// end-get_report_summary
+			// end-get_provider_type_instance
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
-			Expect(reportSummary).ToNot(BeNil())
+			Expect(providerTypeInstance).ToNot(BeNil())
 		})
-		It(`GetReportEvaluation request example`, func() {
-			fmt.Println("\nGetReportEvaluation() result:")
-			// begin-get_report_evaluation
+		It(`UpdateProviderTypeInstance request example`, func() {
+			fmt.Println("\nUpdateProviderTypeInstance() result:")
+			// begin-update_provider_type_instance
 
-			getReportEvaluationOptions := securityAndComplianceCenterApiService.NewGetReportEvaluationOptions(
-				instanceID,
-				reportIdForReportLink,
+			updateProviderTypeInstanceOptions := securityAndComplianceCenterService.NewUpdateProviderTypeInstanceOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				providerTypeIDLink,
+				providerTypeInstanceIDLink,
+				"Provider Type Instance from SDK run",
 			)
 
-			result, response, err := securityAndComplianceCenterApiService.GetReportEvaluation(getReportEvaluationOptions)
+			providerTypeInstance, response, err := securityAndComplianceCenterService.UpdateProviderTypeInstance(updateProviderTypeInstanceOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(providerTypeInstance, "", "  ")
+			fmt.Println(string(b))
+
+			// end-update_provider_type_instance
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(providerTypeInstance).ToNot(BeNil())
+		})
+		It(`GetProviderTypeByID request example`, func() {
+			fmt.Println("\nGetProviderTypeByID() result:")
+			// begin-get_provider_type_by_id
+
+			getProviderTypeByIDOptions := securityAndComplianceCenterService.NewGetProviderTypeByIDOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				providerTypeIDLink,
+			)
+
+			providerType, response, err := securityAndComplianceCenterService.GetProviderTypeByID(getProviderTypeByIDOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(providerType, "", "  ")
+			fmt.Println(string(b))
+
+			// end-get_provider_type_by_id
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(providerType).ToNot(BeNil())
+		})
+		It(`GetScanReport request example`, func() {
+			fmt.Println("\nGetScanReport() result:")
+			// begin-get_scan_report
+
+			getScanReportOptions := securityAndComplianceCenterService.NewGetScanReportOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				reportIDForReportLink,
+				scanIDforReportLink,
+			)
+
+			scanReport, response, err := securityAndComplianceCenterService.GetScanReport(getScanReportOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(scanReport, "", "  ")
+			fmt.Println(string(b))
+
+			// end-get_scan_report
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(scanReport).ToNot(BeNil())
+		})
+		It(`GetScanReportDownloadFile request example`, func() {
+			fmt.Println("\nGetScanReportDownloadFile() result:")
+			// begin-get_scan_report_download_file
+
+			getScanReportDownloadFileOptions := securityAndComplianceCenterService.NewGetScanReportDownloadFileOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				reportIDForReportLink,
+				scanIDforReportLink,
+			)
+
+			result, response, err := securityAndComplianceCenterService.GetScanReportDownloadFile(getScanReportDownloadFileOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -1099,7 +1665,110 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 				}
 			}
 
-			// end-get_report_evaluation
+			// end-get_scan_report_download_file
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(result).ToNot(BeNil())
+		})
+		It(`ListReports request example`, func() {
+			fmt.Println("\nListReports() result:")
+			// begin-list_reports
+			listReportsOptions := &securityandcompliancecenterv3.ListReportsOptions{
+				InstanceID:   core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
+				AttachmentID: &attachmentIDForReportLink,
+				Limit:        core.Int64Ptr(int64(10)),
+				Sort:         core.StringPtr("profile_name"),
+			}
+
+			pager, err := securityAndComplianceCenterService.NewReportsPager(listReportsOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			var allResults []securityandcompliancecenterv3.Report
+			for i := 0; pager.HasNext() && i < 5; i++ {
+				nextPage, err := pager.GetNext()
+				if err != nil {
+					panic(err)
+				}
+				allResults = append(allResults, nextPage...)
+			}
+			b, _ := json.MarshalIndent(allResults, "", "  ")
+			fmt.Println(string(b))
+			// end-list_reports
+		})
+		It(`GetReport request example`, func() {
+			fmt.Println("\nGetReport() result:")
+			// begin-get_report
+
+			getReportOptions := securityAndComplianceCenterService.NewGetReportOptions(
+				reportIDForReportLink,
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+			)
+
+			report, response, err := securityAndComplianceCenterService.GetReport(getReportOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(report, "", "  ")
+			fmt.Println(string(b))
+
+			// end-get_report
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(report).ToNot(BeNil())
+		})
+		It(`GetReportSummary request example`, func() {
+			fmt.Println("\nGetReportSummary() result:")
+			// begin-get_report_summary
+
+			getReportSummaryOptions := securityAndComplianceCenterService.NewGetReportSummaryOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				reportIDForReportLink,
+			)
+
+			reportSummary, response, err := securityAndComplianceCenterService.GetReportSummary(getReportSummaryOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(reportSummary, "", "  ")
+			fmt.Println(string(b))
+
+			// end-get_report_summary
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(reportSummary).ToNot(BeNil())
+		})
+		It(`GetReportDownloadFile request example`, func() {
+			fmt.Println("\nGetReportDownloadFile() result:")
+			// begin-get_report_download_file
+
+			getReportDownloadFileOptions := securityAndComplianceCenterService.NewGetReportDownloadFileOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				reportIDForReportLink,
+			)
+
+			result, response, err := securityAndComplianceCenterService.GetReportDownloadFile(getReportDownloadFileOptions)
+			if err != nil {
+				panic(err)
+			}
+			if result != nil {
+				defer result.Close()
+				outFile, err := os.Create("result.out")
+				if err != nil {
+					panic(err)
+				}
+				defer outFile.Close()
+				_, err = io.Copy(outFile, result)
+				if err != nil {
+					panic(err)
+				}
+			}
+
+			// end-get_report_download_file
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
@@ -1109,13 +1778,13 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			fmt.Println("\nGetReportControls() result:")
 			// begin-get_report_controls
 
-			getReportControlsOptions := securityAndComplianceCenterApiService.NewGetReportControlsOptions(
-				instanceID,
-				reportIdForReportLink,
+			getReportControlsOptions := securityAndComplianceCenterService.NewGetReportControlsOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				reportIDForReportLink,
 			)
 			getReportControlsOptions.SetStatus("compliant")
 
-			reportControls, response, err := securityAndComplianceCenterApiService.GetReportControls(getReportControlsOptions)
+			reportControls, response, err := securityAndComplianceCenterService.GetReportControls(getReportControlsOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -1128,28 +1797,45 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(reportControls).ToNot(BeNil())
 		})
+		It(`GetReportRule request example`, func() {
+			fmt.Println("\nGetReportRule() result:")
+			// begin-get_report_rule
+
+			getReportRuleOptions := securityAndComplianceCenterService.NewGetReportRuleOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				reportIDForReportLink,
+				"rule-238a6025-2522-4d36-831b-a32f81f97304",
+			)
+
+			ruleInfo, response, err := securityAndComplianceCenterService.GetReportRule(getReportRuleOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(ruleInfo, "", "  ")
+			fmt.Println(string(b))
+
+			// end-get_report_rule
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(ruleInfo).ToNot(BeNil())
+		})
 		It(`ListReportEvaluations request example`, func() {
 			fmt.Println("\nListReportEvaluations() result:")
 			// begin-list_report_evaluations
-			listReportEvaluationsOptions := &securityandcompliancecenterapiv3.ListReportEvaluationsOptions{
-				InstanceID:     &instanceID,
-				ReportID:       &reportIdForReportLink,
-				XCorrelationID: core.StringPtr("testString"),
-				XRequestID:     core.StringPtr("testString"),
-				AssessmentID:   core.StringPtr("testString"),
-				ComponentID:    core.StringPtr("testString"),
-				TargetID:       core.StringPtr("testString"),
-				TargetName:     core.StringPtr("testString"),
-				Status:         core.StringPtr("failure"),
-				Limit:          core.Int64Ptr(int64(10)),
+			listReportEvaluationsOptions := &securityandcompliancecenterv3.ListReportEvaluationsOptions{
+				InstanceID: core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
+				ReportID:   &reportIDForReportLink,
+				Status:     core.StringPtr("failure"),
+				Limit:      core.Int64Ptr(int64(10)),
 			}
 
-			pager, err := securityAndComplianceCenterApiService.NewReportEvaluationsPager(listReportEvaluationsOptions)
+			pager, err := securityAndComplianceCenterService.NewReportEvaluationsPager(listReportEvaluationsOptions)
 			if err != nil {
 				panic(err)
 			}
 
-			var allResults []securityandcompliancecenterapiv3.Evaluation
+			var allResults []securityandcompliancecenterv3.Evaluation
 			for pager.HasNext() {
 				nextPage, err := pager.GetNext()
 				if err != nil {
@@ -1164,26 +1850,17 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 		It(`ListReportResources request example`, func() {
 			fmt.Println("\nListReportResources() result:")
 			// begin-list_report_resources
-			listReportResourcesOptions := &securityandcompliancecenterapiv3.ListReportResourcesOptions{
-				InstanceID:     &instanceID,
-				ReportID:       &reportIdForReportLink,
-				XCorrelationID: core.StringPtr("testString"),
-				XRequestID:     core.StringPtr("testString"),
-				ID:             core.StringPtr("testString"),
-				ResourceName:   core.StringPtr("testString"),
-				AccountID:      &accountIdForReportLink,
-				ComponentID:    core.StringPtr("testString"),
-				Status:         core.StringPtr("compliant"),
-				Sort:           core.StringPtr("account_id"),
-				Limit:          core.Int64Ptr(int64(10)),
+			listReportResourcesOptions := &securityandcompliancecenterv3.ListReportResourcesOptions{
+				InstanceID: core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
+				ReportID:   &reportIDForReportLink,
 			}
 
-			pager, err := securityAndComplianceCenterApiService.NewReportResourcesPager(listReportResourcesOptions)
+			pager, err := securityAndComplianceCenterService.NewReportResourcesPager(listReportResourcesOptions)
 			if err != nil {
 				panic(err)
 			}
 
-			var allResults []securityandcompliancecenterapiv3.Resource
+			var allResults []securityandcompliancecenterv3.Resource
 			for pager.HasNext() {
 				nextPage, err := pager.GetNext()
 				if err != nil {
@@ -1199,12 +1876,12 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			fmt.Println("\nGetReportTags() result:")
 			// begin-get_report_tags
 
-			getReportTagsOptions := securityAndComplianceCenterApiService.NewGetReportTagsOptions(
-				instanceID,
-				reportIdForReportLink,
+			getReportTagsOptions := securityAndComplianceCenterService.NewGetReportTagsOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				reportIDForReportLink,
 			)
 
-			reportTags, response, err := securityAndComplianceCenterApiService.GetReportTags(getReportTagsOptions)
+			reportTags, response, err := securityAndComplianceCenterService.GetReportTags(getReportTagsOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -1221,12 +1898,12 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			fmt.Println("\nGetReportViolationsDrift() result:")
 			// begin-get_report_violations_drift
 
-			getReportViolationsDriftOptions := securityAndComplianceCenterApiService.NewGetReportViolationsDriftOptions(
-				instanceID,
-				reportIdForReportLink,
+			getReportViolationsDriftOptions := securityAndComplianceCenterService.NewGetReportViolationsDriftOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				reportIDForReportLink,
 			)
 
-			reportViolationsDrift, response, err := securityAndComplianceCenterApiService.GetReportViolationsDrift(getReportViolationsDriftOptions)
+			reportViolationsDrift, response, err := securityAndComplianceCenterService.GetReportViolationsDrift(getReportViolationsDriftOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -1239,204 +1916,202 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(reportViolationsDrift).ToNot(BeNil())
 		})
-		It(`ListProviderTypes request example`, func() {
-			fmt.Println("\nListProviderTypes() result:")
-			// begin-list_provider_types
+		It(`ListScanReports request example`, func() {
+			fmt.Println("\nListScanReports() result:")
+			// begin-list_scan_reports
 
-			listProviderTypesOptions := securityAndComplianceCenterApiService.NewListProviderTypesOptions()
-
-			providerTypesCollection, response, err := securityAndComplianceCenterApiService.ListProviderTypes(listProviderTypesOptions)
-			if err != nil {
-				panic(err)
-			}
-			b, _ := json.MarshalIndent(providerTypesCollection, "", "  ")
-			fmt.Println(string(b))
-
-			// end-list_provider_types
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(providerTypesCollection).ToNot(BeNil())
-
-			// Manual Edit for workload-protection
-			providerTypeIdLink = *providerTypesCollection.ProviderTypes[1].ID
-			fmt.Fprintf(GinkgoWriter, "Saved providerTypeIdLink value: %v\n", providerTypeIdLink)
-		})
-		It(`GetProviderTypeByID request example`, func() {
-			fmt.Println("\nGetProviderTypeByID() result:")
-			// begin-get_provider_type_by_id
-
-			getProviderTypeByIdOptions := securityAndComplianceCenterApiService.NewGetProviderTypeByIdOptions(
-				instanceID,
-				providerTypeIdLink,
+			listScanReportsOptions := securityAndComplianceCenterService.NewListScanReportsOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				reportIDForReportLink,
 			)
 
-			providerTypeItem, response, err := securityAndComplianceCenterApiService.GetProviderTypeByID(getProviderTypeByIdOptions)
+			scanReportCollection, response, err := securityAndComplianceCenterService.ListScanReports(listScanReportsOptions)
 			if err != nil {
 				panic(err)
 			}
-			b, _ := json.MarshalIndent(providerTypeItem, "", "  ")
+			b, _ := json.MarshalIndent(scanReportCollection, "", "  ")
 			fmt.Println(string(b))
 
-			// end-get_provider_type_by_id
+			// end-list_scan_reports
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
-			Expect(providerTypeItem).ToNot(BeNil())
+			Expect(scanReportCollection).ToNot(BeNil())
 		})
-		It(`ListProviderTypeInstances request example`, func() {
-			fmt.Println("\nListProviderTypeInstances() result:")
-			// begin-list_provider_type_instances
+		It(`CreateScanReport request example`, func() {
+			fmt.Println("\nCreateScanReport() result:")
+			// begin-create_scan_report
 
-			listProviderTypeInstancesOptions := securityAndComplianceCenterApiService.NewListProviderTypeInstancesOptions(
-				instanceID,
-				providerTypeIdLink,
+			createScanReportOptions := securityAndComplianceCenterService.NewCreateScanReportOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				reportIDForReportLink,
+				"csv",
 			)
 
-			providerTypeInstancesResponse, response, err := securityAndComplianceCenterApiService.ListProviderTypeInstances(listProviderTypeInstancesOptions)
-			if err != nil {
+			createScanReport, response, err := securityAndComplianceCenterService.CreateScanReport(createScanReportOptions)
+			if err != nil && response.StatusCode != 409 {
 				panic(err)
 			}
-			b, _ := json.MarshalIndent(providerTypeInstancesResponse, "", "  ")
+			b, _ := json.MarshalIndent(createScanReport, "", "  ")
 			fmt.Println(string(b))
 
-			// end-list_provider_type_instances
+			// end-create_scan_report
 
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(providerTypeInstancesResponse).ToNot(BeNil())
+			Expect(response.StatusCode).To(Or(Equal(202), Equal(409)))
+			if response.StatusCode == 202 {
+				Expect(err).To(BeNil())
+				Expect(createScanReport).ToNot(BeNil())
+			} else {
+				Expect(createScanReport).To(BeNil())
+				Expect(err).ToNot(BeNil())
+			}
 		})
-		It(`CreateProviderTypeInstance request example`, func() {
-			fmt.Println("\nCreateProviderTypeInstance() result:")
-			// begin-create_provider_type_instance
+		It(`CreateScan request example`, func() {
+			fmt.Println("\nCreateScan() result:")
+			// begin-create_scan
 
-			createProviderTypeInstanceOptions := &securityandcompliancecenterapiv3.CreateProviderTypeInstanceOptions{
-				InstanceID:     &instanceID,
-				ProviderTypeID: &providerTypeIdLink,
-				Name:           core.StringPtr("workload-protection-instance-1"),
-				Attributes:     map[string]interface{}{"wp_crn": "crn:v1:staging:public:sysdig-secure:us-south:a/ff88f007f9ff4622aac4fbc0eda36255:0df4004c-fb74-483b-97be-dd9bd35af4d8::"},
-				XCorrelationID: core.StringPtr("testString"),
-				XRequestID:     core.StringPtr("testString"),
-			}
+			createScanOptions := securityAndComplianceCenterService.NewCreateScanOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+			)
+			createScanOptions.SetAttachmentID(attachmentIDLink)
 
-			providerTypeInstanceItem, response, err := securityAndComplianceCenterApiService.CreateProviderTypeInstance(createProviderTypeInstanceOptions)
+			createScanResponse, response, err := securityAndComplianceCenterService.CreateScan(createScanOptions)
 			if err != nil {
 				panic(err)
 			}
-			b, _ := json.MarshalIndent(providerTypeInstanceItem, "", "  ")
+			b, _ := json.MarshalIndent(createScanResponse, "", "  ")
 			fmt.Println(string(b))
 
-			// end-create_provider_type_instance
+			// end-create_scan
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(201))
-			Expect(providerTypeInstanceItem).ToNot(BeNil())
-
-			providerTypeInstanceIdLink = *providerTypeInstanceItem.ID
-			fmt.Fprintf(GinkgoWriter, "Saved providerTypeInstanceIdLink value: %v\n", providerTypeInstanceIdLink)
+			Expect(createScanResponse).ToNot(BeNil())
 		})
-		It(`GetProviderTypeInstance request example`, func() {
-			fmt.Println("\nGetProviderTypeInstance() result:")
-			// begin-get_provider_type_instance
+		It(`ListRules request example`, func() {
+			fmt.Println("\nListRules() result:")
+			// begin-list_rules
+			listRulesOptions := &securityandcompliancecenterv3.ListRulesOptions{
+				InstanceID:  core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
+				Limit:       core.Int64Ptr(int64(10)),
+				Type:        core.StringPtr("system_defined"),
+				Search:      core.StringPtr("testString"),
+				ServiceName: core.StringPtr("testString"),
+				Sort:        core.StringPtr("updated_on"),
+			}
 
-			getProviderTypeInstanceOptions := securityAndComplianceCenterApiService.NewGetProviderTypeInstanceOptions(
-				instanceID,
-				providerTypeIdLink,
-				providerTypeInstanceIdLink,
+			pager, err := securityAndComplianceCenterService.NewRulesPager(listRulesOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			var allResults []securityandcompliancecenterv3.Rule
+			for pager.HasNext() {
+				nextPage, err := pager.GetNext()
+				if err != nil {
+					panic(err)
+				}
+				allResults = append(allResults, nextPage...)
+			}
+			b, _ := json.MarshalIndent(allResults, "", "  ")
+			fmt.Println(string(b))
+			// end-list_rules
+		})
+		It(`ListServices request example`, func() {
+			fmt.Println("\nListServices() result:")
+			// begin-list_services
+
+			listServicesOptions := securityAndComplianceCenterService.NewListServicesOptions()
+
+			serviceCollection, response, err := securityAndComplianceCenterService.ListServices(listServicesOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(serviceCollection, "", "  ")
+			fmt.Println(string(b))
+
+			// end-list_services
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(serviceCollection).ToNot(BeNil())
+		})
+		It(`GetService request example`, func() {
+			fmt.Println("\nGetService() result:")
+			// begin-get_service
+
+			getServiceOptions := securityAndComplianceCenterService.NewGetServiceOptions(
+				"cloud-object-storage",
 			)
 
-			providerTypeInstanceItem, response, err := securityAndComplianceCenterApiService.GetProviderTypeInstance(getProviderTypeInstanceOptions)
+			service, response, err := securityAndComplianceCenterService.GetService(getServiceOptions)
 			if err != nil {
 				panic(err)
 			}
-			b, _ := json.MarshalIndent(providerTypeInstanceItem, "", "  ")
+			b, _ := json.MarshalIndent(service, "", "  ")
 			fmt.Println(string(b))
 
-			// end-get_provider_type_instance
+			// end-get_service
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
-			Expect(providerTypeInstanceItem).ToNot(BeNil())
-		})
-		It(`UpdateProviderTypeInstance request example`, func() {
-			fmt.Println("\nUpdateProviderTypeInstance() result:")
-			// begin-update_provider_type_instance
-
-			updateProviderTypeInstanceOptions := &securityandcompliancecenterapiv3.UpdateProviderTypeInstanceOptions{
-				InstanceID:             &instanceID,
-				ProviderTypeID:         &providerTypeIdLink,
-				ProviderTypeInstanceID: &providerTypeInstanceIdLink,
-				Name:                   core.StringPtr("workload-protection-instance-1"),
-				Attributes:             map[string]interface{}{"wp_crn": "crn:v1:staging:public:sysdig-secure:us-south:a/ff88f007f9ff4622aac4fbc0eda36255:0df4004c-fb74-483b-97be-dd9bd35af4d8::"},
-				XCorrelationID:         core.StringPtr("testString"),
-				XRequestID:             core.StringPtr("testString"),
-			}
-
-			providerTypeInstanceItem, response, err := securityAndComplianceCenterApiService.UpdateProviderTypeInstance(updateProviderTypeInstanceOptions)
-			if err != nil {
-				panic(err)
-			}
-			b, _ := json.MarshalIndent(providerTypeInstanceItem, "", "  ")
-			fmt.Println(string(b))
-
-			// end-update_provider_type_instance
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(providerTypeInstanceItem).ToNot(BeNil())
-		})
-		It(`GetProviderTypesInstances request example`, func() {
-			fmt.Println("\nGetProviderTypesInstances() result:")
-			// begin-get_provider_types_instances
-
-			getProviderTypesInstancesOptions := securityAndComplianceCenterApiService.NewGetProviderTypesInstancesOptions(instanceID)
-
-			providerTypesInstancesResponse, response, err := securityAndComplianceCenterApiService.GetProviderTypesInstances(getProviderTypesInstancesOptions)
-			if err != nil {
-				panic(err)
-			}
-			b, _ := json.MarshalIndent(providerTypesInstancesResponse, "", "  ")
-			fmt.Println(string(b))
-
-			// end-get_provider_types_instances
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(providerTypesInstancesResponse).ToNot(BeNil())
+			Expect(service).ToNot(BeNil())
 		})
 		It(`DeleteProfileAttachment request example`, func() {
 			fmt.Println("\nDeleteProfileAttachment() result:")
 			// begin-delete_profile_attachment
 
-			deleteProfileAttachmentOptions := securityAndComplianceCenterApiService.NewDeleteProfileAttachmentOptions(
-				instanceID,
-				attachmentIdLink,
-				profileIdLink,
+			deleteProfileAttachmentOptions := securityAndComplianceCenterService.NewDeleteProfileAttachmentOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				oldProfileIDForReportLink,
+				attachmentIDLink,
 			)
 
-			attachmentItem, response, err := securityAndComplianceCenterApiService.DeleteProfileAttachment(deleteProfileAttachmentOptions)
+			profileAttachment, response, err := securityAndComplianceCenterService.DeleteProfileAttachment(deleteProfileAttachmentOptions)
 			if err != nil {
 				panic(err)
 			}
-			b, _ := json.MarshalIndent(attachmentItem, "", "  ")
+			b, _ := json.MarshalIndent(profileAttachment, "", "  ")
 			fmt.Println(string(b))
 
 			// end-delete_profile_attachment
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
-			Expect(attachmentItem).ToNot(BeNil())
+			Expect(profileAttachment).ToNot(BeNil())
+		})
+		It(`DeleteCustomControlLibrary request example`, func() {
+			fmt.Println("\nDeleteCustomControlLibrary() result:")
+			// begin-delete_custom_control_library
+
+			deleteCustomControlLibraryOptions := securityAndComplianceCenterService.NewDeleteCustomControlLibraryOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				controlLibraryIDLink,
+			)
+
+			controlLibrary, response, err := securityAndComplianceCenterService.DeleteCustomControlLibrary(deleteCustomControlLibraryOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(controlLibrary, "", "  ")
+			fmt.Println(string(b))
+
+			// end-delete_custom_control_library
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(controlLibrary).ToNot(BeNil())
 		})
 		It(`DeleteCustomProfile request example`, func() {
 			fmt.Println("\nDeleteCustomProfile() result:")
 			// begin-delete_custom_profile
 
-			deleteCustomProfileOptions := securityAndComplianceCenterApiService.NewDeleteCustomProfileOptions(
-				instanceID,
-				profileIdLink,
+			deleteCustomProfileOptions := securityAndComplianceCenterService.NewDeleteCustomProfileOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				profileIDLink,
 			)
 
-			profile, response, err := securityAndComplianceCenterApiService.DeleteCustomProfile(deleteCustomProfileOptions)
+			profile, response, err := securityAndComplianceCenterService.DeleteCustomProfile(deleteCustomProfileOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -1449,45 +2124,66 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(profile).ToNot(BeNil())
 		})
-		It(`DeleteCustomControlLibrary request example`, func() {
-			fmt.Println("\nDeleteCustomControlLibrary() result:")
-			// begin-delete_custom_control_library
+		It(`DeleteSubscope request example`, func() {
+			// begin-delete_subscope
 
-			deleteCustomControlLibraryOptions := securityAndComplianceCenterApiService.NewDeleteCustomControlLibraryOptions(
-				instanceID,
-				controlLibraryIdLink,
+			deleteSubscopeOptions := securityAndComplianceCenterService.NewDeleteSubscopeOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				scopeIDLink,
+				subScopeIDLink,
 			)
 
-			controlLibraryDelete, response, err := securityAndComplianceCenterApiService.DeleteCustomControlLibrary(deleteCustomControlLibraryOptions)
-			if err != nil {
-				panic(err)
-			}
-			b, _ := json.MarshalIndent(controlLibraryDelete, "", "  ")
-			fmt.Println(string(b))
-
-			// end-delete_custom_control_library
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(controlLibraryDelete).ToNot(BeNil())
-		})
-		It(`DeleteRule request example`, func() {
-			// begin-delete_rule
-
-			deleteRuleOptions := securityAndComplianceCenterApiService.NewDeleteRuleOptions(
-				instanceID,
-				ruleIdLink,
-			)
-
-			response, err := securityAndComplianceCenterApiService.DeleteRule(deleteRuleOptions)
+			response, err := securityAndComplianceCenterService.DeleteSubscope(deleteSubscopeOptions)
 			if err != nil {
 				panic(err)
 			}
 			if response.StatusCode != 204 {
-				fmt.Printf("\nUnexpected response status code received from DeleteRule(): %d\n", response.StatusCode)
+				fmt.Printf("\nUnexpected response status code received from DeleteSubscope(): %d\n", response.StatusCode)
 			}
 
-			// end-delete_rule
+			// end-delete_subscope
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(204))
+		})
+		It(`DeleteScope request example`, func() {
+			// begin-delete_scope
+
+			deleteScopeOptions := securityAndComplianceCenterService.NewDeleteScopeOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				scopeIDLink,
+			)
+
+			response, err := securityAndComplianceCenterService.DeleteScope(deleteScopeOptions)
+			if err != nil {
+				panic(err)
+			}
+			if response.StatusCode != 204 {
+				fmt.Printf("\nUnexpected response status code received from DeleteScope(): %d\n", response.StatusCode)
+			}
+
+			// end-delete_scope
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(204))
+		})
+		It(`DeleteTarget request example`, func() {
+			// begin-delete_target
+
+			deleteTargetOptions := securityAndComplianceCenterService.NewDeleteTargetOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				targetIDLink,
+			)
+
+			response, err := securityAndComplianceCenterService.DeleteTarget(deleteTargetOptions)
+			if err != nil {
+				panic(err)
+			}
+			if response.StatusCode != 204 {
+				fmt.Printf("\nUnexpected response status code received from DeleteTarget(): %d\n", response.StatusCode)
+			}
+
+			// end-delete_target
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(204))
@@ -1495,13 +2191,13 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 		It(`DeleteProviderTypeInstance request example`, func() {
 			// begin-delete_provider_type_instance
 
-			deleteProviderTypeInstanceOptions := securityAndComplianceCenterApiService.NewDeleteProviderTypeInstanceOptions(
-				instanceID,
-				providerTypeIdLink,
-				providerTypeInstanceIdLink,
+			deleteProviderTypeInstanceOptions := securityAndComplianceCenterService.NewDeleteProviderTypeInstanceOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				providerTypeIDLink,
+				providerTypeInstanceIDLink,
 			)
 
-			response, err := securityAndComplianceCenterApiService.DeleteProviderTypeInstance(deleteProviderTypeInstanceOptions)
+			response, err := securityAndComplianceCenterService.DeleteProviderTypeInstance(deleteProviderTypeInstanceOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -1510,6 +2206,27 @@ var _ = Describe(`SecurityAndComplianceCenterApiV3 Examples Tests`, func() {
 			}
 
 			// end-delete_provider_type_instance
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(204))
+		})
+		It(`DeleteRule request example`, func() {
+			// begin-delete_rule
+
+			deleteRuleOptions := securityAndComplianceCenterService.NewDeleteRuleOptions(
+				"acd7032c-15a3-484f-bf5b-67d41534d940",
+				ruleIDLink,
+			)
+
+			response, err := securityAndComplianceCenterService.DeleteRule(deleteRuleOptions)
+			if err != nil {
+				panic(err)
+			}
+			if response.StatusCode != 204 {
+				fmt.Printf("\nUnexpected response status code received from DeleteRule(): %d\n", response.StatusCode)
+			}
+
+			// end-delete_rule
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(204))

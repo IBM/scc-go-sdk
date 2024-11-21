@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-func TestSecurityAndComplianceCenterApiV3(t *testing.T) {
+func TestSecurityAndComplianceCenterV3(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "SecurityAndComplianceCenterApiV3 Suite")
+	RunSpecs(t, "SecurityAndComplianceCenterV3 Suite")
 }

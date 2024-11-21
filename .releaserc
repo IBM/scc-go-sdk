@@ -19,4 +19,5 @@
     ],
     "@semantic-release/github"
   ]
+  "repositoryUrl": "https://github.com/IBM/scc-go-sdk.git"
 }

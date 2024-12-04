@@ -1,3 +1,10 @@
+# [5.5.0](https://github.com/IBM/scc-go-sdk/compare/v5.4.1...v5.5.0) (2024-12-04)
+
+
+### Features
+
+* Adding the new feature Access Control Segmentation ([#149](https://github.com/IBM/scc-go-sdk/issues/149)) ([cd72303](https://github.com/IBM/scc-go-sdk/commit/cd723031aa980f2db07976b773b27282eb2a0336))
+
 ## [5.4.1](https://github.com/IBM/scc-go-sdk/compare/v5.4.0...v5.4.1) (2024-07-16)
 
 

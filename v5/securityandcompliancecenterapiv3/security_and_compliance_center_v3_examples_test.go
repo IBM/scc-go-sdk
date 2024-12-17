@@ -46,7 +46,7 @@ var _ = Describe(`SecurityAndComplianceCenterV3 Examples Tests`, func() {
 	const externalConfigFile = "../security_and_compliance_center_v3.env"
 
 	var (
-		securityAndComplianceCenterService *securityandcompliancecenterv3.SecurityAndComplianceCenterV3
+		securityAndComplianceCenterService *securityandcompliancecenterv3.SecurityAndComplianceCenterApiV3
 		config                             map[string]string
 		serviceURL                         string
 
@@ -164,7 +164,7 @@ var _ = Describe(`SecurityAndComplianceCenterV3 Examples Tests`, func() {
 
 			// begin-common
 
-			securityAndComplianceCenterServiceOptions := &securityandcompliancecenterv3.SecurityAndComplianceCenterV3Options{}
+			securityAndComplianceCenterServiceOptions := &securityandcompliancecenterv3.SecurityAndComplianceCenterApiV3Options{}
 
 			securityAndComplianceCenterService, err = securityandcompliancecenterv3.NewSecurityAndComplianceCenterV3(securityAndComplianceCenterServiceOptions)
 			if err != nil {

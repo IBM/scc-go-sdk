@@ -44,7 +44,7 @@ var _ = Describe(`SecurityAndComplianceCenterV3 Integration Tests`, func() {
 
 	var (
 		err                                error
-		securityAndComplianceCenterService *securityandcompliancecenterv3.SecurityAndComplianceCenterV3
+		securityAndComplianceCenterService *securityandcompliancecenterv3.SecurityAndComplianceCenterApiV3
 		serviceURL                         string
 		config                             map[string]string
 
@@ -155,7 +155,7 @@ var _ = Describe(`SecurityAndComplianceCenterV3 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It("Successfully construct the service client instance", func() {
-			securityAndComplianceCenterServiceOptions := &securityandcompliancecenterv3.SecurityAndComplianceCenterV3Options{}
+			securityAndComplianceCenterServiceOptions := &securityandcompliancecenterv3.SecurityAndComplianceCenterApiV3Options{}
 
 			securityAndComplianceCenterService, err = securityandcompliancecenterv3.NewSecurityAndComplianceCenterV3(securityAndComplianceCenterServiceOptions)
 			Expect(err).To(BeNil())

@@ -1059,6 +1059,9 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListControl
 	if listControlLibrariesOptions.AccountID != nil {
 		builder.AddQuery("account_id", fmt.Sprint(*listControlLibrariesOptions.AccountID))
 	}
+	if listControlLibrariesOptions.ControlLibraryType != nil {
+		builder.AddQuery("control_library_type", fmt.Sprint(*listControlLibrariesOptions.ControlLibraryType))
+	}
 	if listControlLibrariesOptions.Limit != nil {
 		builder.AddQuery("limit", fmt.Sprint(*listControlLibrariesOptions.Limit))
 	}
@@ -1467,6 +1470,15 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfile
 
 	if listProfilesOptions.AccountID != nil {
 		builder.AddQuery("account_id", fmt.Sprint(*listProfilesOptions.AccountID))
+	}
+	if listProfilesOptions.ProfileType != nil {
+		builder.AddQuery("profile_type", fmt.Sprint(*listProfilesOptions.ProfileType))
+	}
+	if listProfilesOptions.Limit != nil {
+		builder.AddQuery("limit", fmt.Sprint(*listProfilesOptions.Limit))
+	}
+	if listProfilesOptions.Start != nil {
+		builder.AddQuery("start", fmt.Sprint(*listProfilesOptions.Start))
 	}
 
 	request, err := builder.Build()
@@ -9678,12 +9690,6 @@ func (_options *ListControlLibrariesOptions) SetAccountID(accountID string) *Lis
 	return _options
 }
 
-// SetHeaders : Allow user to set Headers
-func (_options *ListControlLibrariesOptions) SetHeaders(param map[string]string) *ListControlLibrariesOptions {
-	_options.Headers = param
-	return _options
-}
-
 // SetControlLibraryType : Allow user to set the ControlLibraryType
 func (_options *ListControlLibrariesOptions) SetControlLibraryType(controlLibraryType string) *ListControlLibrariesOptions {
 	_options.ControlLibraryType = &controlLibraryType
@@ -9700,6 +9706,12 @@ func (_options *ListControlLibrariesOptions) SetStart(controlLibraryType string)
 func (_options *ListControlLibrariesOptions) SetLimit(limit int64) *ListControlLibrariesOptions {
 	_options.Limit = core.Int64Ptr(limit)
 	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *ListControlLibrariesOptions) SetHeaders(param map[string]string) *ListControlLibrariesOptions {
+	options.Headers = param
+	return options
 }
 
 // ListInstanceAttachmentsOptions : The ListInstanceAttachments options.

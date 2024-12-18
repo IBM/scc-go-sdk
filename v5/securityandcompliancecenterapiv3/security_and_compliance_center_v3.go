@@ -35,8 +35,8 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// SecurityAndComplianceCenterV3 : The Security and Compliance Center API reference.
-type SecurityAndComplianceCenterV3 struct {
+// SecurityAndComplianceCenterApiV3 : The Security and Compliance Center API reference.
+type SecurityAndComplianceCenterApiV3 struct {
 	Service *core.BaseService
 }
 
@@ -46,15 +46,15 @@ const DefaultServiceURL = "https://us-south.compliance.cloud.ibm.com"
 // DefaultServiceName is the default key used to find external configuration information.
 const DefaultServiceName = "security_and_compliance_center"
 
-// SecurityAndComplianceCenterV3Options : Service options
-type SecurityAndComplianceCenterV3Options struct {
+// SecurityAndComplianceCenterApiV3Options : Service options
+type SecurityAndComplianceCenterApiV3Options struct {
 	ServiceName   string
 	URL           string
 	Authenticator core.Authenticator
 }
 
 // NewSecurityAndComplianceCenterV3 : constructs an instance of SecurityAndComplianceCenterV3 with passed in options.
-func NewSecurityAndComplianceCenterV3(options *SecurityAndComplianceCenterV3Options) (service *SecurityAndComplianceCenterV3, err error) {
+func NewSecurityAndComplianceCenterV3(options *SecurityAndComplianceCenterApiV3Options) (service *SecurityAndComplianceCenterApiV3, err error) {
 	if options.ServiceName == "" {
 		options.ServiceName = DefaultServiceName
 	}
@@ -88,7 +88,7 @@ func NewSecurityAndComplianceCenterV3(options *SecurityAndComplianceCenterV3Opti
 		}
 	}
 
-	service = &SecurityAndComplianceCenterV3{
+	service = &SecurityAndComplianceCenterApiV3{
 		Service: baseService,
 	}
 
@@ -113,7 +113,7 @@ func GetServiceURLForRegion(region string) (string, error) {
 }
 
 // Clone makes a copy of "securityAndComplianceCenter" suitable for processing requests.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) Clone() *SecurityAndComplianceCenterV3 {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) Clone() *SecurityAndComplianceCenterApiV3 {
 	if core.IsNil(securityAndComplianceCenter) {
 		return nil
 	}
@@ -123,49 +123,49 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) Clone() *Secur
 }
 
 // SetServiceURL sets the service URL
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) SetServiceURL(url string) error {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) SetServiceURL(url string) error {
 	return securityAndComplianceCenter.Service.SetServiceURL(url)
 }
 
 // GetServiceURL returns the service URL
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetServiceURL() string {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetServiceURL() string {
 	return securityAndComplianceCenter.Service.GetServiceURL()
 }
 
 // SetDefaultHeaders sets HTTP headers to be sent in every request
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) SetDefaultHeaders(headers http.Header) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) SetDefaultHeaders(headers http.Header) {
 	securityAndComplianceCenter.Service.SetDefaultHeaders(headers)
 }
 
 // SetEnableGzipCompression sets the service's EnableGzipCompression field
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) SetEnableGzipCompression(enableGzip bool) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) SetEnableGzipCompression(enableGzip bool) {
 	securityAndComplianceCenter.Service.SetEnableGzipCompression(enableGzip)
 }
 
 // GetEnableGzipCompression returns the service's EnableGzipCompression field
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetEnableGzipCompression() bool {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetEnableGzipCompression() bool {
 	return securityAndComplianceCenter.Service.GetEnableGzipCompression()
 }
 
 // EnableRetries enables automatic retries for requests invoked for this service instance.
 // If either parameter is specified as 0, then a default value is used instead.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) EnableRetries(maxRetries int, maxRetryInterval time.Duration) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) EnableRetries(maxRetries int, maxRetryInterval time.Duration) {
 	securityAndComplianceCenter.Service.EnableRetries(maxRetries, maxRetryInterval)
 }
 
 // DisableRetries disables automatic retries for requests invoked for this service instance.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DisableRetries() {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DisableRetries() {
 	securityAndComplianceCenter.Service.DisableRetries()
 }
 
 // GetSettings : List settings
 // Retrieve the settings of your service instance.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetSettings(getSettingsOptions *GetSettingsOptions) (result *Settings, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetSettings(getSettingsOptions *GetSettingsOptions) (result *Settings, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.GetSettingsWithContext(context.Background(), getSettingsOptions)
 }
 
 // GetSettingsWithContext is an alternate form of the GetSettings method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetSettingsWithContext(ctx context.Context, getSettingsOptions *GetSettingsOptions) (result *Settings, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetSettingsWithContext(ctx context.Context, getSettingsOptions *GetSettingsOptions) (result *Settings, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getSettingsOptions, "getSettingsOptions cannot be nil")
 	if err != nil {
 		return
@@ -220,12 +220,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetSettingsWit
 
 // UpdateSettings : Update settings
 // Update the settings of your service instance.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) UpdateSettings(updateSettingsOptions *UpdateSettingsOptions) (result *Settings, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateSettings(updateSettingsOptions *UpdateSettingsOptions) (result *Settings, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.UpdateSettingsWithContext(context.Background(), updateSettingsOptions)
 }
 
 // UpdateSettingsWithContext is an alternate form of the UpdateSettings method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) UpdateSettingsWithContext(ctx context.Context, updateSettingsOptions *UpdateSettingsOptions) (result *Settings, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateSettingsWithContext(ctx context.Context, updateSettingsOptions *UpdateSettingsOptions) (result *Settings, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(updateSettingsOptions, "updateSettingsOptions cannot be nil")
 	if err != nil {
 		return
@@ -295,12 +295,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) UpdateSettings
 // Send a test event to your Event Notifications instance to ensure that the events that are generated  by Security and
 // Compliance Center are being forwarded to Event Notifications. For more information, see [Enabling event
 // notifications](/docs/security-compliance?topic=security-compliance-event-notifications#event-notifications-test-api).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) PostTestEvent(postTestEventOptions *PostTestEventOptions) (result *TestEvent, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) PostTestEvent(postTestEventOptions *PostTestEventOptions) (result *TestEvent, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.PostTestEventWithContext(context.Background(), postTestEventOptions)
 }
 
 // PostTestEventWithContext is an alternate form of the PostTestEvent method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) PostTestEventWithContext(ctx context.Context, postTestEventOptions *PostTestEventOptions) (result *TestEvent, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) PostTestEventWithContext(ctx context.Context, postTestEventOptions *PostTestEventOptions) (result *TestEvent, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(postTestEventOptions, "postTestEventOptions cannot be nil")
 	if err != nil {
 		return
@@ -361,12 +361,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) PostTestEventW
 // set of resources that you want to evaluate  and a profile that contains the specific controls that you want to use.
 // For more information, see [Running an evaluation for IBM
 // Cloud](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scan-resources).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListInstanceAttachments(listInstanceAttachmentsOptions *ListInstanceAttachmentsOptions) (result *ProfileAttachmentCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListInstanceAttachments(listInstanceAttachmentsOptions *ListInstanceAttachmentsOptions) (result *ProfileAttachmentCollection, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ListInstanceAttachmentsWithContext(context.Background(), listInstanceAttachmentsOptions)
 }
 
 // ListInstanceAttachmentsWithContext is an alternate form of the ListInstanceAttachments method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListInstanceAttachmentsWithContext(ctx context.Context, listInstanceAttachmentsOptions *ListInstanceAttachmentsOptions) (result *ProfileAttachmentCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListInstanceAttachmentsWithContext(ctx context.Context, listInstanceAttachmentsOptions *ListInstanceAttachmentsOptions) (result *ProfileAttachmentCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listInstanceAttachmentsOptions, "listInstanceAttachmentsOptions cannot be nil")
 	if err != nil {
 		return
@@ -446,12 +446,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListInstanceAt
 // set of resources that you want to evaluate  and a profile that contains the specific controls that you want to use.
 // For more information, see [Running an evaluation for IBM
 // Cloud](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scan-resources).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateProfileAttachment(createProfileAttachmentOptions *CreateProfileAttachmentOptions) (result *ProfileAttachmentResponse, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProfileAttachment(createProfileAttachmentOptions *CreateProfileAttachmentOptions) (result *ProfileAttachmentResponse, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.CreateProfileAttachmentWithContext(context.Background(), createProfileAttachmentOptions)
 }
 
 // CreateProfileAttachmentWithContext is an alternate form of the CreateProfileAttachment method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateProfileAttachmentWithContext(ctx context.Context, createProfileAttachmentOptions *CreateProfileAttachmentOptions) (result *ProfileAttachmentResponse, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProfileAttachmentWithContext(ctx context.Context, createProfileAttachmentOptions *CreateProfileAttachmentOptions) (result *ProfileAttachmentResponse, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(createProfileAttachmentOptions, "createProfileAttachmentOptions cannot be nil")
 	if err != nil {
 		return
@@ -527,12 +527,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateProfileA
 // set of resources that you want to evaluate  and a profile that contains the specific controls that you want to use.
 // For more information, see [Running an evaluation for IBM
 // Cloud](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scan-resources).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListProfileAttachments(listProfileAttachmentsOptions *ListProfileAttachmentsOptions) (result *ProfileAttachmentCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfileAttachments(listProfileAttachmentsOptions *ListProfileAttachmentsOptions) (result *ProfileAttachmentCollection, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ListProfileAttachmentsWithContext(context.Background(), listProfileAttachmentsOptions)
 }
 
 // ListProfileAttachmentsWithContext is an alternate form of the ListProfileAttachments method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListProfileAttachmentsWithContext(ctx context.Context, listProfileAttachmentsOptions *ListProfileAttachmentsOptions) (result *ProfileAttachmentCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfileAttachmentsWithContext(ctx context.Context, listProfileAttachmentsOptions *ListProfileAttachmentsOptions) (result *ProfileAttachmentCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listProfileAttachmentsOptions, "listProfileAttachmentsOptions cannot be nil")
 	if err != nil {
 		return
@@ -598,12 +598,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListProfileAtt
 // set of resources that you want to evaluate  and a profile that contains the specific controls that you want to use.
 // For more information, see [Running an evaluation for IBM
 // Cloud](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scan-resources).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetProfileAttachment(getProfileAttachmentOptions *GetProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProfileAttachment(getProfileAttachmentOptions *GetProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.GetProfileAttachmentWithContext(context.Background(), getProfileAttachmentOptions)
 }
 
 // GetProfileAttachmentWithContext is an alternate form of the GetProfileAttachment method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetProfileAttachmentWithContext(ctx context.Context, getProfileAttachmentOptions *GetProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProfileAttachmentWithContext(ctx context.Context, getProfileAttachmentOptions *GetProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getProfileAttachmentOptions, "getProfileAttachmentOptions cannot be nil")
 	if err != nil {
 		return
@@ -670,12 +670,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetProfileAtta
 // set of resources that you want to evaluate  and a profile that contains the specific controls that you want to use.
 // For more information, see [Running an evaluation for IBM
 // Cloud](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scan-resources).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ReplaceProfileAttachment(replaceProfileAttachmentOptions *ReplaceProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProfileAttachment(replaceProfileAttachmentOptions *ReplaceProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ReplaceProfileAttachmentWithContext(context.Background(), replaceProfileAttachmentOptions)
 }
 
 // ReplaceProfileAttachmentWithContext is an alternate form of the ReplaceProfileAttachment method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ReplaceProfileAttachmentWithContext(ctx context.Context, replaceProfileAttachmentOptions *ReplaceProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProfileAttachmentWithContext(ctx context.Context, replaceProfileAttachmentOptions *ReplaceProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(replaceProfileAttachmentOptions, "replaceProfileAttachmentOptions cannot be nil")
 	if err != nil {
 		return
@@ -771,12 +771,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ReplaceProfile
 // set of resources that you want to evaluate  and a profile that contains the specific controls that you want to use.
 // For more information, see [Running an evaluation for IBM
 // Cloud](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scan-resources).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteProfileAttachment(deleteProfileAttachmentOptions *DeleteProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteProfileAttachment(deleteProfileAttachmentOptions *DeleteProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.DeleteProfileAttachmentWithContext(context.Background(), deleteProfileAttachmentOptions)
 }
 
 // DeleteProfileAttachmentWithContext is an alternate form of the DeleteProfileAttachment method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteProfileAttachmentWithContext(ctx context.Context, deleteProfileAttachmentOptions *DeleteProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteProfileAttachmentWithContext(ctx context.Context, deleteProfileAttachmentOptions *DeleteProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(deleteProfileAttachmentOptions, "deleteProfileAttachmentOptions cannot be nil")
 	if err != nil {
 		return
@@ -843,12 +843,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteProfileA
 // set of resources that you want to evaluate  and a profile that contains the specific controls that you want to use.
 // For more information, see [Running an evaluation for IBM
 // Cloud](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scan-resources).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) UpgradeAttachment(upgradeAttachmentOptions *UpgradeAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpgradeAttachment(upgradeAttachmentOptions *UpgradeAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.UpgradeAttachmentWithContext(context.Background(), upgradeAttachmentOptions)
 }
 
 // UpgradeAttachmentWithContext is an alternate form of the UpgradeAttachment method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) UpgradeAttachmentWithContext(ctx context.Context, upgradeAttachmentOptions *UpgradeAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpgradeAttachmentWithContext(ctx context.Context, upgradeAttachmentOptions *UpgradeAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(upgradeAttachmentOptions, "upgradeAttachmentOptions cannot be nil")
 	if err != nil {
 		return
@@ -926,12 +926,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) UpgradeAttachm
 // specific to a component. An assessment, or several,  are mapped to each specification with a detailed evaluation that
 // is done to check whether the specification is compliant. For more information, see [Creating custom
 // libraries](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-custom-library).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateCustomControlLibrary(createCustomControlLibraryOptions *CreateCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateCustomControlLibrary(createCustomControlLibraryOptions *CreateCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.CreateCustomControlLibraryWithContext(context.Background(), createCustomControlLibraryOptions)
 }
 
 // CreateCustomControlLibraryWithContext is an alternate form of the CreateCustomControlLibrary method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateCustomControlLibraryWithContext(ctx context.Context, createCustomControlLibraryOptions *CreateCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateCustomControlLibraryWithContext(ctx context.Context, createCustomControlLibraryOptions *CreateCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(createCustomControlLibraryOptions, "createCustomControlLibraryOptions cannot be nil")
 	if err != nil {
 		return
@@ -1019,12 +1019,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateCustomCo
 // specific to a component. An assessment, or several,  are mapped to each specification with a detailed evaluation that
 // is done to check whether the specification is compliant. For more information, see [Creating custom
 // libraries](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-custom-library).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListControlLibraries(listControlLibrariesOptions *ListControlLibrariesOptions) (result *ControlLibraryCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListControlLibraries(listControlLibrariesOptions *ListControlLibrariesOptions) (result *ControlLibraryCollection, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ListControlLibrariesWithContext(context.Background(), listControlLibrariesOptions)
 }
 
 // ListControlLibrariesWithContext is an alternate form of the ListControlLibraries method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListControlLibrariesWithContext(ctx context.Context, listControlLibrariesOptions *ListControlLibrariesOptions) (result *ControlLibraryCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListControlLibrariesWithContext(ctx context.Context, listControlLibrariesOptions *ListControlLibrariesOptions) (result *ControlLibraryCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listControlLibrariesOptions, "listControlLibrariesOptions cannot be nil")
 	if err != nil {
 		return
@@ -1059,6 +1059,15 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListControlLib
 	if listControlLibrariesOptions.AccountID != nil {
 		builder.AddQuery("account_id", fmt.Sprint(*listControlLibrariesOptions.AccountID))
 	}
+	if listControlLibrariesOptions.ControlLibraryType != nil {
+		builder.AddQuery("control_library_type", fmt.Sprint(*listControlLibrariesOptions.ControlLibraryType))
+	}
+	if listControlLibrariesOptions.Limit != nil {
+		builder.AddQuery("limit", fmt.Sprint(*listControlLibrariesOptions.Limit))
+	}
+	if listControlLibrariesOptions.Start != nil {
+		builder.AddQuery("start", fmt.Sprint(*listControlLibrariesOptions.Start))
+	}
 
 	request, err := builder.Build()
 	if err != nil {
@@ -1090,12 +1099,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListControlLib
 // specific to a component. An assessment, or several,  are mapped to each specification with a detailed evaluation that
 // is done to check whether the specification is compliant. For more information, see [Creating custom
 // libraries](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-custom-library).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ReplaceCustomControlLibrary(replaceCustomControlLibraryOptions *ReplaceCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceCustomControlLibrary(replaceCustomControlLibraryOptions *ReplaceCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ReplaceCustomControlLibraryWithContext(context.Background(), replaceCustomControlLibraryOptions)
 }
 
 // ReplaceCustomControlLibraryWithContext is an alternate form of the ReplaceCustomControlLibrary method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ReplaceCustomControlLibraryWithContext(ctx context.Context, replaceCustomControlLibraryOptions *ReplaceCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceCustomControlLibraryWithContext(ctx context.Context, replaceCustomControlLibraryOptions *ReplaceCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(replaceCustomControlLibraryOptions, "replaceCustomControlLibraryOptions cannot be nil")
 	if err != nil {
 		return
@@ -1184,12 +1193,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ReplaceCustomC
 // specific to a component. An assessment, or several,  are mapped to each specification with a detailed evaluation that
 // is done to check whether the specification is compliant. For more information, see [Creating custom
 // libraries](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-custom-library).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetControlLibrary(getControlLibraryOptions *GetControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetControlLibrary(getControlLibraryOptions *GetControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.GetControlLibraryWithContext(context.Background(), getControlLibraryOptions)
 }
 
 // GetControlLibraryWithContext is an alternate form of the GetControlLibrary method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetControlLibraryWithContext(ctx context.Context, getControlLibraryOptions *GetControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetControlLibraryWithContext(ctx context.Context, getControlLibraryOptions *GetControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getControlLibraryOptions, "getControlLibraryOptions cannot be nil")
 	if err != nil {
 		return
@@ -1256,12 +1265,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetControlLibr
 // specific to a component. An assessment, or several,  are mapped to each specification with a detailed evaluation that
 // is done to check whether the specification is compliant. For more information, see [Creating custom
 // libraries](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-custom-library).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteCustomControlLibrary(deleteCustomControlLibraryOptions *DeleteCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteCustomControlLibrary(deleteCustomControlLibraryOptions *DeleteCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.DeleteCustomControlLibraryWithContext(context.Background(), deleteCustomControlLibraryOptions)
 }
 
 // DeleteCustomControlLibraryWithContext is an alternate form of the DeleteCustomControlLibrary method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteCustomControlLibraryWithContext(ctx context.Context, deleteCustomControlLibraryOptions *DeleteCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteCustomControlLibraryWithContext(ctx context.Context, deleteCustomControlLibraryOptions *DeleteCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(deleteCustomControlLibraryOptions, "deleteCustomControlLibraryOptions cannot be nil")
 	if err != nil {
 		return
@@ -1325,12 +1334,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteCustomCo
 // With Security and Compliance Center, you can create  a profile that is specific to your usecase, by using an existing
 // library as a starting point.  For more information, see [Building custom
 // profiles](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-build-custom-profiles&interface=api).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateProfile(createProfileOptions *CreateProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProfile(createProfileOptions *CreateProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.CreateProfileWithContext(context.Background(), createProfileOptions)
 }
 
 // CreateProfileWithContext is an alternate form of the CreateProfile method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateProfileWithContext(ctx context.Context, createProfileOptions *CreateProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProfileWithContext(ctx context.Context, createProfileOptions *CreateProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(createProfileOptions, "createProfileOptions cannot be nil")
 	if err != nil {
 		return
@@ -1422,12 +1431,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateProfileW
 // industry standards. Or you can choose  to create one that is specific to your usecase by using an existing library as
 // a starting point. For more information, see [Building custom
 // profiles](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-build-custom-profiles&interface=api).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListProfiles(listProfilesOptions *ListProfilesOptions) (result *ProfileCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfiles(listProfilesOptions *ListProfilesOptions) (result *ProfileCollection, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ListProfilesWithContext(context.Background(), listProfilesOptions)
 }
 
 // ListProfilesWithContext is an alternate form of the ListProfiles method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListProfilesWithContext(ctx context.Context, listProfilesOptions *ListProfilesOptions) (result *ProfileCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfilesWithContext(ctx context.Context, listProfilesOptions *ListProfilesOptions) (result *ProfileCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listProfilesOptions, "listProfilesOptions cannot be nil")
 	if err != nil {
 		return
@@ -1462,6 +1471,15 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListProfilesWi
 	if listProfilesOptions.AccountID != nil {
 		builder.AddQuery("account_id", fmt.Sprint(*listProfilesOptions.AccountID))
 	}
+	if listProfilesOptions.ProfileType != nil {
+		builder.AddQuery("profile_type", fmt.Sprint(*listProfilesOptions.ProfileType))
+	}
+	if listProfilesOptions.Limit != nil {
+		builder.AddQuery("limit", fmt.Sprint(*listProfilesOptions.Limit))
+	}
+	if listProfilesOptions.Start != nil {
+		builder.AddQuery("start", fmt.Sprint(*listProfilesOptions.Start))
+	}
 
 	request, err := builder.Build()
 	if err != nil {
@@ -1490,12 +1508,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListProfilesWi
 // With Security and Compliance Center, you can create  a profile that is specific to your usecase, by using an existing
 // library as a starting point.  For more information, see [Building custom
 // profiles](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-build-custom-profiles&interface=api).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ReplaceProfile(replaceProfileOptions *ReplaceProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProfile(replaceProfileOptions *ReplaceProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ReplaceProfileWithContext(context.Background(), replaceProfileOptions)
 }
 
 // ReplaceProfileWithContext is an alternate form of the ReplaceProfile method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ReplaceProfileWithContext(ctx context.Context, replaceProfileOptions *ReplaceProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProfileWithContext(ctx context.Context, replaceProfileOptions *ReplaceProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(replaceProfileOptions, "replaceProfileOptions cannot be nil")
 	if err != nil {
 		return
@@ -1591,12 +1609,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ReplaceProfile
 // standards. Or you can choose  to create one that is specific to your usecase, by using an existing library as a
 // starting point. For more information, see [Building custom
 // profiles](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-build-custom-profiles&interface=api).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetProfile(getProfileOptions *GetProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProfile(getProfileOptions *GetProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.GetProfileWithContext(context.Background(), getProfileOptions)
 }
 
 // GetProfileWithContext is an alternate form of the GetProfile method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetProfileWithContext(ctx context.Context, getProfileOptions *GetProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProfileWithContext(ctx context.Context, getProfileOptions *GetProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getProfileOptions, "getProfileOptions cannot be nil")
 	if err != nil {
 		return
@@ -1661,12 +1679,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetProfileWith
 // standards. Or you can choose  to create one that is specific to your usecase, by using an existing library as a
 // starting point. For more information, see [Building custom
 // profiles](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-build-custom-profiles&interface=api).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteCustomProfile(deleteCustomProfileOptions *DeleteCustomProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteCustomProfile(deleteCustomProfileOptions *DeleteCustomProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.DeleteCustomProfileWithContext(context.Background(), deleteCustomProfileOptions)
 }
 
 // DeleteCustomProfileWithContext is an alternate form of the DeleteCustomProfile method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteCustomProfileWithContext(ctx context.Context, deleteCustomProfileOptions *DeleteCustomProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteCustomProfileWithContext(ctx context.Context, deleteCustomProfileOptions *DeleteCustomProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(deleteCustomProfileOptions, "deleteCustomProfileOptions cannot be nil")
 	if err != nil {
 		return
@@ -1731,12 +1749,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteCustomPr
 // standards. Or you can choose  to create one that is specific to your usecase, by using an existing library as a
 // starting point. For more information, see [Building custom
 // profiles](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-build-custom-profiles&interface=api).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ReplaceProfileParameters(replaceProfileParametersOptions *ReplaceProfileParametersOptions) (result *ProfileDefaultParametersResponse, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProfileParameters(replaceProfileParametersOptions *ReplaceProfileParametersOptions) (result *ProfileDefaultParametersResponse, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ReplaceProfileParametersWithContext(context.Background(), replaceProfileParametersOptions)
 }
 
 // ReplaceProfileParametersWithContext is an alternate form of the ReplaceProfileParameters method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ReplaceProfileParametersWithContext(ctx context.Context, replaceProfileParametersOptions *ReplaceProfileParametersOptions) (result *ProfileDefaultParametersResponse, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProfileParametersWithContext(ctx context.Context, replaceProfileParametersOptions *ReplaceProfileParametersOptions) (result *ProfileDefaultParametersResponse, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(replaceProfileParametersOptions, "replaceProfileParametersOptions cannot be nil")
 	if err != nil {
 		return
@@ -1809,12 +1827,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ReplaceProfile
 
 // ListProfileParameters : List profile parameters for a given profile
 // List the parameters used in the Profile.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListProfileParameters(listProfileParametersOptions *ListProfileParametersOptions) (result *ProfileDefaultParametersResponse, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfileParameters(listProfileParametersOptions *ListProfileParametersOptions) (result *ProfileDefaultParametersResponse, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ListProfileParametersWithContext(context.Background(), listProfileParametersOptions)
 }
 
 // ListProfileParametersWithContext is an alternate form of the ListProfileParameters method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListProfileParametersWithContext(ctx context.Context, listProfileParametersOptions *ListProfileParametersOptions) (result *ProfileDefaultParametersResponse, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfileParametersWithContext(ctx context.Context, listProfileParametersOptions *ListProfileParametersOptions) (result *ProfileDefaultParametersResponse, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listProfileParametersOptions, "listProfileParametersOptions cannot be nil")
 	if err != nil {
 		return
@@ -1873,12 +1891,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListProfilePar
 // version.  By comparing them, you can view what controls were added, removed, or modified. For more information, see
 // [Building custom
 // profiles](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-build-custom-profiles&interface=api).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CompareProfiles(compareProfilesOptions *CompareProfilesOptions) (result *ComparePredefinedProfilesResponse, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CompareProfiles(compareProfilesOptions *CompareProfilesOptions) (result *ComparePredefinedProfilesResponse, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.CompareProfilesWithContext(context.Background(), compareProfilesOptions)
 }
 
 // CompareProfilesWithContext is an alternate form of the CompareProfiles method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CompareProfilesWithContext(ctx context.Context, compareProfilesOptions *CompareProfilesOptions) (result *ComparePredefinedProfilesResponse, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CompareProfilesWithContext(ctx context.Context, compareProfilesOptions *CompareProfilesOptions) (result *ComparePredefinedProfilesResponse, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(compareProfilesOptions, "compareProfilesOptions cannot be nil")
 	if err != nil {
 		return
@@ -1938,12 +1956,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CompareProfile
 
 // CreateScope : Create a scope
 // Create a scope.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateScope(createScopeOptions *CreateScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateScope(createScopeOptions *CreateScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.CreateScopeWithContext(context.Background(), createScopeOptions)
 }
 
 // CreateScopeWithContext is an alternate form of the CreateScope method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateScopeWithContext(ctx context.Context, createScopeOptions *CreateScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateScopeWithContext(ctx context.Context, createScopeOptions *CreateScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(createScopeOptions, "createScopeOptions cannot be nil")
 	if err != nil {
 		return
@@ -2017,12 +2035,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateScopeWit
 
 // ListScopes : Get all scopes
 // Get all scopes.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListScopes(listScopesOptions *ListScopesOptions) (result *ScopeCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListScopes(listScopesOptions *ListScopesOptions) (result *ScopeCollection, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ListScopesWithContext(context.Background(), listScopesOptions)
 }
 
 // ListScopesWithContext is an alternate form of the ListScopes method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListScopesWithContext(ctx context.Context, listScopesOptions *ListScopesOptions) (result *ScopeCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListScopesWithContext(ctx context.Context, listScopesOptions *ListScopesOptions) (result *ScopeCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listScopesOptions, "listScopesOptions cannot be nil")
 	if err != nil {
 		return
@@ -2093,12 +2111,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListScopesWith
 
 // UpdateScope : Update a scope
 // Update the details of a scope.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) UpdateScope(updateScopeOptions *UpdateScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateScope(updateScopeOptions *UpdateScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.UpdateScopeWithContext(context.Background(), updateScopeOptions)
 }
 
 // UpdateScopeWithContext is an alternate form of the UpdateScope method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) UpdateScopeWithContext(ctx context.Context, updateScopeOptions *UpdateScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateScopeWithContext(ctx context.Context, updateScopeOptions *UpdateScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(updateScopeOptions, "updateScopeOptions cannot be nil")
 	if err != nil {
 		return
@@ -2167,12 +2185,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) UpdateScopeWit
 
 // GetScope : Get a scope
 // Get a scope by specifying the scope ID.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetScope(getScopeOptions *GetScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetScope(getScopeOptions *GetScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.GetScopeWithContext(context.Background(), getScopeOptions)
 }
 
 // GetScopeWithContext is an alternate form of the GetScope method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetScopeWithContext(ctx context.Context, getScopeOptions *GetScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetScopeWithContext(ctx context.Context, getScopeOptions *GetScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getScopeOptions, "getScopeOptions cannot be nil")
 	if err != nil {
 		return
@@ -2228,12 +2246,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetScopeWithCo
 
 // DeleteScope : Delete a scope
 // Delete a scope by specifying the scope ID.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteScope(deleteScopeOptions *DeleteScopeOptions) (response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteScope(deleteScopeOptions *DeleteScopeOptions) (response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.DeleteScopeWithContext(context.Background(), deleteScopeOptions)
 }
 
 // DeleteScopeWithContext is an alternate form of the DeleteScope method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteScopeWithContext(ctx context.Context, deleteScopeOptions *DeleteScopeOptions) (response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteScopeWithContext(ctx context.Context, deleteScopeOptions *DeleteScopeOptions) (response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(deleteScopeOptions, "deleteScopeOptions cannot be nil")
 	if err != nil {
 		return
@@ -2277,12 +2295,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteScopeWit
 
 // CreateSubscope : Create a subscope
 // Create a subscope.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateSubscope(createSubscopeOptions *CreateSubscopeOptions) (result *SubScopeResponse, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateSubscope(createSubscopeOptions *CreateSubscopeOptions) (result *SubScopeResponse, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.CreateSubscopeWithContext(context.Background(), createSubscopeOptions)
 }
 
 // CreateSubscopeWithContext is an alternate form of the CreateSubscope method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateSubscopeWithContext(ctx context.Context, createSubscopeOptions *CreateSubscopeOptions) (result *SubScopeResponse, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateSubscopeWithContext(ctx context.Context, createSubscopeOptions *CreateSubscopeOptions) (result *SubScopeResponse, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(createSubscopeOptions, "createSubscopeOptions cannot be nil")
 	if err != nil {
 		return
@@ -2348,12 +2366,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateSubscope
 
 // ListSubscopes : Get all subscopes
 // Get all subscopes.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListSubscopes(listSubscopesOptions *ListSubscopesOptions) (result *SubScopeCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListSubscopes(listSubscopesOptions *ListSubscopesOptions) (result *SubScopeCollection, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ListSubscopesWithContext(context.Background(), listSubscopesOptions)
 }
 
 // ListSubscopesWithContext is an alternate form of the ListSubscopes method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListSubscopesWithContext(ctx context.Context, listSubscopesOptions *ListSubscopesOptions) (result *SubScopeCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListSubscopesWithContext(ctx context.Context, listSubscopesOptions *ListSubscopesOptions) (result *SubScopeCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listSubscopesOptions, "listSubscopesOptions cannot be nil")
 	if err != nil {
 		return
@@ -2425,12 +2443,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListSubscopesW
 
 // GetSubscope : Get a subscope
 // Get the subscope details.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetSubscope(getSubscopeOptions *GetSubscopeOptions) (result *SubScope, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetSubscope(getSubscopeOptions *GetSubscopeOptions) (result *SubScope, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.GetSubscopeWithContext(context.Background(), getSubscopeOptions)
 }
 
 // GetSubscopeWithContext is an alternate form of the GetSubscope method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetSubscopeWithContext(ctx context.Context, getSubscopeOptions *GetSubscopeOptions) (result *SubScope, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetSubscopeWithContext(ctx context.Context, getSubscopeOptions *GetSubscopeOptions) (result *SubScope, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getSubscopeOptions, "getSubscopeOptions cannot be nil")
 	if err != nil {
 		return
@@ -2487,12 +2505,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetSubscopeWit
 
 // UpdateSubscope : Update a subscope
 // Update the subscope details.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) UpdateSubscope(updateSubscopeOptions *UpdateSubscopeOptions) (result *SubScope, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateSubscope(updateSubscopeOptions *UpdateSubscopeOptions) (result *SubScope, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.UpdateSubscopeWithContext(context.Background(), updateSubscopeOptions)
 }
 
 // UpdateSubscopeWithContext is an alternate form of the UpdateSubscope method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) UpdateSubscopeWithContext(ctx context.Context, updateSubscopeOptions *UpdateSubscopeOptions) (result *SubScope, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateSubscopeWithContext(ctx context.Context, updateSubscopeOptions *UpdateSubscopeOptions) (result *SubScope, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(updateSubscopeOptions, "updateSubscopeOptions cannot be nil")
 	if err != nil {
 		return
@@ -2562,12 +2580,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) UpdateSubscope
 
 // DeleteSubscope : Delete a subscope
 // Delete the subscope by specifying the subscope ID.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteSubscope(deleteSubscopeOptions *DeleteSubscopeOptions) (response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteSubscope(deleteSubscopeOptions *DeleteSubscopeOptions) (response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.DeleteSubscopeWithContext(context.Background(), deleteSubscopeOptions)
 }
 
 // DeleteSubscopeWithContext is an alternate form of the DeleteSubscope method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteSubscopeWithContext(ctx context.Context, deleteSubscopeOptions *DeleteSubscopeOptions) (response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteSubscopeWithContext(ctx context.Context, deleteSubscopeOptions *DeleteSubscopeOptions) (response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(deleteSubscopeOptions, "deleteSubscopeOptions cannot be nil")
 	if err != nil {
 		return
@@ -2612,12 +2630,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteSubscope
 
 // CreateTarget : Create a target
 // Creates a target to scan against.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateTarget(createTargetOptions *CreateTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateTarget(createTargetOptions *CreateTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.CreateTargetWithContext(context.Background(), createTargetOptions)
 }
 
 // CreateTargetWithContext is an alternate form of the CreateTarget method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateTargetWithContext(ctx context.Context, createTargetOptions *CreateTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateTargetWithContext(ctx context.Context, createTargetOptions *CreateTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(createTargetOptions, "createTargetOptions cannot be nil")
 	if err != nil {
 		return
@@ -2691,12 +2709,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateTargetWi
 
 // ListTargets : Get a list of targets with pagination
 // Returns a list of targets.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListTargets(listTargetsOptions *ListTargetsOptions) (result *TargetCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListTargets(listTargetsOptions *ListTargetsOptions) (result *TargetCollection, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ListTargetsWithContext(context.Background(), listTargetsOptions)
 }
 
 // ListTargetsWithContext is an alternate form of the ListTargets method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListTargetsWithContext(ctx context.Context, listTargetsOptions *ListTargetsOptions) (result *TargetCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListTargetsWithContext(ctx context.Context, listTargetsOptions *ListTargetsOptions) (result *TargetCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listTargetsOptions, "listTargetsOptions cannot be nil")
 	if err != nil {
 		return
@@ -2751,12 +2769,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListTargetsWit
 
 // GetTarget : Get a target by ID
 // Retrieves a target by its ID association.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetTarget(getTargetOptions *GetTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetTarget(getTargetOptions *GetTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.GetTargetWithContext(context.Background(), getTargetOptions)
 }
 
 // GetTargetWithContext is an alternate form of the GetTarget method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetTargetWithContext(ctx context.Context, getTargetOptions *GetTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetTargetWithContext(ctx context.Context, getTargetOptions *GetTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getTargetOptions, "getTargetOptions cannot be nil")
 	if err != nil {
 		return
@@ -2812,12 +2830,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetTargetWithC
 
 // ReplaceTarget : replace a target by ID
 // Updates a target by its ID.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ReplaceTarget(replaceTargetOptions *ReplaceTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceTarget(replaceTargetOptions *ReplaceTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ReplaceTargetWithContext(context.Background(), replaceTargetOptions)
 }
 
 // ReplaceTargetWithContext is an alternate form of the ReplaceTarget method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ReplaceTargetWithContext(ctx context.Context, replaceTargetOptions *ReplaceTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceTargetWithContext(ctx context.Context, replaceTargetOptions *ReplaceTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(replaceTargetOptions, "replaceTargetOptions cannot be nil")
 	if err != nil {
 		return
@@ -2892,12 +2910,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ReplaceTargetW
 
 // DeleteTarget : Delete a target by ID
 // Deletes a target by the ID.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteTarget(deleteTargetOptions *DeleteTargetOptions) (response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteTarget(deleteTargetOptions *DeleteTargetOptions) (response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.DeleteTargetWithContext(context.Background(), deleteTargetOptions)
 }
 
 // DeleteTargetWithContext is an alternate form of the DeleteTarget method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteTargetWithContext(ctx context.Context, deleteTargetOptions *DeleteTargetOptions) (response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteTargetWithContext(ctx context.Context, deleteTargetOptions *DeleteTargetOptions) (response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(deleteTargetOptions, "deleteTargetOptions cannot be nil")
 	if err != nil {
 		return
@@ -2942,12 +2960,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteTargetWi
 // CreateProviderTypeInstance : Create a provider type instance
 // Create an instance of a provider type. For more information about integrations, see [Connecting Workload
 // Protection](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-setup-workload-protection).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateProviderTypeInstance(createProviderTypeInstanceOptions *CreateProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProviderTypeInstance(createProviderTypeInstanceOptions *CreateProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.CreateProviderTypeInstanceWithContext(context.Background(), createProviderTypeInstanceOptions)
 }
 
 // CreateProviderTypeInstanceWithContext is an alternate form of the CreateProviderTypeInstance method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateProviderTypeInstanceWithContext(ctx context.Context, createProviderTypeInstanceOptions *CreateProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProviderTypeInstanceWithContext(ctx context.Context, createProviderTypeInstanceOptions *CreateProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(createProviderTypeInstanceOptions, "createProviderTypeInstanceOptions cannot be nil")
 	if err != nil {
 		return
@@ -3017,12 +3035,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateProvider
 // ListProviderTypeInstances : List instances of a specific provider type
 // Retrieve all instances of a provider type. For more information about integrations, see [Connecting Workload
 // Protection](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-setup-workload-protection).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListProviderTypeInstances(listProviderTypeInstancesOptions *ListProviderTypeInstancesOptions) (result *ProviderTypeInstanceCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProviderTypeInstances(listProviderTypeInstancesOptions *ListProviderTypeInstancesOptions) (result *ProviderTypeInstanceCollection, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ListProviderTypeInstancesWithContext(context.Background(), listProviderTypeInstancesOptions)
 }
 
 // ListProviderTypeInstancesWithContext is an alternate form of the ListProviderTypeInstances method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListProviderTypeInstancesWithContext(ctx context.Context, listProviderTypeInstancesOptions *ListProviderTypeInstancesOptions) (result *ProviderTypeInstanceCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProviderTypeInstancesWithContext(ctx context.Context, listProviderTypeInstancesOptions *ListProviderTypeInstancesOptions) (result *ProviderTypeInstanceCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listProviderTypeInstancesOptions, "listProviderTypeInstancesOptions cannot be nil")
 	if err != nil {
 		return
@@ -3080,12 +3098,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListProviderTy
 // Retrieve a provider type instance by specifying the provider type ID, and Security and Compliance Center instance ID.
 // For more information about integrations, see [Connecting Workload
 // Protection](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-setup-workload-protection).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetProviderTypeInstance(getProviderTypeInstanceOptions *GetProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProviderTypeInstance(getProviderTypeInstanceOptions *GetProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.GetProviderTypeInstanceWithContext(context.Background(), getProviderTypeInstanceOptions)
 }
 
 // GetProviderTypeInstanceWithContext is an alternate form of the GetProviderTypeInstance method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetProviderTypeInstanceWithContext(ctx context.Context, getProviderTypeInstanceOptions *GetProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProviderTypeInstanceWithContext(ctx context.Context, getProviderTypeInstanceOptions *GetProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getProviderTypeInstanceOptions, "getProviderTypeInstanceOptions cannot be nil")
 	if err != nil {
 		return
@@ -3143,12 +3161,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetProviderTyp
 // UpdateProviderTypeInstance : Update a provider type instance
 // Update a provider type instance. For more information about integrations, see [Connecting Workload
 // Protection](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-setup-workload-protection).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) UpdateProviderTypeInstance(updateProviderTypeInstanceOptions *UpdateProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateProviderTypeInstance(updateProviderTypeInstanceOptions *UpdateProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.UpdateProviderTypeInstanceWithContext(context.Background(), updateProviderTypeInstanceOptions)
 }
 
 // UpdateProviderTypeInstanceWithContext is an alternate form of the UpdateProviderTypeInstance method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) UpdateProviderTypeInstanceWithContext(ctx context.Context, updateProviderTypeInstanceOptions *UpdateProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateProviderTypeInstanceWithContext(ctx context.Context, updateProviderTypeInstanceOptions *UpdateProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(updateProviderTypeInstanceOptions, "updateProviderTypeInstanceOptions cannot be nil")
 	if err != nil {
 		return
@@ -3219,12 +3237,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) UpdateProvider
 // DeleteProviderTypeInstance : Delete a provider type instance
 // Remove a provider type instance. For more information about integrations, see [Connecting Workload
 // Protection](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-setup-workload-protection).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteProviderTypeInstance(deleteProviderTypeInstanceOptions *DeleteProviderTypeInstanceOptions) (response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteProviderTypeInstance(deleteProviderTypeInstanceOptions *DeleteProviderTypeInstanceOptions) (response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.DeleteProviderTypeInstanceWithContext(context.Background(), deleteProviderTypeInstanceOptions)
 }
 
 // DeleteProviderTypeInstanceWithContext is an alternate form of the DeleteProviderTypeInstance method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteProviderTypeInstanceWithContext(ctx context.Context, deleteProviderTypeInstanceOptions *DeleteProviderTypeInstanceOptions) (response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteProviderTypeInstanceWithContext(ctx context.Context, deleteProviderTypeInstanceOptions *DeleteProviderTypeInstanceOptions) (response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(deleteProviderTypeInstanceOptions, "deleteProviderTypeInstanceOptions cannot be nil")
 	if err != nil {
 		return
@@ -3272,12 +3290,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteProvider
 // and Compliance Center.  For more information about connecting Workload Protection with the Security and Compliance
 // Center, see [Connecting Workload
 // Protection](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-setup-workload-protection).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListProviderTypes(listProviderTypesOptions *ListProviderTypesOptions) (result *ProviderTypeCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProviderTypes(listProviderTypesOptions *ListProviderTypesOptions) (result *ProviderTypeCollection, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ListProviderTypesWithContext(context.Background(), listProviderTypesOptions)
 }
 
 // ListProviderTypesWithContext is an alternate form of the ListProviderTypes method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListProviderTypesWithContext(ctx context.Context, listProviderTypesOptions *ListProviderTypesOptions) (result *ProviderTypeCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProviderTypesWithContext(ctx context.Context, listProviderTypesOptions *ListProviderTypesOptions) (result *ProviderTypeCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listProviderTypesOptions, "listProviderTypesOptions cannot be nil")
 	if err != nil {
 		return
@@ -3333,12 +3351,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListProviderTy
 // GetProviderTypeByID : Get a provider type
 // Retrieve a provider type by specifying its ID. For more information about integrations, see [Connecting Workload
 // Protection](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-setup-workload-protection).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetProviderTypeByID(getProviderTypeByIDOptions *GetProviderTypeByIDOptions) (result *ProviderType, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProviderTypeByID(getProviderTypeByIDOptions *GetProviderTypeByIDOptions) (result *ProviderType, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.GetProviderTypeByIDWithContext(context.Background(), getProviderTypeByIDOptions)
 }
 
 // GetProviderTypeByIDWithContext is an alternate form of the GetProviderTypeByID method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetProviderTypeByIDWithContext(ctx context.Context, getProviderTypeByIDOptions *GetProviderTypeByIDOptions) (result *ProviderType, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProviderTypeByIDWithContext(ctx context.Context, getProviderTypeByIDOptions *GetProviderTypeByIDOptions) (result *ProviderType, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getProviderTypeByIDOptions, "getProviderTypeByIDOptions cannot be nil")
 	if err != nil {
 		return
@@ -3395,12 +3413,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetProviderTyp
 // GetScanReport : Get a scan report
 // Retrieve the scan report by specifying the ID. For more information, see [Viewing
 // results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetScanReport(getScanReportOptions *GetScanReportOptions) (result *ScanReport, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetScanReport(getScanReportOptions *GetScanReportOptions) (result *ScanReport, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.GetScanReportWithContext(context.Background(), getScanReportOptions)
 }
 
 // GetScanReportWithContext is an alternate form of the GetScanReport method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetScanReportWithContext(ctx context.Context, getScanReportOptions *GetScanReportOptions) (result *ScanReport, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetScanReportWithContext(ctx context.Context, getScanReportOptions *GetScanReportOptions) (result *ScanReport, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getScanReportOptions, "getScanReportOptions cannot be nil")
 	if err != nil {
 		return
@@ -3458,12 +3476,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetScanReportW
 // GetScanReportDownloadFile : Get a scan report details
 // Download the scan report with evaluation details for the specified ID. For more information, see [Viewing
 // results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetScanReportDownloadFile(getScanReportDownloadFileOptions *GetScanReportDownloadFileOptions) (result io.ReadCloser, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetScanReportDownloadFile(getScanReportDownloadFileOptions *GetScanReportDownloadFileOptions) (result io.ReadCloser, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.GetScanReportDownloadFileWithContext(context.Background(), getScanReportDownloadFileOptions)
 }
 
 // GetScanReportDownloadFileWithContext is an alternate form of the GetScanReportDownloadFile method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetScanReportDownloadFileWithContext(ctx context.Context, getScanReportDownloadFileOptions *GetScanReportDownloadFileOptions) (result io.ReadCloser, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetScanReportDownloadFileWithContext(ctx context.Context, getScanReportDownloadFileOptions *GetScanReportDownloadFileOptions) (result io.ReadCloser, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getScanReportDownloadFileOptions, "getScanReportDownloadFileOptions cannot be nil")
 	if err != nil {
 		return
@@ -3513,12 +3531,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetScanReportD
 // GetLatestReports : List latest reports
 // Retrieve the latest reports, which are grouped by profile ID, scope ID, and attachment ID. For more information, see
 // [Viewing results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetLatestReports(getLatestReportsOptions *GetLatestReportsOptions) (result *ReportLatest, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetLatestReports(getLatestReportsOptions *GetLatestReportsOptions) (result *ReportLatest, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.GetLatestReportsWithContext(context.Background(), getLatestReportsOptions)
 }
 
 // GetLatestReportsWithContext is an alternate form of the GetLatestReports method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetLatestReportsWithContext(ctx context.Context, getLatestReportsOptions *GetLatestReportsOptions) (result *ReportLatest, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetLatestReportsWithContext(ctx context.Context, getLatestReportsOptions *GetLatestReportsOptions) (result *ReportLatest, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getLatestReportsOptions, "getLatestReportsOptions cannot be nil")
 	if err != nil {
 		return
@@ -3578,12 +3596,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetLatestRepor
 // ListReports : List reports
 // Retrieve a page of reports that are filtered by the specified parameters. For more information, see [Viewing
 // results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListReports(listReportsOptions *ListReportsOptions) (result *ReportCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReports(listReportsOptions *ListReportsOptions) (result *ReportCollection, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ListReportsWithContext(context.Background(), listReportsOptions)
 }
 
 // ListReportsWithContext is an alternate form of the ListReports method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListReportsWithContext(ctx context.Context, listReportsOptions *ListReportsOptions) (result *ReportCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReportsWithContext(ctx context.Context, listReportsOptions *ListReportsOptions) (result *ReportCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listReportsOptions, "listReportsOptions cannot be nil")
 	if err != nil {
 		return
@@ -3661,12 +3679,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListReportsWit
 // GetReport : Get a report
 // Retrieve a specified report and filter the report details by the specified scope ID and/or subscope ID. For more
 // information, see [Viewing results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetReport(getReportOptions *GetReportOptions) (result *Report, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReport(getReportOptions *GetReportOptions) (result *Report, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.GetReportWithContext(context.Background(), getReportOptions)
 }
 
 // GetReportWithContext is an alternate form of the GetReport method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetReportWithContext(ctx context.Context, getReportOptions *GetReportOptions) (result *Report, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportWithContext(ctx context.Context, getReportOptions *GetReportOptions) (result *Report, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getReportOptions, "getReportOptions cannot be nil")
 	if err != nil {
 		return
@@ -3730,12 +3748,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetReportWithC
 // GetReportSummary : Get a report summary
 // Retrieve the complete summarized information for a report. For more information, see [Viewing
 // results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetReportSummary(getReportSummaryOptions *GetReportSummaryOptions) (result *ReportSummary, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportSummary(getReportSummaryOptions *GetReportSummaryOptions) (result *ReportSummary, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.GetReportSummaryWithContext(context.Background(), getReportSummaryOptions)
 }
 
 // GetReportSummaryWithContext is an alternate form of the GetReportSummary method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetReportSummaryWithContext(ctx context.Context, getReportSummaryOptions *GetReportSummaryOptions) (result *ReportSummary, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportSummaryWithContext(ctx context.Context, getReportSummaryOptions *GetReportSummaryOptions) (result *ReportSummary, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getReportSummaryOptions, "getReportSummaryOptions cannot be nil")
 	if err != nil {
 		return
@@ -3792,12 +3810,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetReportSumma
 // GetReportDownloadFile : Get report evaluation details
 // Download a .csv file to inspect the evaluation details of a specified report. For more information, see [Viewing
 // results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetReportDownloadFile(getReportDownloadFileOptions *GetReportDownloadFileOptions) (result io.ReadCloser, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportDownloadFile(getReportDownloadFileOptions *GetReportDownloadFileOptions) (result io.ReadCloser, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.GetReportDownloadFileWithContext(context.Background(), getReportDownloadFileOptions)
 }
 
 // GetReportDownloadFileWithContext is an alternate form of the GetReportDownloadFile method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetReportDownloadFileWithContext(ctx context.Context, getReportDownloadFileOptions *GetReportDownloadFileOptions) (result io.ReadCloser, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportDownloadFileWithContext(ctx context.Context, getReportDownloadFileOptions *GetReportDownloadFileOptions) (result io.ReadCloser, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getReportDownloadFileOptions, "getReportDownloadFileOptions cannot be nil")
 	if err != nil {
 		return
@@ -3850,12 +3868,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetReportDownl
 // GetReportControls : Get report controls
 // Retrieve a sorted and filtered list of controls for the specified report. For more information, see [Viewing
 // results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetReportControls(getReportControlsOptions *GetReportControlsOptions) (result *ReportControls, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportControls(getReportControlsOptions *GetReportControlsOptions) (result *ReportControls, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.GetReportControlsWithContext(context.Background(), getReportControlsOptions)
 }
 
 // GetReportControlsWithContext is an alternate form of the GetReportControls method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetReportControlsWithContext(ctx context.Context, getReportControlsOptions *GetReportControlsOptions) (result *ReportControls, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportControlsWithContext(ctx context.Context, getReportControlsOptions *GetReportControlsOptions) (result *ReportControls, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getReportControlsOptions, "getReportControlsOptions cannot be nil")
 	if err != nil {
 		return
@@ -3937,12 +3955,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetReportContr
 // GetReportRule : Get a report rule
 // Retrieve the rule by specifying the report ID and rule ID. For more information, see [Viewing
 // results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetReportRule(getReportRuleOptions *GetReportRuleOptions) (result *RuleInfo, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportRule(getReportRuleOptions *GetReportRuleOptions) (result *RuleInfo, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.GetReportRuleWithContext(context.Background(), getReportRuleOptions)
 }
 
 // GetReportRuleWithContext is an alternate form of the GetReportRule method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetReportRuleWithContext(ctx context.Context, getReportRuleOptions *GetReportRuleOptions) (result *RuleInfo, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportRuleWithContext(ctx context.Context, getReportRuleOptions *GetReportRuleOptions) (result *RuleInfo, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getReportRuleOptions, "getReportRuleOptions cannot be nil")
 	if err != nil {
 		return
@@ -4000,12 +4018,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetReportRuleW
 // ListReportEvaluations : List report evaluations
 // Get a paginated list of evaluations for the specified report. For more information, see [Viewing
 // results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListReportEvaluations(listReportEvaluationsOptions *ListReportEvaluationsOptions) (result *EvaluationPage, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReportEvaluations(listReportEvaluationsOptions *ListReportEvaluationsOptions) (result *EvaluationPage, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ListReportEvaluationsWithContext(context.Background(), listReportEvaluationsOptions)
 }
 
 // ListReportEvaluationsWithContext is an alternate form of the ListReportEvaluations method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListReportEvaluationsWithContext(ctx context.Context, listReportEvaluationsOptions *ListReportEvaluationsOptions) (result *EvaluationPage, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReportEvaluationsWithContext(ctx context.Context, listReportEvaluationsOptions *ListReportEvaluationsOptions) (result *EvaluationPage, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listReportEvaluationsOptions, "listReportEvaluationsOptions cannot be nil")
 	if err != nil {
 		return
@@ -4099,12 +4117,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListReportEval
 // ListReportResources : List report resources
 // Get a paginated list of resources for the specified report. For more information, see [Viewing
 // results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListReportResources(listReportResourcesOptions *ListReportResourcesOptions) (result *ResourcePage, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReportResources(listReportResourcesOptions *ListReportResourcesOptions) (result *ResourcePage, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ListReportResourcesWithContext(context.Background(), listReportResourcesOptions)
 }
 
 // ListReportResourcesWithContext is an alternate form of the ListReportResources method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListReportResourcesWithContext(ctx context.Context, listReportResourcesOptions *ListReportResourcesOptions) (result *ResourcePage, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReportResourcesWithContext(ctx context.Context, listReportResourcesOptions *ListReportResourcesOptions) (result *ResourcePage, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listReportResourcesOptions, "listReportResourcesOptions cannot be nil")
 	if err != nil {
 		return
@@ -4192,12 +4210,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListReportReso
 // GetReportTags : List report tags
 // Retrieve a list of tags for the specified report. For more information, see [Viewing
 // results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetReportTags(getReportTagsOptions *GetReportTagsOptions) (result *ReportTags, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportTags(getReportTagsOptions *GetReportTagsOptions) (result *ReportTags, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.GetReportTagsWithContext(context.Background(), getReportTagsOptions)
 }
 
 // GetReportTagsWithContext is an alternate form of the GetReportTags method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetReportTagsWithContext(ctx context.Context, getReportTagsOptions *GetReportTagsOptions) (result *ReportTags, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportTagsWithContext(ctx context.Context, getReportTagsOptions *GetReportTagsOptions) (result *ReportTags, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getReportTagsOptions, "getReportTagsOptions cannot be nil")
 	if err != nil {
 		return
@@ -4254,12 +4272,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetReportTagsW
 // GetReportViolationsDrift : Get report violations drift
 // Get a list of report violation data points for the specified report and time frame. For more information, see
 // [Viewing results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetReportViolationsDrift(getReportViolationsDriftOptions *GetReportViolationsDriftOptions) (result *ReportViolationsDrift, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportViolationsDrift(getReportViolationsDriftOptions *GetReportViolationsDriftOptions) (result *ReportViolationsDrift, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.GetReportViolationsDriftWithContext(context.Background(), getReportViolationsDriftOptions)
 }
 
 // GetReportViolationsDriftWithContext is an alternate form of the GetReportViolationsDrift method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetReportViolationsDriftWithContext(ctx context.Context, getReportViolationsDriftOptions *GetReportViolationsDriftOptions) (result *ReportViolationsDrift, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportViolationsDriftWithContext(ctx context.Context, getReportViolationsDriftOptions *GetReportViolationsDriftOptions) (result *ReportViolationsDrift, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getReportViolationsDriftOptions, "getReportViolationsDriftOptions cannot be nil")
 	if err != nil {
 		return
@@ -4326,12 +4344,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetReportViola
 // ListScanReports : List scan reports
 // Get a list of scan reports and view the status of report generation in progress. For more information, see [Viewing
 // results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListScanReports(listScanReportsOptions *ListScanReportsOptions) (result *ScanReportCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListScanReports(listScanReportsOptions *ListScanReportsOptions) (result *ScanReportCollection, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ListScanReportsWithContext(context.Background(), listScanReportsOptions)
 }
 
 // ListScanReportsWithContext is an alternate form of the ListScanReports method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListScanReportsWithContext(ctx context.Context, listScanReportsOptions *ListScanReportsOptions) (result *ScanReportCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListScanReportsWithContext(ctx context.Context, listScanReportsOptions *ListScanReportsOptions) (result *ScanReportCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listScanReportsOptions, "listScanReportsOptions cannot be nil")
 	if err != nil {
 		return
@@ -4395,12 +4413,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListScanReport
 // CreateScanReport : Create a scan report
 // Create a scan report for a specific scope or sub-scope. For more information, see [Defining custom
 // rules](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-rules-define).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateScanReport(createScanReportOptions *CreateScanReportOptions) (result *CreateScanReport, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateScanReport(createScanReportOptions *CreateScanReportOptions) (result *CreateScanReport, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.CreateScanReportWithContext(context.Background(), createScanReportOptions)
 }
 
 // CreateScanReportWithContext is an alternate form of the CreateScanReport method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateScanReportWithContext(ctx context.Context, createScanReportOptions *CreateScanReportOptions) (result *CreateScanReport, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateScanReportWithContext(ctx context.Context, createScanReportOptions *CreateScanReportOptions) (result *CreateScanReport, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(createScanReportOptions, "createScanReportOptions cannot be nil")
 	if err != nil {
 		return
@@ -4477,12 +4495,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateScanRepo
 // exists, but you don't want to wait for the next  scan to see your posture, you can initiate an on-demand scan. For
 // more information, see [Running a scan on
 // demand](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scan-resources#scan-ondemand-api).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateScan(createScanOptions *CreateScanOptions) (result *CreateScanResponse, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateScan(createScanOptions *CreateScanOptions) (result *CreateScanResponse, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.CreateScanWithContext(context.Background(), createScanOptions)
 }
 
 // CreateScanWithContext is an alternate form of the CreateScan method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateScanWithContext(ctx context.Context, createScanOptions *CreateScanOptions) (result *CreateScanResponse, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateScanWithContext(ctx context.Context, createScanOptions *CreateScanOptions) (result *CreateScanResponse, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(createScanOptions, "createScanOptions cannot be nil")
 	if err != nil {
 		return
@@ -4553,12 +4571,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateScanWith
 // Retrieve all the rules that you use to target the exact configuration properties  that you need to ensure are
 // compliant. For more information, see [Defining custom
 // rules](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-rules-define).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListRules(listRulesOptions *ListRulesOptions) (result *RuleCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListRules(listRulesOptions *ListRulesOptions) (result *RuleCollection, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ListRulesWithContext(context.Background(), listRulesOptions)
 }
 
 // ListRulesWithContext is an alternate form of the ListRules method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListRulesWithContext(ctx context.Context, listRulesOptions *ListRulesOptions) (result *RuleCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListRulesWithContext(ctx context.Context, listRulesOptions *ListRulesOptions) (result *RuleCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listRulesOptions, "listRulesOptions cannot be nil")
 	if err != nil {
 		return
@@ -4634,12 +4652,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListRulesWithC
 // Create a custom rule to to target the exact configuration properties  that you need to evaluate your resources for
 // compliance. For more information, see [Defining custom
 // rules](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-rules-define).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateRule(createRuleOptions *CreateRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateRule(createRuleOptions *CreateRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.CreateRuleWithContext(context.Background(), createRuleOptions)
 }
 
 // CreateRuleWithContext is an alternate form of the CreateRule method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateRuleWithContext(ctx context.Context, createRuleOptions *CreateRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateRuleWithContext(ctx context.Context, createRuleOptions *CreateRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(createRuleOptions, "createRuleOptions cannot be nil")
 	if err != nil {
 		return
@@ -4720,12 +4738,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) CreateRuleWith
 // GetRule : Get a custom rule
 // Retrieve a rule that you created to evaluate your resources.  For more information, see [Defining custom
 // rules](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-rules-define).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetRule(getRuleOptions *GetRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetRule(getRuleOptions *GetRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.GetRuleWithContext(context.Background(), getRuleOptions)
 }
 
 // GetRuleWithContext is an alternate form of the GetRule method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetRuleWithContext(ctx context.Context, getRuleOptions *GetRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetRuleWithContext(ctx context.Context, getRuleOptions *GetRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getRuleOptions, "getRuleOptions cannot be nil")
 	if err != nil {
 		return
@@ -4783,12 +4801,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetRuleWithCon
 // Update a custom rule that you use to target the exact configuration properties  that you need to evaluate your
 // resources for compliance. For more information, see [Defining custom
 // rules](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-rules-define).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ReplaceRule(replaceRuleOptions *ReplaceRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceRule(replaceRuleOptions *ReplaceRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ReplaceRuleWithContext(context.Background(), replaceRuleOptions)
 }
 
 // ReplaceRuleWithContext is an alternate form of the ReplaceRule method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ReplaceRuleWithContext(ctx context.Context, replaceRuleOptions *ReplaceRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceRuleWithContext(ctx context.Context, replaceRuleOptions *ReplaceRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(replaceRuleOptions, "replaceRuleOptions cannot be nil")
 	if err != nil {
 		return
@@ -4873,12 +4891,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ReplaceRuleWit
 // DeleteRule : Delete a custom rule
 // Delete a custom rule that you no longer require to evaluate your resources. For more information, see [Defining
 // custom rules](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-rules-define).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteRule(deleteRuleOptions *DeleteRuleOptions) (response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteRule(deleteRuleOptions *DeleteRuleOptions) (response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.DeleteRuleWithContext(context.Background(), deleteRuleOptions)
 }
 
 // DeleteRuleWithContext is an alternate form of the DeleteRule method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteRuleWithContext(ctx context.Context, deleteRuleOptions *DeleteRuleOptions) (response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteRuleWithContext(ctx context.Context, deleteRuleOptions *DeleteRuleOptions) (response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(deleteRuleOptions, "deleteRuleOptions cannot be nil")
 	if err != nil {
 		return
@@ -4923,12 +4941,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) DeleteRuleWith
 // ListServices : List services
 // List all the services that you use to evaluate the configuration of your resources for security and compliance.
 // [Learn more](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scannable-components).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListServices(listServicesOptions *ListServicesOptions) (result *ServiceCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListServices(listServicesOptions *ListServicesOptions) (result *ServiceCollection, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.ListServicesWithContext(context.Background(), listServicesOptions)
 }
 
 // ListServicesWithContext is an alternate form of the ListServices method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListServicesWithContext(ctx context.Context, listServicesOptions *ListServicesOptions) (result *ServiceCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListServicesWithContext(ctx context.Context, listServicesOptions *ListServicesOptions) (result *ServiceCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateStruct(listServicesOptions, "listServicesOptions")
 	if err != nil {
 		return
@@ -4976,12 +4994,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) ListServicesWi
 // GetService : Get a service
 // Retrieve a service configuration that you monitor. [Learn
 // more](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scannable-components).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetService(getServiceOptions *GetServiceOptions) (result *Service, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetService(getServiceOptions *GetServiceOptions) (result *Service, response *core.DetailedResponse, err error) {
 	return securityAndComplianceCenter.GetServiceWithContext(context.Background(), getServiceOptions)
 }
 
 // GetServiceWithContext is an alternate form of the GetService method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) GetServiceWithContext(ctx context.Context, getServiceOptions *GetServiceOptions) (result *Service, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetServiceWithContext(ctx context.Context, getServiceOptions *GetServiceOptions) (result *Service, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getServiceOptions, "getServiceOptions cannot be nil")
 	if err != nil {
 		return
@@ -5577,7 +5595,7 @@ type CompareProfilesOptions struct {
 }
 
 // NewCompareProfilesOptions : Instantiate CompareProfilesOptions
-func (*SecurityAndComplianceCenterV3) NewCompareProfilesOptions(instanceID string, profileID string) *CompareProfilesOptions {
+func (*SecurityAndComplianceCenterApiV3) NewCompareProfilesOptions(instanceID string, profileID string) *CompareProfilesOptions {
 	return &CompareProfilesOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ProfileID:  core.StringPtr(profileID),
@@ -6229,7 +6247,7 @@ type ControlPrototype struct {
 }
 
 // NewControlPrototype : Instantiate ControlPrototype (Generic Model Constructor)
-func (*SecurityAndComplianceCenterV3) NewControlPrototype(controlName string, controlCategory string, controlRequirement bool, controlSpecifications []ControlSpecificationPrototype) (_model *ControlPrototype, err error) {
+func (*SecurityAndComplianceCenterApiV3) NewControlPrototype(controlName string, controlCategory string, controlRequirement bool, controlSpecifications []ControlSpecificationPrototype) (_model *ControlPrototype, err error) {
 	_model = &ControlPrototype{
 		ControlName:           core.StringPtr(controlName),
 		ControlCategory:       core.StringPtr(controlCategory),
@@ -6704,7 +6722,7 @@ const (
 )
 
 // NewCreateCustomControlLibraryOptions : Instantiate CreateCustomControlLibraryOptions
-func (*SecurityAndComplianceCenterV3) NewCreateCustomControlLibraryOptions(instanceID string, controlLibraryName string, controlLibraryDescription string, controlLibraryType string, controlLibraryVersion string, controls []ControlPrototype) *CreateCustomControlLibraryOptions {
+func (*SecurityAndComplianceCenterApiV3) NewCreateCustomControlLibraryOptions(instanceID string, controlLibraryName string, controlLibraryDescription string, controlLibraryType string, controlLibraryVersion string, controls []ControlPrototype) *CreateCustomControlLibraryOptions {
 	return &CreateCustomControlLibraryOptions{
 		InstanceID:                core.StringPtr(instanceID),
 		ControlLibraryName:        core.StringPtr(controlLibraryName),
@@ -6782,7 +6800,7 @@ type CreateProfileAttachmentOptions struct {
 }
 
 // NewCreateProfileAttachmentOptions : Instantiate CreateProfileAttachmentOptions
-func (*SecurityAndComplianceCenterV3) NewCreateProfileAttachmentOptions(instanceID string, profileID string) *CreateProfileAttachmentOptions {
+func (*SecurityAndComplianceCenterApiV3) NewCreateProfileAttachmentOptions(instanceID string, profileID string) *CreateProfileAttachmentOptions {
 	return &CreateProfileAttachmentOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ProfileID:  core.StringPtr(profileID),
@@ -6853,7 +6871,7 @@ type CreateProfileOptions struct {
 }
 
 // NewCreateProfileOptions : Instantiate CreateProfileOptions
-func (*SecurityAndComplianceCenterV3) NewCreateProfileOptions(instanceID string) *CreateProfileOptions {
+func (*SecurityAndComplianceCenterApiV3) NewCreateProfileOptions(instanceID string) *CreateProfileOptions {
 	return &CreateProfileOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -6938,7 +6956,7 @@ type CreateProviderTypeInstanceOptions struct {
 }
 
 // NewCreateProviderTypeInstanceOptions : Instantiate CreateProviderTypeInstanceOptions
-func (*SecurityAndComplianceCenterV3) NewCreateProviderTypeInstanceOptions(instanceID string, providerTypeID string, providerTypeInstanceName string) *CreateProviderTypeInstanceOptions {
+func (*SecurityAndComplianceCenterApiV3) NewCreateProviderTypeInstanceOptions(instanceID string, providerTypeID string, providerTypeInstanceName string) *CreateProviderTypeInstanceOptions {
 	return &CreateProviderTypeInstanceOptions{
 		InstanceID:     core.StringPtr(instanceID),
 		ProviderTypeID: core.StringPtr(providerTypeID),
@@ -7004,7 +7022,7 @@ type CreateRuleOptions struct {
 }
 
 // NewCreateRuleOptions : Instantiate CreateRuleOptions
-func (*SecurityAndComplianceCenterV3) NewCreateRuleOptions(instanceID string, description string, target *RuleTargetPrototype, requiredConfig RequiredConfigIntf) *CreateRuleOptions {
+func (*SecurityAndComplianceCenterApiV3) NewCreateRuleOptions(instanceID string, description string, target *RuleTargetPrototype, requiredConfig RequiredConfigIntf) *CreateRuleOptions {
 	return &CreateRuleOptions{
 		InstanceID:     core.StringPtr(instanceID),
 		Description:    core.StringPtr(description),
@@ -7077,7 +7095,7 @@ type CreateScanOptions struct {
 }
 
 // NewCreateScanOptions : Instantiate CreateScanOptions
-func (*SecurityAndComplianceCenterV3) NewCreateScanOptions(instanceID string) *CreateScanOptions {
+func (*SecurityAndComplianceCenterApiV3) NewCreateScanOptions(instanceID string) *CreateScanOptions {
 	return &CreateScanOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -7153,7 +7171,7 @@ const (
 )
 
 // NewCreateScanReportOptions : Instantiate CreateScanReportOptions
-func (*SecurityAndComplianceCenterV3) NewCreateScanReportOptions(instanceID string, reportID string, format string) *CreateScanReportOptions {
+func (*SecurityAndComplianceCenterApiV3) NewCreateScanReportOptions(instanceID string, reportID string, format string) *CreateScanReportOptions {
 	return &CreateScanReportOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -7292,7 +7310,7 @@ type CreateScopeOptions struct {
 }
 
 // NewCreateScopeOptions : Instantiate CreateScopeOptions
-func (*SecurityAndComplianceCenterV3) NewCreateScopeOptions(instanceID string) *CreateScopeOptions {
+func (*SecurityAndComplianceCenterApiV3) NewCreateScopeOptions(instanceID string) *CreateScopeOptions {
 	return &CreateScopeOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -7350,7 +7368,7 @@ type CreateSubscopeOptions struct {
 }
 
 // NewCreateSubscopeOptions : Instantiate CreateSubscopeOptions
-func (*SecurityAndComplianceCenterV3) NewCreateSubscopeOptions(instanceID string, scopeID string) *CreateSubscopeOptions {
+func (*SecurityAndComplianceCenterApiV3) NewCreateSubscopeOptions(instanceID string, scopeID string) *CreateSubscopeOptions {
 	return &CreateSubscopeOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ScopeID:    core.StringPtr(scopeID),
@@ -7403,7 +7421,7 @@ type CreateTargetOptions struct {
 }
 
 // NewCreateTargetOptions : Instantiate CreateTargetOptions
-func (*SecurityAndComplianceCenterV3) NewCreateTargetOptions(instanceID string, accountID string, trustedProfileID string, name string) *CreateTargetOptions {
+func (*SecurityAndComplianceCenterApiV3) NewCreateTargetOptions(instanceID string, accountID string, trustedProfileID string, name string) *CreateTargetOptions {
 	return &CreateTargetOptions{
 		InstanceID:       core.StringPtr(instanceID),
 		AccountID:        core.StringPtr(accountID),
@@ -7464,7 +7482,7 @@ type Credential struct {
 }
 
 // NewCredential : Instantiate Credential (Generic Model Constructor)
-func (*SecurityAndComplianceCenterV3) NewCredential(secretCRN string, resources []Resource) (_model *Credential, err error) {
+func (*SecurityAndComplianceCenterApiV3) NewCredential(secretCRN string, resources []Resource) (_model *Credential, err error) {
 	_model = &Credential{
 		SecretCRN: core.StringPtr(secretCRN),
 		Resources: resources,
@@ -7728,7 +7746,7 @@ type DeleteCustomControlLibraryOptions struct {
 }
 
 // NewDeleteCustomControlLibraryOptions : Instantiate DeleteCustomControlLibraryOptions
-func (*SecurityAndComplianceCenterV3) NewDeleteCustomControlLibraryOptions(instanceID string, controlLibraryID string) *DeleteCustomControlLibraryOptions {
+func (*SecurityAndComplianceCenterApiV3) NewDeleteCustomControlLibraryOptions(instanceID string, controlLibraryID string) *DeleteCustomControlLibraryOptions {
 	return &DeleteCustomControlLibraryOptions{
 		InstanceID:       core.StringPtr(instanceID),
 		ControlLibraryID: core.StringPtr(controlLibraryID),
@@ -7775,7 +7793,7 @@ type DeleteCustomProfileOptions struct {
 }
 
 // NewDeleteCustomProfileOptions : Instantiate DeleteCustomProfileOptions
-func (*SecurityAndComplianceCenterV3) NewDeleteCustomProfileOptions(instanceID string, profileID string) *DeleteCustomProfileOptions {
+func (*SecurityAndComplianceCenterApiV3) NewDeleteCustomProfileOptions(instanceID string, profileID string) *DeleteCustomProfileOptions {
 	return &DeleteCustomProfileOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ProfileID:  core.StringPtr(profileID),
@@ -7825,7 +7843,7 @@ type DeleteProfileAttachmentOptions struct {
 }
 
 // NewDeleteProfileAttachmentOptions : Instantiate DeleteProfileAttachmentOptions
-func (*SecurityAndComplianceCenterV3) NewDeleteProfileAttachmentOptions(instanceID string, profileID string, attachmentID string) *DeleteProfileAttachmentOptions {
+func (*SecurityAndComplianceCenterApiV3) NewDeleteProfileAttachmentOptions(instanceID string, profileID string, attachmentID string) *DeleteProfileAttachmentOptions {
 	return &DeleteProfileAttachmentOptions{
 		InstanceID:   core.StringPtr(instanceID),
 		ProfileID:    core.StringPtr(profileID),
@@ -7879,7 +7897,7 @@ type DeleteProviderTypeInstanceOptions struct {
 }
 
 // NewDeleteProviderTypeInstanceOptions : Instantiate DeleteProviderTypeInstanceOptions
-func (*SecurityAndComplianceCenterV3) NewDeleteProviderTypeInstanceOptions(instanceID string, providerTypeID string, providerTypeInstanceID string) *DeleteProviderTypeInstanceOptions {
+func (*SecurityAndComplianceCenterApiV3) NewDeleteProviderTypeInstanceOptions(instanceID string, providerTypeID string, providerTypeInstanceID string) *DeleteProviderTypeInstanceOptions {
 	return &DeleteProviderTypeInstanceOptions{
 		InstanceID:             core.StringPtr(instanceID),
 		ProviderTypeID:         core.StringPtr(providerTypeID),
@@ -7924,7 +7942,7 @@ type DeleteRuleOptions struct {
 }
 
 // NewDeleteRuleOptions : Instantiate DeleteRuleOptions
-func (*SecurityAndComplianceCenterV3) NewDeleteRuleOptions(instanceID string, ruleID string) *DeleteRuleOptions {
+func (*SecurityAndComplianceCenterApiV3) NewDeleteRuleOptions(instanceID string, ruleID string) *DeleteRuleOptions {
 	return &DeleteRuleOptions{
 		InstanceID: core.StringPtr(instanceID),
 		RuleID:     core.StringPtr(ruleID),
@@ -7962,7 +7980,7 @@ type DeleteScopeOptions struct {
 }
 
 // NewDeleteScopeOptions : Instantiate DeleteScopeOptions
-func (*SecurityAndComplianceCenterV3) NewDeleteScopeOptions(instanceID string, scopeID string) *DeleteScopeOptions {
+func (*SecurityAndComplianceCenterApiV3) NewDeleteScopeOptions(instanceID string, scopeID string) *DeleteScopeOptions {
 	return &DeleteScopeOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ScopeID:    core.StringPtr(scopeID),
@@ -8003,7 +8021,7 @@ type DeleteSubscopeOptions struct {
 }
 
 // NewDeleteSubscopeOptions : Instantiate DeleteSubscopeOptions
-func (*SecurityAndComplianceCenterV3) NewDeleteSubscopeOptions(instanceID string, scopeID string, subscopeID string) *DeleteSubscopeOptions {
+func (*SecurityAndComplianceCenterApiV3) NewDeleteSubscopeOptions(instanceID string, scopeID string, subscopeID string) *DeleteSubscopeOptions {
 	return &DeleteSubscopeOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ScopeID:    core.StringPtr(scopeID),
@@ -8048,7 +8066,7 @@ type DeleteTargetOptions struct {
 }
 
 // NewDeleteTargetOptions : Instantiate DeleteTargetOptions
-func (*SecurityAndComplianceCenterV3) NewDeleteTargetOptions(instanceID string, targetID string) *DeleteTargetOptions {
+func (*SecurityAndComplianceCenterApiV3) NewDeleteTargetOptions(instanceID string, targetID string) *DeleteTargetOptions {
 	return &DeleteTargetOptions{
 		InstanceID: core.StringPtr(instanceID),
 		TargetID:   core.StringPtr(targetID),
@@ -8547,7 +8565,7 @@ type GetControlLibraryOptions struct {
 }
 
 // NewGetControlLibraryOptions : Instantiate GetControlLibraryOptions
-func (*SecurityAndComplianceCenterV3) NewGetControlLibraryOptions(instanceID string, controlLibraryID string) *GetControlLibraryOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetControlLibraryOptions(instanceID string, controlLibraryID string) *GetControlLibraryOptions {
 	return &GetControlLibraryOptions{
 		InstanceID:       core.StringPtr(instanceID),
 		ControlLibraryID: core.StringPtr(controlLibraryID),
@@ -8592,7 +8610,7 @@ type GetLatestReportsOptions struct {
 }
 
 // NewGetLatestReportsOptions : Instantiate GetLatestReportsOptions
-func (*SecurityAndComplianceCenterV3) NewGetLatestReportsOptions(instanceID string) *GetLatestReportsOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetLatestReportsOptions(instanceID string) *GetLatestReportsOptions {
 	return &GetLatestReportsOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -8635,7 +8653,7 @@ type GetProfileAttachmentOptions struct {
 }
 
 // NewGetProfileAttachmentOptions : Instantiate GetProfileAttachmentOptions
-func (*SecurityAndComplianceCenterV3) NewGetProfileAttachmentOptions(instanceID string, profileID string, attachmentID string) *GetProfileAttachmentOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetProfileAttachmentOptions(instanceID string, profileID string, attachmentID string) *GetProfileAttachmentOptions {
 	return &GetProfileAttachmentOptions{
 		InstanceID:   core.StringPtr(instanceID),
 		ProfileID:    core.StringPtr(profileID),
@@ -8689,7 +8707,7 @@ type GetProfileOptions struct {
 }
 
 // NewGetProfileOptions : Instantiate GetProfileOptions
-func (*SecurityAndComplianceCenterV3) NewGetProfileOptions(instanceID string, profileID string) *GetProfileOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetProfileOptions(instanceID string, profileID string) *GetProfileOptions {
 	return &GetProfileOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ProfileID:  core.StringPtr(profileID),
@@ -8733,7 +8751,7 @@ type GetProviderTypeByIDOptions struct {
 }
 
 // NewGetProviderTypeByIDOptions : Instantiate GetProviderTypeByIDOptions
-func (*SecurityAndComplianceCenterV3) NewGetProviderTypeByIDOptions(instanceID string, providerTypeID string) *GetProviderTypeByIDOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetProviderTypeByIDOptions(instanceID string, providerTypeID string) *GetProviderTypeByIDOptions {
 	return &GetProviderTypeByIDOptions{
 		InstanceID:     core.StringPtr(instanceID),
 		ProviderTypeID: core.StringPtr(providerTypeID),
@@ -8774,7 +8792,7 @@ type GetProviderTypeInstanceOptions struct {
 }
 
 // NewGetProviderTypeInstanceOptions : Instantiate GetProviderTypeInstanceOptions
-func (*SecurityAndComplianceCenterV3) NewGetProviderTypeInstanceOptions(instanceID string, providerTypeID string, providerTypeInstanceID string) *GetProviderTypeInstanceOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetProviderTypeInstanceOptions(instanceID string, providerTypeID string, providerTypeInstanceID string) *GetProviderTypeInstanceOptions {
 	return &GetProviderTypeInstanceOptions{
 		InstanceID:             core.StringPtr(instanceID),
 		ProviderTypeID:         core.StringPtr(providerTypeID),
@@ -8863,7 +8881,7 @@ const (
 )
 
 // NewGetReportControlsOptions : Instantiate GetReportControlsOptions
-func (*SecurityAndComplianceCenterV3) NewGetReportControlsOptions(instanceID string, reportID string) *GetReportControlsOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetReportControlsOptions(instanceID string, reportID string) *GetReportControlsOptions {
 	return &GetReportControlsOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -8955,7 +8973,7 @@ type GetReportDownloadFileOptions struct {
 }
 
 // NewGetReportDownloadFileOptions : Instantiate GetReportDownloadFileOptions
-func (*SecurityAndComplianceCenterV3) NewGetReportDownloadFileOptions(instanceID string, reportID string) *GetReportDownloadFileOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetReportDownloadFileOptions(instanceID string, reportID string) *GetReportDownloadFileOptions {
 	return &GetReportDownloadFileOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -9011,7 +9029,7 @@ type GetReportOptions struct {
 }
 
 // NewGetReportOptions : Instantiate GetReportOptions
-func (*SecurityAndComplianceCenterV3) NewGetReportOptions(reportID string, instanceID string) *GetReportOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetReportOptions(reportID string, instanceID string) *GetReportOptions {
 	return &GetReportOptions{
 		ReportID:   core.StringPtr(reportID),
 		InstanceID: core.StringPtr(instanceID),
@@ -9064,7 +9082,7 @@ type GetReportRuleOptions struct {
 }
 
 // NewGetReportRuleOptions : Instantiate GetReportRuleOptions
-func (*SecurityAndComplianceCenterV3) NewGetReportRuleOptions(instanceID string, reportID string, ruleID string) *GetReportRuleOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetReportRuleOptions(instanceID string, reportID string, ruleID string) *GetReportRuleOptions {
 	return &GetReportRuleOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -9109,7 +9127,7 @@ type GetReportSummaryOptions struct {
 }
 
 // NewGetReportSummaryOptions : Instantiate GetReportSummaryOptions
-func (*SecurityAndComplianceCenterV3) NewGetReportSummaryOptions(instanceID string, reportID string) *GetReportSummaryOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetReportSummaryOptions(instanceID string, reportID string) *GetReportSummaryOptions {
 	return &GetReportSummaryOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -9147,7 +9165,7 @@ type GetReportTagsOptions struct {
 }
 
 // NewGetReportTagsOptions : Instantiate GetReportTagsOptions
-func (*SecurityAndComplianceCenterV3) NewGetReportTagsOptions(instanceID string, reportID string) *GetReportTagsOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetReportTagsOptions(instanceID string, reportID string) *GetReportTagsOptions {
 	return &GetReportTagsOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -9194,7 +9212,7 @@ type GetReportViolationsDriftOptions struct {
 }
 
 // NewGetReportViolationsDriftOptions : Instantiate GetReportViolationsDriftOptions
-func (*SecurityAndComplianceCenterV3) NewGetReportViolationsDriftOptions(instanceID string, reportID string) *GetReportViolationsDriftOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetReportViolationsDriftOptions(instanceID string, reportID string) *GetReportViolationsDriftOptions {
 	return &GetReportViolationsDriftOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -9250,7 +9268,7 @@ type GetRuleOptions struct {
 }
 
 // NewGetRuleOptions : Instantiate GetRuleOptions
-func (*SecurityAndComplianceCenterV3) NewGetRuleOptions(instanceID string, ruleID string) *GetRuleOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetRuleOptions(instanceID string, ruleID string) *GetRuleOptions {
 	return &GetRuleOptions{
 		InstanceID: core.StringPtr(instanceID),
 		RuleID:     core.StringPtr(ruleID),
@@ -9294,7 +9312,7 @@ type GetScanReportDownloadFileOptions struct {
 }
 
 // NewGetScanReportDownloadFileOptions : Instantiate GetScanReportDownloadFileOptions
-func (*SecurityAndComplianceCenterV3) NewGetScanReportDownloadFileOptions(instanceID string, reportID string, jobID string) *GetScanReportDownloadFileOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetScanReportDownloadFileOptions(instanceID string, reportID string, jobID string) *GetScanReportDownloadFileOptions {
 	return &GetScanReportDownloadFileOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -9348,7 +9366,7 @@ type GetScanReportOptions struct {
 }
 
 // NewGetScanReportOptions : Instantiate GetScanReportOptions
-func (*SecurityAndComplianceCenterV3) NewGetScanReportOptions(instanceID string, reportID string, jobID string) *GetScanReportOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetScanReportOptions(instanceID string, reportID string, jobID string) *GetScanReportOptions {
 	return &GetScanReportOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -9393,7 +9411,7 @@ type GetScopeOptions struct {
 }
 
 // NewGetScopeOptions : Instantiate GetScopeOptions
-func (*SecurityAndComplianceCenterV3) NewGetScopeOptions(instanceID string, scopeID string) *GetScopeOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetScopeOptions(instanceID string, scopeID string) *GetScopeOptions {
 	return &GetScopeOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ScopeID:    core.StringPtr(scopeID),
@@ -9428,7 +9446,7 @@ type GetServiceOptions struct {
 }
 
 // NewGetServiceOptions : Instantiate GetServiceOptions
-func (*SecurityAndComplianceCenterV3) NewGetServiceOptions(servicesName string) *GetServiceOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetServiceOptions(servicesName string) *GetServiceOptions {
 	return &GetServiceOptions{
 		ServicesName: core.StringPtr(servicesName),
 	}
@@ -9456,7 +9474,7 @@ type GetSettingsOptions struct {
 }
 
 // NewGetSettingsOptions : Instantiate GetSettingsOptions
-func (*SecurityAndComplianceCenterV3) NewGetSettingsOptions(instanceID string) *GetSettingsOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetSettingsOptions(instanceID string) *GetSettingsOptions {
 	return &GetSettingsOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -9490,7 +9508,7 @@ type GetSubscopeOptions struct {
 }
 
 // NewGetSubscopeOptions : Instantiate GetSubscopeOptions
-func (*SecurityAndComplianceCenterV3) NewGetSubscopeOptions(instanceID string, scopeID string, subscopeID string) *GetSubscopeOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetSubscopeOptions(instanceID string, scopeID string, subscopeID string) *GetSubscopeOptions {
 	return &GetSubscopeOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ScopeID:    core.StringPtr(scopeID),
@@ -9535,7 +9553,7 @@ type GetTargetOptions struct {
 }
 
 // NewGetTargetOptions : Instantiate GetTargetOptions
-func (*SecurityAndComplianceCenterV3) NewGetTargetOptions(instanceID string, targetID string) *GetTargetOptions {
+func (*SecurityAndComplianceCenterApiV3) NewGetTargetOptions(instanceID string, targetID string) *GetTargetOptions {
 	return &GetTargetOptions{
 		InstanceID: core.StringPtr(instanceID),
 		TargetID:   core.StringPtr(targetID),
@@ -9640,12 +9658,21 @@ type ListControlLibrariesOptions struct {
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
 
+	// The field that indicates how many resources to return, unless the response is the last page of resources.
+	Limit *int64 `json:"limit,omitempty"`
+
+	// The field that indicate how you want the resources to be filtered by.
+	ControlLibraryType *string `json:"control_library_type,omitempty"`
+
+	// Determine what resource to start the page on or after.
+	Start *string `json:"start,omitempty"`
+
 	// Allows users to set headers on API requests
 	Headers map[string]string
 }
 
 // NewListControlLibrariesOptions : Instantiate ListControlLibrariesOptions
-func (*SecurityAndComplianceCenterV3) NewListControlLibrariesOptions(instanceID string) *ListControlLibrariesOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListControlLibrariesOptions(instanceID string) *ListControlLibrariesOptions {
 	return &ListControlLibrariesOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -9660,6 +9687,24 @@ func (_options *ListControlLibrariesOptions) SetInstanceID(instanceID string) *L
 // SetAccountID : Allow user to set AccountID
 func (_options *ListControlLibrariesOptions) SetAccountID(accountID string) *ListControlLibrariesOptions {
 	_options.AccountID = core.StringPtr(accountID)
+	return _options
+}
+
+// SetControlLibraryType : Allow user to set the ControlLibraryType
+func (_options *ListControlLibrariesOptions) SetControlLibraryType(controlLibraryType string) *ListControlLibrariesOptions {
+	_options.ControlLibraryType = &controlLibraryType
+	return _options
+}
+
+// SetStart : Allow user to set the Start
+func (_options *ListControlLibrariesOptions) SetStart(controlLibraryType string) *ListControlLibrariesOptions {
+	_options.Start = &controlLibraryType
+	return _options
+}
+
+// SetLimit : Allow user to set the Limit
+func (_options *ListControlLibrariesOptions) SetLimit(limit int64) *ListControlLibrariesOptions {
+	_options.Limit = core.Int64Ptr(limit)
 	return _options
 }
 
@@ -9714,7 +9759,7 @@ const (
 )
 
 // NewListInstanceAttachmentsOptions : Instantiate ListInstanceAttachmentsOptions
-func (*SecurityAndComplianceCenterV3) NewListInstanceAttachmentsOptions(instanceID string) *ListInstanceAttachmentsOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListInstanceAttachmentsOptions(instanceID string) *ListInstanceAttachmentsOptions {
 	return &ListInstanceAttachmentsOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -9784,7 +9829,7 @@ type ListProfileAttachmentsOptions struct {
 }
 
 // NewListProfileAttachmentsOptions : Instantiate ListProfileAttachmentsOptions
-func (*SecurityAndComplianceCenterV3) NewListProfileAttachmentsOptions(instanceID string, profileID string) *ListProfileAttachmentsOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListProfileAttachmentsOptions(instanceID string, profileID string) *ListProfileAttachmentsOptions {
 	return &ListProfileAttachmentsOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ProfileID:  core.StringPtr(profileID),
@@ -9828,7 +9873,7 @@ type ListProfileParametersOptions struct {
 }
 
 // NewListProfileParametersOptions : Instantiate ListProfileParametersOptions
-func (*SecurityAndComplianceCenterV3) NewListProfileParametersOptions(instanceID string, profileID string) *ListProfileParametersOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListProfileParametersOptions(instanceID string, profileID string) *ListProfileParametersOptions {
 	return &ListProfileParametersOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ProfileID:  core.StringPtr(profileID),
@@ -9863,10 +9908,19 @@ type ListProfilesOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
+
+	// The field that indicates how many resources to return, unless the response is the last page of resources.
+	Limit *int64 `json:"limit,omitempty"`
+
+	// The field that indicate how you want the resources to be filtered by.
+	ProfileType *string `json:"profile_type,omitempty"`
+
+	// Determine what resource to start the page on or after.
+	Start *string `json:"start,omitempty"`
 }
 
 // NewListProfilesOptions : Instantiate ListProfilesOptions
-func (*SecurityAndComplianceCenterV3) NewListProfilesOptions(instanceID string) *ListProfilesOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListProfilesOptions(instanceID string) *ListProfilesOptions {
 	return &ListProfilesOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -9881,6 +9935,24 @@ func (_options *ListProfilesOptions) SetInstanceID(instanceID string) *ListProfi
 // SetAccountID : Allow user to set AccountID
 func (_options *ListProfilesOptions) SetAccountID(accountID string) *ListProfilesOptions {
 	_options.AccountID = core.StringPtr(accountID)
+	return _options
+}
+
+// SetProfileType : Allow user to set ProfileType
+func (_options *ListProfilesOptions) SetProfileType(typeVar string) *ListProfilesOptions {
+	_options.ProfileType = core.StringPtr(typeVar)
+	return _options
+}
+
+// SetStart : Allow user to set Start
+func (_options *ListProfilesOptions) SetStart(start string) *ListProfilesOptions {
+	_options.Start = core.StringPtr(start)
+	return _options
+}
+
+// SetLimit : Allow user to set Limit
+func (_options *ListProfilesOptions) SetLimit(limit int64) *ListProfilesOptions {
+	_options.Limit = core.Int64Ptr(limit)
 	return _options
 }
 
@@ -9903,7 +9975,7 @@ type ListProviderTypeInstancesOptions struct {
 }
 
 // NewListProviderTypeInstancesOptions : Instantiate ListProviderTypeInstancesOptions
-func (*SecurityAndComplianceCenterV3) NewListProviderTypeInstancesOptions(instanceID string, providerTypeID string) *ListProviderTypeInstancesOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListProviderTypeInstancesOptions(instanceID string, providerTypeID string) *ListProviderTypeInstancesOptions {
 	return &ListProviderTypeInstancesOptions{
 		InstanceID:     core.StringPtr(instanceID),
 		ProviderTypeID: core.StringPtr(providerTypeID),
@@ -9938,7 +10010,7 @@ type ListProviderTypesOptions struct {
 }
 
 // NewListProviderTypesOptions : Instantiate ListProviderTypesOptions
-func (*SecurityAndComplianceCenterV3) NewListProviderTypesOptions(instanceID string) *ListProviderTypesOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListProviderTypesOptions(instanceID string) *ListProviderTypesOptions {
 	return &ListProviderTypesOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -10015,7 +10087,7 @@ const (
 )
 
 // NewListReportEvaluationsOptions : Instantiate ListReportEvaluationsOptions
-func (*SecurityAndComplianceCenterV3) NewListReportEvaluationsOptions(instanceID string, reportID string) *ListReportEvaluationsOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListReportEvaluationsOptions(instanceID string, reportID string) *ListReportEvaluationsOptions {
 	return &ListReportEvaluationsOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -10176,7 +10248,7 @@ const (
 )
 
 // NewListReportResourcesOptions : Instantiate ListReportResourcesOptions
-func (*SecurityAndComplianceCenterV3) NewListReportResourcesOptions(instanceID string, reportID string) *ListReportResourcesOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListReportResourcesOptions(instanceID string, reportID string) *ListReportResourcesOptions {
 	return &ListReportResourcesOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -10300,7 +10372,7 @@ const (
 )
 
 // NewListReportsOptions : Instantiate ListReportsOptions
-func (*SecurityAndComplianceCenterV3) NewListReportsOptions(instanceID string) *ListReportsOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListReportsOptions(instanceID string) *ListReportsOptions {
 	return &ListReportsOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -10404,7 +10476,7 @@ const (
 )
 
 // NewListRulesOptions : Instantiate ListRulesOptions
-func (*SecurityAndComplianceCenterV3) NewListRulesOptions(instanceID string) *ListRulesOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListRulesOptions(instanceID string) *ListRulesOptions {
 	return &ListRulesOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -10477,7 +10549,7 @@ type ListScanReportsOptions struct {
 }
 
 // NewListScanReportsOptions : Instantiate ListScanReportsOptions
-func (*SecurityAndComplianceCenterV3) NewListScanReportsOptions(instanceID string, reportID string) *ListScanReportsOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListScanReportsOptions(instanceID string, reportID string) *ListScanReportsOptions {
 	return &ListScanReportsOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -10539,7 +10611,7 @@ type ListScopesOptions struct {
 }
 
 // NewListScopesOptions : Instantiate ListScopesOptions
-func (*SecurityAndComplianceCenterV3) NewListScopesOptions(instanceID string) *ListScopesOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListScopesOptions(instanceID string) *ListScopesOptions {
 	return &ListScopesOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -10594,7 +10666,7 @@ type ListServicesOptions struct {
 }
 
 // NewListServicesOptions : Instantiate ListServicesOptions
-func (*SecurityAndComplianceCenterV3) NewListServicesOptions() *ListServicesOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListServicesOptions() *ListServicesOptions {
 	return &ListServicesOptions{}
 }
 
@@ -10632,7 +10704,7 @@ type ListSubscopesOptions struct {
 }
 
 // NewListSubscopesOptions : Instantiate ListSubscopesOptions
-func (*SecurityAndComplianceCenterV3) NewListSubscopesOptions(instanceID string, scopeID string) *ListSubscopesOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListSubscopesOptions(instanceID string, scopeID string) *ListSubscopesOptions {
 	return &ListSubscopesOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ScopeID:    core.StringPtr(scopeID),
@@ -10697,7 +10769,7 @@ type ListTargetsOptions struct {
 }
 
 // NewListTargetsOptions : Instantiate ListTargetsOptions
-func (*SecurityAndComplianceCenterV3) NewListTargetsOptions(instanceID string) *ListTargetsOptions {
+func (*SecurityAndComplianceCenterApiV3) NewListTargetsOptions(instanceID string) *ListTargetsOptions {
 	return &ListTargetsOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -10917,7 +10989,7 @@ type PostTestEventOptions struct {
 }
 
 // NewPostTestEventOptions : Instantiate PostTestEventOptions
-func (*SecurityAndComplianceCenterV3) NewPostTestEventOptions(instanceID string) *PostTestEventOptions {
+func (*SecurityAndComplianceCenterApiV3) NewPostTestEventOptions(instanceID string) *PostTestEventOptions {
 	return &PostTestEventOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -11258,7 +11330,7 @@ const (
 )
 
 // NewProfileAttachmentBase : Instantiate ProfileAttachmentBase (Generic Model Constructor)
-func (*SecurityAndComplianceCenterV3) NewProfileAttachmentBase(attachmentParameters []Parameter, description string, name string, notifications *AttachmentNotifications, schedule string, scope []MultiCloudScopePayload, status string) (_model *ProfileAttachmentBase, err error) {
+func (*SecurityAndComplianceCenterApiV3) NewProfileAttachmentBase(attachmentParameters []Parameter, description string, name string, notifications *AttachmentNotifications, schedule string, scope []MultiCloudScopePayload, status string) (_model *ProfileAttachmentBase, err error) {
 	_model = &ProfileAttachmentBase{
 		AttachmentParameters: attachmentParameters,
 		Description:          core.StringPtr(description),
@@ -11847,7 +11919,7 @@ const (
 )
 
 // NewReplaceCustomControlLibraryOptions : Instantiate ReplaceCustomControlLibraryOptions
-func (*SecurityAndComplianceCenterV3) NewReplaceCustomControlLibraryOptions(instanceID string, controlLibraryID string, controlLibraryName string, controlLibraryDescription string, controlLibraryType string, controlLibraryVersion string, controls []ControlPrototype) *ReplaceCustomControlLibraryOptions {
+func (*SecurityAndComplianceCenterApiV3) NewReplaceCustomControlLibraryOptions(instanceID string, controlLibraryID string, controlLibraryName string, controlLibraryDescription string, controlLibraryType string, controlLibraryVersion string, controls []ControlPrototype) *ReplaceCustomControlLibraryOptions {
 	return &ReplaceCustomControlLibraryOptions{
 		InstanceID:                core.StringPtr(instanceID),
 		ControlLibraryID:          core.StringPtr(controlLibraryID),
@@ -11953,7 +12025,7 @@ type ReplaceProfileAttachmentOptions struct {
 }
 
 // NewReplaceProfileAttachmentOptions : Instantiate ReplaceProfileAttachmentOptions
-func (*SecurityAndComplianceCenterV3) NewReplaceProfileAttachmentOptions(instanceID string, profileID string, attachmentID string, description string, name string, schedule string, status string, notifications *AttachmentNotifications, scope []MultiCloudScopePayload, attachmentParameters []Parameter) *ReplaceProfileAttachmentOptions {
+func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileAttachmentOptions(instanceID string, profileID string, attachmentID string, description string, name string, schedule string, status string, notifications *AttachmentNotifications, scope []MultiCloudScopePayload, attachmentParameters []Parameter) *ReplaceProfileAttachmentOptions {
 	return &ReplaceProfileAttachmentOptions{
 		InstanceID:           core.StringPtr(instanceID),
 		ProfileID:            core.StringPtr(profileID),
@@ -12080,7 +12152,7 @@ type ReplaceProfileOptions struct {
 }
 
 // NewReplaceProfileOptions : Instantiate ReplaceProfileOptions
-func (*SecurityAndComplianceCenterV3) NewReplaceProfileOptions(instanceID string, profileID string, profileName string, profileDescription string) *ReplaceProfileOptions {
+func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileOptions(instanceID string, profileID string, profileName string, profileDescription string) *ReplaceProfileOptions {
 	return &ReplaceProfileOptions{
 		InstanceID:         core.StringPtr(instanceID),
 		ProfileDescription: core.StringPtr(profileDescription),
@@ -12184,7 +12256,7 @@ type ReplaceProfileParametersOptions struct {
 }
 
 // NewReplaceProfileParametersOptions : Instantiate ReplaceProfileParametersOptions
-func (*SecurityAndComplianceCenterV3) NewReplaceProfileParametersOptions(instanceID string, profileID string) *ReplaceProfileParametersOptions {
+func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileParametersOptions(instanceID string, profileID string) *ReplaceProfileParametersOptions {
 	return &ReplaceProfileParametersOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ProfileID:  core.StringPtr(profileID),
@@ -12264,7 +12336,7 @@ type ReplaceRuleOptions struct {
 }
 
 // NewReplaceRuleOptions : Instantiate ReplaceRuleOptions
-func (*SecurityAndComplianceCenterV3) NewReplaceRuleOptions(instanceID string, ruleID string, ifMatch string, description string, target *RuleTargetPrototype, requiredConfig RequiredConfigIntf) *ReplaceRuleOptions {
+func (*SecurityAndComplianceCenterApiV3) NewReplaceRuleOptions(instanceID string, ruleID string, ifMatch string, description string, target *RuleTargetPrototype, requiredConfig RequiredConfigIntf) *ReplaceRuleOptions {
 	return &ReplaceRuleOptions{
 		InstanceID:     core.StringPtr(instanceID),
 		RuleID:         core.StringPtr(ruleID),
@@ -12360,7 +12432,7 @@ type ReplaceTargetOptions struct {
 }
 
 // NewReplaceTargetOptions : Instantiate ReplaceTargetOptions
-func (*SecurityAndComplianceCenterV3) NewReplaceTargetOptions(instanceID string, targetID string, accountID string, trustedProfileID string, name string) *ReplaceTargetOptions {
+func (*SecurityAndComplianceCenterApiV3) NewReplaceTargetOptions(instanceID string, targetID string, accountID string, trustedProfileID string, name string) *ReplaceTargetOptions {
 	return &ReplaceTargetOptions{
 		InstanceID:       core.StringPtr(instanceID),
 		TargetID:         core.StringPtr(targetID),
@@ -13717,7 +13789,7 @@ type RuleTarget struct {
 }
 
 // NewRuleTarget : Instantiate RuleTarget (Generic Model Constructor)
-func (*SecurityAndComplianceCenterV3) NewRuleTarget(serviceName string, resourceKind string) (_model *RuleTarget, err error) {
+func (*SecurityAndComplianceCenterApiV3) NewRuleTarget(serviceName string, resourceKind string) (_model *RuleTarget, err error) {
 	_model = &RuleTarget{
 		ServiceName:  core.StringPtr(serviceName),
 		ResourceKind: core.StringPtr(resourceKind),
@@ -13762,7 +13834,7 @@ type RuleTargetPrototype struct {
 }
 
 // NewRuleTargetPrototype : Instantiate RuleTargetPrototype (Generic Model Constructor)
-func (*SecurityAndComplianceCenterV3) NewRuleTargetPrototype(serviceName string, resourceKind string) (_model *RuleTargetPrototype, err error) {
+func (*SecurityAndComplianceCenterApiV3) NewRuleTargetPrototype(serviceName string, resourceKind string) (_model *RuleTargetPrototype, err error) {
 	_model = &RuleTargetPrototype{
 		ServiceName:  core.StringPtr(serviceName),
 		ResourceKind: core.StringPtr(resourceKind),
@@ -14833,7 +14905,7 @@ type UpdateProviderTypeInstanceOptions struct {
 }
 
 // NewUpdateProviderTypeInstanceOptions : Instantiate UpdateProviderTypeInstanceOptions
-func (*SecurityAndComplianceCenterV3) NewUpdateProviderTypeInstanceOptions(instanceID string, providerTypeID string, providerTypeInstanceID string, providerTypeInstanceName string) *UpdateProviderTypeInstanceOptions {
+func (*SecurityAndComplianceCenterApiV3) NewUpdateProviderTypeInstanceOptions(instanceID string, providerTypeID string, providerTypeInstanceID string, providerTypeInstanceName string) *UpdateProviderTypeInstanceOptions {
 	return &UpdateProviderTypeInstanceOptions{
 		InstanceID:             core.StringPtr(instanceID),
 		Name:                   core.StringPtr(providerTypeInstanceName),
@@ -14897,7 +14969,7 @@ type UpdateScopeOptions struct {
 }
 
 // NewUpdateScopeOptions : Instantiate UpdateScopeOptions
-func (*SecurityAndComplianceCenterV3) NewUpdateScopeOptions(instanceID string, scopeID string) *UpdateScopeOptions {
+func (*SecurityAndComplianceCenterApiV3) NewUpdateScopeOptions(instanceID string, scopeID string) *UpdateScopeOptions {
 	return &UpdateScopeOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ScopeID:    core.StringPtr(scopeID),
@@ -14950,7 +15022,7 @@ type UpdateSettingsOptions struct {
 }
 
 // NewUpdateSettingsOptions : Instantiate UpdateSettingsOptions
-func (*SecurityAndComplianceCenterV3) NewUpdateSettingsOptions(instanceID string) *UpdateSettingsOptions {
+func (*SecurityAndComplianceCenterApiV3) NewUpdateSettingsOptions(instanceID string) *UpdateSettingsOptions {
 	return &UpdateSettingsOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -15002,7 +15074,7 @@ type UpdateSubscopeOptions struct {
 }
 
 // NewUpdateSubscopeOptions : Instantiate UpdateSubscopeOptions
-func (*SecurityAndComplianceCenterV3) NewUpdateSubscopeOptions(instanceID string, scopeID string, subscopeID string) *UpdateSubscopeOptions {
+func (*SecurityAndComplianceCenterApiV3) NewUpdateSubscopeOptions(instanceID string, scopeID string, subscopeID string) *UpdateSubscopeOptions {
 	return &UpdateSubscopeOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ScopeID:    core.StringPtr(scopeID),
@@ -15068,7 +15140,7 @@ type UpgradeAttachmentOptions struct {
 }
 
 // NewUpgradeAttachmentOptions : Instantiate UpgradeAttachmentOptions
-func (*SecurityAndComplianceCenterV3) NewUpgradeAttachmentOptions(instanceID string, profileID string, attachmentID string) *UpgradeAttachmentOptions {
+func (*SecurityAndComplianceCenterApiV3) NewUpgradeAttachmentOptions(instanceID string, profileID string, attachmentID string) *UpgradeAttachmentOptions {
 	return &UpgradeAttachmentOptions{
 		InstanceID:   core.StringPtr(instanceID),
 		ProfileID:    core.StringPtr(profileID),
@@ -15156,7 +15228,7 @@ const (
 )
 
 // NewConditionItemConditionBase : Instantiate ConditionItemConditionBase (Generic Model Constructor)
-func (*SecurityAndComplianceCenterV3) NewConditionItemConditionBase(property string, operator string) (_model *ConditionItemConditionBase, err error) {
+func (*SecurityAndComplianceCenterApiV3) NewConditionItemConditionBase(property string, operator string) (_model *ConditionItemConditionBase, err error) {
 	_model = &ConditionItemConditionBase{
 		Property: core.StringPtr(property),
 		Operator: core.StringPtr(operator),
@@ -15341,7 +15413,7 @@ const (
 )
 
 // NewRequiredConfigConditionBase : Instantiate RequiredConfigConditionBase (Generic Model Constructor)
-func (*SecurityAndComplianceCenterV3) NewRequiredConfigConditionBase(property string, operator string) (_model *RequiredConfigConditionBase, err error) {
+func (*SecurityAndComplianceCenterApiV3) NewRequiredConfigConditionBase(property string, operator string) (_model *RequiredConfigConditionBase, err error) {
 	_model = &RequiredConfigConditionBase{
 		Property: core.StringPtr(property),
 		Operator: core.StringPtr(operator),
@@ -15938,18 +16010,176 @@ func UnmarshalRequiredConfigConditionSubRuleConditionSubRuleConditionAnyIf(m map
 	return
 }
 
+// ControlLibrariesPager can be used to simplify the use of the "ListControlLibraries" method.
+type ControlLibrariesPager struct {
+	hasNext     bool
+	options     *ListControlLibrariesOptions
+	client      *SecurityAndComplianceCenterApiV3
+	pageContext struct {
+		next *string
+	}
+}
+
+// NewControlLibrariesPager returns a new ControlLibrariesPager instance.
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) NewControlLibrariesPager(options *ListControlLibrariesOptions) (pager *ControlLibrariesPager, err error) {
+	if options.Start != nil && *options.Start != "" {
+		err = fmt.Errorf("the 'options.Start' field should not be set")
+		return
+	}
+
+	var optionsCopy ListControlLibrariesOptions = *options
+	pager = &ControlLibrariesPager{
+		hasNext: true,
+		options: &optionsCopy,
+		client:  securityAndComplianceCenterApi,
+	}
+	return
+}
+
+// HasNext returns true if there are potentially more results to be retrieved.
+func (pager *ControlLibrariesPager) HasNext() bool {
+	return pager.hasNext
+}
+
+// GetNextWithContext returns the next page of results using the specified Context.
+func (pager *ControlLibrariesPager) GetNextWithContext(ctx context.Context) (page []ControlLibrary, err error) {
+	if !pager.HasNext() {
+		return nil, fmt.Errorf("no more results available")
+	}
+
+	pager.options.Start = pager.pageContext.next
+
+	result, _, err := pager.client.ListControlLibrariesWithContext(ctx, pager.options)
+	if err != nil {
+		return
+	}
+
+	var next *string
+	if result.Next != nil {
+		next = result.Next.Start
+	}
+	pager.pageContext.next = next
+	pager.hasNext = (pager.pageContext.next != nil)
+	page = result.ControlLibraries
+
+	return
+}
+
+// GetAllWithContext returns all results by invoking GetNextWithContext() repeatedly
+// until all pages of results have been retrieved.
+func (pager *ControlLibrariesPager) GetAllWithContext(ctx context.Context) (allItems []ControlLibrary, err error) {
+	for pager.HasNext() {
+		var nextPage []ControlLibrary
+		nextPage, err = pager.GetNextWithContext(ctx)
+		if err != nil {
+			return
+		}
+		allItems = append(allItems, nextPage...)
+	}
+	return
+}
+
+// GetNext invokes GetNextWithContext() using context.Background() as the Context parameter.
+func (pager *ControlLibrariesPager) GetNext() (page []ControlLibrary, err error) {
+	return pager.GetNextWithContext(context.Background())
+}
+
+// GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
+func (pager *ControlLibrariesPager) GetAll() (allItems []ControlLibrary, err error) {
+	return pager.GetAllWithContext(context.Background())
+}
+
+// ProfilesPager can be used to simplify the use of the "ListProfiles" method.
+type ProfilesPager struct {
+	hasNext     bool
+	options     *ListProfilesOptions
+	client      *SecurityAndComplianceCenterApiV3
+	pageContext struct {
+		next *string
+	}
+}
+
+// NewControlLibrariesPager returns a new ControlLibrariesPager instance.
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) NewProfilesPager(options *ListProfilesOptions) (pager *ProfilesPager, err error) {
+	if options.Start != nil && *options.Start != "" {
+		err = fmt.Errorf("the 'options.Start' field should not be set")
+		return
+	}
+
+	var optionsCopy ListProfilesOptions = *options
+	pager = &ProfilesPager{
+		hasNext: true,
+		options: &optionsCopy,
+		client:  securityAndComplianceCenterApi,
+	}
+	return
+}
+
+// HasNext returns true if there are potentially more results to be retrieved.
+func (pager *ProfilesPager) HasNext() bool {
+	return pager.hasNext
+}
+
+// GetNextWithContext returns the next page of results using the specified Context.
+func (pager *ProfilesPager) GetNextWithContext(ctx context.Context) (page []Profile, err error) {
+	if !pager.HasNext() {
+		return nil, fmt.Errorf("no more results available")
+	}
+
+	pager.options.Start = pager.pageContext.next
+
+	result, _, err := pager.client.ListProfilesWithContext(ctx, pager.options)
+	if err != nil {
+		return
+	}
+
+	var next *string
+	if result.Next != nil {
+		next = result.Next.Start
+	}
+	pager.pageContext.next = next
+	pager.hasNext = (pager.pageContext.next != nil)
+	page = result.Profiles
+
+	return
+}
+
+// GetAllWithContext returns all results by invoking GetNextWithContext() repeatedly
+// until all pages of results have been retrieved.
+func (pager *ProfilesPager) GetAllWithContext(ctx context.Context) (allItems []Profile, err error) {
+	for pager.HasNext() {
+		var nextPage []Profile
+		nextPage, err = pager.GetNextWithContext(ctx)
+		if err != nil {
+			return
+		}
+		allItems = append(allItems, nextPage...)
+	}
+	return
+}
+
+// GetNext invokes GetNextWithContext() using context.Background() as the Context parameter.
+func (pager *ProfilesPager) GetNext() (page []Profile, err error) {
+	return pager.GetNextWithContext(context.Background())
+}
+
+// GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
+func (pager *ProfilesPager) GetAll() (allItems []Profile, err error) {
+	return pager.GetAllWithContext(context.Background())
+}
+
 // InstanceAttachmentsPager can be used to simplify the use of the "ListInstanceAttachments" method.
 type InstanceAttachmentsPager struct {
 	hasNext     bool
 	options     *ListInstanceAttachmentsOptions
-	client      *SecurityAndComplianceCenterV3
+	client      *SecurityAndComplianceCenterApiV3
 	pageContext struct {
 		next *string
 	}
 }
 
 // NewInstanceAttachmentsPager returns a new InstanceAttachmentsPager instance.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) NewInstanceAttachmentsPager(options *ListInstanceAttachmentsOptions) (pager *InstanceAttachmentsPager, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) NewInstanceAttachmentsPager(options *ListInstanceAttachmentsOptions) (pager *InstanceAttachmentsPager, err error) {
 	if options.Start != nil && *options.Start != "" {
 		err = fmt.Errorf("the 'options.Start' field should not be set")
 		return
@@ -16021,14 +16251,14 @@ func (pager *InstanceAttachmentsPager) GetAll() (allItems []ProfileAttachment, e
 type ScopesPager struct {
 	hasNext     bool
 	options     *ListScopesOptions
-	client      *SecurityAndComplianceCenterV3
+	client      *SecurityAndComplianceCenterApiV3
 	pageContext struct {
 		next *string
 	}
 }
 
 // NewScopesPager returns a new ScopesPager instance.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) NewScopesPager(options *ListScopesOptions) (pager *ScopesPager, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) NewScopesPager(options *ListScopesOptions) (pager *ScopesPager, err error) {
 	if options.Start != nil && *options.Start != "" {
 		err = fmt.Errorf("the 'options.Start' field should not be set")
 		return
@@ -16100,14 +16330,14 @@ func (pager *ScopesPager) GetAll() (allItems []Scope, err error) {
 type SubscopesPager struct {
 	hasNext     bool
 	options     *ListSubscopesOptions
-	client      *SecurityAndComplianceCenterV3
+	client      *SecurityAndComplianceCenterApiV3
 	pageContext struct {
 		next *string
 	}
 }
 
 // NewSubscopesPager returns a new SubscopesPager instance.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) NewSubscopesPager(options *ListSubscopesOptions) (pager *SubscopesPager, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) NewSubscopesPager(options *ListSubscopesOptions) (pager *SubscopesPager, err error) {
 	if options.Start != nil && *options.Start != "" {
 		err = fmt.Errorf("the 'options.Start' field should not be set")
 		return
@@ -16179,14 +16409,14 @@ func (pager *SubscopesPager) GetAll() (allItems []SubScope, err error) {
 type ReportsPager struct {
 	hasNext     bool
 	options     *ListReportsOptions
-	client      *SecurityAndComplianceCenterV3
+	client      *SecurityAndComplianceCenterApiV3
 	pageContext struct {
 		next *string
 	}
 }
 
 // NewReportsPager returns a new ReportsPager instance.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) NewReportsPager(options *ListReportsOptions) (pager *ReportsPager, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) NewReportsPager(options *ListReportsOptions) (pager *ReportsPager, err error) {
 	if options.Start != nil && *options.Start != "" {
 		err = fmt.Errorf("the 'options.Start' field should not be set")
 		return
@@ -16258,14 +16488,14 @@ func (pager *ReportsPager) GetAll() (allItems []Report, err error) {
 type ReportEvaluationsPager struct {
 	hasNext     bool
 	options     *ListReportEvaluationsOptions
-	client      *SecurityAndComplianceCenterV3
+	client      *SecurityAndComplianceCenterApiV3
 	pageContext struct {
 		next *string
 	}
 }
 
 // NewReportEvaluationsPager returns a new ReportEvaluationsPager instance.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) NewReportEvaluationsPager(options *ListReportEvaluationsOptions) (pager *ReportEvaluationsPager, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) NewReportEvaluationsPager(options *ListReportEvaluationsOptions) (pager *ReportEvaluationsPager, err error) {
 	if options.Start != nil && *options.Start != "" {
 		err = fmt.Errorf("the 'options.Start' field should not be set")
 		return
@@ -16337,14 +16567,14 @@ func (pager *ReportEvaluationsPager) GetAll() (allItems []Evaluation, err error)
 type ReportResourcesPager struct {
 	hasNext     bool
 	options     *ListReportResourcesOptions
-	client      *SecurityAndComplianceCenterV3
+	client      *SecurityAndComplianceCenterApiV3
 	pageContext struct {
 		next *string
 	}
 }
 
 // NewReportResourcesPager returns a new ReportResourcesPager instance.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) NewReportResourcesPager(options *ListReportResourcesOptions) (pager *ReportResourcesPager, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) NewReportResourcesPager(options *ListReportResourcesOptions) (pager *ReportResourcesPager, err error) {
 	if options.Start != nil && *options.Start != "" {
 		err = fmt.Errorf("the 'options.Start' field should not be set")
 		return
@@ -16416,14 +16646,14 @@ func (pager *ReportResourcesPager) GetAll() (allItems []Resource, err error) {
 type RulesPager struct {
 	hasNext     bool
 	options     *ListRulesOptions
-	client      *SecurityAndComplianceCenterV3
+	client      *SecurityAndComplianceCenterApiV3
 	pageContext struct {
 		next *string
 	}
 }
 
 // NewRulesPager returns a new RulesPager instance.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterV3) NewRulesPager(options *ListRulesOptions) (pager *RulesPager, err error) {
+func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) NewRulesPager(options *ListRulesOptions) (pager *RulesPager, err error) {
 	if options.Start != nil && *options.Start != "" {
 		err = fmt.Errorf("the 'options.Start' field should not be set")
 		return

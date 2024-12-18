@@ -37,21 +37,21 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 	var testServer *httptest.Server
 	Describe(`Service constructor tests`, func() {
 		It(`Instantiate service client`, func() {
-			securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+			securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 				Authenticator: &core.NoAuthAuthenticator{},
 			})
 			Expect(securityAndComplianceCenterService).ToNot(BeNil())
 			Expect(serviceErr).To(BeNil())
 		})
 		It(`Instantiate service client with error: Invalid URL`, func() {
-			securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+			securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 				URL: "{BAD_URL_STRING",
 			})
 			Expect(securityAndComplianceCenterService).To(BeNil())
 			Expect(serviceErr).ToNot(BeNil())
 		})
 		It(`Instantiate service client with error: Invalid Auth`, func() {
-			securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+			securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 				URL: "https://securityandcompliancecenterapiv3/api",
 				Authenticator: &core.BasicAuthenticator{
 					Username: "",
@@ -72,7 +72,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{})
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{})
 				Expect(securityAndComplianceCenterService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
@@ -85,7 +85,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 			})
 			It(`Create service client using external config and set url from constructor successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL: "https://testService/api",
 				})
 				Expect(securityAndComplianceCenterService).ToNot(BeNil())
@@ -101,7 +101,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{})
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{})
 				err := securityAndComplianceCenterService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
 				Expect(securityAndComplianceCenterService).ToNot(BeNil())
@@ -124,7 +124,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 			}
 
 			SetTestEnvironment(testEnvironment)
-			securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{})
+			securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{})
 
 			It(`Instantiate service client with error`, func() {
 				Expect(securityAndComplianceCenterService).To(BeNil())
@@ -139,7 +139,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 			}
 
 			SetTestEnvironment(testEnvironment)
-			securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+			securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 				URL: "{BAD_URL_STRING",
 			})
 
@@ -200,7 +200,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetSettings with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -250,7 +250,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetSettings successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -304,7 +304,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetSettings successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -329,7 +329,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke GetSettings with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -370,7 +370,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetSettings successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -411,7 +411,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke UpdateSettings with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -490,7 +490,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke UpdateSettings successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -573,7 +573,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke UpdateSettings successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -611,7 +611,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke UpdateSettings with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -665,7 +665,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke UpdateSettings successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -719,7 +719,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke PostTestEvent with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -769,7 +769,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke PostTestEvent successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -823,7 +823,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke PostTestEvent successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -848,7 +848,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke PostTestEvent with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -889,7 +889,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke PostTestEvent successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -936,7 +936,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListInstanceAttachments with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -998,7 +998,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListInstanceAttachments successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1064,7 +1064,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListInstanceAttachments successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1095,7 +1095,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ListInstanceAttachments with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1142,7 +1142,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListInstanceAttachments successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1215,7 +1215,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Use InstanceAttachmentsPager.GetNext successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1245,7 +1245,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(len(allResults)).To(Equal(2))
 			})
 			It(`Use InstanceAttachmentsPager.GetAll successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1289,7 +1289,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateProfileAttachment with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1399,7 +1399,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateProfileAttachment successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1513,7 +1513,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateProfileAttachment successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1581,7 +1581,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke CreateProfileAttachment with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1665,7 +1665,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateProfileAttachment successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1750,7 +1750,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListProfileAttachments with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1803,7 +1803,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListProfileAttachments successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1860,7 +1860,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListProfileAttachments successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1887,7 +1887,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ListProfileAttachments with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1930,7 +1930,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListProfileAttachments successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -1974,7 +1974,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetProfileAttachment with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2028,7 +2028,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetProfileAttachment successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2086,7 +2086,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetProfileAttachment successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2114,7 +2114,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke GetProfileAttachment with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2158,7 +2158,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetProfileAttachment successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2203,7 +2203,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceProfileAttachment with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2310,7 +2310,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceProfileAttachment successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2423,7 +2423,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceProfileAttachment successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2488,7 +2488,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ReplaceProfileAttachment with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2571,7 +2571,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceProfileAttachment successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2655,7 +2655,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke DeleteProfileAttachment with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2709,7 +2709,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke DeleteProfileAttachment successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2767,7 +2767,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke DeleteProfileAttachment successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2795,7 +2795,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke DeleteProfileAttachment with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2839,7 +2839,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke DeleteProfileAttachment successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2884,7 +2884,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke UpgradeAttachment with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -2964,7 +2964,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke UpgradeAttachment successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3048,7 +3048,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke UpgradeAttachment successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3086,7 +3086,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke UpgradeAttachment with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3140,7 +3140,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke UpgradeAttachment successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3195,7 +3195,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateCustomControlLibrary with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3296,7 +3296,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateCustomControlLibrary successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3401,7 +3401,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateCustomControlLibrary successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3460,7 +3460,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke CreateCustomControlLibrary with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3535,7 +3535,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateCustomControlLibrary successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3611,7 +3611,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListControlLibraries with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3663,7 +3663,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListControlLibraries successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3719,7 +3719,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListControlLibraries successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3745,7 +3745,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ListControlLibraries with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3787,7 +3787,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListControlLibraries successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3830,7 +3830,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceCustomControlLibrary with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -3932,7 +3932,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceCustomControlLibrary successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4038,7 +4038,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceCustomControlLibrary successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4098,7 +4098,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ReplaceCustomControlLibrary with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4174,7 +4174,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceCustomControlLibrary successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4251,7 +4251,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetControlLibrary with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4304,7 +4304,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetControlLibrary successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4361,7 +4361,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetControlLibrary successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4388,7 +4388,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke GetControlLibrary with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4431,7 +4431,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetControlLibrary successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4475,7 +4475,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke DeleteCustomControlLibrary with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4528,7 +4528,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke DeleteCustomControlLibrary successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4585,7 +4585,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke DeleteCustomControlLibrary successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4612,7 +4612,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke DeleteCustomControlLibrary with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4655,7 +4655,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke DeleteCustomControlLibrary successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4699,7 +4699,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateProfile with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4798,7 +4798,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateProfile successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4901,7 +4901,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateProfile successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -4958,7 +4958,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke CreateProfile with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5031,7 +5031,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateProfile successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5105,7 +5105,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListProfiles with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5157,7 +5157,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListProfiles successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5213,7 +5213,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListProfiles successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5239,7 +5239,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ListProfiles with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5281,7 +5281,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListProfiles successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5324,7 +5324,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceProfile with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5425,7 +5425,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceProfile successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5530,7 +5530,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceProfile successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5589,7 +5589,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ReplaceProfile with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5664,7 +5664,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceProfile successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5740,7 +5740,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetProfile with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5793,7 +5793,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetProfile successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5850,7 +5850,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetProfile successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5877,7 +5877,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke GetProfile with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5920,7 +5920,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetProfile successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -5964,7 +5964,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke DeleteCustomProfile with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6017,7 +6017,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke DeleteCustomProfile successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6074,7 +6074,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke DeleteCustomProfile successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6101,7 +6101,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke DeleteCustomProfile with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6144,7 +6144,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke DeleteCustomProfile successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6188,7 +6188,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceProfileParameters with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6268,7 +6268,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceProfileParameters successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6352,7 +6352,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceProfileParameters successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6390,7 +6390,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ReplaceProfileParameters with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6444,7 +6444,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceProfileParameters successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6498,7 +6498,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListProfileParameters with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6549,7 +6549,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListProfileParameters successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6604,7 +6604,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListProfileParameters successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6630,7 +6630,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ListProfileParameters with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6672,7 +6672,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListProfileParameters successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6715,7 +6715,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CompareProfiles with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6768,7 +6768,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CompareProfiles successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6825,7 +6825,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CompareProfiles successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6852,7 +6852,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke CompareProfiles with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6895,7 +6895,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CompareProfiles successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -6938,7 +6938,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateScope with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -7013,7 +7013,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateScope successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -7092,7 +7092,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateScope successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -7126,7 +7126,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke CreateScope with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -7176,7 +7176,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateScope successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -7231,7 +7231,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListScopes with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -7291,7 +7291,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListScopes successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -7355,7 +7355,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListScopes successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -7385,7 +7385,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ListScopes with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -7431,7 +7431,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListScopes successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -7503,7 +7503,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Use ScopesPager.GetNext successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -7532,7 +7532,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(len(allResults)).To(Equal(2))
 			})
 			It(`Use ScopesPager.GetAll successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -7574,7 +7574,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke UpdateScope with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -7643,7 +7643,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke UpdateScope successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -7716,7 +7716,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke UpdateScope successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -7744,7 +7744,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke UpdateScope with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -7788,7 +7788,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke UpdateScope successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -7832,7 +7832,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetScope with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -7883,7 +7883,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetScope successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -7938,7 +7938,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetScope successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -7964,7 +7964,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke GetScope with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -8006,7 +8006,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetScope successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -8047,7 +8047,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke DeleteScope successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -8071,7 +8071,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(response).ToNot(BeNil())
 			})
 			It(`Invoke DeleteScope with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -8118,7 +8118,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateSubscope with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -8198,7 +8198,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateSubscope successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -8282,7 +8282,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateSubscope successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -8321,7 +8321,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke CreateSubscope with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -8376,7 +8376,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateSubscope successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -8436,7 +8436,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListSubscopes with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -8497,7 +8497,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListSubscopes successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -8562,7 +8562,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListSubscopes successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -8593,7 +8593,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ListSubscopes with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -8640,7 +8640,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListSubscopes successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -8713,7 +8713,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Use SubscopesPager.GetNext successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -8743,7 +8743,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(len(allResults)).To(Equal(2))
 			})
 			It(`Use SubscopesPager.GetAll successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -8786,7 +8786,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetSubscope with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -8838,7 +8838,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetSubscope successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -8894,7 +8894,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetSubscope successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -8921,7 +8921,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke GetSubscope with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -8964,7 +8964,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetSubscope successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -9007,7 +9007,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke UpdateSubscope with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -9077,7 +9077,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke UpdateSubscope successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -9151,7 +9151,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke UpdateSubscope successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -9180,7 +9180,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke UpdateSubscope with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -9225,7 +9225,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke UpdateSubscope successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -9269,7 +9269,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke DeleteSubscope successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -9294,7 +9294,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(response).ToNot(BeNil())
 			})
 			It(`Invoke DeleteSubscope with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -9342,7 +9342,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateTarget with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -9450,7 +9450,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateTarget successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -9562,7 +9562,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateTarget successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -9629,7 +9629,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke CreateTarget with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -9712,7 +9712,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateTarget successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -9795,7 +9795,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListTargets with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -9845,7 +9845,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListTargets successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -9899,7 +9899,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListTargets successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -9924,7 +9924,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ListTargets with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -9965,7 +9965,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListTargets successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -10006,7 +10006,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetTarget with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -10057,7 +10057,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetTarget successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -10112,7 +10112,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetTarget successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -10138,7 +10138,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke GetTarget with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -10180,7 +10180,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetTarget successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -10222,7 +10222,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceTarget with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -10331,7 +10331,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceTarget successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -10444,7 +10444,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceTarget successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -10512,7 +10512,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ReplaceTarget with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -10596,7 +10596,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceTarget successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -10679,7 +10679,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke DeleteTarget successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -10703,7 +10703,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(response).ToNot(BeNil())
 			})
 			It(`Invoke DeleteTarget with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -10750,7 +10750,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateProviderTypeInstance with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -10819,7 +10819,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateProviderTypeInstance successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -10892,7 +10892,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateProviderTypeInstance successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -10920,7 +10920,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke CreateProviderTypeInstance with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -10964,7 +10964,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateProviderTypeInstance successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11008,7 +11008,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListProviderTypeInstances with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11059,7 +11059,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListProviderTypeInstances successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11114,7 +11114,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListProviderTypeInstances successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11140,7 +11140,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ListProviderTypeInstances with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11182,7 +11182,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListProviderTypeInstances successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11224,7 +11224,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetProviderTypeInstance with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11276,7 +11276,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetProviderTypeInstance successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11332,7 +11332,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetProviderTypeInstance successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11359,7 +11359,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke GetProviderTypeInstance with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11402,7 +11402,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetProviderTypeInstance successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11445,7 +11445,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke UpdateProviderTypeInstance with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11515,7 +11515,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke UpdateProviderTypeInstance successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11589,7 +11589,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke UpdateProviderTypeInstance successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11618,7 +11618,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke UpdateProviderTypeInstance with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11663,7 +11663,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke UpdateProviderTypeInstance successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11707,7 +11707,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke DeleteProviderTypeInstance successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11732,7 +11732,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(response).ToNot(BeNil())
 			})
 			It(`Invoke DeleteProviderTypeInstance with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11780,7 +11780,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListProviderTypes with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11830,7 +11830,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListProviderTypes successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11884,7 +11884,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListProviderTypes successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11909,7 +11909,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ListProviderTypes with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11950,7 +11950,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListProviderTypes successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -11991,7 +11991,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetProviderTypeByID with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -12042,7 +12042,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetProviderTypeByID successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -12097,7 +12097,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetProviderTypeByID successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -12123,7 +12123,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke GetProviderTypeByID with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -12165,7 +12165,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetProviderTypeByID successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -12207,7 +12207,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetScanReport with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -12259,7 +12259,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetScanReport successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -12315,7 +12315,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetScanReport successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -12342,7 +12342,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke GetScanReport with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -12385,7 +12385,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetScanReport successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -12435,7 +12435,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetScanReportDownloadFile successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -12494,7 +12494,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetScanReportDownloadFile successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -12522,7 +12522,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke GetScanReportDownloadFile with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -12566,7 +12566,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetScanReportDownloadFile successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -12615,7 +12615,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetLatestReports with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -12667,7 +12667,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetLatestReports successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -12723,7 +12723,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetLatestReports successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -12749,7 +12749,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke GetLatestReports with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -12791,7 +12791,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetLatestReports successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -12840,7 +12840,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListReports with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -12904,7 +12904,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListReports successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -12972,7 +12972,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListReports successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -13004,7 +13004,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ListReports with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -13052,7 +13052,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListReports successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -13126,7 +13126,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Use ReportsPager.GetNext successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -13157,7 +13157,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(len(allResults)).To(Equal(2))
 			})
 			It(`Use ReportsPager.GetAll successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -13203,7 +13203,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReport with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -13258,7 +13258,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReport successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -13317,7 +13317,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReport successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -13345,7 +13345,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke GetReport with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -13389,7 +13389,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReport successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -13433,7 +13433,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportSummary with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -13484,7 +13484,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportSummary successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -13539,7 +13539,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportSummary successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -13565,7 +13565,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke GetReportSummary with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -13607,7 +13607,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportSummary successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -13657,7 +13657,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportDownloadFile successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -13717,7 +13717,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportDownloadFile successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -13745,7 +13745,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke GetReportDownloadFile with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -13789,7 +13789,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportDownloadFile successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -13845,7 +13845,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportControls with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -13912,7 +13912,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportControls successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -13983,7 +13983,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportControls successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -14017,7 +14017,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke GetReportControls with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -14067,7 +14067,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportControls successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -14117,7 +14117,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportRule with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -14169,7 +14169,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportRule successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -14225,7 +14225,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportRule successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -14252,7 +14252,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke GetReportRule with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -14295,7 +14295,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportRule successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -14350,7 +14350,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListReportEvaluations with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -14425,7 +14425,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListReportEvaluations successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -14504,7 +14504,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListReportEvaluations successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -14542,7 +14542,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ListReportEvaluations with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -14596,7 +14596,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListReportEvaluations successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -14676,7 +14676,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Use ReportEvaluationsPager.GetNext successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -14713,7 +14713,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(len(allResults)).To(Equal(2))
 			})
 			It(`Use ReportEvaluationsPager.GetAll successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -14773,7 +14773,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListReportResources with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -14844,7 +14844,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListReportResources successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -14919,7 +14919,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListReportResources successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -14955,7 +14955,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ListReportResources with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -15007,7 +15007,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListReportResources successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -15085,7 +15085,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Use ReportResourcesPager.GetNext successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -15120,7 +15120,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(len(allResults)).To(Equal(2))
 			})
 			It(`Use ReportResourcesPager.GetAll successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -15168,7 +15168,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportTags with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -15219,7 +15219,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportTags successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -15274,7 +15274,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportTags successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -15300,7 +15300,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke GetReportTags with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -15342,7 +15342,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportTags successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -15387,7 +15387,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportViolationsDrift with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -15444,7 +15444,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportViolationsDrift successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -15505,7 +15505,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportViolationsDrift successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -15534,7 +15534,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke GetReportViolationsDrift with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -15579,7 +15579,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetReportViolationsDrift successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -15626,7 +15626,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListScanReports with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -15681,7 +15681,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListScanReports successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -15740,7 +15740,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListScanReports successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -15768,7 +15768,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ListScanReports with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -15812,7 +15812,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListScanReports successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -15856,7 +15856,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateScanReport with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -15926,7 +15926,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateScanReport successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -16000,7 +16000,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateScanReport successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -16029,7 +16029,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke CreateScanReport with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -16074,7 +16074,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateScanReport successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -16120,7 +16120,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateScan with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -16189,7 +16189,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateScan successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -16262,7 +16262,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateScan successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -16289,7 +16289,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke CreateScan with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -16332,7 +16332,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateScan successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -16381,7 +16381,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListRules with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -16443,7 +16443,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListRules successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -16509,7 +16509,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListRules successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -16540,7 +16540,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ListRules with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -16587,7 +16587,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListRules successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -16660,7 +16660,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Use RulesPager.GetNext successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -16690,7 +16690,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(len(allResults)).To(Equal(2))
 			})
 			It(`Use RulesPager.GetAll successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -16733,7 +16733,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateRule with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -16840,7 +16840,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateRule successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -16951,7 +16951,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateRule successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -17017,7 +17017,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke CreateRule with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -17099,7 +17099,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke CreateRule successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -17181,7 +17181,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetRule with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -17232,7 +17232,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetRule successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -17287,7 +17287,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetRule successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -17313,7 +17313,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke GetRule with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -17355,7 +17355,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetRule successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -17399,7 +17399,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceRule with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -17510,7 +17510,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceRule successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -17625,7 +17625,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceRule successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -17693,7 +17693,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ReplaceRule with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -17777,7 +17777,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ReplaceRule successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -17860,7 +17860,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke DeleteRule successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -17884,7 +17884,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(response).ToNot(BeNil())
 			})
 			It(`Invoke DeleteRule with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -17931,7 +17931,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListServices with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -17980,7 +17980,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListServices successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -18033,7 +18033,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListServices successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -18057,7 +18057,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke ListServices with error: Operation request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -18090,7 +18090,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke ListServices successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -18130,7 +18130,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetService with error: Operation response processing error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -18180,7 +18180,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetService successfully with retries`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -18234,7 +18234,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetService successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -18259,7 +18259,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).ToNot(BeNil())
 			})
 			It(`Invoke GetService with error: Operation validation and request error`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -18300,7 +18300,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				}))
 			})
 			It(`Invoke GetService successfully`, func() {
-				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+				securityAndComplianceCenterService, serviceErr := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
@@ -18327,7 +18327,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 	})
 	Describe(`Model constructor tests`, func() {
 		Context(`Using a service client instance`, func() {
-			securityAndComplianceCenterService, _ := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterV3Options{
+			securityAndComplianceCenterService, _ := securityandcompliancecenterapiv3.NewSecurityAndComplianceCenterV3(&securityandcompliancecenterapiv3.SecurityAndComplianceCenterApiV3Options{
 				URL:           "http://securityandcompliancecenterapiv3modelgenerator.com",
 				Authenticator: &core.NoAuthAuthenticator{},
 			})

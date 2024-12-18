@@ -1059,6 +1059,12 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListControl
 	if listControlLibrariesOptions.AccountID != nil {
 		builder.AddQuery("account_id", fmt.Sprint(*listControlLibrariesOptions.AccountID))
 	}
+	if listControlLibrariesOptions.Limit != nil {
+		builder.AddQuery("limit", fmt.Sprint(*listControlLibrariesOptions.Limit))
+	}
+	if listControlLibrariesOptions.Start != nil {
+		builder.AddQuery("start", fmt.Sprint(*listControlLibrariesOptions.Start))
+	}
 
 	request, err := builder.Build()
 	if err != nil {
@@ -9640,6 +9646,15 @@ type ListControlLibrariesOptions struct {
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
 
+	// The field that indicates how many resources to return, unless the response is the last page of resources.
+	Limit *int64 `json:"limit,omitempty"`
+
+	// The field that indicate how you want the resources to be filtered by.
+	ControlLibraryType *string `json:"control_library_type,omitempty"`
+
+	// Determine what resource to start the page on or after.
+	Start *string `json:"start,omitempty"`
+
 	// Allows users to set headers on API requests
 	Headers map[string]string
 }
@@ -9664,9 +9679,27 @@ func (_options *ListControlLibrariesOptions) SetAccountID(accountID string) *Lis
 }
 
 // SetHeaders : Allow user to set Headers
-func (options *ListControlLibrariesOptions) SetHeaders(param map[string]string) *ListControlLibrariesOptions {
-	options.Headers = param
-	return options
+func (_options *ListControlLibrariesOptions) SetHeaders(param map[string]string) *ListControlLibrariesOptions {
+	_options.Headers = param
+	return _options
+}
+
+// SetControlLibraryType : Allow user to set the ControlLibraryType
+func (_options *ListControlLibrariesOptions) SetControlLibraryType(controlLibraryType string) *ListControlLibrariesOptions {
+	_options.ControlLibraryType = &controlLibraryType
+	return _options
+}
+
+// SetStart : Allow user to set the Start
+func (_options *ListControlLibrariesOptions) SetStart(controlLibraryType string) *ListControlLibrariesOptions {
+	_options.Start = &controlLibraryType
+	return _options
+}
+
+// SetLimit : Allow user to set the Limit
+func (_options *ListControlLibrariesOptions) SetLimit(limit int64) *ListControlLibrariesOptions {
+	_options.Limit = core.Int64Ptr(limit)
+	return _options
 }
 
 // ListInstanceAttachmentsOptions : The ListInstanceAttachments options.
@@ -9863,6 +9896,15 @@ type ListProfilesOptions struct {
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
+
+	// The field that indicates how many resources to return, unless the response is the last page of resources.
+	Limit *int64 `json:"limit,omitempty"`
+
+	// The field that indicate how you want the resources to be filtered by.
+	ProfileType *string `json:"profile_type,omitempty"`
+
+	// Determine what resource to start the page on or after.
+	Start *string `json:"start,omitempty"`
 }
 
 // NewListProfilesOptions : Instantiate ListProfilesOptions
@@ -9881,6 +9923,24 @@ func (_options *ListProfilesOptions) SetInstanceID(instanceID string) *ListProfi
 // SetAccountID : Allow user to set AccountID
 func (_options *ListProfilesOptions) SetAccountID(accountID string) *ListProfilesOptions {
 	_options.AccountID = core.StringPtr(accountID)
+	return _options
+}
+
+// SetProfileType : Allow user to set ProfileType
+func (_options *ListProfilesOptions) SetProfileType(typeVar string) *ListProfilesOptions {
+	_options.ProfileType = core.StringPtr(typeVar)
+	return _options
+}
+
+// SetStart : Allow user to set Start
+func (_options *ListProfilesOptions) SetStart(start string) *ListProfilesOptions {
+	_options.Start = core.StringPtr(start)
+	return _options
+}
+
+// SetLimit : Allow user to set Limit
+func (_options *ListProfilesOptions) SetLimit(limit int64) *ListProfilesOptions {
+	_options.Limit = core.Int64Ptr(limit)
 	return _options
 }
 
@@ -15936,6 +15996,164 @@ func UnmarshalRequiredConfigConditionSubRuleConditionSubRuleConditionAnyIf(m map
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
+}
+
+// ControlLibrariesPager can be used to simplify the use of the "ListControlLibraries" method.
+type ControlLibrariesPager struct {
+	hasNext     bool
+	options     *ListControlLibrariesOptions
+	client      *SecurityAndComplianceCenterApiV3
+	pageContext struct {
+		next *string
+	}
+}
+
+// NewControlLibrariesPager returns a new ControlLibrariesPager instance.
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) NewControlLibrariesPager(options *ListControlLibrariesOptions) (pager *ControlLibrariesPager, err error) {
+	if options.Start != nil && *options.Start != "" {
+		err = fmt.Errorf("the 'options.Start' field should not be set")
+		return
+	}
+
+	var optionsCopy ListControlLibrariesOptions = *options
+	pager = &ControlLibrariesPager{
+		hasNext: true,
+		options: &optionsCopy,
+		client:  securityAndComplianceCenterApi,
+	}
+	return
+}
+
+// HasNext returns true if there are potentially more results to be retrieved.
+func (pager *ControlLibrariesPager) HasNext() bool {
+	return pager.hasNext
+}
+
+// GetNextWithContext returns the next page of results using the specified Context.
+func (pager *ControlLibrariesPager) GetNextWithContext(ctx context.Context) (page []ControlLibrary, err error) {
+	if !pager.HasNext() {
+		return nil, fmt.Errorf("no more results available")
+	}
+
+	pager.options.Start = pager.pageContext.next
+
+	result, _, err := pager.client.ListControlLibrariesWithContext(ctx, pager.options)
+	if err != nil {
+		return
+	}
+
+	var next *string
+	if result.Next != nil {
+		next = result.Next.Start
+	}
+	pager.pageContext.next = next
+	pager.hasNext = (pager.pageContext.next != nil)
+	page = result.ControlLibraries
+
+	return
+}
+
+// GetAllWithContext returns all results by invoking GetNextWithContext() repeatedly
+// until all pages of results have been retrieved.
+func (pager *ControlLibrariesPager) GetAllWithContext(ctx context.Context) (allItems []ControlLibrary, err error) {
+	for pager.HasNext() {
+		var nextPage []ControlLibrary
+		nextPage, err = pager.GetNextWithContext(ctx)
+		if err != nil {
+			return
+		}
+		allItems = append(allItems, nextPage...)
+	}
+	return
+}
+
+// GetNext invokes GetNextWithContext() using context.Background() as the Context parameter.
+func (pager *ControlLibrariesPager) GetNext() (page []ControlLibrary, err error) {
+	return pager.GetNextWithContext(context.Background())
+}
+
+// GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
+func (pager *ControlLibrariesPager) GetAll() (allItems []ControlLibrary, err error) {
+	return pager.GetAllWithContext(context.Background())
+}
+
+// ProfilesPager can be used to simplify the use of the "ListProfiles" method.
+type ProfilesPager struct {
+	hasNext     bool
+	options     *ListProfilesOptions
+	client      *SecurityAndComplianceCenterApiV3
+	pageContext struct {
+		next *string
+	}
+}
+
+// NewControlLibrariesPager returns a new ControlLibrariesPager instance.
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) NewProfilesPager(options *ListProfilesOptions) (pager *ProfilesPager, err error) {
+	if options.Start != nil && *options.Start != "" {
+		err = fmt.Errorf("the 'options.Start' field should not be set")
+		return
+	}
+
+	var optionsCopy ListProfilesOptions = *options
+	pager = &ProfilesPager{
+		hasNext: true,
+		options: &optionsCopy,
+		client:  securityAndComplianceCenterApi,
+	}
+	return
+}
+
+// HasNext returns true if there are potentially more results to be retrieved.
+func (pager *ProfilesPager) HasNext() bool {
+	return pager.hasNext
+}
+
+// GetNextWithContext returns the next page of results using the specified Context.
+func (pager *ProfilesPager) GetNextWithContext(ctx context.Context) (page []Profile, err error) {
+	if !pager.HasNext() {
+		return nil, fmt.Errorf("no more results available")
+	}
+
+	pager.options.Start = pager.pageContext.next
+
+	result, _, err := pager.client.ListProfilesWithContext(ctx, pager.options)
+	if err != nil {
+		return
+	}
+
+	var next *string
+	if result.Next != nil {
+		next = result.Next.Start
+	}
+	pager.pageContext.next = next
+	pager.hasNext = (pager.pageContext.next != nil)
+	page = result.Profiles
+
+	return
+}
+
+// GetAllWithContext returns all results by invoking GetNextWithContext() repeatedly
+// until all pages of results have been retrieved.
+func (pager *ProfilesPager) GetAllWithContext(ctx context.Context) (allItems []Profile, err error) {
+	for pager.HasNext() {
+		var nextPage []Profile
+		nextPage, err = pager.GetNextWithContext(ctx)
+		if err != nil {
+			return
+		}
+		allItems = append(allItems, nextPage...)
+	}
+	return
+}
+
+// GetNext invokes GetNextWithContext() using context.Background() as the Context parameter.
+func (pager *ProfilesPager) GetNext() (page []Profile, err error) {
+	return pager.GetNextWithContext(context.Background())
+}
+
+// GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
+func (pager *ProfilesPager) GetAll() (allItems []Profile, err error) {
+	return pager.GetAllWithContext(context.Background())
 }
 
 // InstanceAttachmentsPager can be used to simplify the use of the "ListInstanceAttachments" method.

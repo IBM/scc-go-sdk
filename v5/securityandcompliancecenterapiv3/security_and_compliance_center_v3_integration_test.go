@@ -960,6 +960,38 @@ var _ = Describe(`SecurityAndComplianceCenterV3 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(controlLibraryCollection).ToNot(BeNil())
 		})
+		It(`ListControlLibraries(listControlLibrariesOptions *ListControlLibrariesOptions) using ControlLibrariesPager`, func() {
+			listControlLibrariesOptions := &securityandcompliancecenterv3.ListControlLibrariesOptions{
+				InstanceID: core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
+				AccountID:  &accountIDForReportLink,
+				Limit:      core.Int64Ptr(int64(10)),
+			}
+
+			// Test GetNext().
+			pager, err := securityAndComplianceCenterService.NewControlLibrariesPager(listControlLibrariesOptions)
+			Expect(err).To(BeNil())
+			Expect(pager).ToNot(BeNil())
+
+			var allResults []securityandcompliancecenterv3.ControlLibrary
+			for pager.HasNext() {
+				nextPage, err := pager.GetNext()
+				Expect(err).To(BeNil())
+				Expect(nextPage).ToNot(BeNil())
+				allResults = append(allResults, nextPage...)
+			}
+
+			// Test GetAll().
+			pager, err = securityAndComplianceCenterService.NewControlLibrariesPager(listControlLibrariesOptions)
+			Expect(err).To(BeNil())
+			Expect(pager).ToNot(BeNil())
+
+			allItems, err := pager.GetAll()
+			Expect(err).To(BeNil())
+			Expect(allItems).ToNot(BeNil())
+
+			Expect(len(allItems)).To(Equal(len(allResults)))
+			fmt.Fprintf(GinkgoWriter, "ListControlLibraries() returned a total of %d item(s) using ControlLibrariesPager.\n", len(allResults))
+		})
 	})
 
 	Describe(`ReplaceCustomControlLibrary - Update a custom control library`, func() {
@@ -1042,6 +1074,38 @@ var _ = Describe(`SecurityAndComplianceCenterV3 Integration Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(profileCollection).ToNot(BeNil())
+		})
+		It(`ListProfiles(listProfilesOptions *ListProfileOptions) using ProfilesPager`, func() {
+			listProfilesOptions := &securityandcompliancecenterv3.ListProfilesOptions{
+				InstanceID: core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
+				AccountID:  &accountIDForReportLink,
+				Limit:      core.Int64Ptr(int64(10)),
+			}
+
+			// Test GetNext().
+			pager, err := securityAndComplianceCenterService.NewProfilesPager(listProfilesOptions)
+			Expect(err).To(BeNil())
+			Expect(pager).ToNot(BeNil())
+
+			var allResults []securityandcompliancecenterv3.Profile
+			for pager.HasNext() {
+				nextPage, err := pager.GetNext()
+				Expect(err).To(BeNil())
+				Expect(nextPage).ToNot(BeNil())
+				allResults = append(allResults, nextPage...)
+			}
+
+			// Test GetAll().
+			pager, err = securityAndComplianceCenterService.NewProfilesPager(listProfilesOptions)
+			Expect(err).To(BeNil())
+			Expect(pager).ToNot(BeNil())
+
+			allItems, err := pager.GetAll()
+			Expect(err).To(BeNil())
+			Expect(allItems).ToNot(BeNil())
+
+			Expect(len(allItems)).To(Equal(len(allResults)))
+			fmt.Fprintf(GinkgoWriter, "ListProfiles() returned a total of %d item(s) using ProfilesPager.\n", len(allResults))
 		})
 	})
 

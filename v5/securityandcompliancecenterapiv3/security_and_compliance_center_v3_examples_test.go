@@ -215,26 +215,26 @@ var _ = Describe(`SecurityAndComplianceCenterV3 Examples Tests`, func() {
 			fmt.Println("\nCreateCustomControlLibrary() result:")
 			// begin-create_custom_control_library
 
-			assessmentPrototypeModel := &securityandcompliancecenterv3.AssessmentPrototype{
+			assessmentPrototypeModel := &securityandcompliancecenterv3.Assessment{
 				AssessmentID:          core.StringPtr("rule-d1bd9f3f-bee1-46c5-9533-da8bba9eed4e"),
 				AssessmentDescription: core.StringPtr("This rule will check on regulation"),
 			}
 
-			controlSpecificationPrototypeModel := &securityandcompliancecenterv3.ControlSpecificationPrototype{
+			controlSpecificationPrototypeModel := &securityandcompliancecenterv3.ControlSpecification{
 				ComponentID: core.StringPtr("apprapp"),
 				Environment: core.StringPtr("ibm-cloud"),
 				Description: core.StringPtr("This field is used to describe a control specification"),
-				Assessments: []securityandcompliancecenterv3.AssessmentPrototype{*assessmentPrototypeModel},
+				Assessments: []securityandcompliancecenterv3.Assessment{*assessmentPrototypeModel},
 			}
 
 			controlDocModel := &securityandcompliancecenterv3.ControlDoc{}
 
-			controlPrototypeModel := &securityandcompliancecenterv3.ControlPrototype{
+			controlPrototypeModel := &securityandcompliancecenterv3.Control{
 				ControlName:           core.StringPtr("security"),
 				ControlDescription:    core.StringPtr("This is a description of a control"),
 				ControlCategory:       core.StringPtr("test-control"),
 				ControlRequirement:    core.BoolPtr(true),
-				ControlSpecifications: []securityandcompliancecenterv3.ControlSpecificationPrototype{*controlSpecificationPrototypeModel},
+				ControlSpecifications: []securityandcompliancecenterv3.ControlSpecification{*controlSpecificationPrototypeModel},
 				ControlDocs:           controlDocModel,
 				Status:                core.StringPtr("disabled"),
 			}
@@ -245,7 +245,7 @@ var _ = Describe(`SecurityAndComplianceCenterV3 Examples Tests`, func() {
 				"This is a custom control library made from the SDK test framework",
 				"custom",
 				"0.0.1",
-				[]securityandcompliancecenterv3.ControlPrototype{*controlPrototypeModel},
+				[]securityandcompliancecenterv3.Control{*controlPrototypeModel},
 			)
 
 			controlLibrary, response, err := securityAndComplianceCenterService.CreateCustomControlLibrary(createCustomControlLibraryOptions)

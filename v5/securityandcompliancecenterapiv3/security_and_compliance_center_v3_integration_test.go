@@ -267,27 +267,27 @@ var _ = Describe(`SecurityAndComplianceCenterV3 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`CreateCustomControlLibrary(createCustomControlLibraryOptions *CreateCustomControlLibraryOptions)`, func() {
-			assessmentPrototypeModel := &securityandcompliancecenterv3.AssessmentPrototype{
+			assessmentPrototypeModel := &securityandcompliancecenterv3.Assessment{
 				AssessmentID:          core.StringPtr("rule-d1bd9f3f-bee1-46c5-9533-da8bba9eed4e"),
 				AssessmentDescription: core.StringPtr("This rule will check on regulation"),
 			}
 
-			controlSpecificationPrototypeModel := &securityandcompliancecenterv3.ControlSpecificationPrototype{
+			controlSpecificationPrototypeModel := &securityandcompliancecenterv3.ControlSpecification{
 				ComponentID: core.StringPtr("apprapp"),
 				Environment: core.StringPtr("ibm-cloud"),
 				Description: core.StringPtr("This field is used to describe a control specification"),
-				Assessments: []securityandcompliancecenterv3.AssessmentPrototype{*assessmentPrototypeModel},
+				Assessments: []securityandcompliancecenterv3.Assessment{*assessmentPrototypeModel},
 			}
 
 			controlDocModel := &securityandcompliancecenterv3.ControlDoc{}
 
-			controlPrototypeModel := &securityandcompliancecenterv3.ControlPrototype{
+			controlPrototypeModel := &securityandcompliancecenterv3.Control{
 				ControlName:           core.StringPtr("security"),
 				ControlDescription:    core.StringPtr("This control library can be deleted"),
 				ControlCategory:       core.StringPtr("test-control"),
 				ControlRequirement:    core.BoolPtr(true),
 				ControlParent:         core.StringPtr(""),
-				ControlSpecifications: []securityandcompliancecenterv3.ControlSpecificationPrototype{*controlSpecificationPrototypeModel},
+				ControlSpecifications: []securityandcompliancecenterv3.ControlSpecification{*controlSpecificationPrototypeModel},
 				ControlDocs:           controlDocModel,
 				Status:                core.StringPtr("disabled"),
 			}
@@ -298,7 +298,7 @@ var _ = Describe(`SecurityAndComplianceCenterV3 Integration Tests`, func() {
 				ControlLibraryDescription: core.StringPtr("This is a custom control library made from the SDK test framework"),
 				ControlLibraryType:        core.StringPtr("custom"),
 				ControlLibraryVersion:     core.StringPtr("0.0.1"),
-				Controls:                  []securityandcompliancecenterv3.ControlPrototype{*controlPrototypeModel},
+				Controls:                  []securityandcompliancecenterv3.Control{*controlPrototypeModel},
 				AccountID:                 &accountIDForReportLink,
 			}
 

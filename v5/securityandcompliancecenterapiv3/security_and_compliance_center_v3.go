@@ -5229,30 +5229,6 @@ func UnmarshalAssessment(m map[string]json.RawMessage, result interface{}) (err 
 	return
 }
 
-// AssessmentPrototype : The necessary fields to include a rule/assessment.
-type AssessmentPrototype struct {
-	// The ID of the rule to target. A list of rules can be obtained from the list_rules method.
-	AssessmentID *string `json:"assessment_id,omitempty"`
-
-	// Details on the intent of the rule for an assessment.
-	AssessmentDescription *string `json:"assessment_description,omitempty"`
-}
-
-// UnmarshalAssessmentPrototype unmarshals an instance of AssessmentPrototype from the specified map of raw messages.
-func UnmarshalAssessmentPrototype(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(AssessmentPrototype)
-	err = core.UnmarshalPrimitive(m, "assessment_id", &obj.AssessmentID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "assessment_description", &obj.AssessmentDescription)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
 // AssessmentWithStats : The control specification assessment.
 type AssessmentWithStats struct {
 	// The assessment ID.
@@ -6261,7 +6237,7 @@ type Control struct {
 	Status *string `json:"status,omitempty"`
 }
 
-// UnmarshalControlPrototype unmarshals an instance of ControlPrototype from the specified map of raw messages.
+// UnmarshalControl unmarshals an instance of Control from the specified map of raw messages.
 func UnmarshalControl(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(Control)
 	err = core.UnmarshalPrimitive(m, "control_name", &obj.ControlName)
@@ -6316,98 +6292,15 @@ func UnmarshalControl(m map[string]json.RawMessage, result interface{}) (err err
 	return
 }
 
-// ControlPrototype : The payload to instantiate a control.
-type ControlPrototype struct {
-	// The ID of the control library that contains the profile.
-	ControlName *string `json:"control_name" validate:"required"`
-
-	// The association of the control.
-	ControlCategory *string `json:"control_category" validate:"required"`
-
-	// true if the control can be automated, false if the control cannot. Must be false to be a parent
-	ControlRequirement *bool `json:"control_requirement" validate:"required"`
-
-	// The ID of the control.
-	ID *string `json:"control_id,omitempty"`
-
-	// The control description.
-	ControlDescription *string `json:"control_description,omitempty"`
-
-	// The ID of the parent control.
-	ControlParent *string `json:"control_parent,omitempty"`
-
-	// The Path of the control
-	ControlPath *string `json:"control_path,omitempty"`
-
-	// List of control specifications associated with the control.
-	ControlSpecifications []ControlSpecificationPrototype `json:"control_specifications" validate:"required"`
-
-	// References to a control documentation.
-	ControlDocs *ControlDoc `json:"control_docs,omitempty"`
-
-	// Details if a control library can be used or not.
-	Status *string `json:"status,omitempty"`
-
-	// The Tags associated with the ControlPrototype.
-	ControlTags []string `json:"control_tags,omitempty"`
-}
-
-// NewControlPrototype : Instantiate ControlPrototype (Generic Model Constructor)
-func (*SecurityAndComplianceCenterApiV3) NewControlPrototype(controlName string, controlCategory string, controlRequirement bool, controlSpecifications []ControlSpecificationPrototype) (_model *ControlPrototype, err error) {
-	_model = &ControlPrototype{
+// NewControl: Instantiate Control(Generic Model Constructor)
+func (*SecurityAndComplianceCenterApiV3) NewControl(controlName string, controlCategory string, controlRequirement bool, controlSpecifications []ControlSpecification) (_model *Control, err error) {
+	_model = &Control{
 		ControlName:           core.StringPtr(controlName),
 		ControlCategory:       core.StringPtr(controlCategory),
 		ControlRequirement:    core.BoolPtr(controlRequirement),
 		ControlSpecifications: controlSpecifications,
 	}
 	err = core.ValidateStruct(_model, "required parameters")
-	return
-}
-
-// UnmarshalControlPrototype unmarshals an instance of ControlPrototype from the specified map of raw messages.
-func UnmarshalControlPrototype(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(ControlPrototype)
-	err = core.UnmarshalPrimitive(m, "control_name", &obj.ControlName)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "control_description", &obj.ControlDescription)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "control_category", &obj.ControlCategory)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "control_id", &obj.ID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "control_requirement", &obj.ControlRequirement)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "control_parent", &obj.ControlParent)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "control_path", &obj.ControlPath)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalModel(m, "control_specifications", &obj.ControlSpecifications, UnmarshalControlSpecificationPrototype)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalModel(m, "control_docs", &obj.ControlDocs, UnmarshalControlDoc)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
 }
 
@@ -6484,57 +6377,6 @@ func UnmarshalControlSpecification(m map[string]json.RawMessage, result interfac
 		return
 	}
 	err = core.UnmarshalModel(m, "assessments", &obj.Assessments, UnmarshalAssessment)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// ControlSpecificationPrototype : The necessary fields to instantiate a Control Specification.
-type ControlSpecificationPrototype struct {
-	// The ID of the control specification
-	ID *string `json:"control_specification_id,omitempty"`
-
-	// The ID of the component. The component_id can be found from the 'service_name' using the Get Services method.
-	ComponentID *string `json:"component_id,omitempty"`
-
-	// The cloud provider the specification is targeting.
-	Environment *string `json:"environment,omitempty"`
-
-	// Information about the Control Specification.
-	Description *string `json:"control_specification_description,omitempty"`
-
-	// The detailed list of rules associated with the Specification.
-	Assessments []AssessmentPrototype `json:"assessments,omitempty"`
-}
-
-// Constants associated with the ControlSpecificationPrototype.Environment property.
-// The cloud provider the specification is targeting.
-const (
-	ControlSpecificationPrototypeEnvironmentIBMCloudConst = "ibm-cloud"
-)
-
-// UnmarshalControlSpecificationPrototype unmarshals an instance of ControlSpecificationPrototype from the specified map of raw messages.
-func UnmarshalControlSpecificationPrototype(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(ControlSpecificationPrototype)
-	err = core.UnmarshalPrimitive(m, "control_specification_id", &obj.ID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "component_id", &obj.ComponentID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "environment", &obj.Environment)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "control_specification_description", &obj.Description)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalModel(m, "assessments", &obj.Assessments, UnmarshalAssessmentPrototype)
 	if err != nil {
 		return
 	}
@@ -6848,7 +6690,7 @@ type CreateCustomControlLibraryOptions struct {
 	ControlLibraryVersion *string `json:"control_library_version" validate:"required"`
 
 	// The list of rules that the control library attempts to adhere to.
-	Controls []ControlPrototype `json:"controls" validate:"required"`
+	Controls []Control `json:"controls" validate:"required"`
 
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
@@ -6870,7 +6712,7 @@ const (
 )
 
 // NewCreateCustomControlLibraryOptions : Instantiate CreateCustomControlLibraryOptions
-func (*SecurityAndComplianceCenterApiV3) NewCreateCustomControlLibraryOptions(instanceID string, controlLibraryName string, controlLibraryDescription string, controlLibraryType string, controlLibraryVersion string, controls []ControlPrototype) *CreateCustomControlLibraryOptions {
+func (*SecurityAndComplianceCenterApiV3) NewCreateCustomControlLibraryOptions(instanceID string, controlLibraryName string, controlLibraryDescription string, controlLibraryType string, controlLibraryVersion string, controls []Control) *CreateCustomControlLibraryOptions {
 	return &CreateCustomControlLibraryOptions{
 		InstanceID:                core.StringPtr(instanceID),
 		ControlLibraryName:        core.StringPtr(controlLibraryName),
@@ -6912,7 +6754,7 @@ func (_options *CreateCustomControlLibraryOptions) SetControlLibraryVersion(cont
 }
 
 // SetControls : Allow user to set Controls
-func (_options *CreateCustomControlLibraryOptions) SetControls(controls []ControlPrototype) *CreateCustomControlLibraryOptions {
+func (_options *CreateCustomControlLibraryOptions) SetControls(controls []Control) *CreateCustomControlLibraryOptions {
 	_options.Controls = controls
 	return _options
 }

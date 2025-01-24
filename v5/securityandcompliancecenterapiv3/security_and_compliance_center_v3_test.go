@@ -3203,16 +3203,16 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(securityAndComplianceCenterService).ToNot(BeNil())
 
 				// Construct an instance of the AssessmentPrototype model
-				assessmentPrototypeModel := new(securityandcompliancecenterapiv3.AssessmentPrototype)
+				assessmentPrototypeModel := new(securityandcompliancecenterapiv3.Assessment)
 				assessmentPrototypeModel.AssessmentID = core.StringPtr("rule-d1bd9f3f-bee1-46c5-9533-da8bba9eed4e")
 				assessmentPrototypeModel.AssessmentDescription = core.StringPtr("This rule will check on regulation")
 
 				// Construct an instance of the ControlSpecificationPrototype model
-				controlSpecificationPrototypeModel := new(securityandcompliancecenterapiv3.ControlSpecificationPrototype)
+				controlSpecificationPrototypeModel := new(securityandcompliancecenterapiv3.ControlSpecification)
 				controlSpecificationPrototypeModel.ComponentID = core.StringPtr("apprapp")
 				controlSpecificationPrototypeModel.Environment = core.StringPtr("ibm-cloud")
 				controlSpecificationPrototypeModel.Description = core.StringPtr("This field is used to describe a control specification")
-				controlSpecificationPrototypeModel.Assessments = []securityandcompliancecenterapiv3.AssessmentPrototype{*assessmentPrototypeModel}
+				controlSpecificationPrototypeModel.Assessments = []securityandcompliancecenterapiv3.Assessment{*assessmentPrototypeModel}
 
 				// Construct an instance of the ControlDoc model
 				controlDocModel := new(securityandcompliancecenterapiv3.ControlDoc)
@@ -3220,13 +3220,13 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				controlDocModel.ControlDocsType = core.StringPtr("testString")
 
 				// Construct an instance of the ControlPrototype model
-				controlPrototypeModel := new(securityandcompliancecenterapiv3.ControlPrototype)
+				controlPrototypeModel := new(securityandcompliancecenterapiv3.Control)
 				controlPrototypeModel.ControlName = core.StringPtr("security")
 				controlPrototypeModel.ControlDescription = core.StringPtr("This is a description of a control")
 				controlPrototypeModel.ControlCategory = core.StringPtr("test-control")
 				controlPrototypeModel.ControlRequirement = core.BoolPtr(true)
 				controlPrototypeModel.ControlParent = core.StringPtr("testString")
-				controlPrototypeModel.ControlSpecifications = []securityandcompliancecenterapiv3.ControlSpecificationPrototype{*controlSpecificationPrototypeModel}
+				controlPrototypeModel.ControlSpecifications = []securityandcompliancecenterapiv3.ControlSpecification{*controlSpecificationPrototypeModel}
 				controlPrototypeModel.ControlDocs = controlDocModel
 				controlPrototypeModel.Status = core.StringPtr("disabled")
 
@@ -3237,7 +3237,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				createCustomControlLibraryOptionsModel.ControlLibraryDescription = core.StringPtr("This is a custom control library made from the SDK test framework")
 				createCustomControlLibraryOptionsModel.ControlLibraryType = core.StringPtr("custom")
 				createCustomControlLibraryOptionsModel.ControlLibraryVersion = core.StringPtr("0.0.1")
-				createCustomControlLibraryOptionsModel.Controls = []securityandcompliancecenterapiv3.ControlPrototype{*controlPrototypeModel}
+				createCustomControlLibraryOptionsModel.Controls = []securityandcompliancecenterapiv3.Control{*controlPrototypeModel}
 				createCustomControlLibraryOptionsModel.AccountID = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
@@ -3305,16 +3305,16 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				securityAndComplianceCenterService.EnableRetries(0, 0)
 
 				// Construct an instance of the AssessmentPrototype model
-				assessmentPrototypeModel := new(securityandcompliancecenterapiv3.AssessmentPrototype)
+				assessmentPrototypeModel := new(securityandcompliancecenterapiv3.Assessment)
 				assessmentPrototypeModel.AssessmentID = core.StringPtr("rule-d1bd9f3f-bee1-46c5-9533-da8bba9eed4e")
 				assessmentPrototypeModel.AssessmentDescription = core.StringPtr("This rule will check on regulation")
 
 				// Construct an instance of the ControlSpecificationPrototype model
-				controlSpecificationPrototypeModel := new(securityandcompliancecenterapiv3.ControlSpecificationPrototype)
+				controlSpecificationPrototypeModel := new(securityandcompliancecenterapiv3.ControlSpecification)
 				controlSpecificationPrototypeModel.ComponentID = core.StringPtr("apprapp")
 				controlSpecificationPrototypeModel.Environment = core.StringPtr("ibm-cloud")
 				controlSpecificationPrototypeModel.Description = core.StringPtr("This field is used to describe a control specification")
-				controlSpecificationPrototypeModel.Assessments = []securityandcompliancecenterapiv3.AssessmentPrototype{*assessmentPrototypeModel}
+				controlSpecificationPrototypeModel.Assessments = []securityandcompliancecenterapiv3.Assessment{*assessmentPrototypeModel}
 
 				// Construct an instance of the ControlDoc model
 				controlDocModel := new(securityandcompliancecenterapiv3.ControlDoc)
@@ -3322,13 +3322,13 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				controlDocModel.ControlDocsType = core.StringPtr("testString")
 
 				// Construct an instance of the ControlPrototype model
-				controlPrototypeModel := new(securityandcompliancecenterapiv3.ControlPrototype)
+				controlPrototypeModel := new(securityandcompliancecenterapiv3.Control)
 				controlPrototypeModel.ControlName = core.StringPtr("security")
 				controlPrototypeModel.ControlDescription = core.StringPtr("This is a description of a control")
 				controlPrototypeModel.ControlCategory = core.StringPtr("test-control")
 				controlPrototypeModel.ControlRequirement = core.BoolPtr(true)
 				controlPrototypeModel.ControlParent = core.StringPtr("testString")
-				controlPrototypeModel.ControlSpecifications = []securityandcompliancecenterapiv3.ControlSpecificationPrototype{*controlSpecificationPrototypeModel}
+				controlPrototypeModel.ControlSpecifications = []securityandcompliancecenterapiv3.ControlSpecification{*controlSpecificationPrototypeModel}
 				controlPrototypeModel.ControlDocs = controlDocModel
 				controlPrototypeModel.Status = core.StringPtr("disabled")
 
@@ -3339,7 +3339,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				createCustomControlLibraryOptionsModel.ControlLibraryDescription = core.StringPtr("This is a custom control library made from the SDK test framework")
 				createCustomControlLibraryOptionsModel.ControlLibraryType = core.StringPtr("custom")
 				createCustomControlLibraryOptionsModel.ControlLibraryVersion = core.StringPtr("0.0.1")
-				createCustomControlLibraryOptionsModel.Controls = []securityandcompliancecenterapiv3.ControlPrototype{*controlPrototypeModel}
+				createCustomControlLibraryOptionsModel.Controls = []securityandcompliancecenterapiv3.Control{*controlPrototypeModel}
 				createCustomControlLibraryOptionsModel.AccountID = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -3415,16 +3415,16 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(result).To(BeNil())
 
 				// Construct an instance of the AssessmentPrototype model
-				assessmentPrototypeModel := new(securityandcompliancecenterapiv3.AssessmentPrototype)
+				assessmentPrototypeModel := new(securityandcompliancecenterapiv3.Assessment)
 				assessmentPrototypeModel.AssessmentID = core.StringPtr("rule-d1bd9f3f-bee1-46c5-9533-da8bba9eed4e")
 				assessmentPrototypeModel.AssessmentDescription = core.StringPtr("This rule will check on regulation")
 
 				// Construct an instance of the ControlSpecificationPrototype model
-				controlSpecificationPrototypeModel := new(securityandcompliancecenterapiv3.ControlSpecificationPrototype)
+				controlSpecificationPrototypeModel := new(securityandcompliancecenterapiv3.ControlSpecification)
 				controlSpecificationPrototypeModel.ComponentID = core.StringPtr("apprapp")
 				controlSpecificationPrototypeModel.Environment = core.StringPtr("ibm-cloud")
 				controlSpecificationPrototypeModel.Description = core.StringPtr("This field is used to describe a control specification")
-				controlSpecificationPrototypeModel.Assessments = []securityandcompliancecenterapiv3.AssessmentPrototype{*assessmentPrototypeModel}
+				controlSpecificationPrototypeModel.Assessments = []securityandcompliancecenterapiv3.Assessment{*assessmentPrototypeModel}
 
 				// Construct an instance of the ControlDoc model
 				controlDocModel := new(securityandcompliancecenterapiv3.ControlDoc)
@@ -3432,13 +3432,13 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				controlDocModel.ControlDocsType = core.StringPtr("testString")
 
 				// Construct an instance of the ControlPrototype model
-				controlPrototypeModel := new(securityandcompliancecenterapiv3.ControlPrototype)
+				controlPrototypeModel := new(securityandcompliancecenterapiv3.Control)
 				controlPrototypeModel.ControlName = core.StringPtr("security")
 				controlPrototypeModel.ControlDescription = core.StringPtr("This is a description of a control")
 				controlPrototypeModel.ControlCategory = core.StringPtr("test-control")
 				controlPrototypeModel.ControlRequirement = core.BoolPtr(true)
 				controlPrototypeModel.ControlParent = core.StringPtr("testString")
-				controlPrototypeModel.ControlSpecifications = []securityandcompliancecenterapiv3.ControlSpecificationPrototype{*controlSpecificationPrototypeModel}
+				controlPrototypeModel.ControlSpecifications = []securityandcompliancecenterapiv3.ControlSpecification{*controlSpecificationPrototypeModel}
 				controlPrototypeModel.ControlDocs = controlDocModel
 				controlPrototypeModel.Status = core.StringPtr("disabled")
 
@@ -3449,7 +3449,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				createCustomControlLibraryOptionsModel.ControlLibraryDescription = core.StringPtr("This is a custom control library made from the SDK test framework")
 				createCustomControlLibraryOptionsModel.ControlLibraryType = core.StringPtr("custom")
 				createCustomControlLibraryOptionsModel.ControlLibraryVersion = core.StringPtr("0.0.1")
-				createCustomControlLibraryOptionsModel.Controls = []securityandcompliancecenterapiv3.ControlPrototype{*controlPrototypeModel}
+				createCustomControlLibraryOptionsModel.Controls = []securityandcompliancecenterapiv3.Control{*controlPrototypeModel}
 				createCustomControlLibraryOptionsModel.AccountID = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -3468,16 +3468,16 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(securityAndComplianceCenterService).ToNot(BeNil())
 
 				// Construct an instance of the AssessmentPrototype model
-				assessmentPrototypeModel := new(securityandcompliancecenterapiv3.AssessmentPrototype)
+				assessmentPrototypeModel := new(securityandcompliancecenterapiv3.Assessment)
 				assessmentPrototypeModel.AssessmentID = core.StringPtr("rule-d1bd9f3f-bee1-46c5-9533-da8bba9eed4e")
 				assessmentPrototypeModel.AssessmentDescription = core.StringPtr("This rule will check on regulation")
 
 				// Construct an instance of the ControlSpecificationPrototype model
-				controlSpecificationPrototypeModel := new(securityandcompliancecenterapiv3.ControlSpecificationPrototype)
+				controlSpecificationPrototypeModel := new(securityandcompliancecenterapiv3.ControlSpecification)
 				controlSpecificationPrototypeModel.ComponentID = core.StringPtr("apprapp")
 				controlSpecificationPrototypeModel.Environment = core.StringPtr("ibm-cloud")
 				controlSpecificationPrototypeModel.Description = core.StringPtr("This field is used to describe a control specification")
-				controlSpecificationPrototypeModel.Assessments = []securityandcompliancecenterapiv3.AssessmentPrototype{*assessmentPrototypeModel}
+				controlSpecificationPrototypeModel.Assessments = []securityandcompliancecenterapiv3.Assessment{*assessmentPrototypeModel}
 
 				// Construct an instance of the ControlDoc model
 				controlDocModel := new(securityandcompliancecenterapiv3.ControlDoc)
@@ -3485,13 +3485,13 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				controlDocModel.ControlDocsType = core.StringPtr("testString")
 
 				// Construct an instance of the ControlPrototype model
-				controlPrototypeModel := new(securityandcompliancecenterapiv3.ControlPrototype)
+				controlPrototypeModel := new(securityandcompliancecenterapiv3.Control)
 				controlPrototypeModel.ControlName = core.StringPtr("security")
 				controlPrototypeModel.ControlDescription = core.StringPtr("This is a description of a control")
 				controlPrototypeModel.ControlCategory = core.StringPtr("test-control")
 				controlPrototypeModel.ControlRequirement = core.BoolPtr(true)
 				controlPrototypeModel.ControlParent = core.StringPtr("testString")
-				controlPrototypeModel.ControlSpecifications = []securityandcompliancecenterapiv3.ControlSpecificationPrototype{*controlSpecificationPrototypeModel}
+				controlPrototypeModel.ControlSpecifications = []securityandcompliancecenterapiv3.ControlSpecification{*controlSpecificationPrototypeModel}
 				controlPrototypeModel.ControlDocs = controlDocModel
 				controlPrototypeModel.Status = core.StringPtr("disabled")
 
@@ -3502,7 +3502,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				createCustomControlLibraryOptionsModel.ControlLibraryDescription = core.StringPtr("This is a custom control library made from the SDK test framework")
 				createCustomControlLibraryOptionsModel.ControlLibraryType = core.StringPtr("custom")
 				createCustomControlLibraryOptionsModel.ControlLibraryVersion = core.StringPtr("0.0.1")
-				createCustomControlLibraryOptionsModel.Controls = []securityandcompliancecenterapiv3.ControlPrototype{*controlPrototypeModel}
+				createCustomControlLibraryOptionsModel.Controls = []securityandcompliancecenterapiv3.Control{*controlPrototypeModel}
 				createCustomControlLibraryOptionsModel.AccountID = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
@@ -3543,16 +3543,16 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(securityAndComplianceCenterService).ToNot(BeNil())
 
 				// Construct an instance of the AssessmentPrototype model
-				assessmentPrototypeModel := new(securityandcompliancecenterapiv3.AssessmentPrototype)
+				assessmentPrototypeModel := new(securityandcompliancecenterapiv3.Assessment)
 				assessmentPrototypeModel.AssessmentID = core.StringPtr("rule-d1bd9f3f-bee1-46c5-9533-da8bba9eed4e")
 				assessmentPrototypeModel.AssessmentDescription = core.StringPtr("This rule will check on regulation")
 
 				// Construct an instance of the ControlSpecificationPrototype model
-				controlSpecificationPrototypeModel := new(securityandcompliancecenterapiv3.ControlSpecificationPrototype)
+				controlSpecificationPrototypeModel := new(securityandcompliancecenterapiv3.ControlSpecification)
 				controlSpecificationPrototypeModel.ComponentID = core.StringPtr("apprapp")
 				controlSpecificationPrototypeModel.Environment = core.StringPtr("ibm-cloud")
 				controlSpecificationPrototypeModel.Description = core.StringPtr("This field is used to describe a control specification")
-				controlSpecificationPrototypeModel.Assessments = []securityandcompliancecenterapiv3.AssessmentPrototype{*assessmentPrototypeModel}
+				controlSpecificationPrototypeModel.Assessments = []securityandcompliancecenterapiv3.Assessment{*assessmentPrototypeModel}
 
 				// Construct an instance of the ControlDoc model
 				controlDocModel := new(securityandcompliancecenterapiv3.ControlDoc)
@@ -3560,13 +3560,13 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				controlDocModel.ControlDocsType = core.StringPtr("testString")
 
 				// Construct an instance of the ControlPrototype model
-				controlPrototypeModel := new(securityandcompliancecenterapiv3.ControlPrototype)
+				controlPrototypeModel := new(securityandcompliancecenterapiv3.Control)
 				controlPrototypeModel.ControlName = core.StringPtr("security")
 				controlPrototypeModel.ControlDescription = core.StringPtr("This is a description of a control")
 				controlPrototypeModel.ControlCategory = core.StringPtr("test-control")
 				controlPrototypeModel.ControlRequirement = core.BoolPtr(true)
 				controlPrototypeModel.ControlParent = core.StringPtr("testString")
-				controlPrototypeModel.ControlSpecifications = []securityandcompliancecenterapiv3.ControlSpecificationPrototype{*controlSpecificationPrototypeModel}
+				controlPrototypeModel.ControlSpecifications = []securityandcompliancecenterapiv3.ControlSpecification{*controlSpecificationPrototypeModel}
 				controlPrototypeModel.ControlDocs = controlDocModel
 				controlPrototypeModel.Status = core.StringPtr("disabled")
 
@@ -3577,7 +3577,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				createCustomControlLibraryOptionsModel.ControlLibraryDescription = core.StringPtr("This is a custom control library made from the SDK test framework")
 				createCustomControlLibraryOptionsModel.ControlLibraryType = core.StringPtr("custom")
 				createCustomControlLibraryOptionsModel.ControlLibraryVersion = core.StringPtr("0.0.1")
-				createCustomControlLibraryOptionsModel.Controls = []securityandcompliancecenterapiv3.ControlPrototype{*controlPrototypeModel}
+				createCustomControlLibraryOptionsModel.Controls = []securityandcompliancecenterapiv3.Control{*controlPrototypeModel}
 				createCustomControlLibraryOptionsModel.AccountID = core.StringPtr("testString")
 				createCustomControlLibraryOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -18350,14 +18350,14 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				controlName := "testString"
 				controlCategory := "testString"
 				controlRequirement := true
-				controlSpecifications := []securityandcompliancecenterapiv3.ControlSpecificationPrototype{}
-				_model, err := securityAndComplianceCenterService.NewControlPrototype(controlName, controlCategory, controlRequirement, controlSpecifications)
+				controlSpecifications := []securityandcompliancecenterapiv3.ControlSpecification{}
+				_model, err := securityAndComplianceCenterService.NewControl(controlName, controlCategory, controlRequirement, controlSpecifications)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewCreateCustomControlLibraryOptions successfully`, func() {
 				// Construct an instance of the AssessmentPrototype model
-				assessmentPrototypeModel := new(securityandcompliancecenterapiv3.AssessmentPrototype)
+				assessmentPrototypeModel := new(securityandcompliancecenterapiv3.Assessment)
 				Expect(assessmentPrototypeModel).ToNot(BeNil())
 				assessmentPrototypeModel.AssessmentID = core.StringPtr("rule-d1bd9f3f-bee1-46c5-9533-da8bba9eed4e")
 				assessmentPrototypeModel.AssessmentDescription = core.StringPtr("This rule will check on regulation")
@@ -18365,16 +18365,16 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(assessmentPrototypeModel.AssessmentDescription).To(Equal(core.StringPtr("This rule will check on regulation")))
 
 				// Construct an instance of the ControlSpecificationPrototype model
-				controlSpecificationPrototypeModel := new(securityandcompliancecenterapiv3.ControlSpecificationPrototype)
+				controlSpecificationPrototypeModel := new(securityandcompliancecenterapiv3.ControlSpecification)
 				Expect(controlSpecificationPrototypeModel).ToNot(BeNil())
 				controlSpecificationPrototypeModel.ComponentID = core.StringPtr("apprapp")
 				controlSpecificationPrototypeModel.Environment = core.StringPtr("ibm-cloud")
 				controlSpecificationPrototypeModel.Description = core.StringPtr("This field is used to describe a control specification")
-				controlSpecificationPrototypeModel.Assessments = []securityandcompliancecenterapiv3.AssessmentPrototype{*assessmentPrototypeModel}
+				controlSpecificationPrototypeModel.Assessments = []securityandcompliancecenterapiv3.Assessment{*assessmentPrototypeModel}
 				Expect(controlSpecificationPrototypeModel.ComponentID).To(Equal(core.StringPtr("apprapp")))
 				Expect(controlSpecificationPrototypeModel.Environment).To(Equal(core.StringPtr("ibm-cloud")))
 				Expect(controlSpecificationPrototypeModel.Description).To(Equal(core.StringPtr("This field is used to describe a control specification")))
-				Expect(controlSpecificationPrototypeModel.Assessments).To(Equal([]securityandcompliancecenterapiv3.AssessmentPrototype{*assessmentPrototypeModel}))
+				Expect(controlSpecificationPrototypeModel.Assessments).To(Equal([]securityandcompliancecenterapiv3.Assessment{*assessmentPrototypeModel}))
 
 				// Construct an instance of the ControlDoc model
 				controlDocModel := new(securityandcompliancecenterapiv3.ControlDoc)
@@ -18385,14 +18385,14 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(controlDocModel.ControlDocsType).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the ControlPrototype model
-				controlPrototypeModel := new(securityandcompliancecenterapiv3.ControlPrototype)
+				controlPrototypeModel := new(securityandcompliancecenterapiv3.Control)
 				Expect(controlPrototypeModel).ToNot(BeNil())
 				controlPrototypeModel.ControlName = core.StringPtr("security")
 				controlPrototypeModel.ControlDescription = core.StringPtr("This is a description of a control")
 				controlPrototypeModel.ControlCategory = core.StringPtr("test-control")
 				controlPrototypeModel.ControlRequirement = core.BoolPtr(true)
 				controlPrototypeModel.ControlParent = core.StringPtr("testString")
-				controlPrototypeModel.ControlSpecifications = []securityandcompliancecenterapiv3.ControlSpecificationPrototype{*controlSpecificationPrototypeModel}
+				controlPrototypeModel.ControlSpecifications = []securityandcompliancecenterapiv3.ControlSpecification{*controlSpecificationPrototypeModel}
 				controlPrototypeModel.ControlDocs = controlDocModel
 				controlPrototypeModel.Status = core.StringPtr("disabled")
 				Expect(controlPrototypeModel.ControlName).To(Equal(core.StringPtr("security")))
@@ -18400,7 +18400,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(controlPrototypeModel.ControlCategory).To(Equal(core.StringPtr("test-control")))
 				Expect(controlPrototypeModel.ControlRequirement).To(Equal(core.BoolPtr(true)))
 				Expect(controlPrototypeModel.ControlParent).To(Equal(core.StringPtr("testString")))
-				Expect(controlPrototypeModel.ControlSpecifications).To(Equal([]securityandcompliancecenterapiv3.ControlSpecificationPrototype{*controlSpecificationPrototypeModel}))
+				Expect(controlPrototypeModel.ControlSpecifications).To(Equal([]securityandcompliancecenterapiv3.ControlSpecification{*controlSpecificationPrototypeModel}))
 				Expect(controlPrototypeModel.ControlDocs).To(Equal(controlDocModel))
 				Expect(controlPrototypeModel.Status).To(Equal(core.StringPtr("disabled")))
 
@@ -18410,14 +18410,14 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				createCustomControlLibraryOptionsControlLibraryDescription := "This is a custom control library made from the SDK test framework"
 				createCustomControlLibraryOptionsControlLibraryType := "custom"
 				createCustomControlLibraryOptionsControlLibraryVersion := "0.0.1"
-				createCustomControlLibraryOptionsControls := []securityandcompliancecenterapiv3.ControlPrototype{}
+				createCustomControlLibraryOptionsControls := []securityandcompliancecenterapiv3.Control{}
 				createCustomControlLibraryOptionsModel := securityAndComplianceCenterService.NewCreateCustomControlLibraryOptions(instanceID, createCustomControlLibraryOptionsControlLibraryName, createCustomControlLibraryOptionsControlLibraryDescription, createCustomControlLibraryOptionsControlLibraryType, createCustomControlLibraryOptionsControlLibraryVersion, createCustomControlLibraryOptionsControls)
 				createCustomControlLibraryOptionsModel.SetInstanceID("acd7032c-15a3-484f-bf5b-67d41534d940")
 				createCustomControlLibraryOptionsModel.SetControlLibraryName("custom control library from SDK")
 				createCustomControlLibraryOptionsModel.SetControlLibraryDescription("This is a custom control library made from the SDK test framework")
 				createCustomControlLibraryOptionsModel.SetControlLibraryType("custom")
 				createCustomControlLibraryOptionsModel.SetControlLibraryVersion("0.0.1")
-				createCustomControlLibraryOptionsModel.SetControls([]securityandcompliancecenterapiv3.ControlPrototype{*controlPrototypeModel})
+				createCustomControlLibraryOptionsModel.SetControls([]securityandcompliancecenterapiv3.Control{*controlPrototypeModel})
 				createCustomControlLibraryOptionsModel.SetAccountID("testString")
 				createCustomControlLibraryOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(createCustomControlLibraryOptionsModel).ToNot(BeNil())
@@ -18426,7 +18426,7 @@ var _ = Describe(`securityandcompliancecenterapiv3`, func() {
 				Expect(createCustomControlLibraryOptionsModel.ControlLibraryDescription).To(Equal(core.StringPtr("This is a custom control library made from the SDK test framework")))
 				Expect(createCustomControlLibraryOptionsModel.ControlLibraryType).To(Equal(core.StringPtr("custom")))
 				Expect(createCustomControlLibraryOptionsModel.ControlLibraryVersion).To(Equal(core.StringPtr("0.0.1")))
-				Expect(createCustomControlLibraryOptionsModel.Controls).To(Equal([]securityandcompliancecenterapiv3.ControlPrototype{*controlPrototypeModel}))
+				Expect(createCustomControlLibraryOptionsModel.Controls).To(Equal([]securityandcompliancecenterapiv3.Control{*controlPrototypeModel}))
 				Expect(createCustomControlLibraryOptionsModel.AccountID).To(Equal(core.StringPtr("testString")))
 				Expect(createCustomControlLibraryOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})

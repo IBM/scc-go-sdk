@@ -1,3 +1,10 @@
+## [5.5.2](https://github.com/IBM/scc-go-sdk/compare/v5.5.1...v5.5.2) (2025-01-24)
+
+
+### Bug Fixes
+
+* Update schemas for Terraform Backwards Compatibility ([#154](https://github.com/IBM/scc-go-sdk/issues/154)) ([b642125](https://github.com/IBM/scc-go-sdk/commit/b642125a7c941dd142c60e593ee53a347e5bbe53)), closes [#153](https://github.com/IBM/scc-go-sdk/issues/153)
+
 ## [5.5.1](https://github.com/IBM/scc-go-sdk/compare/v5.5.0...v5.5.1) (2024-12-18)
 
 

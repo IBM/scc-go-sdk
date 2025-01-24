@@ -133,16 +133,16 @@ SECURITY_AND_COMPLIANCE_CENTER_API_PROFILEID=<INSERT_SCC_PROFILE_ID
 SECURITY_AND_COMPLIANCE_CENTER_API_AUTHTYPE=noauth
 ```
 
+## Issues
+If you encounter an issue with the project, you are welcome to submit a
+[bug report](https://github.com/IBM/scc-go-sdk/issues).
+Before that, please search for similar issues. It's possible that someone has already reported the problem.
+
 ## Questions
 
 If you are having difficulties using this SDK or have a question about the IBM Cloud services,
 please ask a question at
 [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-cloud).
-
-## Issues
-If you encounter an issue with the project, you are welcome to submit a
-[bug report](https://github.com/IBM/scc-go-sdk/issues).
-Before that, please search for similar issues. It's possible that someone has already reported the problem.
 
 ## Open source @ IBM
 Find more open source projects on the [IBM Github Page](http://ibm.github.io/)

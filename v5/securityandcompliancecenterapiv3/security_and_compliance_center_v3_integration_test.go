@@ -267,27 +267,27 @@ var _ = Describe(`SecurityAndComplianceCenterV3 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`CreateCustomControlLibrary(createCustomControlLibraryOptions *CreateCustomControlLibraryOptions)`, func() {
-			assessmentPrototypeModel := &securityandcompliancecenterv3.AssessmentPrototype{
+			assessmentPrototypeModel := &securityandcompliancecenterv3.Assessment{
 				AssessmentID:          core.StringPtr("rule-d1bd9f3f-bee1-46c5-9533-da8bba9eed4e"),
 				AssessmentDescription: core.StringPtr("This rule will check on regulation"),
 			}
 
-			controlSpecificationPrototypeModel := &securityandcompliancecenterv3.ControlSpecificationPrototype{
-				ComponentID:                     core.StringPtr("apprapp"),
-				Environment:                     core.StringPtr("ibm-cloud"),
-				ControlSpecificationDescription: core.StringPtr("This field is used to describe a control specification"),
-				Assessments:                     []securityandcompliancecenterv3.AssessmentPrototype{*assessmentPrototypeModel},
+			controlSpecificationPrototypeModel := &securityandcompliancecenterv3.ControlSpecification{
+				ComponentID: core.StringPtr("apprapp"),
+				Environment: core.StringPtr("ibm-cloud"),
+				Description: core.StringPtr("This field is used to describe a control specification"),
+				Assessments: []securityandcompliancecenterv3.Assessment{*assessmentPrototypeModel},
 			}
 
 			controlDocModel := &securityandcompliancecenterv3.ControlDoc{}
 
-			controlPrototypeModel := &securityandcompliancecenterv3.ControlPrototype{
+			controlPrototypeModel := &securityandcompliancecenterv3.Control{
 				ControlName:           core.StringPtr("security"),
 				ControlDescription:    core.StringPtr("This control library can be deleted"),
 				ControlCategory:       core.StringPtr("test-control"),
 				ControlRequirement:    core.BoolPtr(true),
 				ControlParent:         core.StringPtr(""),
-				ControlSpecifications: []securityandcompliancecenterv3.ControlSpecificationPrototype{*controlSpecificationPrototypeModel},
+				ControlSpecifications: []securityandcompliancecenterv3.ControlSpecification{*controlSpecificationPrototypeModel},
 				ControlDocs:           controlDocModel,
 				Status:                core.StringPtr("disabled"),
 			}
@@ -298,7 +298,7 @@ var _ = Describe(`SecurityAndComplianceCenterV3 Integration Tests`, func() {
 				ControlLibraryDescription: core.StringPtr("This is a custom control library made from the SDK test framework"),
 				ControlLibraryType:        core.StringPtr("custom"),
 				ControlLibraryVersion:     core.StringPtr("0.0.1"),
-				Controls:                  []securityandcompliancecenterv3.ControlPrototype{*controlPrototypeModel},
+				Controls:                  []securityandcompliancecenterv3.Control{*controlPrototypeModel},
 				AccountID:                 &accountIDForReportLink,
 			}
 
@@ -999,28 +999,28 @@ var _ = Describe(`SecurityAndComplianceCenterV3 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`ReplaceCustomControlLibrary(replaceCustomControlLibraryOptions *ReplaceCustomControlLibraryOptions)`, func() {
-			assessmentPrototypeModel := &securityandcompliancecenterv3.AssessmentPrototype{
+			assessmentPrototypeModel := &securityandcompliancecenterv3.Assessment{
 				// Manual Update
 				AssessmentID:          core.StringPtr("rule-5bdfc82b-5eed-4405-b116-fa76292ec003"),
 				AssessmentDescription: core.StringPtr("Ensure that IAM IDentity has cbr enabled"),
 			}
 
-			controlSpecificationPrototypeModel := &securityandcompliancecenterv3.ControlSpecificationPrototype{
-				ComponentID:                     core.StringPtr("iam-identity"),
-				Environment:                     core.StringPtr("ibm-cloud"),
-				ControlSpecificationDescription: core.StringPtr("CBR security policies"),
-				Assessments:                     []securityandcompliancecenterv3.AssessmentPrototype{*assessmentPrototypeModel},
+			controlSpecificationPrototypeModel := &securityandcompliancecenterv3.ControlSpecification{
+				ComponentID: core.StringPtr("iam-identity"),
+				Environment: core.StringPtr("ibm-cloud"),
+				Description: core.StringPtr("CBR security policies"),
+				Assessments: []securityandcompliancecenterv3.Assessment{*assessmentPrototypeModel},
 			}
 
 			controlDocModel := &securityandcompliancecenterv3.ControlDoc{}
 
-			controlPrototypeModel := &securityandcompliancecenterv3.ControlPrototype{
+			controlPrototypeModel := &securityandcompliancecenterv3.Control{
 				ControlName:           core.StringPtr("security"),
 				ControlDescription:    core.StringPtr("Check whether IAM Identity has context-based restrictions enabled"),
 				ControlCategory:       core.StringPtr("cbr"),
 				ControlRequirement:    core.BoolPtr(true),
 				ControlParent:         core.StringPtr(""),
-				ControlSpecifications: []securityandcompliancecenterv3.ControlSpecificationPrototype{*controlSpecificationPrototypeModel},
+				ControlSpecifications: []securityandcompliancecenterv3.ControlSpecification{*controlSpecificationPrototypeModel},
 				ControlDocs:           controlDocModel,
 				Status:                core.StringPtr("enabled"),
 			}
@@ -1032,7 +1032,7 @@ var _ = Describe(`SecurityAndComplianceCenterV3 Integration Tests`, func() {
 				ControlLibraryDescription: core.StringPtr("This control library can be deleted"),
 				ControlLibraryType:        core.StringPtr("custom"),
 				ControlLibraryVersion:     core.StringPtr("0.0.2"),
-				Controls:                  []securityandcompliancecenterv3.ControlPrototype{*controlPrototypeModel},
+				Controls:                  []securityandcompliancecenterv3.Control{*controlPrototypeModel},
 			}
 
 			controlLibrary, response, err := securityAndComplianceCenterService.ReplaceCustomControlLibrary(replaceCustomControlLibraryOptions)

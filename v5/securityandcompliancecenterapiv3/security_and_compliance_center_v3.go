@@ -5229,30 +5229,6 @@ func UnmarshalAssessment(m map[string]json.RawMessage, result interface{}) (err 
 	return
 }
 
-// AssessmentPrototype : The necessary fields to include a rule/assessment.
-type AssessmentPrototype struct {
-	// The ID of the rule to target. A list of rules can be obtained from the list_rules method.
-	AssessmentID *string `json:"assessment_id,omitempty"`
-
-	// Details on the intent of the rule for an assessment.
-	AssessmentDescription *string `json:"assessment_description,omitempty"`
-}
-
-// UnmarshalAssessmentPrototype unmarshals an instance of AssessmentPrototype from the specified map of raw messages.
-func UnmarshalAssessmentPrototype(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(AssessmentPrototype)
-	err = core.UnmarshalPrimitive(m, "assessment_id", &obj.AssessmentID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "assessment_description", &obj.AssessmentDescription)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
 // AssessmentWithStats : The control specification assessment.
 type AssessmentWithStats struct {
 	// The assessment ID.
@@ -5353,6 +5329,9 @@ type Attachment struct {
 
 	// The attachment schedule.
 	Schedule *string `json:"schedule,omitempty"`
+
+	// The report's scope from backwards compatiblity
+	Scope Scope `json:"scope,omitempty"`
 
 	// The report's scopes based on the caller's access permissions.
 	Scopes []Scope `json:"scopes,omitempty"`
@@ -6060,7 +6039,7 @@ type ControlLibrary struct {
 	ControlLibraryVersion *string `json:"control_library_version,omitempty"`
 
 	// The list of rules that the control library attempts to adhere to.
-	Controls []ControlPrototype `json:"controls,omitempty"`
+	Controls []Control `json:"controls,omitempty"`
 
 	// The ID of the control library.
 	ID *string `json:"id,omitempty"`
@@ -6078,13 +6057,13 @@ type ControlLibrary struct {
 	CreatedBy *string `json:"created_by,omitempty"`
 
 	// The date-time of the creation.
-	CreatedOn *string `json:"created_on,omitempty"`
+	CreatedOn *strfmt.DateTime `json:"created_on,omitempty"`
 
 	// The ID of the user who made the last update.
 	UpdatedBy *string `json:"updated_by,omitempty"`
 
 	// The date-time of the update.
-	UpdatedOn *string `json:"updated_on,omitempty"`
+	UpdatedOn *strfmt.DateTime `json:"updated_on,omitempty"`
 
 	// Determines if the control library has any hierarchy.
 	HierarchyEnabled *bool `json:"hierarchy_enabled,omitempty"`
@@ -6122,7 +6101,7 @@ func UnmarshalControlLibrary(m map[string]json.RawMessage, result interface{}) (
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(m, "controls", &obj.Controls, UnmarshalControlPrototype)
+	err = core.UnmarshalModel(m, "controls", &obj.Controls, UnmarshalControl)
 	if err != nil {
 		return
 	}
@@ -6219,25 +6198,37 @@ func UnmarshalControlLibraryCollection(m map[string]json.RawMessage, result inte
 	return
 }
 
-// ControlPrototype : The payload to instantiate a control.
-type ControlPrototype struct {
+// Control : The assesment to abide to.
+type Control struct {
 	// The ID of the control library that contains the profile.
-	ControlName *string `json:"control_name" validate:"required"`
+	ControlID *string `json:"control_id,omitempty"`
+
+	// The Name of the control
+	ControlName *string `json:"control_name,omitempty"`
 
 	// The control description.
 	ControlDescription *string `json:"control_description,omitempty"`
 
 	// The association of the control.
-	ControlCategory *string `json:"control_category" validate:"required"`
+	ControlCategory *string `json:"control_category,omitempty"`
 
 	// true if the control can be automated, false if the control cannot.
-	ControlRequirement *bool `json:"control_requirement" validate:"required"`
+	ControlRequirement *bool `json:"control_requirement,omitempty"`
 
 	// The ID of the parent control.
 	ControlParent *string `json:"control_parent,omitempty"`
 
+	// The path of the control
+	ControlPath *string `json:"control_path,omitempty"`
+
+	// Number of control specifications associated with the control.
+	ControlSpecificationCount *int64 `json:"control_specification_count,omitempty"`
+
 	// List of control specifications associated with the control.
-	ControlSpecifications []ControlSpecificationPrototype `json:"control_specifications" validate:"required"`
+	ControlSpecifications []ControlSpecification `json:"control_specifications,omitempty"`
+
+	// List of Tags associated with the control
+	ControlTags []string `json:"control_tags,omitempty"`
 
 	// References to a control documentation.
 	ControlDocs *ControlDoc `json:"control_docs,omitempty"`
@@ -6246,22 +6237,14 @@ type ControlPrototype struct {
 	Status *string `json:"status,omitempty"`
 }
 
-// NewControlPrototype : Instantiate ControlPrototype (Generic Model Constructor)
-func (*SecurityAndComplianceCenterApiV3) NewControlPrototype(controlName string, controlCategory string, controlRequirement bool, controlSpecifications []ControlSpecificationPrototype) (_model *ControlPrototype, err error) {
-	_model = &ControlPrototype{
-		ControlName:           core.StringPtr(controlName),
-		ControlCategory:       core.StringPtr(controlCategory),
-		ControlRequirement:    core.BoolPtr(controlRequirement),
-		ControlSpecifications: controlSpecifications,
-	}
-	err = core.ValidateStruct(_model, "required parameters")
-	return
-}
-
-// UnmarshalControlPrototype unmarshals an instance of ControlPrototype from the specified map of raw messages.
-func UnmarshalControlPrototype(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(ControlPrototype)
+// UnmarshalControl unmarshals an instance of Control from the specified map of raw messages.
+func UnmarshalControl(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(Control)
 	err = core.UnmarshalPrimitive(m, "control_name", &obj.ControlName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "control_id", &obj.ControlID)
 	if err != nil {
 		return
 	}
@@ -6281,11 +6264,23 @@ func UnmarshalControlPrototype(m map[string]json.RawMessage, result interface{})
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(m, "control_specifications", &obj.ControlSpecifications, UnmarshalControlSpecificationPrototype)
+	err = core.UnmarshalPrimitive(m, "control_path", &obj.ControlPath)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "control_specification_count", &obj.ControlSpecificationCount)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "control_specifications", &obj.ControlSpecifications, UnmarshalControlSpecification)
 	if err != nil {
 		return
 	}
 	err = core.UnmarshalModel(m, "control_docs", &obj.ControlDocs, UnmarshalControlDoc)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "control_tags", &obj.ControlTags)
 	if err != nil {
 		return
 	}
@@ -6297,10 +6292,25 @@ func UnmarshalControlPrototype(m map[string]json.RawMessage, result interface{})
 	return
 }
 
+// NewControl: Instantiate Control(Generic Model Constructor)
+func (*SecurityAndComplianceCenterApiV3) NewControl(controlName string, controlCategory string, controlRequirement bool, controlSpecifications []ControlSpecification) (_model *Control, err error) {
+	_model = &Control{
+		ControlName:           core.StringPtr(controlName),
+		ControlCategory:       core.StringPtr(controlCategory),
+		ControlRequirement:    core.BoolPtr(controlRequirement),
+		ControlSpecifications: controlSpecifications,
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
 // ControlSpecification : A statement that defines a security/privacy requirement for a Control.
 type ControlSpecification struct {
 	// The ID of the control.
-	ID *string `json:"id,omitempty"`
+	ID *string `json:"control_specification_id,omitempty"`
+
+	// The Name of the control specification
+	Name *string `json:"control_specification_name,omitempty"`
 
 	// Details which party is responsible for the implementation of a specification.
 	Responsibility *string `json:"responsibility,omitempty"`
@@ -6308,11 +6318,17 @@ type ControlSpecification struct {
 	// The ID of the component.
 	ComponentID *string `json:"component_id,omitempty"`
 
+	// The name of the component.
+	ComponentName *string `json:"component_name,omitempty"`
+
+	// The type of the component.
+	ComponentType *string `json:"component_type,omitempty"`
+
 	// The cloud provider the specification is targeting.
 	Environment *string `json:"environment,omitempty"`
 
 	// Information about the Control Specification.
-	Description *string `json:"description,omitempty"`
+	Description *string `json:"control_specification_description,omitempty"`
 
 	// The number of rules tied to the specification.
 	AssessmentsCount *int64 `json:"assessments_count,omitempty"`
@@ -6324,7 +6340,11 @@ type ControlSpecification struct {
 // UnmarshalControlSpecification unmarshals an instance of ControlSpecification from the specified map of raw messages.
 func UnmarshalControlSpecification(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(ControlSpecification)
-	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
+	err = core.UnmarshalPrimitive(m, "control_specification_id", &obj.ID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "control_specification_name", &obj.Name)
 	if err != nil {
 		return
 	}
@@ -6336,11 +6356,19 @@ func UnmarshalControlSpecification(m map[string]json.RawMessage, result interfac
 	if err != nil {
 		return
 	}
+	err = core.UnmarshalPrimitive(m, "component_name", &obj.ComponentName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "component_type", &obj.ComponentType)
+	if err != nil {
+		return
+	}
 	err = core.UnmarshalPrimitive(m, "environment", &obj.Environment)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
+	err = core.UnmarshalPrimitive(m, "control_specification_description", &obj.Description)
 	if err != nil {
 		return
 	}
@@ -6349,50 +6377,6 @@ func UnmarshalControlSpecification(m map[string]json.RawMessage, result interfac
 		return
 	}
 	err = core.UnmarshalModel(m, "assessments", &obj.Assessments, UnmarshalAssessment)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// ControlSpecificationPrototype : The necessary fields to instantiate a Control Specification.
-type ControlSpecificationPrototype struct {
-	// The ID of the component. The component_id can be found from the 'service_name' using the Get Services method.
-	ComponentID *string `json:"component_id,omitempty"`
-
-	// The cloud provider the specification is targeting.
-	Environment *string `json:"environment,omitempty"`
-
-	// Information about the Control Specification.
-	ControlSpecificationDescription *string `json:"control_specification_description,omitempty"`
-
-	// The detailed list of rules associated with the Specification.
-	Assessments []AssessmentPrototype `json:"assessments,omitempty"`
-}
-
-// Constants associated with the ControlSpecificationPrototype.Environment property.
-// The cloud provider the specification is targeting.
-const (
-	ControlSpecificationPrototypeEnvironmentIBMCloudConst = "ibm-cloud"
-)
-
-// UnmarshalControlSpecificationPrototype unmarshals an instance of ControlSpecificationPrototype from the specified map of raw messages.
-func UnmarshalControlSpecificationPrototype(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(ControlSpecificationPrototype)
-	err = core.UnmarshalPrimitive(m, "component_id", &obj.ComponentID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "environment", &obj.Environment)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "control_specification_description", &obj.ControlSpecificationDescription)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalModel(m, "assessments", &obj.Assessments, UnmarshalAssessmentPrototype)
 	if err != nil {
 		return
 	}
@@ -6706,10 +6690,16 @@ type CreateCustomControlLibraryOptions struct {
 	ControlLibraryVersion *string `json:"control_library_version" validate:"required"`
 
 	// The list of rules that the control library attempts to adhere to.
-	Controls []ControlPrototype `json:"controls" validate:"required"`
+	Controls []Control `json:"controls" validate:"required"`
 
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
+
+	// The version group label
+	VersionGroupLabel *string `json:"version_group_label,omitempty"`
+
+	// Set to determine if the latest is true
+	Latest *bool `json:"latest,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -6722,7 +6712,7 @@ const (
 )
 
 // NewCreateCustomControlLibraryOptions : Instantiate CreateCustomControlLibraryOptions
-func (*SecurityAndComplianceCenterApiV3) NewCreateCustomControlLibraryOptions(instanceID string, controlLibraryName string, controlLibraryDescription string, controlLibraryType string, controlLibraryVersion string, controls []ControlPrototype) *CreateCustomControlLibraryOptions {
+func (*SecurityAndComplianceCenterApiV3) NewCreateCustomControlLibraryOptions(instanceID string, controlLibraryName string, controlLibraryDescription string, controlLibraryType string, controlLibraryVersion string, controls []Control) *CreateCustomControlLibraryOptions {
 	return &CreateCustomControlLibraryOptions{
 		InstanceID:                core.StringPtr(instanceID),
 		ControlLibraryName:        core.StringPtr(controlLibraryName),
@@ -6764,7 +6754,7 @@ func (_options *CreateCustomControlLibraryOptions) SetControlLibraryVersion(cont
 }
 
 // SetControls : Allow user to set Controls
-func (_options *CreateCustomControlLibraryOptions) SetControls(controls []ControlPrototype) *CreateCustomControlLibraryOptions {
+func (_options *CreateCustomControlLibraryOptions) SetControls(controls []Control) *CreateCustomControlLibraryOptions {
 	_options.Controls = controls
 	return _options
 }
@@ -6772,6 +6762,16 @@ func (_options *CreateCustomControlLibraryOptions) SetControls(controls []Contro
 // SetAccountID : Allow user to set AccountID
 func (_options *CreateCustomControlLibraryOptions) SetAccountID(accountID string) *CreateCustomControlLibraryOptions {
 	_options.AccountID = core.StringPtr(accountID)
+	return _options
+}
+
+func (_options *CreateCustomControlLibraryOptions) SetVersionGroupLabel(versionGroupLabel string) *CreateCustomControlLibraryOptions {
+	_options.VersionGroupLabel = core.StringPtr(versionGroupLabel)
+	return _options
+}
+
+func (_options *CreateCustomControlLibraryOptions) SetLatest(latest bool) *CreateCustomControlLibraryOptions {
+	_options.Latest = core.BoolPtr(latest)
 	return _options
 }
 
@@ -6949,7 +6949,7 @@ type CreateProviderTypeInstanceOptions struct {
 	Name *string `json:"name" validate:"required,ne="`
 
 	// The attributes for connecting to the provider type instance.
-	Attributes map[string]string `json:"attributes,omitempty"`
+	Attributes map[string]interface{} `json:"attributes,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -6983,7 +6983,7 @@ func (_options *CreateProviderTypeInstanceOptions) SetName(name string) *CreateP
 }
 
 // SetAttributes : Allow user to set Attributes
-func (_options *CreateProviderTypeInstanceOptions) SetAttributes(attributes map[string]string) *CreateProviderTypeInstanceOptions {
+func (_options *CreateProviderTypeInstanceOptions) SetAttributes(attributes map[string]interface{}) *CreateProviderTypeInstanceOptions {
 	_options.Attributes = attributes
 	return _options
 }
@@ -11033,6 +11033,12 @@ type Profile struct {
 	// User who created the profile.
 	CreatedBy *string `json:"created_by,omitempty"`
 
+	// The ID associated with the profile.
+	InstanceID *string `json:"instance_id,omitempty"`
+
+	// Determines if an heirarchy is enabled.
+	HierarchyEnabled *bool `json:"heirarchy_enabled,omitempty"`
+
 	// The date when the profile was created, in date-time format.
 	CreatedOn *strfmt.DateTime `json:"created_on,omitempty"`
 
@@ -11044,6 +11050,9 @@ type Profile struct {
 
 	// The number of controls contained in the profile.
 	ControlsCount *int64 `json:"controls_count,omitempty"`
+
+	// The number of parent controls contained in the profile.
+	ControlParentsCount *int64 `json:"control_parents_count,omitempty"`
 
 	// The number of attachments associated with the profile.
 	AttachmentsCount *int64 `json:"attachments_count,omitempty"`
@@ -11106,6 +11115,10 @@ func UnmarshalProfile(m map[string]json.RawMessage, result interface{}) (err err
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "updated_on", &obj.UpdatedOn)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "instance_id", &obj.InstanceID)
 	if err != nil {
 		return
 	}
@@ -11539,6 +11552,9 @@ type ProfileControlsInResponse struct {
 	// The control name.
 	ControlName *string `json:"control_name,omitempty"`
 
+	// Determines if the control needs to be satisfied
+	ControlRequirement *bool `json:"control_requirement,omitempty"`
+
 	// The control description.
 	ControlDescription *string `json:"control_description,omitempty"`
 
@@ -11554,6 +11570,9 @@ type ProfileControlsInResponse struct {
 	// References to a control documentation.
 	ControlDocs *ControlDoc `json:"control_docs,omitempty"`
 
+	// The number of control specifications in the control
+	ControlSpecificationsCount *int64 `json:"control_specifications_count,omitempty"`
+
 	// List of control specifications in a profile.
 	ControlSpecifications []ControlSpecification `json:"control_specifications,omitempty"`
 }
@@ -11566,6 +11585,10 @@ func UnmarshalProfileControlsInResponse(m map[string]json.RawMessage, result int
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_id", &obj.ControlID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "control_requirement", &obj.ControlRequirement)
 	if err != nil {
 		return
 	}
@@ -11590,6 +11613,10 @@ func UnmarshalProfileControlsInResponse(m map[string]json.RawMessage, result int
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_parent", &obj.ControlParent)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "control_specifications_count", &obj.ControlSpecificationsCount)
 	if err != nil {
 		return
 	}
@@ -11825,7 +11852,7 @@ type ProviderTypeInstance struct {
 	Name *string `json:"name,omitempty"`
 
 	// The attributes for connecting to the provider type instance.
-	Attributes map[string]string `json:"attributes,omitempty"`
+	Attributes map[string]interface{} `json:"attributes,omitempty"`
 
 	// Time at which resource was created.
 	CreatedAt *strfmt.DateTime `json:"created_at,omitempty"`
@@ -11903,7 +11930,10 @@ type ReplaceCustomControlLibraryOptions struct {
 	ControlLibraryVersion *string `json:"control_library_version" validate:"required"`
 
 	// The list of rules that the control library attempts to adhere to.
-	Controls []ControlPrototype `json:"controls" validate:"required"`
+	Controls []Control `json:"controls" validate:"required"`
+
+	// The unique identifier of the revision.
+	VersionGroupLabel *string `json:"version_group_label,omitempty"`
 
 	// The account id tied to billing.
 	BssAccount *string `json:"bss_account,omitempty"`
@@ -11919,7 +11949,7 @@ const (
 )
 
 // NewReplaceCustomControlLibraryOptions : Instantiate ReplaceCustomControlLibraryOptions
-func (*SecurityAndComplianceCenterApiV3) NewReplaceCustomControlLibraryOptions(instanceID string, controlLibraryID string, controlLibraryName string, controlLibraryDescription string, controlLibraryType string, controlLibraryVersion string, controls []ControlPrototype) *ReplaceCustomControlLibraryOptions {
+func (*SecurityAndComplianceCenterApiV3) NewReplaceCustomControlLibraryOptions(instanceID string, controlLibraryID string, controlLibraryName string, controlLibraryDescription string, controlLibraryType string, controlLibraryVersion string, controls []Control) *ReplaceCustomControlLibraryOptions {
 	return &ReplaceCustomControlLibraryOptions{
 		InstanceID:                core.StringPtr(instanceID),
 		ControlLibraryID:          core.StringPtr(controlLibraryID),
@@ -11968,8 +11998,14 @@ func (_options *ReplaceCustomControlLibraryOptions) SetControlLibraryVersion(con
 }
 
 // SetControls : Allow user to set Controls
-func (_options *ReplaceCustomControlLibraryOptions) SetControls(controls []ControlPrototype) *ReplaceCustomControlLibraryOptions {
+func (_options *ReplaceCustomControlLibraryOptions) SetControls(controls []Control) *ReplaceCustomControlLibraryOptions {
 	_options.Controls = controls
+	return _options
+}
+
+// SetVersionGroupLabel: Allows user to set VersionGroupLabel
+func (_options *ReplaceCustomControlLibraryOptions) SetVersionGroupLabel(versionGroupLabel string) *ReplaceCustomControlLibraryOptions {
+	_options.VersionGroupLabel = core.StringPtr(versionGroupLabel)
 	return _options
 }
 
@@ -12496,7 +12532,7 @@ type Report struct {
 	GroupID *string `json:"group_id" validate:"required"`
 
 	// The date when the report was created.
-	CreatedOn *string `json:"created_on" validate:"required"`
+	CreatedOn *strfmt.DateTime `json:"created_on,omitempty"`
 
 	// The date when the scan was run.
 	ScanTime *string `json:"scan_time" validate:"required"`
@@ -12937,10 +12973,10 @@ type RequiredConfig struct {
 	Value interface{} `json:"value,omitempty"`
 
 	// A list of required configurations where one item should evaluate to true.
-	Or []ConditionItemIntf `json:"or,omitempty"`
+	Or []RequiredConfigIntf `json:"or,omitempty"`
 
 	// A list of required configurations where all items should evaluate to true.
-	And []ConditionItemIntf `json:"and,omitempty"`
+	And []RequiredConfigIntf `json:"and,omitempty"`
 
 	// A rule within a rule used in the requiredConfig.
 	Any *SubRule `json:"any,omitempty"`
@@ -13010,11 +13046,11 @@ func UnmarshalRequiredConfig(m map[string]json.RawMessage, result interface{}) (
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(m, "or", &obj.Or, UnmarshalConditionItem)
+	err = core.UnmarshalModel(m, "or", &obj.Or, UnmarshalRequiredConfig)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(m, "and", &obj.And, UnmarshalConditionItem)
+	err = core.UnmarshalModel(m, "and", &obj.And, UnmarshalRequiredConfig)
 	if err != nil {
 		return
 	}
@@ -13618,13 +13654,13 @@ type RuleInfo struct {
 	AccountID *string `json:"account_id,omitempty"`
 
 	// The date when the rule was created.
-	CreatedOn *string `json:"created_on,omitempty"`
+	CreatedOn *strfmt.DateTime `json:"created_on,omitempty"`
 
 	// The ID of the user who created the rule.
 	CreatedBy *string `json:"created_by,omitempty"`
 
 	// The date when the rule was updated.
-	UpdatedOn *string `json:"updated_on,omitempty"`
+	UpdatedOn *strfmt.DateTime `json:"updated_on,omitempty"`
 
 	// The ID of the user who updated the rule.
 	UpdatedBy *string `json:"updated_by,omitempty"`
@@ -13784,6 +13820,9 @@ type RuleTarget struct {
 	// The target resource kind.
 	ResourceKind *string `json:"resource_kind" validate:"required"`
 
+	// The reference name used
+	Ref *string `json:"ref,omitempty"`
+
 	// The additional target attributes used to filter to a subset of resources.
 	AdditionalTargetAttributes []AdditionalTargetAttribute `json:"additional_target_attributes,omitempty"`
 }
@@ -13813,6 +13852,10 @@ func UnmarshalRuleTarget(m map[string]json.RawMessage, result interface{}) (err 
 	if err != nil {
 		return
 	}
+	err = core.UnmarshalPrimitive(m, "ref", &obj.Ref)
+	if err != nil {
+		return
+	}
 	err = core.UnmarshalModel(m, "additional_target_attributes", &obj.AdditionalTargetAttributes, UnmarshalAdditionalTargetAttribute)
 	if err != nil {
 		return
@@ -13828,6 +13871,9 @@ type RuleTargetPrototype struct {
 
 	// The target resource kind.
 	ResourceKind *string `json:"resource_kind" validate:"required"`
+
+	// The reference name used
+	Ref *string `json:"ref,omitempty"`
 
 	// The additional target attributes used to filter to a subset of resources.
 	AdditionalTargetAttributes []AdditionalTargetAttribute `json:"additional_target_attributes,omitempty"`
@@ -14221,10 +14267,6 @@ func UnmarshalScopeProperty(m map[string]json.RawMessage, result interface{}) (e
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "value", &obj.Value)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalModel(m, "exclusions", &obj.Exclusions, UnmarshalScopePropertyExclusionItem)
 	if err != nil {
 		return
 	}
@@ -14710,13 +14752,13 @@ type Target struct {
 	CreatedBy *string `json:"created_by,omitempty"`
 
 	// The time when the target was created.
-	CreatedOn *string `json:"created_on,omitempty"`
+	CreatedOn *strfmt.DateTime `json:"created_on,omitempty"`
 
 	// The user ID who updated the target.
 	UpdatedBy *string `json:"updated_by,omitempty"`
 
 	// The time when the target was updated.
-	UpdatedOn *string `json:"updated_on,omitempty"`
+	UpdatedOn *strfmt.DateTime `json:"updated_on,omitempty"`
 }
 
 // UnmarshalTarget unmarshals an instance of Target from the specified map of raw messages.
@@ -14898,7 +14940,7 @@ type UpdateProviderTypeInstanceOptions struct {
 	Name *string `json:"name" validate:"required,ne="`
 
 	// The attributes for connecting to the provider type instance.
-	Attributes map[string]string `json:"attributes,omitempty"`
+	Attributes map[string]interface{} `json:"attributes,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -14939,7 +14981,7 @@ func (_options *UpdateProviderTypeInstanceOptions) SetName(name string) *UpdateP
 }
 
 // SetAttributes : Allow user to set Attributes
-func (_options *UpdateProviderTypeInstanceOptions) SetAttributes(attributes map[string]string) *UpdateProviderTypeInstanceOptions {
+func (_options *UpdateProviderTypeInstanceOptions) SetAttributes(attributes map[string]interface{}) *UpdateProviderTypeInstanceOptions {
 	_options.Attributes = attributes
 	return _options
 }
@@ -15557,8 +15599,10 @@ func UnmarshalRequiredConfigConditionSubRule(m map[string]json.RawMessage, resul
 // ScopePropertyExclusions : Any exclusions or resources that should not be part of the scope. Has to be the same type as the one specified.
 // This model "extends" ScopeProperty
 type ScopePropertyExclusions struct {
+	Name *string `json:"name,omitempty"`
+
 	// A list of scopes/targets to exclude from a scope.
-	Exclusions []ScopePropertyExclusionItem `json:"exclusions,omitempty"`
+	Value []ScopePropertyExclusionItem `json:"value,omitempty"`
 }
 
 func (*ScopePropertyExclusions) isaScopeProperty() bool {
@@ -15568,7 +15612,11 @@ func (*ScopePropertyExclusions) isaScopeProperty() bool {
 // UnmarshalScopePropertyExclusions unmarshals an instance of ScopePropertyExclusions from the specified map of raw messages.
 func UnmarshalScopePropertyExclusions(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(ScopePropertyExclusions)
-	err = core.UnmarshalModel(m, "exclusions", &obj.Exclusions, UnmarshalScopePropertyExclusionItem)
+	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "value", &obj.Value, UnmarshalScopePropertyExclusionItem)
 	if err != nil {
 		return
 	}

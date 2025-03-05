@@ -14202,6 +14202,12 @@ func (resp *ScopeCollection) GetNextStart() (*string, error) {
 	if core.IsNil(resp.Next) {
 		return nil, nil
 	}
+	if core.IsNil(resp.Next.Start) {
+		return nil, nil
+	}
+	if *resp.Next.Start == "" {
+		return nil, nil
+	}
 	return resp.Next.Start, nil
 }
 
@@ -16353,6 +16359,7 @@ func (pager *ScopesPager) GetNextWithContext(ctx context.Context) (page []Scope,
 // GetAllWithContext returns all results by invoking GetNextWithContext() repeatedly
 // until all pages of results have been retrieved.
 func (pager *ScopesPager) GetAllWithContext(ctx context.Context) (allItems []Scope, err error) {
+	allItems = make([]Scope, 0)
 	for pager.HasNext() {
 		var nextPage []Scope
 		nextPage, err = pager.GetNextWithContext(ctx)

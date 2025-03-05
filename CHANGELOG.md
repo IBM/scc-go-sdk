@@ -1,3 +1,10 @@
+## [5.5.3](https://github.com/IBM/scc-go-sdk/compare/v5.5.2...v5.5.3) (2025-03-05)
+
+
+### Bug Fixes
+
+* prevent infinite loop for ProfilesPager and ScopesPager ([#155](https://github.com/IBM/scc-go-sdk/issues/155)) ([20d67f5](https://github.com/IBM/scc-go-sdk/commit/20d67f5b17bdaf0a82941a7b461fc746ace4150e))
+
 ## [5.5.2](https://github.com/IBM/scc-go-sdk/compare/v5.5.1...v5.5.2) (2025-01-24)
 
 

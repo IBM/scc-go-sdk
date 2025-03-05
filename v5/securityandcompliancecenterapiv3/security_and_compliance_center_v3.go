@@ -16201,6 +16201,7 @@ func (pager *ProfilesPager) GetNextWithContext(ctx context.Context) (page []Prof
 // GetAllWithContext returns all results by invoking GetNextWithContext() repeatedly
 // until all pages of results have been retrieved.
 func (pager *ProfilesPager) GetAllWithContext(ctx context.Context) (allItems []Profile, err error) {
+	allItems = make([]Profile, 0)
 	for pager.HasNext() {
 		var nextPage []Profile
 		nextPage, err = pager.GetNextWithContext(ctx)
@@ -16350,7 +16351,7 @@ func (pager *ScopesPager) GetNextWithContext(ctx context.Context) (page []Scope,
 		next = result.Next.Start
 	}
 	pager.pageContext.next = next
-	pager.hasNext = (pager.pageContext.next != nil)
+	pager.hasNext = (pager.pageContext.next != nil && *pager.pageContext.next != "")
 	page = result.Scopes
 
 	return

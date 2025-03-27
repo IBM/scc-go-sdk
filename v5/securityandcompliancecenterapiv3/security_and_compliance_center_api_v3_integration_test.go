@@ -606,7 +606,6 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 				InstanceID: core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
 				AccountID:  &accountIDForReportLink,
 				Limit:      core.Int64Ptr(int64(10)),
-				Start:      core.StringPtr("testString"),
 			}
 
 			listControlLibrariesOptions.Start = nil

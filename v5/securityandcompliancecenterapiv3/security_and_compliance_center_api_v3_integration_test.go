@@ -1889,8 +1889,6 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 				InstanceID:       core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
 				ReportID:         &reportIDForReportLink,
 				ScanTimeDuration: core.Int64Ptr(int64(0)),
-				ScopeID:          core.StringPtr("testString"),
-				SubscopeID:       core.StringPtr("testString"),
 			}
 
 			reportViolationsDrift, response, err := securityAndComplianceCenterAPIService.GetReportViolationsDrift(getReportViolationsDriftOptions)

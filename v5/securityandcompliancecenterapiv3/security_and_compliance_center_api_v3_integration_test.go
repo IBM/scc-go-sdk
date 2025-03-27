@@ -1733,20 +1733,10 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 		})
 		It(`ListReportEvaluations(listReportEvaluationsOptions *ListReportEvaluationsOptions) with pagination`, func() {
 			listReportEvaluationsOptions := &securityandcompliancecenterapiv3.ListReportEvaluationsOptions{
-				InstanceID:       core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
-				ReportID:         &reportIDForReportLink,
-				AssessmentID:     core.StringPtr("testString"),
-				AssessmentMethod: core.StringPtr("testString"),
-				ComponentID:      core.StringPtr("testString"),
-				TargetID:         core.StringPtr("testString"),
-				TargetEnv:        core.StringPtr("testString"),
-				TargetName:       core.StringPtr("testString"),
-				Status:           core.StringPtr("failure"),
-				Start:            core.StringPtr("testString"),
-				Limit:            core.Int64Ptr(int64(10)),
-				Sort:             core.StringPtr("assessment_id"),
-				ScopeID:          core.StringPtr("testString"),
-				SubscopeID:       core.StringPtr("testString"),
+				InstanceID: core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
+				ReportID:   &reportIDForReportLink,
+				Status:     core.StringPtr("failure"),
+				Limit:      core.Int64Ptr(int64(10)),
 			}
 
 			listReportEvaluationsOptions.Start = nil
@@ -1771,19 +1761,10 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 		})
 		It(`ListReportEvaluations(listReportEvaluationsOptions *ListReportEvaluationsOptions) using ReportEvaluationsPager`, func() {
 			listReportEvaluationsOptions := &securityandcompliancecenterapiv3.ListReportEvaluationsOptions{
-				InstanceID:       core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
-				ReportID:         &reportIDForReportLink,
-				AssessmentID:     core.StringPtr("testString"),
-				AssessmentMethod: core.StringPtr("testString"),
-				ComponentID:      core.StringPtr("testString"),
-				TargetID:         core.StringPtr("testString"),
-				TargetEnv:        core.StringPtr("testString"),
-				TargetName:       core.StringPtr("testString"),
-				Status:           core.StringPtr("failure"),
-				Limit:            core.Int64Ptr(int64(10)),
-				Sort:             core.StringPtr("assessment_id"),
-				ScopeID:          core.StringPtr("testString"),
-				SubscopeID:       core.StringPtr("testString"),
+				InstanceID: core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
+				ReportID:   &reportIDForReportLink,
+				Status:     core.StringPtr("failure"),
+				Limit:      core.Int64Ptr(int64(10)),
 			}
 
 			// Test GetNext().

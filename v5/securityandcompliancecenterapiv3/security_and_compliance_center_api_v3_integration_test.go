@@ -735,8 +735,18 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`CreateProfile(createProfileOptions *CreateProfileOptions)`, func() {
-			profileControlsPrototypeModel := &securityandcompliancecenterapiv3.ProfileControlsPrototype{
-				ControlLibraryID: core.StringPtr("51ca566e-c559-412b-8d64-f05b57044c32"),
+			profileControlsPrototypeModel0 := &securityandcompliancecenterapiv3.ProfileControlsPrototype{
+				ControlLibraryID: core.StringPtr("a046fb6b-aba5-4646-b190-a2c76241e7af"),
+				ControlID:        core.StringPtr("2ce21ba3-0548-49a3-88e2-1122632218f4"),
+			}
+
+			profileControlsPrototypeModel1 := &securityandcompliancecenterapiv3.ProfileControlsPrototype{
+				ControlLibraryID: core.StringPtr("a046fb6b-aba5-4646-b190-a2c76241e7af"),
+				ControlID:        core.StringPtr("bdc5fdab-6934-461c-8bb1-9af7ed8e8d33"),
+			}
+
+			profileControlsPrototypeModel2 := &securityandcompliancecenterapiv3.ProfileControlsPrototype{
+				ControlLibraryID: core.StringPtr("a046fb6b-aba5-4646-b190-a2c76241e7af"),
 				ControlID:        core.StringPtr("60dae3b5-6104-4b3e-bac7-26cc7b741aca"),
 			}
 
@@ -744,8 +754,8 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 				AssessmentType:        core.StringPtr("automated"),
 				AssessmentID:          core.StringPtr("rule-e16fcfea-fe21-4d30-a721-423611481fea"),
 				ParameterName:         core.StringPtr("tls_version"),
-				ParameterDefaultValue: core.StringPtr("[\"1.2\",\"1.3\"]"),
-				ParameterDisplayName:  core.StringPtr("IBM Cloud Internet Services TLS version"),
+				ParameterDefaultValue: core.StringPtr(`["1.2","1.3"]`),
+				ParameterDisplayName:  core.StringPtr("testString"),
 				ParameterType:         core.StringPtr("string_list"),
 			}
 
@@ -753,7 +763,7 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 				InstanceID:         core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
 				ProfileName:        core.StringPtr("Example Profile"),
 				ProfileVersion:     core.StringPtr("0.0.1"),
-				Controls:           []securityandcompliancecenterapiv3.ProfileControlsPrototype{*profileControlsPrototypeModel},
+				Controls:           []securityandcompliancecenterapiv3.ProfileControlsPrototype{*profileControlsPrototypeModel0, *profileControlsPrototypeModel1, *profileControlsPrototypeModel2},
 				DefaultParameters:  []securityandcompliancecenterapiv3.DefaultParameters{*defaultParametersModel},
 				ProfileDescription: core.StringPtr("This profile is created as an example of the SDK gen"),
 				Latest:             core.BoolPtr(true),

@@ -1331,51 +1331,12 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`ReplaceTarget(replaceTargetOptions *ReplaceTargetOptions)`, func() {
-			accountModel := &securityandcompliancecenterapiv3.Account{
-				ID:   core.StringPtr("531fc3e28bfc43c5a2cea07786d93f5c"),
-				Name: core.StringPtr("NIST"),
-				Type: core.StringPtr("account_type"),
-			}
-
-			tagsModel := &securityandcompliancecenterapiv3.Tags{
-				User:    []string{"testString"},
-				Access:  []string{"testString"},
-				Service: []string{"testString"},
-			}
-
-			resourceModel := &securityandcompliancecenterapiv3.Resource{
-				ReportID:       core.StringPtr("30b434b3-cb08-4845-af10-7a8fc682b6a8"),
-				HomeAccountID:  core.StringPtr("2411ffdc16844b07b42521c3443f456d"),
-				ID:             core.StringPtr("crn:v1:bluemix:public:kms:us-south:a/5af747ca19a8a278b1b6e4eec20df507:03502a50-4ea9-463c-80e5-e27ed838cdb6::"),
-				ResourceName:   core.StringPtr("jeff's key"),
-				Account:        accountModel,
-				ComponentID:    core.StringPtr("cloud-object_storage"),
-				ComponentName:  core.StringPtr("cloud-object_storage"),
-				Environment:    core.StringPtr("ibm cloud"),
-				Tags:           tagsModel,
-				Status:         core.StringPtr("compliant"),
-				TotalCount:     core.Int64Ptr(int64(140)),
-				PassCount:      core.Int64Ptr(int64(123)),
-				FailureCount:   core.Int64Ptr(int64(12)),
-				ErrorCount:     core.Int64Ptr(int64(5)),
-				SkippedCount:   core.Int64Ptr(int64(7)),
-				CompletedCount: core.Int64Ptr(int64(135)),
-				ServiceName:    core.StringPtr("pm-20"),
-				InstanceCRN:    core.StringPtr("testString"),
-			}
-
-			credentialModel := &securityandcompliancecenterapiv3.Credential{
-				SecretCRN: core.StringPtr("testString"),
-				Resources: []securityandcompliancecenterapiv3.Resource{*resourceModel},
-			}
-
 			replaceTargetOptions := &securityandcompliancecenterapiv3.ReplaceTargetOptions{
 				InstanceID:       core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
 				TargetID:         &targetIDLink,
 				AccountID:        core.StringPtr("62ecf99b240144dea9125666249edfcb"),
 				TrustedProfileID: core.StringPtr("Profile-cb2c1829-9a8d-4218-b9cd-9f83fc814e54"),
-				Name:             core.StringPtr("Updated target for IBM account"),
-				Credentials:      []securityandcompliancecenterapiv3.Credential{*credentialModel},
+				Name:             core.StringPtr("Updated SDK Target"),
 			}
 
 			target, response, err := securityAndComplianceCenterAPIService.ReplaceTarget(replaceTargetOptions)

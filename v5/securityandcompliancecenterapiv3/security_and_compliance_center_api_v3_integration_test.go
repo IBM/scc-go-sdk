@@ -1136,16 +1136,20 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`CreateSubscope(createSubscopeOptions *CreateSubscopeOptions)`, func() {
-			scopePropertyModel := &securityandcompliancecenterapiv3.ScopePropertyScopeAny{
+			scopeID := &securityandcompliancecenterapiv3.ScopePropertyScopeAny{
 				Name:  core.StringPtr("scope_id"),
 				Value: core.StringPtr("1f689f08ec9b47b885c2659c17029581"),
 			}
+			scopeType := &securityandcompliancecenterapiv3.ScopePropertyScopeAny{
+				Name:  core.StringPtr("scope_type"),
+				Value: core.StringPtr("account.resource_group"),
+			}
 
 			scopePrototypeModel := &securityandcompliancecenterapiv3.ScopePrototype{
-				Name:        core.StringPtr("ibm subscope update"),
+				Name:        core.StringPtr("ibm subscope"),
 				Description: core.StringPtr("The subscope that is defined for IBM resources."),
 				Environment: core.StringPtr("ibm-cloud"),
-				Properties:  []securityandcompliancecenterapiv3.ScopePropertyIntf{scopePropertyModel},
+				Properties:  []securityandcompliancecenterapiv3.ScopePropertyIntf{scopeID, scopeType},
 			}
 
 			createSubscopeOptions := &securityandcompliancecenterapiv3.CreateSubscopeOptions{

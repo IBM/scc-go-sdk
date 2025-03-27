@@ -18087,7 +18087,7 @@ func (pager *InstanceAttachmentsPager) GetNextWithContext(ctx context.Context) (
 		next = result.Next.Start
 	}
 	pager.pageContext.next = next
-	pager.hasNext = pager.pageContext.next != nil
+	pager.hasNext = pager.pageContext.next != nil && *pager.pageContext.next != ""
 	page = result.Attachments
 
 	return
@@ -18172,7 +18172,7 @@ func (pager *ControlLibrariesPager) GetNextWithContext(ctx context.Context) (pag
 		next = result.Next.Start
 	}
 	pager.pageContext.next = next
-	pager.hasNext = pager.pageContext.next != nil
+	pager.hasNext = pager.pageContext.next != nil && *pager.pageContext.next != ""
 	page = result.ControlLibraries
 
 	return
@@ -18257,7 +18257,7 @@ func (pager *ProfilesPager) GetNextWithContext(ctx context.Context) (page []Prof
 		next = result.Next.Start
 	}
 	pager.pageContext.next = next
-	pager.hasNext = pager.pageContext.next != nil
+	pager.hasNext = pager.pageContext.next != nil && *pager.pageContext.next != ""
 	page = result.Profiles
 
 	return
@@ -18342,7 +18342,7 @@ func (pager *ScopesPager) GetNextWithContext(ctx context.Context) (page []Scope,
 		next = result.Next.Start
 	}
 	pager.pageContext.next = next
-	pager.hasNext = pager.pageContext.next != nil
+	pager.hasNext = pager.pageContext.next != nil && *pager.pageContext.next != ""
 	page = result.Scopes
 
 	return
@@ -18427,7 +18427,7 @@ func (pager *SubscopesPager) GetNextWithContext(ctx context.Context) (page []Sub
 		next = result.Next.Start
 	}
 	pager.pageContext.next = next
-	pager.hasNext = pager.pageContext.next != nil
+	pager.hasNext = pager.pageContext.next != nil && *pager.pageContext.next != ""
 	page = result.Subscopes
 
 	return
@@ -18512,7 +18512,7 @@ func (pager *ReportsPager) GetNextWithContext(ctx context.Context) (page []Repor
 		next = result.Next.Start
 	}
 	pager.pageContext.next = next
-	pager.hasNext = pager.pageContext.next != nil
+	pager.hasNext = pager.pageContext.next != nil && *pager.pageContext.next != ""
 	page = result.Reports
 
 	return
@@ -18597,7 +18597,7 @@ func (pager *ReportEvaluationsPager) GetNextWithContext(ctx context.Context) (pa
 		next = result.Next.Start
 	}
 	pager.pageContext.next = next
-	pager.hasNext = pager.pageContext.next != nil
+	pager.hasNext = pager.pageContext.next != nil && *pager.pageContext.next != ""
 	page = result.Evaluations
 
 	return
@@ -18682,7 +18682,7 @@ func (pager *ReportResourcesPager) GetNextWithContext(ctx context.Context) (page
 		next = result.Next.Start
 	}
 	pager.pageContext.next = next
-	pager.hasNext = pager.pageContext.next != nil
+	pager.hasNext = pager.pageContext.next != nil && *pager.pageContext.next != ""
 	page = result.Resources
 
 	return
@@ -18767,7 +18767,7 @@ func (pager *RulesPager) GetNextWithContext(ctx context.Context) (page []Rule, e
 		next = result.Next.Start
 	}
 	pager.pageContext.next = next
-	pager.hasNext = pager.pageContext.next != nil
+	pager.hasNext = pager.pageContext.next != nil && *pager.pageContext.next != ""
 	page = result.Rules
 
 	return

@@ -2027,17 +2027,14 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 		})
 		It(`ListRules(listRulesOptions *ListRulesOptions) with pagination`, func() {
 			listRulesOptions := &securityandcompliancecenterapiv3.ListRulesOptions{
-				InstanceID:  core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
-				Limit:       core.Int64Ptr(int64(10)),
-				Start:       core.StringPtr("testString"),
-				Type:        core.StringPtr("system_defined"),
-				Search:      core.StringPtr("testString"),
-				ServiceName: core.StringPtr("testString"),
-				Sort:        core.StringPtr("updated_on"),
+				InstanceID: core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
+				Limit:      core.Int64Ptr(int64(100)),
+				Type:       core.StringPtr("system_defined"),
+				Sort:       core.StringPtr("updated_on"),
 			}
 
 			listRulesOptions.Start = nil
-			listRulesOptions.Limit = core.Int64Ptr(1)
+			listRulesOptions.Limit = core.Int64Ptr(100)
 
 			var allResults []securityandcompliancecenterapiv3.Rule
 			for {
@@ -2058,12 +2055,10 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 		})
 		It(`ListRules(listRulesOptions *ListRulesOptions) using RulesPager`, func() {
 			listRulesOptions := &securityandcompliancecenterapiv3.ListRulesOptions{
-				InstanceID:  core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
-				Limit:       core.Int64Ptr(int64(10)),
-				Type:        core.StringPtr("system_defined"),
-				Search:      core.StringPtr("testString"),
-				ServiceName: core.StringPtr("testString"),
-				Sort:        core.StringPtr("updated_on"),
+				InstanceID: core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
+				Limit:      core.Int64Ptr(int64(100)),
+				Type:       core.StringPtr("system_defined"),
+				Sort:       core.StringPtr("updated_on"),
 			}
 
 			// Test GetNext().

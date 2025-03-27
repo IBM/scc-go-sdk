@@ -852,61 +852,28 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`ReplaceProfile(replaceProfileOptions *ReplaceProfileOptions)`, func() {
-			controlDocModel := &securityandcompliancecenterapiv3.ControlDoc{
-				ControlDocsID:   core.StringPtr("testString"),
-				ControlDocsType: core.StringPtr("testString"),
+			profileControlsModel0 := &securityandcompliancecenterapiv3.ProfileControls{
+				ControlRequirement: core.BoolPtr(true),
+				ControlLibraryID:   core.StringPtr("a046fb6b-aba5-4646-b190-a2c76241e7af"),
+				ControlID:          core.StringPtr("2ce21ba3-0548-49a3-88e2-1122632218f4"),
 			}
 
-			parameterModel := &securityandcompliancecenterapiv3.Parameter{
-				AssessmentType:       core.StringPtr("testString"),
-				AssessmentID:         core.StringPtr("testString"),
-				ParameterName:        core.StringPtr("location"),
-				ParameterDisplayName: core.StringPtr("Location"),
-				ParameterType:        core.StringPtr("string"),
-				ParameterValue:       "testString",
+			profileControlsModel1 := &securityandcompliancecenterapiv3.ProfileControls{
+				ControlLibraryID: core.StringPtr("a046fb6b-aba5-4646-b190-a2c76241e7af"),
+				ControlID:        core.StringPtr("bdc5fdab-6934-461c-8bb1-9af7ed8e8d33"),
 			}
 
-			assessmentModel := &securityandcompliancecenterapiv3.Assessment{
-				AssessmentID:          core.StringPtr("382c2b06-e6b2-43ee-b189-c1c7743b67ee"),
-				AssessmentType:        core.StringPtr("ibm-cloud-rule"),
-				AssessmentMethod:      core.StringPtr("ibm-cloud-rule"),
-				AssessmentDescription: core.StringPtr("Check whether Cloud Object Storage is accessible only by using private endpoints"),
-				ParameterCount:        core.Int64Ptr(int64(1)),
-				Parameters:            []securityandcompliancecenterapiv3.Parameter{*parameterModel},
-			}
-
-			controlSpecificationModel := &securityandcompliancecenterapiv3.ControlSpecification{
-				ID:               core.StringPtr("testString"),
-				Responsibility:   core.StringPtr("testString"),
-				ComponentID:      core.StringPtr("testString"),
-				ComponentName:    core.StringPtr("testString"),
-				ComponentType:    core.StringPtr("testString"),
-				Environment:      core.StringPtr("testString"),
-				Description:      core.StringPtr("testString"),
-				AssessmentsCount: core.Int64Ptr(int64(38)),
-				Assessments:      []securityandcompliancecenterapiv3.Assessment{*assessmentModel},
-			}
-
-			profileControlsModel := &securityandcompliancecenterapiv3.ProfileControls{
-				ControlRequirement:    core.BoolPtr(true),
-				ControlLibraryID:      core.StringPtr("51ca566e-c559-412b-8d64-f05b57044c32"),
-				ControlID:             core.StringPtr("60dae3b5-6104-4b3e-bac7-26cc7b741aca"),
-				ControlLibraryVersion: core.StringPtr("testString"),
-				ControlName:           core.StringPtr("testString"),
-				ControlDescription:    core.StringPtr("testString"),
-				ControlSeverity:       core.StringPtr("testString"),
-				ControlCategory:       core.StringPtr("testString"),
-				ControlParent:         core.StringPtr("testString"),
-				ControlDocs:           controlDocModel,
-				ControlSpecifications: []securityandcompliancecenterapiv3.ControlSpecification{*controlSpecificationModel},
+			profileControlsModel2 := &securityandcompliancecenterapiv3.ProfileControls{
+				ControlLibraryID: core.StringPtr("a046fb6b-aba5-4646-b190-a2c76241e7af"),
+				ControlID:        core.StringPtr("60dae3b5-6104-4b3e-bac7-26cc7b741aca"),
 			}
 
 			defaultParametersModel := &securityandcompliancecenterapiv3.DefaultParameters{
 				AssessmentType:        core.StringPtr("automated"),
 				AssessmentID:          core.StringPtr("rule-e16fcfea-fe21-4d30-a721-423611481fea"),
 				ParameterName:         core.StringPtr("tls_version"),
-				ParameterDefaultValue: core.StringPtr("[\"1.2\",\"1.3\"]"),
-				ParameterDisplayName:  core.StringPtr("IBM Cloud Internet Services TLS version"),
+				ParameterDisplayName:  core.StringPtr("TLS Versions to Target"),
+				ParameterDefaultValue: core.StringPtr(`["1.2","1.3","1.4"]`),
 				ParameterType:         core.StringPtr("string_list"),
 			}
 
@@ -914,22 +881,13 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 				InstanceID:            core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
 				ProfileID:             &profileIDLink,
 				NewProfileType:        core.StringPtr("custom"),
-				NewControls:           []securityandcompliancecenterapiv3.ProfileControls{*profileControlsModel},
+				NewControls:           []securityandcompliancecenterapiv3.ProfileControls{*profileControlsModel0, *profileControlsModel1, *profileControlsModel2},
 				NewDefaultParameters:  []securityandcompliancecenterapiv3.DefaultParameters{*defaultParametersModel},
-				NewID:                 core.StringPtr("testString"),
 				NewProfileName:        core.StringPtr("Example Profile Updated"),
-				NewInstanceID:         core.StringPtr("testString"),
 				NewHierarchyEnabled:   core.BoolPtr(true),
 				NewProfileDescription: core.StringPtr("This profile has been updated"),
 				NewProfileVersion:     core.StringPtr("0.0.2"),
-				NewVersionGroupLabel:  core.StringPtr("testString"),
 				NewLatest:             core.BoolPtr(true),
-				NewCreatedBy:          core.StringPtr("testString"),
-				NewCreatedOn:          CreateMockDateTime("2019-01-01T12:00:00.000Z"),
-				NewUpdatedBy:          core.StringPtr("testString"),
-				NewUpdatedOn:          CreateMockDateTime("2019-01-01T12:00:00.000Z"),
-				NewControlsCount:      core.Int64Ptr(int64(38)),
-				NewAttachmentsCount:   core.Int64Ptr(int64(38)),
 				AccountID:             &accountIDForReportLink,
 			}
 

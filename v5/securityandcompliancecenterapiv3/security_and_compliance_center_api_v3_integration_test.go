@@ -1174,17 +1174,13 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 		})
 		It(`ListSubscopes(listSubscopesOptions *ListSubscopesOptions) with pagination`, func() {
 			listSubscopesOptions := &securityandcompliancecenterapiv3.ListSubscopesOptions{
-				InstanceID:  core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
-				ScopeID:     &scopeIDLink,
-				Limit:       core.Int64Ptr(int64(10)),
-				Start:       core.StringPtr("testString"),
-				Name:        core.StringPtr("testString"),
-				Description: core.StringPtr("testString"),
-				Environment: core.StringPtr("testString"),
+				InstanceID: core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
+				ScopeID:    &scopeIDLink,
+				Limit:      core.Int64Ptr(int64(10)),
 			}
 
 			listSubscopesOptions.Start = nil
-			listSubscopesOptions.Limit = core.Int64Ptr(1)
+			listSubscopesOptions.Limit = core.Int64Ptr(10)
 
 			var allResults []securityandcompliancecenterapiv3.SubScope
 			for {
@@ -1205,12 +1201,9 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 		})
 		It(`ListSubscopes(listSubscopesOptions *ListSubscopesOptions) using SubscopesPager`, func() {
 			listSubscopesOptions := &securityandcompliancecenterapiv3.ListSubscopesOptions{
-				InstanceID:  core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
-				ScopeID:     &scopeIDLink,
-				Limit:       core.Int64Ptr(int64(10)),
-				Name:        core.StringPtr("testString"),
-				Description: core.StringPtr("testString"),
-				Environment: core.StringPtr("testString"),
+				InstanceID: core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
+				ScopeID:    &scopeIDLink,
+				Limit:      core.Int64Ptr(int64(10)),
 			}
 
 			// Test GetNext().

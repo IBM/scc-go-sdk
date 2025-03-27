@@ -1697,16 +1697,9 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 		})
 		It(`GetReportControls(getReportControlsOptions *GetReportControlsOptions)`, func() {
 			getReportControlsOptions := &securityandcompliancecenterapiv3.GetReportControlsOptions{
-				InstanceID:         core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
-				ReportID:           &reportIDForReportLink,
-				ControlID:          core.StringPtr("testString"),
-				ControlName:        core.StringPtr("testString"),
-				ControlDescription: core.StringPtr("testString"),
-				ControlCategory:    core.StringPtr("testString"),
-				Status:             core.StringPtr("compliant"),
-				Sort:               core.StringPtr("control_name"),
-				ScopeID:            core.StringPtr("testString"),
-				SubscopeID:         core.StringPtr("testString"),
+				InstanceID: core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
+				ReportID:   &reportIDForReportLink,
+				Status:     core.StringPtr("compliant"),
 			}
 
 			reportControls, response, err := securityAndComplianceCenterAPIService.GetReportControls(getReportControlsOptions)

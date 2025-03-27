@@ -26,6 +26,7 @@ import (
 
 	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/IBM/scc-go-sdk/v5/securityandcompliancecenterapiv3"
+	"github.com/go-openapi/strfmt"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -264,13 +265,49 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`CreateProfileAttachment(createProfileAttachmentOptions *CreateProfileAttachmentOptions)`, func() {
-			parameterModel := &securityandcompliancecenterapiv3.Parameter{
-				AssessmentType:       core.StringPtr("automated"),
-				AssessmentID:         core.StringPtr("rule-e16fcfea-fe21-4d30-a721-423611481fea"),
-				ParameterName:        core.StringPtr("tls_version"),
-				ParameterDisplayName: core.StringPtr("IBM Cloud Internet Services TLS version"),
-				ParameterType:        core.StringPtr("string_list"),
-				ParameterValue:       core.StringPtr("[\"1.2\", \"1.3\"]"),
+			parameterList := []securityandcompliancecenterapiv3.Parameter{
+				securityandcompliancecenterapiv3.Parameter{
+					AssessmentID:         core.StringPtr("rule-e16fcfea-fe21-4d30-a721-423611481fea"),
+					ParameterName:        core.StringPtr("tls_version"),
+					ParameterDisplayName: core.StringPtr("IBM Cloud Internet Services TLS version"),
+					ParameterType:        core.StringPtr("string_list"),
+					ParameterValue:       core.StringPtr("['1.2', '1.3']"),
+				},
+				securityandcompliancecenterapiv3.Parameter{
+					AssessmentID:         core.StringPtr("rule-f9137be8-2490-4afb-8cd5-a201cb167eb2"),
+					ParameterName:        core.StringPtr("ssh_port"),
+					ParameterDisplayName: core.StringPtr("Network ACL rule for allowed IPs to SSH port"),
+					ParameterType:        core.StringPtr("numeric"),
+					ParameterValue:       core.StringPtr("22"),
+				},
+				securityandcompliancecenterapiv3.Parameter{
+					AssessmentID:         core.StringPtr("rule-9653d2c7-6290-4128-a5a3-65487ba40370"),
+					ParameterName:        core.StringPtr("rdp_port"),
+					ParameterDisplayName: core.StringPtr("Security group rule RDP allow port number"),
+					ParameterType:        core.StringPtr("numeric"),
+					ParameterValue:       core.StringPtr("22"),
+				},
+				securityandcompliancecenterapiv3.Parameter{
+					AssessmentID:         core.StringPtr("rule-7c5f6385-67e4-4edf-bec8-c722558b2dec"),
+					ParameterName:        core.StringPtr("ssh_port"),
+					ParameterDisplayName: core.StringPtr("Security group rule SSH allow port number"),
+					ParameterType:        core.StringPtr("numeric"),
+					ParameterValue:       core.StringPtr("22"),
+				},
+				securityandcompliancecenterapiv3.Parameter{
+					AssessmentID:         core.StringPtr("rule-f1e80ee7-88d5-4bf2-b42f-c863bb24601c"),
+					ParameterName:        core.StringPtr("rdp_port"),
+					ParameterDisplayName: core.StringPtr("Disallowed IPs for ingress to RDP port"),
+					ParameterType:        core.StringPtr("numeric"),
+					ParameterValue:       core.StringPtr("3389"),
+				},
+				securityandcompliancecenterapiv3.Parameter{
+					AssessmentID:         core.StringPtr("rule-96527f89-1867-4581-b923-1400e04661e0"),
+					ParameterName:        core.StringPtr("exclude_default_security_groups"),
+					ParameterDisplayName: core.StringPtr("Exclude the default security groups"),
+					ParameterType:        core.StringPtr("string_list"),
+					ParameterValue:       core.StringPtr("['Default']"),
+				},
 			}
 
 			attachmentNotificationsControlsModel := &securityandcompliancecenterapiv3.AttachmentNotificationsControls{
@@ -287,13 +324,14 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 				ID: core.StringPtr("8baad3b5-2e69-4027-9967-efac19508e1c"),
 			}
 
+			endDate := strfmt.DateTime(time.Now())
 			dateRangeModel := &securityandcompliancecenterapiv3.DateRange{
 				StartDate: CreateMockDateTime("2025-02-28T05:42:58.000Z"),
-				EndDate:   CreateMockDateTime("2025-02-28T05:42:58.000Z"),
+				EndDate:   &endDate,
 			}
 
 			profileAttachmentBaseModel := &securityandcompliancecenterapiv3.ProfileAttachmentBase{
-				AttachmentParameters: []securityandcompliancecenterapiv3.Parameter{*parameterModel},
+				AttachmentParameters: parameterList,
 				Description:          core.StringPtr("This is a profile attachment targeting IBM CIS Foundation using a SDK"),
 				Name:                 core.StringPtr("Profile Attachment for IBM CIS Foundation SDK test"),
 				Notifications:        attachmentNotificationsModel,

@@ -1526,8 +1526,8 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 				InstanceID:             core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
 				ProviderTypeID:         core.StringPtr("3e25966275dccfa2c3a34786919c5af7"),
 				ProviderTypeInstanceID: &providerTypeInstanceIDLink,
-				Name:                   core.StringPtr("workload-protection-instance-1"),
-				Attributes:             map[string]interface{}{"anyKey": "anyValue"},
+				Name:                   core.StringPtr("caveonix-instance-1-update"),
+				Attributes:             map[string]interface{}{},
 			}
 
 			providerTypeInstance, response, err := securityAndComplianceCenterAPIService.UpdateProviderTypeInstance(updateProviderTypeInstanceOptions)

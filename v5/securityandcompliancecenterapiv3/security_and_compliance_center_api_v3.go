@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,10 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.75.0-726bc7e3-20230713-221716
+ * IBM OpenAPI SDK Code Generator Version: 3.98.0-8be2046a-20241205-162752
  */
 
-// Package securityandcompliancecenterapiv3 : Operations and models for the SecurityAndComplianceCenterV3 service
+// Package securityandcompliancecenterapiv3 : Operations and models for the SecurityAndComplianceCenterAPIV3 service
 package securityandcompliancecenterapiv3
 
 import (
@@ -31,12 +31,12 @@ import (
 	"time"
 
 	"github.com/IBM/go-sdk-core/v5/core"
-	common "github.com/IBM/scc-go-sdk/v5/common"
+	"github.com/IBM/scc-go-sdk/v5/common"
 	"github.com/go-openapi/strfmt"
 )
 
-// SecurityAndComplianceCenterApiV3 : The Security and Compliance Center API reference.
-type SecurityAndComplianceCenterApiV3 struct {
+// SecurityAndComplianceCenterAPIV3 : The Security and Compliance Center API reference.
+type SecurityAndComplianceCenterAPIV3 struct {
 	Service *core.BaseService
 }
 
@@ -44,51 +44,70 @@ type SecurityAndComplianceCenterApiV3 struct {
 const DefaultServiceURL = "https://us-south.compliance.cloud.ibm.com"
 
 // DefaultServiceName is the default key used to find external configuration information.
-const DefaultServiceName = "security_and_compliance_center"
+const DefaultServiceName = "security_and_compliance_center_api"
 
-// SecurityAndComplianceCenterApiV3Options : Service options
-type SecurityAndComplianceCenterApiV3Options struct {
+// SecurityAndComplianceCenterAPIV3Options : Service options
+type SecurityAndComplianceCenterAPIV3Options struct {
 	ServiceName   string
 	URL           string
 	Authenticator core.Authenticator
 }
 
-// NewSecurityAndComplianceCenterV3 : constructs an instance of SecurityAndComplianceCenterV3 with passed in options.
-func NewSecurityAndComplianceCenterV3(options *SecurityAndComplianceCenterApiV3Options) (service *SecurityAndComplianceCenterApiV3, err error) {
+// NewSecurityAndComplianceCenterAPIV3UsingExternalConfig : constructs an instance of SecurityAndComplianceCenterAPIV3 with passed in options and external configuration.
+func NewSecurityAndComplianceCenterAPIV3UsingExternalConfig(options *SecurityAndComplianceCenterAPIV3Options) (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3, err error) {
 	if options.ServiceName == "" {
 		options.ServiceName = DefaultServiceName
 	}
 
+	if options.Authenticator == nil {
+		options.Authenticator, err = core.GetAuthenticatorFromEnvironment(options.ServiceName)
+		if err != nil {
+			err = core.SDKErrorf(err, "", "env-auth-error", common.GetComponentInfo())
+			return
+		}
+	}
+
+	securityAndComplianceCenterApi, err = NewSecurityAndComplianceCenterAPIV3(options)
+	err = core.RepurposeSDKProblem(err, "new-client-error")
+	if err != nil {
+		return
+	}
+
+	err = securityAndComplianceCenterApi.Service.ConfigureService(options.ServiceName)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "client-config-error", common.GetComponentInfo())
+		return
+	}
+
+	if options.URL != "" {
+		err = securityAndComplianceCenterApi.Service.SetServiceURL(options.URL)
+		err = core.RepurposeSDKProblem(err, "url-set-error")
+	}
+	return
+}
+
+// NewSecurityAndComplianceCenterAPIV3 : constructs an instance of SecurityAndComplianceCenterAPIV3 with passed in options.
+func NewSecurityAndComplianceCenterAPIV3(options *SecurityAndComplianceCenterAPIV3Options) (service *SecurityAndComplianceCenterAPIV3, err error) {
 	serviceOptions := &core.ServiceOptions{
 		URL:           DefaultServiceURL,
 		Authenticator: options.Authenticator,
 	}
 
-	if serviceOptions.Authenticator == nil {
-		serviceOptions.Authenticator, err = core.GetAuthenticatorFromEnvironment(options.ServiceName)
-		if err != nil {
-			return
-		}
-	}
-
 	baseService, err := core.NewBaseService(serviceOptions)
 	if err != nil {
-		return
-	}
-
-	err = baseService.ConfigureService(options.ServiceName)
-	if err != nil {
+		err = core.SDKErrorf(err, "", "new-base-error", common.GetComponentInfo())
 		return
 	}
 
 	if options.URL != "" {
 		err = baseService.SetServiceURL(options.URL)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "set-url-error", common.GetComponentInfo())
 			return
 		}
 	}
 
-	service = &SecurityAndComplianceCenterApiV3{
+	service = &SecurityAndComplianceCenterAPIV3{
 		Service: baseService,
 	}
 
@@ -97,7 +116,7 @@ func NewSecurityAndComplianceCenterV3(options *SecurityAndComplianceCenterApiV3O
 
 // GetServiceURLForRegion returns the service URL to be used for the specified region
 func GetServiceURLForRegion(region string) (string, error) {
-	endpoints := map[string]string{
+	var endpoints = map[string]string{
 		"us-south": "https://us-south.compliance.cloud.ibm.com", // Dallas region
 		"eu-de":    "https://eu-de.compliance.cloud.ibm.com",    // Frankfurt region
 		"eu-fr2":   "https://eu-fr2.compliance.cloud.ibm.com",   // Frankfurt region(Restricted)
@@ -109,69 +128,77 @@ func GetServiceURLForRegion(region string) (string, error) {
 	if url, ok := endpoints[region]; ok {
 		return url, nil
 	}
-	return "", fmt.Errorf("service URL for region '%s' not found", region)
+	return "", core.SDKErrorf(nil, fmt.Sprintf("service URL for region '%s' not found", region), "invalid-region", common.GetComponentInfo())
 }
 
-// Clone makes a copy of "securityAndComplianceCenter" suitable for processing requests.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) Clone() *SecurityAndComplianceCenterApiV3 {
-	if core.IsNil(securityAndComplianceCenter) {
+// Clone makes a copy of "securityAndComplianceCenterApi" suitable for processing requests.
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) Clone() *SecurityAndComplianceCenterAPIV3 {
+	if core.IsNil(securityAndComplianceCenterApi) {
 		return nil
 	}
-	clone := *securityAndComplianceCenter
-	clone.Service = securityAndComplianceCenter.Service.Clone()
+	clone := *securityAndComplianceCenterApi
+	clone.Service = securityAndComplianceCenterApi.Service.Clone()
 	return &clone
 }
 
 // SetServiceURL sets the service URL
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) SetServiceURL(url string) error {
-	return securityAndComplianceCenter.Service.SetServiceURL(url)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) SetServiceURL(url string) error {
+	err := securityAndComplianceCenterApi.Service.SetServiceURL(url)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "url-set-error", common.GetComponentInfo())
+	}
+	return err
 }
 
 // GetServiceURL returns the service URL
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetServiceURL() string {
-	return securityAndComplianceCenter.Service.GetServiceURL()
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetServiceURL() string {
+	return securityAndComplianceCenterApi.Service.GetServiceURL()
 }
 
 // SetDefaultHeaders sets HTTP headers to be sent in every request
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) SetDefaultHeaders(headers http.Header) {
-	securityAndComplianceCenter.Service.SetDefaultHeaders(headers)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) SetDefaultHeaders(headers http.Header) {
+	securityAndComplianceCenterApi.Service.SetDefaultHeaders(headers)
 }
 
 // SetEnableGzipCompression sets the service's EnableGzipCompression field
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) SetEnableGzipCompression(enableGzip bool) {
-	securityAndComplianceCenter.Service.SetEnableGzipCompression(enableGzip)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) SetEnableGzipCompression(enableGzip bool) {
+	securityAndComplianceCenterApi.Service.SetEnableGzipCompression(enableGzip)
 }
 
 // GetEnableGzipCompression returns the service's EnableGzipCompression field
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetEnableGzipCompression() bool {
-	return securityAndComplianceCenter.Service.GetEnableGzipCompression()
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetEnableGzipCompression() bool {
+	return securityAndComplianceCenterApi.Service.GetEnableGzipCompression()
 }
 
 // EnableRetries enables automatic retries for requests invoked for this service instance.
 // If either parameter is specified as 0, then a default value is used instead.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) EnableRetries(maxRetries int, maxRetryInterval time.Duration) {
-	securityAndComplianceCenter.Service.EnableRetries(maxRetries, maxRetryInterval)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) EnableRetries(maxRetries int, maxRetryInterval time.Duration) {
+	securityAndComplianceCenterApi.Service.EnableRetries(maxRetries, maxRetryInterval)
 }
 
 // DisableRetries disables automatic retries for requests invoked for this service instance.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DisableRetries() {
-	securityAndComplianceCenter.Service.DisableRetries()
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) DisableRetries() {
+	securityAndComplianceCenterApi.Service.DisableRetries()
 }
 
 // GetSettings : List settings
 // Retrieve the settings of your service instance.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetSettings(getSettingsOptions *GetSettingsOptions) (result *Settings, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.GetSettingsWithContext(context.Background(), getSettingsOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetSettings(getSettingsOptions *GetSettingsOptions) (result *Settings, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.GetSettingsWithContext(context.Background(), getSettingsOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetSettingsWithContext is an alternate form of the GetSettings method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetSettingsWithContext(ctx context.Context, getSettingsOptions *GetSettingsOptions) (result *Settings, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetSettingsWithContext(ctx context.Context, getSettingsOptions *GetSettingsOptions) (result *Settings, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getSettingsOptions, "getSettingsOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(getSettingsOptions, "getSettingsOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -181,9 +208,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetSettings
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/settings`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/settings`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -191,7 +219,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetSettings
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "GetSettings")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "GetSettings")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -199,17 +227,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetSettings
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "get_settings", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalSettings)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -220,18 +252,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetSettings
 
 // UpdateSettings : Update settings
 // Update the settings of your service instance.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateSettings(updateSettingsOptions *UpdateSettingsOptions) (result *Settings, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.UpdateSettingsWithContext(context.Background(), updateSettingsOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) UpdateSettings(updateSettingsOptions *UpdateSettingsOptions) (result *Settings, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.UpdateSettingsWithContext(context.Background(), updateSettingsOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // UpdateSettingsWithContext is an alternate form of the UpdateSettings method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateSettingsWithContext(ctx context.Context, updateSettingsOptions *UpdateSettingsOptions) (result *Settings, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) UpdateSettingsWithContext(ctx context.Context, updateSettingsOptions *UpdateSettingsOptions) (result *Settings, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(updateSettingsOptions, "updateSettingsOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(updateSettingsOptions, "updateSettingsOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -241,9 +277,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateSetti
 
 	builder := core.NewRequestBuilder(core.PATCH)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/settings`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/settings`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -251,7 +288,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateSetti
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "UpdateSettings")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "UpdateSettings")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -267,22 +304,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateSetti
 	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
 		return
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "update_settings", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalSettings)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -295,18 +337,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateSetti
 // Send a test event to your Event Notifications instance to ensure that the events that are generated  by Security and
 // Compliance Center are being forwarded to Event Notifications. For more information, see [Enabling event
 // notifications](/docs/security-compliance?topic=security-compliance-event-notifications#event-notifications-test-api).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) PostTestEvent(postTestEventOptions *PostTestEventOptions) (result *TestEvent, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.PostTestEventWithContext(context.Background(), postTestEventOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) PostTestEvent(postTestEventOptions *PostTestEventOptions) (result *TestEvent, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.PostTestEventWithContext(context.Background(), postTestEventOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // PostTestEventWithContext is an alternate form of the PostTestEvent method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) PostTestEventWithContext(ctx context.Context, postTestEventOptions *PostTestEventOptions) (result *TestEvent, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) PostTestEventWithContext(ctx context.Context, postTestEventOptions *PostTestEventOptions) (result *TestEvent, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(postTestEventOptions, "postTestEventOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(postTestEventOptions, "postTestEventOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -316,9 +362,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) PostTestEve
 
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/test_event`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/test_event`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -326,7 +373,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) PostTestEve
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "PostTestEvent")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "PostTestEvent")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -334,17 +381,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) PostTestEve
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "post_test_event", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalTestEvent)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -356,23 +407,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) PostTestEve
 // ListInstanceAttachments : Get all instance attachments
 // Retrieve all instance attachments.
 //
-// With Security and Compliance Center, you can evaluate your resources  on a recurring schedule or you can initiate a
-// scan at any time. To evaluate your resources, you create an attachment.  An attachment is the association between the
-// set of resources that you want to evaluate  and a profile that contains the specific controls that you want to use.
+// With Security and Compliance Center, you can evaluate your resources on a recurring schedule or you can initiate a
+// scan at any time. To evaluate your resources, you create an attachment. An attachment is the association between the
+// set of resources that you want to evaluate and a profile that contains the specific controls that you want to use.
 // For more information, see [Running an evaluation for IBM
 // Cloud](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scan-resources).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListInstanceAttachments(listInstanceAttachmentsOptions *ListInstanceAttachmentsOptions) (result *ProfileAttachmentCollection, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ListInstanceAttachmentsWithContext(context.Background(), listInstanceAttachmentsOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListInstanceAttachments(listInstanceAttachmentsOptions *ListInstanceAttachmentsOptions) (result *ProfileAttachmentCollection, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ListInstanceAttachmentsWithContext(context.Background(), listInstanceAttachmentsOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ListInstanceAttachmentsWithContext is an alternate form of the ListInstanceAttachments method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListInstanceAttachmentsWithContext(ctx context.Context, listInstanceAttachmentsOptions *ListInstanceAttachmentsOptions) (result *ProfileAttachmentCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListInstanceAttachmentsWithContext(ctx context.Context, listInstanceAttachmentsOptions *ListInstanceAttachmentsOptions) (result *ProfileAttachmentCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listInstanceAttachmentsOptions, "listInstanceAttachmentsOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(listInstanceAttachmentsOptions, "listInstanceAttachmentsOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -382,9 +437,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListInstanc
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/attachments`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/attachments`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -392,7 +448,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListInstanc
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ListInstanceAttachments")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ListInstanceAttachments")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -419,17 +475,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListInstanc
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "list_instance_attachments", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalProfileAttachmentCollection)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -438,26 +498,30 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListInstanc
 	return
 }
 
-// CreateProfileAttachment : Create a profile attachment
+// CreateProfileAttachment : Create an attachment
 // Create an attachment to link to a profile.
 //
-// With Security and Compliance Center, you can evaluate your resources  on a recurring schedule or you can initiate a
-// scan at any time. To evaluate your resources, you create an attachment.  An attachment is the association between the
-// set of resources that you want to evaluate  and a profile that contains the specific controls that you want to use.
+// With Security and Compliance Center, you can evaluate your resources on a recurring schedule or you can initiate a
+// scan at any time. To evaluate your resources, you create an attachment. An attachment is the association between the
+// set of resources that you want to evaluate and a profile that contains the specific controls that you want to use.
 // For more information, see [Running an evaluation for IBM
 // Cloud](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scan-resources).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProfileAttachment(createProfileAttachmentOptions *CreateProfileAttachmentOptions) (result *ProfileAttachmentResponse, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.CreateProfileAttachmentWithContext(context.Background(), createProfileAttachmentOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CreateProfileAttachment(createProfileAttachmentOptions *CreateProfileAttachmentOptions) (result *ProfileAttachmentResponse, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.CreateProfileAttachmentWithContext(context.Background(), createProfileAttachmentOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // CreateProfileAttachmentWithContext is an alternate form of the CreateProfileAttachment method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProfileAttachmentWithContext(ctx context.Context, createProfileAttachmentOptions *CreateProfileAttachmentOptions) (result *ProfileAttachmentResponse, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CreateProfileAttachmentWithContext(ctx context.Context, createProfileAttachmentOptions *CreateProfileAttachmentOptions) (result *ProfileAttachmentResponse, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(createProfileAttachmentOptions, "createProfileAttachmentOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(createProfileAttachmentOptions, "createProfileAttachmentOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -468,9 +532,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProfi
 
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}/attachments`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}/attachments`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -478,7 +543,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProfi
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "CreateProfileAttachment")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "CreateProfileAttachment")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -490,27 +555,35 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProfi
 	}
 
 	body := make(map[string]interface{})
-	if createProfileAttachmentOptions.Attachments != nil {
-		body["attachments"] = createProfileAttachmentOptions.Attachments
+	if createProfileAttachmentOptions.NewAttachments != nil {
+		body["attachments"] = createProfileAttachmentOptions.NewAttachments
+	}
+	if createProfileAttachmentOptions.NewProfileID != nil {
+		body["profile_id"] = createProfileAttachmentOptions.NewProfileID
 	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
 		return
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "create_profile_attachment", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalProfileAttachmentResponse)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -519,97 +592,30 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProfi
 	return
 }
 
-// ListProfileAttachments : Get all attachments tied to a profile
-// Retrieve all attachments that are linked to a profile.
-//
-// With Security and Compliance Center, you can evaluate your resources  on a recurring schedule or you can initiate a
-// scan at any time. To evaluate your resources, you create an attachment.  An attachment is the association between the
-// set of resources that you want to evaluate  and a profile that contains the specific controls that you want to use.
-// For more information, see [Running an evaluation for IBM
-// Cloud](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scan-resources).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfileAttachments(listProfileAttachmentsOptions *ListProfileAttachmentsOptions) (result *ProfileAttachmentCollection, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ListProfileAttachmentsWithContext(context.Background(), listProfileAttachmentsOptions)
-}
-
-// ListProfileAttachmentsWithContext is an alternate form of the ListProfileAttachments method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfileAttachmentsWithContext(ctx context.Context, listProfileAttachmentsOptions *ListProfileAttachmentsOptions) (result *ProfileAttachmentCollection, response *core.DetailedResponse, err error) {
-	err = core.ValidateNotNil(listProfileAttachmentsOptions, "listProfileAttachmentsOptions cannot be nil")
-	if err != nil {
-		return
-	}
-	err = core.ValidateStruct(listProfileAttachmentsOptions, "listProfileAttachmentsOptions")
-	if err != nil {
-		return
-	}
-
-	pathParamsMap := map[string]string{
-		"instance_id": *listProfileAttachmentsOptions.InstanceID,
-		"profile_id":  *listProfileAttachmentsOptions.ProfileID,
-	}
-
-	builder := core.NewRequestBuilder(core.GET)
-	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}/attachments`, pathParamsMap)
-	if err != nil {
-		return
-	}
-
-	for headerName, headerValue := range listProfileAttachmentsOptions.Headers {
-		builder.AddHeader(headerName, headerValue)
-	}
-
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ListProfileAttachments")
-	for headerName, headerValue := range sdkHeaders {
-		builder.AddHeader(headerName, headerValue)
-	}
-	builder.AddHeader("Accept", "application/json")
-
-	if listProfileAttachmentsOptions.AccountID != nil {
-		builder.AddQuery("account_id", fmt.Sprint(*listProfileAttachmentsOptions.AccountID))
-	}
-
-	request, err := builder.Build()
-	if err != nil {
-		return
-	}
-
-	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
-	if err != nil {
-		return
-	}
-	if rawResponse != nil {
-		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalProfileAttachmentCollection)
-		if err != nil {
-			return
-		}
-		response.Result = result
-	}
-
-	return
-}
-
-// GetProfileAttachment : Get an attachment for a profile
+// GetProfileAttachment : Get an attachment
 // Retrieve an attachment that is linked to a profile by specifying the attachment ID.
 //
-// With Security and Compliance Center, you can evaluate your resources  on a recurring schedule or you can initiate a
-// scan at any time. To evaluate your resources, you create an attachment.  An attachment is the association between the
-// set of resources that you want to evaluate  and a profile that contains the specific controls that you want to use.
+// With Security and Compliance Center, you can evaluate your resources on a recurring schedule or you can initiate a
+// scan at any time. To evaluate your resources, you create an attachment. An attachment is the association between the
+// set of resources that you want to evaluate and a profile that contains the specific controls that you want to use.
 // For more information, see [Running an evaluation for IBM
 // Cloud](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scan-resources).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProfileAttachment(getProfileAttachmentOptions *GetProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.GetProfileAttachmentWithContext(context.Background(), getProfileAttachmentOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetProfileAttachment(getProfileAttachmentOptions *GetProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.GetProfileAttachmentWithContext(context.Background(), getProfileAttachmentOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetProfileAttachmentWithContext is an alternate form of the GetProfileAttachment method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProfileAttachmentWithContext(ctx context.Context, getProfileAttachmentOptions *GetProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetProfileAttachmentWithContext(ctx context.Context, getProfileAttachmentOptions *GetProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getProfileAttachmentOptions, "getProfileAttachmentOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(getProfileAttachmentOptions, "getProfileAttachmentOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -621,9 +627,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProfileA
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}/attachments/{attachment_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}/attachments/{attachment_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -631,7 +638,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProfileA
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "GetProfileAttachment")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "GetProfileAttachment")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -643,17 +650,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProfileA
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "get_profile_attachment", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalProfileAttachment)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -665,23 +676,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProfileA
 // ReplaceProfileAttachment : Update an attachment
 // Update an attachment that is linked to a profile.
 //
-// With Security and Compliance Center, you can evaluate your resources  on a recurring schedule or you can initiate a
-// scan at any time. To evaluate your resources, you create an attachment.  An attachment is the association between the
-// set of resources that you want to evaluate  and a profile that contains the specific controls that you want to use.
+// With Security and Compliance Center, you can evaluate your resources on a recurring schedule or you can initiate a
+// scan at any time. To evaluate your resources, you create an attachment. An attachment is the association between the
+// set of resources that you want to evaluate and a profile that contains the specific controls that you want to use.
 // For more information, see [Running an evaluation for IBM
 // Cloud](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scan-resources).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProfileAttachment(replaceProfileAttachmentOptions *ReplaceProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ReplaceProfileAttachmentWithContext(context.Background(), replaceProfileAttachmentOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ReplaceProfileAttachment(replaceProfileAttachmentOptions *ReplaceProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ReplaceProfileAttachmentWithContext(context.Background(), replaceProfileAttachmentOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ReplaceProfileAttachmentWithContext is an alternate form of the ReplaceProfileAttachment method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProfileAttachmentWithContext(ctx context.Context, replaceProfileAttachmentOptions *ReplaceProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ReplaceProfileAttachmentWithContext(ctx context.Context, replaceProfileAttachmentOptions *ReplaceProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(replaceProfileAttachmentOptions, "replaceProfileAttachmentOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(replaceProfileAttachmentOptions, "replaceProfileAttachmentOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -693,9 +708,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProf
 
 	builder := core.NewRequestBuilder(core.PUT)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}/attachments/{attachment_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}/attachments/{attachment_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -703,7 +719,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProf
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ReplaceProfileAttachment")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ReplaceProfileAttachment")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -736,25 +752,32 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProf
 	if replaceProfileAttachmentOptions.Status != nil {
 		body["status"] = replaceProfileAttachmentOptions.Status
 	}
-
+	if replaceProfileAttachmentOptions.DataSelectionRange != nil {
+		body["data_selection_range"] = replaceProfileAttachmentOptions.DataSelectionRange
+	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
 		return
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "replace_profile_attachment", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalProfileAttachment)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -766,23 +789,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProf
 // DeleteProfileAttachment : Delete an attachment
 // Delete an attachment that is linked to a profile.
 //
-// With Security and Compliance Center, you can evaluate your resources  on a recurring schedule or you can initiate a
-// scan at any time. To evaluate your resources, you create an attachment.  An attachment is the association between the
-// set of resources that you want to evaluate  and a profile that contains the specific controls that you want to use.
+// With Security and Compliance Center, you can evaluate your resources on a recurring schedule or you can initiate a
+// scan at any time. To evaluate your resources, you create an attachment. An attachment is the association between the
+// set of resources that you want to evaluate and a profile that contains the specific controls that you want to use.
 // For more information, see [Running an evaluation for IBM
 // Cloud](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scan-resources).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteProfileAttachment(deleteProfileAttachmentOptions *DeleteProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.DeleteProfileAttachmentWithContext(context.Background(), deleteProfileAttachmentOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) DeleteProfileAttachment(deleteProfileAttachmentOptions *DeleteProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.DeleteProfileAttachmentWithContext(context.Background(), deleteProfileAttachmentOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // DeleteProfileAttachmentWithContext is an alternate form of the DeleteProfileAttachment method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteProfileAttachmentWithContext(ctx context.Context, deleteProfileAttachmentOptions *DeleteProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) DeleteProfileAttachmentWithContext(ctx context.Context, deleteProfileAttachmentOptions *DeleteProfileAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(deleteProfileAttachmentOptions, "deleteProfileAttachmentOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(deleteProfileAttachmentOptions, "deleteProfileAttachmentOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -794,9 +821,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteProfi
 
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}/attachments/{attachment_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}/attachments/{attachment_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -804,7 +832,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteProfi
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "DeleteProfileAttachment")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "DeleteProfileAttachment")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -816,17 +844,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteProfi
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "delete_profile_attachment", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalProfileAttachment)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -838,23 +870,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteProfi
 // UpgradeAttachment : Upgrade an attachment
 // Upgrade an attachment to the latest version of a profile.
 //
-// With Security and Compliance Center, you can evaluate your resources  on a recurring schedule or you can initiate a
-// scan at any time. To evaluate your resources, you create an attachment.  An attachment is the association between the
-// set of resources that you want to evaluate  and a profile that contains the specific controls that you want to use.
+// With Security and Compliance Center, you can evaluate your resources on a recurring schedule or you can initiate a
+// scan at any time. To evaluate your resources, you create an attachment. An attachment is the association between the
+// set of resources that you want to evaluate and a profile that contains the specific controls that you want to use.
 // For more information, see [Running an evaluation for IBM
 // Cloud](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scan-resources).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpgradeAttachment(upgradeAttachmentOptions *UpgradeAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.UpgradeAttachmentWithContext(context.Background(), upgradeAttachmentOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) UpgradeAttachment(upgradeAttachmentOptions *UpgradeAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.UpgradeAttachmentWithContext(context.Background(), upgradeAttachmentOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // UpgradeAttachmentWithContext is an alternate form of the UpgradeAttachment method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpgradeAttachmentWithContext(ctx context.Context, upgradeAttachmentOptions *UpgradeAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) UpgradeAttachmentWithContext(ctx context.Context, upgradeAttachmentOptions *UpgradeAttachmentOptions) (result *ProfileAttachment, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(upgradeAttachmentOptions, "upgradeAttachmentOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(upgradeAttachmentOptions, "upgradeAttachmentOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -866,9 +902,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpgradeAtta
 
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}/attachments/{attachment_id}/upgrade`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}/attachments/{attachment_id}/upgrade`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -876,7 +913,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpgradeAtta
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "UpgradeAttachment")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "UpgradeAttachment")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -893,22 +930,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpgradeAtta
 	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
 		return
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "upgrade_attachment", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalProfileAttachment)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -917,91 +959,190 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpgradeAtta
 	return
 }
 
-// CreateCustomControlLibrary : Create a custom control library
-// Create a custom control library that is specific to your organization's needs.
+// CreateScan : Create a scan
+// Create a scan to evaluate your resources.
 //
-// With Security and Compliance Center, you can create a custom control library that is specific to your organization's
-// needs.  You define the controls and specifications before you map previously created assessments. Each control has
-// several specifications  and assessments that are mapped to it. A specification is a defined requirement that is
-// specific to a component. An assessment, or several,  are mapped to each specification with a detailed evaluation that
-// is done to check whether the specification is compliant. For more information, see [Creating custom
-// libraries](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-custom-library).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateCustomControlLibrary(createCustomControlLibraryOptions *CreateCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.CreateCustomControlLibraryWithContext(context.Background(), createCustomControlLibraryOptions)
+// With Security and Compliance Center, you can evaluate your resources on a recurring schedule. If your attachment
+// exists, but you don't want to wait for the next scan to see your posture, you can initiate an on-demand scan. For
+// more information, see [Running a scan on
+// demand](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scan-resources#scan-ondemand-api).
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CreateScan(createScanOptions *CreateScanOptions) (result *CreateScanResponse, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.CreateScanWithContext(context.Background(), createScanOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
-// CreateCustomControlLibraryWithContext is an alternate form of the CreateCustomControlLibrary method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateCustomControlLibraryWithContext(ctx context.Context, createCustomControlLibraryOptions *CreateCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
-	err = core.ValidateNotNil(createCustomControlLibraryOptions, "createCustomControlLibraryOptions cannot be nil")
+// CreateScanWithContext is an alternate form of the CreateScan method which supports a Context parameter
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CreateScanWithContext(ctx context.Context, createScanOptions *CreateScanOptions) (result *CreateScanResponse, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(createScanOptions, "createScanOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
-	err = core.ValidateStruct(createCustomControlLibraryOptions, "createCustomControlLibraryOptions")
+	err = core.ValidateStruct(createScanOptions, "createScanOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
 	pathParamsMap := map[string]string{
-		"instance_id": *createCustomControlLibraryOptions.InstanceID,
+		"instance_id": *createScanOptions.InstanceID,
 	}
 
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/control_libraries`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/scans`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
-	for headerName, headerValue := range createCustomControlLibraryOptions.Headers {
+	for headerName, headerValue := range createScanOptions.Headers {
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "CreateCustomControlLibrary")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "CreateScan")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
 	builder.AddHeader("Accept", "application/json")
 	builder.AddHeader("Content-Type", "application/json")
 
-	if createCustomControlLibraryOptions.AccountID != nil {
-		builder.AddQuery("account_id", fmt.Sprint(*createCustomControlLibraryOptions.AccountID))
+	if createScanOptions.AccountID != nil {
+		builder.AddQuery("account_id", fmt.Sprint(*createScanOptions.AccountID))
 	}
 
 	body := make(map[string]interface{})
-	if createCustomControlLibraryOptions.ControlLibraryName != nil {
-		body["control_library_name"] = createCustomControlLibraryOptions.ControlLibraryName
-	}
-	if createCustomControlLibraryOptions.ControlLibraryDescription != nil {
-		body["control_library_description"] = createCustomControlLibraryOptions.ControlLibraryDescription
-	}
-	if createCustomControlLibraryOptions.ControlLibraryType != nil {
-		body["control_library_type"] = createCustomControlLibraryOptions.ControlLibraryType
-	}
-	if createCustomControlLibraryOptions.ControlLibraryVersion != nil {
-		body["control_library_version"] = createCustomControlLibraryOptions.ControlLibraryVersion
-	}
-	if createCustomControlLibraryOptions.Controls != nil {
-		body["controls"] = createCustomControlLibraryOptions.Controls
+	if createScanOptions.AttachmentID != nil {
+		body["attachment_id"] = createScanOptions.AttachmentID
 	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
 		return
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "create_scan", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalCreateScanResponse)
+		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// CreateControlLibrary : Create a custom control library
+// Create a custom control library that is specific to your organization's needs.
+//
+// With Security and Compliance Center, you can create a custom control library that is specific to your organization's
+// needs. You define the controls and specifications before you map previously created assessments. Each control has
+// several specifications and assessments that are mapped to it. A specification is a defined requirement that is
+// specific to a component. An assessment, or several, are mapped to each specification with a detailed evaluation that
+// is done to check whether the specification is compliant. For more information, see [Creating custom
+// libraries](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-custom-library).
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CreateControlLibrary(createControlLibraryOptions *CreateControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.CreateControlLibraryWithContext(context.Background(), createControlLibraryOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
+}
+
+// CreateControlLibraryWithContext is an alternate form of the CreateControlLibrary method which supports a Context parameter
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CreateControlLibraryWithContext(ctx context.Context, createControlLibraryOptions *CreateControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(createControlLibraryOptions, "createControlLibraryOptions cannot be nil")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
+		return
+	}
+	err = core.ValidateStruct(createControlLibraryOptions, "createControlLibraryOptions")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *createControlLibraryOptions.InstanceID,
+	}
+
+	builder := core.NewRequestBuilder(core.POST)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/control_libraries`, pathParamsMap)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
+		return
+	}
+
+	for headerName, headerValue := range createControlLibraryOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "CreateControlLibrary")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+	builder.AddHeader("Content-Type", "application/json")
+
+	if createControlLibraryOptions.AccountID != nil {
+		builder.AddQuery("account_id", fmt.Sprint(*createControlLibraryOptions.AccountID))
+	}
+
+	body := make(map[string]interface{})
+	if createControlLibraryOptions.ControlLibraryName != nil {
+		body["control_library_name"] = createControlLibraryOptions.ControlLibraryName
+	}
+	if createControlLibraryOptions.ControlLibraryDescription != nil {
+		body["control_library_description"] = createControlLibraryOptions.ControlLibraryDescription
+	}
+	if createControlLibraryOptions.ControlLibraryType != nil {
+		body["control_library_type"] = createControlLibraryOptions.ControlLibraryType
+	}
+	if createControlLibraryOptions.ControlLibraryVersion != nil {
+		body["control_library_version"] = createControlLibraryOptions.ControlLibraryVersion
+	}
+	if createControlLibraryOptions.Controls != nil {
+		body["controls"] = createControlLibraryOptions.Controls
+	}
+	_, err = builder.SetBodyContentJSON(body)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
+		return
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
+	if err != nil {
+		core.EnrichHTTPProblem(err, "create_control_library", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalControlLibrary)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -1014,23 +1155,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateCusto
 // Retrieve all the control libraries, including predefined, and custom libraries.
 //
 // With Security and Compliance Center, you can create a custom control library that is specific to your organization's
-// needs.  You define the controls and specifications before you map previously created assessments. Each control has
-// several specifications  and assessments that are mapped to it. A specification is a defined requirement that is
-// specific to a component. An assessment, or several,  are mapped to each specification with a detailed evaluation that
+// needs. You define the controls and specifications before you map previously created assessments. Each control has
+// several specifications and assessments that are mapped to it. A specification is a defined requirement that is
+// specific to a component. An assessment, or several, are mapped to each specification with a detailed evaluation that
 // is done to check whether the specification is compliant. For more information, see [Creating custom
 // libraries](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-custom-library).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListControlLibraries(listControlLibrariesOptions *ListControlLibrariesOptions) (result *ControlLibraryCollection, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ListControlLibrariesWithContext(context.Background(), listControlLibrariesOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListControlLibraries(listControlLibrariesOptions *ListControlLibrariesOptions) (result *ControlLibraryCollection, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ListControlLibrariesWithContext(context.Background(), listControlLibrariesOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ListControlLibrariesWithContext is an alternate form of the ListControlLibraries method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListControlLibrariesWithContext(ctx context.Context, listControlLibrariesOptions *ListControlLibrariesOptions) (result *ControlLibraryCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListControlLibrariesWithContext(ctx context.Context, listControlLibrariesOptions *ListControlLibrariesOptions) (result *ControlLibraryCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listControlLibrariesOptions, "listControlLibrariesOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(listControlLibrariesOptions, "listControlLibrariesOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1040,9 +1185,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListControl
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/control_libraries`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/control_libraries`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1050,7 +1196,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListControl
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ListControlLibraries")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ListControlLibraries")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -1058,9 +1204,6 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListControl
 
 	if listControlLibrariesOptions.AccountID != nil {
 		builder.AddQuery("account_id", fmt.Sprint(*listControlLibrariesOptions.AccountID))
-	}
-	if listControlLibrariesOptions.ControlLibraryType != nil {
-		builder.AddQuery("control_library_type", fmt.Sprint(*listControlLibrariesOptions.ControlLibraryType))
 	}
 	if listControlLibrariesOptions.Limit != nil {
 		builder.AddQuery("limit", fmt.Sprint(*listControlLibrariesOptions.Limit))
@@ -1071,17 +1214,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListControl
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "list_control_libraries", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalControlLibraryCollection)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -1094,23 +1241,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListControl
 // Update a custom control library by specifying its ID.
 //
 // With Security and Compliance Center, you can create a custom control library that is specific to your organization's
-// needs.  You define the controls and specifications before you map previously created assessments. Each control has
-// several specifications  and assessments that are mapped to it. A specification is a defined requirement that is
-// specific to a component. An assessment, or several,  are mapped to each specification with a detailed evaluation that
+// needs. You define the controls and specifications before you map previously created assessments. Each control has
+// several specifications and assessments that are mapped to it. A specification is a defined requirement that is
+// specific to a component. An assessment, or several, are mapped to each specification with a detailed evaluation that
 // is done to check whether the specification is compliant. For more information, see [Creating custom
 // libraries](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-custom-library).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceCustomControlLibrary(replaceCustomControlLibraryOptions *ReplaceCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ReplaceCustomControlLibraryWithContext(context.Background(), replaceCustomControlLibraryOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ReplaceCustomControlLibrary(replaceCustomControlLibraryOptions *ReplaceCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ReplaceCustomControlLibraryWithContext(context.Background(), replaceCustomControlLibraryOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ReplaceCustomControlLibraryWithContext is an alternate form of the ReplaceCustomControlLibrary method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceCustomControlLibraryWithContext(ctx context.Context, replaceCustomControlLibraryOptions *ReplaceCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ReplaceCustomControlLibraryWithContext(ctx context.Context, replaceCustomControlLibraryOptions *ReplaceCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(replaceCustomControlLibraryOptions, "replaceCustomControlLibraryOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(replaceCustomControlLibraryOptions, "replaceCustomControlLibraryOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1121,9 +1272,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceCust
 
 	builder := core.NewRequestBuilder(core.PUT)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/control_libraries/{control_library_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/control_libraries/{control_library_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1131,7 +1283,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceCust
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ReplaceCustomControlLibrary")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ReplaceCustomControlLibrary")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -1160,22 +1312,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceCust
 	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
 		return
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "replace_custom_control_library", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalControlLibrary)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -1188,23 +1345,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceCust
 // View the details of a control library by specifying its ID.
 //
 // With Security and Compliance Center, you can create a custom control library that is specific to your organization's
-// needs.  You define the controls and specifications before you map previously created assessments. Each control has
-// several specifications  and assessments that are mapped to it. A specification is a defined requirement that is
-// specific to a component. An assessment, or several,  are mapped to each specification with a detailed evaluation that
+// needs. You define the controls and specifications before you map previously created assessments. Each control has
+// several specifications and assessments that are mapped to it. A specification is a defined requirement that is
+// specific to a component. An assessment, or several, are mapped to each specification with a detailed evaluation that
 // is done to check whether the specification is compliant. For more information, see [Creating custom
 // libraries](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-custom-library).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetControlLibrary(getControlLibraryOptions *GetControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.GetControlLibraryWithContext(context.Background(), getControlLibraryOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetControlLibrary(getControlLibraryOptions *GetControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.GetControlLibraryWithContext(context.Background(), getControlLibraryOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetControlLibraryWithContext is an alternate form of the GetControlLibrary method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetControlLibraryWithContext(ctx context.Context, getControlLibraryOptions *GetControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetControlLibraryWithContext(ctx context.Context, getControlLibraryOptions *GetControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getControlLibraryOptions, "getControlLibraryOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(getControlLibraryOptions, "getControlLibraryOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1215,9 +1376,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetControlL
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/control_libraries/{control_library_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/control_libraries/{control_library_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1225,7 +1387,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetControlL
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "GetControlLibrary")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "GetControlLibrary")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -1237,17 +1399,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetControlL
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "get_control_library", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalControlLibrary)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -1260,23 +1426,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetControlL
 // Delete a custom control library by specifying its ID.
 //
 // With Security and Compliance Center, you can create a custom control library that is specific to your organization's
-// needs.  You define the controls and specifications before you map previously created assessments. Each control has
-// several specifications  and assessments that are mapped to it. A specification is a defined requirement that is
-// specific to a component. An assessment, or several,  are mapped to each specification with a detailed evaluation that
+// needs. You define the controls and specifications before you map previously created assessments. Each control has
+// several specifications and assessments that are mapped to it. A specification is a defined requirement that is
+// specific to a component. An assessment, or several, are mapped to each specification with a detailed evaluation that
 // is done to check whether the specification is compliant. For more information, see [Creating custom
 // libraries](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-custom-library).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteCustomControlLibrary(deleteCustomControlLibraryOptions *DeleteCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.DeleteCustomControlLibraryWithContext(context.Background(), deleteCustomControlLibraryOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) DeleteCustomControlLibrary(deleteCustomControlLibraryOptions *DeleteCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.DeleteCustomControlLibraryWithContext(context.Background(), deleteCustomControlLibraryOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // DeleteCustomControlLibraryWithContext is an alternate form of the DeleteCustomControlLibrary method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteCustomControlLibraryWithContext(ctx context.Context, deleteCustomControlLibraryOptions *DeleteCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) DeleteCustomControlLibraryWithContext(ctx context.Context, deleteCustomControlLibraryOptions *DeleteCustomControlLibraryOptions) (result *ControlLibrary, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(deleteCustomControlLibraryOptions, "deleteCustomControlLibraryOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(deleteCustomControlLibraryOptions, "deleteCustomControlLibraryOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1287,9 +1457,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteCusto
 
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/control_libraries/{control_library_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/control_libraries/{control_library_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1297,7 +1468,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteCusto
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "DeleteCustomControlLibrary")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "DeleteCustomControlLibrary")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -1309,17 +1480,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteCusto
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "delete_custom_control_library", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalControlLibrary)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -1331,21 +1506,25 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteCusto
 // CreateProfile : Create a custom profile
 // Create a user-defined custom profile.
 //
-// With Security and Compliance Center, you can create  a profile that is specific to your usecase, by using an existing
-// library as a starting point.  For more information, see [Building custom
+// With Security and Compliance Center, you can create a profile that is specific to your usecase, by using an existing
+// library as a starting point. For more information, see [Building custom
 // profiles](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-build-custom-profiles&interface=api).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProfile(createProfileOptions *CreateProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.CreateProfileWithContext(context.Background(), createProfileOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CreateProfile(createProfileOptions *CreateProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.CreateProfileWithContext(context.Background(), createProfileOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // CreateProfileWithContext is an alternate form of the CreateProfile method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProfileWithContext(ctx context.Context, createProfileOptions *CreateProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CreateProfileWithContext(ctx context.Context, createProfileOptions *CreateProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(createProfileOptions, "createProfileOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(createProfileOptions, "createProfileOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1355,9 +1534,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProfi
 
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/profiles`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/profiles`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1365,7 +1545,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProfi
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "CreateProfile")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "CreateProfile")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -1380,17 +1560,8 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProfi
 	if createProfileOptions.ProfileName != nil {
 		body["profile_name"] = createProfileOptions.ProfileName
 	}
-	if createProfileOptions.ProfileDescription != nil {
-		body["profile_description"] = createProfileOptions.ProfileDescription
-	}
 	if createProfileOptions.ProfileVersion != nil {
 		body["profile_version"] = createProfileOptions.ProfileVersion
-	}
-	if createProfileOptions.Latest != nil {
-		body["latest"] = createProfileOptions.Latest
-	}
-	if createProfileOptions.VersionGroupLabel != nil {
-		body["version_group_label"] = createProfileOptions.VersionGroupLabel
 	}
 	if createProfileOptions.Controls != nil {
 		body["controls"] = createProfileOptions.Controls
@@ -1398,24 +1569,38 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProfi
 	if createProfileOptions.DefaultParameters != nil {
 		body["default_parameters"] = createProfileOptions.DefaultParameters
 	}
+	if createProfileOptions.ProfileDescription != nil {
+		body["profile_description"] = createProfileOptions.ProfileDescription
+	}
+	if createProfileOptions.Latest != nil {
+		body["latest"] = createProfileOptions.Latest
+	}
+	if createProfileOptions.VersionGroupLabel != nil {
+		body["version_group_label"] = createProfileOptions.VersionGroupLabel
+	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
 		return
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "create_profile", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalProfile)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -1427,22 +1612,26 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProfi
 // ListProfiles : Get all profiles
 // Retrieve all profiles, including predefined and custom profiles.
 //
-// With Security and Compliance Center, you can take advantage of predefined profiles  that are curated based on
-// industry standards. Or you can choose  to create one that is specific to your usecase by using an existing library as
-// a starting point. For more information, see [Building custom
+// With Security and Compliance Center, you can take advantage of predefined profiles that are curated based on industry
+// standards. Or you can choose to create one that is specific to your usecase by using an existing library as a
+// starting point. For more information, see [Building custom
 // profiles](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-build-custom-profiles&interface=api).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfiles(listProfilesOptions *ListProfilesOptions) (result *ProfileCollection, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ListProfilesWithContext(context.Background(), listProfilesOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListProfiles(listProfilesOptions *ListProfilesOptions) (result *ProfileCollection, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ListProfilesWithContext(context.Background(), listProfilesOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ListProfilesWithContext is an alternate form of the ListProfiles method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfilesWithContext(ctx context.Context, listProfilesOptions *ListProfilesOptions) (result *ProfileCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListProfilesWithContext(ctx context.Context, listProfilesOptions *ListProfilesOptions) (result *ProfileCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listProfilesOptions, "listProfilesOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(listProfilesOptions, "listProfilesOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1452,9 +1641,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfile
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/profiles`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/profiles`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1462,7 +1652,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfile
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ListProfiles")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ListProfiles")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -1470,9 +1660,6 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfile
 
 	if listProfilesOptions.AccountID != nil {
 		builder.AddQuery("account_id", fmt.Sprint(*listProfilesOptions.AccountID))
-	}
-	if listProfilesOptions.ProfileType != nil {
-		builder.AddQuery("profile_type", fmt.Sprint(*listProfilesOptions.ProfileType))
 	}
 	if listProfilesOptions.Limit != nil {
 		builder.AddQuery("limit", fmt.Sprint(*listProfilesOptions.Limit))
@@ -1483,17 +1670,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfile
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "list_profiles", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalProfileCollection)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -1505,21 +1696,25 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfile
 // ReplaceProfile : Update a custom profile
 // Update the details of a user-defined profile.
 //
-// With Security and Compliance Center, you can create  a profile that is specific to your usecase, by using an existing
-// library as a starting point.  For more information, see [Building custom
+// With Security and Compliance Center, you can create a profile that is specific to your usecase, by using an existing
+// library as a starting point. For more information, see [Building custom
 // profiles](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-build-custom-profiles&interface=api).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProfile(replaceProfileOptions *ReplaceProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ReplaceProfileWithContext(context.Background(), replaceProfileOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ReplaceProfile(replaceProfileOptions *ReplaceProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ReplaceProfileWithContext(context.Background(), replaceProfileOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ReplaceProfileWithContext is an alternate form of the ReplaceProfile method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProfileWithContext(ctx context.Context, replaceProfileOptions *ReplaceProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ReplaceProfileWithContext(ctx context.Context, replaceProfileOptions *ReplaceProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(replaceProfileOptions, "replaceProfileOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(replaceProfileOptions, "replaceProfileOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1530,9 +1725,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProf
 
 	builder := core.NewRequestBuilder(core.PUT)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1540,7 +1736,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProf
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ReplaceProfile")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ReplaceProfile")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -1552,48 +1748,80 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProf
 	}
 
 	body := make(map[string]interface{})
-	if replaceProfileOptions.ProfileName != nil {
-		body["profile_name"] = replaceProfileOptions.ProfileName
+	if replaceProfileOptions.NewProfileType != nil {
+		body["profile_type"] = replaceProfileOptions.NewProfileType
 	}
-	if replaceProfileOptions.ProfileDescription != nil {
-		body["profile_description"] = replaceProfileOptions.ProfileDescription
+	if replaceProfileOptions.NewControls != nil {
+		body["controls"] = replaceProfileOptions.NewControls
 	}
-	if replaceProfileOptions.ProfileVersion != nil {
-		body["profile_version"] = replaceProfileOptions.ProfileVersion
+	if replaceProfileOptions.NewDefaultParameters != nil {
+		body["default_parameters"] = replaceProfileOptions.NewDefaultParameters
 	}
-	if replaceProfileOptions.ProfileType != nil {
-		body["profile_type"] = replaceProfileOptions.ProfileType
+	if replaceProfileOptions.NewID != nil {
+		body["id"] = replaceProfileOptions.NewID
 	}
-	if replaceProfileOptions.Latest != nil {
-		body["latest"] = replaceProfileOptions.Latest
+	if replaceProfileOptions.NewProfileName != nil {
+		body["profile_name"] = replaceProfileOptions.NewProfileName
 	}
-	if replaceProfileOptions.VersionGroupLabel != nil {
-		body["version_group_label"] = replaceProfileOptions.VersionGroupLabel
+	if replaceProfileOptions.NewInstanceID != nil {
+		body["instance_id"] = replaceProfileOptions.NewInstanceID
 	}
-	if replaceProfileOptions.Controls != nil {
-		body["controls"] = replaceProfileOptions.Controls
+	if replaceProfileOptions.NewHierarchyEnabled != nil {
+		body["hierarchy_enabled"] = replaceProfileOptions.NewHierarchyEnabled
 	}
-	if replaceProfileOptions.DefaultParameters != nil {
-		body["default_parameters"] = replaceProfileOptions.DefaultParameters
+	if replaceProfileOptions.NewProfileDescription != nil {
+		body["profile_description"] = replaceProfileOptions.NewProfileDescription
+	}
+	if replaceProfileOptions.NewProfileVersion != nil {
+		body["profile_version"] = replaceProfileOptions.NewProfileVersion
+	}
+	if replaceProfileOptions.NewVersionGroupLabel != nil {
+		body["version_group_label"] = replaceProfileOptions.NewVersionGroupLabel
+	}
+	if replaceProfileOptions.NewLatest != nil {
+		body["latest"] = replaceProfileOptions.NewLatest
+	}
+	if replaceProfileOptions.NewCreatedBy != nil {
+		body["created_by"] = replaceProfileOptions.NewCreatedBy
+	}
+	if replaceProfileOptions.NewCreatedOn != nil {
+		body["created_on"] = replaceProfileOptions.NewCreatedOn
+	}
+	if replaceProfileOptions.NewUpdatedBy != nil {
+		body["updated_by"] = replaceProfileOptions.NewUpdatedBy
+	}
+	if replaceProfileOptions.NewUpdatedOn != nil {
+		body["updated_on"] = replaceProfileOptions.NewUpdatedOn
+	}
+	if replaceProfileOptions.NewControlsCount != nil {
+		body["controls_count"] = replaceProfileOptions.NewControlsCount
+	}
+	if replaceProfileOptions.NewAttachmentsCount != nil {
+		body["attachments_count"] = replaceProfileOptions.NewAttachmentsCount
 	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
 		return
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "replace_profile", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalProfile)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -1605,22 +1833,26 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProf
 // GetProfile : Get a profile
 // Retrieve a profile by specifying the profile ID.
 //
-// With Security and Compliance Center, you can utilize predefined profiles  that are curated based on industry
-// standards. Or you can choose  to create one that is specific to your usecase, by using an existing library as a
+// With Security and Compliance Center, you can utilize predefined profiles that are curated based on industry
+// standards. Or you can choose to create one that is specific to your usecase, by using an existing library as a
 // starting point. For more information, see [Building custom
 // profiles](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-build-custom-profiles&interface=api).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProfile(getProfileOptions *GetProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.GetProfileWithContext(context.Background(), getProfileOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetProfile(getProfileOptions *GetProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.GetProfileWithContext(context.Background(), getProfileOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetProfileWithContext is an alternate form of the GetProfile method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProfileWithContext(ctx context.Context, getProfileOptions *GetProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetProfileWithContext(ctx context.Context, getProfileOptions *GetProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getProfileOptions, "getProfileOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(getProfileOptions, "getProfileOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1631,9 +1863,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProfileW
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1641,7 +1874,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProfileW
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "GetProfile")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "GetProfile")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -1653,17 +1886,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProfileW
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "get_profile", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalProfile)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -1675,22 +1912,26 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProfileW
 // DeleteCustomProfile : Delete a custom profile
 // Delete a custom profile by specifying the profile ID.
 //
-// With Security and Compliance Center, you can utilize predefined profiles  that are curated based on industry
-// standards. Or you can choose  to create one that is specific to your usecase, by using an existing library as a
+// With Security and Compliance Center, you can utilize predefined profiles that are curated based on industry
+// standards. Or you can choose to create one that is specific to your usecase, by using an existing library as a
 // starting point. For more information, see [Building custom
 // profiles](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-build-custom-profiles&interface=api).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteCustomProfile(deleteCustomProfileOptions *DeleteCustomProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.DeleteCustomProfileWithContext(context.Background(), deleteCustomProfileOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) DeleteCustomProfile(deleteCustomProfileOptions *DeleteCustomProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.DeleteCustomProfileWithContext(context.Background(), deleteCustomProfileOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // DeleteCustomProfileWithContext is an alternate form of the DeleteCustomProfile method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteCustomProfileWithContext(ctx context.Context, deleteCustomProfileOptions *DeleteCustomProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) DeleteCustomProfileWithContext(ctx context.Context, deleteCustomProfileOptions *DeleteCustomProfileOptions) (result *Profile, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(deleteCustomProfileOptions, "deleteCustomProfileOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(deleteCustomProfileOptions, "deleteCustomProfileOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1701,9 +1942,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteCusto
 
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1711,7 +1953,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteCusto
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "DeleteCustomProfile")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "DeleteCustomProfile")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -1723,17 +1965,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteCusto
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "delete_custom_profile", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalProfile)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -1745,22 +1991,26 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteCusto
 // ReplaceProfileParameters : Update custom profile parameters
 // Update the parameters of a custom profile.
 //
-// With Security and Compliance Center, you can utilize predefined profiles  that are curated based on industry
-// standards. Or you can choose  to create one that is specific to your usecase, by using an existing library as a
+// With Security and Compliance Center, you can utilize predefined profiles that are curated based on industry
+// standards. Or you can choose to create one that is specific to your usecase, by using an existing library as a
 // starting point. For more information, see [Building custom
 // profiles](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-build-custom-profiles&interface=api).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProfileParameters(replaceProfileParametersOptions *ReplaceProfileParametersOptions) (result *ProfileDefaultParametersResponse, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ReplaceProfileParametersWithContext(context.Background(), replaceProfileParametersOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ReplaceProfileParameters(replaceProfileParametersOptions *ReplaceProfileParametersOptions) (result *ProfileDefaultParametersResponse, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ReplaceProfileParametersWithContext(context.Background(), replaceProfileParametersOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ReplaceProfileParametersWithContext is an alternate form of the ReplaceProfileParameters method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProfileParametersWithContext(ctx context.Context, replaceProfileParametersOptions *ReplaceProfileParametersOptions) (result *ProfileDefaultParametersResponse, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ReplaceProfileParametersWithContext(ctx context.Context, replaceProfileParametersOptions *ReplaceProfileParametersOptions) (result *ProfileDefaultParametersResponse, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(replaceProfileParametersOptions, "replaceProfileParametersOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(replaceProfileParametersOptions, "replaceProfileParametersOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1771,9 +2021,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProf
 
 	builder := core.NewRequestBuilder(core.PUT)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}/parameters`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}/parameters`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1781,7 +2032,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProf
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ReplaceProfileParameters")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ReplaceProfileParameters")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -1793,30 +2044,35 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProf
 	}
 
 	body := make(map[string]interface{})
-	if replaceProfileParametersOptions.ID != nil {
-		body["id"] = replaceProfileParametersOptions.ID
-	}
 	if replaceProfileParametersOptions.DefaultParameters != nil {
 		body["default_parameters"] = replaceProfileParametersOptions.DefaultParameters
 	}
+	if replaceProfileParametersOptions.ID != nil {
+		body["id"] = replaceProfileParametersOptions.ID
+	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
 		return
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "replace_profile_parameters", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalProfileDefaultParametersResponse)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -1827,18 +2083,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceProf
 
 // ListProfileParameters : List profile parameters for a given profile
 // List the parameters used in the Profile.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfileParameters(listProfileParametersOptions *ListProfileParametersOptions) (result *ProfileDefaultParametersResponse, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ListProfileParametersWithContext(context.Background(), listProfileParametersOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListProfileParameters(listProfileParametersOptions *ListProfileParametersOptions) (result *ProfileDefaultParametersResponse, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ListProfileParametersWithContext(context.Background(), listProfileParametersOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ListProfileParametersWithContext is an alternate form of the ListProfileParameters method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfileParametersWithContext(ctx context.Context, listProfileParametersOptions *ListProfileParametersOptions) (result *ProfileDefaultParametersResponse, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListProfileParametersWithContext(ctx context.Context, listProfileParametersOptions *ListProfileParametersOptions) (result *ProfileDefaultParametersResponse, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listProfileParametersOptions, "listProfileParametersOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(listProfileParametersOptions, "listProfileParametersOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1849,9 +2109,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfile
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}/parameters`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}/parameters`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1859,7 +2120,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfile
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ListProfileParameters")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ListProfileParameters")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -1867,17 +2128,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfile
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "list_profile_parameters", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalProfileDefaultParametersResponse)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -1888,21 +2153,25 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProfile
 
 // CompareProfiles : Compare profiles
 // Compare the version of the profile that you're currently using with your attachment to the most recent profile
-// version.  By comparing them, you can view what controls were added, removed, or modified. For more information, see
+// version. By comparing them, you can view what controls were added, removed, or modified. For more information, see
 // [Building custom
 // profiles](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-build-custom-profiles&interface=api).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CompareProfiles(compareProfilesOptions *CompareProfilesOptions) (result *ComparePredefinedProfilesResponse, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.CompareProfilesWithContext(context.Background(), compareProfilesOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CompareProfiles(compareProfilesOptions *CompareProfilesOptions) (result *ComparePredefinedProfilesResponse, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.CompareProfilesWithContext(context.Background(), compareProfilesOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // CompareProfilesWithContext is an alternate form of the CompareProfiles method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CompareProfilesWithContext(ctx context.Context, compareProfilesOptions *CompareProfilesOptions) (result *ComparePredefinedProfilesResponse, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CompareProfilesWithContext(ctx context.Context, compareProfilesOptions *CompareProfilesOptions) (result *ComparePredefinedProfilesResponse, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(compareProfilesOptions, "compareProfilesOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(compareProfilesOptions, "compareProfilesOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1913,9 +2182,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CompareProf
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}/compare`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}/compare`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1923,7 +2193,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CompareProf
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "CompareProfiles")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "CompareProfiles")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -1935,17 +2205,101 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CompareProf
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "compare_profiles", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalComparePredefinedProfilesResponse)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// ListProfileAttachments : Get all attachments linked to a specific profile
+// Retrieve all attachments that are linked to a profile.
+//
+// With Security and Compliance Center, you can evaluate your resources on a recurring schedule or you can initiate a
+// scan at any time. To evaluate your resources, you create an attachment. An attachment is the association between the
+// set of resources that you want to evaluate and a profile that contains the specific controls that you want to use.
+// For more information, see [Running an evaluation for IBM
+// Cloud](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scan-resources).
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListProfileAttachments(listProfileAttachmentsOptions *ListProfileAttachmentsOptions) (result *ProfileAttachmentCollection, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ListProfileAttachmentsWithContext(context.Background(), listProfileAttachmentsOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
+}
+
+// ListProfileAttachmentsWithContext is an alternate form of the ListProfileAttachments method which supports a Context parameter
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListProfileAttachmentsWithContext(ctx context.Context, listProfileAttachmentsOptions *ListProfileAttachmentsOptions) (result *ProfileAttachmentCollection, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(listProfileAttachmentsOptions, "listProfileAttachmentsOptions cannot be nil")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
+		return
+	}
+	err = core.ValidateStruct(listProfileAttachmentsOptions, "listProfileAttachmentsOptions")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *listProfileAttachmentsOptions.InstanceID,
+		"profile_id":  *listProfileAttachmentsOptions.ProfileID,
+	}
+
+	builder := core.NewRequestBuilder(core.GET)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/profiles/{profile_id}/attachments`, pathParamsMap)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
+		return
+	}
+
+	for headerName, headerValue := range listProfileAttachmentsOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ListProfileAttachments")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+
+	if listProfileAttachmentsOptions.AccountID != nil {
+		builder.AddQuery("account_id", fmt.Sprint(*listProfileAttachmentsOptions.AccountID))
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
+	if err != nil {
+		core.EnrichHTTPProblem(err, "list_profile_attachments", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalProfileAttachmentCollection)
+		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -1956,18 +2310,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CompareProf
 
 // CreateScope : Create a scope
 // Create a scope.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateScope(createScopeOptions *CreateScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.CreateScopeWithContext(context.Background(), createScopeOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CreateScope(createScopeOptions *CreateScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.CreateScopeWithContext(context.Background(), createScopeOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // CreateScopeWithContext is an alternate form of the CreateScope method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateScopeWithContext(ctx context.Context, createScopeOptions *CreateScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CreateScopeWithContext(ctx context.Context, createScopeOptions *CreateScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(createScopeOptions, "createScopeOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(createScopeOptions, "createScopeOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1977,9 +2335,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateScope
 
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/scopes`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/scopes`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -1987,7 +2346,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateScope
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "CreateScope")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "CreateScope")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -2009,22 +2368,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateScope
 	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
 		return
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "create_scope", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalScope)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -2035,18 +2399,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateScope
 
 // ListScopes : Get all scopes
 // Get all scopes.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListScopes(listScopesOptions *ListScopesOptions) (result *ScopeCollection, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ListScopesWithContext(context.Background(), listScopesOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListScopes(listScopesOptions *ListScopesOptions) (result *ScopeCollection, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ListScopesWithContext(context.Background(), listScopesOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ListScopesWithContext is an alternate form of the ListScopes method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListScopesWithContext(ctx context.Context, listScopesOptions *ListScopesOptions) (result *ScopeCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListScopesWithContext(ctx context.Context, listScopesOptions *ListScopesOptions) (result *ScopeCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listScopesOptions, "listScopesOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(listScopesOptions, "listScopesOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2056,9 +2424,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListScopesW
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/scopes`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/scopes`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2066,7 +2435,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListScopesW
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ListScopes")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ListScopes")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -2090,17 +2459,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListScopesW
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "list_scopes", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalScopeCollection)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -2111,18 +2484,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListScopesW
 
 // UpdateScope : Update a scope
 // Update the details of a scope.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateScope(updateScopeOptions *UpdateScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.UpdateScopeWithContext(context.Background(), updateScopeOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) UpdateScope(updateScopeOptions *UpdateScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.UpdateScopeWithContext(context.Background(), updateScopeOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // UpdateScopeWithContext is an alternate form of the UpdateScope method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateScopeWithContext(ctx context.Context, updateScopeOptions *UpdateScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) UpdateScopeWithContext(ctx context.Context, updateScopeOptions *UpdateScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(updateScopeOptions, "updateScopeOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(updateScopeOptions, "updateScopeOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2133,9 +2510,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateScope
 
 	builder := core.NewRequestBuilder(core.PATCH)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/scopes/{scope_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/scopes/{scope_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2143,7 +2521,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateScope
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "UpdateScope")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "UpdateScope")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -2159,22 +2537,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateScope
 	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
 		return
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "update_scope", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalScope)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -2185,18 +2568,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateScope
 
 // GetScope : Get a scope
 // Get a scope by specifying the scope ID.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetScope(getScopeOptions *GetScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.GetScopeWithContext(context.Background(), getScopeOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetScope(getScopeOptions *GetScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.GetScopeWithContext(context.Background(), getScopeOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetScopeWithContext is an alternate form of the GetScope method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetScopeWithContext(ctx context.Context, getScopeOptions *GetScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetScopeWithContext(ctx context.Context, getScopeOptions *GetScopeOptions) (result *Scope, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getScopeOptions, "getScopeOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(getScopeOptions, "getScopeOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2207,9 +2594,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetScopeWit
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/scopes/{scope_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/scopes/{scope_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2217,7 +2605,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetScopeWit
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "GetScope")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "GetScope")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -2225,17 +2613,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetScopeWit
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "get_scope", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalScope)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -2246,18 +2638,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetScopeWit
 
 // DeleteScope : Delete a scope
 // Delete a scope by specifying the scope ID.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteScope(deleteScopeOptions *DeleteScopeOptions) (response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.DeleteScopeWithContext(context.Background(), deleteScopeOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) DeleteScope(deleteScopeOptions *DeleteScopeOptions) (response *core.DetailedResponse, err error) {
+	response, err = securityAndComplianceCenterApi.DeleteScopeWithContext(context.Background(), deleteScopeOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // DeleteScopeWithContext is an alternate form of the DeleteScope method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteScopeWithContext(ctx context.Context, deleteScopeOptions *DeleteScopeOptions) (response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) DeleteScopeWithContext(ctx context.Context, deleteScopeOptions *DeleteScopeOptions) (response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(deleteScopeOptions, "deleteScopeOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(deleteScopeOptions, "deleteScopeOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2268,9 +2664,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteScope
 
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/scopes/{scope_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/scopes/{scope_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2278,35 +2675,45 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteScope
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "DeleteScope")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "DeleteScope")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
-	response, err = securityAndComplianceCenter.Service.Request(request, nil)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, nil)
+	if err != nil {
+		core.EnrichHTTPProblem(err, "delete_scope", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
+		return
+	}
 
 	return
 }
 
 // CreateSubscope : Create a subscope
 // Create a subscope.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateSubscope(createSubscopeOptions *CreateSubscopeOptions) (result *SubScopeResponse, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.CreateSubscopeWithContext(context.Background(), createSubscopeOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CreateSubscope(createSubscopeOptions *CreateSubscopeOptions) (result *SubScopeResponse, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.CreateSubscopeWithContext(context.Background(), createSubscopeOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // CreateSubscopeWithContext is an alternate form of the CreateSubscope method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateSubscopeWithContext(ctx context.Context, createSubscopeOptions *CreateSubscopeOptions) (result *SubScopeResponse, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CreateSubscopeWithContext(ctx context.Context, createSubscopeOptions *CreateSubscopeOptions) (result *SubScopeResponse, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(createSubscopeOptions, "createSubscopeOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(createSubscopeOptions, "createSubscopeOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2317,9 +2724,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateSubsc
 
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/scopes/{scope_id}/subscopes`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/scopes/{scope_id}/subscopes`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2327,7 +2735,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateSubsc
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "CreateSubscope")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "CreateSubscope")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -2340,22 +2748,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateSubsc
 	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
 		return
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "create_subscope", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalSubScopeResponse)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -2366,18 +2779,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateSubsc
 
 // ListSubscopes : Get all subscopes
 // Get all subscopes.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListSubscopes(listSubscopesOptions *ListSubscopesOptions) (result *SubScopeCollection, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ListSubscopesWithContext(context.Background(), listSubscopesOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListSubscopes(listSubscopesOptions *ListSubscopesOptions) (result *SubScopeCollection, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ListSubscopesWithContext(context.Background(), listSubscopesOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ListSubscopesWithContext is an alternate form of the ListSubscopes method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListSubscopesWithContext(ctx context.Context, listSubscopesOptions *ListSubscopesOptions) (result *SubScopeCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListSubscopesWithContext(ctx context.Context, listSubscopesOptions *ListSubscopesOptions) (result *SubScopeCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listSubscopesOptions, "listSubscopesOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(listSubscopesOptions, "listSubscopesOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2388,9 +2805,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListSubscop
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/scopes/{scope_id}/subscopes`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/scopes/{scope_id}/subscopes`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2398,7 +2816,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListSubscop
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ListSubscopes")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ListSubscopes")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -2422,17 +2840,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListSubscop
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "list_subscopes", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalSubScopeCollection)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -2443,18 +2865,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListSubscop
 
 // GetSubscope : Get a subscope
 // Get the subscope details.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetSubscope(getSubscopeOptions *GetSubscopeOptions) (result *SubScope, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.GetSubscopeWithContext(context.Background(), getSubscopeOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetSubscope(getSubscopeOptions *GetSubscopeOptions) (result *SubScope, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.GetSubscopeWithContext(context.Background(), getSubscopeOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetSubscopeWithContext is an alternate form of the GetSubscope method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetSubscopeWithContext(ctx context.Context, getSubscopeOptions *GetSubscopeOptions) (result *SubScope, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetSubscopeWithContext(ctx context.Context, getSubscopeOptions *GetSubscopeOptions) (result *SubScope, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getSubscopeOptions, "getSubscopeOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(getSubscopeOptions, "getSubscopeOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2466,9 +2892,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetSubscope
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/scopes/{scope_id}/subscopes/{subscope_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/scopes/{scope_id}/subscopes/{subscope_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2476,7 +2903,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetSubscope
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "GetSubscope")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "GetSubscope")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -2484,17 +2911,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetSubscope
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "get_subscope", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalSubScope)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -2505,18 +2936,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetSubscope
 
 // UpdateSubscope : Update a subscope
 // Update the subscope details.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateSubscope(updateSubscopeOptions *UpdateSubscopeOptions) (result *SubScope, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.UpdateSubscopeWithContext(context.Background(), updateSubscopeOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) UpdateSubscope(updateSubscopeOptions *UpdateSubscopeOptions) (result *SubScope, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.UpdateSubscopeWithContext(context.Background(), updateSubscopeOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // UpdateSubscopeWithContext is an alternate form of the UpdateSubscope method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateSubscopeWithContext(ctx context.Context, updateSubscopeOptions *UpdateSubscopeOptions) (result *SubScope, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) UpdateSubscopeWithContext(ctx context.Context, updateSubscopeOptions *UpdateSubscopeOptions) (result *SubScope, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(updateSubscopeOptions, "updateSubscopeOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(updateSubscopeOptions, "updateSubscopeOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2528,9 +2963,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateSubsc
 
 	builder := core.NewRequestBuilder(core.PATCH)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/scopes/{scope_id}/subscopes/{subscope_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/scopes/{scope_id}/subscopes/{subscope_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2538,7 +2974,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateSubsc
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "UpdateSubscope")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "UpdateSubscope")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -2554,22 +2990,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateSubsc
 	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
 		return
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "update_subscope", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalSubScope)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -2580,18 +3021,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateSubsc
 
 // DeleteSubscope : Delete a subscope
 // Delete the subscope by specifying the subscope ID.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteSubscope(deleteSubscopeOptions *DeleteSubscopeOptions) (response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.DeleteSubscopeWithContext(context.Background(), deleteSubscopeOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) DeleteSubscope(deleteSubscopeOptions *DeleteSubscopeOptions) (response *core.DetailedResponse, err error) {
+	response, err = securityAndComplianceCenterApi.DeleteSubscopeWithContext(context.Background(), deleteSubscopeOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // DeleteSubscopeWithContext is an alternate form of the DeleteSubscope method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteSubscopeWithContext(ctx context.Context, deleteSubscopeOptions *DeleteSubscopeOptions) (response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) DeleteSubscopeWithContext(ctx context.Context, deleteSubscopeOptions *DeleteSubscopeOptions) (response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(deleteSubscopeOptions, "deleteSubscopeOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(deleteSubscopeOptions, "deleteSubscopeOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2603,9 +3048,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteSubsc
 
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/scopes/{scope_id}/subscopes/{subscope_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/scopes/{scope_id}/subscopes/{subscope_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2613,35 +3059,45 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteSubsc
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "DeleteSubscope")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "DeleteSubscope")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
-	response, err = securityAndComplianceCenter.Service.Request(request, nil)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, nil)
+	if err != nil {
+		core.EnrichHTTPProblem(err, "delete_subscope", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
+		return
+	}
 
 	return
 }
 
 // CreateTarget : Create a target
 // Creates a target to scan against.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateTarget(createTargetOptions *CreateTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.CreateTargetWithContext(context.Background(), createTargetOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CreateTarget(createTargetOptions *CreateTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.CreateTargetWithContext(context.Background(), createTargetOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // CreateTargetWithContext is an alternate form of the CreateTarget method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateTargetWithContext(ctx context.Context, createTargetOptions *CreateTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CreateTargetWithContext(ctx context.Context, createTargetOptions *CreateTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(createTargetOptions, "createTargetOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(createTargetOptions, "createTargetOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2651,9 +3107,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateTarge
 
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/targets`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/targets`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2661,7 +3118,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateTarge
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "CreateTarget")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "CreateTarget")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -2683,22 +3140,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateTarge
 	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
 		return
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "create_target", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalTarget)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -2709,18 +3171,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateTarge
 
 // ListTargets : Get a list of targets with pagination
 // Returns a list of targets.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListTargets(listTargetsOptions *ListTargetsOptions) (result *TargetCollection, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ListTargetsWithContext(context.Background(), listTargetsOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListTargets(listTargetsOptions *ListTargetsOptions) (result *TargetCollection, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ListTargetsWithContext(context.Background(), listTargetsOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ListTargetsWithContext is an alternate form of the ListTargets method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListTargetsWithContext(ctx context.Context, listTargetsOptions *ListTargetsOptions) (result *TargetCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListTargetsWithContext(ctx context.Context, listTargetsOptions *ListTargetsOptions) (result *TargetCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listTargetsOptions, "listTargetsOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(listTargetsOptions, "listTargetsOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2730,9 +3196,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListTargets
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/targets`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/targets`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2740,7 +3207,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListTargets
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ListTargets")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ListTargets")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -2748,17 +3215,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListTargets
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "list_targets", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalTargetCollection)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -2769,18 +3240,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListTargets
 
 // GetTarget : Get a target by ID
 // Retrieves a target by its ID association.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetTarget(getTargetOptions *GetTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.GetTargetWithContext(context.Background(), getTargetOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetTarget(getTargetOptions *GetTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.GetTargetWithContext(context.Background(), getTargetOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetTargetWithContext is an alternate form of the GetTarget method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetTargetWithContext(ctx context.Context, getTargetOptions *GetTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetTargetWithContext(ctx context.Context, getTargetOptions *GetTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getTargetOptions, "getTargetOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(getTargetOptions, "getTargetOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2791,9 +3266,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetTargetWi
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/targets/{target_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/targets/{target_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2801,7 +3277,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetTargetWi
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "GetTarget")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "GetTarget")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -2809,17 +3285,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetTargetWi
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "get_target", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalTarget)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -2830,18 +3310,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetTargetWi
 
 // ReplaceTarget : replace a target by ID
 // Updates a target by its ID.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceTarget(replaceTargetOptions *ReplaceTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ReplaceTargetWithContext(context.Background(), replaceTargetOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ReplaceTarget(replaceTargetOptions *ReplaceTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ReplaceTargetWithContext(context.Background(), replaceTargetOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ReplaceTargetWithContext is an alternate form of the ReplaceTarget method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceTargetWithContext(ctx context.Context, replaceTargetOptions *ReplaceTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ReplaceTargetWithContext(ctx context.Context, replaceTargetOptions *ReplaceTargetOptions) (result *Target, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(replaceTargetOptions, "replaceTargetOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(replaceTargetOptions, "replaceTargetOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2852,9 +3336,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceTarg
 
 	builder := core.NewRequestBuilder(core.PUT)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/targets/{target_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/targets/{target_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2862,7 +3347,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceTarg
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ReplaceTarget")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ReplaceTarget")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -2884,22 +3369,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceTarg
 	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
 		return
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "replace_target", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalTarget)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -2910,18 +3400,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceTarg
 
 // DeleteTarget : Delete a target by ID
 // Deletes a target by the ID.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteTarget(deleteTargetOptions *DeleteTargetOptions) (response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.DeleteTargetWithContext(context.Background(), deleteTargetOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) DeleteTarget(deleteTargetOptions *DeleteTargetOptions) (response *core.DetailedResponse, err error) {
+	response, err = securityAndComplianceCenterApi.DeleteTargetWithContext(context.Background(), deleteTargetOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // DeleteTargetWithContext is an alternate form of the DeleteTarget method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteTargetWithContext(ctx context.Context, deleteTargetOptions *DeleteTargetOptions) (response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) DeleteTargetWithContext(ctx context.Context, deleteTargetOptions *DeleteTargetOptions) (response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(deleteTargetOptions, "deleteTargetOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(deleteTargetOptions, "deleteTargetOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2932,9 +3426,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteTarge
 
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/targets/{target_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/targets/{target_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2942,17 +3437,23 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteTarge
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "DeleteTarget")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "DeleteTarget")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
-	response, err = securityAndComplianceCenter.Service.Request(request, nil)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, nil)
+	if err != nil {
+		core.EnrichHTTPProblem(err, "delete_target", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
+		return
+	}
 
 	return
 }
@@ -2960,18 +3461,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteTarge
 // CreateProviderTypeInstance : Create a provider type instance
 // Create an instance of a provider type. For more information about integrations, see [Connecting Workload
 // Protection](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-setup-workload-protection).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProviderTypeInstance(createProviderTypeInstanceOptions *CreateProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.CreateProviderTypeInstanceWithContext(context.Background(), createProviderTypeInstanceOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CreateProviderTypeInstance(createProviderTypeInstanceOptions *CreateProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.CreateProviderTypeInstanceWithContext(context.Background(), createProviderTypeInstanceOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // CreateProviderTypeInstanceWithContext is an alternate form of the CreateProviderTypeInstance method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProviderTypeInstanceWithContext(ctx context.Context, createProviderTypeInstanceOptions *CreateProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CreateProviderTypeInstanceWithContext(ctx context.Context, createProviderTypeInstanceOptions *CreateProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(createProviderTypeInstanceOptions, "createProviderTypeInstanceOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(createProviderTypeInstanceOptions, "createProviderTypeInstanceOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2982,9 +3487,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProvi
 
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/provider_types/{provider_type_id}/provider_type_instances`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/provider_types/{provider_type_id}/provider_type_instances`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -2992,7 +3498,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProvi
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "CreateProviderTypeInstance")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "CreateProviderTypeInstance")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -3008,22 +3514,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProvi
 	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
 		return
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "create_provider_type_instance", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalProviderTypeInstance)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -3035,18 +3546,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateProvi
 // ListProviderTypeInstances : List instances of a specific provider type
 // Retrieve all instances of a provider type. For more information about integrations, see [Connecting Workload
 // Protection](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-setup-workload-protection).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProviderTypeInstances(listProviderTypeInstancesOptions *ListProviderTypeInstancesOptions) (result *ProviderTypeInstanceCollection, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ListProviderTypeInstancesWithContext(context.Background(), listProviderTypeInstancesOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListProviderTypeInstances(listProviderTypeInstancesOptions *ListProviderTypeInstancesOptions) (result *ProviderTypeInstanceCollection, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ListProviderTypeInstancesWithContext(context.Background(), listProviderTypeInstancesOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ListProviderTypeInstancesWithContext is an alternate form of the ListProviderTypeInstances method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProviderTypeInstancesWithContext(ctx context.Context, listProviderTypeInstancesOptions *ListProviderTypeInstancesOptions) (result *ProviderTypeInstanceCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListProviderTypeInstancesWithContext(ctx context.Context, listProviderTypeInstancesOptions *ListProviderTypeInstancesOptions) (result *ProviderTypeInstanceCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listProviderTypeInstancesOptions, "listProviderTypeInstancesOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(listProviderTypeInstancesOptions, "listProviderTypeInstancesOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3057,9 +3572,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProvide
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/provider_types/{provider_type_id}/provider_type_instances`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/provider_types/{provider_type_id}/provider_type_instances`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3067,7 +3583,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProvide
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ListProviderTypeInstances")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ListProviderTypeInstances")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -3075,17 +3591,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProvide
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "list_provider_type_instances", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalProviderTypeInstanceCollection)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -3098,18 +3618,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProvide
 // Retrieve a provider type instance by specifying the provider type ID, and Security and Compliance Center instance ID.
 // For more information about integrations, see [Connecting Workload
 // Protection](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-setup-workload-protection).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProviderTypeInstance(getProviderTypeInstanceOptions *GetProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.GetProviderTypeInstanceWithContext(context.Background(), getProviderTypeInstanceOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetProviderTypeInstance(getProviderTypeInstanceOptions *GetProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.GetProviderTypeInstanceWithContext(context.Background(), getProviderTypeInstanceOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetProviderTypeInstanceWithContext is an alternate form of the GetProviderTypeInstance method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProviderTypeInstanceWithContext(ctx context.Context, getProviderTypeInstanceOptions *GetProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetProviderTypeInstanceWithContext(ctx context.Context, getProviderTypeInstanceOptions *GetProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getProviderTypeInstanceOptions, "getProviderTypeInstanceOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(getProviderTypeInstanceOptions, "getProviderTypeInstanceOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3121,9 +3645,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProvider
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/provider_types/{provider_type_id}/provider_type_instances/{provider_type_instance_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/provider_types/{provider_type_id}/provider_type_instances/{provider_type_instance_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3131,7 +3656,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProvider
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "GetProviderTypeInstance")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "GetProviderTypeInstance")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -3139,17 +3664,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProvider
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "get_provider_type_instance", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalProviderTypeInstance)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -3161,18 +3690,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProvider
 // UpdateProviderTypeInstance : Update a provider type instance
 // Update a provider type instance. For more information about integrations, see [Connecting Workload
 // Protection](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-setup-workload-protection).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateProviderTypeInstance(updateProviderTypeInstanceOptions *UpdateProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.UpdateProviderTypeInstanceWithContext(context.Background(), updateProviderTypeInstanceOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) UpdateProviderTypeInstance(updateProviderTypeInstanceOptions *UpdateProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.UpdateProviderTypeInstanceWithContext(context.Background(), updateProviderTypeInstanceOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // UpdateProviderTypeInstanceWithContext is an alternate form of the UpdateProviderTypeInstance method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateProviderTypeInstanceWithContext(ctx context.Context, updateProviderTypeInstanceOptions *UpdateProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) UpdateProviderTypeInstanceWithContext(ctx context.Context, updateProviderTypeInstanceOptions *UpdateProviderTypeInstanceOptions) (result *ProviderTypeInstance, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(updateProviderTypeInstanceOptions, "updateProviderTypeInstanceOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(updateProviderTypeInstanceOptions, "updateProviderTypeInstanceOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3184,9 +3717,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateProvi
 
 	builder := core.NewRequestBuilder(core.PATCH)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/provider_types/{provider_type_id}/provider_type_instances/{provider_type_instance_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/provider_types/{provider_type_id}/provider_type_instances/{provider_type_instance_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3194,7 +3728,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateProvi
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "UpdateProviderTypeInstance")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "UpdateProviderTypeInstance")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -3210,22 +3744,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateProvi
 	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
 		return
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "update_provider_type_instance", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalProviderTypeInstance)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -3237,18 +3776,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) UpdateProvi
 // DeleteProviderTypeInstance : Delete a provider type instance
 // Remove a provider type instance. For more information about integrations, see [Connecting Workload
 // Protection](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-setup-workload-protection).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteProviderTypeInstance(deleteProviderTypeInstanceOptions *DeleteProviderTypeInstanceOptions) (response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.DeleteProviderTypeInstanceWithContext(context.Background(), deleteProviderTypeInstanceOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) DeleteProviderTypeInstance(deleteProviderTypeInstanceOptions *DeleteProviderTypeInstanceOptions) (response *core.DetailedResponse, err error) {
+	response, err = securityAndComplianceCenterApi.DeleteProviderTypeInstanceWithContext(context.Background(), deleteProviderTypeInstanceOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // DeleteProviderTypeInstanceWithContext is an alternate form of the DeleteProviderTypeInstance method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteProviderTypeInstanceWithContext(ctx context.Context, deleteProviderTypeInstanceOptions *DeleteProviderTypeInstanceOptions) (response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) DeleteProviderTypeInstanceWithContext(ctx context.Context, deleteProviderTypeInstanceOptions *DeleteProviderTypeInstanceOptions) (response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(deleteProviderTypeInstanceOptions, "deleteProviderTypeInstanceOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(deleteProviderTypeInstanceOptions, "deleteProviderTypeInstanceOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3260,9 +3803,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteProvi
 
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/provider_types/{provider_type_id}/provider_type_instances/{provider_type_instance_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/provider_types/{provider_type_id}/provider_type_instances/{provider_type_instance_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3270,17 +3814,23 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteProvi
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "DeleteProviderTypeInstance")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "DeleteProviderTypeInstance")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
-	response, err = securityAndComplianceCenter.Service.Request(request, nil)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, nil)
+	if err != nil {
+		core.EnrichHTTPProblem(err, "delete_provider_type_instance", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
+		return
+	}
 
 	return
 }
@@ -3290,18 +3840,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteProvi
 // and Compliance Center.  For more information about connecting Workload Protection with the Security and Compliance
 // Center, see [Connecting Workload
 // Protection](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-setup-workload-protection).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProviderTypes(listProviderTypesOptions *ListProviderTypesOptions) (result *ProviderTypeCollection, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ListProviderTypesWithContext(context.Background(), listProviderTypesOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListProviderTypes(listProviderTypesOptions *ListProviderTypesOptions) (result *ProviderTypeCollection, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ListProviderTypesWithContext(context.Background(), listProviderTypesOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ListProviderTypesWithContext is an alternate form of the ListProviderTypes method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProviderTypesWithContext(ctx context.Context, listProviderTypesOptions *ListProviderTypesOptions) (result *ProviderTypeCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListProviderTypesWithContext(ctx context.Context, listProviderTypesOptions *ListProviderTypesOptions) (result *ProviderTypeCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listProviderTypesOptions, "listProviderTypesOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(listProviderTypesOptions, "listProviderTypesOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3311,9 +3865,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProvide
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/provider_types`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/provider_types`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3321,7 +3876,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProvide
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ListProviderTypes")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ListProviderTypes")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -3329,17 +3884,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProvide
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "list_provider_types", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalProviderTypeCollection)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -3351,18 +3910,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListProvide
 // GetProviderTypeByID : Get a provider type
 // Retrieve a provider type by specifying its ID. For more information about integrations, see [Connecting Workload
 // Protection](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-setup-workload-protection).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProviderTypeByID(getProviderTypeByIDOptions *GetProviderTypeByIDOptions) (result *ProviderType, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.GetProviderTypeByIDWithContext(context.Background(), getProviderTypeByIDOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetProviderTypeByID(getProviderTypeByIDOptions *GetProviderTypeByIDOptions) (result *ProviderType, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.GetProviderTypeByIDWithContext(context.Background(), getProviderTypeByIDOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetProviderTypeByIDWithContext is an alternate form of the GetProviderTypeByID method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProviderTypeByIDWithContext(ctx context.Context, getProviderTypeByIDOptions *GetProviderTypeByIDOptions) (result *ProviderType, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetProviderTypeByIDWithContext(ctx context.Context, getProviderTypeByIDOptions *GetProviderTypeByIDOptions) (result *ProviderType, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getProviderTypeByIDOptions, "getProviderTypeByIDOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(getProviderTypeByIDOptions, "getProviderTypeByIDOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3373,9 +3936,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProvider
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/provider_types/{provider_type_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/provider_types/{provider_type_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3383,7 +3947,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProvider
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "GetProviderTypeByID")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "GetProviderTypeByID")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -3391,139 +3955,25 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetProvider
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "get_provider_type_by_id", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalProviderType)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
 	}
-
-	return
-}
-
-// GetScanReport : Get a scan report
-// Retrieve the scan report by specifying the ID. For more information, see [Viewing
-// results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetScanReport(getScanReportOptions *GetScanReportOptions) (result *ScanReport, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.GetScanReportWithContext(context.Background(), getScanReportOptions)
-}
-
-// GetScanReportWithContext is an alternate form of the GetScanReport method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetScanReportWithContext(ctx context.Context, getScanReportOptions *GetScanReportOptions) (result *ScanReport, response *core.DetailedResponse, err error) {
-	err = core.ValidateNotNil(getScanReportOptions, "getScanReportOptions cannot be nil")
-	if err != nil {
-		return
-	}
-	err = core.ValidateStruct(getScanReportOptions, "getScanReportOptions")
-	if err != nil {
-		return
-	}
-
-	pathParamsMap := map[string]string{
-		"instance_id": *getScanReportOptions.InstanceID,
-		"report_id":   *getScanReportOptions.ReportID,
-		"job_id":      *getScanReportOptions.JobID,
-	}
-
-	builder := core.NewRequestBuilder(core.GET)
-	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/scan_reports/{job_id}`, pathParamsMap)
-	if err != nil {
-		return
-	}
-
-	for headerName, headerValue := range getScanReportOptions.Headers {
-		builder.AddHeader(headerName, headerValue)
-	}
-
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "GetScanReport")
-	for headerName, headerValue := range sdkHeaders {
-		builder.AddHeader(headerName, headerValue)
-	}
-	builder.AddHeader("Accept", "application/json")
-
-	request, err := builder.Build()
-	if err != nil {
-		return
-	}
-
-	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
-	if err != nil {
-		return
-	}
-	if rawResponse != nil {
-		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalScanReport)
-		if err != nil {
-			return
-		}
-		response.Result = result
-	}
-
-	return
-}
-
-// GetScanReportDownloadFile : Get a scan report details
-// Download the scan report with evaluation details for the specified ID. For more information, see [Viewing
-// results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetScanReportDownloadFile(getScanReportDownloadFileOptions *GetScanReportDownloadFileOptions) (result io.ReadCloser, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.GetScanReportDownloadFileWithContext(context.Background(), getScanReportDownloadFileOptions)
-}
-
-// GetScanReportDownloadFileWithContext is an alternate form of the GetScanReportDownloadFile method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetScanReportDownloadFileWithContext(ctx context.Context, getScanReportDownloadFileOptions *GetScanReportDownloadFileOptions) (result io.ReadCloser, response *core.DetailedResponse, err error) {
-	err = core.ValidateNotNil(getScanReportDownloadFileOptions, "getScanReportDownloadFileOptions cannot be nil")
-	if err != nil {
-		return
-	}
-	err = core.ValidateStruct(getScanReportDownloadFileOptions, "getScanReportDownloadFileOptions")
-	if err != nil {
-		return
-	}
-
-	pathParamsMap := map[string]string{
-		"instance_id": *getScanReportDownloadFileOptions.InstanceID,
-		"report_id":   *getScanReportDownloadFileOptions.ReportID,
-		"job_id":      *getScanReportDownloadFileOptions.JobID,
-	}
-
-	builder := core.NewRequestBuilder(core.GET)
-	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/scan_reports/{job_id}/download`, pathParamsMap)
-	if err != nil {
-		return
-	}
-
-	for headerName, headerValue := range getScanReportDownloadFileOptions.Headers {
-		builder.AddHeader(headerName, headerValue)
-	}
-
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "GetScanReportDownloadFile")
-	for headerName, headerValue := range sdkHeaders {
-		builder.AddHeader(headerName, headerValue)
-	}
-	builder.AddHeader("Accept", "application/csv")
-	if getScanReportDownloadFileOptions.Accept != nil {
-		builder.AddHeader("Accept", fmt.Sprint(*getScanReportDownloadFileOptions.Accept))
-	}
-
-	request, err := builder.Build()
-	if err != nil {
-		return
-	}
-
-	response, err = securityAndComplianceCenter.Service.Request(request, &result)
 
 	return
 }
@@ -3531,18 +3981,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetScanRepo
 // GetLatestReports : List latest reports
 // Retrieve the latest reports, which are grouped by profile ID, scope ID, and attachment ID. For more information, see
 // [Viewing results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetLatestReports(getLatestReportsOptions *GetLatestReportsOptions) (result *ReportLatest, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.GetLatestReportsWithContext(context.Background(), getLatestReportsOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetLatestReports(getLatestReportsOptions *GetLatestReportsOptions) (result *ReportLatest, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.GetLatestReportsWithContext(context.Background(), getLatestReportsOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetLatestReportsWithContext is an alternate form of the GetLatestReports method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetLatestReportsWithContext(ctx context.Context, getLatestReportsOptions *GetLatestReportsOptions) (result *ReportLatest, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetLatestReportsWithContext(ctx context.Context, getLatestReportsOptions *GetLatestReportsOptions) (result *ReportLatest, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getLatestReportsOptions, "getLatestReportsOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(getLatestReportsOptions, "getLatestReportsOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3552,9 +4006,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetLatestRe
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/reports/latest`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/reports/latest`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3562,7 +4017,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetLatestRe
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "GetLatestReports")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "GetLatestReports")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -3574,17 +4029,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetLatestRe
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "get_latest_reports", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalReportLatest)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -3596,18 +4055,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetLatestRe
 // ListReports : List reports
 // Retrieve a page of reports that are filtered by the specified parameters. For more information, see [Viewing
 // results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReports(listReportsOptions *ListReportsOptions) (result *ReportCollection, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ListReportsWithContext(context.Background(), listReportsOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListReports(listReportsOptions *ListReportsOptions) (result *ReportCollection, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ListReportsWithContext(context.Background(), listReportsOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ListReportsWithContext is an alternate form of the ListReports method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReportsWithContext(ctx context.Context, listReportsOptions *ListReportsOptions) (result *ReportCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListReportsWithContext(ctx context.Context, listReportsOptions *ListReportsOptions) (result *ReportCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listReportsOptions, "listReportsOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(listReportsOptions, "listReportsOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3617,9 +4080,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReports
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/reports`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/reports`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3627,20 +4091,20 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReports
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ListReports")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ListReports")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
 	builder.AddHeader("Accept", "application/json")
 
-	if listReportsOptions.AttachmentID != nil {
-		builder.AddQuery("attachment_id", fmt.Sprint(*listReportsOptions.AttachmentID))
+	if listReportsOptions.ReportAttachmentID != nil {
+		builder.AddQuery("report_attachment_id", fmt.Sprint(*listReportsOptions.ReportAttachmentID))
 	}
 	if listReportsOptions.GroupID != nil {
 		builder.AddQuery("group_id", fmt.Sprint(*listReportsOptions.GroupID))
 	}
-	if listReportsOptions.ProfileID != nil {
-		builder.AddQuery("profile_id", fmt.Sprint(*listReportsOptions.ProfileID))
+	if listReportsOptions.ReportProfileID != nil {
+		builder.AddQuery("report_profile_id", fmt.Sprint(*listReportsOptions.ReportProfileID))
 	}
 	if listReportsOptions.Type != nil {
 		builder.AddQuery("type", fmt.Sprint(*listReportsOptions.Type))
@@ -3657,17 +4121,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReports
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "list_reports", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalReportCollection)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -3679,18 +4147,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReports
 // GetReport : Get a report
 // Retrieve a specified report and filter the report details by the specified scope ID and/or subscope ID. For more
 // information, see [Viewing results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReport(getReportOptions *GetReportOptions) (result *Report, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.GetReportWithContext(context.Background(), getReportOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetReport(getReportOptions *GetReportOptions) (result *Report, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.GetReportWithContext(context.Background(), getReportOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetReportWithContext is an alternate form of the GetReport method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportWithContext(ctx context.Context, getReportOptions *GetReportOptions) (result *Report, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetReportWithContext(ctx context.Context, getReportOptions *GetReportOptions) (result *Report, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getReportOptions, "getReportOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(getReportOptions, "getReportOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3701,9 +4173,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportWi
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3711,7 +4184,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportWi
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "GetReport")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "GetReport")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -3726,17 +4199,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportWi
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "get_report", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalReport)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -3748,18 +4225,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportWi
 // GetReportSummary : Get a report summary
 // Retrieve the complete summarized information for a report. For more information, see [Viewing
 // results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportSummary(getReportSummaryOptions *GetReportSummaryOptions) (result *ReportSummary, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.GetReportSummaryWithContext(context.Background(), getReportSummaryOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetReportSummary(getReportSummaryOptions *GetReportSummaryOptions) (result *ReportSummary, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.GetReportSummaryWithContext(context.Background(), getReportSummaryOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetReportSummaryWithContext is an alternate form of the GetReportSummary method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportSummaryWithContext(ctx context.Context, getReportSummaryOptions *GetReportSummaryOptions) (result *ReportSummary, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetReportSummaryWithContext(ctx context.Context, getReportSummaryOptions *GetReportSummaryOptions) (result *ReportSummary, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getReportSummaryOptions, "getReportSummaryOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(getReportSummaryOptions, "getReportSummaryOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3770,9 +4251,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportSu
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/summary`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/summary`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3780,7 +4262,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportSu
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "GetReportSummary")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "GetReportSummary")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -3788,17 +4270,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportSu
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "get_report_summary", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalReportSummary)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -3810,18 +4296,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportSu
 // GetReportDownloadFile : Get report evaluation details
 // Download a .csv file to inspect the evaluation details of a specified report. For more information, see [Viewing
 // results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportDownloadFile(getReportDownloadFileOptions *GetReportDownloadFileOptions) (result io.ReadCloser, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.GetReportDownloadFileWithContext(context.Background(), getReportDownloadFileOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetReportDownloadFile(getReportDownloadFileOptions *GetReportDownloadFileOptions) (result io.ReadCloser, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.GetReportDownloadFileWithContext(context.Background(), getReportDownloadFileOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetReportDownloadFileWithContext is an alternate form of the GetReportDownloadFile method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportDownloadFileWithContext(ctx context.Context, getReportDownloadFileOptions *GetReportDownloadFileOptions) (result io.ReadCloser, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetReportDownloadFileWithContext(ctx context.Context, getReportDownloadFileOptions *GetReportDownloadFileOptions) (result io.ReadCloser, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getReportDownloadFileOptions, "getReportDownloadFileOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(getReportDownloadFileOptions, "getReportDownloadFileOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3832,9 +4322,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportDo
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/download`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/download`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3842,7 +4333,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportDo
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "GetReportDownloadFile")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "GetReportDownloadFile")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -3857,10 +4348,16 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportDo
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
-	response, err = securityAndComplianceCenter.Service.Request(request, &result)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &result)
+	if err != nil {
+		core.EnrichHTTPProblem(err, "get_report_download_file", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
+		return
+	}
 
 	return
 }
@@ -3868,18 +4365,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportDo
 // GetReportControls : Get report controls
 // Retrieve a sorted and filtered list of controls for the specified report. For more information, see [Viewing
 // results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportControls(getReportControlsOptions *GetReportControlsOptions) (result *ReportControls, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.GetReportControlsWithContext(context.Background(), getReportControlsOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetReportControls(getReportControlsOptions *GetReportControlsOptions) (result *ReportControls, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.GetReportControlsWithContext(context.Background(), getReportControlsOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetReportControlsWithContext is an alternate form of the GetReportControls method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportControlsWithContext(ctx context.Context, getReportControlsOptions *GetReportControlsOptions) (result *ReportControls, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetReportControlsWithContext(ctx context.Context, getReportControlsOptions *GetReportControlsOptions) (result *ReportControls, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getReportControlsOptions, "getReportControlsOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(getReportControlsOptions, "getReportControlsOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3890,9 +4391,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportCo
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/controls`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/controls`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3900,7 +4402,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportCo
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "GetReportControls")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "GetReportControls")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -3933,17 +4435,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportCo
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "get_report_controls", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalReportControls)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -3955,18 +4461,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportCo
 // GetReportRule : Get a report rule
 // Retrieve the rule by specifying the report ID and rule ID. For more information, see [Viewing
 // results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportRule(getReportRuleOptions *GetReportRuleOptions) (result *RuleInfo, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.GetReportRuleWithContext(context.Background(), getReportRuleOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetReportRule(getReportRuleOptions *GetReportRuleOptions) (result *RuleInfo, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.GetReportRuleWithContext(context.Background(), getReportRuleOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetReportRuleWithContext is an alternate form of the GetReportRule method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportRuleWithContext(ctx context.Context, getReportRuleOptions *GetReportRuleOptions) (result *RuleInfo, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetReportRuleWithContext(ctx context.Context, getReportRuleOptions *GetReportRuleOptions) (result *RuleInfo, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getReportRuleOptions, "getReportRuleOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(getReportRuleOptions, "getReportRuleOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3978,9 +4488,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportRu
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/rules/{rule_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/rules/{rule_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -3988,7 +4499,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportRu
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "GetReportRule")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "GetReportRule")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -3996,17 +4507,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportRu
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "get_report_rule", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalRuleInfo)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -4018,18 +4533,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportRu
 // ListReportEvaluations : List report evaluations
 // Get a paginated list of evaluations for the specified report. For more information, see [Viewing
 // results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReportEvaluations(listReportEvaluationsOptions *ListReportEvaluationsOptions) (result *EvaluationPage, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ListReportEvaluationsWithContext(context.Background(), listReportEvaluationsOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListReportEvaluations(listReportEvaluationsOptions *ListReportEvaluationsOptions) (result *EvaluationPage, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ListReportEvaluationsWithContext(context.Background(), listReportEvaluationsOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ListReportEvaluationsWithContext is an alternate form of the ListReportEvaluations method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReportEvaluationsWithContext(ctx context.Context, listReportEvaluationsOptions *ListReportEvaluationsOptions) (result *EvaluationPage, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListReportEvaluationsWithContext(ctx context.Context, listReportEvaluationsOptions *ListReportEvaluationsOptions) (result *EvaluationPage, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listReportEvaluationsOptions, "listReportEvaluationsOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(listReportEvaluationsOptions, "listReportEvaluationsOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4040,9 +4559,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReportE
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/evaluations`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/evaluations`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4050,7 +4570,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReportE
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ListReportEvaluations")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ListReportEvaluations")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -4095,17 +4615,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReportE
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "list_report_evaluations", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalEvaluationPage)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -4117,18 +4641,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReportE
 // ListReportResources : List report resources
 // Get a paginated list of resources for the specified report. For more information, see [Viewing
 // results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReportResources(listReportResourcesOptions *ListReportResourcesOptions) (result *ResourcePage, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ListReportResourcesWithContext(context.Background(), listReportResourcesOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListReportResources(listReportResourcesOptions *ListReportResourcesOptions) (result *ResourcePage, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ListReportResourcesWithContext(context.Background(), listReportResourcesOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ListReportResourcesWithContext is an alternate form of the ListReportResources method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReportResourcesWithContext(ctx context.Context, listReportResourcesOptions *ListReportResourcesOptions) (result *ResourcePage, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListReportResourcesWithContext(ctx context.Context, listReportResourcesOptions *ListReportResourcesOptions) (result *ResourcePage, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listReportResourcesOptions, "listReportResourcesOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(listReportResourcesOptions, "listReportResourcesOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4139,9 +4667,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReportR
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/resources`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/resources`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4149,7 +4678,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReportR
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ListReportResources")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ListReportResources")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -4188,17 +4717,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReportR
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "list_report_resources", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalResourcePage)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -4210,18 +4743,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListReportR
 // GetReportTags : List report tags
 // Retrieve a list of tags for the specified report. For more information, see [Viewing
 // results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportTags(getReportTagsOptions *GetReportTagsOptions) (result *ReportTags, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.GetReportTagsWithContext(context.Background(), getReportTagsOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetReportTags(getReportTagsOptions *GetReportTagsOptions) (result *ReportTags, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.GetReportTagsWithContext(context.Background(), getReportTagsOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetReportTagsWithContext is an alternate form of the GetReportTags method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportTagsWithContext(ctx context.Context, getReportTagsOptions *GetReportTagsOptions) (result *ReportTags, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetReportTagsWithContext(ctx context.Context, getReportTagsOptions *GetReportTagsOptions) (result *ReportTags, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getReportTagsOptions, "getReportTagsOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(getReportTagsOptions, "getReportTagsOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4232,9 +4769,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportTa
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/tags`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/tags`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4242,7 +4780,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportTa
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "GetReportTags")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "GetReportTags")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -4250,17 +4788,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportTa
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "get_report_tags", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalReportTags)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -4272,18 +4814,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportTa
 // GetReportViolationsDrift : Get report violations drift
 // Get a list of report violation data points for the specified report and time frame. For more information, see
 // [Viewing results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportViolationsDrift(getReportViolationsDriftOptions *GetReportViolationsDriftOptions) (result *ReportViolationsDrift, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.GetReportViolationsDriftWithContext(context.Background(), getReportViolationsDriftOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetReportViolationsDrift(getReportViolationsDriftOptions *GetReportViolationsDriftOptions) (result *ReportViolationsDrift, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.GetReportViolationsDriftWithContext(context.Background(), getReportViolationsDriftOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetReportViolationsDriftWithContext is an alternate form of the GetReportViolationsDrift method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportViolationsDriftWithContext(ctx context.Context, getReportViolationsDriftOptions *GetReportViolationsDriftOptions) (result *ReportViolationsDrift, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetReportViolationsDriftWithContext(ctx context.Context, getReportViolationsDriftOptions *GetReportViolationsDriftOptions) (result *ReportViolationsDrift, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getReportViolationsDriftOptions, "getReportViolationsDriftOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(getReportViolationsDriftOptions, "getReportViolationsDriftOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4294,9 +4840,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportVi
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/violations_drift`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/violations_drift`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4304,7 +4851,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportVi
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "GetReportViolationsDrift")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "GetReportViolationsDrift")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -4322,17 +4869,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportVi
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "get_report_violations_drift", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalReportViolationsDrift)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -4344,18 +4895,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetReportVi
 // ListScanReports : List scan reports
 // Get a list of scan reports and view the status of report generation in progress. For more information, see [Viewing
 // results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListScanReports(listScanReportsOptions *ListScanReportsOptions) (result *ScanReportCollection, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ListScanReportsWithContext(context.Background(), listScanReportsOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListScanReports(listScanReportsOptions *ListScanReportsOptions) (result *ScanReportCollection, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ListScanReportsWithContext(context.Background(), listScanReportsOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ListScanReportsWithContext is an alternate form of the ListScanReports method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListScanReportsWithContext(ctx context.Context, listScanReportsOptions *ListScanReportsOptions) (result *ScanReportCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListScanReportsWithContext(ctx context.Context, listScanReportsOptions *ListScanReportsOptions) (result *ScanReportCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listScanReportsOptions, "listScanReportsOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(listScanReportsOptions, "listScanReportsOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4366,9 +4921,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListScanRep
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/scan_reports`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/scan_reports`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4376,7 +4932,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListScanRep
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ListScanReports")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ListScanReports")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -4388,20 +4944,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListScanRep
 	if listScanReportsOptions.SubscopeID != nil {
 		builder.AddQuery("subscope_id", fmt.Sprint(*listScanReportsOptions.SubscopeID))
 	}
+	if listScanReportsOptions.Sort != nil {
+		builder.AddQuery("sort", fmt.Sprint(*listScanReportsOptions.Sort))
+	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "list_scan_reports", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalScanReportCollection)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -4413,18 +4976,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListScanRep
 // CreateScanReport : Create a scan report
 // Create a scan report for a specific scope or sub-scope. For more information, see [Defining custom
 // rules](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-rules-define).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateScanReport(createScanReportOptions *CreateScanReportOptions) (result *CreateScanReport, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.CreateScanReportWithContext(context.Background(), createScanReportOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CreateScanReport(createScanReportOptions *CreateScanReportOptions) (result *CreateScanReport, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.CreateScanReportWithContext(context.Background(), createScanReportOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // CreateScanReportWithContext is an alternate form of the CreateScanReport method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateScanReportWithContext(ctx context.Context, createScanReportOptions *CreateScanReportOptions) (result *CreateScanReport, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CreateScanReportWithContext(ctx context.Context, createScanReportOptions *CreateScanReportOptions) (result *CreateScanReport, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(createScanReportOptions, "createScanReportOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(createScanReportOptions, "createScanReportOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4435,9 +5002,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateScanR
 
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/scan_reports`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/scan_reports`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4445,7 +5013,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateScanR
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "CreateScanReport")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "CreateScanReport")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -4464,22 +5032,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateScanR
 	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
 		return
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "create_scan_report", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalCreateScanReport)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -4488,80 +5061,139 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateScanR
 	return
 }
 
-// CreateScan : Create a scan
-// Create a scan to evaluate your resources.
-//
-// With Security and Compliance Center, you can evaluate your resources  on a recurring schedule. If your attachment
-// exists, but you don't want to wait for the next  scan to see your posture, you can initiate an on-demand scan. For
-// more information, see [Running a scan on
-// demand](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scan-resources#scan-ondemand-api).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateScan(createScanOptions *CreateScanOptions) (result *CreateScanResponse, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.CreateScanWithContext(context.Background(), createScanOptions)
+// GetScanReport : Get a scan report
+// Retrieve the scan report by specifying the ID. For more information, see [Viewing
+// results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetScanReport(getScanReportOptions *GetScanReportOptions) (result *ScanReport, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.GetScanReportWithContext(context.Background(), getScanReportOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
-// CreateScanWithContext is an alternate form of the CreateScan method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateScanWithContext(ctx context.Context, createScanOptions *CreateScanOptions) (result *CreateScanResponse, response *core.DetailedResponse, err error) {
-	err = core.ValidateNotNil(createScanOptions, "createScanOptions cannot be nil")
+// GetScanReportWithContext is an alternate form of the GetScanReport method which supports a Context parameter
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetScanReportWithContext(ctx context.Context, getScanReportOptions *GetScanReportOptions) (result *ScanReport, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(getScanReportOptions, "getScanReportOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
-	err = core.ValidateStruct(createScanOptions, "createScanOptions")
+	err = core.ValidateStruct(getScanReportOptions, "getScanReportOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
 	pathParamsMap := map[string]string{
-		"instance_id": *createScanOptions.InstanceID,
+		"instance_id": *getScanReportOptions.InstanceID,
+		"report_id":   *getScanReportOptions.ReportID,
+		"job_id":      *getScanReportOptions.JobID,
 	}
 
-	builder := core.NewRequestBuilder(core.POST)
+	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/scans`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/scan_reports/{job_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
-	for headerName, headerValue := range createScanOptions.Headers {
+	for headerName, headerValue := range getScanReportOptions.Headers {
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "CreateScan")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "GetScanReport")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
 	builder.AddHeader("Accept", "application/json")
-	builder.AddHeader("Content-Type", "application/json")
-
-	if createScanOptions.AccountID != nil {
-		builder.AddQuery("account_id", fmt.Sprint(*createScanOptions.AccountID))
-	}
-
-	body := make(map[string]interface{})
-	if createScanOptions.AttachmentID != nil {
-		body["attachment_id"] = createScanOptions.AttachmentID
-	}
-	_, err = builder.SetBodyContentJSON(body)
-	if err != nil {
-		return
-	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "get_scan_report", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
-		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalCreateScanResponse)
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalScanReport)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
+	}
+
+	return
+}
+
+// GetScanReportDownloadFile : Get a scan report details
+// Download the scan report with evaluation details for the specified ID. For more information, see [Viewing
+// results](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-results).
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetScanReportDownloadFile(getScanReportDownloadFileOptions *GetScanReportDownloadFileOptions) (result io.ReadCloser, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.GetScanReportDownloadFileWithContext(context.Background(), getScanReportDownloadFileOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
+}
+
+// GetScanReportDownloadFileWithContext is an alternate form of the GetScanReportDownloadFile method which supports a Context parameter
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetScanReportDownloadFileWithContext(ctx context.Context, getScanReportDownloadFileOptions *GetScanReportDownloadFileOptions) (result io.ReadCloser, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(getScanReportDownloadFileOptions, "getScanReportDownloadFileOptions cannot be nil")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
+		return
+	}
+	err = core.ValidateStruct(getScanReportDownloadFileOptions, "getScanReportDownloadFileOptions")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *getScanReportDownloadFileOptions.InstanceID,
+		"report_id":   *getScanReportDownloadFileOptions.ReportID,
+		"job_id":      *getScanReportDownloadFileOptions.JobID,
+	}
+
+	builder := core.NewRequestBuilder(core.GET)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/reports/{report_id}/scan_reports/{job_id}/download`, pathParamsMap)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
+		return
+	}
+
+	for headerName, headerValue := range getScanReportDownloadFileOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "GetScanReportDownloadFile")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/csv")
+	if getScanReportDownloadFileOptions.Accept != nil {
+		builder.AddHeader("Accept", fmt.Sprint(*getScanReportDownloadFileOptions.Accept))
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
+		return
+	}
+
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &result)
+	if err != nil {
+		core.EnrichHTTPProblem(err, "get_scan_report_download_file", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
+		return
 	}
 
 	return
@@ -4571,18 +5203,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateScanW
 // Retrieve all the rules that you use to target the exact configuration properties  that you need to ensure are
 // compliant. For more information, see [Defining custom
 // rules](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-rules-define).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListRules(listRulesOptions *ListRulesOptions) (result *RuleCollection, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ListRulesWithContext(context.Background(), listRulesOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListRules(listRulesOptions *ListRulesOptions) (result *RuleCollection, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ListRulesWithContext(context.Background(), listRulesOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ListRulesWithContext is an alternate form of the ListRules method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListRulesWithContext(ctx context.Context, listRulesOptions *ListRulesOptions) (result *RuleCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListRulesWithContext(ctx context.Context, listRulesOptions *ListRulesOptions) (result *RuleCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(listRulesOptions, "listRulesOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(listRulesOptions, "listRulesOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4592,9 +5228,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListRulesWi
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/rules`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/rules`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4602,7 +5239,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListRulesWi
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ListRules")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ListRules")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -4629,17 +5266,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListRulesWi
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "list_rules", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalRuleCollection)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -4652,18 +5293,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListRulesWi
 // Create a custom rule to to target the exact configuration properties  that you need to evaluate your resources for
 // compliance. For more information, see [Defining custom
 // rules](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-rules-define).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateRule(createRuleOptions *CreateRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.CreateRuleWithContext(context.Background(), createRuleOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CreateRule(createRuleOptions *CreateRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.CreateRuleWithContext(context.Background(), createRuleOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // CreateRuleWithContext is an alternate form of the CreateRule method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateRuleWithContext(ctx context.Context, createRuleOptions *CreateRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) CreateRuleWithContext(ctx context.Context, createRuleOptions *CreateRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(createRuleOptions, "createRuleOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(createRuleOptions, "createRuleOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4673,9 +5318,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateRuleW
 
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/rules`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/rules`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4683,7 +5329,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateRuleW
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "CreateRule")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "CreateRule")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -4711,22 +5357,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateRuleW
 	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
 		return
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "create_rule", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalRule)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -4738,18 +5389,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) CreateRuleW
 // GetRule : Get a custom rule
 // Retrieve a rule that you created to evaluate your resources.  For more information, see [Defining custom
 // rules](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-rules-define).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetRule(getRuleOptions *GetRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.GetRuleWithContext(context.Background(), getRuleOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetRule(getRuleOptions *GetRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.GetRuleWithContext(context.Background(), getRuleOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetRuleWithContext is an alternate form of the GetRule method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetRuleWithContext(ctx context.Context, getRuleOptions *GetRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetRuleWithContext(ctx context.Context, getRuleOptions *GetRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getRuleOptions, "getRuleOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(getRuleOptions, "getRuleOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4760,9 +5415,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetRuleWith
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/rules/{rule_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/rules/{rule_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4770,7 +5426,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetRuleWith
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "GetRule")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "GetRule")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -4778,17 +5434,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetRuleWith
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "get_rule", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalRule)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -4801,18 +5461,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetRuleWith
 // Update a custom rule that you use to target the exact configuration properties  that you need to evaluate your
 // resources for compliance. For more information, see [Defining custom
 // rules](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-rules-define).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceRule(replaceRuleOptions *ReplaceRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ReplaceRuleWithContext(context.Background(), replaceRuleOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ReplaceRule(replaceRuleOptions *ReplaceRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ReplaceRuleWithContext(context.Background(), replaceRuleOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ReplaceRuleWithContext is an alternate form of the ReplaceRule method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceRuleWithContext(ctx context.Context, replaceRuleOptions *ReplaceRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ReplaceRuleWithContext(ctx context.Context, replaceRuleOptions *ReplaceRuleOptions) (result *Rule, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(replaceRuleOptions, "replaceRuleOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(replaceRuleOptions, "replaceRuleOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4823,9 +5487,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceRule
 
 	builder := core.NewRequestBuilder(core.PUT)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/rules/{rule_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/rules/{rule_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4833,7 +5498,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceRule
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ReplaceRule")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ReplaceRule")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -4864,22 +5529,27 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceRule
 	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
 		return
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "replace_rule", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalRule)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -4891,18 +5561,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ReplaceRule
 // DeleteRule : Delete a custom rule
 // Delete a custom rule that you no longer require to evaluate your resources. For more information, see [Defining
 // custom rules](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-rules-define).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteRule(deleteRuleOptions *DeleteRuleOptions) (response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.DeleteRuleWithContext(context.Background(), deleteRuleOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) DeleteRule(deleteRuleOptions *DeleteRuleOptions) (response *core.DetailedResponse, err error) {
+	response, err = securityAndComplianceCenterApi.DeleteRuleWithContext(context.Background(), deleteRuleOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // DeleteRuleWithContext is an alternate form of the DeleteRule method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteRuleWithContext(ctx context.Context, deleteRuleOptions *DeleteRuleOptions) (response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) DeleteRuleWithContext(ctx context.Context, deleteRuleOptions *DeleteRuleOptions) (response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(deleteRuleOptions, "deleteRuleOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(deleteRuleOptions, "deleteRuleOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4913,9 +5587,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteRuleW
 
 	builder := core.NewRequestBuilder(core.DELETE)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/instances/{instance_id}/v3/rules/{rule_id}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/instances/{instance_id}/v3/rules/{rule_id}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4923,17 +5598,23 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteRuleW
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "DeleteRule")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "DeleteRule")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
-	response, err = securityAndComplianceCenter.Service.Request(request, nil)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, nil)
+	if err != nil {
+		core.EnrichHTTPProblem(err, "delete_rule", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
+		return
+	}
 
 	return
 }
@@ -4941,22 +5622,26 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) DeleteRuleW
 // ListServices : List services
 // List all the services that you use to evaluate the configuration of your resources for security and compliance.
 // [Learn more](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scannable-components).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListServices(listServicesOptions *ListServicesOptions) (result *ServiceCollection, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.ListServicesWithContext(context.Background(), listServicesOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListServices(listServicesOptions *ListServicesOptions) (result *ServiceCollection, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.ListServicesWithContext(context.Background(), listServicesOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ListServicesWithContext is an alternate form of the ListServices method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListServicesWithContext(ctx context.Context, listServicesOptions *ListServicesOptions) (result *ServiceCollection, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) ListServicesWithContext(ctx context.Context, listServicesOptions *ListServicesOptions) (result *ServiceCollection, response *core.DetailedResponse, err error) {
 	err = core.ValidateStruct(listServicesOptions, "listServicesOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/v3/services`, nil)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/v3/services`, nil)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -4964,7 +5649,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListService
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "ListServices")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "ListServices")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -4972,17 +5657,21 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListService
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "list_services", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalServiceCollection)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
@@ -4994,18 +5683,22 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) ListService
 // GetService : Get a service
 // Retrieve a service configuration that you monitor. [Learn
 // more](https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-scannable-components).
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetService(getServiceOptions *GetServiceOptions) (result *Service, response *core.DetailedResponse, err error) {
-	return securityAndComplianceCenter.GetServiceWithContext(context.Background(), getServiceOptions)
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetService(getServiceOptions *GetServiceOptions) (result *Service, response *core.DetailedResponse, err error) {
+	result, response, err = securityAndComplianceCenterApi.GetServiceWithContext(context.Background(), getServiceOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetServiceWithContext is an alternate form of the GetService method which supports a Context parameter
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetServiceWithContext(ctx context.Context, getServiceOptions *GetServiceOptions) (result *Service, response *core.DetailedResponse, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) GetServiceWithContext(ctx context.Context, getServiceOptions *GetServiceOptions) (result *Service, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(getServiceOptions, "getServiceOptions cannot be nil")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
 		return
 	}
 	err = core.ValidateStruct(getServiceOptions, "getServiceOptions")
 	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
 		return
 	}
 
@@ -5015,9 +5708,10 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetServiceW
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = securityAndComplianceCenter.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(securityAndComplianceCenter.Service.Options.URL, `/v3/services/{services_name}`, pathParamsMap)
+	builder.EnableGzipCompression = securityAndComplianceCenterApi.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(securityAndComplianceCenterApi.Service.Options.URL, `/v3/services/{services_name}`, pathParamsMap)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
 		return
 	}
 
@@ -5025,7 +5719,7 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetServiceW
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center", "V3", "GetService")
+	sdkHeaders := common.GetSdkHeaders("security_and_compliance_center_api", "V3", "GetService")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -5033,23 +5727,30 @@ func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) GetServiceW
 
 	request, err := builder.Build()
 	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
 		return
 	}
 
 	var rawResponse map[string]json.RawMessage
-	response, err = securityAndComplianceCenter.Service.Request(request, &rawResponse)
+	response, err = securityAndComplianceCenterApi.Service.Request(request, &rawResponse)
 	if err != nil {
+		core.EnrichHTTPProblem(err, "get_service", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalService)
 		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
 		}
 		response.Result = result
 	}
 
 	return
+}
+func getServiceComponentInfo() *core.ProblemComponent {
+	return core.NewProblemComponent(DefaultServiceName, "3.1.0")
 }
 
 // Account : The account that is associated with a report.
@@ -5069,14 +5770,51 @@ func UnmarshalAccount(m map[string]json.RawMessage, result interface{}) (err err
 	obj := new(Account)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "type-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// AdditionalDetails : Extended information for a report.
+type AdditionalDetails struct {
+	// Identifies which entity created a report.
+	CreatedBy *string `json:"created_by,omitempty"`
+
+	// Classification for a report.
+	Labels []string `json:"labels,omitempty"`
+
+	// URL.
+	Links []Link `json:"links,omitempty"`
+}
+
+// UnmarshalAdditionalDetails unmarshals an instance of AdditionalDetails from the specified map of raw messages.
+func UnmarshalAdditionalDetails(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(AdditionalDetails)
+	err = core.UnmarshalPrimitive(m, "created_by", &obj.CreatedBy)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "created_by-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "labels", &obj.Labels)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "labels-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalModel(m, "links", &obj.Links, UnmarshalLink)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "links-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -5109,10 +5847,12 @@ func UnmarshalAdditionalProperty(m map[string]json.RawMessage, result interface{
 	obj := new(AdditionalProperty)
 	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "type-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "display_name", &obj.DisplayName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "display_name-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -5125,8 +5865,9 @@ type AdditionalTargetAttribute struct {
 	Name *string `json:"name,omitempty"`
 
 	// The operator.
-	Operator *string `json:"operator,omitempty"`
+	Operator *string `json:"operator" validate:"required"`
 
+	// The value can be of any type.
 	Value interface{} `json:"value,omitempty"`
 }
 
@@ -5158,19 +5899,34 @@ const (
 	AdditionalTargetAttributeOperatorStringsRequiredConst      = "strings_required"
 )
 
+// NewAdditionalTargetAttribute : Instantiate AdditionalTargetAttribute (Generic Model Constructor)
+func (*SecurityAndComplianceCenterAPIV3) NewAdditionalTargetAttribute(operator string) (_model *AdditionalTargetAttribute, err error) {
+	_model = &AdditionalTargetAttribute{
+		Operator: core.StringPtr(operator),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
+}
+
 // UnmarshalAdditionalTargetAttribute unmarshals an instance of AdditionalTargetAttribute from the specified map of raw messages.
 func UnmarshalAdditionalTargetAttribute(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(AdditionalTargetAttribute)
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "operator", &obj.Operator)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "operator-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "value", &obj.Value)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "value-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -5195,7 +5951,19 @@ type Assessment struct {
 	ParameterCount *int64 `json:"parameter_count,omitempty"`
 
 	// The list of parameters of this assessment.
-	Parameters []Parameter `json:"parameters,omitempty"`
+	Parameters []Parameter `json:"parameters" validate:"required"`
+}
+
+// NewAssessment : Instantiate Assessment (Generic Model Constructor)
+func (*SecurityAndComplianceCenterAPIV3) NewAssessment(parameters []Parameter) (_model *Assessment, err error) {
+	_model = &Assessment{
+		Parameters: parameters,
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
 }
 
 // UnmarshalAssessment unmarshals an instance of Assessment from the specified map of raw messages.
@@ -5203,26 +5971,58 @@ func UnmarshalAssessment(m map[string]json.RawMessage, result interface{}) (err 
 	obj := new(Assessment)
 	err = core.UnmarshalPrimitive(m, "assessment_id", &obj.AssessmentID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "assessment_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "assessment_type", &obj.AssessmentType)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "assessment_type-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "assessment_method", &obj.AssessmentMethod)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "assessment_method-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "assessment_description", &obj.AssessmentDescription)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "assessment_description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "parameter_count", &obj.ParameterCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "parameter_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "parameters", &obj.Parameters, UnmarshalParameter)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "parameters-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// AssessmentPrototype : The necessary fields to include a rule/assessment.
+type AssessmentPrototype struct {
+	// The ID of the rule to target. A list of rules can be obtained from the list_rules method.
+	AssessmentID *string `json:"assessment_id,omitempty"`
+
+	// Details on the intent of the rule for an assessment.
+	AssessmentDescription *string `json:"assessment_description,omitempty"`
+}
+
+// UnmarshalAssessmentPrototype unmarshals an instance of AssessmentPrototype from the specified map of raw messages.
+func UnmarshalAssessmentPrototype(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(AssessmentPrototype)
+	err = core.UnmarshalPrimitive(m, "assessment_id", &obj.AssessmentID)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "assessment_id-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "assessment_description", &obj.AssessmentDescription)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "assessment_description-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -5270,46 +6070,57 @@ func UnmarshalAssessmentWithStats(m map[string]json.RawMessage, result interface
 	obj := new(AssessmentWithStats)
 	err = core.UnmarshalPrimitive(m, "assessment_id", &obj.AssessmentID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "assessment_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "assessment_type", &obj.AssessmentType)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "assessment_type-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "assessment_method", &obj.AssessmentMethod)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "assessment_method-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "assessment_description", &obj.AssessmentDescription)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "assessment_description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "parameter_count", &obj.ParameterCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "parameter_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "parameters", &obj.Parameters, UnmarshalParameter)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "parameters-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "pass_count", &obj.PassCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "pass_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "failure_count", &obj.FailureCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "failure_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "error_count", &obj.ErrorCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "error_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "completed_count", &obj.CompletedCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "completed_count-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -5330,8 +6141,9 @@ type Attachment struct {
 	// The attachment schedule.
 	Schedule *string `json:"schedule,omitempty"`
 
-	// The report's scope from backwards compatiblity
-	Scope Scope `json:"scope,omitempty"`
+	// (deprecated) The scope associated with the report.
+	// Deprecated: this field is deprecated and may be removed in a future release.
+	Scope interface{} `json:"scope,omitempty"`
 
 	// The report's scopes based on the caller's access permissions.
 	Scopes []Scope `json:"scopes,omitempty"`
@@ -5345,26 +6157,37 @@ func UnmarshalAttachment(m map[string]json.RawMessage, result interface{}) (err 
 	obj := new(Attachment)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "schedule", &obj.Schedule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "schedule-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "scope", &obj.Scope)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "scope-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "scopes", &obj.Scopes, UnmarshalScope)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "scopes-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "notifications", &obj.Notifications, UnmarshalAttachmentNotifications)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "notifications-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -5385,10 +6208,12 @@ func UnmarshalAttachmentNotifications(m map[string]json.RawMessage, result inter
 	obj := new(AttachmentNotifications)
 	err = core.UnmarshalPrimitive(m, "enabled", &obj.Enabled)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "enabled-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "controls", &obj.Controls, UnmarshalAttachmentNotificationsControls)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "controls-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -5401,7 +6226,19 @@ type AttachmentNotificationsControls struct {
 	ThresholdLimit *int64 `json:"threshold_limit,omitempty"`
 
 	// List of controls that triggers a notification should a scan fail.
-	FailedControlIds []string `json:"failed_control_ids,omitempty"`
+	FailedControlIds []string `json:"failed_control_ids" validate:"required"`
+}
+
+// NewAttachmentNotificationsControls : Instantiate AttachmentNotificationsControls (Generic Model Constructor)
+func (*SecurityAndComplianceCenterAPIV3) NewAttachmentNotificationsControls(failedControlIds []string) (_model *AttachmentNotificationsControls, err error) {
+	_model = &AttachmentNotificationsControls{
+		FailedControlIds: failedControlIds,
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
 }
 
 // UnmarshalAttachmentNotificationsControls unmarshals an instance of AttachmentNotificationsControls from the specified map of raw messages.
@@ -5409,10 +6246,12 @@ func UnmarshalAttachmentNotificationsControls(m map[string]json.RawMessage, resu
 	obj := new(AttachmentNotificationsControls)
 	err = core.UnmarshalPrimitive(m, "threshold_limit", &obj.ThresholdLimit)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "threshold_limit-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "failed_control_ids", &obj.FailedControlIds)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "failed_control_ids-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -5439,18 +6278,22 @@ func UnmarshalComparePredefinedProfilesResponse(m map[string]json.RawMessage, re
 	obj := new(ComparePredefinedProfilesResponse)
 	err = core.UnmarshalModel(m, "current_predefined_version", &obj.CurrentPredefinedVersion, UnmarshalCompareProfileResponse)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "current_predefined_version-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "latest_predefined_version", &obj.LatestPredefinedVersion, UnmarshalCompareProfileResponse)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "latest_predefined_version-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "controls_changes", &obj.ControlsChanges, UnmarshalControlChanges)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "controls_changes-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "default_parameters_changes", &obj.DefaultParametersChanges, UnmarshalDefaultParametersChanges)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "default_parameters_changes-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -5469,7 +6312,7 @@ type CompareProfileResponse struct {
 	ProfileDescription *string `json:"profile_description,omitempty"`
 
 	// The type of profile, either predefined or custom.
-	ProfileType *string `json:"profile_type,omitempty"`
+	ProfileType *string `json:"profile_type" validate:"required"`
 
 	// The version of the profile.
 	ProfileVersion *string `json:"profile_version,omitempty"`
@@ -5508,50 +6351,62 @@ func UnmarshalCompareProfileResponse(m map[string]json.RawMessage, result interf
 	obj := new(CompareProfileResponse)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "profile_name", &obj.ProfileName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "profile_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "profile_description", &obj.ProfileDescription)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "profile_description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "profile_type", &obj.ProfileType)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "profile_type-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "profile_version", &obj.ProfileVersion)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "profile_version-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "version_group_label", &obj.VersionGroupLabel)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "version_group_label-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "latest", &obj.Latest)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "latest-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "created_by", &obj.CreatedBy)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "created_by-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "created_on", &obj.CreatedOn)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "created_on-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "updated_by", &obj.UpdatedBy)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_by-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "updated_on", &obj.UpdatedOn)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_on-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "controls_count", &obj.ControlsCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "controls_count-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -5563,18 +6418,18 @@ type CompareProfilesOptions struct {
 	// The ID of the Security and Compliance Center instance.
 	InstanceID *string `json:"instance_id" validate:"required,ne="`
 
-	// The profile ID.
+	// The profile ID to compare.
 	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewCompareProfilesOptions : Instantiate CompareProfilesOptions
-func (*SecurityAndComplianceCenterApiV3) NewCompareProfilesOptions(instanceID string, profileID string) *CompareProfilesOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewCompareProfilesOptions(instanceID string, profileID string) *CompareProfilesOptions {
 	return &CompareProfilesOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ProfileID:  core.StringPtr(profileID),
@@ -5622,14 +6477,17 @@ func UnmarshalComplianceScore(m map[string]json.RawMessage, result interface{}) 
 	obj := new(ComplianceScore)
 	err = core.UnmarshalPrimitive(m, "passed", &obj.Passed)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "passed-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "percent", &obj.Percent)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "percent-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -5639,7 +6497,7 @@ func UnmarshalComplianceScore(m map[string]json.RawMessage, result interface{}) 
 // ComplianceStats : The compliance stats.
 type ComplianceStats struct {
 	// The allowed values of an aggregated status for controls, specifications, assessments, and resources.
-	Status *string `json:"status,omitempty"`
+	Status *string `json:"status" validate:"required"`
 
 	// The total number of checks.
 	TotalCount *int64 `json:"total_count,omitempty"`
@@ -5675,30 +6533,37 @@ func UnmarshalComplianceStats(m map[string]json.RawMessage, result interface{}) 
 	obj := new(ComplianceStats)
 	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "status-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "compliant_count", &obj.CompliantCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "compliant_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "not_compliant_count", &obj.NotCompliantCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "not_compliant_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "unable_to_perform_count", &obj.UnableToPerformCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unable_to_perform_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "user_evaluation_required_count", &obj.UserEvaluationRequiredCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "user_evaluation_required_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "not_applicable_count", &obj.NotApplicableCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "not_applicable_count-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -5708,7 +6573,7 @@ func UnmarshalComplianceStats(m map[string]json.RawMessage, result interface{}) 
 // ComplianceStatsWithNonCompliant : The compliance stats.
 type ComplianceStatsWithNonCompliant struct {
 	// The allowed values of an aggregated status for controls, specifications, assessments, and resources.
-	Status *string `json:"status,omitempty"`
+	Status *string `json:"status" validate:"required"`
 
 	// The total number of checks.
 	TotalCount *int64 `json:"total_count,omitempty"`
@@ -5747,34 +6612,42 @@ func UnmarshalComplianceStatsWithNonCompliant(m map[string]json.RawMessage, resu
 	obj := new(ComplianceStatsWithNonCompliant)
 	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "status-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "compliant_count", &obj.CompliantCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "compliant_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "not_compliant_count", &obj.NotCompliantCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "not_compliant_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "unable_to_perform_count", &obj.UnableToPerformCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unable_to_perform_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "user_evaluation_required_count", &obj.UserEvaluationRequiredCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "user_evaluation_required_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "not_applicable_count", &obj.NotApplicableCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "not_applicable_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "not_compliant_controls", &obj.NotCompliantControls, UnmarshalControlSummary)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "not_compliant_controls-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -5796,6 +6669,7 @@ type ConditionItem struct {
 	// The operator.
 	Operator *string `json:"operator,omitempty"`
 
+	// The value can be of any type.
 	Value interface{} `json:"value,omitempty"`
 
 	// A list of required configurations where one item should evaluate to true.
@@ -5858,42 +6732,52 @@ func UnmarshalConditionItem(m map[string]json.RawMessage, result interface{}) (e
 	obj := new(ConditionItem)
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "property", &obj.Property)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "property-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "operator", &obj.Operator)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "operator-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "value", &obj.Value)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "value-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "or", &obj.Or, UnmarshalConditionItem)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "or-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "and", &obj.And, UnmarshalConditionItem)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "and-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "any", &obj.Any, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "any-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "any_ifexists", &obj.AnyIfexists, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "any_ifexists-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "all", &obj.All, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "all-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "all_ifexists", &obj.AllIfexists, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "all_ifexists-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -5914,10 +6798,103 @@ func UnmarshalConfigurationInformationPoints(m map[string]json.RawMessage, resul
 	obj := new(ConfigurationInformationPoints)
 	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "type-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "endpoints", &obj.Endpoints, UnmarshalEndpoint)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "endpoints-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// Control : A technical, administrative, or physical safeguard designed to meet a set of defined security and privacy
+// requirements.
+type Control struct {
+	// The ID of the control library that contains the profile.
+	ControlName *string `json:"control_name,omitempty"`
+
+	// The control name.
+	ControlID *string `json:"control_id,omitempty"`
+
+	// The control description.
+	ControlDescription *string `json:"control_description,omitempty"`
+
+	// The association of the control.
+	ControlCategory *string `json:"control_category,omitempty"`
+
+	// The ID of the parent control.
+	ControlParent *string `json:"control_parent,omitempty"`
+
+	// Details how important a control is should it fail.
+	ControlSeverity *string `json:"control_severity,omitempty"`
+
+	// tags associated with a control.
+	ControlTags []string `json:"control_tags" validate:"required"`
+
+	// List of control specifications associated with the control.
+	ControlSpecifications []ControlSpecification `json:"control_specifications" validate:"required"`
+
+	// References to a control documentation.
+	ControlDocs *ControlDoc `json:"control_docs,omitempty"`
+
+	// Determines if a control will be evaluated or not.
+	Status *string `json:"status,omitempty"`
+}
+
+// UnmarshalControl unmarshals an instance of Control from the specified map of raw messages.
+func UnmarshalControl(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(Control)
+	err = core.UnmarshalPrimitive(m, "control_name", &obj.ControlName)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "control_name-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "control_id", &obj.ControlID)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "control_id-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "control_description", &obj.ControlDescription)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "control_description-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "control_category", &obj.ControlCategory)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "control_category-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "control_parent", &obj.ControlParent)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "control_parent-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "control_severity", &obj.ControlSeverity)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "control_severity-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "control_tags", &obj.ControlTags)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "control_tags-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalModel(m, "control_specifications", &obj.ControlSpecifications, UnmarshalControlSpecification)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "control_specifications-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalModel(m, "control_docs", &obj.ControlDocs, UnmarshalControlDoc)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "control_docs-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "status-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -5936,13 +6913,13 @@ type ControlChanges struct {
 	TotalUpdated *int64 `json:"total_updated,omitempty"`
 
 	// A list of controls that were added.
-	Added []ProfileControlsInResponse `json:"added,omitempty"`
+	Added []ProfileControls `json:"added" validate:"required"`
 
 	// A list of controls that were removed.
-	Removed []ProfileControlsInResponse `json:"removed,omitempty"`
+	Removed []ProfileControls `json:"removed" validate:"required"`
 
 	// A list of controls that were updated.
-	Updated []ControlChangesUpdated `json:"updated,omitempty"`
+	Updated []ControlChangesUpdated `json:"updated" validate:"required"`
 }
 
 // UnmarshalControlChanges unmarshals an instance of ControlChanges from the specified map of raw messages.
@@ -5950,26 +6927,32 @@ func UnmarshalControlChanges(m map[string]json.RawMessage, result interface{}) (
 	obj := new(ControlChanges)
 	err = core.UnmarshalPrimitive(m, "total_added", &obj.TotalAdded)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_added-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_removed", &obj.TotalRemoved)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_removed-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_updated", &obj.TotalUpdated)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_updated-error", common.GetComponentInfo())
 		return
 	}
-	err = core.UnmarshalModel(m, "added", &obj.Added, UnmarshalProfileControlsInResponse)
+	err = core.UnmarshalModel(m, "added", &obj.Added, UnmarshalProfileControls)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "added-error", common.GetComponentInfo())
 		return
 	}
-	err = core.UnmarshalModel(m, "removed", &obj.Removed, UnmarshalProfileControlsInResponse)
+	err = core.UnmarshalModel(m, "removed", &obj.Removed, UnmarshalProfileControls)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "removed-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "updated", &obj.Updated, UnmarshalControlChangesUpdated)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -5979,21 +6962,23 @@ func UnmarshalControlChanges(m map[string]json.RawMessage, result interface{}) (
 // ControlChangesUpdated : Shows the difference in the Controls.
 type ControlChangesUpdated struct {
 	// The control details for a profile.
-	Current *ProfileControlsInResponse `json:"current,omitempty"`
+	Current *ProfileControls `json:"current,omitempty"`
 
 	// The control details for a profile.
-	Latest *ProfileControlsInResponse `json:"latest,omitempty"`
+	Latest *ProfileControls `json:"latest,omitempty"`
 }
 
 // UnmarshalControlChangesUpdated unmarshals an instance of ControlChangesUpdated from the specified map of raw messages.
 func UnmarshalControlChangesUpdated(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(ControlChangesUpdated)
-	err = core.UnmarshalModel(m, "current", &obj.Current, UnmarshalProfileControlsInResponse)
+	err = core.UnmarshalModel(m, "current", &obj.Current, UnmarshalProfileControls)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "current-error", common.GetComponentInfo())
 		return
 	}
-	err = core.UnmarshalModel(m, "latest", &obj.Latest, UnmarshalProfileControlsInResponse)
+	err = core.UnmarshalModel(m, "latest", &obj.Latest, UnmarshalProfileControls)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "latest-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -6014,10 +6999,12 @@ func UnmarshalControlDoc(m map[string]json.RawMessage, result interface{}) (err 
 	obj := new(ControlDoc)
 	err = core.UnmarshalPrimitive(m, "control_docs_id", &obj.ControlDocsID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_docs_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_docs_type", &obj.ControlDocsType)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_docs_type-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -6033,13 +7020,13 @@ type ControlLibrary struct {
 	ControlLibraryDescription *string `json:"control_library_description,omitempty"`
 
 	// Details that the control library is a user made(custom) or Security Compliance Center(predefined).
-	ControlLibraryType *string `json:"control_library_type,omitempty"`
+	ControlLibraryType *string `json:"control_library_type" validate:"required"`
 
 	// The revision number of the control library.
 	ControlLibraryVersion *string `json:"control_library_version,omitempty"`
 
 	// The list of rules that the control library attempts to adhere to.
-	Controls []Control `json:"controls,omitempty"`
+	Controls []Control `json:"controls" validate:"required"`
 
 	// The ID of the control library.
 	ID *string `json:"id,omitempty"`
@@ -6087,73 +7074,89 @@ func UnmarshalControlLibrary(m map[string]json.RawMessage, result interface{}) (
 	obj := new(ControlLibrary)
 	err = core.UnmarshalPrimitive(m, "control_library_name", &obj.ControlLibraryName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_library_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_library_description", &obj.ControlLibraryDescription)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_library_description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_library_type", &obj.ControlLibraryType)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_library_type-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_library_version", &obj.ControlLibraryVersion)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_library_version-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "controls", &obj.Controls, UnmarshalControl)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "controls-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "account_id", &obj.AccountID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "account_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "version_group_label", &obj.VersionGroupLabel)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "version_group_label-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "latest", &obj.Latest)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "latest-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "created_by", &obj.CreatedBy)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "created_by-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "created_on", &obj.CreatedOn)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "created_on-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "updated_by", &obj.UpdatedBy)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_by-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "updated_on", &obj.UpdatedOn)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_on-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "hierarchy_enabled", &obj.HierarchyEnabled)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "hierarchy_enabled-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "controls_count", &obj.ControlsCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "controls_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_parents_count", &obj.ControlParentsCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_parents_count-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
 }
 
-// ControlLibraryCollection : A list of control libraries.
+// ControlLibraryCollection : A list of ControlLibrary.
 type ControlLibraryCollection struct {
 	// The requested page limit.
 	Limit *int64 `json:"limit" validate:"required"`
@@ -6168,7 +7171,7 @@ type ControlLibraryCollection struct {
 	Next *PageHRefNext `json:"next,omitempty"`
 
 	// The list of control libraries.
-	ControlLibraries []ControlLibrary `json:"control_libraries,omitempty"`
+	ControlLibraries []ControlLibrary `json:"control_libraries" validate:"required"`
 }
 
 // UnmarshalControlLibraryCollection unmarshals an instance of ControlLibraryCollection from the specified map of raw messages.
@@ -6176,59 +7179,60 @@ func UnmarshalControlLibraryCollection(m map[string]json.RawMessage, result inte
 	obj := new(ControlLibraryCollection)
 	err = core.UnmarshalPrimitive(m, "limit", &obj.Limit)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "limit-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "first", &obj.First, UnmarshalPageHRefFirst)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "first-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "next", &obj.Next, UnmarshalPageHRefNext)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "next-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "control_libraries", &obj.ControlLibraries, UnmarshalControlLibrary)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_libraries-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
 }
 
-// Control : The assesment to abide to.
-type Control struct {
-	// The ID of the control library that contains the profile.
-	ControlID *string `json:"control_id,omitempty"`
+// Retrieve the value to be passed to a request to access the next page of results
+func (resp *ControlLibraryCollection) GetNextStart() (*string, error) {
+	if core.IsNil(resp.Next) {
+		return nil, nil
+	}
+	return resp.Next.Start, nil
+}
 
-	// The Name of the control
-	ControlName *string `json:"control_name,omitempty"`
+// ControlPrototype : The payload to instantiate a control.
+type ControlPrototype struct {
+	// The ID of the control library that contains the profile.
+	ControlName *string `json:"control_name" validate:"required"`
 
 	// The control description.
-	ControlDescription *string `json:"control_description,omitempty"`
+	ControlDescription *string `json:"control_description" validate:"required"`
 
 	// The association of the control.
-	ControlCategory *string `json:"control_category,omitempty"`
+	ControlCategory *string `json:"control_category" validate:"required"`
 
 	// true if the control can be automated, false if the control cannot.
-	ControlRequirement *bool `json:"control_requirement,omitempty"`
+	ControlRequirement *bool `json:"control_requirement" validate:"required"`
 
 	// The ID of the parent control.
 	ControlParent *string `json:"control_parent,omitempty"`
 
-	// The path of the control
-	ControlPath *string `json:"control_path,omitempty"`
-
-	// Number of control specifications associated with the control.
-	ControlSpecificationCount *int64 `json:"control_specification_count,omitempty"`
-
 	// List of control specifications associated with the control.
-	ControlSpecifications []ControlSpecification `json:"control_specifications,omitempty"`
-
-	// List of Tags associated with the control
-	ControlTags []string `json:"control_tags,omitempty"`
+	ControlSpecifications []ControlSpecificationPrototype `json:"control_specifications" validate:"required"`
 
 	// References to a control documentation.
 	ControlDocs *ControlDoc `json:"control_docs,omitempty"`
@@ -6237,80 +7241,73 @@ type Control struct {
 	Status *string `json:"status,omitempty"`
 }
 
-// UnmarshalControl unmarshals an instance of Control from the specified map of raw messages.
-func UnmarshalControl(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(Control)
+// NewControlPrototype : Instantiate ControlPrototype (Generic Model Constructor)
+func (*SecurityAndComplianceCenterAPIV3) NewControlPrototype(controlName string, controlDescription string, controlCategory string, controlRequirement bool, controlSpecifications []ControlSpecificationPrototype) (_model *ControlPrototype, err error) {
+	_model = &ControlPrototype{
+		ControlName:           core.StringPtr(controlName),
+		ControlDescription:    core.StringPtr(controlDescription),
+		ControlCategory:       core.StringPtr(controlCategory),
+		ControlRequirement:    core.BoolPtr(controlRequirement),
+		ControlSpecifications: controlSpecifications,
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
+}
+
+// UnmarshalControlPrototype unmarshals an instance of ControlPrototype from the specified map of raw messages.
+func UnmarshalControlPrototype(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(ControlPrototype)
 	err = core.UnmarshalPrimitive(m, "control_name", &obj.ControlName)
 	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "control_id", &obj.ControlID)
-	if err != nil {
+		err = core.SDKErrorf(err, "", "control_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_description", &obj.ControlDescription)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_category", &obj.ControlCategory)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_category-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_requirement", &obj.ControlRequirement)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_requirement-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_parent", &obj.ControlParent)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_parent-error", common.GetComponentInfo())
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "control_path", &obj.ControlPath)
+	err = core.UnmarshalModel(m, "control_specifications", &obj.ControlSpecifications, UnmarshalControlSpecificationPrototype)
 	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "control_specification_count", &obj.ControlSpecificationCount)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalModel(m, "control_specifications", &obj.ControlSpecifications, UnmarshalControlSpecification)
-	if err != nil {
+		err = core.SDKErrorf(err, "", "control_specifications-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "control_docs", &obj.ControlDocs, UnmarshalControlDoc)
 	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "control_tags", &obj.ControlTags)
-	if err != nil {
+		err = core.SDKErrorf(err, "", "control_docs-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "status-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
 }
 
-// NewControl: Instantiate Control(Generic Model Constructor)
-func (*SecurityAndComplianceCenterApiV3) NewControl(controlName string, controlCategory string, controlRequirement bool, controlSpecifications []ControlSpecification) (_model *Control, err error) {
-	_model = &Control{
-		ControlName:           core.StringPtr(controlName),
-		ControlCategory:       core.StringPtr(controlCategory),
-		ControlRequirement:    core.BoolPtr(controlRequirement),
-		ControlSpecifications: controlSpecifications,
-	}
-	err = core.ValidateStruct(_model, "required parameters")
-	return
-}
-
 // ControlSpecification : A statement that defines a security/privacy requirement for a Control.
 type ControlSpecification struct {
 	// The ID of the control.
-	ID *string `json:"control_specification_id,omitempty"`
-
-	// The Name of the control specification
-	Name *string `json:"control_specification_name,omitempty"`
+	ID *string `json:"id,omitempty"`
 
 	// Details which party is responsible for the implementation of a specification.
 	Responsibility *string `json:"responsibility,omitempty"`
@@ -6321,63 +7318,136 @@ type ControlSpecification struct {
 	// The name of the component.
 	ComponentName *string `json:"component_name,omitempty"`
 
-	// The type of the component.
+	// The type of component that will use the specification.
 	ComponentType *string `json:"component_type,omitempty"`
 
 	// The cloud provider the specification is targeting.
 	Environment *string `json:"environment,omitempty"`
 
 	// Information about the Control Specification.
-	Description *string `json:"control_specification_description,omitempty"`
+	Description *string `json:"description,omitempty"`
 
 	// The number of rules tied to the specification.
 	AssessmentsCount *int64 `json:"assessments_count,omitempty"`
 
 	// The detailed list of rules associated with the Specification.
-	Assessments []Assessment `json:"assessments,omitempty"`
+	Assessments []Assessment `json:"assessments" validate:"required"`
+}
+
+// NewControlSpecification : Instantiate ControlSpecification (Generic Model Constructor)
+func (*SecurityAndComplianceCenterAPIV3) NewControlSpecification(assessments []Assessment) (_model *ControlSpecification, err error) {
+	_model = &ControlSpecification{
+		Assessments: assessments,
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
 }
 
 // UnmarshalControlSpecification unmarshals an instance of ControlSpecification from the specified map of raw messages.
 func UnmarshalControlSpecification(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(ControlSpecification)
-	err = core.UnmarshalPrimitive(m, "control_specification_id", &obj.ID)
+	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "control_specification_name", &obj.Name)
-	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "responsibility", &obj.Responsibility)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "responsibility-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "component_id", &obj.ComponentID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "component_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "component_name", &obj.ComponentName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "component_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "component_type", &obj.ComponentType)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "component_type-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "environment", &obj.Environment)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "environment-error", common.GetComponentInfo())
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "control_specification_description", &obj.Description)
+	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "assessments_count", &obj.AssessmentsCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "assessments_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "assessments", &obj.Assessments, UnmarshalAssessment)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "assessments-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// ControlSpecificationPrototype : The necessary fields to instantiate a Control Specification.
+type ControlSpecificationPrototype struct {
+	// The ID of the component. The component_id can be found from the 'service_name' using the Get Services method.
+	ComponentID *string `json:"component_id,omitempty"`
+
+	// The cloud provider the specification is targeting.
+	Environment *string `json:"environment,omitempty"`
+
+	// The ID of the control specification to give when creating the control_specification.
+	ControlSpecificationID *string `json:"control_specification_id,omitempty"`
+
+	// Information about the Control Specification.
+	ControlSpecificationDescription *string `json:"control_specification_description,omitempty"`
+
+	// The detailed list of rules associated with the Specification.
+	Assessments []AssessmentPrototype `json:"assessments,omitempty"`
+}
+
+// Constants associated with the ControlSpecificationPrototype.Environment property.
+// The cloud provider the specification is targeting.
+const (
+	ControlSpecificationPrototypeEnvironmentIBMCloudConst = "ibm-cloud"
+)
+
+// UnmarshalControlSpecificationPrototype unmarshals an instance of ControlSpecificationPrototype from the specified map of raw messages.
+func UnmarshalControlSpecificationPrototype(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(ControlSpecificationPrototype)
+	err = core.UnmarshalPrimitive(m, "component_id", &obj.ComponentID)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "component_id-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "environment", &obj.Environment)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "environment-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "control_specification_id", &obj.ControlSpecificationID)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "control_specification_id-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "control_specification_description", &obj.ControlSpecificationDescription)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "control_specification_description-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalModel(m, "assessments", &obj.Assessments, UnmarshalAssessmentPrototype)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "assessments-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -6408,7 +7478,7 @@ type ControlSpecificationWithStats struct {
 	Assessments []AssessmentWithStats `json:"assessments,omitempty"`
 
 	// The allowed values of an aggregated status for controls, specifications, assessments, and resources.
-	Status *string `json:"status,omitempty"`
+	Status *string `json:"status" validate:"required"`
 
 	// The total number of checks.
 	TotalCount *int64 `json:"total_count,omitempty"`
@@ -6444,58 +7514,72 @@ func UnmarshalControlSpecificationWithStats(m map[string]json.RawMessage, result
 	obj := new(ControlSpecificationWithStats)
 	err = core.UnmarshalPrimitive(m, "control_specification_id", &obj.ControlSpecificationID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_specification_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_specification_description", &obj.ControlSpecificationDescription)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_specification_description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "component_id", &obj.ComponentID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "component_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "component_name", &obj.ComponentName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "component_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "environment", &obj.Environment)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "environment-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "responsibility", &obj.Responsibility)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "responsibility-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "assessments", &obj.Assessments, UnmarshalAssessmentWithStats)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "assessments-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "status-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "compliant_count", &obj.CompliantCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "compliant_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "not_compliant_count", &obj.NotCompliantCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "not_compliant_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "unable_to_perform_count", &obj.UnableToPerformCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unable_to_perform_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "user_evaluation_required_count", &obj.UserEvaluationRequiredCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "user_evaluation_required_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "not_applicable_count", &obj.NotApplicableCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "not_applicable_count-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -6519,14 +7603,17 @@ func UnmarshalControlSummary(m map[string]json.RawMessage, result interface{}) (
 	obj := new(ControlSummary)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_name", &obj.ControlName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_description", &obj.ControlDescription)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_description-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -6566,7 +7653,7 @@ type ControlWithStats struct {
 	ResourceTags *Tags `json:"resource_tags,omitempty"`
 
 	// The allowed values of an aggregated status for controls, specifications, assessments, and resources.
-	Status *string `json:"status,omitempty"`
+	Status *string `json:"status" validate:"required"`
 
 	// The total number of checks.
 	TotalCount *int64 `json:"total_count,omitempty"`
@@ -6602,78 +7689,95 @@ func UnmarshalControlWithStats(m map[string]json.RawMessage, result interface{})
 	obj := new(ControlWithStats)
 	err = core.UnmarshalPrimitive(m, "report_id", &obj.ReportID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "report_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "home_account_id", &obj.HomeAccountID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "home_account_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_library_id", &obj.ControlLibraryID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_library_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_library_version", &obj.ControlLibraryVersion)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_library_version-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_name", &obj.ControlName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_description", &obj.ControlDescription)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_category", &obj.ControlCategory)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_category-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "control_specifications", &obj.ControlSpecifications, UnmarshalControlSpecificationWithStats)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_specifications-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "resource_tags", &obj.ResourceTags, UnmarshalTags)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "resource_tags-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "status-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "compliant_count", &obj.CompliantCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "compliant_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "not_compliant_count", &obj.NotCompliantCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "not_compliant_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "unable_to_perform_count", &obj.UnableToPerformCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unable_to_perform_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "user_evaluation_required_count", &obj.UserEvaluationRequiredCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "user_evaluation_required_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "not_applicable_count", &obj.NotApplicableCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "not_applicable_count-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
 }
 
-// CreateCustomControlLibraryOptions : The CreateCustomControlLibrary options.
-type CreateCustomControlLibraryOptions struct {
+// CreateControlLibraryOptions : The CreateControlLibrary options.
+type CreateControlLibraryOptions struct {
 	// The ID of the Security and Compliance Center instance.
 	InstanceID *string `json:"instance_id" validate:"required,ne="`
 
@@ -6690,30 +7794,24 @@ type CreateCustomControlLibraryOptions struct {
 	ControlLibraryVersion *string `json:"control_library_version" validate:"required"`
 
 	// The list of rules that the control library attempts to adhere to.
-	Controls []Control `json:"controls" validate:"required"`
+	Controls []ControlPrototype `json:"controls" validate:"required"`
 
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
 
-	// The version group label
-	VersionGroupLabel *string `json:"version_group_label,omitempty"`
-
-	// Set to determine if the latest is true
-	Latest *bool `json:"latest,omitempty"`
-
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
-// Constants associated with the CreateCustomControlLibraryOptions.ControlLibraryType property.
+// Constants associated with the CreateControlLibraryOptions.ControlLibraryType property.
 // Details that the control library is a user made(custom) or Security Compliance Center(predefined).
 const (
-	CreateCustomControlLibraryOptionsControlLibraryTypeCustomConst = "custom"
+	CreateControlLibraryOptionsControlLibraryTypeCustomConst = "custom"
 )
 
-// NewCreateCustomControlLibraryOptions : Instantiate CreateCustomControlLibraryOptions
-func (*SecurityAndComplianceCenterApiV3) NewCreateCustomControlLibraryOptions(instanceID string, controlLibraryName string, controlLibraryDescription string, controlLibraryType string, controlLibraryVersion string, controls []Control) *CreateCustomControlLibraryOptions {
-	return &CreateCustomControlLibraryOptions{
+// NewCreateControlLibraryOptions : Instantiate CreateControlLibraryOptions
+func (*SecurityAndComplianceCenterAPIV3) NewCreateControlLibraryOptions(instanceID string, controlLibraryName string, controlLibraryDescription string, controlLibraryType string, controlLibraryVersion string, controls []ControlPrototype) *CreateControlLibraryOptions {
+	return &CreateControlLibraryOptions{
 		InstanceID:                core.StringPtr(instanceID),
 		ControlLibraryName:        core.StringPtr(controlLibraryName),
 		ControlLibraryDescription: core.StringPtr(controlLibraryDescription),
@@ -6724,59 +7822,49 @@ func (*SecurityAndComplianceCenterApiV3) NewCreateCustomControlLibraryOptions(in
 }
 
 // SetInstanceID : Allow user to set InstanceID
-func (_options *CreateCustomControlLibraryOptions) SetInstanceID(instanceID string) *CreateCustomControlLibraryOptions {
+func (_options *CreateControlLibraryOptions) SetInstanceID(instanceID string) *CreateControlLibraryOptions {
 	_options.InstanceID = core.StringPtr(instanceID)
 	return _options
 }
 
 // SetControlLibraryName : Allow user to set ControlLibraryName
-func (_options *CreateCustomControlLibraryOptions) SetControlLibraryName(controlLibraryName string) *CreateCustomControlLibraryOptions {
+func (_options *CreateControlLibraryOptions) SetControlLibraryName(controlLibraryName string) *CreateControlLibraryOptions {
 	_options.ControlLibraryName = core.StringPtr(controlLibraryName)
 	return _options
 }
 
 // SetControlLibraryDescription : Allow user to set ControlLibraryDescription
-func (_options *CreateCustomControlLibraryOptions) SetControlLibraryDescription(controlLibraryDescription string) *CreateCustomControlLibraryOptions {
+func (_options *CreateControlLibraryOptions) SetControlLibraryDescription(controlLibraryDescription string) *CreateControlLibraryOptions {
 	_options.ControlLibraryDescription = core.StringPtr(controlLibraryDescription)
 	return _options
 }
 
 // SetControlLibraryType : Allow user to set ControlLibraryType
-func (_options *CreateCustomControlLibraryOptions) SetControlLibraryType(controlLibraryType string) *CreateCustomControlLibraryOptions {
+func (_options *CreateControlLibraryOptions) SetControlLibraryType(controlLibraryType string) *CreateControlLibraryOptions {
 	_options.ControlLibraryType = core.StringPtr(controlLibraryType)
 	return _options
 }
 
 // SetControlLibraryVersion : Allow user to set ControlLibraryVersion
-func (_options *CreateCustomControlLibraryOptions) SetControlLibraryVersion(controlLibraryVersion string) *CreateCustomControlLibraryOptions {
+func (_options *CreateControlLibraryOptions) SetControlLibraryVersion(controlLibraryVersion string) *CreateControlLibraryOptions {
 	_options.ControlLibraryVersion = core.StringPtr(controlLibraryVersion)
 	return _options
 }
 
 // SetControls : Allow user to set Controls
-func (_options *CreateCustomControlLibraryOptions) SetControls(controls []Control) *CreateCustomControlLibraryOptions {
+func (_options *CreateControlLibraryOptions) SetControls(controls []ControlPrototype) *CreateControlLibraryOptions {
 	_options.Controls = controls
 	return _options
 }
 
 // SetAccountID : Allow user to set AccountID
-func (_options *CreateCustomControlLibraryOptions) SetAccountID(accountID string) *CreateCustomControlLibraryOptions {
+func (_options *CreateControlLibraryOptions) SetAccountID(accountID string) *CreateControlLibraryOptions {
 	_options.AccountID = core.StringPtr(accountID)
 	return _options
 }
 
-func (_options *CreateCustomControlLibraryOptions) SetVersionGroupLabel(versionGroupLabel string) *CreateCustomControlLibraryOptions {
-	_options.VersionGroupLabel = core.StringPtr(versionGroupLabel)
-	return _options
-}
-
-func (_options *CreateCustomControlLibraryOptions) SetLatest(latest bool) *CreateCustomControlLibraryOptions {
-	_options.Latest = core.BoolPtr(latest)
-	return _options
-}
-
 // SetHeaders : Allow user to set Headers
-func (options *CreateCustomControlLibraryOptions) SetHeaders(param map[string]string) *CreateCustomControlLibraryOptions {
+func (options *CreateControlLibraryOptions) SetHeaders(param map[string]string) *CreateControlLibraryOptions {
 	options.Headers = param
 	return options
 }
@@ -6787,23 +7875,27 @@ type CreateProfileAttachmentOptions struct {
 	InstanceID *string `json:"instance_id" validate:"required,ne="`
 
 	// The profile ID.
-	ProfileID *string `json:"profile_id" validate:"required,ne="`
+	ProfileID *string `json:"-" validate:"required,ne="`
 
 	// The Prototype to create a profile attachment.
-	Attachments []ProfileAttachmentBase `json:"attachments,omitempty"`
+	NewAttachments []ProfileAttachmentBase `json:"attachments" validate:"required"`
+
+	// The profile ID to target against.
+	NewProfileID *string `json:"profile_id,omitempty"`
 
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewCreateProfileAttachmentOptions : Instantiate CreateProfileAttachmentOptions
-func (*SecurityAndComplianceCenterApiV3) NewCreateProfileAttachmentOptions(instanceID string, profileID string) *CreateProfileAttachmentOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewCreateProfileAttachmentOptions(instanceID string, profileID string, newAttachments []ProfileAttachmentBase) *CreateProfileAttachmentOptions {
 	return &CreateProfileAttachmentOptions{
-		InstanceID: core.StringPtr(instanceID),
-		ProfileID:  core.StringPtr(profileID),
+		InstanceID:     core.StringPtr(instanceID),
+		ProfileID:      core.StringPtr(profileID),
+		NewAttachments: newAttachments,
 	}
 }
 
@@ -6819,9 +7911,15 @@ func (_options *CreateProfileAttachmentOptions) SetProfileID(profileID string) *
 	return _options
 }
 
-// SetAttachments : Allow user to set Attachments
-func (_options *CreateProfileAttachmentOptions) SetAttachments(attachments []ProfileAttachmentBase) *CreateProfileAttachmentOptions {
-	_options.Attachments = attachments
+// SetNewAttachments : Allow user to set NewAttachments
+func (_options *CreateProfileAttachmentOptions) SetNewAttachments(newAttachments []ProfileAttachmentBase) *CreateProfileAttachmentOptions {
+	_options.NewAttachments = newAttachments
+	return _options
+}
+
+// SetNewProfileID : Allow user to set NewProfileID
+func (_options *CreateProfileAttachmentOptions) SetNewProfileID(newProfileID string) *CreateProfileAttachmentOptions {
+	_options.NewProfileID = core.StringPtr(newProfileID)
 	return _options
 }
 
@@ -6843,13 +7941,19 @@ type CreateProfileOptions struct {
 	InstanceID *string `json:"instance_id" validate:"required,ne="`
 
 	// The name of the profile.
-	ProfileName *string `json:"profile_name,omitempty"`
+	ProfileName *string `json:"profile_name" validate:"required"`
+
+	// The version of the profile.
+	ProfileVersion *string `json:"profile_version" validate:"required"`
+
+	// List of controls associated with the profile.
+	Controls []ProfileControlsPrototype `json:"controls" validate:"required"`
+
+	// The default values when using the profile.
+	DefaultParameters []DefaultParameters `json:"default_parameters" validate:"required"`
 
 	// A description of what the profile should represent.
 	ProfileDescription *string `json:"profile_description,omitempty"`
-
-	// The version of the profile.
-	ProfileVersion *string `json:"profile_version,omitempty"`
 
 	// Determines if the profile is up to date with the latest revisions.
 	Latest *bool `json:"latest,omitempty"`
@@ -6857,23 +7961,21 @@ type CreateProfileOptions struct {
 	// The unique identifier of the revision.
 	VersionGroupLabel *string `json:"version_group_label,omitempty"`
 
-	// List of controls associated with the profile.
-	Controls []ProfileControlsPrototype `json:"controls,omitempty"`
-
-	// The default values when using the profile.
-	DefaultParameters []DefaultParametersPrototype `json:"default_parameters,omitempty"`
-
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewCreateProfileOptions : Instantiate CreateProfileOptions
-func (*SecurityAndComplianceCenterApiV3) NewCreateProfileOptions(instanceID string) *CreateProfileOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewCreateProfileOptions(instanceID string, profileName string, profileVersion string, controls []ProfileControlsPrototype, defaultParameters []DefaultParameters) *CreateProfileOptions {
 	return &CreateProfileOptions{
-		InstanceID: core.StringPtr(instanceID),
+		InstanceID:        core.StringPtr(instanceID),
+		ProfileName:       core.StringPtr(profileName),
+		ProfileVersion:    core.StringPtr(profileVersion),
+		Controls:          controls,
+		DefaultParameters: defaultParameters,
 	}
 }
 
@@ -6889,15 +7991,27 @@ func (_options *CreateProfileOptions) SetProfileName(profileName string) *Create
 	return _options
 }
 
-// SetProfileDescription : Allow user to set ProfileDescription
-func (_options *CreateProfileOptions) SetProfileDescription(profileDescription string) *CreateProfileOptions {
-	_options.ProfileDescription = core.StringPtr(profileDescription)
-	return _options
-}
-
 // SetProfileVersion : Allow user to set ProfileVersion
 func (_options *CreateProfileOptions) SetProfileVersion(profileVersion string) *CreateProfileOptions {
 	_options.ProfileVersion = core.StringPtr(profileVersion)
+	return _options
+}
+
+// SetControls : Allow user to set Controls
+func (_options *CreateProfileOptions) SetControls(controls []ProfileControlsPrototype) *CreateProfileOptions {
+	_options.Controls = controls
+	return _options
+}
+
+// SetDefaultParameters : Allow user to set DefaultParameters
+func (_options *CreateProfileOptions) SetDefaultParameters(defaultParameters []DefaultParameters) *CreateProfileOptions {
+	_options.DefaultParameters = defaultParameters
+	return _options
+}
+
+// SetProfileDescription : Allow user to set ProfileDescription
+func (_options *CreateProfileOptions) SetProfileDescription(profileDescription string) *CreateProfileOptions {
+	_options.ProfileDescription = core.StringPtr(profileDescription)
 	return _options
 }
 
@@ -6910,18 +8024,6 @@ func (_options *CreateProfileOptions) SetLatest(latest bool) *CreateProfileOptio
 // SetVersionGroupLabel : Allow user to set VersionGroupLabel
 func (_options *CreateProfileOptions) SetVersionGroupLabel(versionGroupLabel string) *CreateProfileOptions {
 	_options.VersionGroupLabel = core.StringPtr(versionGroupLabel)
-	return _options
-}
-
-// SetControls : Allow user to set Controls
-func (_options *CreateProfileOptions) SetControls(controls []ProfileControlsPrototype) *CreateProfileOptions {
-	_options.Controls = controls
-	return _options
-}
-
-// SetDefaultParameters : Allow user to set DefaultParameters
-func (_options *CreateProfileOptions) SetDefaultParameters(defaultParameters []DefaultParametersPrototype) *CreateProfileOptions {
-	_options.DefaultParameters = defaultParameters
 	return _options
 }
 
@@ -6946,21 +8048,20 @@ type CreateProviderTypeInstanceOptions struct {
 	ProviderTypeID *string `json:"provider_type_id" validate:"required,ne="`
 
 	// The provider type instance name.
-	Name *string `json:"name" validate:"required,ne="`
+	Name *string `json:"name,omitempty"`
 
 	// The attributes for connecting to the provider type instance.
 	Attributes map[string]interface{} `json:"attributes,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewCreateProviderTypeInstanceOptions : Instantiate CreateProviderTypeInstanceOptions
-func (*SecurityAndComplianceCenterApiV3) NewCreateProviderTypeInstanceOptions(instanceID string, providerTypeID string, providerTypeInstanceName string) *CreateProviderTypeInstanceOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewCreateProviderTypeInstanceOptions(instanceID string, providerTypeID string) *CreateProviderTypeInstanceOptions {
 	return &CreateProviderTypeInstanceOptions{
 		InstanceID:     core.StringPtr(instanceID),
 		ProviderTypeID: core.StringPtr(providerTypeID),
-		Name:           core.StringPtr(providerTypeInstanceName),
 	}
 }
 
@@ -7017,12 +8118,12 @@ type CreateRuleOptions struct {
 	// The list of labels that correspond to a rule.
 	Labels []string `json:"labels,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewCreateRuleOptions : Instantiate CreateRuleOptions
-func (*SecurityAndComplianceCenterApiV3) NewCreateRuleOptions(instanceID string, description string, target *RuleTargetPrototype, requiredConfig RequiredConfigIntf) *CreateRuleOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewCreateRuleOptions(instanceID string, description string, target *RuleTargetPrototype, requiredConfig RequiredConfigIntf) *CreateRuleOptions {
 	return &CreateRuleOptions{
 		InstanceID:     core.StringPtr(instanceID),
 		Description:    core.StringPtr(description),
@@ -7090,12 +8191,12 @@ type CreateScanOptions struct {
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewCreateScanOptions : Instantiate CreateScanOptions
-func (*SecurityAndComplianceCenterApiV3) NewCreateScanOptions(instanceID string) *CreateScanOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewCreateScanOptions(instanceID string) *CreateScanOptions {
 	return &CreateScanOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -7136,6 +8237,7 @@ func UnmarshalCreateScanReport(m map[string]json.RawMessage, result interface{})
 	obj := new(CreateScanReport)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -7159,7 +8261,7 @@ type CreateScanReportOptions struct {
 	// The ID of the sub-scope.
 	SubscopeID *string `json:"subscope_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
@@ -7171,7 +8273,7 @@ const (
 )
 
 // NewCreateScanReportOptions : Instantiate CreateScanReportOptions
-func (*SecurityAndComplianceCenterApiV3) NewCreateScanReportOptions(instanceID string, reportID string, format string) *CreateScanReportOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewCreateScanReportOptions(instanceID string, reportID string, format string) *CreateScanReportOptions {
 	return &CreateScanReportOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -7250,38 +8352,47 @@ func UnmarshalCreateScanResponse(m map[string]json.RawMessage, result interface{
 	obj := new(CreateScanResponse)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "account_id", &obj.AccountID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "account_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "attachment_id", &obj.AttachmentID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "attachment_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "report_id", &obj.ReportID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "report_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "status-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "last_scan_time", &obj.LastScanTime)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "last_scan_time-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "next_scan_time", &obj.NextScanTime)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "next_scan_time-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "scan_type", &obj.ScanType)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "scan_type-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "occurence", &obj.Occurence)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "occurence-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -7305,12 +8416,12 @@ type CreateScopeOptions struct {
 	// The properties that are supported for scoping by this environment.
 	Properties []ScopePropertyIntf `json:"properties,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewCreateScopeOptions : Instantiate CreateScopeOptions
-func (*SecurityAndComplianceCenterApiV3) NewCreateScopeOptions(instanceID string) *CreateScopeOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewCreateScopeOptions(instanceID string) *CreateScopeOptions {
 	return &CreateScopeOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -7361,17 +8472,18 @@ type CreateSubscopeOptions struct {
 	ScopeID *string `json:"scope_id" validate:"required,ne="`
 
 	// The array of subscopes.
-	Subscopes []ScopePrototype `json:"subscopes,omitempty"`
+	Subscopes []ScopePrototype `json:"subscopes" validate:"required"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewCreateSubscopeOptions : Instantiate CreateSubscopeOptions
-func (*SecurityAndComplianceCenterApiV3) NewCreateSubscopeOptions(instanceID string, scopeID string) *CreateSubscopeOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewCreateSubscopeOptions(instanceID string, scopeID string, subscopes []ScopePrototype) *CreateSubscopeOptions {
 	return &CreateSubscopeOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ScopeID:    core.StringPtr(scopeID),
+		Subscopes:  subscopes,
 	}
 }
 
@@ -7416,12 +8528,12 @@ type CreateTargetOptions struct {
 	// Customer credential to access for a specific service to scan.
 	Credentials []Credential `json:"credentials,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewCreateTargetOptions : Instantiate CreateTargetOptions
-func (*SecurityAndComplianceCenterApiV3) NewCreateTargetOptions(instanceID string, accountID string, trustedProfileID string, name string) *CreateTargetOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewCreateTargetOptions(instanceID string, accountID string, trustedProfileID string, name string) *CreateTargetOptions {
 	return &CreateTargetOptions{
 		InstanceID:       core.StringPtr(instanceID),
 		AccountID:        core.StringPtr(accountID),
@@ -7471,23 +8583,20 @@ type Credential struct {
 	// The CRN of the secret.
 	SecretCRN *string `json:"secret_crn" validate:"required"`
 
-	// The type of the credential.
-	Type *string `json:"type,omitempty"`
-
-	// The type of credentials
-	SecretName *string `json:"secret_name,omitempty"`
-
 	// Credential having service name and instance crn.
 	Resources []Resource `json:"resources" validate:"required"`
 }
 
 // NewCredential : Instantiate Credential (Generic Model Constructor)
-func (*SecurityAndComplianceCenterApiV3) NewCredential(secretCRN string, resources []Resource) (_model *Credential, err error) {
+func (*SecurityAndComplianceCenterAPIV3) NewCredential(secretCRN string, resources []Resource) (_model *Credential, err error) {
 	_model = &Credential{
 		SecretCRN: core.StringPtr(secretCRN),
 		Resources: resources,
 	}
 	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
 	return
 }
 
@@ -7496,18 +8605,12 @@ func UnmarshalCredential(m map[string]json.RawMessage, result interface{}) (err 
 	obj := new(Credential)
 	err = core.UnmarshalPrimitive(m, "secret_crn", &obj.SecretCRN)
 	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "secret_name", &obj.SecretName)
-	if err != nil {
+		err = core.SDKErrorf(err, "", "secret_crn-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "resources", &obj.Resources, UnmarshalResource)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "resources-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -7534,18 +8637,61 @@ func UnmarshalCredentialResponse(m map[string]json.RawMessage, result interface{
 	obj := new(CredentialResponse)
 	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "type-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "secret_crn", &obj.SecretCRN)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "secret_crn-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "secret_name", &obj.SecretName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "secret_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "resources", &obj.Resources, UnmarshalResource)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "resources-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// DateRange : Date range.
+type DateRange struct {
+	// date/time for the start of the range.
+	StartDate *strfmt.DateTime `json:"start_date" validate:"required"`
+
+	// date/time for the end of the range.
+	EndDate *strfmt.DateTime `json:"end_date" validate:"required"`
+}
+
+// NewDateRange : Instantiate DateRange (Generic Model Constructor)
+func (*SecurityAndComplianceCenterAPIV3) NewDateRange(startDate *strfmt.DateTime, endDate *strfmt.DateTime) (_model *DateRange, err error) {
+	_model = &DateRange{
+		StartDate: startDate,
+		EndDate:   endDate,
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
+}
+
+// UnmarshalDateRange unmarshals an instance of DateRange from the specified map of raw messages.
+func UnmarshalDateRange(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(DateRange)
+	err = core.UnmarshalPrimitive(m, "start_date", &obj.StartDate)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "start_date-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "end_date", &obj.EndDate)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "end_date-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -7563,7 +8709,8 @@ type DefaultParameters struct {
 	// The parameter's name.
 	ParameterName *string `json:"parameter_name,omitempty"`
 
-	ParameterDefaultValue interface{} `json:"parameter_default_value,omitempty"`
+	// The default value of the parameter.
+	ParameterDefaultValue *string `json:"parameter_default_value,omitempty"`
 
 	// The parameter display name.
 	ParameterDisplayName *string `json:"parameter_display_name,omitempty"`
@@ -7577,26 +8724,32 @@ func UnmarshalDefaultParameters(m map[string]json.RawMessage, result interface{}
 	obj := new(DefaultParameters)
 	err = core.UnmarshalPrimitive(m, "assessment_type", &obj.AssessmentType)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "assessment_type-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "assessment_id", &obj.AssessmentID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "assessment_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "parameter_name", &obj.ParameterName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "parameter_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "parameter_default_value", &obj.ParameterDefaultValue)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "parameter_default_value-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "parameter_display_name", &obj.ParameterDisplayName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "parameter_display_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "parameter_type", &obj.ParameterType)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "parameter_type-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -7615,13 +8768,13 @@ type DefaultParametersChanges struct {
 	TotalUpdated *int64 `json:"total_updated,omitempty"`
 
 	// List of parameters added.
-	Added []DefaultParameters `json:"added,omitempty"`
+	Added []DefaultParameters `json:"added" validate:"required"`
 
 	// List of parameters removed.
-	Removed []DefaultParameters `json:"removed,omitempty"`
+	Removed []DefaultParameters `json:"removed" validate:"required"`
 
 	// List of parameters updated.
-	Updated []DefaultParametersDifference `json:"updated,omitempty"`
+	Updated []DefaultParametersDifference `json:"updated" validate:"required"`
 }
 
 // UnmarshalDefaultParametersChanges unmarshals an instance of DefaultParametersChanges from the specified map of raw messages.
@@ -7629,26 +8782,32 @@ func UnmarshalDefaultParametersChanges(m map[string]json.RawMessage, result inte
 	obj := new(DefaultParametersChanges)
 	err = core.UnmarshalPrimitive(m, "total_added", &obj.TotalAdded)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_added-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_removed", &obj.TotalRemoved)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_removed-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_updated", &obj.TotalUpdated)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_updated-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "added", &obj.Added, UnmarshalDefaultParameters)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "added-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "removed", &obj.Removed, UnmarshalDefaultParameters)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "removed-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "updated", &obj.Updated, UnmarshalDefaultParametersDifference)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -7669,61 +8828,12 @@ func UnmarshalDefaultParametersDifference(m map[string]json.RawMessage, result i
 	obj := new(DefaultParametersDifference)
 	err = core.UnmarshalModel(m, "current", &obj.Current, UnmarshalDefaultParameters)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "current-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "latest", &obj.Latest, UnmarshalDefaultParameters)
 	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// DefaultParametersPrototype : The parameters of the profile to inherently set.
-type DefaultParametersPrototype struct {
-	// The type of the implementation.
-	AssessmentType *string `json:"assessment_type,omitempty"`
-
-	// The implementation ID of the parameter.
-	AssessmentID *string `json:"assessment_id,omitempty"`
-
-	// The parameter's name.
-	ParameterName *string `json:"parameter_name,omitempty"`
-
-	ParameterDefaultValue interface{} `json:"parameter_default_value,omitempty"`
-
-	// The parameter display name.
-	ParameterDisplayName *string `json:"parameter_display_name,omitempty"`
-
-	// The parameter type.
-	ParameterType *string `json:"parameter_type,omitempty"`
-}
-
-// UnmarshalDefaultParametersPrototype unmarshals an instance of DefaultParametersPrototype from the specified map of raw messages.
-func UnmarshalDefaultParametersPrototype(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(DefaultParametersPrototype)
-	err = core.UnmarshalPrimitive(m, "assessment_type", &obj.AssessmentType)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "assessment_id", &obj.AssessmentID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "parameter_name", &obj.ParameterName)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "parameter_default_value", &obj.ParameterDefaultValue)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "parameter_display_name", &obj.ParameterDisplayName)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "parameter_type", &obj.ParameterType)
-	if err != nil {
+		err = core.SDKErrorf(err, "", "latest-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -7741,12 +8851,12 @@ type DeleteCustomControlLibraryOptions struct {
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewDeleteCustomControlLibraryOptions : Instantiate DeleteCustomControlLibraryOptions
-func (*SecurityAndComplianceCenterApiV3) NewDeleteCustomControlLibraryOptions(instanceID string, controlLibraryID string) *DeleteCustomControlLibraryOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewDeleteCustomControlLibraryOptions(instanceID string, controlLibraryID string) *DeleteCustomControlLibraryOptions {
 	return &DeleteCustomControlLibraryOptions{
 		InstanceID:       core.StringPtr(instanceID),
 		ControlLibraryID: core.StringPtr(controlLibraryID),
@@ -7788,12 +8898,12 @@ type DeleteCustomProfileOptions struct {
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewDeleteCustomProfileOptions : Instantiate DeleteCustomProfileOptions
-func (*SecurityAndComplianceCenterApiV3) NewDeleteCustomProfileOptions(instanceID string, profileID string) *DeleteCustomProfileOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewDeleteCustomProfileOptions(instanceID string, profileID string) *DeleteCustomProfileOptions {
 	return &DeleteCustomProfileOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ProfileID:  core.StringPtr(profileID),
@@ -7838,12 +8948,12 @@ type DeleteProfileAttachmentOptions struct {
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewDeleteProfileAttachmentOptions : Instantiate DeleteProfileAttachmentOptions
-func (*SecurityAndComplianceCenterApiV3) NewDeleteProfileAttachmentOptions(instanceID string, profileID string, attachmentID string) *DeleteProfileAttachmentOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewDeleteProfileAttachmentOptions(instanceID string, profileID string, attachmentID string) *DeleteProfileAttachmentOptions {
 	return &DeleteProfileAttachmentOptions{
 		InstanceID:   core.StringPtr(instanceID),
 		ProfileID:    core.StringPtr(profileID),
@@ -7892,12 +9002,12 @@ type DeleteProviderTypeInstanceOptions struct {
 	// The provider type instance ID.
 	ProviderTypeInstanceID *string `json:"provider_type_instance_id" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewDeleteProviderTypeInstanceOptions : Instantiate DeleteProviderTypeInstanceOptions
-func (*SecurityAndComplianceCenterApiV3) NewDeleteProviderTypeInstanceOptions(instanceID string, providerTypeID string, providerTypeInstanceID string) *DeleteProviderTypeInstanceOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewDeleteProviderTypeInstanceOptions(instanceID string, providerTypeID string, providerTypeInstanceID string) *DeleteProviderTypeInstanceOptions {
 	return &DeleteProviderTypeInstanceOptions{
 		InstanceID:             core.StringPtr(instanceID),
 		ProviderTypeID:         core.StringPtr(providerTypeID),
@@ -7937,12 +9047,12 @@ type DeleteRuleOptions struct {
 	// The ID of a rule/assessment.
 	RuleID *string `json:"rule_id" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewDeleteRuleOptions : Instantiate DeleteRuleOptions
-func (*SecurityAndComplianceCenterApiV3) NewDeleteRuleOptions(instanceID string, ruleID string) *DeleteRuleOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewDeleteRuleOptions(instanceID string, ruleID string) *DeleteRuleOptions {
 	return &DeleteRuleOptions{
 		InstanceID: core.StringPtr(instanceID),
 		RuleID:     core.StringPtr(ruleID),
@@ -7975,12 +9085,12 @@ type DeleteScopeOptions struct {
 	// The ID of the scope being targeted.
 	ScopeID *string `json:"scope_id" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewDeleteScopeOptions : Instantiate DeleteScopeOptions
-func (*SecurityAndComplianceCenterApiV3) NewDeleteScopeOptions(instanceID string, scopeID string) *DeleteScopeOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewDeleteScopeOptions(instanceID string, scopeID string) *DeleteScopeOptions {
 	return &DeleteScopeOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ScopeID:    core.StringPtr(scopeID),
@@ -8016,12 +9126,12 @@ type DeleteSubscopeOptions struct {
 	// The ID of the scope being targeted.
 	SubscopeID *string `json:"subscope_id" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewDeleteSubscopeOptions : Instantiate DeleteSubscopeOptions
-func (*SecurityAndComplianceCenterApiV3) NewDeleteSubscopeOptions(instanceID string, scopeID string, subscopeID string) *DeleteSubscopeOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewDeleteSubscopeOptions(instanceID string, scopeID string, subscopeID string) *DeleteSubscopeOptions {
 	return &DeleteSubscopeOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ScopeID:    core.StringPtr(scopeID),
@@ -8061,12 +9171,12 @@ type DeleteTargetOptions struct {
 	// The target ID.
 	TargetID *string `json:"target_id" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewDeleteTargetOptions : Instantiate DeleteTargetOptions
-func (*SecurityAndComplianceCenterApiV3) NewDeleteTargetOptions(instanceID string, targetID string) *DeleteTargetOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewDeleteTargetOptions(instanceID string, targetID string) *DeleteTargetOptions {
 	return &DeleteTargetOptions{
 		InstanceID: core.StringPtr(instanceID),
 		TargetID:   core.StringPtr(targetID),
@@ -8111,18 +9221,22 @@ func UnmarshalEndpoint(m map[string]json.RawMessage, result interface{}) (err er
 	obj := new(Endpoint)
 	err = core.UnmarshalPrimitive(m, "host", &obj.Host)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "host-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "path", &obj.Path)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "path-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "region", &obj.Region)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "region-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "advisory_call_limit", &obj.AdvisoryCallLimit)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "advisory_call_limit-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -8132,7 +9246,7 @@ func UnmarshalEndpoint(m map[string]json.RawMessage, result interface{}) (err er
 // EvalStats : The evaluation stats.
 type EvalStats struct {
 	// The allowed values of an aggregated status for controls, specifications, assessments, and resources.
-	Status *string `json:"status,omitempty"`
+	Status *string `json:"status" validate:"required"`
 
 	// The total number of evaluations.
 	TotalCount *int64 `json:"total_count,omitempty"`
@@ -8168,30 +9282,37 @@ func UnmarshalEvalStats(m map[string]json.RawMessage, result interface{}) (err e
 	obj := new(EvalStats)
 	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "status-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "pass_count", &obj.PassCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "pass_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "failure_count", &obj.FailureCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "failure_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "error_count", &obj.ErrorCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "error_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "skipped_count", &obj.SkippedCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "skipped_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "completed_count", &obj.CompletedCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "completed_count-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -8222,7 +9343,7 @@ type Evaluation struct {
 	Target *TargetInfo `json:"target,omitempty"`
 
 	// The allowed values of an evaluation status.
-	Status *string `json:"status,omitempty"`
+	Status *string `json:"status" validate:"required"`
 
 	// The reason for the evaluation failure.
 	Reason *string `json:"reason,omitempty"`
@@ -8248,46 +9369,57 @@ func UnmarshalEvaluation(m map[string]json.RawMessage, result interface{}) (err 
 	obj := new(Evaluation)
 	err = core.UnmarshalPrimitive(m, "report_id", &obj.ReportID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "report_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "home_account_id", &obj.HomeAccountID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "home_account_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "component_id", &obj.ComponentID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "component_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "component_name", &obj.ComponentName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "component_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "assessment", &obj.Assessment, UnmarshalAssessment)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "assessment-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "evaluate_time", &obj.EvaluateTime)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "evaluate_time-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "target", &obj.Target, UnmarshalTargetInfo)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "target-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "status-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "reason", &obj.Reason)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "reason-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "details", &obj.Details, UnmarshalEvaluationDetails)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "details-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "evaluated_by", &obj.EvaluatedBy)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "evaluated_by-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -8308,10 +9440,12 @@ func UnmarshalEvaluationDetails(m map[string]json.RawMessage, result interface{}
 	obj := new(EvaluationDetails)
 	err = core.UnmarshalModel(m, "properties", &obj.Properties, UnmarshalEvaluationProperty)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "properties-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "provider_info", &obj.ProviderInfo, UnmarshalEvaluationProviderInfo)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "provider_info-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -8347,30 +9481,37 @@ func UnmarshalEvaluationPage(m map[string]json.RawMessage, result interface{}) (
 	obj := new(EvaluationPage)
 	err = core.UnmarshalPrimitive(m, "limit", &obj.Limit)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "limit-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "first", &obj.First, UnmarshalPageHRefFirst)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "first-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "next", &obj.Next, UnmarshalPageHRefNext)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "next-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "report_id", &obj.ReportID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "report_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "home_account_id", &obj.HomeAccountID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "home_account_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "evaluations", &obj.Evaluations, UnmarshalEvaluation)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "evaluations-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -8394,10 +9535,12 @@ type EvaluationProperty struct {
 	PropertyDescription *string `json:"property_description,omitempty"`
 
 	// The operator used during the evaluation.
-	Operator *string `json:"operator,omitempty"`
+	Operator *string `json:"operator" validate:"required"`
 
+	// The value can be of any type.
 	ExpectedValue interface{} `json:"expected_value,omitempty"`
 
+	// The value can be of any type.
 	FoundValue interface{} `json:"found_value,omitempty"`
 }
 
@@ -8434,22 +9577,27 @@ func UnmarshalEvaluationProperty(m map[string]json.RawMessage, result interface{
 	obj := new(EvaluationProperty)
 	err = core.UnmarshalPrimitive(m, "property", &obj.Property)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "property-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "property_description", &obj.PropertyDescription)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "property_description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "operator", &obj.Operator)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "operator-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "expected_value", &obj.ExpectedValue)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "expected_value-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "found_value", &obj.FoundValue)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "found_value-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -8467,6 +9615,7 @@ func UnmarshalEvaluationProviderInfo(m map[string]json.RawMessage, result interf
 	obj := new(EvaluationProviderInfo)
 	err = core.UnmarshalPrimitive(m, "provider_type", &obj.ProviderType)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "provider_type-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -8496,22 +9645,27 @@ func UnmarshalEventNotifications(m map[string]json.RawMessage, result interface{
 	obj := new(EventNotifications)
 	err = core.UnmarshalPrimitive(m, "instance_crn", &obj.InstanceCRN)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "instance_crn-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "updated_on", &obj.UpdatedOn)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_on-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "source_id", &obj.SourceID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "source_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "source_description", &obj.SourceDescription)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "source_description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "source_name", &obj.SourceName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "source_name-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -8535,14 +9689,17 @@ func UnmarshalEventNotificationsPrototype(m map[string]json.RawMessage, result i
 	obj := new(EventNotificationsPrototype)
 	err = core.UnmarshalPrimitive(m, "instance_crn", &obj.InstanceCRN)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "instance_crn-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "source_description", &obj.SourceDescription)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "source_description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "source_name", &obj.SourceName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "source_name-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -8560,12 +9717,12 @@ type GetControlLibraryOptions struct {
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewGetControlLibraryOptions : Instantiate GetControlLibraryOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetControlLibraryOptions(instanceID string, controlLibraryID string) *GetControlLibraryOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewGetControlLibraryOptions(instanceID string, controlLibraryID string) *GetControlLibraryOptions {
 	return &GetControlLibraryOptions{
 		InstanceID:       core.StringPtr(instanceID),
 		ControlLibraryID: core.StringPtr(controlLibraryID),
@@ -8601,16 +9758,25 @@ type GetLatestReportsOptions struct {
 	// The ID of the Security and Compliance Center instance.
 	InstanceID *string `json:"instance_id" validate:"required,ne="`
 
-	// This field sorts results by using a valid sort field. To learn more, see
+	// This field sorts controls by using a valid sort field. To learn more, see
 	// [Sorting](https://cloud.ibm.com/docs/api-handbook?topic=api-handbook-sorting).
 	Sort *string `json:"sort,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
+// Constants associated with the GetLatestReportsOptions.Sort property.
+// This field sorts controls by using a valid sort field. To learn more, see
+// [Sorting](https://cloud.ibm.com/docs/api-handbook?topic=api-handbook-sorting).
+const (
+	GetLatestReportsOptionsSortCreatedOnConst   = "created_on"
+	GetLatestReportsOptionsSortProfileNameConst = "profile_name"
+	GetLatestReportsOptionsSortScopeIDConst     = "scope_id"
+)
+
 // NewGetLatestReportsOptions : Instantiate GetLatestReportsOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetLatestReportsOptions(instanceID string) *GetLatestReportsOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewGetLatestReportsOptions(instanceID string) *GetLatestReportsOptions {
 	return &GetLatestReportsOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -8648,12 +9814,12 @@ type GetProfileAttachmentOptions struct {
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewGetProfileAttachmentOptions : Instantiate GetProfileAttachmentOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetProfileAttachmentOptions(instanceID string, profileID string, attachmentID string) *GetProfileAttachmentOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewGetProfileAttachmentOptions(instanceID string, profileID string, attachmentID string) *GetProfileAttachmentOptions {
 	return &GetProfileAttachmentOptions{
 		InstanceID:   core.StringPtr(instanceID),
 		ProfileID:    core.StringPtr(profileID),
@@ -8702,12 +9868,12 @@ type GetProfileOptions struct {
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewGetProfileOptions : Instantiate GetProfileOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetProfileOptions(instanceID string, profileID string) *GetProfileOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewGetProfileOptions(instanceID string, profileID string) *GetProfileOptions {
 	return &GetProfileOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ProfileID:  core.StringPtr(profileID),
@@ -8746,12 +9912,12 @@ type GetProviderTypeByIDOptions struct {
 	// The provider type ID.
 	ProviderTypeID *string `json:"provider_type_id" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewGetProviderTypeByIDOptions : Instantiate GetProviderTypeByIDOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetProviderTypeByIDOptions(instanceID string, providerTypeID string) *GetProviderTypeByIDOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewGetProviderTypeByIDOptions(instanceID string, providerTypeID string) *GetProviderTypeByIDOptions {
 	return &GetProviderTypeByIDOptions{
 		InstanceID:     core.StringPtr(instanceID),
 		ProviderTypeID: core.StringPtr(providerTypeID),
@@ -8787,12 +9953,12 @@ type GetProviderTypeInstanceOptions struct {
 	// The provider type instance ID.
 	ProviderTypeInstanceID *string `json:"provider_type_instance_id" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewGetProviderTypeInstanceOptions : Instantiate GetProviderTypeInstanceOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetProviderTypeInstanceOptions(instanceID string, providerTypeID string, providerTypeInstanceID string) *GetProviderTypeInstanceOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewGetProviderTypeInstanceOptions(instanceID string, providerTypeID string, providerTypeInstanceID string) *GetProviderTypeInstanceOptions {
 	return &GetProviderTypeInstanceOptions{
 		InstanceID:             core.StringPtr(instanceID),
 		ProviderTypeID:         core.StringPtr(providerTypeID),
@@ -8857,7 +10023,7 @@ type GetReportControlsOptions struct {
 	// The ID of the subscope.
 	SubscopeID *string `json:"subscope_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
@@ -8881,7 +10047,7 @@ const (
 )
 
 // NewGetReportControlsOptions : Instantiate GetReportControlsOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetReportControlsOptions(instanceID string, reportID string) *GetReportControlsOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewGetReportControlsOptions(instanceID string, reportID string) *GetReportControlsOptions {
 	return &GetReportControlsOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -8968,12 +10134,12 @@ type GetReportDownloadFileOptions struct {
 	// The indication of whether report summary metadata must be excluded.
 	ExcludeSummary *bool `json:"exclude_summary,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewGetReportDownloadFileOptions : Instantiate GetReportDownloadFileOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetReportDownloadFileOptions(instanceID string, reportID string) *GetReportDownloadFileOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewGetReportDownloadFileOptions(instanceID string, reportID string) *GetReportDownloadFileOptions {
 	return &GetReportDownloadFileOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -9024,12 +10190,12 @@ type GetReportOptions struct {
 	// The ID of the subscope.
 	SubscopeID *string `json:"subscope_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewGetReportOptions : Instantiate GetReportOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetReportOptions(reportID string, instanceID string) *GetReportOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewGetReportOptions(reportID string, instanceID string) *GetReportOptions {
 	return &GetReportOptions{
 		ReportID:   core.StringPtr(reportID),
 		InstanceID: core.StringPtr(instanceID),
@@ -9074,15 +10240,15 @@ type GetReportRuleOptions struct {
 	// The ID of the scan that is associated with a report.
 	ReportID *string `json:"report_id" validate:"required,ne="`
 
-	// The ID of a rule/assessment.
+	// The ID of the rule within a report.
 	RuleID *string `json:"rule_id" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewGetReportRuleOptions : Instantiate GetReportRuleOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetReportRuleOptions(instanceID string, reportID string, ruleID string) *GetReportRuleOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewGetReportRuleOptions(instanceID string, reportID string, ruleID string) *GetReportRuleOptions {
 	return &GetReportRuleOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -9122,12 +10288,12 @@ type GetReportSummaryOptions struct {
 	// The ID of the scan that is associated with a report.
 	ReportID *string `json:"report_id" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewGetReportSummaryOptions : Instantiate GetReportSummaryOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetReportSummaryOptions(instanceID string, reportID string) *GetReportSummaryOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewGetReportSummaryOptions(instanceID string, reportID string) *GetReportSummaryOptions {
 	return &GetReportSummaryOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -9160,12 +10326,12 @@ type GetReportTagsOptions struct {
 	// The ID of the scan that is associated with a report.
 	ReportID *string `json:"report_id" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewGetReportTagsOptions : Instantiate GetReportTagsOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetReportTagsOptions(instanceID string, reportID string) *GetReportTagsOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewGetReportTagsOptions(instanceID string, reportID string) *GetReportTagsOptions {
 	return &GetReportTagsOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -9207,12 +10373,12 @@ type GetReportViolationsDriftOptions struct {
 	// The ID of the subscope.
 	SubscopeID *string `json:"subscope_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewGetReportViolationsDriftOptions : Instantiate GetReportViolationsDriftOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetReportViolationsDriftOptions(instanceID string, reportID string) *GetReportViolationsDriftOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewGetReportViolationsDriftOptions(instanceID string, reportID string) *GetReportViolationsDriftOptions {
 	return &GetReportViolationsDriftOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -9263,12 +10429,12 @@ type GetRuleOptions struct {
 	// The ID of a rule/assessment.
 	RuleID *string `json:"rule_id" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewGetRuleOptions : Instantiate GetRuleOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetRuleOptions(instanceID string, ruleID string) *GetRuleOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewGetRuleOptions(instanceID string, ruleID string) *GetRuleOptions {
 	return &GetRuleOptions{
 		InstanceID: core.StringPtr(instanceID),
 		RuleID:     core.StringPtr(ruleID),
@@ -9307,12 +10473,12 @@ type GetScanReportDownloadFileOptions struct {
 	// The type of the response: application/csv or application/pdf.
 	Accept *string `json:"Accept,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewGetScanReportDownloadFileOptions : Instantiate GetScanReportDownloadFileOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetScanReportDownloadFileOptions(instanceID string, reportID string, jobID string) *GetScanReportDownloadFileOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewGetScanReportDownloadFileOptions(instanceID string, reportID string, jobID string) *GetScanReportDownloadFileOptions {
 	return &GetScanReportDownloadFileOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -9361,12 +10527,12 @@ type GetScanReportOptions struct {
 	// The ID of the scan_result.
 	JobID *string `json:"job_id" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewGetScanReportOptions : Instantiate GetScanReportOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetScanReportOptions(instanceID string, reportID string, jobID string) *GetScanReportOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewGetScanReportOptions(instanceID string, reportID string, jobID string) *GetScanReportOptions {
 	return &GetScanReportOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -9406,12 +10572,12 @@ type GetScopeOptions struct {
 	// The ID of the scope being targeted.
 	ScopeID *string `json:"scope_id" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewGetScopeOptions : Instantiate GetScopeOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetScopeOptions(instanceID string, scopeID string) *GetScopeOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewGetScopeOptions(instanceID string, scopeID string) *GetScopeOptions {
 	return &GetScopeOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ScopeID:    core.StringPtr(scopeID),
@@ -9441,12 +10607,12 @@ type GetServiceOptions struct {
 	// The name of the corresponding service.
 	ServicesName *string `json:"services_name" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewGetServiceOptions : Instantiate GetServiceOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetServiceOptions(servicesName string) *GetServiceOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewGetServiceOptions(servicesName string) *GetServiceOptions {
 	return &GetServiceOptions{
 		ServicesName: core.StringPtr(servicesName),
 	}
@@ -9469,12 +10635,12 @@ type GetSettingsOptions struct {
 	// The ID of the Security and Compliance Center instance.
 	InstanceID *string `json:"instance_id" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewGetSettingsOptions : Instantiate GetSettingsOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetSettingsOptions(instanceID string) *GetSettingsOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewGetSettingsOptions(instanceID string) *GetSettingsOptions {
 	return &GetSettingsOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -9503,12 +10669,12 @@ type GetSubscopeOptions struct {
 	// The ID of the scope being targeted.
 	SubscopeID *string `json:"subscope_id" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewGetSubscopeOptions : Instantiate GetSubscopeOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetSubscopeOptions(instanceID string, scopeID string, subscopeID string) *GetSubscopeOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewGetSubscopeOptions(instanceID string, scopeID string, subscopeID string) *GetSubscopeOptions {
 	return &GetSubscopeOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ScopeID:    core.StringPtr(scopeID),
@@ -9548,12 +10714,12 @@ type GetTargetOptions struct {
 	// The target ID.
 	TargetID *string `json:"target_id" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewGetTargetOptions : Instantiate GetTargetOptions
-func (*SecurityAndComplianceCenterApiV3) NewGetTargetOptions(instanceID string, targetID string) *GetTargetOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewGetTargetOptions(instanceID string, targetID string) *GetTargetOptions {
 	return &GetTargetOptions{
 		InstanceID: core.StringPtr(instanceID),
 		TargetID:   core.StringPtr(targetID),
@@ -9589,6 +10755,7 @@ func UnmarshalImport(m map[string]json.RawMessage, result interface{}) (err erro
 	obj := new(Import)
 	err = core.UnmarshalModel(m, "parameters", &obj.Parameters, UnmarshalRuleParameter)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "parameters-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -9609,10 +10776,12 @@ func UnmarshalLabelType(m map[string]json.RawMessage, result interface{}) (err e
 	obj := new(LabelType)
 	err = core.UnmarshalPrimitive(m, "text", &obj.Text)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "text-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "tip", &obj.Tip)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "tip-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -9636,14 +10805,42 @@ func UnmarshalLastScan(m map[string]json.RawMessage, result interface{}) (err er
 	obj := new(LastScan)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "status-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "time", &obj.Time)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "time-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// Link : Link struct
+type Link struct {
+	Description *string `json:"description,omitempty"`
+
+	// URL.
+	Href *string `json:"href,omitempty"`
+}
+
+// UnmarshalLink unmarshals an instance of Link from the specified map of raw messages.
+func UnmarshalLink(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(Link)
+	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "href", &obj.Href)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "href-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -9658,21 +10855,18 @@ type ListControlLibrariesOptions struct {
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
 
-	// The field that indicates how many resources to return, unless the response is the last page of resources.
+	// The indication of how many resources to return, unless the response is the last page of resources.
 	Limit *int64 `json:"limit,omitempty"`
-
-	// The field that indicate how you want the resources to be filtered by.
-	ControlLibraryType *string `json:"control_library_type,omitempty"`
 
 	// Determine what resource to start the page on or after.
 	Start *string `json:"start,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewListControlLibrariesOptions : Instantiate ListControlLibrariesOptions
-func (*SecurityAndComplianceCenterApiV3) NewListControlLibrariesOptions(instanceID string) *ListControlLibrariesOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewListControlLibrariesOptions(instanceID string) *ListControlLibrariesOptions {
 	return &ListControlLibrariesOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -9690,21 +10884,15 @@ func (_options *ListControlLibrariesOptions) SetAccountID(accountID string) *Lis
 	return _options
 }
 
-// SetControlLibraryType : Allow user to set the ControlLibraryType
-func (_options *ListControlLibrariesOptions) SetControlLibraryType(controlLibraryType string) *ListControlLibrariesOptions {
-	_options.ControlLibraryType = &controlLibraryType
-	return _options
-}
-
-// SetStart : Allow user to set the Start
-func (_options *ListControlLibrariesOptions) SetStart(controlLibraryType string) *ListControlLibrariesOptions {
-	_options.Start = &controlLibraryType
-	return _options
-}
-
-// SetLimit : Allow user to set the Limit
+// SetLimit : Allow user to set Limit
 func (_options *ListControlLibrariesOptions) SetLimit(limit int64) *ListControlLibrariesOptions {
 	_options.Limit = core.Int64Ptr(limit)
+	return _options
+}
+
+// SetStart : Allow user to set Start
+func (_options *ListControlLibrariesOptions) SetStart(start string) *ListControlLibrariesOptions {
+	_options.Start = core.StringPtr(start)
 	return _options
 }
 
@@ -9739,7 +10927,7 @@ type ListInstanceAttachmentsOptions struct {
 	// from the previous page.
 	Start *string `json:"start,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
@@ -9759,7 +10947,7 @@ const (
 )
 
 // NewListInstanceAttachmentsOptions : Instantiate ListInstanceAttachmentsOptions
-func (*SecurityAndComplianceCenterApiV3) NewListInstanceAttachmentsOptions(instanceID string) *ListInstanceAttachmentsOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewListInstanceAttachmentsOptions(instanceID string) *ListInstanceAttachmentsOptions {
 	return &ListInstanceAttachmentsOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -9824,12 +11012,12 @@ type ListProfileAttachmentsOptions struct {
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewListProfileAttachmentsOptions : Instantiate ListProfileAttachmentsOptions
-func (*SecurityAndComplianceCenterApiV3) NewListProfileAttachmentsOptions(instanceID string, profileID string) *ListProfileAttachmentsOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewListProfileAttachmentsOptions(instanceID string, profileID string) *ListProfileAttachmentsOptions {
 	return &ListProfileAttachmentsOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ProfileID:  core.StringPtr(profileID),
@@ -9868,12 +11056,12 @@ type ListProfileParametersOptions struct {
 	// The profile ID.
 	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewListProfileParametersOptions : Instantiate ListProfileParametersOptions
-func (*SecurityAndComplianceCenterApiV3) NewListProfileParametersOptions(instanceID string, profileID string) *ListProfileParametersOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewListProfileParametersOptions(instanceID string, profileID string) *ListProfileParametersOptions {
 	return &ListProfileParametersOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ProfileID:  core.StringPtr(profileID),
@@ -9906,21 +11094,18 @@ type ListProfilesOptions struct {
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
 
-	// Allows users to set headers on API requests
-	Headers map[string]string
-
-	// The field that indicates how many resources to return, unless the response is the last page of resources.
+	// The indication of how many resources to return, unless the response is the last page of resources.
 	Limit *int64 `json:"limit,omitempty"`
-
-	// The field that indicate how you want the resources to be filtered by.
-	ProfileType *string `json:"profile_type,omitempty"`
 
 	// Determine what resource to start the page on or after.
 	Start *string `json:"start,omitempty"`
+
+	// Allows users to set headers on API requests.
+	Headers map[string]string
 }
 
 // NewListProfilesOptions : Instantiate ListProfilesOptions
-func (*SecurityAndComplianceCenterApiV3) NewListProfilesOptions(instanceID string) *ListProfilesOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewListProfilesOptions(instanceID string) *ListProfilesOptions {
 	return &ListProfilesOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -9938,21 +11123,15 @@ func (_options *ListProfilesOptions) SetAccountID(accountID string) *ListProfile
 	return _options
 }
 
-// SetProfileType : Allow user to set ProfileType
-func (_options *ListProfilesOptions) SetProfileType(typeVar string) *ListProfilesOptions {
-	_options.ProfileType = core.StringPtr(typeVar)
+// SetLimit : Allow user to set Limit
+func (_options *ListProfilesOptions) SetLimit(limit int64) *ListProfilesOptions {
+	_options.Limit = core.Int64Ptr(limit)
 	return _options
 }
 
 // SetStart : Allow user to set Start
 func (_options *ListProfilesOptions) SetStart(start string) *ListProfilesOptions {
 	_options.Start = core.StringPtr(start)
-	return _options
-}
-
-// SetLimit : Allow user to set Limit
-func (_options *ListProfilesOptions) SetLimit(limit int64) *ListProfilesOptions {
-	_options.Limit = core.Int64Ptr(limit)
 	return _options
 }
 
@@ -9970,12 +11149,12 @@ type ListProviderTypeInstancesOptions struct {
 	// The provider type ID.
 	ProviderTypeID *string `json:"provider_type_id" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewListProviderTypeInstancesOptions : Instantiate ListProviderTypeInstancesOptions
-func (*SecurityAndComplianceCenterApiV3) NewListProviderTypeInstancesOptions(instanceID string, providerTypeID string) *ListProviderTypeInstancesOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewListProviderTypeInstancesOptions(instanceID string, providerTypeID string) *ListProviderTypeInstancesOptions {
 	return &ListProviderTypeInstancesOptions{
 		InstanceID:     core.StringPtr(instanceID),
 		ProviderTypeID: core.StringPtr(providerTypeID),
@@ -10005,12 +11184,12 @@ type ListProviderTypesOptions struct {
 	// The ID of the Security and Compliance Center instance.
 	InstanceID *string `json:"instance_id" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewListProviderTypesOptions : Instantiate ListProviderTypesOptions
-func (*SecurityAndComplianceCenterApiV3) NewListProviderTypesOptions(instanceID string) *ListProviderTypesOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewListProviderTypesOptions(instanceID string) *ListProviderTypesOptions {
 	return &ListProviderTypesOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -10060,10 +11239,10 @@ type ListReportEvaluationsOptions struct {
 	// The indication of what resource to start the page on.
 	Start *string `json:"start,omitempty"`
 
-	// The indication of many resources to return, unless the response is  the last page of resources.
+	// The indication of many resources to return, unless the response is the last page of resources.
 	Limit *int64 `json:"limit,omitempty"`
 
-	// This field sorts results by using a valid sort field. To learn more, see
+	// This field sorts resources by using a valid sort field. To learn more, see
 	// [Sorting](https://cloud.ibm.com/docs/api-handbook?topic=api-handbook-sorting).
 	Sort *string `json:"sort,omitempty"`
 
@@ -10073,7 +11252,7 @@ type ListReportEvaluationsOptions struct {
 	// The ID of the subscope.
 	SubscopeID *string `json:"subscope_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
@@ -10086,8 +11265,18 @@ const (
 	ListReportEvaluationsOptionsStatusSkippedConst = "skipped"
 )
 
+// Constants associated with the ListReportEvaluationsOptions.Sort property.
+// This field sorts resources by using a valid sort field. To learn more, see
+// [Sorting](https://cloud.ibm.com/docs/api-handbook?topic=api-handbook-sorting).
+const (
+	ListReportEvaluationsOptionsSortAssessmentIDConst = "assessment_id"
+	ListReportEvaluationsOptionsSortStatusConst       = "status"
+	ListReportEvaluationsOptionsSortTargetIDConst     = "target_id"
+	ListReportEvaluationsOptionsSortTargetNameConst   = "target_name"
+)
+
 // NewListReportEvaluationsOptions : Instantiate ListReportEvaluationsOptions
-func (*SecurityAndComplianceCenterApiV3) NewListReportEvaluationsOptions(instanceID string, reportID string) *ListReportEvaluationsOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewListReportEvaluationsOptions(instanceID string, reportID string) *ListReportEvaluationsOptions {
 	return &ListReportEvaluationsOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -10214,7 +11403,7 @@ type ListReportResourcesOptions struct {
 	// The indication of what resource to start the page on.
 	Start *string `json:"start,omitempty"`
 
-	// The indication of many resources to return, unless the response is  the last page of resources.
+	// The indication of many resources to return, unless the response is the last page of resources.
 	Limit *int64 `json:"limit,omitempty"`
 
 	// The ID of the scope.
@@ -10223,7 +11412,7 @@ type ListReportResourcesOptions struct {
 	// The ID of the subscope.
 	SubscopeID *string `json:"subscope_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
@@ -10248,7 +11437,7 @@ const (
 )
 
 // NewListReportResourcesOptions : Instantiate ListReportResourcesOptions
-func (*SecurityAndComplianceCenterApiV3) NewListReportResourcesOptions(instanceID string, reportID string) *ListReportResourcesOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewListReportResourcesOptions(instanceID string, reportID string) *ListReportResourcesOptions {
 	return &ListReportResourcesOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -10339,13 +11528,13 @@ type ListReportsOptions struct {
 	InstanceID *string `json:"instance_id" validate:"required,ne="`
 
 	// The ID of the attachment.
-	AttachmentID *string `json:"attachment_id,omitempty"`
+	ReportAttachmentID *string `json:"report_attachment_id,omitempty"`
 
 	// The report group ID.
 	GroupID *string `json:"group_id,omitempty"`
 
 	// The ID of the profile.
-	ProfileID *string `json:"profile_id,omitempty"`
+	ReportProfileID *string `json:"report_profile_id,omitempty"`
 
 	// The type of the scan.
 	Type *string `json:"type,omitempty"`
@@ -10353,14 +11542,13 @@ type ListReportsOptions struct {
 	// The indication of what resource to start the page on.
 	Start *string `json:"start,omitempty"`
 
-	// The indication of many resources to return, unless the response is  the last page of resources.
+	// The indication of many resources to return, unless the response is the last page of resources.
 	Limit *int64 `json:"limit,omitempty"`
 
-	// This field sorts results by using a valid sort field. To learn more, see
-	// [Sorting](https://cloud.ibm.com/docs/api-handbook?topic=api-handbook-sorting).
+	// This field sorts results by using a valid sort field.
 	Sort *string `json:"sort,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
@@ -10371,8 +11559,18 @@ const (
 	ListReportsOptionsTypeScheduledConst = "scheduled"
 )
 
+// Constants associated with the ListReportsOptions.Sort property.
+// This field sorts results by using a valid sort field.
+const (
+	ListReportsOptionsSortCreatedOnConst   = "created_on"
+	ListReportsOptionsSortGroupIDConst     = "group_id"
+	ListReportsOptionsSortProfileNameConst = "profile_name"
+	ListReportsOptionsSortScopeIDConst     = "scope_id"
+	ListReportsOptionsSortTypeConst        = "type"
+)
+
 // NewListReportsOptions : Instantiate ListReportsOptions
-func (*SecurityAndComplianceCenterApiV3) NewListReportsOptions(instanceID string) *ListReportsOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewListReportsOptions(instanceID string) *ListReportsOptions {
 	return &ListReportsOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -10384,9 +11582,9 @@ func (_options *ListReportsOptions) SetInstanceID(instanceID string) *ListReport
 	return _options
 }
 
-// SetAttachmentID : Allow user to set AttachmentID
-func (_options *ListReportsOptions) SetAttachmentID(attachmentID string) *ListReportsOptions {
-	_options.AttachmentID = core.StringPtr(attachmentID)
+// SetReportAttachmentID : Allow user to set ReportAttachmentID
+func (_options *ListReportsOptions) SetReportAttachmentID(reportAttachmentID string) *ListReportsOptions {
+	_options.ReportAttachmentID = core.StringPtr(reportAttachmentID)
 	return _options
 }
 
@@ -10396,9 +11594,9 @@ func (_options *ListReportsOptions) SetGroupID(groupID string) *ListReportsOptio
 	return _options
 }
 
-// SetProfileID : Allow user to set ProfileID
-func (_options *ListReportsOptions) SetProfileID(profileID string) *ListReportsOptions {
-	_options.ProfileID = core.StringPtr(profileID)
+// SetReportProfileID : Allow user to set ReportProfileID
+func (_options *ListReportsOptions) SetReportProfileID(reportProfileID string) *ListReportsOptions {
+	_options.ReportProfileID = core.StringPtr(reportProfileID)
 	return _options
 }
 
@@ -10455,7 +11653,7 @@ type ListRulesOptions struct {
 	// Field used to sort rules. Rules can be sorted in ascending or descending order.
 	Sort *string `json:"sort,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
@@ -10476,7 +11674,7 @@ const (
 )
 
 // NewListRulesOptions : Instantiate ListRulesOptions
-func (*SecurityAndComplianceCenterApiV3) NewListRulesOptions(instanceID string) *ListRulesOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewListRulesOptions(instanceID string) *ListRulesOptions {
 	return &ListRulesOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -10544,12 +11742,24 @@ type ListScanReportsOptions struct {
 	// The ID of the subscope.
 	SubscopeID *string `json:"subscope_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// This field sorts results by using a valid sort field.
+	Sort *string `json:"sort,omitempty"`
+
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
+// Constants associated with the ListScanReportsOptions.Sort property.
+// This field sorts results by using a valid sort field.
+const (
+	ListScanReportsOptionsSortCreatedOnConst  = "created_on"
+	ListScanReportsOptionsSortScopeIDConst    = "scope_id"
+	ListScanReportsOptionsSortStatusConst     = "status"
+	ListScanReportsOptionsSortSubscopeIDConst = "subscope_id"
+)
+
 // NewListScanReportsOptions : Instantiate ListScanReportsOptions
-func (*SecurityAndComplianceCenterApiV3) NewListScanReportsOptions(instanceID string, reportID string) *ListScanReportsOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewListScanReportsOptions(instanceID string, reportID string) *ListScanReportsOptions {
 	return &ListScanReportsOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ReportID:   core.StringPtr(reportID),
@@ -10580,6 +11790,12 @@ func (_options *ListScanReportsOptions) SetSubscopeID(subscopeID string) *ListSc
 	return _options
 }
 
+// SetSort : Allow user to set Sort
+func (_options *ListScanReportsOptions) SetSort(sort string) *ListScanReportsOptions {
+	_options.Sort = core.StringPtr(sort)
+	return _options
+}
+
 // SetHeaders : Allow user to set Headers
 func (options *ListScanReportsOptions) SetHeaders(param map[string]string) *ListScanReportsOptions {
 	options.Headers = param
@@ -10606,12 +11822,12 @@ type ListScopesOptions struct {
 	// determine environment of scopes returned in response.
 	Environment *string `json:"environment,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewListScopesOptions : Instantiate ListScopesOptions
-func (*SecurityAndComplianceCenterApiV3) NewListScopesOptions(instanceID string) *ListScopesOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewListScopesOptions(instanceID string) *ListScopesOptions {
 	return &ListScopesOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -10661,12 +11877,13 @@ func (options *ListScopesOptions) SetHeaders(param map[string]string) *ListScope
 
 // ListServicesOptions : The ListServices options.
 type ListServicesOptions struct {
-	// Allows users to set headers on API requests
+
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewListServicesOptions : Instantiate ListServicesOptions
-func (*SecurityAndComplianceCenterApiV3) NewListServicesOptions() *ListServicesOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewListServicesOptions() *ListServicesOptions {
 	return &ListServicesOptions{}
 }
 
@@ -10699,12 +11916,12 @@ type ListSubscopesOptions struct {
 	// determine environment of subscopes returned in response.
 	Environment *string `json:"environment,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewListSubscopesOptions : Instantiate ListSubscopesOptions
-func (*SecurityAndComplianceCenterApiV3) NewListSubscopesOptions(instanceID string, scopeID string) *ListSubscopesOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewListSubscopesOptions(instanceID string, scopeID string) *ListSubscopesOptions {
 	return &ListSubscopesOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ScopeID:    core.StringPtr(scopeID),
@@ -10764,12 +11981,12 @@ type ListTargetsOptions struct {
 	// The ID of the Security and Compliance Center instance.
 	InstanceID *string `json:"instance_id" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewListTargetsOptions : Instantiate ListTargetsOptions
-func (*SecurityAndComplianceCenterApiV3) NewListTargetsOptions(instanceID string) *ListTargetsOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewListTargetsOptions(instanceID string) *ListTargetsOptions {
 	return &ListTargetsOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -10788,9 +12005,15 @@ func (options *ListTargetsOptions) SetHeaders(param map[string]string) *ListTarg
 }
 
 // MultiCloudScopePayload : MultiCloudScopePayload struct
+// Models which "extend" this model:
+// - MultiCloudScopePayloadByID
+// - MultiCloudScopePayloadByProperties
 type MultiCloudScopePayload struct {
-	// The ID of the scope.
+	// The UUID of the scope made.
 	ID *string `json:"id,omitempty"`
+
+	// The details of a newly created scope.
+	Description *string `json:"description,omitempty"`
 
 	// The environment that relates to this scope.
 	Environment *string `json:"environment,omitempty"`
@@ -10799,19 +12022,35 @@ type MultiCloudScopePayload struct {
 	Properties []ScopePropertyIntf `json:"properties,omitempty"`
 }
 
+func (*MultiCloudScopePayload) isaMultiCloudScopePayload() bool {
+	return true
+}
+
+type MultiCloudScopePayloadIntf interface {
+	isaMultiCloudScopePayload() bool
+}
+
 // UnmarshalMultiCloudScopePayload unmarshals an instance of MultiCloudScopePayload from the specified map of raw messages.
 func UnmarshalMultiCloudScopePayload(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(MultiCloudScopePayload)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "environment", &obj.Environment)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "environment-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "properties", &obj.Properties, UnmarshalScopeProperty)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "properties-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -10841,22 +12080,27 @@ func UnmarshalObjectStorage(m map[string]json.RawMessage, result interface{}) (e
 	obj := new(ObjectStorage)
 	err = core.UnmarshalPrimitive(m, "instance_crn", &obj.InstanceCRN)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "instance_crn-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "bucket", &obj.Bucket)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "bucket-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "bucket_location", &obj.BucketLocation)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "bucket_location-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "bucket_endpoint", &obj.BucketEndpoint)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "bucket_endpoint-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "updated_on", &obj.UpdatedOn)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_on-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -10877,10 +12121,12 @@ func UnmarshalObjectStoragePrototype(m map[string]json.RawMessage, result interf
 	obj := new(ObjectStoragePrototype)
 	err = core.UnmarshalPrimitive(m, "bucket", &obj.Bucket)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "bucket-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "instance_crn", &obj.InstanceCRN)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "instance_crn-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -10898,6 +12144,7 @@ func UnmarshalPageHRefFirst(m map[string]json.RawMessage, result interface{}) (e
 	obj := new(PageHRefFirst)
 	err = core.UnmarshalPrimitive(m, "href", &obj.Href)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "href-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -10918,10 +12165,12 @@ func UnmarshalPageHRefNext(m map[string]json.RawMessage, result interface{}) (er
 	obj := new(PageHRefNext)
 	err = core.UnmarshalPrimitive(m, "href", &obj.Href)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "href-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "start", &obj.Start)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "start-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -10945,6 +12194,7 @@ type Parameter struct {
 	// The parameter type.
 	ParameterType *string `json:"parameter_type,omitempty"`
 
+	// The value can be of any type.
 	ParameterValue interface{} `json:"parameter_value,omitempty"`
 }
 
@@ -10953,26 +12203,32 @@ func UnmarshalParameter(m map[string]json.RawMessage, result interface{}) (err e
 	obj := new(Parameter)
 	err = core.UnmarshalPrimitive(m, "assessment_type", &obj.AssessmentType)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "assessment_type-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "assessment_id", &obj.AssessmentID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "assessment_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "parameter_name", &obj.ParameterName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "parameter_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "parameter_display_name", &obj.ParameterDisplayName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "parameter_display_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "parameter_type", &obj.ParameterType)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "parameter_type-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "parameter_value", &obj.ParameterValue)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "parameter_value-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -10984,12 +12240,12 @@ type PostTestEventOptions struct {
 	// The ID of the Security and Compliance Center instance.
 	InstanceID *string `json:"instance_id" validate:"required,ne="`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewPostTestEventOptions : Instantiate PostTestEventOptions
-func (*SecurityAndComplianceCenterApiV3) NewPostTestEventOptions(instanceID string) *PostTestEventOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewPostTestEventOptions(instanceID string) *PostTestEventOptions {
 	return &PostTestEventOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -11015,11 +12271,17 @@ type Profile struct {
 	// The name of the profile.
 	ProfileName *string `json:"profile_name,omitempty"`
 
+	// The ID of the Security and Compliance Center instance who owns the profile.
+	InstanceID *string `json:"instance_id,omitempty"`
+
+	// Determines if the profile can be set to a hierarchy.
+	HierarchyEnabled *bool `json:"hierarchy_enabled,omitempty"`
+
 	// A description of what the profile should represent.
 	ProfileDescription *string `json:"profile_description,omitempty"`
 
 	// The type of profile, either predefined or custom.
-	ProfileType *string `json:"profile_type,omitempty"`
+	ProfileType *string `json:"profile_type" validate:"required"`
 
 	// The version of the profile.
 	ProfileVersion *string `json:"profile_version,omitempty"`
@@ -11033,12 +12295,6 @@ type Profile struct {
 	// User who created the profile.
 	CreatedBy *string `json:"created_by,omitempty"`
 
-	// The ID associated with the profile.
-	InstanceID *string `json:"instance_id,omitempty"`
-
-	// Determines if an heirarchy is enabled.
-	HierarchyEnabled *bool `json:"heirarchy_enabled,omitempty"`
-
 	// The date when the profile was created, in date-time format.
 	CreatedOn *strfmt.DateTime `json:"created_on,omitempty"`
 
@@ -11051,17 +12307,14 @@ type Profile struct {
 	// The number of controls contained in the profile.
 	ControlsCount *int64 `json:"controls_count,omitempty"`
 
-	// The number of parent controls contained in the profile.
-	ControlParentsCount *int64 `json:"control_parents_count,omitempty"`
-
 	// The number of attachments associated with the profile.
 	AttachmentsCount *int64 `json:"attachments_count,omitempty"`
 
 	// The list of controls.
-	Controls []ProfileControlsInResponse `json:"controls,omitempty"`
+	Controls []ProfileControls `json:"controls" validate:"required"`
 
 	// The default parameters of the profile.
-	DefaultParameters []DefaultParameters `json:"default_parameters,omitempty"`
+	DefaultParameters []DefaultParameters `json:"default_parameters" validate:"required"`
 }
 
 // Constants associated with the Profile.ProfileType property.
@@ -11071,88 +12324,106 @@ const (
 	ProfileProfileTypePredefinedConst = "predefined"
 )
 
+// NewProfile : Instantiate Profile (Generic Model Constructor)
+func (*SecurityAndComplianceCenterAPIV3) NewProfile(profileType string, controls []ProfileControls, defaultParameters []DefaultParameters) (_model *Profile, err error) {
+	_model = &Profile{
+		ProfileType:       core.StringPtr(profileType),
+		Controls:          controls,
+		DefaultParameters: defaultParameters,
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
+}
+
 // UnmarshalProfile unmarshals an instance of Profile from the specified map of raw messages.
 func UnmarshalProfile(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(Profile)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "profile_name", &obj.ProfileName)
 	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "profile_description", &obj.ProfileDescription)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "profile_type", &obj.ProfileType)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "profile_version", &obj.ProfileVersion)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "version_group_label", &obj.VersionGroupLabel)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "latest", &obj.Latest)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "created_by", &obj.CreatedBy)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "created_on", &obj.CreatedOn)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "updated_by", &obj.UpdatedBy)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "updated_on", &obj.UpdatedOn)
-	if err != nil {
+		err = core.SDKErrorf(err, "", "profile_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "instance_id", &obj.InstanceID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "instance_id-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "hierarchy_enabled", &obj.HierarchyEnabled)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "hierarchy_enabled-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "profile_description", &obj.ProfileDescription)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "profile_description-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "profile_type", &obj.ProfileType)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "profile_type-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "profile_version", &obj.ProfileVersion)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "profile_version-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "version_group_label", &obj.VersionGroupLabel)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "version_group_label-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "latest", &obj.Latest)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "latest-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "created_by", &obj.CreatedBy)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "created_by-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "created_on", &obj.CreatedOn)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "created_on-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "updated_by", &obj.UpdatedBy)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_by-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "updated_on", &obj.UpdatedOn)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_on-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "controls_count", &obj.ControlsCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "controls_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "attachments_count", &obj.AttachmentsCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "attachments_count-error", common.GetComponentInfo())
 		return
 	}
-	err = core.UnmarshalModel(m, "controls", &obj.Controls, UnmarshalProfileControlsInResponse)
+	err = core.UnmarshalModel(m, "controls", &obj.Controls, UnmarshalProfileControls)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "controls-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "default_parameters", &obj.DefaultParameters, UnmarshalDefaultParameters)
 	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// ProfileAssessmentPrototype : The attributes needed for the payload.
-type ProfileAssessmentPrototype struct {
-	// The rule or assessment to target.
-	AssessmentID *string `json:"assessment_id,omitempty"`
-}
-
-// UnmarshalProfileAssessmentPrototype unmarshals an instance of ProfileAssessmentPrototype from the specified map of raw messages.
-func UnmarshalProfileAssessmentPrototype(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(ProfileAssessmentPrototype)
-	err = core.UnmarshalPrimitive(m, "assessment_id", &obj.AssessmentID)
-	if err != nil {
+		err = core.SDKErrorf(err, "", "default_parameters-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -11177,10 +12448,13 @@ type ProfileAttachment struct {
 	Schedule *string `json:"schedule" validate:"required"`
 
 	// A list of scopes associated with a profile attachment.
-	Scope []MultiCloudScopePayload `json:"scope" validate:"required"`
+	Scope []MultiCloudScopePayloadIntf `json:"scope" validate:"required"`
 
 	// Details the state of a profile attachment.
 	Status *string `json:"status" validate:"required"`
+
+	// Date range.
+	DataSelectionRange *DateRange `json:"data_selection_range,omitempty"`
 
 	// The ID of the account.
 	AccountID *string `json:"account_id,omitempty"`
@@ -11233,70 +12507,92 @@ func UnmarshalProfileAttachment(m map[string]json.RawMessage, result interface{}
 	obj := new(ProfileAttachment)
 	err = core.UnmarshalModel(m, "attachment_parameters", &obj.AttachmentParameters, UnmarshalParameter)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "attachment_parameters-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "notifications", &obj.Notifications, UnmarshalAttachmentNotifications)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "notifications-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "schedule", &obj.Schedule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "schedule-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "scope", &obj.Scope, UnmarshalMultiCloudScopePayload)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "scope-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "status-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalModel(m, "data_selection_range", &obj.DataSelectionRange, UnmarshalDateRange)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "data_selection_range-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "account_id", &obj.AccountID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "account_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "created_by", &obj.CreatedBy)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "created_by-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "created_on", &obj.CreatedOn)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "created_on-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "instance_id", &obj.InstanceID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "instance_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "last_scan", &obj.LastScan, UnmarshalLastScan)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "last_scan-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "next_scan_time", &obj.NextScanTime)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "next_scan_time-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "profile_id", &obj.ProfileID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "profile_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "updated_by", &obj.UpdatedBy)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_by-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "updated_on", &obj.UpdatedOn)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_on-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -11321,10 +12617,13 @@ type ProfileAttachmentBase struct {
 	Schedule *string `json:"schedule" validate:"required"`
 
 	// A list of scopes associated with a profile attachment.
-	Scope []MultiCloudScopePayload `json:"scope" validate:"required"`
+	Scope []MultiCloudScopePayloadIntf `json:"scope" validate:"required"`
 
 	// Details the state of a profile attachment.
 	Status *string `json:"status" validate:"required"`
+
+	// Date range.
+	DataSelectionRange *DateRange `json:"data_selection_range,omitempty"`
 }
 
 // Constants associated with the ProfileAttachmentBase.Schedule property.
@@ -11343,7 +12642,7 @@ const (
 )
 
 // NewProfileAttachmentBase : Instantiate ProfileAttachmentBase (Generic Model Constructor)
-func (*SecurityAndComplianceCenterApiV3) NewProfileAttachmentBase(attachmentParameters []Parameter, description string, name string, notifications *AttachmentNotifications, schedule string, scope []MultiCloudScopePayload, status string) (_model *ProfileAttachmentBase, err error) {
+func (*SecurityAndComplianceCenterAPIV3) NewProfileAttachmentBase(attachmentParameters []Parameter, description string, name string, notifications *AttachmentNotifications, schedule string, scope []MultiCloudScopePayloadIntf, status string) (_model *ProfileAttachmentBase, err error) {
 	_model = &ProfileAttachmentBase{
 		AttachmentParameters: attachmentParameters,
 		Description:          core.StringPtr(description),
@@ -11354,6 +12653,9 @@ func (*SecurityAndComplianceCenterApiV3) NewProfileAttachmentBase(attachmentPara
 		Status:               core.StringPtr(status),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
 	return
 }
 
@@ -11362,30 +12664,42 @@ func UnmarshalProfileAttachmentBase(m map[string]json.RawMessage, result interfa
 	obj := new(ProfileAttachmentBase)
 	err = core.UnmarshalModel(m, "attachment_parameters", &obj.AttachmentParameters, UnmarshalParameter)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "attachment_parameters-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "notifications", &obj.Notifications, UnmarshalAttachmentNotifications)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "notifications-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "schedule", &obj.Schedule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "schedule-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "scope", &obj.Scope, UnmarshalMultiCloudScopePayload)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "scope-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "status-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalModel(m, "data_selection_range", &obj.DataSelectionRange, UnmarshalDateRange)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "data_selection_range-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -11407,7 +12721,7 @@ type ProfileAttachmentCollection struct {
 	Next *PageHRefNext `json:"next,omitempty"`
 
 	// List of attachments.
-	Attachments []ProfileAttachment `json:"attachments,omitempty"`
+	Attachments []ProfileAttachment `json:"attachments" validate:"required"`
 }
 
 // UnmarshalProfileAttachmentCollection unmarshals an instance of ProfileAttachmentCollection from the specified map of raw messages.
@@ -11415,22 +12729,27 @@ func UnmarshalProfileAttachmentCollection(m map[string]json.RawMessage, result i
 	obj := new(ProfileAttachmentCollection)
 	err = core.UnmarshalPrimitive(m, "limit", &obj.Limit)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "limit-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "first", &obj.First, UnmarshalPageHRefFirst)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "first-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "next", &obj.Next, UnmarshalPageHRefNext)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "next-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "attachments", &obj.Attachments, UnmarshalProfileAttachment)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "attachments-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -11445,13 +12764,13 @@ func (resp *ProfileAttachmentCollection) GetNextStart() (*string, error) {
 	return resp.Next.Start, nil
 }
 
-// ProfileAttachmentResponse : The response coming back from creating a ProfileAttachment.
+// ProfileAttachmentResponse : ProfileAttachmentResponse struct
 type ProfileAttachmentResponse struct {
 	// The ID of the profile.
 	ProfileID *string `json:"profile_id,omitempty"`
 
 	// List of profile attachments associated with profile.
-	Attachments []ProfileAttachment `json:"attachments,omitempty"`
+	Attachments []ProfileAttachment `json:"attachments" validate:"required"`
 }
 
 // UnmarshalProfileAttachmentResponse unmarshals an instance of ProfileAttachmentResponse from the specified map of raw messages.
@@ -11459,17 +12778,19 @@ func UnmarshalProfileAttachmentResponse(m map[string]json.RawMessage, result int
 	obj := new(ProfileAttachmentResponse)
 	err = core.UnmarshalPrimitive(m, "profile_id", &obj.ProfileID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "profile_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "attachments", &obj.Attachments, UnmarshalProfileAttachment)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "attachments-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
 }
 
-// ProfileCollection : Show a list of Profiles.
+// ProfileCollection : A list of Profiles.
 type ProfileCollection struct {
 	// The requested page limit.
 	Limit *int64 `json:"limit" validate:"required"`
@@ -11483,8 +12804,8 @@ type ProfileCollection struct {
 	// A page reference.
 	Next *PageHRefNext `json:"next,omitempty"`
 
-	// A list of profiles.
-	Profiles []Profile `json:"profiles,omitempty"`
+	// A list of profiles associated with the scope.
+	Profiles []Profile `json:"profiles" validate:"required"`
 }
 
 // UnmarshalProfileCollection unmarshals an instance of ProfileCollection from the specified map of raw messages.
@@ -11492,54 +12813,46 @@ func UnmarshalProfileCollection(m map[string]json.RawMessage, result interface{}
 	obj := new(ProfileCollection)
 	err = core.UnmarshalPrimitive(m, "limit", &obj.Limit)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "limit-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "first", &obj.First, UnmarshalPageHRefFirst)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "first-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "next", &obj.Next, UnmarshalPageHRefNext)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "next-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "profiles", &obj.Profiles, UnmarshalProfile)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "profiles-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
 }
 
-// ProfileControlSpecificationPrototype : The control specification payload.
-type ProfileControlSpecificationPrototype struct {
-	// The ID of the control specification to target.
-	ControlSpecificationID *string `json:"control_specification_id,omitempty"`
-
-	// List of rules to target.
-	Assessments []ProfileAssessmentPrototype `json:"assessments,omitempty"`
+// Retrieve the value to be passed to a request to access the next page of results
+func (resp *ProfileCollection) GetNextStart() (*string, error) {
+	if core.IsNil(resp.Next) {
+		return nil, nil
+	}
+	return resp.Next.Start, nil
 }
 
-// UnmarshalProfileControlSpecificationPrototype unmarshals an instance of ProfileControlSpecificationPrototype from the specified map of raw messages.
-func UnmarshalProfileControlSpecificationPrototype(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(ProfileControlSpecificationPrototype)
-	err = core.UnmarshalPrimitive(m, "control_specification_id", &obj.ControlSpecificationID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalModel(m, "assessments", &obj.Assessments, UnmarshalProfileAssessmentPrototype)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
+// ProfileControls : The control details for a profile.
+type ProfileControls struct {
+	// Determines if the control needs to pass during evaluation.
+	ControlRequirement *bool `json:"control_requirement,omitempty"`
 
-// ProfileControlsInResponse : The control details for a profile.
-type ProfileControlsInResponse struct {
 	// The ID of the control library that contains a profile.
 	ControlLibraryID *string `json:"control_library_id,omitempty"`
 
@@ -11551,9 +12864,6 @@ type ProfileControlsInResponse struct {
 
 	// The control name.
 	ControlName *string `json:"control_name,omitempty"`
-
-	// Determines if the control needs to be satisfied
-	ControlRequirement *bool `json:"control_requirement,omitempty"`
 
 	// The control description.
 	ControlDescription *string `json:"control_description,omitempty"`
@@ -11570,62 +12880,78 @@ type ProfileControlsInResponse struct {
 	// References to a control documentation.
 	ControlDocs *ControlDoc `json:"control_docs,omitempty"`
 
-	// The number of control specifications in the control
-	ControlSpecificationsCount *int64 `json:"control_specifications_count,omitempty"`
-
 	// List of control specifications in a profile.
-	ControlSpecifications []ControlSpecification `json:"control_specifications,omitempty"`
+	ControlSpecifications []ControlSpecification `json:"control_specifications" validate:"required"`
 }
 
-// UnmarshalProfileControlsInResponse unmarshals an instance of ProfileControlsInResponse from the specified map of raw messages.
-func UnmarshalProfileControlsInResponse(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(ProfileControlsInResponse)
+// NewProfileControls : Instantiate ProfileControls (Generic Model Constructor)
+func (*SecurityAndComplianceCenterAPIV3) NewProfileControls(controlSpecifications []ControlSpecification) (_model *ProfileControls, err error) {
+	_model = &ProfileControls{
+		ControlSpecifications: controlSpecifications,
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
+}
+
+// UnmarshalProfileControls unmarshals an instance of ProfileControls from the specified map of raw messages.
+func UnmarshalProfileControls(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(ProfileControls)
+	err = core.UnmarshalPrimitive(m, "control_requirement", &obj.ControlRequirement)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "control_requirement-error", common.GetComponentInfo())
+		return
+	}
 	err = core.UnmarshalPrimitive(m, "control_library_id", &obj.ControlLibraryID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_library_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_id", &obj.ControlID)
 	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "control_requirement", &obj.ControlRequirement)
-	if err != nil {
+		err = core.SDKErrorf(err, "", "control_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_library_version", &obj.ControlLibraryVersion)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_library_version-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_name", &obj.ControlName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_description", &obj.ControlDescription)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_severity", &obj.ControlSeverity)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_severity-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_category", &obj.ControlCategory)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_category-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_parent", &obj.ControlParent)
 	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "control_specifications_count", &obj.ControlSpecificationsCount)
-	if err != nil {
+		err = core.SDKErrorf(err, "", "control_parent-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "control_docs", &obj.ControlDocs, UnmarshalControlDoc)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_docs-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "control_specifications", &obj.ControlSpecifications, UnmarshalControlSpecification)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_specifications-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -11639,9 +12965,6 @@ type ProfileControlsPrototype struct {
 
 	// The control ID.
 	ControlID *string `json:"control_id,omitempty"`
-
-	// List of control specifications in a profile.
-	ControlSpecifications []ProfileControlSpecificationPrototype `json:"control_specifications,omitempty"`
 }
 
 // UnmarshalProfileControlsPrototype unmarshals an instance of ProfileControlsPrototype from the specified map of raw messages.
@@ -11649,14 +12972,12 @@ func UnmarshalProfileControlsPrototype(m map[string]json.RawMessage, result inte
 	obj := new(ProfileControlsPrototype)
 	err = core.UnmarshalPrimitive(m, "control_library_id", &obj.ControlLibraryID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "control_library_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "control_id", &obj.ControlID)
 	if err != nil {
-		return
-	}
-	err = core.UnmarshalModel(m, "control_specifications", &obj.ControlSpecifications, UnmarshalProfileControlSpecificationPrototype)
-	if err != nil {
+		err = core.SDKErrorf(err, "", "control_id-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -11669,7 +12990,19 @@ type ProfileDefaultParametersResponse struct {
 	ID *string `json:"id,omitempty"`
 
 	// list of parameters given by default.
-	DefaultParameters []DefaultParameters `json:"default_parameters,omitempty"`
+	DefaultParameters []DefaultParameters `json:"default_parameters" validate:"required"`
+}
+
+// NewProfileDefaultParametersResponse : Instantiate ProfileDefaultParametersResponse (Generic Model Constructor)
+func (*SecurityAndComplianceCenterAPIV3) NewProfileDefaultParametersResponse(defaultParameters []DefaultParameters) (_model *ProfileDefaultParametersResponse, err error) {
+	_model = &ProfileDefaultParametersResponse{
+		DefaultParameters: defaultParameters,
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
 }
 
 // UnmarshalProfileDefaultParametersResponse unmarshals an instance of ProfileDefaultParametersResponse from the specified map of raw messages.
@@ -11677,10 +13010,12 @@ func UnmarshalProfileDefaultParametersResponse(m map[string]json.RawMessage, res
 	obj := new(ProfileDefaultParametersResponse)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "default_parameters", &obj.DefaultParameters, UnmarshalDefaultParameters)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "default_parameters-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -11704,14 +13039,17 @@ func UnmarshalProfileInfo(m map[string]json.RawMessage, result interface{}) (err
 	obj := new(ProfileInfo)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "version", &obj.Version)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "version-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -11769,54 +13107,67 @@ func UnmarshalProviderType(m map[string]json.RawMessage, result interface{}) (er
 	obj := new(ProviderType)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "type-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "s2s_enabled", &obj.S2sEnabled)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "s2s_enabled-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "instance_limit", &obj.InstanceLimit)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "instance_limit-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "mode", &obj.Mode)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "mode-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "data_type", &obj.DataType)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "data_type-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "icon", &obj.Icon)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "icon-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "label", &obj.Label, UnmarshalLabelType)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "label-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "attributes", &obj.Attributes, UnmarshalAdditionalProperty)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "attributes-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "created_at", &obj.CreatedAt)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "created_at-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "updated_at", &obj.UpdatedAt)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_at-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -11834,6 +13185,7 @@ func UnmarshalProviderTypeCollection(m map[string]json.RawMessage, result interf
 	obj := new(ProviderTypeCollection)
 	err = core.UnmarshalModel(m, "provider_types", &obj.ProviderTypes, UnmarshalProviderType)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "provider_types-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -11866,26 +13218,32 @@ func UnmarshalProviderTypeInstance(m map[string]json.RawMessage, result interfac
 	obj := new(ProviderTypeInstance)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "type-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "attributes", &obj.Attributes)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "attributes-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "created_at", &obj.CreatedAt)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "created_at-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "updated_at", &obj.UpdatedAt)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_at-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -11903,6 +13261,7 @@ func UnmarshalProviderTypeInstanceCollection(m map[string]json.RawMessage, resul
 	obj := new(ProviderTypeInstanceCollection)
 	err = core.UnmarshalModel(m, "provider_type_instances", &obj.ProviderTypeInstances, UnmarshalProviderTypeInstance)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "provider_type_instances-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -11930,15 +13289,12 @@ type ReplaceCustomControlLibraryOptions struct {
 	ControlLibraryVersion *string `json:"control_library_version" validate:"required"`
 
 	// The list of rules that the control library attempts to adhere to.
-	Controls []Control `json:"controls" validate:"required"`
-
-	// The unique identifier of the revision.
-	VersionGroupLabel *string `json:"version_group_label,omitempty"`
+	Controls []ControlPrototype `json:"controls" validate:"required"`
 
 	// The account id tied to billing.
 	BssAccount *string `json:"bss_account,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
@@ -11949,7 +13305,7 @@ const (
 )
 
 // NewReplaceCustomControlLibraryOptions : Instantiate ReplaceCustomControlLibraryOptions
-func (*SecurityAndComplianceCenterApiV3) NewReplaceCustomControlLibraryOptions(instanceID string, controlLibraryID string, controlLibraryName string, controlLibraryDescription string, controlLibraryType string, controlLibraryVersion string, controls []Control) *ReplaceCustomControlLibraryOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewReplaceCustomControlLibraryOptions(instanceID string, controlLibraryID string, controlLibraryName string, controlLibraryDescription string, controlLibraryType string, controlLibraryVersion string, controls []ControlPrototype) *ReplaceCustomControlLibraryOptions {
 	return &ReplaceCustomControlLibraryOptions{
 		InstanceID:                core.StringPtr(instanceID),
 		ControlLibraryID:          core.StringPtr(controlLibraryID),
@@ -11998,14 +13354,8 @@ func (_options *ReplaceCustomControlLibraryOptions) SetControlLibraryVersion(con
 }
 
 // SetControls : Allow user to set Controls
-func (_options *ReplaceCustomControlLibraryOptions) SetControls(controls []Control) *ReplaceCustomControlLibraryOptions {
+func (_options *ReplaceCustomControlLibraryOptions) SetControls(controls []ControlPrototype) *ReplaceCustomControlLibraryOptions {
 	_options.Controls = controls
-	return _options
-}
-
-// SetVersionGroupLabel: Allows user to set VersionGroupLabel
-func (_options *ReplaceCustomControlLibraryOptions) SetVersionGroupLabel(versionGroupLabel string) *ReplaceCustomControlLibraryOptions {
-	_options.VersionGroupLabel = core.StringPtr(versionGroupLabel)
 	return _options
 }
 
@@ -12032,47 +13382,65 @@ type ReplaceProfileAttachmentOptions struct {
 	// The attachment ID.
 	AttachmentID *string `json:"attachment_id" validate:"required,ne="`
 
+	// The parameters associated with the profile attachment.
+	AttachmentParameters []Parameter `json:"attachment_parameters" validate:"required"`
+
 	// The details to describe the profile attachment.
 	Description *string `json:"description" validate:"required"`
 
 	// The name of the Profile Attachment.
 	Name *string `json:"name" validate:"required"`
 
+	// The notification configuration of the attachment.
+	Notifications *AttachmentNotifications `json:"notifications" validate:"required"`
+
 	// Details how often a scan from a profile attachment is ran.
 	Schedule *string `json:"schedule" validate:"required"`
+
+	// A list of scopes associated with a profile attachment.
+	Scope []MultiCloudScopePayloadIntf `json:"scope" validate:"required"`
 
 	// Details the state of a profile attachment.
 	Status *string `json:"status" validate:"required"`
 
-	// The notification configuration of the attachment.
-	Notifications *AttachmentNotifications `json:"notifications" validate:"required"`
-
-	// The parameters associated with the profile attachment.
-	AttachmentParameters []Parameter `json:"attachment_parameters" validate:"required"`
-
-	// A list of scopes associated with a profile attachment.
-	Scope []MultiCloudScopePayload `json:"scope" validate:"required"`
+	// Date range.
+	DataSelectionRange *DateRange `json:"data_selection_range,omitempty"`
 
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
+// Constants associated with the ReplaceProfileAttachmentOptions.Schedule property.
+// Details how often a scan from a profile attachment is ran.
+const (
+	ReplaceProfileAttachmentOptionsScheduleDailyConst       = "daily"
+	ReplaceProfileAttachmentOptionsScheduleEvery30DaysConst = "every_30_days"
+	ReplaceProfileAttachmentOptionsScheduleEvery7DaysConst  = "every_7_days"
+)
+
+// Constants associated with the ReplaceProfileAttachmentOptions.Status property.
+// Details the state of a profile attachment.
+const (
+	ReplaceProfileAttachmentOptionsStatusDisabledConst = "disabled"
+	ReplaceProfileAttachmentOptionsStatusEnabledConst  = "enabled"
+)
+
 // NewReplaceProfileAttachmentOptions : Instantiate ReplaceProfileAttachmentOptions
-func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileAttachmentOptions(instanceID string, profileID string, attachmentID string, description string, name string, schedule string, status string, notifications *AttachmentNotifications, scope []MultiCloudScopePayload, attachmentParameters []Parameter) *ReplaceProfileAttachmentOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewReplaceProfileAttachmentOptions(instanceID string, profileID string, attachmentID string, attachmentParameters []Parameter, description string, name string, notifications *AttachmentNotifications, schedule string, scope []MultiCloudScopePayloadIntf, status string) *ReplaceProfileAttachmentOptions {
 	return &ReplaceProfileAttachmentOptions{
 		InstanceID:           core.StringPtr(instanceID),
 		ProfileID:            core.StringPtr(profileID),
 		AttachmentID:         core.StringPtr(attachmentID),
+		AttachmentParameters: attachmentParameters,
 		Description:          core.StringPtr(description),
 		Name:                 core.StringPtr(name),
-		Schedule:             core.StringPtr(schedule),
-		Status:               core.StringPtr(status),
 		Notifications:        notifications,
-		AttachmentParameters: attachmentParameters,
+		Schedule:             core.StringPtr(schedule),
 		Scope:                scope,
+		Status:               core.StringPtr(status),
 	}
 }
 
@@ -12094,6 +13462,12 @@ func (_options *ReplaceProfileAttachmentOptions) SetAttachmentID(attachmentID st
 	return _options
 }
 
+// SetAttachmentParameters : Allow user to set AttachmentParameters
+func (_options *ReplaceProfileAttachmentOptions) SetAttachmentParameters(attachmentParameters []Parameter) *ReplaceProfileAttachmentOptions {
+	_options.AttachmentParameters = attachmentParameters
+	return _options
+}
+
 // SetDescription : Allow user to set Description
 func (_options *ReplaceProfileAttachmentOptions) SetDescription(description string) *ReplaceProfileAttachmentOptions {
 	_options.Description = core.StringPtr(description)
@@ -12106,9 +13480,21 @@ func (_options *ReplaceProfileAttachmentOptions) SetName(name string) *ReplacePr
 	return _options
 }
 
+// SetNotifications : Allow user to set Notifications
+func (_options *ReplaceProfileAttachmentOptions) SetNotifications(notifications *AttachmentNotifications) *ReplaceProfileAttachmentOptions {
+	_options.Notifications = notifications
+	return _options
+}
+
 // SetSchedule : Allow user to set Schedule
 func (_options *ReplaceProfileAttachmentOptions) SetSchedule(schedule string) *ReplaceProfileAttachmentOptions {
 	_options.Schedule = core.StringPtr(schedule)
+	return _options
+}
+
+// SetScope : Allow user to set Scope
+func (_options *ReplaceProfileAttachmentOptions) SetScope(scope []MultiCloudScopePayloadIntf) *ReplaceProfileAttachmentOptions {
+	_options.Scope = scope
 	return _options
 }
 
@@ -12118,21 +13504,9 @@ func (_options *ReplaceProfileAttachmentOptions) SetStatus(status string) *Repla
 	return _options
 }
 
-// SetScope : Allow user to set Scope
-func (_options *ReplaceProfileAttachmentOptions) SetScope(scope []MultiCloudScopePayload) *ReplaceProfileAttachmentOptions {
-	_options.Scope = scope
-	return _options
-}
-
-// SetNotifiations : Allow user to set Notifications
-func (_options *ReplaceProfileAttachmentOptions) SetNotifications(notifications *AttachmentNotifications) *ReplaceProfileAttachmentOptions {
-	_options.Notifications = notifications
-	return _options
-}
-
-// SetAttachmentParameters : Allow user to set AttachmentParameters
-func (_options *ReplaceProfileAttachmentOptions) SetAttachmentParameters(parameters []Parameter) *ReplaceProfileAttachmentOptions {
-	_options.AttachmentParameters = parameters
+// SetDataSelectionRange : Allow user to set DataSelectionRange
+func (_options *ReplaceProfileAttachmentOptions) SetDataSelectionRange(dataSelectionRange *DateRange) *ReplaceProfileAttachmentOptions {
+	_options.DataSelectionRange = dataSelectionRange
 	return _options
 }
 
@@ -12151,50 +13525,84 @@ func (options *ReplaceProfileAttachmentOptions) SetHeaders(param map[string]stri
 // ReplaceProfileOptions : The ReplaceProfile options.
 type ReplaceProfileOptions struct {
 	// The ID of the Security and Compliance Center instance.
-	InstanceID *string `json:"instance_id" validate:"required,ne="`
+	InstanceID *string `json:"-" validate:"required,ne="`
 
 	// The profile ID.
 	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
-	// The name of the profile.
-	ProfileName *string `json:"profile_name" validate:"required,ne="`
+	// The type of profile, either predefined or custom.
+	NewProfileType *string `json:"profile_type" validate:"required"`
 
-	// The type of the profile.
-	ProfileType *string `json:"profile_type" validate:"required,ne="`
+	// The list of controls.
+	NewControls []ProfileControls `json:"controls" validate:"required"`
+
+	// The default parameters of the profile.
+	NewDefaultParameters []DefaultParameters `json:"default_parameters" validate:"required"`
+
+	// The ID of the profile.
+	NewID *string `json:"id,omitempty"`
+
+	// The name of the profile.
+	NewProfileName *string `json:"profile_name,omitempty"`
+
+	// The ID of the Security and Compliance Center instance who owns the profile.
+	NewInstanceID *string `json:"instance_id,omitempty"`
+
+	// Determines if the profile can be set to a hierarchy.
+	NewHierarchyEnabled *bool `json:"hierarchy_enabled,omitempty"`
 
 	// A description of what the profile should represent.
-	ProfileDescription *string `json:"profile_description,omitempty"`
+	NewProfileDescription *string `json:"profile_description,omitempty"`
 
 	// The version of the profile.
-	ProfileVersion *string `json:"profile_version,omitempty"`
-
-	// Determines if the profile is up to date with the latest revisions.
-	Latest *bool `json:"latest,omitempty"`
+	NewProfileVersion *string `json:"profile_version,omitempty"`
 
 	// The unique identifier of the revision.
-	VersionGroupLabel *string `json:"version_group_label,omitempty"`
+	NewVersionGroupLabel *string `json:"version_group_label,omitempty"`
 
-	// List of controls associated with the profile.
-	Controls []ProfileControlsPrototype `json:"controls,omitempty"`
+	// Determines if the profile is up to date with the latest revisions.
+	NewLatest *bool `json:"latest,omitempty"`
 
-	// The default values when using the profile.
-	DefaultParameters []DefaultParametersPrototype `json:"default_parameters,omitempty"`
+	// User who created the profile.
+	NewCreatedBy *string `json:"created_by,omitempty"`
+
+	// The date when the profile was created, in date-time format.
+	NewCreatedOn *strfmt.DateTime `json:"created_on,omitempty"`
+
+	// User who made the latest changes to the profile.
+	NewUpdatedBy *string `json:"updated_by,omitempty"`
+
+	// The date when the profile was last updated, in date-time format.
+	NewUpdatedOn *strfmt.DateTime `json:"updated_on,omitempty"`
+
+	// The number of controls contained in the profile.
+	NewControlsCount *int64 `json:"controls_count,omitempty"`
+
+	// The number of attachments associated with the profile.
+	NewAttachmentsCount *int64 `json:"attachments_count,omitempty"`
 
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
+// Constants associated with the ReplaceProfileOptions.NewProfileType property.
+// The type of profile, either predefined or custom.
+const (
+	ReplaceProfileOptionsNewProfileTypeCustomConst     = "custom"
+	ReplaceProfileOptionsNewProfileTypePredefinedConst = "predefined"
+)
+
 // NewReplaceProfileOptions : Instantiate ReplaceProfileOptions
-func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileOptions(instanceID string, profileID string, profileName string, profileDescription string) *ReplaceProfileOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewReplaceProfileOptions(instanceID string, profileID string, newProfileType string, newControls []ProfileControls, newDefaultParameters []DefaultParameters) *ReplaceProfileOptions {
 	return &ReplaceProfileOptions{
-		InstanceID:         core.StringPtr(instanceID),
-		ProfileDescription: core.StringPtr(profileDescription),
-		ProfileID:          core.StringPtr(profileID),
-		ProfileName:        core.StringPtr(profileName),
-		ProfileType:        core.StringPtr("custom"),
+		InstanceID:           core.StringPtr(instanceID),
+		ProfileID:            core.StringPtr(profileID),
+		NewProfileType:       core.StringPtr(newProfileType),
+		NewControls:          newControls,
+		NewDefaultParameters: newDefaultParameters,
 	}
 }
 
@@ -12210,51 +13618,105 @@ func (_options *ReplaceProfileOptions) SetProfileID(profileID string) *ReplacePr
 	return _options
 }
 
-// SetProfileName : Allow user to set ProfileName
-func (_options *ReplaceProfileOptions) SetProfileName(profileName string) *ReplaceProfileOptions {
-	_options.ProfileName = core.StringPtr(profileName)
+// SetNewProfileType : Allow user to set NewProfileType
+func (_options *ReplaceProfileOptions) SetNewProfileType(newProfileType string) *ReplaceProfileOptions {
+	_options.NewProfileType = core.StringPtr(newProfileType)
 	return _options
 }
 
-// SetProfileType : Allow user to set ProfileType
-func (_options *ReplaceProfileOptions) SetProfileType(profileType string) *ReplaceProfileOptions {
-	_options.ProfileType = core.StringPtr(profileType)
+// SetNewControls : Allow user to set NewControls
+func (_options *ReplaceProfileOptions) SetNewControls(newControls []ProfileControls) *ReplaceProfileOptions {
+	_options.NewControls = newControls
 	return _options
 }
 
-// SetProfileDescription : Allow user to set ProfileDescription
-func (_options *ReplaceProfileOptions) SetProfileDescription(profileDescription string) *ReplaceProfileOptions {
-	_options.ProfileDescription = core.StringPtr(profileDescription)
+// SetNewDefaultParameters : Allow user to set NewDefaultParameters
+func (_options *ReplaceProfileOptions) SetNewDefaultParameters(newDefaultParameters []DefaultParameters) *ReplaceProfileOptions {
+	_options.NewDefaultParameters = newDefaultParameters
 	return _options
 }
 
-// SetProfileVersion : Allow user to set ProfileVersion
-func (_options *ReplaceProfileOptions) SetProfileVersion(profileVersion string) *ReplaceProfileOptions {
-	_options.ProfileVersion = core.StringPtr(profileVersion)
+// SetNewID : Allow user to set NewID
+func (_options *ReplaceProfileOptions) SetNewID(newID string) *ReplaceProfileOptions {
+	_options.NewID = core.StringPtr(newID)
 	return _options
 }
 
-// SetLatest : Allow user to set Latest
-func (_options *ReplaceProfileOptions) SetLatest(latest bool) *ReplaceProfileOptions {
-	_options.Latest = core.BoolPtr(latest)
+// SetNewProfileName : Allow user to set NewProfileName
+func (_options *ReplaceProfileOptions) SetNewProfileName(newProfileName string) *ReplaceProfileOptions {
+	_options.NewProfileName = core.StringPtr(newProfileName)
 	return _options
 }
 
-// SetVersionGroupLabel : Allow user to set VersionGroupLabel
-func (_options *ReplaceProfileOptions) SetVersionGroupLabel(versionGroupLabel string) *ReplaceProfileOptions {
-	_options.VersionGroupLabel = core.StringPtr(versionGroupLabel)
+// SetNewInstanceID : Allow user to set NewInstanceID
+func (_options *ReplaceProfileOptions) SetNewInstanceID(newInstanceID string) *ReplaceProfileOptions {
+	_options.NewInstanceID = core.StringPtr(newInstanceID)
 	return _options
 }
 
-// SetControls : Allow user to set Controls
-func (_options *ReplaceProfileOptions) SetControls(controls []ProfileControlsPrototype) *ReplaceProfileOptions {
-	_options.Controls = controls
+// SetNewHierarchyEnabled : Allow user to set NewHierarchyEnabled
+func (_options *ReplaceProfileOptions) SetNewHierarchyEnabled(newHierarchyEnabled bool) *ReplaceProfileOptions {
+	_options.NewHierarchyEnabled = core.BoolPtr(newHierarchyEnabled)
 	return _options
 }
 
-// SetDefaultParameters : Allow user to set DefaultParameters
-func (_options *ReplaceProfileOptions) SetDefaultParameters(defaultParameters []DefaultParametersPrototype) *ReplaceProfileOptions {
-	_options.DefaultParameters = defaultParameters
+// SetNewProfileDescription : Allow user to set NewProfileDescription
+func (_options *ReplaceProfileOptions) SetNewProfileDescription(newProfileDescription string) *ReplaceProfileOptions {
+	_options.NewProfileDescription = core.StringPtr(newProfileDescription)
+	return _options
+}
+
+// SetNewProfileVersion : Allow user to set NewProfileVersion
+func (_options *ReplaceProfileOptions) SetNewProfileVersion(newProfileVersion string) *ReplaceProfileOptions {
+	_options.NewProfileVersion = core.StringPtr(newProfileVersion)
+	return _options
+}
+
+// SetNewVersionGroupLabel : Allow user to set NewVersionGroupLabel
+func (_options *ReplaceProfileOptions) SetNewVersionGroupLabel(newVersionGroupLabel string) *ReplaceProfileOptions {
+	_options.NewVersionGroupLabel = core.StringPtr(newVersionGroupLabel)
+	return _options
+}
+
+// SetNewLatest : Allow user to set NewLatest
+func (_options *ReplaceProfileOptions) SetNewLatest(newLatest bool) *ReplaceProfileOptions {
+	_options.NewLatest = core.BoolPtr(newLatest)
+	return _options
+}
+
+// SetNewCreatedBy : Allow user to set NewCreatedBy
+func (_options *ReplaceProfileOptions) SetNewCreatedBy(newCreatedBy string) *ReplaceProfileOptions {
+	_options.NewCreatedBy = core.StringPtr(newCreatedBy)
+	return _options
+}
+
+// SetNewCreatedOn : Allow user to set NewCreatedOn
+func (_options *ReplaceProfileOptions) SetNewCreatedOn(newCreatedOn *strfmt.DateTime) *ReplaceProfileOptions {
+	_options.NewCreatedOn = newCreatedOn
+	return _options
+}
+
+// SetNewUpdatedBy : Allow user to set NewUpdatedBy
+func (_options *ReplaceProfileOptions) SetNewUpdatedBy(newUpdatedBy string) *ReplaceProfileOptions {
+	_options.NewUpdatedBy = core.StringPtr(newUpdatedBy)
+	return _options
+}
+
+// SetNewUpdatedOn : Allow user to set NewUpdatedOn
+func (_options *ReplaceProfileOptions) SetNewUpdatedOn(newUpdatedOn *strfmt.DateTime) *ReplaceProfileOptions {
+	_options.NewUpdatedOn = newUpdatedOn
+	return _options
+}
+
+// SetNewControlsCount : Allow user to set NewControlsCount
+func (_options *ReplaceProfileOptions) SetNewControlsCount(newControlsCount int64) *ReplaceProfileOptions {
+	_options.NewControlsCount = core.Int64Ptr(newControlsCount)
+	return _options
+}
+
+// SetNewAttachmentsCount : Allow user to set NewAttachmentsCount
+func (_options *ReplaceProfileOptions) SetNewAttachmentsCount(newAttachmentsCount int64) *ReplaceProfileOptions {
+	_options.NewAttachmentsCount = core.Int64Ptr(newAttachmentsCount)
 	return _options
 }
 
@@ -12278,24 +13740,25 @@ type ReplaceProfileParametersOptions struct {
 	// The profile ID.
 	ProfileID *string `json:"profile_id" validate:"required,ne="`
 
+	// list of parameters given by default.
+	DefaultParameters []DefaultParameters `json:"default_parameters" validate:"required"`
+
 	// The ID of the Profile.
 	ID *string `json:"id,omitempty"`
-
-	// list of parameters given by default.
-	DefaultParameters []DefaultParameters `json:"default_parameters,omitempty"`
 
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewReplaceProfileParametersOptions : Instantiate ReplaceProfileParametersOptions
-func (*SecurityAndComplianceCenterApiV3) NewReplaceProfileParametersOptions(instanceID string, profileID string) *ReplaceProfileParametersOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewReplaceProfileParametersOptions(instanceID string, profileID string, defaultParameters []DefaultParameters) *ReplaceProfileParametersOptions {
 	return &ReplaceProfileParametersOptions{
-		InstanceID: core.StringPtr(instanceID),
-		ProfileID:  core.StringPtr(profileID),
+		InstanceID:        core.StringPtr(instanceID),
+		ProfileID:         core.StringPtr(profileID),
+		DefaultParameters: defaultParameters,
 	}
 }
 
@@ -12311,15 +13774,15 @@ func (_options *ReplaceProfileParametersOptions) SetProfileID(profileID string) 
 	return _options
 }
 
-// SetID : Allow user to set ID
-func (_options *ReplaceProfileParametersOptions) SetID(id string) *ReplaceProfileParametersOptions {
-	_options.ID = core.StringPtr(id)
-	return _options
-}
-
 // SetDefaultParameters : Allow user to set DefaultParameters
 func (_options *ReplaceProfileParametersOptions) SetDefaultParameters(defaultParameters []DefaultParameters) *ReplaceProfileParametersOptions {
 	_options.DefaultParameters = defaultParameters
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *ReplaceProfileParametersOptions) SetID(id string) *ReplaceProfileParametersOptions {
+	_options.ID = core.StringPtr(id)
 	return _options
 }
 
@@ -12367,12 +13830,12 @@ type ReplaceRuleOptions struct {
 	// The list of labels that correspond to a rule.
 	Labels []string `json:"labels,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewReplaceRuleOptions : Instantiate ReplaceRuleOptions
-func (*SecurityAndComplianceCenterApiV3) NewReplaceRuleOptions(instanceID string, ruleID string, ifMatch string, description string, target *RuleTargetPrototype, requiredConfig RequiredConfigIntf) *ReplaceRuleOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewReplaceRuleOptions(instanceID string, ruleID string, ifMatch string, description string, target *RuleTargetPrototype, requiredConfig RequiredConfigIntf) *ReplaceRuleOptions {
 	return &ReplaceRuleOptions{
 		InstanceID:     core.StringPtr(instanceID),
 		RuleID:         core.StringPtr(ruleID),
@@ -12463,12 +13926,12 @@ type ReplaceTargetOptions struct {
 	// Customer credential to access for a specific service to scan.
 	Credentials []Credential `json:"credentials,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewReplaceTargetOptions : Instantiate ReplaceTargetOptions
-func (*SecurityAndComplianceCenterApiV3) NewReplaceTargetOptions(instanceID string, targetID string, accountID string, trustedProfileID string, name string) *ReplaceTargetOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewReplaceTargetOptions(instanceID string, targetID string, accountID string, trustedProfileID string, name string) *ReplaceTargetOptions {
 	return &ReplaceTargetOptions{
 		InstanceID:       core.StringPtr(instanceID),
 		TargetID:         core.StringPtr(targetID),
@@ -12532,7 +13995,7 @@ type Report struct {
 	GroupID *string `json:"group_id" validate:"required"`
 
 	// The date when the report was created.
-	CreatedOn *strfmt.DateTime `json:"created_on,omitempty"`
+	CreatedOn *string `json:"created_on" validate:"required"`
 
 	// The date when the scan was run.
 	ScanTime *string `json:"scan_time" validate:"required"`
@@ -12567,6 +14030,9 @@ type Report struct {
 
 	// The scopes used in the report.
 	Scopes []ReportScope `json:"scopes" validate:"required"`
+
+	// Extended information for a report.
+	AdditionalDetails *AdditionalDetails `json:"additional_details" validate:"required"`
 }
 
 // UnmarshalReport unmarshals an instance of Report from the specified map of raw messages.
@@ -12574,62 +14040,82 @@ func UnmarshalReport(m map[string]json.RawMessage, result interface{}) (err erro
 	obj := new(Report)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "type-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "group_id", &obj.GroupID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "group_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "created_on", &obj.CreatedOn)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "created_on-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "scan_time", &obj.ScanTime)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "scan_time-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "cos_object", &obj.CosObject)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "cos_object-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "instance_id", &obj.InstanceID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "instance_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "account", &obj.Account, UnmarshalAccount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "account-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "profile", &obj.Profile, UnmarshalProfileInfo)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "profile-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "scope", &obj.Scope, UnmarshalScopeID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "scope-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "attachment", &obj.Attachment, UnmarshalAttachment)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "attachment-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "controls_summary", &obj.ControlsSummary, UnmarshalComplianceStatsWithNonCompliant)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "controls_summary-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "evaluations_summary", &obj.EvaluationsSummary, UnmarshalEvalStats)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "evaluations_summary-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "tags", &obj.Tags, UnmarshalTags)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "tags-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "scopes", &obj.Scopes, UnmarshalReportScope)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "scopes-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalModel(m, "additional_details", &obj.AdditionalDetails, UnmarshalAdditionalDetails)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "additional_details-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -12662,26 +14148,32 @@ func UnmarshalReportCollection(m map[string]json.RawMessage, result interface{})
 	obj := new(ReportCollection)
 	err = core.UnmarshalPrimitive(m, "limit", &obj.Limit)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "limit-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "first", &obj.First, UnmarshalPageHRefFirst)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "first-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "next", &obj.Next, UnmarshalPageHRefNext)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "next-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "home_account_id", &obj.HomeAccountID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "home_account_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "reports", &obj.Reports, UnmarshalReport)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "reports-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -12713,14 +14205,17 @@ func UnmarshalReportControls(m map[string]json.RawMessage, result interface{}) (
 	obj := new(ReportControls)
 	err = core.UnmarshalPrimitive(m, "report_id", &obj.ReportID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "report_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "home_account_id", &obj.HomeAccountID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "home_account_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "controls", &obj.Controls, UnmarshalControlWithStats)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "controls-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -12750,22 +14245,27 @@ func UnmarshalReportLatest(m map[string]json.RawMessage, result interface{}) (er
 	obj := new(ReportLatest)
 	err = core.UnmarshalPrimitive(m, "home_account_id", &obj.HomeAccountID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "home_account_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "controls_summary", &obj.ControlsSummary, UnmarshalComplianceStats)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "controls_summary-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "evaluations_summary", &obj.EvaluationsSummary, UnmarshalEvalStats)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "evaluations_summary-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "score", &obj.Score, UnmarshalComplianceScore)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "score-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "reports", &obj.Reports, UnmarshalReport)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "reports-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -12782,6 +14282,9 @@ type ReportScope struct {
 
 	// The url to a report concerning the specified scope.
 	Href *string `json:"href" validate:"required"`
+
+	// The cloud provider that the scope is targeting.
+	Environment *string `json:"environment,omitempty"`
 }
 
 // UnmarshalReportScope unmarshals an instance of ReportScope from the specified map of raw messages.
@@ -12789,14 +14292,22 @@ func UnmarshalReportScope(m map[string]json.RawMessage, result interface{}) (err
 	obj := new(ReportScope)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "href", &obj.Href)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "href-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "environment", &obj.Environment)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "environment-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -12809,7 +14320,7 @@ type ReportSummary struct {
 	ReportID *string `json:"report_id,omitempty"`
 
 	// Instance ID.
-	IsntanceID *string `json:"isntance_id,omitempty"`
+	InstanceID *string `json:"instance_id,omitempty"`
 
 	// The account that is associated with a report.
 	Account *Account `json:"account,omitempty"`
@@ -12832,30 +14343,37 @@ func UnmarshalReportSummary(m map[string]json.RawMessage, result interface{}) (e
 	obj := new(ReportSummary)
 	err = core.UnmarshalPrimitive(m, "report_id", &obj.ReportID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "report_id-error", common.GetComponentInfo())
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "isntance_id", &obj.IsntanceID)
+	err = core.UnmarshalPrimitive(m, "instance_id", &obj.InstanceID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "instance_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "account", &obj.Account, UnmarshalAccount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "account-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "score", &obj.Score, UnmarshalComplianceScore)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "score-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "evaluations", &obj.Evaluations, UnmarshalEvalStats)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "evaluations-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "controls", &obj.Controls, UnmarshalComplianceStats)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "controls-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "resources", &obj.Resources, UnmarshalResourceSummary)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "resources-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -12876,10 +14394,12 @@ func UnmarshalReportTags(m map[string]json.RawMessage, result interface{}) (err 
 	obj := new(ReportTags)
 	err = core.UnmarshalPrimitive(m, "report_id", &obj.ReportID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "report_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "tags", &obj.Tags, UnmarshalTags)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "tags-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -12906,18 +14426,22 @@ func UnmarshalReportViolationDataPoint(m map[string]json.RawMessage, result inte
 	obj := new(ReportViolationDataPoint)
 	err = core.UnmarshalPrimitive(m, "report_id", &obj.ReportID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "report_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "report_group_id", &obj.ReportGroupID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "report_group_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "scan_time", &obj.ScanTime)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "scan_time-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "controls_summary", &obj.ControlsSummary, UnmarshalComplianceStats)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "controls_summary-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -12941,14 +14465,17 @@ func UnmarshalReportViolationsDrift(m map[string]json.RawMessage, result interfa
 	obj := new(ReportViolationsDrift)
 	err = core.UnmarshalPrimitive(m, "home_account_id", &obj.HomeAccountID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "home_account_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "report_group_id", &obj.ReportGroupID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "report_group_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "data_points", &obj.DataPoints, UnmarshalReportViolationDataPoint)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "data_points-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -12970,13 +14497,14 @@ type RequiredConfig struct {
 	// The operator.
 	Operator *string `json:"operator,omitempty"`
 
+	// The value can be of any type.
 	Value interface{} `json:"value,omitempty"`
 
 	// A list of required configurations where one item should evaluate to true.
-	Or []RequiredConfigIntf `json:"or,omitempty"`
+	Or []ConditionItemIntf `json:"or,omitempty"`
 
 	// A list of required configurations where all items should evaluate to true.
-	And []RequiredConfigIntf `json:"and,omitempty"`
+	And []ConditionItemIntf `json:"and,omitempty"`
 
 	// A rule within a rule used in the requiredConfig.
 	Any *SubRule `json:"any,omitempty"`
@@ -13032,42 +14560,52 @@ func UnmarshalRequiredConfig(m map[string]json.RawMessage, result interface{}) (
 	obj := new(RequiredConfig)
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "property", &obj.Property)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "property-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "operator", &obj.Operator)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "operator-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "value", &obj.Value)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "value-error", common.GetComponentInfo())
 		return
 	}
-	err = core.UnmarshalModel(m, "or", &obj.Or, UnmarshalRequiredConfig)
+	err = core.UnmarshalModel(m, "or", &obj.Or, UnmarshalConditionItem)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "or-error", common.GetComponentInfo())
 		return
 	}
-	err = core.UnmarshalModel(m, "and", &obj.And, UnmarshalRequiredConfig)
+	err = core.UnmarshalModel(m, "and", &obj.And, UnmarshalConditionItem)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "and-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "any", &obj.Any, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "any-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "any_ifexists", &obj.AnyIfexists, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "any_ifexists-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "all", &obj.All, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "all-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "all_ifexists", &obj.AllIfexists, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "all_ifexists-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -13104,7 +14642,7 @@ type Resource struct {
 	Tags *Tags `json:"tags,omitempty"`
 
 	// The allowed values of an aggregated status for controls, specifications, assessments, and resources.
-	Status *string `json:"status,omitempty"`
+	Status *string `json:"status" validate:"required"`
 
 	// The total number of evaluations.
 	TotalCount *int64 `json:"total_count,omitempty"`
@@ -13141,79 +14679,109 @@ const (
 	ResourceStatusUserEvaluationRequiredConst = "user_evaluation_required"
 )
 
+// NewResource : Instantiate Resource (Generic Model Constructor)
+func (*SecurityAndComplianceCenterAPIV3) NewResource(status string) (_model *Resource, err error) {
+	_model = &Resource{
+		Status: core.StringPtr(status),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
+}
+
 // UnmarshalResource unmarshals an instance of Resource from the specified map of raw messages.
 func UnmarshalResource(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(Resource)
 	err = core.UnmarshalPrimitive(m, "report_id", &obj.ReportID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "report_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "home_account_id", &obj.HomeAccountID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "home_account_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "resource_name", &obj.ResourceName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "resource_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "account", &obj.Account, UnmarshalAccount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "account-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "component_id", &obj.ComponentID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "component_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "component_name", &obj.ComponentName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "component_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "environment", &obj.Environment)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "environment-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "tags", &obj.Tags, UnmarshalTags)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "tags-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "status-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "pass_count", &obj.PassCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "pass_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "failure_count", &obj.FailureCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "failure_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "error_count", &obj.ErrorCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "error_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "skipped_count", &obj.SkippedCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "skipped_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "completed_count", &obj.CompletedCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "completed_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "service_name", &obj.ServiceName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "service_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "instance_crn", &obj.InstanceCRN)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "instance_crn-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -13249,30 +14817,37 @@ func UnmarshalResourcePage(m map[string]json.RawMessage, result interface{}) (er
 	obj := new(ResourcePage)
 	err = core.UnmarshalPrimitive(m, "limit", &obj.Limit)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "limit-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "first", &obj.First, UnmarshalPageHRefFirst)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "first-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "next", &obj.Next, UnmarshalPageHRefNext)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "next-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "report_id", &obj.ReportID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "report_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "home_account_id", &obj.HomeAccountID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "home_account_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "resources", &obj.Resources, UnmarshalResource)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "resources-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -13290,7 +14865,7 @@ func (resp *ResourcePage) GetNextStart() (*string, error) {
 // ResourceSummary : The resource summary.
 type ResourceSummary struct {
 	// The allowed values of an aggregated status for controls, specifications, assessments, and resources.
-	Status *string `json:"status,omitempty"`
+	Status *string `json:"status" validate:"required"`
 
 	// The total number of checks.
 	TotalCount *int64 `json:"total_count,omitempty"`
@@ -13329,34 +14904,42 @@ func UnmarshalResourceSummary(m map[string]json.RawMessage, result interface{}) 
 	obj := new(ResourceSummary)
 	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "status-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "compliant_count", &obj.CompliantCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "compliant_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "not_compliant_count", &obj.NotCompliantCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "not_compliant_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "unable_to_perform_count", &obj.UnableToPerformCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "unable_to_perform_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "user_evaluation_required_count", &obj.UserEvaluationRequiredCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "user_evaluation_required_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "not_applicable_count", &obj.NotApplicableCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "not_applicable_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "top_failed", &obj.TopFailed, UnmarshalResourceSummaryItem)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "top_failed-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -13384,7 +14967,7 @@ type ResourceSummaryItem struct {
 	Tags *Tags `json:"tags,omitempty"`
 
 	// The allowed values of an aggregated status for controls, specifications, assessments, and resources.
-	Status *string `json:"status,omitempty"`
+	Status *string `json:"status" validate:"required"`
 
 	// The total number of evaluations.
 	TotalCount *int64 `json:"total_count,omitempty"`
@@ -13420,54 +15003,67 @@ func UnmarshalResourceSummaryItem(m map[string]json.RawMessage, result interface
 	obj := new(ResourceSummaryItem)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "account", &obj.Account)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "account-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "service", &obj.Service)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "service-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "service_display_name", &obj.ServiceDisplayName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "service_display_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "tags", &obj.Tags, UnmarshalTags)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "tags-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "status-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "pass_count", &obj.PassCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "pass_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "failure_count", &obj.FailureCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "failure_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "error_count", &obj.ErrorCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "error_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "skipped_count", &obj.SkippedCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "skipped_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "completed_count", &obj.CompletedCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "completed_count-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -13528,54 +15124,67 @@ func UnmarshalRule(m map[string]json.RawMessage, result interface{}) (err error)
 	obj := new(Rule)
 	err = core.UnmarshalPrimitive(m, "created_on", &obj.CreatedOn)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "created_on-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "created_by", &obj.CreatedBy)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "created_by-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "updated_on", &obj.UpdatedOn)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_on-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "updated_by", &obj.UpdatedBy)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_by-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "account_id", &obj.AccountID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "account_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "type-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "version", &obj.Version)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "version-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "import", &obj.Import, UnmarshalImport)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "import-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "target", &obj.Target, UnmarshalRuleTarget)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "target-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "required_config", &obj.RequiredConfig, UnmarshalRequiredConfig)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "required_config-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "labels", &obj.Labels)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "labels-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -13606,22 +15215,27 @@ func UnmarshalRuleCollection(m map[string]json.RawMessage, result interface{}) (
 	obj := new(RuleCollection)
 	err = core.UnmarshalPrimitive(m, "limit", &obj.Limit)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "limit-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "first", &obj.First, UnmarshalPageHRefFirst)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "first-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "next", &obj.Next, UnmarshalPageHRefNext)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "next-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "rules", &obj.Rules, UnmarshalRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "rules-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -13674,42 +15288,52 @@ func UnmarshalRuleInfo(m map[string]json.RawMessage, result interface{}) (err er
 	obj := new(RuleInfo)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "type-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "version", &obj.Version)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "version-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "account_id", &obj.AccountID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "account_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "created_on", &obj.CreatedOn)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "created_on-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "created_by", &obj.CreatedBy)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "created_by-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "updated_on", &obj.UpdatedOn)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_on-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "updated_by", &obj.UpdatedBy)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_by-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "labels", &obj.Labels)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "labels-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -13728,7 +15352,7 @@ type RuleParameter struct {
 	Description *string `json:"description,omitempty"`
 
 	// The property type.
-	Type *string `json:"type,omitempty"`
+	Type *string `json:"type" validate:"required"`
 }
 
 // Constants associated with the RuleParameter.Type property.
@@ -13743,23 +15367,39 @@ const (
 	RuleParameterTypeTimestampConst  = "timestamp"
 )
 
+// NewRuleParameter : Instantiate RuleParameter (Generic Model Constructor)
+func (*SecurityAndComplianceCenterAPIV3) NewRuleParameter(typeVar string) (_model *RuleParameter, err error) {
+	_model = &RuleParameter{
+		Type: core.StringPtr(typeVar),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
+}
+
 // UnmarshalRuleParameter unmarshals an instance of RuleParameter from the specified map of raw messages.
 func UnmarshalRuleParameter(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(RuleParameter)
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "display_name", &obj.DisplayName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "display_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "type-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -13775,7 +15415,7 @@ type RuleProperty struct {
 	Description *string `json:"description,omitempty"`
 
 	// The operator kind used when evaluating a property.
-	Type *string `json:"type,omitempty"`
+	Type *string `json:"type" validate:"required"`
 }
 
 // Constants associated with the RuleProperty.Type property.
@@ -13795,14 +15435,17 @@ func UnmarshalRuleProperty(m map[string]json.RawMessage, result interface{}) (er
 	obj := new(RuleProperty)
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "type-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -13820,20 +15463,23 @@ type RuleTarget struct {
 	// The target resource kind.
 	ResourceKind *string `json:"resource_kind" validate:"required"`
 
-	// The reference name used
-	Ref *string `json:"ref,omitempty"`
-
 	// The additional target attributes used to filter to a subset of resources.
 	AdditionalTargetAttributes []AdditionalTargetAttribute `json:"additional_target_attributes,omitempty"`
+
+	// The name of target when used in a rule.
+	Ref *string `json:"ref,omitempty"`
 }
 
 // NewRuleTarget : Instantiate RuleTarget (Generic Model Constructor)
-func (*SecurityAndComplianceCenterApiV3) NewRuleTarget(serviceName string, resourceKind string) (_model *RuleTarget, err error) {
+func (*SecurityAndComplianceCenterAPIV3) NewRuleTarget(serviceName string, resourceKind string) (_model *RuleTarget, err error) {
 	_model = &RuleTarget{
 		ServiceName:  core.StringPtr(serviceName),
 		ResourceKind: core.StringPtr(resourceKind),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
 	return
 }
 
@@ -13842,22 +15488,27 @@ func UnmarshalRuleTarget(m map[string]json.RawMessage, result interface{}) (err 
 	obj := new(RuleTarget)
 	err = core.UnmarshalPrimitive(m, "service_name", &obj.ServiceName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "service_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "service_display_name", &obj.ServiceDisplayName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "service_display_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "resource_kind", &obj.ResourceKind)
 	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "ref", &obj.Ref)
-	if err != nil {
+		err = core.SDKErrorf(err, "", "resource_kind-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "additional_target_attributes", &obj.AdditionalTargetAttributes, UnmarshalAdditionalTargetAttribute)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "additional_target_attributes-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "ref", &obj.Ref)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "ref-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -13872,20 +15523,20 @@ type RuleTargetPrototype struct {
 	// The target resource kind.
 	ResourceKind *string `json:"resource_kind" validate:"required"`
 
-	// The reference name used
-	Ref *string `json:"ref,omitempty"`
-
 	// The additional target attributes used to filter to a subset of resources.
 	AdditionalTargetAttributes []AdditionalTargetAttribute `json:"additional_target_attributes,omitempty"`
 }
 
 // NewRuleTargetPrototype : Instantiate RuleTargetPrototype (Generic Model Constructor)
-func (*SecurityAndComplianceCenterApiV3) NewRuleTargetPrototype(serviceName string, resourceKind string) (_model *RuleTargetPrototype, err error) {
+func (*SecurityAndComplianceCenterAPIV3) NewRuleTargetPrototype(serviceName string, resourceKind string) (_model *RuleTargetPrototype, err error) {
 	_model = &RuleTargetPrototype{
 		ServiceName:  core.StringPtr(serviceName),
 		ResourceKind: core.StringPtr(resourceKind),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
 	return
 }
 
@@ -13894,14 +15545,17 @@ func UnmarshalRuleTargetPrototype(m map[string]json.RawMessage, result interface
 	obj := new(RuleTargetPrototype)
 	err = core.UnmarshalPrimitive(m, "service_name", &obj.ServiceName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "service_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "resource_kind", &obj.ResourceKind)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "resource_kind-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "additional_target_attributes", &obj.AdditionalTargetAttributes, UnmarshalAdditionalTargetAttribute)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "additional_target_attributes-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -13926,7 +15580,7 @@ type ScanReport struct {
 	SubscopeID *string `json:"subscope_id,omitempty"`
 
 	// The enum of different scan report status.
-	Status *string `json:"status,omitempty"`
+	Status *string `json:"status" validate:"required"`
 
 	// The date when the report was created.
 	CreatedOn *strfmt.DateTime `json:"created_on,omitempty"`
@@ -13960,38 +15614,47 @@ func UnmarshalScanReport(m map[string]json.RawMessage, result interface{}) (err 
 	obj := new(ScanReport)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "scan_id", &obj.ScanID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "scan_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "instance_id", &obj.InstanceID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "instance_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "scope_id", &obj.ScopeID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "scope_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "subscope_id", &obj.SubscopeID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "subscope_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "status-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "created_on", &obj.CreatedOn)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "created_on-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "format", &obj.Format)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "format-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "href", &obj.Href)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "href-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -14027,30 +15690,37 @@ func UnmarshalScanReportCollection(m map[string]json.RawMessage, result interfac
 	obj := new(ScanReportCollection)
 	err = core.UnmarshalPrimitive(m, "limit", &obj.Limit)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "limit-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "first", &obj.First, UnmarshalPageHRefFirst)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "first-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "next", &obj.Next, UnmarshalPageHRefNext)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "next-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "scope_id", &obj.ScopeID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "scope_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "subscope_id", &obj.SubscopeID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "subscope_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "scan_reports", &obj.ScanReports, UnmarshalScanReport)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "scan_reports-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -14102,50 +15772,62 @@ func UnmarshalScope(m map[string]json.RawMessage, result interface{}) (err error
 	obj := new(Scope)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "environment", &obj.Environment)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "environment-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "properties", &obj.Properties, UnmarshalScopeProperty)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "properties-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "account_id", &obj.AccountID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "account_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "instance_id", &obj.InstanceID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "instance_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "created_by", &obj.CreatedBy)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "created_by-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "created_on", &obj.CreatedOn)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "created_on-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "updated_by", &obj.UpdatedBy)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_by-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "updated_on", &obj.UpdatedOn)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_on-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "attachment_count", &obj.AttachmentCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "attachment_count-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -14167,7 +15849,7 @@ type ScopeCollection struct {
 	Next *PageHRefNext `json:"next,omitempty"`
 
 	// The array of scopes.
-	Scopes []Scope `json:"scopes,omitempty"`
+	Scopes []Scope `json:"scopes" validate:"required"`
 }
 
 // UnmarshalScopeCollection unmarshals an instance of ScopeCollection from the specified map of raw messages.
@@ -14175,22 +15857,27 @@ func UnmarshalScopeCollection(m map[string]json.RawMessage, result interface{}) 
 	obj := new(ScopeCollection)
 	err = core.UnmarshalPrimitive(m, "limit", &obj.Limit)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "limit-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "first", &obj.First, UnmarshalPageHRefFirst)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "first-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "next", &obj.Next, UnmarshalPageHRefNext)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "next-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "scopes", &obj.Scopes, UnmarshalScope)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "scopes-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -14220,10 +15907,12 @@ func UnmarshalScopeID(m map[string]json.RawMessage, result interface{}) (err err
 	obj := new(ScopeID)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "type-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -14232,24 +15921,17 @@ func UnmarshalScopeID(m map[string]json.RawMessage, result interface{}) (err err
 
 // ScopeProperty : ScopeProperty struct
 // Models which "extend" this model:
-// - ScopePropertyScopeID
+// - ScopePropertyScopeAny
 // - ScopePropertyScopeType
+// - ScopePropertyScopeID
 // - ScopePropertyExclusions
 type ScopeProperty struct {
-	// The key for the scope property.
+	// key to say the attribute targets the scope type.
 	Name *string `json:"name,omitempty"`
 
+	// The value can be a string or a string list.
 	Value interface{} `json:"value,omitempty"`
-
-	// A list of scopes/targets to exclude from a scope.
-	Exclusions []ScopePropertyExclusionItem `json:"exclusions,omitempty"`
 }
-
-// Constants associated with the ScopeProperty.Name property.
-// The key for the scope property.
-const (
-	ScopePropertyNameScopeIDConst = "scope_id"
-)
 
 func (*ScopeProperty) isaScopeProperty() bool {
 	return true
@@ -14264,10 +15946,12 @@ func UnmarshalScopeProperty(m map[string]json.RawMessage, result interface{}) (e
 	obj := new(ScopeProperty)
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "value", &obj.Value)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "value-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -14286,7 +15970,7 @@ type ScopePropertyExclusionItem struct {
 	// - enterprise.account: The scope targets an account within an enterprise
 	// - account: The scope targets an account not tied to an enterprise
 	// - account.resource_group: The scope targets a resource group within an account.
-	ScopeType *string `json:"scope_type,omitempty"`
+	ScopeType *string `json:"scope_type" validate:"required"`
 }
 
 // Constants associated with the ScopePropertyExclusionItem.ScopeType property.
@@ -14306,15 +15990,29 @@ const (
 	ScopePropertyExclusionItemScopeTypeEnterpriseAccountGroupConst = "enterprise.account_group"
 )
 
+// NewScopePropertyExclusionItem : Instantiate ScopePropertyExclusionItem (Generic Model Constructor)
+func (*SecurityAndComplianceCenterAPIV3) NewScopePropertyExclusionItem(scopeType string) (_model *ScopePropertyExclusionItem, err error) {
+	_model = &ScopePropertyExclusionItem{
+		ScopeType: core.StringPtr(scopeType),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
+}
+
 // UnmarshalScopePropertyExclusionItem unmarshals an instance of ScopePropertyExclusionItem from the specified map of raw messages.
 func UnmarshalScopePropertyExclusionItem(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(ScopePropertyExclusionItem)
 	err = core.UnmarshalPrimitive(m, "scope_id", &obj.ScopeID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "scope_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "scope_type", &obj.ScopeType)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "scope_type-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -14341,18 +16039,22 @@ func UnmarshalScopePrototype(m map[string]json.RawMessage, result interface{}) (
 	obj := new(ScopePrototype)
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "environment", &obj.Environment)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "environment-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "properties", &obj.Properties, UnmarshalScopeProperty)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "properties-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -14403,50 +16105,62 @@ func UnmarshalService(m map[string]json.RawMessage, result interface{}) (err err
 	obj := new(Service)
 	err = core.UnmarshalPrimitive(m, "created_on", &obj.CreatedOn)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "created_on-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "created_by", &obj.CreatedBy)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "created_by-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "updated_on", &obj.UpdatedOn)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_on-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "updated_by", &obj.UpdatedBy)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_by-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "service_name", &obj.ServiceName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "service_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "service_display_name", &obj.ServiceDisplayName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "service_display_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "monitoring_enabled", &obj.MonitoringEnabled)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "monitoring_enabled-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "enforcement_enabled", &obj.EnforcementEnabled)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "enforcement_enabled-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "service_listing_enabled", &obj.ServiceListingEnabled)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "service_listing_enabled-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "config_information_point", &obj.ConfigInformationPoint, UnmarshalConfigurationInformationPoints)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "config_information_point-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "supported_configs", &obj.SupportedConfigs, UnmarshalSupportedConfigs)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "supported_configs-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -14464,6 +16178,7 @@ func UnmarshalServiceCollection(m map[string]json.RawMessage, result interface{}
 	obj := new(ServiceCollection)
 	err = core.UnmarshalModel(m, "services", &obj.Services, UnmarshalService)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "services-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -14484,10 +16199,12 @@ func UnmarshalSettings(m map[string]json.RawMessage, result interface{}) (err er
 	obj := new(Settings)
 	err = core.UnmarshalModel(m, "event_notifications", &obj.EventNotifications, UnmarshalEventNotifications)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "event_notifications-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "object_storage", &obj.ObjectStorage, UnmarshalObjectStorage)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "object_storage-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -14508,10 +16225,12 @@ func UnmarshalSubRule(m map[string]json.RawMessage, result interface{}) (err err
 	obj := new(SubRule)
 	err = core.UnmarshalModel(m, "target", &obj.Target, UnmarshalRuleTarget)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "target-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "required_config", &obj.RequiredConfig, UnmarshalRequiredConfig)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "required_config-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -14534,7 +16253,7 @@ type SubScope struct {
 	Environment *string `json:"environment,omitempty"`
 
 	// Additional attributes that are supported for scoping by this environment.
-	Properties []ScopePropertyIntf `json:"properties,omitempty"`
+	Properties []ScopePropertyIntf `json:"properties" validate:"required"`
 }
 
 // UnmarshalSubScope unmarshals an instance of SubScope from the specified map of raw messages.
@@ -14542,22 +16261,27 @@ func UnmarshalSubScope(m map[string]json.RawMessage, result interface{}) (err er
 	obj := new(SubScope)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "environment", &obj.Environment)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "environment-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "properties", &obj.Properties, UnmarshalScopeProperty)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "properties-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -14579,7 +16303,7 @@ type SubScopeCollection struct {
 	Next *PageHRefNext `json:"next,omitempty"`
 
 	// The array of subscopes.
-	Subscopes []SubScope `json:"subscopes,omitempty"`
+	Subscopes []SubScope `json:"subscopes" validate:"required"`
 }
 
 // UnmarshalSubScopeCollection unmarshals an instance of SubScopeCollection from the specified map of raw messages.
@@ -14587,22 +16311,27 @@ func UnmarshalSubScopeCollection(m map[string]json.RawMessage, result interface{
 	obj := new(SubScopeCollection)
 	err = core.UnmarshalPrimitive(m, "limit", &obj.Limit)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "limit-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "first", &obj.First, UnmarshalPageHRefFirst)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "first-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "next", &obj.Next, UnmarshalPageHRefNext)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "next-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "subscopes", &obj.Subscopes, UnmarshalSubScope)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "subscopes-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -14620,7 +16349,7 @@ func (resp *SubScopeCollection) GetNextStart() (*string, error) {
 // SubScopeResponse : The response body of the subscope.
 type SubScopeResponse struct {
 	// The array of subscopes.
-	Subscopes []SubScope `json:"subscopes,omitempty"`
+	Subscopes []SubScope `json:"subscopes" validate:"required"`
 }
 
 // UnmarshalSubScopeResponse unmarshals an instance of SubScopeResponse from the specified map of raw messages.
@@ -14628,6 +16357,7 @@ func UnmarshalSubScopeResponse(m map[string]json.RawMessage, result interface{})
 	obj := new(SubScopeResponse)
 	err = core.UnmarshalModel(m, "subscopes", &obj.Subscopes, UnmarshalSubScope)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "subscopes-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -14666,34 +16396,42 @@ func UnmarshalSupportedConfigs(m map[string]json.RawMessage, result interface{})
 	obj := new(SupportedConfigs)
 	err = core.UnmarshalPrimitive(m, "resource_kind", &obj.ResourceKind)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "resource_kind-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "additional_target_attributes", &obj.AdditionalTargetAttributes, UnmarshalAdditionalTargetAttribute)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "additional_target_attributes-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "properties", &obj.Properties, UnmarshalRuleProperty)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "properties-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "cip_requires_service_instance", &obj.CipRequiresServiceInstance)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "cip_requires_service_instance-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "resource_group_support", &obj.ResourceGroupSupport)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "resource_group_support-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "tagging_support", &obj.TaggingSupport)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "tagging_support-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "inherit_tags", &obj.InheritTags)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "inherit_tags-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -14717,14 +16455,17 @@ func UnmarshalTags(m map[string]json.RawMessage, result interface{}) (err error)
 	obj := new(Tags)
 	err = core.UnmarshalPrimitive(m, "user", &obj.User)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "user-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "access", &obj.Access)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "access-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "service", &obj.Service)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "service-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -14746,7 +16487,7 @@ type Target struct {
 	Name *string `json:"name" validate:"required"`
 
 	// List of credentials.
-	Credentials []CredentialResponse `json:"credentials,omitempty"`
+	Credentials []CredentialResponse `json:"credentials" validate:"required"`
 
 	// The user ID who created the target.
 	CreatedBy *string `json:"created_by,omitempty"`
@@ -14766,38 +16507,47 @@ func UnmarshalTarget(m map[string]json.RawMessage, result interface{}) (err erro
 	obj := new(Target)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "account_id", &obj.AccountID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "account_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "trusted_profile_id", &obj.TrustedProfileID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "trusted_profile_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "credentials", &obj.Credentials, UnmarshalCredentialResponse)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "credentials-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "created_by", &obj.CreatedBy)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "created_by-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "created_on", &obj.CreatedOn)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "created_on-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "updated_by", &obj.UpdatedBy)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_by-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "updated_on", &obj.UpdatedOn)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_on-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -14819,7 +16569,7 @@ type TargetCollection struct {
 	Next *PageHRefNext `json:"next,omitempty"`
 
 	// The details of the target account.
-	Targets []Target `json:"targets,omitempty"`
+	Targets []Target `json:"targets" validate:"required"`
 }
 
 // UnmarshalTargetCollection unmarshals an instance of TargetCollection from the specified map of raw messages.
@@ -14827,22 +16577,27 @@ func UnmarshalTargetCollection(m map[string]json.RawMessage, result interface{})
 	obj := new(TargetCollection)
 	err = core.UnmarshalPrimitive(m, "limit", &obj.Limit)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "limit-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "first", &obj.First, UnmarshalPageHRefFirst)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "first-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "next", &obj.Next, UnmarshalPageHRefNext)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "next-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "targets", &obj.Targets, UnmarshalTarget)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "targets-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -14878,30 +16633,37 @@ func UnmarshalTargetInfo(m map[string]json.RawMessage, result interface{}) (err 
 	obj := new(TargetInfo)
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "account_id", &obj.AccountID)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "account_id-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "service_name", &obj.ServiceName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "service_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "service_display_name", &obj.ServiceDisplayName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "service_display_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "resource_crn", &obj.ResourceCRN)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "resource_crn-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "resource_name", &obj.ResourceName)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "resource_name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "tags", &obj.Tags, UnmarshalTags)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "tags-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -14919,6 +16681,7 @@ func UnmarshalTestEvent(m map[string]json.RawMessage, result interface{}) (err e
 	obj := new(TestEvent)
 	err = core.UnmarshalPrimitive(m, "success", &obj.Success)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "success-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -14937,20 +16700,19 @@ type UpdateProviderTypeInstanceOptions struct {
 	ProviderTypeInstanceID *string `json:"provider_type_instance_id" validate:"required,ne="`
 
 	// The provider type instance name.
-	Name *string `json:"name" validate:"required,ne="`
+	Name *string `json:"name,omitempty"`
 
 	// The attributes for connecting to the provider type instance.
 	Attributes map[string]interface{} `json:"attributes,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewUpdateProviderTypeInstanceOptions : Instantiate UpdateProviderTypeInstanceOptions
-func (*SecurityAndComplianceCenterApiV3) NewUpdateProviderTypeInstanceOptions(instanceID string, providerTypeID string, providerTypeInstanceID string, providerTypeInstanceName string) *UpdateProviderTypeInstanceOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewUpdateProviderTypeInstanceOptions(instanceID string, providerTypeID string, providerTypeInstanceID string) *UpdateProviderTypeInstanceOptions {
 	return &UpdateProviderTypeInstanceOptions{
 		InstanceID:             core.StringPtr(instanceID),
-		Name:                   core.StringPtr(providerTypeInstanceName),
 		ProviderTypeID:         core.StringPtr(providerTypeID),
 		ProviderTypeInstanceID: core.StringPtr(providerTypeInstanceID),
 	}
@@ -15006,12 +16768,12 @@ type UpdateScopeOptions struct {
 	// The scope description.
 	Description *string `json:"description,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewUpdateScopeOptions : Instantiate UpdateScopeOptions
-func (*SecurityAndComplianceCenterApiV3) NewUpdateScopeOptions(instanceID string, scopeID string) *UpdateScopeOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewUpdateScopeOptions(instanceID string, scopeID string) *UpdateScopeOptions {
 	return &UpdateScopeOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ScopeID:    core.StringPtr(scopeID),
@@ -15059,12 +16821,12 @@ type UpdateSettingsOptions struct {
 	// The payload to connect an Event Notification instance with a Security and Compliance Center instance.
 	EventNotifications *EventNotificationsPrototype `json:"event_notifications,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewUpdateSettingsOptions : Instantiate UpdateSettingsOptions
-func (*SecurityAndComplianceCenterApiV3) NewUpdateSettingsOptions(instanceID string) *UpdateSettingsOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewUpdateSettingsOptions(instanceID string) *UpdateSettingsOptions {
 	return &UpdateSettingsOptions{
 		InstanceID: core.StringPtr(instanceID),
 	}
@@ -15111,12 +16873,12 @@ type UpdateSubscopeOptions struct {
 	// The scope description.
 	Description *string `json:"description,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewUpdateSubscopeOptions : Instantiate UpdateSubscopeOptions
-func (*SecurityAndComplianceCenterApiV3) NewUpdateSubscopeOptions(instanceID string, scopeID string, subscopeID string) *UpdateSubscopeOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewUpdateSubscopeOptions(instanceID string, scopeID string, subscopeID string) *UpdateSubscopeOptions {
 	return &UpdateSubscopeOptions{
 		InstanceID: core.StringPtr(instanceID),
 		ScopeID:    core.StringPtr(scopeID),
@@ -15172,21 +16934,22 @@ type UpgradeAttachmentOptions struct {
 	AttachmentID *string `json:"attachment_id" validate:"required,ne="`
 
 	// The attachment_parameters to set for a Profile Attachment.
-	AttachmentParameters []Parameter `json:"attachment_parameters,omitempty"`
+	AttachmentParameters []Parameter `json:"attachment_parameters" validate:"required"`
 
 	// The user account ID.
 	AccountID *string `json:"account_id,omitempty"`
 
-	// Allows users to set headers on API requests
+	// Allows users to set headers on API requests.
 	Headers map[string]string
 }
 
 // NewUpgradeAttachmentOptions : Instantiate UpgradeAttachmentOptions
-func (*SecurityAndComplianceCenterApiV3) NewUpgradeAttachmentOptions(instanceID string, profileID string, attachmentID string) *UpgradeAttachmentOptions {
+func (*SecurityAndComplianceCenterAPIV3) NewUpgradeAttachmentOptions(instanceID string, profileID string, attachmentID string, attachmentParameters []Parameter) *UpgradeAttachmentOptions {
 	return &UpgradeAttachmentOptions{
-		InstanceID:   core.StringPtr(instanceID),
-		ProfileID:    core.StringPtr(profileID),
-		AttachmentID: core.StringPtr(attachmentID),
+		InstanceID:           core.StringPtr(instanceID),
+		ProfileID:            core.StringPtr(profileID),
+		AttachmentID:         core.StringPtr(attachmentID),
+		AttachmentParameters: attachmentParameters,
 	}
 }
 
@@ -15238,6 +17001,7 @@ type ConditionItemConditionBase struct {
 	// The operator.
 	Operator *string `json:"operator" validate:"required"`
 
+	// The value can be of any type.
 	Value interface{} `json:"value,omitempty"`
 }
 
@@ -15270,12 +17034,15 @@ const (
 )
 
 // NewConditionItemConditionBase : Instantiate ConditionItemConditionBase (Generic Model Constructor)
-func (*SecurityAndComplianceCenterApiV3) NewConditionItemConditionBase(property string, operator string) (_model *ConditionItemConditionBase, err error) {
+func (*SecurityAndComplianceCenterAPIV3) NewConditionItemConditionBase(property string, operator string) (_model *ConditionItemConditionBase, err error) {
 	_model = &ConditionItemConditionBase{
 		Property: core.StringPtr(property),
 		Operator: core.StringPtr(operator),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
 	return
 }
 
@@ -15288,18 +17055,22 @@ func UnmarshalConditionItemConditionBase(m map[string]json.RawMessage, result in
 	obj := new(ConditionItemConditionBase)
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "property", &obj.Property)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "property-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "operator", &obj.Operator)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "operator-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "value", &obj.Value)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "value-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -15340,14 +17111,17 @@ func UnmarshalConditionItemConditionList(m map[string]json.RawMessage, result in
 	obj := new(ConditionItemConditionList)
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "or", &obj.Or, UnmarshalConditionItem)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "or-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "and", &obj.And, UnmarshalConditionItem)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "and-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -15393,18 +17167,96 @@ func UnmarshalConditionItemConditionSubRule(m map[string]json.RawMessage, result
 	obj := new(ConditionItemConditionSubRule)
 	err = core.UnmarshalModel(m, "any", &obj.Any, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "any-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "any_ifexists", &obj.AnyIfexists, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "any_ifexists-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "all", &obj.All, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "all-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "all_ifexists", &obj.AllIfexists, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "all_ifexists-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// MultiCloudScopePayloadByID : The payload to reference a previously made scope object.
+// This model "extends" MultiCloudScopePayload
+type MultiCloudScopePayloadByID struct {
+	// The UUID of the scope made.
+	ID *string `json:"id,omitempty"`
+}
+
+func (*MultiCloudScopePayloadByID) isaMultiCloudScopePayload() bool {
+	return true
+}
+
+// UnmarshalMultiCloudScopePayloadByID unmarshals an instance of MultiCloudScopePayloadByID from the specified map of raw messages.
+func UnmarshalMultiCloudScopePayloadByID(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(MultiCloudScopePayloadByID)
+	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// MultiCloudScopePayloadByProperties : The payload to create a new Scope from a Profile Attachment.
+// This model "extends" MultiCloudScopePayload
+type MultiCloudScopePayloadByProperties struct {
+	// The details of a newly created scope.
+	Description *string `json:"description,omitempty"`
+
+	// The environment that relates to this scope.
+	Environment *string `json:"environment,omitempty"`
+
+	// The properties supported for scoping by this environment.
+	Properties []ScopePropertyIntf `json:"properties" validate:"required"`
+}
+
+// NewMultiCloudScopePayloadByProperties : Instantiate MultiCloudScopePayloadByProperties (Generic Model Constructor)
+func (*SecurityAndComplianceCenterAPIV3) NewMultiCloudScopePayloadByProperties(properties []ScopePropertyIntf) (_model *MultiCloudScopePayloadByProperties, err error) {
+	_model = &MultiCloudScopePayloadByProperties{
+		Properties: properties,
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
+}
+
+func (*MultiCloudScopePayloadByProperties) isaMultiCloudScopePayload() bool {
+	return true
+}
+
+// UnmarshalMultiCloudScopePayloadByProperties unmarshals an instance of MultiCloudScopePayloadByProperties from the specified map of raw messages.
+func UnmarshalMultiCloudScopePayloadByProperties(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(MultiCloudScopePayloadByProperties)
+	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "environment", &obj.Environment)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "environment-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalModel(m, "properties", &obj.Properties, UnmarshalScopeProperty)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "properties-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -15423,6 +17275,7 @@ type RequiredConfigConditionBase struct {
 	// The operator.
 	Operator *string `json:"operator" validate:"required"`
 
+	// The value can be of any type.
 	Value interface{} `json:"value,omitempty"`
 }
 
@@ -15455,12 +17308,15 @@ const (
 )
 
 // NewRequiredConfigConditionBase : Instantiate RequiredConfigConditionBase (Generic Model Constructor)
-func (*SecurityAndComplianceCenterApiV3) NewRequiredConfigConditionBase(property string, operator string) (_model *RequiredConfigConditionBase, err error) {
+func (*SecurityAndComplianceCenterAPIV3) NewRequiredConfigConditionBase(property string, operator string) (_model *RequiredConfigConditionBase, err error) {
 	_model = &RequiredConfigConditionBase{
 		Property: core.StringPtr(property),
 		Operator: core.StringPtr(operator),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
 	return
 }
 
@@ -15473,18 +17329,22 @@ func UnmarshalRequiredConfigConditionBase(m map[string]json.RawMessage, result i
 	obj := new(RequiredConfigConditionBase)
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "property", &obj.Property)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "property-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "operator", &obj.Operator)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "operator-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "value", &obj.Value)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "value-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -15525,14 +17385,17 @@ func UnmarshalRequiredConfigConditionList(m map[string]json.RawMessage, result i
 	obj := new(RequiredConfigConditionList)
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "or", &obj.Or, UnmarshalConditionItem)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "or-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "and", &obj.And, UnmarshalConditionItem)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "and-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -15578,18 +17441,22 @@ func UnmarshalRequiredConfigConditionSubRule(m map[string]json.RawMessage, resul
 	obj := new(RequiredConfigConditionSubRule)
 	err = core.UnmarshalModel(m, "any", &obj.Any, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "any-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "any_ifexists", &obj.AnyIfexists, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "any_ifexists-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "all", &obj.All, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "all-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "all_ifexists", &obj.AllIfexists, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "all_ifexists-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -15599,10 +17466,29 @@ func UnmarshalRequiredConfigConditionSubRule(m map[string]json.RawMessage, resul
 // ScopePropertyExclusions : Any exclusions or resources that should not be part of the scope. Has to be the same type as the one specified.
 // This model "extends" ScopeProperty
 type ScopePropertyExclusions struct {
-	Name *string `json:"name,omitempty"`
+	// The key that denotes the user is declaring the exclusions.
+	Name *string `json:"name" validate:"required"`
 
-	// A list of scopes/targets to exclude from a scope.
-	Value []ScopePropertyExclusionItem `json:"value,omitempty"`
+	Value []ScopePropertyExclusionItem `json:"value" validate:"required"`
+}
+
+// Constants associated with the ScopePropertyExclusions.Name property.
+// The key that denotes the user is declaring the exclusions.
+const (
+	ScopePropertyExclusionsNameExclusionsConst = "exclusions"
+)
+
+// NewScopePropertyExclusions : Instantiate ScopePropertyExclusions (Generic Model Constructor)
+func (*SecurityAndComplianceCenterAPIV3) NewScopePropertyExclusions(name string, value []ScopePropertyExclusionItem) (_model *ScopePropertyExclusions, err error) {
+	_model = &ScopePropertyExclusions{
+		Name:  core.StringPtr(name),
+		Value: value,
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
 }
 
 func (*ScopePropertyExclusions) isaScopeProperty() bool {
@@ -15614,10 +17500,56 @@ func UnmarshalScopePropertyExclusions(m map[string]json.RawMessage, result inter
 	obj := new(ScopePropertyExclusions)
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "value", &obj.Value, UnmarshalScopePropertyExclusionItem)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "value-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// ScopePropertyScopeAny : Attribute that details what kind of type of scope.
+// This model "extends" ScopeProperty
+type ScopePropertyScopeAny struct {
+	// key to say the attribute targets the scope type.
+	Name *string `json:"name" validate:"required"`
+
+	// The value can be a string or a string list.
+	Value interface{} `json:"value" validate:"required"`
+}
+
+// NewScopePropertyScopeAny : Instantiate ScopePropertyScopeAny (Generic Model Constructor)
+func (*SecurityAndComplianceCenterAPIV3) NewScopePropertyScopeAny(name string, value interface{}) (_model *ScopePropertyScopeAny, err error) {
+	_model = &ScopePropertyScopeAny{
+		Name:  core.StringPtr(name),
+		Value: value,
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
+}
+
+func (*ScopePropertyScopeAny) isaScopeProperty() bool {
+	return true
+}
+
+// UnmarshalScopePropertyScopeAny unmarshals an instance of ScopePropertyScopeAny from the specified map of raw messages.
+func UnmarshalScopePropertyScopeAny(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(ScopePropertyScopeAny)
+	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "value", &obj.Value)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "value-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -15629,9 +17561,10 @@ func UnmarshalScopePropertyExclusions(m map[string]json.RawMessage, result inter
 // This model "extends" ScopeProperty
 type ScopePropertyScopeID struct {
 	// The key for the scope property.
-	Name *string `json:"name,omitempty"`
+	Name *string `json:"name" validate:"required"`
 
-	Value interface{} `json:"value,omitempty"`
+	// The identifier for the scope_type specified.
+	Value *string `json:"value" validate:"required"`
 }
 
 // Constants associated with the ScopePropertyScopeID.Name property.
@@ -15639,6 +17572,19 @@ type ScopePropertyScopeID struct {
 const (
 	ScopePropertyScopeIDNameScopeIDConst = "scope_id"
 )
+
+// NewScopePropertyScopeID : Instantiate ScopePropertyScopeID (Generic Model Constructor)
+func (*SecurityAndComplianceCenterAPIV3) NewScopePropertyScopeID(name string, value string) (_model *ScopePropertyScopeID, err error) {
+	_model = &ScopePropertyScopeID{
+		Name:  core.StringPtr(name),
+		Value: core.StringPtr(value),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
+}
 
 func (*ScopePropertyScopeID) isaScopeProperty() bool {
 	return true
@@ -15649,10 +17595,12 @@ func UnmarshalScopePropertyScopeID(m map[string]json.RawMessage, result interfac
 	obj := new(ScopePropertyScopeID)
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "value", &obj.Value)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "value-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -15663,7 +17611,7 @@ func UnmarshalScopePropertyScopeID(m map[string]json.RawMessage, result interfac
 // This model "extends" ScopeProperty
 type ScopePropertyScopeType struct {
 	// key to say the attribute targets the scope type.
-	Name *string `json:"name,omitempty"`
+	Name *string `json:"name" validate:"required"`
 
 	// The type of scope it targets
 	//
@@ -15673,7 +17621,7 @@ type ScopePropertyScopeType struct {
 	// - enterprise.account: The scope targets an account within an enterprise
 	// - account: The scope targets an account not tied to an enterprise
 	// - account.resource_group: The scope targets a resource group within an account.
-	Value *string `json:"value,omitempty"`
+	Value *string `json:"value" validate:"required"`
 }
 
 // Constants associated with the ScopePropertyScopeType.Name property.
@@ -15699,6 +17647,19 @@ const (
 	ScopePropertyScopeTypeValueEnterpriseAccountGroupConst = "enterprise.account_group"
 )
 
+// NewScopePropertyScopeType : Instantiate ScopePropertyScopeType (Generic Model Constructor)
+func (*SecurityAndComplianceCenterAPIV3) NewScopePropertyScopeType(name string, value string) (_model *ScopePropertyScopeType, err error) {
+	_model = &ScopePropertyScopeType{
+		Name:  core.StringPtr(name),
+		Value: core.StringPtr(value),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
+}
+
 func (*ScopePropertyScopeType) isaScopeProperty() bool {
 	return true
 }
@@ -15708,10 +17669,12 @@ func UnmarshalScopePropertyScopeType(m map[string]json.RawMessage, result interf
 	obj := new(ScopePropertyScopeType)
 	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "value", &obj.Value)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "value-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -15741,10 +17704,12 @@ func UnmarshalConditionItemConditionListConditionListConditionAnd(m map[string]j
 	obj := new(ConditionItemConditionListConditionListConditionAnd)
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "and", &obj.And, UnmarshalConditionItem)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "and-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -15774,10 +17739,12 @@ func UnmarshalConditionItemConditionListConditionListConditionOr(m map[string]js
 	obj := new(ConditionItemConditionListConditionListConditionOr)
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "or", &obj.Or, UnmarshalConditionItem)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "or-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -15804,6 +17771,7 @@ func UnmarshalConditionItemConditionSubRuleConditionSubRuleConditionAll(m map[st
 	obj := new(ConditionItemConditionSubRuleConditionSubRuleConditionAll)
 	err = core.UnmarshalModel(m, "all", &obj.All, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "all-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -15830,6 +17798,7 @@ func UnmarshalConditionItemConditionSubRuleConditionSubRuleConditionAllIf(m map[
 	obj := new(ConditionItemConditionSubRuleConditionSubRuleConditionAllIf)
 	err = core.UnmarshalModel(m, "all_ifexists", &obj.AllIfexists, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "all_ifexists-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -15856,6 +17825,7 @@ func UnmarshalConditionItemConditionSubRuleConditionSubRuleConditionAny(m map[st
 	obj := new(ConditionItemConditionSubRuleConditionSubRuleConditionAny)
 	err = core.UnmarshalModel(m, "any", &obj.Any, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "any-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -15882,6 +17852,7 @@ func UnmarshalConditionItemConditionSubRuleConditionSubRuleConditionAnyIf(m map[
 	obj := new(ConditionItemConditionSubRuleConditionSubRuleConditionAnyIf)
 	err = core.UnmarshalModel(m, "any_ifexists", &obj.AnyIfexists, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "any_ifexists-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -15911,10 +17882,12 @@ func UnmarshalRequiredConfigConditionListConditionListConditionAnd(m map[string]
 	obj := new(RequiredConfigConditionListConditionListConditionAnd)
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "and", &obj.And, UnmarshalConditionItem)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "and-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -15944,10 +17917,12 @@ func UnmarshalRequiredConfigConditionListConditionListConditionOr(m map[string]j
 	obj := new(RequiredConfigConditionListConditionListConditionOr)
 	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "or", &obj.Or, UnmarshalConditionItem)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "or-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -15974,6 +17949,7 @@ func UnmarshalRequiredConfigConditionSubRuleConditionSubRuleConditionAll(m map[s
 	obj := new(RequiredConfigConditionSubRuleConditionSubRuleConditionAll)
 	err = core.UnmarshalModel(m, "all", &obj.All, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "all-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -16000,6 +17976,7 @@ func UnmarshalRequiredConfigConditionSubRuleConditionSubRuleConditionAllIf(m map
 	obj := new(RequiredConfigConditionSubRuleConditionSubRuleConditionAllIf)
 	err = core.UnmarshalModel(m, "all_ifexists", &obj.AllIfexists, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "all_ifexists-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -16026,6 +18003,7 @@ func UnmarshalRequiredConfigConditionSubRuleConditionSubRuleConditionAny(m map[s
 	obj := new(RequiredConfigConditionSubRuleConditionSubRuleConditionAny)
 	err = core.UnmarshalModel(m, "any", &obj.Any, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "any-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -16052,9 +18030,95 @@ func UnmarshalRequiredConfigConditionSubRuleConditionSubRuleConditionAnyIf(m map
 	obj := new(RequiredConfigConditionSubRuleConditionSubRuleConditionAnyIf)
 	err = core.UnmarshalModel(m, "any_ifexists", &obj.AnyIfexists, UnmarshalSubRule)
 	if err != nil {
+		err = core.SDKErrorf(err, "", "any_ifexists-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// InstanceAttachmentsPager can be used to simplify the use of the "ListInstanceAttachments" method.
+type InstanceAttachmentsPager struct {
+	hasNext     bool
+	options     *ListInstanceAttachmentsOptions
+	client      *SecurityAndComplianceCenterAPIV3
+	pageContext struct {
+		next *string
+	}
+}
+
+// NewInstanceAttachmentsPager returns a new InstanceAttachmentsPager instance.
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) NewInstanceAttachmentsPager(options *ListInstanceAttachmentsOptions) (pager *InstanceAttachmentsPager, err error) {
+	if options.Start != nil && *options.Start != "" {
+		err = core.SDKErrorf(nil, "the 'options.Start' field should not be set", "no-query-setting", common.GetComponentInfo())
+		return
+	}
+
+	var optionsCopy = *options
+	pager = &InstanceAttachmentsPager{
+		hasNext: true,
+		options: &optionsCopy,
+		client:  securityAndComplianceCenterApi,
+	}
+	return
+}
+
+// HasNext returns true if there are potentially more results to be retrieved.
+func (pager *InstanceAttachmentsPager) HasNext() bool {
+	return pager.hasNext
+}
+
+// GetNextWithContext returns the next page of results using the specified Context.
+func (pager *InstanceAttachmentsPager) GetNextWithContext(ctx context.Context) (page []ProfileAttachment, err error) {
+	if !pager.HasNext() {
+		return nil, fmt.Errorf("no more results available")
+	}
+
+	pager.options.Start = pager.pageContext.next
+
+	result, _, err := pager.client.ListInstanceAttachmentsWithContext(ctx, pager.options)
+	if err != nil {
+		err = core.RepurposeSDKProblem(err, "error-getting-next-page")
+		return
+	}
+
+	var next *string
+	if result.Next != nil {
+		next = result.Next.Start
+	}
+	pager.pageContext.next = next
+	pager.hasNext = pager.pageContext.next != nil
+	page = result.Attachments
+
+	return
+}
+
+// GetAllWithContext returns all results by invoking GetNextWithContext() repeatedly
+// until all pages of results have been retrieved.
+func (pager *InstanceAttachmentsPager) GetAllWithContext(ctx context.Context) (allItems []ProfileAttachment, err error) {
+	for pager.HasNext() {
+		var nextPage []ProfileAttachment
+		nextPage, err = pager.GetNextWithContext(ctx)
+		if err != nil {
+			err = core.RepurposeSDKProblem(err, "error-getting-next-page")
+			return
+		}
+		allItems = append(allItems, nextPage...)
+	}
+	return
+}
+
+// GetNext invokes GetNextWithContext() using context.Background() as the Context parameter.
+func (pager *InstanceAttachmentsPager) GetNext() (page []ProfileAttachment, err error) {
+	page, err = pager.GetNextWithContext(context.Background())
+	err = core.RepurposeSDKProblem(err, "")
+	return
+}
+
+// GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
+func (pager *InstanceAttachmentsPager) GetAll() (allItems []ProfileAttachment, err error) {
+	allItems, err = pager.GetAllWithContext(context.Background())
+	err = core.RepurposeSDKProblem(err, "")
 	return
 }
 
@@ -16062,20 +18126,20 @@ func UnmarshalRequiredConfigConditionSubRuleConditionSubRuleConditionAnyIf(m map
 type ControlLibrariesPager struct {
 	hasNext     bool
 	options     *ListControlLibrariesOptions
-	client      *SecurityAndComplianceCenterApiV3
+	client      *SecurityAndComplianceCenterAPIV3
 	pageContext struct {
 		next *string
 	}
 }
 
 // NewControlLibrariesPager returns a new ControlLibrariesPager instance.
-func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) NewControlLibrariesPager(options *ListControlLibrariesOptions) (pager *ControlLibrariesPager, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) NewControlLibrariesPager(options *ListControlLibrariesOptions) (pager *ControlLibrariesPager, err error) {
 	if options.Start != nil && *options.Start != "" {
-		err = fmt.Errorf("the 'options.Start' field should not be set")
+		err = core.SDKErrorf(nil, "the 'options.Start' field should not be set", "no-query-setting", common.GetComponentInfo())
 		return
 	}
 
-	var optionsCopy ListControlLibrariesOptions = *options
+	var optionsCopy = *options
 	pager = &ControlLibrariesPager{
 		hasNext: true,
 		options: &optionsCopy,
@@ -16099,6 +18163,7 @@ func (pager *ControlLibrariesPager) GetNextWithContext(ctx context.Context) (pag
 
 	result, _, err := pager.client.ListControlLibrariesWithContext(ctx, pager.options)
 	if err != nil {
+		err = core.RepurposeSDKProblem(err, "error-getting-next-page")
 		return
 	}
 
@@ -16107,7 +18172,7 @@ func (pager *ControlLibrariesPager) GetNextWithContext(ctx context.Context) (pag
 		next = result.Next.Start
 	}
 	pager.pageContext.next = next
-	pager.hasNext = (pager.pageContext.next != nil)
+	pager.hasNext = pager.pageContext.next != nil
 	page = result.ControlLibraries
 
 	return
@@ -16120,6 +18185,7 @@ func (pager *ControlLibrariesPager) GetAllWithContext(ctx context.Context) (allI
 		var nextPage []ControlLibrary
 		nextPage, err = pager.GetNextWithContext(ctx)
 		if err != nil {
+			err = core.RepurposeSDKProblem(err, "error-getting-next-page")
 			return
 		}
 		allItems = append(allItems, nextPage...)
@@ -16129,32 +18195,36 @@ func (pager *ControlLibrariesPager) GetAllWithContext(ctx context.Context) (allI
 
 // GetNext invokes GetNextWithContext() using context.Background() as the Context parameter.
 func (pager *ControlLibrariesPager) GetNext() (page []ControlLibrary, err error) {
-	return pager.GetNextWithContext(context.Background())
+	page, err = pager.GetNextWithContext(context.Background())
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
 func (pager *ControlLibrariesPager) GetAll() (allItems []ControlLibrary, err error) {
-	return pager.GetAllWithContext(context.Background())
+	allItems, err = pager.GetAllWithContext(context.Background())
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ProfilesPager can be used to simplify the use of the "ListProfiles" method.
 type ProfilesPager struct {
 	hasNext     bool
 	options     *ListProfilesOptions
-	client      *SecurityAndComplianceCenterApiV3
+	client      *SecurityAndComplianceCenterAPIV3
 	pageContext struct {
 		next *string
 	}
 }
 
-// NewControlLibrariesPager returns a new ControlLibrariesPager instance.
-func (securityAndComplianceCenterApi *SecurityAndComplianceCenterApiV3) NewProfilesPager(options *ListProfilesOptions) (pager *ProfilesPager, err error) {
+// NewProfilesPager returns a new ProfilesPager instance.
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) NewProfilesPager(options *ListProfilesOptions) (pager *ProfilesPager, err error) {
 	if options.Start != nil && *options.Start != "" {
-		err = fmt.Errorf("the 'options.Start' field should not be set")
+		err = core.SDKErrorf(nil, "the 'options.Start' field should not be set", "no-query-setting", common.GetComponentInfo())
 		return
 	}
 
-	var optionsCopy ListProfilesOptions = *options
+	var optionsCopy = *options
 	pager = &ProfilesPager{
 		hasNext: true,
 		options: &optionsCopy,
@@ -16178,6 +18248,7 @@ func (pager *ProfilesPager) GetNextWithContext(ctx context.Context) (page []Prof
 
 	result, _, err := pager.client.ListProfilesWithContext(ctx, pager.options)
 	if err != nil {
+		err = core.RepurposeSDKProblem(err, "error-getting-next-page")
 		return
 	}
 
@@ -16186,7 +18257,7 @@ func (pager *ProfilesPager) GetNextWithContext(ctx context.Context) (page []Prof
 		next = result.Next.Start
 	}
 	pager.pageContext.next = next
-	pager.hasNext = (pager.pageContext.next != nil)
+	pager.hasNext = pager.pageContext.next != nil
 	page = result.Profiles
 
 	return
@@ -16199,6 +18270,7 @@ func (pager *ProfilesPager) GetAllWithContext(ctx context.Context) (allItems []P
 		var nextPage []Profile
 		nextPage, err = pager.GetNextWithContext(ctx)
 		if err != nil {
+			err = core.RepurposeSDKProblem(err, "error-getting-next-page")
 			return
 		}
 		allItems = append(allItems, nextPage...)
@@ -16208,115 +18280,40 @@ func (pager *ProfilesPager) GetAllWithContext(ctx context.Context) (allItems []P
 
 // GetNext invokes GetNextWithContext() using context.Background() as the Context parameter.
 func (pager *ProfilesPager) GetNext() (page []Profile, err error) {
-	return pager.GetNextWithContext(context.Background())
+	page, err = pager.GetNextWithContext(context.Background())
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
 func (pager *ProfilesPager) GetAll() (allItems []Profile, err error) {
-	return pager.GetAllWithContext(context.Background())
-}
-
-// InstanceAttachmentsPager can be used to simplify the use of the "ListInstanceAttachments" method.
-type InstanceAttachmentsPager struct {
-	hasNext     bool
-	options     *ListInstanceAttachmentsOptions
-	client      *SecurityAndComplianceCenterApiV3
-	pageContext struct {
-		next *string
-	}
-}
-
-// NewInstanceAttachmentsPager returns a new InstanceAttachmentsPager instance.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) NewInstanceAttachmentsPager(options *ListInstanceAttachmentsOptions) (pager *InstanceAttachmentsPager, err error) {
-	if options.Start != nil && *options.Start != "" {
-		err = fmt.Errorf("the 'options.Start' field should not be set")
-		return
-	}
-
-	var optionsCopy ListInstanceAttachmentsOptions = *options
-	pager = &InstanceAttachmentsPager{
-		hasNext: true,
-		options: &optionsCopy,
-		client:  securityAndComplianceCenter,
-	}
+	allItems, err = pager.GetAllWithContext(context.Background())
+	err = core.RepurposeSDKProblem(err, "")
 	return
-}
-
-// HasNext returns true if there are potentially more results to be retrieved.
-func (pager *InstanceAttachmentsPager) HasNext() bool {
-	return pager.hasNext
-}
-
-// GetNextWithContext returns the next page of results using the specified Context.
-func (pager *InstanceAttachmentsPager) GetNextWithContext(ctx context.Context) (page []ProfileAttachment, err error) {
-	if !pager.HasNext() {
-		return nil, fmt.Errorf("no more results available")
-	}
-
-	pager.options.Start = pager.pageContext.next
-
-	result, _, err := pager.client.ListInstanceAttachmentsWithContext(ctx, pager.options)
-	if err != nil {
-		return
-	}
-
-	var next *string
-	if result.Next != nil {
-		next = result.Next.Start
-	}
-	pager.pageContext.next = next
-	pager.hasNext = (pager.pageContext.next != nil)
-	page = result.Attachments
-
-	return
-}
-
-// GetAllWithContext returns all results by invoking GetNextWithContext() repeatedly
-// until all pages of results have been retrieved.
-func (pager *InstanceAttachmentsPager) GetAllWithContext(ctx context.Context) (allItems []ProfileAttachment, err error) {
-	for pager.HasNext() {
-		var nextPage []ProfileAttachment
-		nextPage, err = pager.GetNextWithContext(ctx)
-		if err != nil {
-			return
-		}
-		allItems = append(allItems, nextPage...)
-	}
-	return
-}
-
-// GetNext invokes GetNextWithContext() using context.Background() as the Context parameter.
-func (pager *InstanceAttachmentsPager) GetNext() (page []ProfileAttachment, err error) {
-	return pager.GetNextWithContext(context.Background())
-}
-
-// GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
-func (pager *InstanceAttachmentsPager) GetAll() (allItems []ProfileAttachment, err error) {
-	return pager.GetAllWithContext(context.Background())
 }
 
 // ScopesPager can be used to simplify the use of the "ListScopes" method.
 type ScopesPager struct {
 	hasNext     bool
 	options     *ListScopesOptions
-	client      *SecurityAndComplianceCenterApiV3
+	client      *SecurityAndComplianceCenterAPIV3
 	pageContext struct {
 		next *string
 	}
 }
 
 // NewScopesPager returns a new ScopesPager instance.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) NewScopesPager(options *ListScopesOptions) (pager *ScopesPager, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) NewScopesPager(options *ListScopesOptions) (pager *ScopesPager, err error) {
 	if options.Start != nil && *options.Start != "" {
-		err = fmt.Errorf("the 'options.Start' field should not be set")
+		err = core.SDKErrorf(nil, "the 'options.Start' field should not be set", "no-query-setting", common.GetComponentInfo())
 		return
 	}
 
-	var optionsCopy ListScopesOptions = *options
+	var optionsCopy = *options
 	pager = &ScopesPager{
 		hasNext: true,
 		options: &optionsCopy,
-		client:  securityAndComplianceCenter,
+		client:  securityAndComplianceCenterApi,
 	}
 	return
 }
@@ -16336,6 +18333,7 @@ func (pager *ScopesPager) GetNextWithContext(ctx context.Context) (page []Scope,
 
 	result, _, err := pager.client.ListScopesWithContext(ctx, pager.options)
 	if err != nil {
+		err = core.RepurposeSDKProblem(err, "error-getting-next-page")
 		return
 	}
 
@@ -16344,7 +18342,7 @@ func (pager *ScopesPager) GetNextWithContext(ctx context.Context) (page []Scope,
 		next = result.Next.Start
 	}
 	pager.pageContext.next = next
-	pager.hasNext = (pager.pageContext.next != nil)
+	pager.hasNext = pager.pageContext.next != nil
 	page = result.Scopes
 
 	return
@@ -16357,6 +18355,7 @@ func (pager *ScopesPager) GetAllWithContext(ctx context.Context) (allItems []Sco
 		var nextPage []Scope
 		nextPage, err = pager.GetNextWithContext(ctx)
 		if err != nil {
+			err = core.RepurposeSDKProblem(err, "error-getting-next-page")
 			return
 		}
 		allItems = append(allItems, nextPage...)
@@ -16366,36 +18365,40 @@ func (pager *ScopesPager) GetAllWithContext(ctx context.Context) (allItems []Sco
 
 // GetNext invokes GetNextWithContext() using context.Background() as the Context parameter.
 func (pager *ScopesPager) GetNext() (page []Scope, err error) {
-	return pager.GetNextWithContext(context.Background())
+	page, err = pager.GetNextWithContext(context.Background())
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
 func (pager *ScopesPager) GetAll() (allItems []Scope, err error) {
-	return pager.GetAllWithContext(context.Background())
+	allItems, err = pager.GetAllWithContext(context.Background())
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // SubscopesPager can be used to simplify the use of the "ListSubscopes" method.
 type SubscopesPager struct {
 	hasNext     bool
 	options     *ListSubscopesOptions
-	client      *SecurityAndComplianceCenterApiV3
+	client      *SecurityAndComplianceCenterAPIV3
 	pageContext struct {
 		next *string
 	}
 }
 
 // NewSubscopesPager returns a new SubscopesPager instance.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) NewSubscopesPager(options *ListSubscopesOptions) (pager *SubscopesPager, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) NewSubscopesPager(options *ListSubscopesOptions) (pager *SubscopesPager, err error) {
 	if options.Start != nil && *options.Start != "" {
-		err = fmt.Errorf("the 'options.Start' field should not be set")
+		err = core.SDKErrorf(nil, "the 'options.Start' field should not be set", "no-query-setting", common.GetComponentInfo())
 		return
 	}
 
-	var optionsCopy ListSubscopesOptions = *options
+	var optionsCopy = *options
 	pager = &SubscopesPager{
 		hasNext: true,
 		options: &optionsCopy,
-		client:  securityAndComplianceCenter,
+		client:  securityAndComplianceCenterApi,
 	}
 	return
 }
@@ -16415,6 +18418,7 @@ func (pager *SubscopesPager) GetNextWithContext(ctx context.Context) (page []Sub
 
 	result, _, err := pager.client.ListSubscopesWithContext(ctx, pager.options)
 	if err != nil {
+		err = core.RepurposeSDKProblem(err, "error-getting-next-page")
 		return
 	}
 
@@ -16423,7 +18427,7 @@ func (pager *SubscopesPager) GetNextWithContext(ctx context.Context) (page []Sub
 		next = result.Next.Start
 	}
 	pager.pageContext.next = next
-	pager.hasNext = (pager.pageContext.next != nil)
+	pager.hasNext = pager.pageContext.next != nil
 	page = result.Subscopes
 
 	return
@@ -16436,6 +18440,7 @@ func (pager *SubscopesPager) GetAllWithContext(ctx context.Context) (allItems []
 		var nextPage []SubScope
 		nextPage, err = pager.GetNextWithContext(ctx)
 		if err != nil {
+			err = core.RepurposeSDKProblem(err, "error-getting-next-page")
 			return
 		}
 		allItems = append(allItems, nextPage...)
@@ -16445,36 +18450,40 @@ func (pager *SubscopesPager) GetAllWithContext(ctx context.Context) (allItems []
 
 // GetNext invokes GetNextWithContext() using context.Background() as the Context parameter.
 func (pager *SubscopesPager) GetNext() (page []SubScope, err error) {
-	return pager.GetNextWithContext(context.Background())
+	page, err = pager.GetNextWithContext(context.Background())
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
 func (pager *SubscopesPager) GetAll() (allItems []SubScope, err error) {
-	return pager.GetAllWithContext(context.Background())
+	allItems, err = pager.GetAllWithContext(context.Background())
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ReportsPager can be used to simplify the use of the "ListReports" method.
 type ReportsPager struct {
 	hasNext     bool
 	options     *ListReportsOptions
-	client      *SecurityAndComplianceCenterApiV3
+	client      *SecurityAndComplianceCenterAPIV3
 	pageContext struct {
 		next *string
 	}
 }
 
 // NewReportsPager returns a new ReportsPager instance.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) NewReportsPager(options *ListReportsOptions) (pager *ReportsPager, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) NewReportsPager(options *ListReportsOptions) (pager *ReportsPager, err error) {
 	if options.Start != nil && *options.Start != "" {
-		err = fmt.Errorf("the 'options.Start' field should not be set")
+		err = core.SDKErrorf(nil, "the 'options.Start' field should not be set", "no-query-setting", common.GetComponentInfo())
 		return
 	}
 
-	var optionsCopy ListReportsOptions = *options
+	var optionsCopy = *options
 	pager = &ReportsPager{
 		hasNext: true,
 		options: &optionsCopy,
-		client:  securityAndComplianceCenter,
+		client:  securityAndComplianceCenterApi,
 	}
 	return
 }
@@ -16494,6 +18503,7 @@ func (pager *ReportsPager) GetNextWithContext(ctx context.Context) (page []Repor
 
 	result, _, err := pager.client.ListReportsWithContext(ctx, pager.options)
 	if err != nil {
+		err = core.RepurposeSDKProblem(err, "error-getting-next-page")
 		return
 	}
 
@@ -16502,7 +18512,7 @@ func (pager *ReportsPager) GetNextWithContext(ctx context.Context) (page []Repor
 		next = result.Next.Start
 	}
 	pager.pageContext.next = next
-	pager.hasNext = (pager.pageContext.next != nil)
+	pager.hasNext = pager.pageContext.next != nil
 	page = result.Reports
 
 	return
@@ -16515,6 +18525,7 @@ func (pager *ReportsPager) GetAllWithContext(ctx context.Context) (allItems []Re
 		var nextPage []Report
 		nextPage, err = pager.GetNextWithContext(ctx)
 		if err != nil {
+			err = core.RepurposeSDKProblem(err, "error-getting-next-page")
 			return
 		}
 		allItems = append(allItems, nextPage...)
@@ -16524,36 +18535,40 @@ func (pager *ReportsPager) GetAllWithContext(ctx context.Context) (allItems []Re
 
 // GetNext invokes GetNextWithContext() using context.Background() as the Context parameter.
 func (pager *ReportsPager) GetNext() (page []Report, err error) {
-	return pager.GetNextWithContext(context.Background())
+	page, err = pager.GetNextWithContext(context.Background())
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
 func (pager *ReportsPager) GetAll() (allItems []Report, err error) {
-	return pager.GetAllWithContext(context.Background())
+	allItems, err = pager.GetAllWithContext(context.Background())
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ReportEvaluationsPager can be used to simplify the use of the "ListReportEvaluations" method.
 type ReportEvaluationsPager struct {
 	hasNext     bool
 	options     *ListReportEvaluationsOptions
-	client      *SecurityAndComplianceCenterApiV3
+	client      *SecurityAndComplianceCenterAPIV3
 	pageContext struct {
 		next *string
 	}
 }
 
 // NewReportEvaluationsPager returns a new ReportEvaluationsPager instance.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) NewReportEvaluationsPager(options *ListReportEvaluationsOptions) (pager *ReportEvaluationsPager, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) NewReportEvaluationsPager(options *ListReportEvaluationsOptions) (pager *ReportEvaluationsPager, err error) {
 	if options.Start != nil && *options.Start != "" {
-		err = fmt.Errorf("the 'options.Start' field should not be set")
+		err = core.SDKErrorf(nil, "the 'options.Start' field should not be set", "no-query-setting", common.GetComponentInfo())
 		return
 	}
 
-	var optionsCopy ListReportEvaluationsOptions = *options
+	var optionsCopy = *options
 	pager = &ReportEvaluationsPager{
 		hasNext: true,
 		options: &optionsCopy,
-		client:  securityAndComplianceCenter,
+		client:  securityAndComplianceCenterApi,
 	}
 	return
 }
@@ -16573,6 +18588,7 @@ func (pager *ReportEvaluationsPager) GetNextWithContext(ctx context.Context) (pa
 
 	result, _, err := pager.client.ListReportEvaluationsWithContext(ctx, pager.options)
 	if err != nil {
+		err = core.RepurposeSDKProblem(err, "error-getting-next-page")
 		return
 	}
 
@@ -16581,7 +18597,7 @@ func (pager *ReportEvaluationsPager) GetNextWithContext(ctx context.Context) (pa
 		next = result.Next.Start
 	}
 	pager.pageContext.next = next
-	pager.hasNext = (pager.pageContext.next != nil)
+	pager.hasNext = pager.pageContext.next != nil
 	page = result.Evaluations
 
 	return
@@ -16594,6 +18610,7 @@ func (pager *ReportEvaluationsPager) GetAllWithContext(ctx context.Context) (all
 		var nextPage []Evaluation
 		nextPage, err = pager.GetNextWithContext(ctx)
 		if err != nil {
+			err = core.RepurposeSDKProblem(err, "error-getting-next-page")
 			return
 		}
 		allItems = append(allItems, nextPage...)
@@ -16603,36 +18620,40 @@ func (pager *ReportEvaluationsPager) GetAllWithContext(ctx context.Context) (all
 
 // GetNext invokes GetNextWithContext() using context.Background() as the Context parameter.
 func (pager *ReportEvaluationsPager) GetNext() (page []Evaluation, err error) {
-	return pager.GetNextWithContext(context.Background())
+	page, err = pager.GetNextWithContext(context.Background())
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
 func (pager *ReportEvaluationsPager) GetAll() (allItems []Evaluation, err error) {
-	return pager.GetAllWithContext(context.Background())
+	allItems, err = pager.GetAllWithContext(context.Background())
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // ReportResourcesPager can be used to simplify the use of the "ListReportResources" method.
 type ReportResourcesPager struct {
 	hasNext     bool
 	options     *ListReportResourcesOptions
-	client      *SecurityAndComplianceCenterApiV3
+	client      *SecurityAndComplianceCenterAPIV3
 	pageContext struct {
 		next *string
 	}
 }
 
 // NewReportResourcesPager returns a new ReportResourcesPager instance.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) NewReportResourcesPager(options *ListReportResourcesOptions) (pager *ReportResourcesPager, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) NewReportResourcesPager(options *ListReportResourcesOptions) (pager *ReportResourcesPager, err error) {
 	if options.Start != nil && *options.Start != "" {
-		err = fmt.Errorf("the 'options.Start' field should not be set")
+		err = core.SDKErrorf(nil, "the 'options.Start' field should not be set", "no-query-setting", common.GetComponentInfo())
 		return
 	}
 
-	var optionsCopy ListReportResourcesOptions = *options
+	var optionsCopy = *options
 	pager = &ReportResourcesPager{
 		hasNext: true,
 		options: &optionsCopy,
-		client:  securityAndComplianceCenter,
+		client:  securityAndComplianceCenterApi,
 	}
 	return
 }
@@ -16652,6 +18673,7 @@ func (pager *ReportResourcesPager) GetNextWithContext(ctx context.Context) (page
 
 	result, _, err := pager.client.ListReportResourcesWithContext(ctx, pager.options)
 	if err != nil {
+		err = core.RepurposeSDKProblem(err, "error-getting-next-page")
 		return
 	}
 
@@ -16660,7 +18682,7 @@ func (pager *ReportResourcesPager) GetNextWithContext(ctx context.Context) (page
 		next = result.Next.Start
 	}
 	pager.pageContext.next = next
-	pager.hasNext = (pager.pageContext.next != nil)
+	pager.hasNext = pager.pageContext.next != nil
 	page = result.Resources
 
 	return
@@ -16673,6 +18695,7 @@ func (pager *ReportResourcesPager) GetAllWithContext(ctx context.Context) (allIt
 		var nextPage []Resource
 		nextPage, err = pager.GetNextWithContext(ctx)
 		if err != nil {
+			err = core.RepurposeSDKProblem(err, "error-getting-next-page")
 			return
 		}
 		allItems = append(allItems, nextPage...)
@@ -16682,36 +18705,40 @@ func (pager *ReportResourcesPager) GetAllWithContext(ctx context.Context) (allIt
 
 // GetNext invokes GetNextWithContext() using context.Background() as the Context parameter.
 func (pager *ReportResourcesPager) GetNext() (page []Resource, err error) {
-	return pager.GetNextWithContext(context.Background())
+	page, err = pager.GetNextWithContext(context.Background())
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
 func (pager *ReportResourcesPager) GetAll() (allItems []Resource, err error) {
-	return pager.GetAllWithContext(context.Background())
+	allItems, err = pager.GetAllWithContext(context.Background())
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // RulesPager can be used to simplify the use of the "ListRules" method.
 type RulesPager struct {
 	hasNext     bool
 	options     *ListRulesOptions
-	client      *SecurityAndComplianceCenterApiV3
+	client      *SecurityAndComplianceCenterAPIV3
 	pageContext struct {
 		next *string
 	}
 }
 
 // NewRulesPager returns a new RulesPager instance.
-func (securityAndComplianceCenter *SecurityAndComplianceCenterApiV3) NewRulesPager(options *ListRulesOptions) (pager *RulesPager, err error) {
+func (securityAndComplianceCenterApi *SecurityAndComplianceCenterAPIV3) NewRulesPager(options *ListRulesOptions) (pager *RulesPager, err error) {
 	if options.Start != nil && *options.Start != "" {
-		err = fmt.Errorf("the 'options.Start' field should not be set")
+		err = core.SDKErrorf(nil, "the 'options.Start' field should not be set", "no-query-setting", common.GetComponentInfo())
 		return
 	}
 
-	var optionsCopy ListRulesOptions = *options
+	var optionsCopy = *options
 	pager = &RulesPager{
 		hasNext: true,
 		options: &optionsCopy,
-		client:  securityAndComplianceCenter,
+		client:  securityAndComplianceCenterApi,
 	}
 	return
 }
@@ -16731,6 +18758,7 @@ func (pager *RulesPager) GetNextWithContext(ctx context.Context) (page []Rule, e
 
 	result, _, err := pager.client.ListRulesWithContext(ctx, pager.options)
 	if err != nil {
+		err = core.RepurposeSDKProblem(err, "error-getting-next-page")
 		return
 	}
 
@@ -16739,7 +18767,7 @@ func (pager *RulesPager) GetNextWithContext(ctx context.Context) (page []Rule, e
 		next = result.Next.Start
 	}
 	pager.pageContext.next = next
-	pager.hasNext = (pager.pageContext.next != nil)
+	pager.hasNext = pager.pageContext.next != nil
 	page = result.Rules
 
 	return
@@ -16752,6 +18780,7 @@ func (pager *RulesPager) GetAllWithContext(ctx context.Context) (allItems []Rule
 		var nextPage []Rule
 		nextPage, err = pager.GetNextWithContext(ctx)
 		if err != nil {
+			err = core.RepurposeSDKProblem(err, "error-getting-next-page")
 			return
 		}
 		allItems = append(allItems, nextPage...)
@@ -16761,10 +18790,14 @@ func (pager *RulesPager) GetAllWithContext(ctx context.Context) (allItems []Rule
 
 // GetNext invokes GetNextWithContext() using context.Background() as the Context parameter.
 func (pager *RulesPager) GetNext() (page []Rule, err error) {
-	return pager.GetNextWithContext(context.Background())
+	page, err = pager.GetNextWithContext(context.Background())
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }
 
 // GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
 func (pager *RulesPager) GetAll() (allItems []Rule, err error) {
-	return pager.GetAllWithContext(context.Background())
+	allItems, err = pager.GetAllWithContext(context.Background())
+	err = core.RepurposeSDKProblem(err, "")
+	return
 }

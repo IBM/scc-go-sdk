@@ -1906,8 +1906,6 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 			listScanReportsOptions := &securityandcompliancecenterapiv3.ListScanReportsOptions{
 				InstanceID: core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
 				ReportID:   &reportIDForReportLink,
-				ScopeID:    core.StringPtr("testString"),
-				SubscopeID: core.StringPtr("testString"),
 				Sort:       core.StringPtr("status"),
 			}
 

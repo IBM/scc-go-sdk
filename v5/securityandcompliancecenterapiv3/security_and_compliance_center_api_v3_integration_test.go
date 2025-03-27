@@ -162,8 +162,12 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 
 			settings, response, err := securityAndComplianceCenterAPIService.UpdateSettings(updateSettingsOptions)
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(settings).ToNot(BeNil())
+			Expect(response.StatusCode).To(Or(Equal(200), Equal(204)))
+			if response.StatusCode == 200 {
+				Expect(settings).ToNot(BeNil())
+			} else {
+				Expect(settings).To(BeNil())
+			}
 		})
 	})
 

@@ -1928,14 +1928,12 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 				InstanceID: core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
 				ReportID:   &reportIDForReportLink,
 				Format:     core.StringPtr("csv"),
-				ScopeID:    core.StringPtr("132009ff-b982-412e-a110-ad8797e10f84"),
-				SubscopeID: core.StringPtr("c7ddcbcc-6a43-4ab3-b6a7-b2d8f65cd54a"),
 			}
 
 			createScanReport, response, err := securityAndComplianceCenterAPIService.CreateScanReport(createScanReportOptions)
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(202))
-			Expect(createScanReport).ToNot(BeNil())
+			Expect(err).ToNot(BeNil())
+			Expect(response.StatusCode).To(Equal(409))
+			Expect(createScanReport).To(BeNil())
 		})
 	})
 

@@ -1646,8 +1646,6 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 			getReportOptions := &securityandcompliancecenterapiv3.GetReportOptions{
 				ReportID:   &reportIDForReportLink,
 				InstanceID: core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
-				ScopeID:    core.StringPtr("testString"),
-				SubscopeID: core.StringPtr("testString"),
 			}
 
 			report, response, err := securityAndComplianceCenterAPIService.GetReport(getReportOptions)

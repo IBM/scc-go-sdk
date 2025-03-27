@@ -564,14 +564,8 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 			controlSpecificationPrototypeModel := &securityandcompliancecenterapiv3.ControlSpecificationPrototype{
 				ComponentID:                     core.StringPtr("apprapp"),
 				Environment:                     core.StringPtr("ibm-cloud"),
-				ControlSpecificationID:          core.StringPtr("testString"),
 				ControlSpecificationDescription: core.StringPtr("This field is used to describe a control specification"),
 				Assessments:                     []securityandcompliancecenterapiv3.AssessmentPrototype{*assessmentPrototypeModel},
-			}
-
-			controlDocModel := &securityandcompliancecenterapiv3.ControlDoc{
-				ControlDocsID:   core.StringPtr("testString"),
-				ControlDocsType: core.StringPtr("testString"),
 			}
 
 			controlPrototypeModel := &securityandcompliancecenterapiv3.ControlPrototype{
@@ -579,9 +573,7 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 				ControlDescription:    core.StringPtr("This is a description of a control"),
 				ControlCategory:       core.StringPtr("test-control"),
 				ControlRequirement:    core.BoolPtr(true),
-				ControlParent:         core.StringPtr("testString"),
 				ControlSpecifications: []securityandcompliancecenterapiv3.ControlSpecificationPrototype{*controlSpecificationPrototypeModel},
-				ControlDocs:           controlDocModel,
 				Status:                core.StringPtr("disabled"),
 			}
 

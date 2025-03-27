@@ -1003,9 +1003,15 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`CreateScope(createScopeOptions *CreateScopeOptions)`, func() {
-			scopePropertyModel := &securityandcompliancecenterapiv3.ScopePropertyScopeAny{
-				Name:  core.StringPtr("scope_id"),
-				Value: core.StringPtr("ff88f007f9ff4622aac4fbc0eda36255"),
+			scopePropertyList := []securityandcompliancecenterapiv3.ScopePropertyIntf{
+				&securityandcompliancecenterapiv3.ScopePropertyScopeID{
+					Name:  core.StringPtr("scope_id"),
+					Value: core.StringPtr("ff88f007f9ff4622aac4fbc0eda36255"),
+				},
+				&securityandcompliancecenterapiv3.ScopePropertyScopeType{
+					Name:  core.StringPtr("scope_type"),
+					Value: core.StringPtr("account"),
+				},
 			}
 
 			createScopeOptions := &securityandcompliancecenterapiv3.CreateScopeOptions{
@@ -1013,7 +1019,7 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 				Name:        core.StringPtr("ibm scope"),
 				Description: core.StringPtr("The scope that is defined for IBM resources."),
 				Environment: core.StringPtr("ibm-cloud"),
-				Properties:  []securityandcompliancecenterapiv3.ScopePropertyIntf{scopePropertyModel},
+				Properties:  scopePropertyList,
 			}
 
 			scope, response, err := securityAndComplianceCenterAPIService.CreateScope(createScopeOptions)

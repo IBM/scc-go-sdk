@@ -676,7 +676,6 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 			controlSpecificationPrototypeModel := &securityandcompliancecenterapiv3.ControlSpecificationPrototype{
 				ComponentID:                     core.StringPtr("apprapp"),
 				Environment:                     core.StringPtr("ibm-cloud"),
-				ControlSpecificationID:          core.StringPtr("testString"),
 				ControlSpecificationDescription: core.StringPtr("This field is used to describe a control specification"),
 				Assessments:                     []securityandcompliancecenterapiv3.AssessmentPrototype{*assessmentPrototypeModel},
 			}
@@ -687,25 +686,24 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 			}
 
 			controlPrototypeModel := &securityandcompliancecenterapiv3.ControlPrototype{
-				ControlName:           core.StringPtr("security"),
-				ControlDescription:    core.StringPtr("This is a description of a control"),
-				ControlCategory:       core.StringPtr("test-control"),
+				ControlName:           core.StringPtr("testString"),
+				ControlDescription:    core.StringPtr("testString"),
+				ControlCategory:       core.StringPtr("testString"),
 				ControlRequirement:    core.BoolPtr(true),
-				ControlParent:         core.StringPtr("testString"),
+				ControlParent:         core.StringPtr(""),
 				ControlSpecifications: []securityandcompliancecenterapiv3.ControlSpecificationPrototype{*controlSpecificationPrototypeModel},
 				ControlDocs:           controlDocModel,
-				Status:                core.StringPtr("disabled"),
+				Status:                core.StringPtr("enabled"),
 			}
 
 			replaceCustomControlLibraryOptions := &securityandcompliancecenterapiv3.ReplaceCustomControlLibraryOptions{
 				InstanceID:                core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
 				ControlLibraryID:          &controlLibraryIDLink,
-				ControlLibraryName:        core.StringPtr("custom control library from SDK"),
-				ControlLibraryDescription: core.StringPtr("This is a custom control library made from the SDK test framework"),
+				ControlLibraryName:        core.StringPtr("testControlLibUpdate"),
+				ControlLibraryDescription: core.StringPtr("Updates the control library"),
 				ControlLibraryType:        core.StringPtr("custom"),
 				ControlLibraryVersion:     core.StringPtr("0.0.2"),
 				Controls:                  []securityandcompliancecenterapiv3.ControlPrototype{*controlPrototypeModel},
-				BssAccount:                core.StringPtr("testString"),
 			}
 
 			controlLibrary, response, err := securityAndComplianceCenterAPIService.ReplaceCustomControlLibrary(replaceCustomControlLibraryOptions)

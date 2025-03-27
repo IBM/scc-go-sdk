@@ -1038,12 +1038,8 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 		})
 		It(`ListScopes(listScopesOptions *ListScopesOptions) with pagination`, func() {
 			listScopesOptions := &securityandcompliancecenterapiv3.ListScopesOptions{
-				InstanceID:  core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
-				Limit:       core.Int64Ptr(int64(10)),
-				Start:       core.StringPtr("testString"),
-				Name:        core.StringPtr("testString"),
-				Description: core.StringPtr("testString"),
-				Environment: core.StringPtr("testString"),
+				InstanceID: core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
+				Limit:      core.Int64Ptr(int64(10)),
 			}
 
 			listScopesOptions.Start = nil
@@ -1068,11 +1064,8 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 		})
 		It(`ListScopes(listScopesOptions *ListScopesOptions) using ScopesPager`, func() {
 			listScopesOptions := &securityandcompliancecenterapiv3.ListScopesOptions{
-				InstanceID:  core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
-				Limit:       core.Int64Ptr(int64(10)),
-				Name:        core.StringPtr("testString"),
-				Description: core.StringPtr("testString"),
-				Environment: core.StringPtr("testString"),
+				InstanceID: core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
+				Limit:      core.Int64Ptr(int64(10)),
 			}
 
 			// Test GetNext().

@@ -1267,7 +1267,7 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Integration Tests`, func() {
 				InstanceID:  core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
 				ScopeID:     &scopeIDLink,
 				SubscopeID:  &subScopeIDLink,
-				Name:        core.StringPtr("updated name of scope"),
+				Name:        core.StringPtr("updated name of scope from sdk run"),
 				Description: core.StringPtr("updated scope description"),
 			}
 

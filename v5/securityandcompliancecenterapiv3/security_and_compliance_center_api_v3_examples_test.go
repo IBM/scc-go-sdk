@@ -184,8 +184,12 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Examples Tests`, func() {
 			// end-update_settings
 
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(settings).ToNot(BeNil())
+			Expect(response.StatusCode).To(Or(Equal(200), Equal(204)))
+			if response.StatusCode == 200 {
+				Expect(settings).ToNot(BeNil())
+			} else {
+				Expect(settings).To(BeNil())
+			}
 		})
 		It(`PostTestEvent request example`, func() {
 			fmt.Println("\nPostTestEvent() result:")

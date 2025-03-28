@@ -363,17 +363,70 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Examples Tests`, func() {
 			fmt.Println("\nReplaceProfileAttachment() result:")
 			// begin-replace_profile_attachment
 
-			parameterModel := &securityandcompliancecenterapiv3.Parameter{}
+			parameterList := []securityandcompliancecenterapiv3.Parameter{
+				{
+					AssessmentID:         core.StringPtr("rule-e16fcfea-fe21-4d30-a721-423611481fea"),
+					ParameterName:        core.StringPtr("tls_version"),
+					ParameterDisplayName: core.StringPtr("IBM Cloud Internet Services TLS version"),
+					ParameterType:        core.StringPtr("string_list"),
+					ParameterValue:       core.StringPtr("['1.2', '1.3']"),
+				},
+				{
+					AssessmentID:         core.StringPtr("rule-f9137be8-2490-4afb-8cd5-a201cb167eb2"),
+					ParameterName:        core.StringPtr("ssh_port"),
+					ParameterDisplayName: core.StringPtr("Network ACL rule for allowed IPs to SSH port"),
+					ParameterType:        core.StringPtr("numeric"),
+					ParameterValue:       core.StringPtr("22"),
+				},
+				{
+					AssessmentID:         core.StringPtr("rule-9653d2c7-6290-4128-a5a3-65487ba40370"),
+					ParameterName:        core.StringPtr("rdp_port"),
+					ParameterDisplayName: core.StringPtr("Security group rule RDP allow port number"),
+					ParameterType:        core.StringPtr("numeric"),
+					ParameterValue:       core.StringPtr("22"),
+				},
+				{
+					AssessmentID:         core.StringPtr("rule-7c5f6385-67e4-4edf-bec8-c722558b2dec"),
+					ParameterName:        core.StringPtr("ssh_port"),
+					ParameterDisplayName: core.StringPtr("Security group rule SSH allow port number"),
+					ParameterType:        core.StringPtr("numeric"),
+					ParameterValue:       core.StringPtr("22"),
+				},
+				{
+					AssessmentID:         core.StringPtr("rule-f1e80ee7-88d5-4bf2-b42f-c863bb24601c"),
+					ParameterName:        core.StringPtr("rdp_port"),
+					ParameterDisplayName: core.StringPtr("Disallowed IPs for ingress to RDP port"),
+					ParameterType:        core.StringPtr("numeric"),
+					ParameterValue:       core.StringPtr("3389"),
+				},
+				{
+					AssessmentID:         core.StringPtr("rule-96527f89-1867-4581-b923-1400e04661e0"),
+					ParameterName:        core.StringPtr("exclude_default_security_groups"),
+					ParameterDisplayName: core.StringPtr("Exclude the default security groups"),
+					ParameterType:        core.StringPtr("string_list"),
+					ParameterValue:       core.StringPtr("['Default']"),
+				},
+			}
 
-			attachmentNotificationsModel := &securityandcompliancecenterapiv3.AttachmentNotifications{}
+			attachmentNotificationsControlsModel := &securityandcompliancecenterapiv3.AttachmentNotificationsControls{
+				ThresholdLimit:   core.Int64Ptr(int64(15)),
+				FailedControlIds: []string{},
+			}
 
-			multiCloudScopePayloadModel := &securityandcompliancecenterapiv3.MultiCloudScopePayloadByID{}
+			attachmentNotificationsModel := &securityandcompliancecenterapiv3.AttachmentNotifications{
+				Enabled:  core.BoolPtr(true),
+				Controls: attachmentNotificationsControlsModel,
+			}
+
+			multiCloudScopePayloadModel := &securityandcompliancecenterapiv3.MultiCloudScopePayloadByID{
+				ID: core.StringPtr("8baad3b5-2e69-4027-9967-efac19508e1c"),
+			}
 
 			replaceProfileAttachmentOptions := securityAndComplianceCenterAPIService.NewReplaceProfileAttachmentOptions(
 				"acd7032c-15a3-484f-bf5b-67d41534d940",
 				"9c265b4a-4cdf-47f1-acd3-17b5808f7f3f",
 				attachmentIDLink,
-				[]securityandcompliancecenterapiv3.Parameter{*parameterModel},
+				parameterList,
 				"testString",
 				"testString",
 				attachmentNotificationsModel,

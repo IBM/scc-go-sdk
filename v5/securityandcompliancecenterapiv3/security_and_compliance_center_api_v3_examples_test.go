@@ -1048,17 +1048,20 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Examples Tests`, func() {
 		It(`CreateSubscope request example`, func() {
 			fmt.Println("\nCreateSubscope() result:")
 			// begin-create_subscope
-
 			scopePropertyModel := &securityandcompliancecenterapiv3.ScopePropertyScopeAny{
 				Name:  core.StringPtr("scope_id"),
 				Value: core.StringPtr("1f689f08ec9b47b885c2659c17029581"),
+			}
+			scopeType := &securityandcompliancecenterapiv3.ScopePropertyScopeAny{
+				Name:  core.StringPtr("scope_type"),
+				Value: core.StringPtr("account.resource_group"),
 			}
 
 			scopePrototypeModel := &securityandcompliancecenterapiv3.ScopePrototype{
 				Name:        core.StringPtr("ibm subscope update"),
 				Description: core.StringPtr("The subscope that is defined for IBM resources."),
 				Environment: core.StringPtr("ibm-cloud"),
-				Properties:  []securityandcompliancecenterapiv3.ScopePropertyIntf{scopePropertyModel},
+				Properties:  []securityandcompliancecenterapiv3.ScopePropertyIntf{scopePropertyModel, scopeType},
 			}
 
 			createSubscopeOptions := securityAndComplianceCenterAPIService.NewCreateSubscopeOptions(

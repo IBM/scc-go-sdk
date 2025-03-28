@@ -1267,6 +1267,9 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Examples Tests`, func() {
 				"3e25966275dccfa2c3a34786919c5af7",
 			)
 
+			createProviderTypeInstanceOptions.SetName("Caveonix-instance-1")
+			createProviderTypeInstanceOptions.SetAttributes(map[string]interface{}{})
+
 			providerTypeInstance, response, err := securityAndComplianceCenterAPIService.CreateProviderTypeInstance(createProviderTypeInstanceOptions)
 			if err != nil {
 				panic(err)

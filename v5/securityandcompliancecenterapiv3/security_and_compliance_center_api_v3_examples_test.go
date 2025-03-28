@@ -1341,6 +1341,9 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Examples Tests`, func() {
 				providerTypeInstanceIDLink,
 			)
 
+			updateProviderTypeInstanceOptions.SetName("caveonix-instance-1")
+			updateProviderTypeInstanceOptions.SetAttributes(map[string]interface{}{})
+
 			providerTypeInstance, response, err := securityAndComplianceCenterAPIService.UpdateProviderTypeInstance(updateProviderTypeInstanceOptions)
 			if err != nil {
 				panic(err)

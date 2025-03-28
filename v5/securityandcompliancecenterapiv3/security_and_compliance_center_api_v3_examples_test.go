@@ -772,21 +772,19 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Examples Tests`, func() {
 		It(`ReplaceProfile request example`, func() {
 			fmt.Println("\nReplaceProfile() result:")
 			// begin-replace_profile
-
-			parameterModel := &securityandcompliancecenterapiv3.Parameter{}
-
-			assessmentModel := &securityandcompliancecenterapiv3.Assessment{
-				Parameters: []securityandcompliancecenterapiv3.Parameter{*parameterModel},
-			}
-
-			controlSpecificationModel := &securityandcompliancecenterapiv3.ControlSpecification{
-				Assessments: []securityandcompliancecenterapiv3.Assessment{*assessmentModel},
-			}
-
-			profileControlsModel := &securityandcompliancecenterapiv3.ProfileControls{
-				ControlLibraryID:      core.StringPtr("51ca566e-c559-412b-8d64-f05b57044c32"),
-				ControlID:             core.StringPtr("60dae3b5-6104-4b3e-bac7-26cc7b741aca"),
-				ControlSpecifications: []securityandcompliancecenterapiv3.ControlSpecification{*controlSpecificationModel},
+			profileControlsModels := []securityandcompliancecenterapiv3.ProfileControls{
+				{
+					ControlLibraryID: core.StringPtr("a046fb6b-aba5-4646-b190-a2c76241e7af"),
+					ControlID:        core.StringPtr("2ce21ba3-0548-49a3-88e2-1122632218f4"),
+				},
+				{
+					ControlLibraryID: core.StringPtr("a046fb6b-aba5-4646-b190-a2c76241e7af"),
+					ControlID:        core.StringPtr("bdc5fdab-6934-461c-8bb1-9af7ed8e8d33"),
+				},
+				{
+					ControlLibraryID: core.StringPtr("a046fb6b-aba5-4646-b190-a2c76241e7af"),
+					ControlID:        core.StringPtr("60dae3b5-6104-4b3e-bac7-26cc7b741aca"),
+				},
 			}
 
 			defaultParametersModel := &securityandcompliancecenterapiv3.DefaultParameters{
@@ -802,7 +800,7 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Examples Tests`, func() {
 				"acd7032c-15a3-484f-bf5b-67d41534d940",
 				profileIDLink,
 				"custom",
-				[]securityandcompliancecenterapiv3.ProfileControls{*profileControlsModel},
+				profileControlsModels,
 				[]securityandcompliancecenterapiv3.DefaultParameters{*defaultParametersModel},
 			)
 			replaceProfileOptions.SetNewProfileName("Example Profile Updated")

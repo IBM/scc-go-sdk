@@ -1617,17 +1617,10 @@ var _ = Describe(`SecurityAndComplianceCenterAPIV3 Examples Tests`, func() {
 			fmt.Println("\nListReportResources() result:")
 			// begin-list_report_resources
 			listReportResourcesOptions := &securityandcompliancecenterapiv3.ListReportResourcesOptions{
-				InstanceID:   core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
-				ReportID:     &reportIDForReportLink,
-				ID:           core.StringPtr("testString"),
-				ResourceName: core.StringPtr("testString"),
-				AccountID:    &accountIDForReportLink,
-				ComponentID:  core.StringPtr("testString"),
-				Status:       core.StringPtr("compliant"),
-				Sort:         core.StringPtr("account_id"),
-				Limit:        core.Int64Ptr(int64(10)),
-				ScopeID:      core.StringPtr("testString"),
-				SubscopeID:   core.StringPtr("testString"),
+				InstanceID: core.StringPtr("acd7032c-15a3-484f-bf5b-67d41534d940"),
+				ReportID:   &reportIDForReportLink,
+				AccountID:  &accountIDForReportLink,
+				Limit:      core.Int64Ptr(int64(10)),
 			}
 
 			pager, err := securityAndComplianceCenterAPIService.NewReportResourcesPager(listReportResourcesOptions)

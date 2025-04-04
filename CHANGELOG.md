@@ -1,3 +1,11 @@
+# [5.6.0](https://github.com/IBM/scc-go-sdk/compare/v5.5.3...v5.6.0) (2025-04-04)
+
+
+### Features
+
+* Adding ProfileAttachment attribute data_selection_range ([1ae016d](https://github.com/IBM/scc-go-sdk/commit/1ae016d13d37dbcfc94f9f8f7bec9a18ffc60a14))
+* **SCC:** Implement data selection range on attachment ([cd0e59e](https://github.com/IBM/scc-go-sdk/commit/cd0e59e7fd4f2e749be8eab32ded6d41d828479b))
+
 ## [5.5.3](https://github.com/IBM/scc-go-sdk/compare/v5.5.2...v5.5.3) (2025-03-05)
 
 
